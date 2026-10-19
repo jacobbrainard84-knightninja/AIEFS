@@ -18,7 +18,6 @@ env/
 *.keras
 *.tflite
 *.safetensors
-runs/
 wandb/
 logs/
 *.log
