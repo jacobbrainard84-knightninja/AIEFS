@@ -1,0 +1,19 @@
+{
+  "analysis": "AIEF-1.4 transverse phase Jacobian",
+  "evidence_class": "diagnostic mechanism exploration",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "r_EMA": 0.05713333333333142,
+    "alpha": 0.9994288298464774,
+    "tau_delay": 0.5
+  },
+  "outputs": [
+    "transverse_jacobian_trajectory.csv",
+    "transverse_jacobian_intervals.csv",
+    "transverse_jacobian_report.txt",
+    "analysis_manifest.json"
+  ],
+  "tested_hypothesis": "mu_phase > r_EMA (phase sync faster than EMA memory)",
+  "not_a_proof": true
+}

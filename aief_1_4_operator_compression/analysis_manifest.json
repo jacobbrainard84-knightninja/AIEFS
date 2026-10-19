@@ -1,0 +1,16 @@
+{
+  "analysis": "AIEF-1.4 operator compression onto slow subspace",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "r_EMA": 0.05713333333333142,
+    "alpha": 0.9994288298464774,
+    "perturbation": 1e-08
+  },
+  "slow_dim": 7,
+  "outputs": [
+    "operator_compression.csv",
+    "operator_compression_report.txt",
+    "analysis_manifest.json"
+  ]
+}

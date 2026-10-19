@@ -1,0 +1,31 @@
+{
+  "analysis": "AIEF tangent-channel invariance and tolerance-aware spectra",
+  "channel_tolerance": 1e-20,
+  "exceptional_check_times": [
+    100.0,
+    120.0,
+    123.0,
+    125.0,
+    150.0
+  ],
+  "exceptional_seed": "4619122171158768524",
+  "modal_R2_threshold": 0.95,
+  "modal_summary_path": "/home/deck/AI_Programs/SSRH/aief_1_4_face_spectrum/modal_trajectory_prediction_summary.csv",
+  "modal_summary_sha256": "492fd3de1cf8ab3d555fd1adcd17689d0b771acd19533731f2e8e5eb4899d707",
+  "notes": [
+    "Geometry signatures are not complete graph-isomorphism canonical forms.",
+    "Spectrum equality is tolerance-based, not bitwise.",
+    "Channel multiplicity inference assumes tangent/channel invariance.",
+    "Unique seed/direction is the independent directional unit for modal success."
+  ],
+  "npz_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+  "npz_sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f",
+  "scalar_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+  "scalar_sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda",
+  "source_manifest_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+  "source_manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+  "spectrum_tolerance": 1e-10,
+  "subspace_tolerance": 1e-09,
+  "tangent_results_path": "/home/deck/AI_Programs/SSRH/aief_1_4_exceptional_tangent/corrected_tangent_by_seed.csv",
+  "tangent_results_sha256": "b5fbd72007baba5c6e266d5467d46e57397d62868dcc70bb37687054dd5ca214"
+}

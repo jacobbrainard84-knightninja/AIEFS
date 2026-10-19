@@ -1,0 +1,31 @@
+{
+  "analysis": "AIEF-1.4 phase-increment source decomposition",
+  "evidence_class": "diagnostic mechanism exploration",
+  "production_run_hash": "5a9f093a2fe0",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "alpha_EMA": 0.9994288298464774,
+    "r_EMA": 0.05713333333333142,
+    "scale_epsilon": 1e-12,
+    "signal_floor": 1e-14,
+    "intervals": [
+      0.0,
+      50.0,
+      100.0,
+      150.0,
+      200.0,
+      250.0,
+      300.0,
+      320.0
+    ]
+  },
+  "outputs": [
+    "source_decomposition_trajectory.csv",
+    "source_decomposition_intervals.csv",
+    "source_decomposition_report.txt",
+    "analysis_manifest.json"
+  ],
+  "not_a_proof": true,
+  "open_problem": "Deriving alpha-rate alignment-residual decay from the coupled phase, delayed-history, EMA, and weight dynamics"
+}

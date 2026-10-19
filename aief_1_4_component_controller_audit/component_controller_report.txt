@@ -1,0 +1,71 @@
+AIEF component, controller, and explicit-intertwiner audit
+========================================================
+
+Frozen split states
+-------------------
+Seeds: 40
+All positive support nodes saturated: 39/40
+All components rate-uniform: 39/40
+All components pass the full conditional mechanism audit: 39/40
+Explicit component spectra match: 39/40
+Median least-squares CD=LC residual: 3.19796e-13
+Median explicit-component CD=LC residual: 4.64673e-13
+Maximum explicit-component CD=LC residual: 0.0298736
+Maximum component-spectrum error: 0.055513
+
+Split-state support components
+------------------------------
+  n=2, m=1, k=1, complete=True, bipartite=True, nullity=0: count=37
+  n=3, m=3, k=2, complete=True, bipartite=False, nullity=0: count=25
+  n=3, m=3, k=2, complete=True, bipartite=False, nullity=2: count=1
+  n=4, m=6, k=3, complete=True, bipartite=False, nullity=2: count=15
+  n=5, m=10, k=4, complete=True, bipartite=False, nullity=5: count=5
+  n=6, m=15, k=5, complete=True, bipartite=False, nullity=9: count=36
+
+Split-state component combinations
+----------------------------------
+  K6+K2+K3: seeds=24
+  K6+K2+K4: seeds=11
+  K5+K2+K4: seeds=2
+  K5+K3+K4: seeds=1
+  K5+K3[partial-active]+K4: seeds=1
+  K5+K6: seeds=1
+
+Controller residual decomposition at split
+------------------------------------------
+Median all-node capacity residual: 2.75885e-12
+Median active-saturated row-sum residual: 5.60615e-13
+Median active-outward row-sum residual: 5.60615e-13
+Maximum exact outward identity defect: 1.45569e-12
+Maximum unsaturated positive-node controller-load fraction: 0.09648
+
+Exceptional stages for seed 4619122171158768524
+-----------------------------------------------
+  split: dim=9, components=3, all_support_saturated=False, LS_CDLC=1.43e-12, explicit_CDLC=0.0299, all_controller=0.0969, sat_controller=2.2e-12, unsat_load=0.0965
+  time_100: dim=9, components=3, all_support_saturated=False, LS_CDLC=2.22e-14, explicit_CDLC=0.0397, all_controller=0.122, sat_controller=2.65e-14, unsat_load=0.121
+  time_120: dim=9, components=3, all_support_saturated=False, LS_CDLC=2.18e-14, explicit_CDLC=0.0398, all_controller=0.122, sat_controller=2.63e-14, unsat_load=0.121
+  time_123: dim=9, components=3, all_support_saturated=False, LS_CDLC=2.19e-14, explicit_CDLC=0.0398, all_controller=0.122, sat_controller=2.54e-14, unsat_load=0.121
+  pre_switch: dim=9, components=3, all_support_saturated=False, LS_CDLC=2.19e-14, explicit_CDLC=0.0398, all_controller=0.122, sat_controller=2.53e-14, unsat_load=0.121
+  post_switch: dim=8, components=3, all_support_saturated=False, LS_CDLC=6.83e-08, explicit_CDLC=1.04e-07, all_controller=0.17, sat_controller=1.2e-07, unsat_load=0.167
+  time_125: dim=8, components=3, all_support_saturated=False, LS_CDLC=6.48e-08, explicit_CDLC=9.89e-08, all_controller=0.17, sat_controller=1.14e-07, unsat_load=0.167
+  time_150: dim=8, components=3, all_support_saturated=False, LS_CDLC=1.58e-08, explicit_CDLC=2.41e-08, all_controller=0.17, sat_controller=2.78e-08, unsat_load=0.168
+  late: dim=8, components=3, all_support_saturated=False, LS_CDLC=9.65e-13, explicit_CDLC=1.47e-12, all_controller=0.17, sat_controller=1.7e-12, unsat_load=0.168
+
+Interpretation constraints
+--------------------------
+* Least-squares and explicit-component intertwiners are separate diagnostics.
+* The all-node controller equation is not required on unsaturated rows.
+* The outward identity with A p is an implementation identity, not an equilibrium test.
+* Degree rates k*eta/c require locked R=1, saturation, and edge stationarity.
+* Complete-graph labels are accepted only when directly verified from support edges.
+* Signless-incidence nullity is not the usual oriented graph cycle-space dimension.
+* Exceptional post-switch deviations require timestep/tolerance convergence before a continuum claim.
+
+Tolerances
+----------
+  boundary_tolerance: 1e-09
+  support_tolerance: 1e-14
+  rate_tolerance: 1e-08
+  locking_tolerance: 1e-08
+  balance_tolerance: 1e-08
+  rank_tolerance: 1e-10

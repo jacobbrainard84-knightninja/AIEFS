@@ -1,0 +1,15 @@
+{
+  "amplitude_unreliable_count": 3,
+  "direction_count": 200,
+  "median_frozen_rate": 0.3157894736450564,
+  "median_observed_rate": 0.31533903901093735,
+  "median_rate_relative_error": 0.0014284137053999025,
+  "negative_frozen_rate_count": 2,
+  "pearson_frozen_observed": -0.28472392459971424,
+  "reliable_direction_count": 197,
+  "slow_mode_count": 42,
+  "spearman_frozen_observed": 0.6701543561587071,
+  "within_10pct_typical_fraction": 0.6802030456852792,
+  "within_1pct_typical_fraction": 0.6091370558375635,
+  "within_5pct_typical_fraction": 0.6294416243654822
+}

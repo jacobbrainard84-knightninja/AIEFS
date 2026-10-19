@@ -1,0 +1,121 @@
+{
+  "K3_edges": [
+    25,
+    29,
+    59
+  ],
+  "K3_identification": {
+    "all_K3_candidates": [
+      {
+        "edges": [
+          25,
+          29,
+          59
+        ],
+        "nodes": [
+          2,
+          7,
+          11
+        ],
+        "saturated_count": 1
+      }
+    ],
+    "candidate_count": 1,
+    "split_saturated_count": 1
+  },
+  "K3_nodes": [
+    2,
+    7,
+    11
+  ],
+  "analysis": "AIEF-1.4 actual finite-step admissibility branch and derivative audit",
+  "boundary_classifier_tolerance": 1e-09,
+  "command": [
+    "AIEF_1_4_actual_admissibility_branch_audit.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--seed",
+    "4619122171158768524",
+    "--boundary-tol",
+    "1e-9",
+    "--scale-epsilon",
+    "1e-12",
+    "--numeric-tie-tol",
+    "1e-12",
+    "--check-times",
+    "100,113.8,113.81,113.82,120,123,124.04,124.05,125,150",
+    "--output-dir",
+    "aief_1_4_actual_admissibility_branch"
+  ],
+  "dependencies": {
+    "K3_transition_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_exceptional_K3_transition_audit.py",
+      "sha256": "cbca075aa549b1bd9d12b6134c9afa63eab3cbbca5fdd83240d33f996f6dc2f6"
+    },
+    "component_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_component_controller_audit.py",
+      "sha256": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e"
+    },
+    "stationarity": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "sha256": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc"
+    }
+  },
+  "direction_count": 5,
+  "direction_seed": 20260723,
+  "dt": 0.01,
+  "fd_steps": [
+    0.0001,
+    3e-05,
+    1e-05,
+    3e-06,
+    1e-06,
+    3e-07,
+    1e-07,
+    3e-08,
+    1e-08
+  ],
+  "final_replay_exact": true,
+  "final_replay_max_error": 0.0,
+  "future_steps": 32000,
+  "inputs": {
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "Proposal violation, scale clipping, endpoint winner status, and slack classification are distinct.",
+    "Stratum-signature changes are separated from changes in the formulas applied to selected edge outputs.",
+    "The branchwise classical Jacobian is asserted only on strict constant-winner strata.",
+    "The directional formula is used at endpoint ties away from the safeguarded global-gate discontinuity.",
+    "The post-positivity map is exactly fiber-linear on Ax=q within the nonnegative domain.",
+    "Finite-step branch spectra are not automatically continuous-generator spectra.",
+    "This deterministic replay of one frozen seed is not independent population evidence."
+  ],
+  "numeric_tie_tolerance": 1e-12,
+  "outputs": [
+    "actual_branch_step_summary.csv",
+    "actual_branch_node_trajectory.csv",
+    "actual_branch_edge_trajectory.csv",
+    "actual_branch_events.csv",
+    "branch_jacobian_validation.csv",
+    "directional_derivative_validation.csv",
+    "actual_branch_key_matrices.npz",
+    "actual_admissibility_branch_report.txt"
+  ],
+  "projected_reproduction_max_error": 0.0,
+  "scale_epsilon": 1e-12,
+  "seed": "4619122171158768524",
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_actual_admissibility_branch_audit.py",
+    "sha256": "0cde24499becfffcb9857ecfb359671534bfa6d85961483174d2811e2ce8101e"
+  },
+  "support_tolerance": 1e-14
+}

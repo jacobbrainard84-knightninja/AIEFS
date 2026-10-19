@@ -1,0 +1,10 @@
+{
+  "all_amplitudes_success_count": 196,
+  "median_success_count": 196,
+  "median_unique_direction_R2": 0.9999982972649254,
+  "median_unique_direction_RMSE": 0.00032672743392392497,
+  "reliable_all_amplitudes_success_fraction": 0.9898477157360406,
+  "reliable_median_success_fraction": 0.9898477157360406,
+  "reliable_unique_direction_count": 197,
+  "unique_direction_count": 200
+}

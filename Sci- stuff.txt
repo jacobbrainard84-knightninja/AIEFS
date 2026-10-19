@@ -1,0 +1,10 @@
+# Create a virtual environment in your home directory
+python -m venv ~/sci-env
+
+# Activate it
+source ~/sci-env/bin/activate
+
+# Install scientific packages
+pip install numpy scipy pandas matplotlib scikit-learn jupyter sympy
+
+pip install xgi hypergraphx hypernetx hypertorch hypergraph-db hypabase hyperxdb

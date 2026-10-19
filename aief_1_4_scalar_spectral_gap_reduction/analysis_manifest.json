@@ -1,0 +1,86 @@
+{
+  "analysis": "AIEF-1.4 scalar spectral-gap and two-state reduction",
+  "command": [
+    "AIEF_1_4_scalar_spectral_gap_reduction.py",
+    "--duhamel-npz",
+    "aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+    "--memory-fits",
+    "aief_1_4_feedback_rank_memory_reduction/target_time_memory_fits.csv",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--late-direction-start",
+    "250",
+    "--target-times",
+    "150,200,250,320",
+    "--rate-fit-window",
+    "66.6",
+    "--train-window",
+    "200,260",
+    "--validation-window",
+    "260,320",
+    "--scalar-tol",
+    "1e-30",
+    "--output-dir",
+    "aief_1_4_scalar_spectral_gap_reduction"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "inputs": {
+    "duhamel_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+      "sha256": "08285f872f9d103f487f6de1328d163a678dec3fa8eed88be626c80569275871"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "memory_fits": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_feedback_rank_memory_reduction/target_time_memory_fits.csv",
+      "sha256": "22ab9bb774dd494e6fef7bbec05be38d2185f1546704e628f72210a99dce28df"
+    }
+  },
+  "interpretation_constraints": [
+    "The fixed late POD direction is measured from this replay and tested subspace.",
+    "Spectral-gap closure is a deterministic same-trajectory mechanism test, not independent statistical replication.",
+    "Forcing envelopes are fit in absolute value and sign changes are reported.",
+    "The two-state recurrence is trained and validated on disjoint late intervals.",
+    "No T_window parameter is changed in this analysis."
+  ],
+  "late_direction": [
+    0.5773410255782927,
+    -0.5773687559683237,
+    -0.5773410255782931
+  ],
+  "late_direction_start": 250.0,
+  "outputs": [
+    "scalar_projection_trajectory.csv",
+    "scalar_projection_summary.csv",
+    "target_spectral_gap_tests.csv",
+    "two_state_model_summary.csv",
+    "two_state_rollout_validation.csv",
+    "scalar_reduction_arrays.npz",
+    "scalar_spectral_gap_report.txt"
+  ],
+  "rate_fit_window": 66.6,
+  "scalar_tolerance": 1e-30,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_scalar_spectral_gap_reduction.py",
+    "sha256": "c59c65e9d08568156a3bef9436e33435865ec2f591d77927e04b8aa53903e5e4"
+  },
+  "target_times": [
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "train_window": [
+    200.0,
+    260.0
+  ],
+  "validation_window": [
+    260.0,
+    320.0
+  ]
+}

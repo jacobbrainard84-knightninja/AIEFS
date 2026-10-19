@@ -1,0 +1,41 @@
+======================================================================
+AIEF-1.4 K3 Structure Prevalence Scan
+======================================================================
+Seeds scanned: 40/40
+Seeds with >=1 K3 component: 40
+Total K3 components found: 856
+
+Partial-controller K3s (2 controllers): 755
+Full-controller K3s (3 controllers):    0
+(7,2,7) winner map on {2,7,11}:         1
+
+──────────────────────────────────────────────────────────────────────
+Controller-Set Distribution:
+──────────────────────────────────────────────────────────────────────
+  0-controller K3s: 15
+  1-controller K3s: 86
+  2-controller K3s: 755
+
+──────────────────────────────────────────────────────────────────────
+Winner Map Distribution (top 12):
+──────────────────────────────────────────────────────────────────────
+  (5,5,6): 55
+  (5,1,5): 42
+  (5,0,5): 40
+  (1,1,6): 35
+  (-2,1,5): 33
+  (-2,1,6): 29
+  (5,-2,5): 27
+  (1,0,1): 25
+  (5,5,10): 23
+  (1,1,10): 20
+  (6,6,10): 19
+  (5,6,5): 18
+
+CONCLUSION: The (7,2,7) partial-controller K3 is EXCEPTIONAL.
+It appears in exactly 1 seed.  No multi-seed bundle exists.
+The single-seed analysis characterizes a unique attractor state,
+not a robust geometric structure common across the ensemble.
+
+Evidence class: structure prevalence scan.
+No Jacobians.  No eigenvalues.  No invariant subspaces claimed.

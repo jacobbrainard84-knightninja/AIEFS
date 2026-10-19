@@ -1,0 +1,155 @@
+AIEF mature stationarity and feasible-perturbation analysis
+==========================================================
+
+Mature adaptive stationarity
+----------------------------
+  seed=172180395821707403: stationary_fraction=1, mean ||P_w(F)||/||F||=9.96029e-14, max=1.42818e-12, zero-set switches=0, saturated-set switches=0, max B drift=4.43115e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.7e-17, replay_exact=True
+  seed=283404770198602602: stationary_fraction=1, mean ||P_w(F)||/||F||=1.75457e-13, max=2.75971e-12, zero-set switches=0, saturated-set switches=0, max B drift=1.72456e-11, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=4.91e-17, replay_exact=True
+  seed=305986450614148690: stationary_fraction=1, mean ||P_w(F)||/||F||=1.91646e-13, max=3.23833e-12, zero-set switches=0, saturated-set switches=0, max B drift=4.72533e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.54e-17, replay_exact=True
+  seed=1230287949579537403: stationary_fraction=1, mean ||P_w(F)||/||F||=1.18532e-12, max=2.10587e-11, zero-set switches=0, saturated-set switches=0, max B drift=7.27283e-11, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.67e-17, replay_exact=True
+  seed=1888415619847841128: stationary_fraction=1, mean ||P_w(F)||/||F||=1.11711e-13, max=1.67395e-12, zero-set switches=0, saturated-set switches=0, max B drift=2.57059e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.6e-17, replay_exact=True
+  seed=1918007468868772336: stationary_fraction=1, mean ||P_w(F)||/||F||=7.78676e-14, max=9.78005e-13, zero-set switches=0, saturated-set switches=0, max B drift=8.10498e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.6e-17, replay_exact=True
+  seed=2461295749352584108: stationary_fraction=1, mean ||P_w(F)||/||F||=4.49434e-14, max=3.30867e-13, zero-set switches=0, saturated-set switches=0, max B drift=9.19448e-13, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=9.81e-18, replay_exact=True
+  seed=3258463328937640595: stationary_fraction=1, mean ||P_w(F)||/||F||=1.01956e-13, max=1.43812e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.32296e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=4.39e-17, replay_exact=True
+  seed=3582616062465030267: stationary_fraction=1, mean ||P_w(F)||/||F||=8.6123e-14, max=1.05571e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.98931e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=9.81e-18, replay_exact=True
+  seed=3704716633526084363: stationary_fraction=1, mean ||P_w(F)||/||F||=1.1187e-13, max=1.57609e-12, zero-set switches=0, saturated-set switches=0, max B drift=2.9748e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.1e-17, replay_exact=True
+  seed=3952397966055989215: stationary_fraction=1, mean ||P_w(F)||/||F||=1.08241e-13, max=1.52927e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.79974e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.25e-17, replay_exact=True
+  seed=4040285944958847150: stationary_fraction=1, mean ||P_w(F)||/||F||=7.97556e-14, max=1.1087e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.22999e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.4e-17, replay_exact=True
+  seed=4219039243791140697: stationary_fraction=1, mean ||P_w(F)||/||F||=1.24233e-13, max=2.02643e-12, zero-set switches=0, saturated-set switches=0, max B drift=7.64049e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=0, replay_exact=True
+  seed=4619122171158768524: stationary_fraction=0.115125, mean ||P_w(F)||/||F||=0.0569358, max=0.160206, zero-set switches=0, saturated-set switches=1, max B drift=0.208939, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.54e-17, replay_exact=True
+  seed=4932511216876650745: stationary_fraction=1, mean ||P_w(F)||/||F||=5.82875e-14, max=6.88792e-13, zero-set switches=0, saturated-set switches=0, max B drift=7.60477e-13, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.4e-17, replay_exact=True
+  seed=5213047409853278064: stationary_fraction=1, mean ||P_w(F)||/||F||=6.64507e-14, max=8.08965e-13, zero-set switches=0, saturated-set switches=0, max B drift=1.98264e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.78e-17, replay_exact=True
+  seed=5415544643585892346: stationary_fraction=1, mean ||P_w(F)||/||F||=9.39025e-14, max=1.16187e-12, zero-set switches=0, saturated-set switches=0, max B drift=2.64868e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.7e-17, replay_exact=True
+  seed=6023008189364820510: stationary_fraction=1, mean ||P_w(F)||/||F||=7.57295e-14, max=1.01207e-12, zero-set switches=0, saturated-set switches=0, max B drift=5.55414e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.7e-17, replay_exact=True
+  seed=6108867655028980287: stationary_fraction=1, mean ||P_w(F)||/||F||=9.63434e-14, max=1.19049e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.39442e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.1e-17, replay_exact=True
+  seed=6942591650975756121: stationary_fraction=1, mean ||P_w(F)||/||F||=7.61809e-14, max=8.56888e-13, zero-set switches=0, saturated-set switches=0, max B drift=1.91521e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.6e-17, replay_exact=True
+  seed=9036321132460399255: stationary_fraction=1, mean ||P_w(F)||/||F||=1.0392e-13, max=1.52455e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.00391e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.94e-17, replay_exact=True
+  seed=9082055256280075172: stationary_fraction=1, mean ||P_w(F)||/||F||=1.55613e-13, max=2.40277e-12, zero-set switches=0, saturated-set switches=0, max B drift=6.67596e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=4.39e-17, replay_exact=True
+  seed=9189988769602851417: stationary_fraction=1, mean ||P_w(F)||/||F||=9.71492e-14, max=1.30153e-12, zero-set switches=0, saturated-set switches=0, max B drift=6.86555e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.39e-17, replay_exact=True
+  seed=10431384713483787270: stationary_fraction=1, mean ||P_w(F)||/||F||=7.00657e-14, max=8.55589e-13, zero-set switches=0, saturated-set switches=0, max B drift=2.32124e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.96e-17, replay_exact=True
+  seed=10856823803646276806: stationary_fraction=1, mean ||P_w(F)||/||F||=1.25824e-13, max=1.91392e-12, zero-set switches=0, saturated-set switches=0, max B drift=4.33768e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.25e-17, replay_exact=True
+  seed=11242426753702356865: stationary_fraction=1, mean ||P_w(F)||/||F||=7.83726e-14, max=9.972e-13, zero-set switches=0, saturated-set switches=0, max B drift=2.27496e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.7e-17, replay_exact=True
+  seed=12123519807951751650: stationary_fraction=1, mean ||P_w(F)||/||F||=7.8453e-14, max=1.09766e-12, zero-set switches=0, saturated-set switches=0, max B drift=4.25432e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.19e-17, replay_exact=True
+  seed=12851640484293199234: stationary_fraction=1, mean ||P_w(F)||/||F||=4.32554e-14, max=5.32567e-13, zero-set switches=0, saturated-set switches=0, max B drift=1.84928e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.54e-17, replay_exact=True
+  seed=14040336450255043598: stationary_fraction=1, mean ||P_w(F)||/||F||=8.80282e-14, max=1.26214e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.53566e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=4.16e-17, replay_exact=True
+  seed=14924267685654216746: stationary_fraction=1, mean ||P_w(F)||/||F||=6.66157e-14, max=8.46693e-13, zero-set switches=0, saturated-set switches=0, max B drift=2.71523e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.1e-17, replay_exact=True
+  seed=15403081841477312463: stationary_fraction=1, mean ||P_w(F)||/||F||=1.18361e-13, max=1.80085e-12, zero-set switches=0, saturated-set switches=0, max B drift=4.44102e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.39e-17, replay_exact=True
+  seed=15853699719446171583: stationary_fraction=1, mean ||P_w(F)||/||F||=1.2699e-13, max=1.99444e-12, zero-set switches=0, saturated-set switches=0, max B drift=7.50579e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=2.4e-17, replay_exact=True
+  seed=16329425431442249417: stationary_fraction=1, mean ||P_w(F)||/||F||=7.13448e-14, max=9.72213e-13, zero-set switches=0, saturated-set switches=0, max B drift=3.38388e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.96e-17, replay_exact=True
+  seed=16627818730624180313: stationary_fraction=1, mean ||P_w(F)||/||F||=7.39512e-14, max=1.02939e-12, zero-set switches=0, saturated-set switches=0, max B drift=1.54925e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.39e-17, replay_exact=True
+  seed=16952466944611321358: stationary_fraction=1, mean ||P_w(F)||/||F||=1.02441e-13, max=1.58137e-12, zero-set switches=0, saturated-set switches=0, max B drift=3.57766e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.25e-17, replay_exact=True
+  seed=17279552413280415429: stationary_fraction=1, mean ||P_w(F)||/||F||=7.51491e-14, max=9.64569e-13, zero-set switches=0, saturated-set switches=0, max B drift=2.89497e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=4.16e-17, replay_exact=True
+  seed=17521310920850592782: stationary_fraction=1, mean ||P_w(F)||/||F||=1.13311e-13, max=1.65346e-12, zero-set switches=0, saturated-set switches=0, max B drift=5.22557e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=1.96e-17, replay_exact=True
+  seed=17715532056777442089: stationary_fraction=1, mean ||P_w(F)||/||F||=9.21112e-14, max=1.38956e-12, zero-set switches=0, saturated-set switches=0, max B drift=2.59041e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.93e-17, replay_exact=True
+  seed=17883847597205629106: stationary_fraction=1, mean ||P_w(F)||/||F||=4.44722e-13, max=7.85276e-12, zero-set switches=0, saturated-set switches=0, max B drift=5.75374e-11, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=4.39e-17, replay_exact=True
+  seed=18127452951968972828: stationary_fraction=1, mean ||P_w(F)||/||F||=1.80724e-13, max=3.0378e-12, zero-set switches=0, saturated-set switches=0, max B drift=4.0923e-12, tangent/idempotence/homogeneity failures=0/0/0, equivariance error=3.93e-17, replay_exact=True
+
+Frozen-fast restoring diagnostics
+---------------------------------
+  interior_mixing, delta=0.0001
+    restoring_coefficient: median=1705.81, min=1705.59, max=3812.36
+    restoring_cosine: median=0.670362, min=0.67027, max=0.931897
+    transverse_to_field_ratio: median=0.742034, min=0.362723, max=0.742117
+  interior_mixing, delta=0.001
+    restoring_coefficient: median=170.594, min=170.573, max=381.249
+    restoring_cosine: median=0.670392, min=0.6703, max=0.931901
+    transverse_to_field_ratio: median=0.742008, min=0.362712, max=0.742091
+  interior_mixing, delta=0.01
+    restoring_coefficient: median=17.0729, min=17.0708, max=38.1384
+    restoring_cosine: median=0.670683, min=0.670591, max=0.931945
+    transverse_to_field_ratio: median=0.741744, min=0.3626, max=0.741827
+  interior_mixing, delta=0.05
+    restoring_coefficient: median=3.42658, min=3.42616, max=7.63969
+    restoring_cosine: median=0.671977, min=0.671885, max=0.932137
+    transverse_to_field_ratio: median=0.740572, min=0.362106, max=0.740655
+  radial_inward, delta=0.0001
+    restoring_coefficient: median=1328.18, min=1328.18, max=2685.68
+    restoring_cosine: median=0.793147, min=0.793147, max=0.993161
+    transverse_to_field_ratio: median=0.60903, min=0.116754, max=0.60903
+  radial_inward, delta=0.001
+    restoring_coefficient: median=132.831, min=132.831, max=268.581
+    restoring_cosine: median=0.793177, min=0.793177, max=0.993161
+    transverse_to_field_ratio: median=0.608991, min=0.116749, max=0.608991
+  radial_inward, delta=0.01
+    restoring_coefficient: median=13.2966, min=13.2966, max=26.8716
+    restoring_cosine: median=0.793476, min=0.793476, max=0.993168
+    transverse_to_field_ratio: median=0.608602, min=0.116691, max=0.608602
+  radial_inward, delta=0.05
+    restoring_coefficient: median=2.67133, min=2.67133, max=5.38632
+    restoring_cosine: median=0.794797, min=0.794797, max=0.993198
+    transverse_to_field_ratio: median=0.606876, min=0.116434, max=0.606876
+  tangent_face, delta=0.0001
+    restoring_coefficient: median=0.315789, min=0.221397, max=53.4947
+    restoring_cosine: median=1, min=0.246348, max=1
+    transverse_to_field_ratio: median=1.14333e-08, min=3.91233e-09, max=0.969181
+  tangent_face, delta=0.001
+    restoring_coefficient: median=0.315789, min=-29145.1, max=0.315789
+    restoring_cosine: median=1, min=-0.424179, max=1
+    transverse_to_field_ratio: median=1.19457e-09, min=3.80634e-10, max=0.905579
+  tangent_face, delta=0.01
+    restoring_coefficient: median=0.315789, min=-5604.16, max=0.315789
+    restoring_cosine: median=1, min=-0.345925, max=1
+    transverse_to_field_ratio: median=1.23926e-10, min=3.8217e-11, max=0.938262
+  tangent_face, delta=0.05
+    restoring_coefficient: median=0.315789, min=0.200872, max=0.37363
+    restoring_cosine: median=1, min=0.764327, max=1
+    transverse_to_field_ratio: median=2.45775e-11, min=7.77796e-12, max=0.644829
+
+Coupled restoration diagnostics
+-------------------------------
+  interior_mixing, delta=0.0001
+    final_to_initial_distance_ratio: median=4.27237e-12, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=0.5, valid=40/40
+  interior_mixing, delta=0.001
+    final_to_initial_distance_ratio: median=5.3518e-13, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=0.5, valid=40/40
+  interior_mixing, delta=0.01
+    final_to_initial_distance_ratio: median=3.49086e-11, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=0.5, valid=40/40
+  interior_mixing, delta=0.05
+    final_to_initial_distance_ratio: median=4.40604e-09, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=1, valid=40/40
+  radial_inward, delta=0.0001
+    final_to_initial_distance_ratio: median=5.07018e-12, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=0.5, valid=40/40
+  radial_inward, delta=0.001
+    final_to_initial_distance_ratio: median=4.97561e-13, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=0.5, valid=40/40
+  radial_inward, delta=0.01
+    final_to_initial_distance_ratio: median=4.87147e-11, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=0.5, valid=40/40
+  radial_inward, delta=0.05
+    final_to_initial_distance_ratio: median=6.23636e-09, valid=40/40
+    time_to_50pct_distance: median=0.5, valid=40/40
+    time_to_10pct_distance: median=1, valid=40/40
+  tangent_face, delta=0.0001
+    final_to_initial_distance_ratio: median=1.42123e-07, valid=40/40
+    time_to_50pct_distance: median=2.5, valid=40/40
+    time_to_10pct_distance: median=7.5, valid=40/40
+  tangent_face, delta=0.001
+    final_to_initial_distance_ratio: median=1.42425e-07, valid=40/40
+    time_to_50pct_distance: median=2.5, valid=40/40
+    time_to_10pct_distance: median=7.5, valid=40/40
+  tangent_face, delta=0.01
+    final_to_initial_distance_ratio: median=1.50665e-07, valid=40/40
+    time_to_50pct_distance: median=2.5, valid=40/40
+    time_to_10pct_distance: median=7.5, valid=40/40
+  tangent_face, delta=0.05
+    final_to_initial_distance_ratio: median=1.83456e-07, valid=40/40
+    time_to_50pct_distance: median=2.5, valid=40/40
+    time_to_10pct_distance: median=7.5, valid=40/40
+
+Interpretation constraints
+--------------------------
+* Stationarity refers only to the adaptive B-component, not the full delayed state.
+* Frozen-fast restoration holds theta/history/EMA fixed for one instantaneous field evaluation.
+* Coupled restoration evolves all state variables and answers a different stability question.
+* Positive radial restoration does not exclude large transverse or non-normal motion.
+* The ideal directional field excludes the fixed denominator safeguard.

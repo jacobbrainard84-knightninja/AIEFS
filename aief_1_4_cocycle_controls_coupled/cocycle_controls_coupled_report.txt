@@ -1,0 +1,50 @@
+AIEF K3 cocycle controls and coupled comparison
+================================================
+
+Identity
+--------
+Seed: 4619122171158768524
+Recomputed versus saved K-matrix maximum error: 0
+Final base replay exact: True
+Final base replay maximum error: 0
+
+Stable finite-time singular spectra
+------------------------------------
+  K0_constant: peak_sigma1=1.27095 at t=0.1, final_lambda1=-0.0974338, final_lambda2=-40.3277, final_lambda3=-2717.61, final_log_kappa=869605, restricted_peak=1.20562
+  Klate_constant: peak_sigma1=1.20899 at t=0.1, final_lambda1=-0.125621, final_lambda2=-69.441, final_lambda3=-2717.66, final_log_kappa=869612, restricted_peak=1.20899
+  actual_time_varying: peak_sigma1=1.27097 at t=0.1, final_lambda1=-0.123335, final_lambda2=-66.8271, final_lambda3=-2717.66, final_log_kappa=869612, restricted_peak=1.20563
+  diagonal_scale_only: peak_sigma1=1 at t=0, final_lambda1=-0.124131, final_lambda2=-0.124137, final_lambda3=-0.124137, final_log_kappa=0.0018586, restricted_peak=1
+
+Dense short-window amplification
+--------------------------------
+  K0_constant, window=0.1: peak_G=1.27095, start=0, end=0.1
+  K0_constant, window=1: peak_G=1.1717, start=0, end=1
+  Klate_constant, window=0.1: peak_G=1.20899, start=0, end=0.1
+  Klate_constant, window=1: peak_G=1.07948, start=0, end=1
+  actual_time_varying, window=0.1: peak_G=1.27097, start=0, end=0.1
+  actual_time_varying, window=1: peak_G=1.1715, start=0, end=1
+  diagonal_scale_only, window=0.1: peak_G=0.990228, start=0, end=0.1
+  diagonal_scale_only, window=1: peak_G=0.906324, start=0, end=1
+
+Coupled versus frozen centered comparisons
+-------------------------------------------
+  direction=0, fraction=0.001, amplitude=2.2e-10, frozen_branch=True, coupled_branch=True, max_chi_frozen=0.000945, max_chi_coupled=0.000945, resolved=3, median_frozen_error=2.94e-07, median_coupled_error=2.94e-07, median_feedback_fraction=0, last_resolved_time=0.2
+  direction=0, fraction=0.01, amplitude=2.2e-09, frozen_branch=True, coupled_branch=True, max_chi_frozen=0.00945, max_chi_coupled=0.00945, resolved=4, median_frozen_error=1.59e-05, median_coupled_error=0.00016, median_feedback_fraction=0.000175, last_resolved_time=0.3
+  direction=0, fraction=0.1, amplitude=2.2e-08, frozen_branch=True, coupled_branch=True, max_chi_frozen=0.0945, max_chi_coupled=0.0945, resolved=4, median_frozen_error=2.41e-06, median_coupled_error=0.000156, median_feedback_fraction=0.000159, last_resolved_time=0.3
+  direction=1, fraction=0.001, amplitude=3.12e-10, frozen_branch=True, coupled_branch=True, max_chi_frozen=0.00161, max_chi_coupled=0.00177, resolved=880, median_frozen_error=8.66e-05, median_coupled_error=0.367, median_feedback_fraction=0.481, last_resolved_time=87.9
+  direction=1, fraction=0.01, amplitude=3.12e-09, frozen_branch=True, coupled_branch=True, max_chi_frozen=0.0161, max_chi_coupled=0.0161, resolved=1064, median_frozen_error=1.97e-05, median_coupled_error=0.43, median_feedback_fraction=0.607, last_resolved_time=106
+  direction=1, fraction=0.1, amplitude=3.12e-08, frozen_branch=True, coupled_branch=True, max_chi_frozen=0.161, max_chi_coupled=0.161, resolved=1245, median_frozen_error=2.11e-05, median_coupled_error=0.468, median_feedback_fraction=0.713, last_resolved_time=124
+
+Overall resolved median frozen-linear error: 3.69895e-05
+Overall resolved median coupled-linear error: 0.428982
+Overall resolved median feedback fraction: 0.604175
+Maximum resolved feedback fraction: 0.990166
+
+Interpretation constraints
+--------------------------
+* Compound-cocycle exponents are finite-time quantities, not asserted Oseledets limits.
+* K0, Klate, and diagonal-only sequences are controlled counterfactuals, not additive causal decompositions.
+* Coupled-minus-frozen centered differences measure feedback effects for the tested directions and amplitudes.
+* The frozen linear cocycle is a reduced weight-sector model with delta R set to zero.
+* Branch preservation is audited dynamically for frozen and fully coupled perturbations.
+* A substantial coupled discrepancy motivates an analytic augmented phase/history/EMA tangent model.

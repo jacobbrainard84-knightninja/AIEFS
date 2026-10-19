@@ -1,0 +1,75 @@
+AIEF tangent-spectrum and exceptional-switch analysis
+======================================================
+
+Tangent direction agreement
+---------------------------
+  direction_count: 200
+  reliable_direction_count: 197
+  amplitude_unreliable_count: 3
+  slow_mode_count: 42
+  negative_frozen_rate_count: 2
+  within_1pct_typical_fraction: 0.6091370558375635
+  within_5pct_typical_fraction: 0.6294416243654822
+  within_10pct_typical_fraction: 0.6802030456852792
+  median_frozen_rate: 0.3157894736450564
+  median_observed_rate: 0.31533903901093735
+  median_rate_relative_error: 0.0014284137053999025
+  pearson_frozen_observed: -0.28472392459971424
+  spearman_frozen_observed: 0.6701543561587071
+
+Exceptional switch
+------------------
+  seed: 4619122171158768524
+  first_saturated_switch_step: 12405
+  first_saturated_switch_time: 124.06
+  switch_record_count: 1
+
+Fixed-stratum tangent Jacobians
+--------------------------------
+  seed=172180395821707403: status=ok, dimension=9, spectral_abscissa=-0.31578947368227844, slowest_rate=0.31578947368227844, sym_part_max=-0.31578947368183213, normality=7.165885256196015e-24
+  seed=283404770198602602: status=ok, dimension=9, spectral_abscissa=-0.31578947368148236, slowest_rate=0.31578947368148236, sym_part_max=-0.31578947368121907, normality=8.681284119496167e-24
+  seed=305986450614148690: status=ok, dimension=11, spectral_abscissa=-0.1894736842095543, slowest_rate=0.1894736842095543, sym_part_max=-0.189473684209533, normality=3.1694320222272083e-13
+  seed=1230287949579537403: status=ok, dimension=14, spectral_abscissa=-0.25263157894636146, slowest_rate=0.25263157894636146, sym_part_max=-0.25263157894611743, normality=3.101816786543324e-13
+  seed=1888415619847841128: status=ok, dimension=7, spectral_abscissa=-0.18947368420919058, slowest_rate=0.18947368420919058, sym_part_max=-0.18947368420915592, normality=3.304634936167399e-13
+  seed=1918007468868772336: status=ok, dimension=11, spectral_abscissa=-0.18947368420957375, slowest_rate=0.18947368420957375, sym_part_max=-0.18947368420957061, normality=4.0962557112114984e-13
+  seed=2461295749352584108: status=ok, dimension=7, spectral_abscissa=-0.1894736842105243, slowest_rate=0.1894736842105243, sym_part_max=-0.18947368421017868, normality=5.116296645210917e-13
+  seed=3258463328937640595: status=ok, dimension=11, spectral_abscissa=-0.18947368420858404, slowest_rate=0.18947368420858404, sym_part_max=-0.18947368420856997, normality=4.4850732088361035e-13
+  seed=3582616062465030267: status=ok, dimension=9, spectral_abscissa=-0.3157894736828082, slowest_rate=0.3157894736828082, sym_part_max=-0.3157894736822911, normality=7.19568167249728e-24
+  seed=3704716633526084363: status=ok, dimension=9, spectral_abscissa=-0.31578947368152827, slowest_rate=0.31578947368152827, sym_part_max=-0.3157894736811292, normality=4.6778698242297046e-24
+  seed=3952397966055989215: status=ok, dimension=11, spectral_abscissa=-0.18947368420914548, slowest_rate=0.18947368420914548, sym_part_max=-0.18947368420912963, normality=3.2339061860079947e-13
+  seed=4040285944958847150: status=ok, dimension=9, spectral_abscissa=-0.3157894736813775, slowest_rate=0.3157894736813775, sym_part_max=-0.31578947368106447, normality=8.332226887129152e-24
+  seed=4219039243791140697: status=ok, dimension=9, spectral_abscissa=-0.3157894736811837, slowest_rate=0.3157894736811837, sym_part_max=-0.3157894736807099, normality=4.135151505684955e-24
+  seed=4619122171158768524: status=ok, dimension=9, spectral_abscissa=-0.015000000001819586, slowest_rate=0.015000000001819586, sym_part_max=-0.015000000001819579, normality=5.522034840835133e-11
+  seed=4932511216876650745: status=ok, dimension=9, spectral_abscissa=-0.3157894736831134, slowest_rate=0.3157894736831134, sym_part_max=-0.31578947368245786, normality=4.249617628353242e-24
+  seed=5213047409853278064: status=ok, dimension=9, spectral_abscissa=-0.31578947368143845, slowest_rate=0.31578947368143845, sym_part_max=-0.31578947368083565, normality=1.0118673010099255e-23
+  seed=5415544643585892346: status=ok, dimension=9, spectral_abscissa=-0.3157894736816441, slowest_rate=0.3157894736816441, sym_part_max=-0.31578947368108606, normality=7.483311533691686e-24
+  seed=6023008189364820510: status=ok, dimension=9, spectral_abscissa=-0.3157894736816007, slowest_rate=0.3157894736816007, sym_part_max=-0.3157894736814607, normality=6.659746748116492e-24
+  seed=6108867655028980287: status=ok, dimension=11, spectral_abscissa=-0.18947368420941244, slowest_rate=0.18947368420941244, sym_part_max=-0.1894736842093369, normality=4.0636780663337985e-13
+  seed=6942591650975756121: status=ok, dimension=11, spectral_abscissa=-0.18947368420985447, slowest_rate=0.18947368420985447, sym_part_max=-0.18947368420983135, normality=3.1907391731725423e-13
+  seed=9036321132460399255: status=ok, dimension=9, spectral_abscissa=-0.31578947368133947, slowest_rate=0.31578947368133947, sym_part_max=-0.3157894736807705, normality=6.160999127983801e-24
+  seed=9082055256280075172: status=ok, dimension=11, spectral_abscissa=-0.18947368420710936, slowest_rate=0.18947368420710936, sym_part_max=-0.18947368420703278, normality=3.8620637864247115e-13
+  seed=9189988769602851417: status=ok, dimension=9, spectral_abscissa=-0.31578947368144955, slowest_rate=0.31578947368144955, sym_part_max=-0.31578947368091526, normality=5.482903981091101e-24
+  seed=10431384713483787270: status=ok, dimension=9, spectral_abscissa=-0.3157894736813852, slowest_rate=0.3157894736813852, sym_part_max=-0.3157894736811793, normality=6.828327524152358e-24
+  seed=10856823803646276806: status=ok, dimension=11, spectral_abscissa=-0.18947368420887503, slowest_rate=0.18947368420887503, sym_part_max=-0.18947368420887484, normality=2.914314791708459e-13
+  seed=11242426753702356865: status=ok, dimension=9, spectral_abscissa=-0.31578947368170857, slowest_rate=0.31578947368170857, sym_part_max=-0.31578947368100874, normality=8.16043414885717e-24
+  seed=12123519807951751650: status=ok, dimension=9, spectral_abscissa=-0.31578947368178445, slowest_rate=0.31578947368178445, sym_part_max=-0.31578947368122556, normality=8.04132829069961e-24
+  seed=12851640484293199234: status=ok, dimension=9, spectral_abscissa=-0.31578947368255406, slowest_rate=0.31578947368255406, sym_part_max=-0.3157894736822217, normality=7.002831967267567e-24
+  seed=14040336450255043598: status=ok, dimension=11, spectral_abscissa=-0.18947368420990016, slowest_rate=0.18947368420990016, sym_part_max=-0.18947368420988436, normality=3.452924919756107e-13
+  seed=14924267685654216746: status=ok, dimension=9, spectral_abscissa=-0.31578947368135935, slowest_rate=0.31578947368135935, sym_part_max=-0.31578947368064797, normality=6.3546227209881925e-24
+  seed=15403081841477312463: status=ok, dimension=9, spectral_abscissa=-0.31578947368237825, slowest_rate=0.31578947368237825, sym_part_max=-0.3157894736818462, normality=8.574176837855159e-24
+  seed=15853699719446171583: status=ok, dimension=11, spectral_abscissa=-0.1894736842075629, slowest_rate=0.1894736842075629, sym_part_max=-0.18947368420749236, normality=3.4638736407245075e-13
+  seed=16329425431442249417: status=ok, dimension=9, spectral_abscissa=-0.31578947368103644, slowest_rate=0.31578947368103644, sym_part_max=-0.3157894736807768, normality=9.082152460649495e-24
+  seed=16627818730624180313: status=ok, dimension=9, spectral_abscissa=-0.31578947368202015, slowest_rate=0.31578947368202015, sym_part_max=-0.31578947368173527, normality=6.199682322535969e-24
+  seed=16952466944611321358: status=ok, dimension=9, spectral_abscissa=-0.31578947368189203, slowest_rate=0.31578947368189203, sym_part_max=-0.3157894736814182, normality=7.244837540882436e-24
+  seed=17279552413280415429: status=ok, dimension=9, spectral_abscissa=-0.31578947368113003, slowest_rate=0.31578947368113003, sym_part_max=-0.31578947368046056, normality=5.936811925292193e-24
+  seed=17521310920850592782: status=ok, dimension=11, spectral_abscissa=-0.18947368420783556, slowest_rate=0.18947368420783556, sym_part_max=-0.1894736842076892, normality=4.2207107705865085e-13
+  seed=17715532056777442089: status=ok, dimension=9, spectral_abscissa=-0.3157894736812931, slowest_rate=0.3157894736812931, sym_part_max=-0.31578947368082755, normality=5.811213943661093e-24
+  seed=17883847597205629106: status=ok, dimension=7, spectral_abscissa=-0.18947368420977287, slowest_rate=0.18947368420977287, sym_part_max=-0.189473684209705, normality=3.2118905823135104e-13
+  seed=18127452951968972828: status=ok, dimension=9, spectral_abscissa=-0.3157894736814473, slowest_rate=0.3157894736814473, sym_part_max=-0.3157894736809935, normality=5.496845885724054e-24
+
+Interpretation constraints
+--------------------------
+* The tangent Jacobian is a frozen-fast, fixed-stratum finite-difference object.
+* Directions with inadequate two-sided feasible steps are rejected.
+* The r2 B_carrier_only/full_reset contrast remains unrelated to this analysis.
+* A negative spectral abscissa supports local tangent contraction but does not prove full coupled stability.

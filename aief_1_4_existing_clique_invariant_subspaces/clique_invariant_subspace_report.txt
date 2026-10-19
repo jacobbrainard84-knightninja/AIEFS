@@ -1,0 +1,28 @@
+AIEF existing-clique invariant-subspace analysis
+================================================
+
+Component counts
+----------------
+  K4: components=15, seeds=15, tangent_dim=2
+  K5: components=5, seeds=5, tangent_dim=5
+  K6: components=36, seeds=36, tangent_dim=9
+
+Invariant-subspace diagnostics
+------------------------------
+  K4: max_CV=6.98e-16, max_UtV=2.42e-16, max_right=7.42e-15, max_left=7.42e-15, max_scalarity=3.47e-15, max_scale_spread=2.08e-14, median_step_rate=0.189322781, expected_continuous_rate=0.189473684
+  K5: max_CV=7.73e-16, max_UtV=4.32e-16, max_right=3.5e-15, max_left=3.48e-15, max_scalarity=3.15e-15, max_scale_spread=1.61e-14, median_step_rate=0.252350807, expected_continuous_rate=0.252631579
+  K6: max_CV=1.3e-15, max_UtV=7.95e-16, max_right=4.54e-14, max_left=4.54e-14, max_scalarity=5.26e-14, max_scale_spread=2.79e-13, median_step_rate=0.315339132, expected_continuous_rate=0.315789474
+
+Centered nonlinear one-step checks
+----------------------------------
+  K4: rows=90, all_fiber_formulas_preserved=True, winner_signature_preserved_fraction=0.956, median_error=8.46e-12, maximum_error=1.32e-10, maximum_row_sum_drift=6.24e-16
+  K5: rows=75, all_fiber_formulas_preserved=True, winner_signature_preserved_fraction=0.88, median_error=1.5e-11, maximum_error=2.37e-10, maximum_row_sum_drift=5.01e-16
+  K6: rows=972, all_fiber_formulas_preserved=True, winner_signature_preserved_fraction=0.62, median_error=2.6e-11, maximum_error=4.49e-10, maximum_row_sum_drift=6.09e-16
+
+Interpretation constraints
+--------------------------
+* Components are repeated within seeds and are not independent replicates.
+* U=V is justified here because V is orthonormal and the exact fiber action is diagonal/symmetric.
+* Scalar-on-subspace action is component-specific; it does not imply rank-one full dynamics.
+* Finite-step rates are distinct from continuous ideal rates by O(dt) and safeguard effects.
+* Results use existing split states only; no new cohort was generated.

@@ -1,0 +1,64 @@
+AIEF exceptional K3 augmented Duhamel feedback analysis
+========================================================
+
+Identity and decomposition
+--------------------------
+Seed: 4619122171158768524
+Final base replay exact: True
+Final base replay maximum error: 0
+* The weight-block forcing is endogenous to the closed augmented tangent system.
+
+Direction-wise Duhamel results
+--------------------------------
+  direction=0: crossover_time=0.4, final_h_norm=0, final_feedback_norm=6.52182e-13, final_total_norm=6.52182e-13, final_ratio=2.93106e+295, max_reconstruction_error=7.04e-16, median_instant_forcing_ratio=0.00144, median_principal_output_alignment=0.772, median_driver_match_error=5.16e-14
+  direction=1: crossover_time=72.9, final_h_norm=6.85866e-18, final_feedback_norm=5.41126e-10, final_total_norm=5.41126e-10, final_ratio=7.88967e+07, max_reconstruction_error=5.87e-15, median_instant_forcing_ratio=0.0007, median_principal_output_alignment=0.988, median_driver_match_error=1.33e-13
+
+Forcing-time attribution at final horizon
+-----------------------------------------
+  direction=0: strongest forcing step=31999, time=319.99, propagated_norm=9.34238e-16, future_input_alignment=nan, alignment_with_final_feedback=0.852808
+  direction=1: strongest forcing step=31999, time=319.99, propagated_norm=3.78285e-13, future_input_alignment=nan, alignment_with_final_feedback=0.999869
+
+Time-bin attribution
+--------------------
+  direction=0:
+    [0,0.1): norm=4.8835e-26, alignment=-0.999999
+    [0.1,1): norm=9.44702e-24, alignment=-0.999999
+    [1,10): norm=1.2582e-21, alignment=-0.999999
+    [10,50): norm=1.35841e-21, alignment=-0.999999
+    [50,100): norm=1.43602e-19, alignment=0.999999
+    [100,150): norm=4.9375e-18, alignment=0.999999
+    [150,200): norm=1.57551e-16, alignment=0.999999
+    [200,250): norm=4.996e-15, alignment=0.999999
+    [250,320): norm=6.47023e-13, alignment=1
+  direction=1:
+    [0,0.1): norm=5.62569e-25, alignment=-1
+    [0.1,1): norm=6.09502e-22, alignment=-1
+    [1,10): norm=3.81176e-19, alignment=-1
+    [10,50): norm=2.73246e-18, alignment=-1
+    [50,100): norm=1.11585e-16, alignment=1
+    [100,150): norm=4.08191e-15, alignment=1
+    [150,200): norm=1.30815e-13, alignment=1
+    [200,250): norm=4.14951e-12, alignment=1
+    [250,320): norm=5.36842e-10, alignment=1
+
+Counterfactual tangent ablations
+--------------------------------
+  direction=0, ablation=no_R_to_weight: resolved=3126, last_time=312.5, median_relative_difference=1, maximum=1.35106, last_norm_ratio=0, last_alignment=nan
+  direction=0, ablation=no_current_phase: resolved=3126, last_time=312.5, median_relative_difference=2.30642, maximum=913.684, last_norm_ratio=1.30586, last_alignment=-0.999998
+  direction=0, ablation=no_delayed_history: resolved=3126, last_time=312.5, median_relative_difference=1.38001, maximum=891.096, last_norm_ratio=2.37918, last_alignment=0.999999
+  direction=0, ablation=no_ema_memory: resolved=3126, last_time=312.5, median_relative_difference=1, maximum=1.29595, last_norm_ratio=5.33739e-12, last_alignment=-0.999999
+  direction=0, ablation=no_fresh_phase: resolved=3126, last_time=312.5, median_relative_difference=1, maximum=1.35106, last_norm_ratio=0, last_alignment=nan
+  direction=1, ablation=no_R_to_weight: resolved=3201, last_time=320, median_relative_difference=0.999186, maximum=1, last_norm_ratio=1.26748e-08, last_alignment=1
+  direction=1, ablation=no_current_phase: resolved=3201, last_time=320, median_relative_difference=1.07475, maximum=1.10154, last_norm_ratio=0.0746925, last_alignment=-1
+  direction=1, ablation=no_delayed_history: resolved=3201, last_time=320, median_relative_difference=0.111518, maximum=0.75558, last_norm_ratio=1.1098, last_alignment=1
+  direction=1, ablation=no_ema_memory: resolved=3201, last_time=320, median_relative_difference=0.999187, maximum=1, last_norm_ratio=1.2671e-08, last_alignment=1
+  direction=1, ablation=no_fresh_phase: resolved=3201, last_time=320, median_relative_difference=0.999186, maximum=1, last_norm_ratio=1.26748e-08, last_alignment=1
+
+Interpretation constraints
+--------------------------
+* Duhamel forcing is a weight-block representation of an internally generated closed-system feedback.
+* The residual forcing b[n+1]-K[n]b[n] gives an exact direction-wise decomposition.
+* Direct projected dR forcing is compared with that residual; equality relies on linear restriction/additivity.
+* Time-bin vectors can cancel, so their norms are not additive percentages.
+* Ablations alter recursive tangent feedback and are controlled counterfactuals, not additive causal fractions.
+* Results remain conditional on this seed, branch, and tested initial directions.

@@ -1,0 +1,125 @@
+AIEF Duhamel memory and alignment analysis
+============================================
+
+Direction-wise mechanism summary
+--------------------------------
+  direction=0: exact_crossover_step=38, crossover_time=0.38, median_immediate_alignment=0.771997, median_future_alignment=0.393431, strongest_final_forcing_time=319.99, contribution_sum_error=1.32e-15
+    recent forcing horizon for relative error <= 0.01: 66.61
+    recent forcing horizon for relative error <= 0.1: 33.3
+    recent forcing horizon for relative error <= 0.5: 10.02
+  direction=1: exact_crossover_step=7286, crossover_time=72.86, median_immediate_alignment=0.988158, median_future_alignment=0.807035, strongest_final_forcing_time=319.99, contribution_sum_error=1.99e-15
+    recent forcing horizon for relative error <= 0.01: 66.63
+    recent forcing horizon for relative error <= 0.1: 33.32
+    recent forcing horizon for relative error <= 0.5: 10.03
+
+Selected ablation states
+------------------------
+  direction=0, ablation=no_R_to_weight, target=0.4, actual_time=0.4, full_norm=2.1932e-07, ablation_norm=9.57784e-08, difference=2.96314e-07, ratio=0.436705, alignment=-0.726621
+  direction=0, ablation=no_R_to_weight, target=1, actual_time=1, full_norm=1.86275e-06, ablation_norm=2.52691e-18, difference=1.86275e-06, ratio=1.35655e-12, alignment=-0.739096
+  direction=0, ablation=no_R_to_weight, target=10, actual_time=10, full_norm=8.23948e-05, ablation_norm=0, difference=8.23948e-05, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=50, actual_time=50, full_norm=1.59079e-06, ablation_norm=0, difference=1.59079e-06, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=72.9, actual_time=72.9, full_norm=4.41279e-07, ablation_norm=0, difference=4.41279e-07, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=100, actual_time=100, full_norm=1.62694e-07, ablation_norm=0, difference=1.62694e-07, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=150, actual_time=150, full_norm=1.06546e-08, ablation_norm=0, difference=1.06546e-08, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=200, actual_time=200, full_norm=6.18697e-10, ablation_norm=0, difference=6.18697e-10, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=250, actual_time=250, full_norm=3.55816e-11, ablation_norm=0, difference=3.55816e-11, ratio=0, alignment=nan
+  direction=0, ablation=no_R_to_weight, target=320, actual_time=320, full_norm=6.52182e-13, ablation_norm=0, difference=6.52182e-13, ratio=0, alignment=nan
+  direction=0, ablation=no_current_phase, target=0.4, actual_time=0.4, full_norm=2.1932e-07, ablation_norm=9.57784e-08, difference=2.96314e-07, ratio=0.436705, alignment=-0.726621
+  direction=0, ablation=no_current_phase, target=1, actual_time=1, full_norm=1.86275e-06, ablation_norm=5.09698e-07, difference=1.35418e-06, ratio=0.273627, alignment=0.998382
+  direction=0, ablation=no_current_phase, target=10, actual_time=10, full_norm=8.23948e-05, ablation_norm=4.13206e-05, difference=4.10742e-05, ratio=0.501495, alignment=1
+  direction=0, ablation=no_current_phase, target=50, actual_time=50, full_norm=1.59079e-06, ablation_norm=4.05486e-06, difference=2.46407e-06, ratio=2.54896, alignment=0.999999
+  direction=0, ablation=no_current_phase, target=72.9, actual_time=72.9, full_norm=4.41279e-07, ablation_norm=1.074e-06, difference=1.51528e-06, ratio=2.43383, alignment=-0.999996
+  direction=0, ablation=no_current_phase, target=100, actual_time=100, full_norm=1.62694e-07, ablation_norm=2.37645e-07, difference=4.00339e-07, ratio=1.46069, alignment=-0.999998
+  direction=0, ablation=no_current_phase, target=150, actual_time=150, full_norm=1.06546e-08, ablation_norm=1.40257e-08, difference=2.46803e-08, ratio=1.31639, alignment=-0.999998
+  direction=0, ablation=no_current_phase, target=200, actual_time=200, full_norm=6.18697e-10, ablation_norm=8.0845e-10, difference=1.42715e-09, ratio=1.3067, alignment=-0.999998
+  direction=0, ablation=no_current_phase, target=250, actual_time=250, full_norm=3.55816e-11, ablation_norm=4.64669e-11, difference=8.20484e-11, ratio=1.30593, alignment=-0.999998
+  direction=0, ablation=no_current_phase, target=320, actual_time=320, full_norm=6.52182e-13, ablation_norm=8.51655e-13, difference=1.50384e-12, ratio=1.30586, alignment=-0.999998
+  direction=0, ablation=no_delayed_history, target=0.4, actual_time=0.4, full_norm=2.1932e-07, ablation_norm=2.1932e-07, difference=0, ratio=1, alignment=1
+  direction=0, ablation=no_delayed_history, target=1, actual_time=1, full_norm=1.86275e-06, ablation_norm=1.35418e-06, difference=5.09697e-07, ratio=0.726982, alignment=0.999771
+  direction=0, ablation=no_delayed_history, target=10, actual_time=10, full_norm=8.23948e-05, ablation_norm=4.13801e-05, difference=4.10148e-05, ratio=0.502217, alignment=1
+  direction=0, ablation=no_delayed_history, target=50, actual_time=50, full_norm=1.59079e-06, ablation_norm=2.2673e-06, difference=3.85809e-06, ratio=1.42527, alignment=-0.999998
+  direction=0, ablation=no_delayed_history, target=72.9, actual_time=72.9, full_norm=4.41279e-07, ablation_norm=1.52586e-06, difference=1.08458e-06, ratio=3.4578, alignment=0.999998
+  direction=0, ablation=no_delayed_history, target=100, actual_time=100, full_norm=1.62694e-07, ablation_norm=4.10701e-07, difference=2.48008e-07, ratio=2.52438, alignment=0.999999
+  direction=0, ablation=no_delayed_history, target=150, actual_time=150, full_norm=1.06546e-08, ablation_norm=2.54583e-08, difference=1.48037e-08, ratio=2.38941, alignment=0.999999
+  direction=0, ablation=no_delayed_history, target=200, actual_time=200, full_norm=6.18697e-10, ablation_norm=1.47254e-09, difference=8.53841e-10, ratio=2.38006, alignment=0.999999
+  direction=0, ablation=no_delayed_history, target=250, actual_time=250, full_norm=3.55816e-11, ablation_norm=8.46576e-11, difference=4.90761e-11, ratio=2.37925, alignment=0.999999
+  direction=0, ablation=no_delayed_history, target=320, actual_time=320, full_norm=6.52182e-13, ablation_norm=1.55165e-12, difference=8.99471e-13, ratio=2.37917, alignment=0.999999
+  direction=0, ablation=no_ema_memory, target=0.4, actual_time=0.4, full_norm=2.1932e-07, ablation_norm=8.66591e-08, difference=2.84228e-07, ratio=0.395126, alignment=-0.662266
+  direction=0, ablation=no_ema_memory, target=1, actual_time=1, full_norm=1.86275e-06, ablation_norm=4.41604e-08, difference=1.81885e-06, ratio=0.0237072, alignment=0.994094
+  direction=0, ablation=no_ema_memory, target=10, actual_time=10, full_norm=8.23948e-05, ablation_norm=1.32718e-07, difference=8.22621e-05, ratio=0.00161076, alignment=0.999995
+  direction=0, ablation=no_ema_memory, target=50, actual_time=50, full_norm=1.59079e-06, ablation_norm=1.25739e-09, difference=1.58953e-06, ratio=0.000790415, alignment=0.999999
+  direction=0, ablation=no_ema_memory, target=72.9, actual_time=72.9, full_norm=4.41279e-07, ablation_norm=7.23802e-11, difference=4.41352e-07, ratio=0.000164024, alignment=-0.999997
+  direction=0, ablation=no_ema_memory, target=100, actual_time=100, full_norm=1.62694e-07, ablation_norm=2.39006e-12, difference=1.62696e-07, ratio=1.46906e-05, alignment=-0.999999
+  direction=0, ablation=no_ema_memory, target=150, actual_time=150, full_norm=1.06546e-08, ablation_norm=4.34544e-15, difference=1.06546e-08, ratio=4.07845e-07, alignment=-0.999999
+  direction=0, ablation=no_ema_memory, target=200, actual_time=200, full_norm=6.18697e-10, ablation_norm=7.87974e-18, difference=6.18697e-10, ratio=1.2736e-08, alignment=-0.999999
+  direction=0, ablation=no_ema_memory, target=250, actual_time=250, full_norm=3.55816e-11, ablation_norm=1.42864e-20, difference=3.55816e-11, ratio=4.0151e-10, alignment=-0.999999
+  direction=0, ablation=no_ema_memory, target=320, actual_time=320, full_norm=6.52182e-13, ablation_norm=2.0723e-24, difference=6.52182e-13, ratio=3.17748e-12, alignment=-0.999999
+  direction=0, ablation=no_fresh_phase, target=0.4, actual_time=0.4, full_norm=2.1932e-07, ablation_norm=9.57784e-08, difference=2.96314e-07, ratio=0.436705, alignment=-0.726621
+  direction=0, ablation=no_fresh_phase, target=1, actual_time=1, full_norm=1.86275e-06, ablation_norm=2.52691e-18, difference=1.86275e-06, ratio=1.35655e-12, alignment=-0.739096
+  direction=0, ablation=no_fresh_phase, target=10, actual_time=10, full_norm=8.23948e-05, ablation_norm=0, difference=8.23948e-05, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=50, actual_time=50, full_norm=1.59079e-06, ablation_norm=0, difference=1.59079e-06, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=72.9, actual_time=72.9, full_norm=4.41279e-07, ablation_norm=0, difference=4.41279e-07, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=100, actual_time=100, full_norm=1.62694e-07, ablation_norm=0, difference=1.62694e-07, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=150, actual_time=150, full_norm=1.06546e-08, ablation_norm=0, difference=1.06546e-08, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=200, actual_time=200, full_norm=6.18697e-10, ablation_norm=0, difference=6.18697e-10, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=250, actual_time=250, full_norm=3.55816e-11, ablation_norm=0, difference=3.55816e-11, ratio=0, alignment=nan
+  direction=0, ablation=no_fresh_phase, target=320, actual_time=320, full_norm=6.52182e-13, ablation_norm=0, difference=6.52182e-13, ratio=0, alignment=nan
+  direction=1, ablation=no_R_to_weight, target=0.4, actual_time=0.4, full_norm=1.17752, ablation_norm=1.17752, difference=6.20875e-06, ratio=1.00001, alignment=1
+  direction=1, ablation=no_R_to_weight, target=1, actual_time=1, full_norm=1.10986, ablation_norm=1.10996, difference=9.86061e-05, ratio=1.00009, alignment=1
+  direction=1, ablation=no_R_to_weight, target=10, actual_time=10, full_norm=0.420037, ablation_norm=0.444797, difference=0.0247601, ratio=1.05895, alignment=1
+  direction=1, ablation=no_R_to_weight, target=50, actual_time=50, full_norm=0.00227068, ablation_norm=0.00415918, difference=0.0018885, ratio=1.83169, alignment=1
+  direction=1, ablation=no_R_to_weight, target=72.9, actual_time=72.9, full_norm=0.000480568, ablation_norm=0.000239422, difference=0.000241146, ratio=0.498206, alignment=1
+  direction=1, ablation=no_R_to_weight, target=100, actual_time=100, full_norm=0.000132942, ablation_norm=7.90595e-06, difference=0.000125036, ratio=0.0594694, alignment=1
+  direction=1, ablation=no_R_to_weight, target=150, actual_time=150, full_norm=8.79652e-06, ablation_norm=1.43741e-08, difference=8.78215e-06, ratio=0.00163406, alignment=1
+  direction=1, ablation=no_R_to_weight, target=200, actual_time=200, full_norm=5.13095e-07, ablation_norm=2.6065e-11, difference=5.13069e-07, ratio=5.07995e-05, alignment=1
+  direction=1, ablation=no_R_to_weight, target=250, actual_time=250, full_norm=2.95215e-08, ablation_norm=4.72573e-14, difference=2.95215e-08, ratio=1.60078e-06, alignment=1
+  direction=1, ablation=no_R_to_weight, target=320, actual_time=320, full_norm=5.41126e-10, ablation_norm=6.85866e-18, difference=5.41126e-10, ratio=1.26748e-08, alignment=1
+  direction=1, ablation=no_current_phase, target=0.4, actual_time=0.4, full_norm=1.17752, ablation_norm=1.17752, difference=6.20875e-06, ratio=1.00001, alignment=1
+  direction=1, ablation=no_current_phase, target=1, actual_time=1, full_norm=1.10986, ablation_norm=1.10995, difference=8.67199e-05, ratio=1.00008, alignment=1
+  direction=1, ablation=no_current_phase, target=10, actual_time=10, full_norm=0.420037, ablation_norm=0.432818, difference=0.0127805, ratio=1.03043, alignment=1
+  direction=1, ablation=no_current_phase, target=50, actual_time=50, full_norm=0.00227068, ablation_norm=0.00239202, difference=0.000121338, ratio=1.05344, alignment=1
+  direction=1, ablation=no_current_phase, target=72.9, actual_time=72.9, full_norm=0.000480568, ablation_norm=2.35812e-05, difference=0.000456987, ratio=0.0490695, alignment=1
+  direction=1, ablation=no_current_phase, target=100, actual_time=100, full_norm=0.000132942, ablation_norm=1.34982e-05, difference=0.00014644, ratio=0.101535, alignment=-1
+  direction=1, ablation=no_current_phase, target=150, actual_time=150, full_norm=8.79652e-06, ablation_norm=7.04132e-07, difference=9.50065e-06, ratio=0.0800466, alignment=-1
+  direction=1, ablation=no_current_phase, target=200, actual_time=200, full_norm=5.13095e-07, ablation_norm=3.85926e-08, difference=5.51688e-07, ratio=0.0752153, alignment=-1
+  direction=1, ablation=no_current_phase, target=250, actual_time=250, full_norm=2.95215e-08, ablation_norm=2.20628e-09, difference=3.17278e-08, ratio=0.0747348, alignment=-1
+  direction=1, ablation=no_current_phase, target=320, actual_time=320, full_norm=5.41126e-10, ablation_norm=4.04181e-11, difference=5.81544e-10, ratio=0.0746925, alignment=-1
+  direction=1, ablation=no_delayed_history, target=0.4, actual_time=0.4, full_norm=1.17752, ablation_norm=1.17752, difference=0, ratio=1, alignment=1
+  direction=1, ablation=no_delayed_history, target=1, actual_time=1, full_norm=1.10986, ablation_norm=1.10987, difference=1.18863e-05, ratio=1.00001, alignment=1
+  direction=1, ablation=no_delayed_history, target=10, actual_time=10, full_norm=0.420037, ablation_norm=0.431963, difference=0.0119263, ratio=1.02839, alignment=1
+  direction=1, ablation=no_delayed_history, target=50, actual_time=50, full_norm=0.00227068, ablation_norm=0.00393948, difference=0.0016688, ratio=1.73494, alignment=1
+  direction=1, ablation=no_delayed_history, target=72.9, actual_time=72.9, full_norm=0.000480568, ablation_norm=0.000695898, difference=0.00021533, ratio=1.44807, alignment=1
+  direction=1, ablation=no_delayed_history, target=100, actual_time=100, full_norm=0.000132942, ablation_norm=0.000158109, difference=2.51673e-05, ratio=1.18931, alignment=1
+  direction=1, ablation=no_delayed_history, target=150, actual_time=150, full_norm=8.79652e-06, ablation_norm=9.823e-06, difference=1.02647e-06, ratio=1.11669, alignment=1
+  direction=1, ablation=no_delayed_history, target=200, actual_time=200, full_norm=5.13095e-07, ablation_norm=5.69749e-07, difference=5.66542e-08, ratio=1.11042, alignment=1
+  direction=1, ablation=no_delayed_history, target=250, actual_time=250, full_norm=2.95215e-08, ablation_norm=3.27646e-08, difference=3.24304e-09, ratio=1.10985, alignment=1
+  direction=1, ablation=no_delayed_history, target=320, actual_time=320, full_norm=5.41126e-10, ablation_norm=6.00543e-10, difference=5.94168e-11, ratio=1.1098, alignment=1
+  direction=1, ablation=no_ema_memory, target=0.4, actual_time=0.4, full_norm=1.17752, ablation_norm=1.17752, difference=5.75474e-06, ratio=1, alignment=1
+  direction=1, ablation=no_ema_memory, target=1, actual_time=1, full_norm=1.10986, ablation_norm=1.10996, difference=9.54081e-05, ratio=1.00009, alignment=1
+  direction=1, ablation=no_ema_memory, target=10, actual_time=10, full_norm=0.420037, ablation_norm=0.444738, difference=0.0247006, ratio=1.05881, alignment=1
+  direction=1, ablation=no_ema_memory, target=50, actual_time=50, full_norm=0.00227068, ablation_norm=0.00415799, difference=0.00188731, ratio=1.83116, alignment=1
+  direction=1, ablation=no_ema_memory, target=72.9, actual_time=72.9, full_norm=0.000480568, ablation_norm=0.000239351, difference=0.000241218, ratio=0.498057, alignment=1
+  direction=1, ablation=no_ema_memory, target=100, actual_time=100, full_norm=0.000132942, ablation_norm=7.90357e-06, difference=0.000125038, ratio=0.0594515, alignment=1
+  direction=1, ablation=no_ema_memory, target=150, actual_time=150, full_norm=8.79652e-06, ablation_norm=1.43697e-08, difference=8.78215e-06, ratio=0.00163357, alignment=1
+  direction=1, ablation=no_ema_memory, target=200, actual_time=200, full_norm=5.13095e-07, ablation_norm=2.60571e-11, difference=5.13069e-07, ratio=5.07842e-05, alignment=1
+  direction=1, ablation=no_ema_memory, target=250, actual_time=250, full_norm=2.95215e-08, ablation_norm=4.7243e-14, difference=2.95215e-08, ratio=1.60029e-06, alignment=1
+  direction=1, ablation=no_ema_memory, target=320, actual_time=320, full_norm=5.41126e-10, ablation_norm=6.85659e-18, difference=5.41126e-10, ratio=1.2671e-08, alignment=1
+  direction=1, ablation=no_fresh_phase, target=0.4, actual_time=0.4, full_norm=1.17752, ablation_norm=1.17752, difference=6.20875e-06, ratio=1.00001, alignment=1
+  direction=1, ablation=no_fresh_phase, target=1, actual_time=1, full_norm=1.10986, ablation_norm=1.10996, difference=9.86061e-05, ratio=1.00009, alignment=1
+  direction=1, ablation=no_fresh_phase, target=10, actual_time=10, full_norm=0.420037, ablation_norm=0.444797, difference=0.0247601, ratio=1.05895, alignment=1
+  direction=1, ablation=no_fresh_phase, target=50, actual_time=50, full_norm=0.00227068, ablation_norm=0.00415918, difference=0.0018885, ratio=1.83169, alignment=1
+  direction=1, ablation=no_fresh_phase, target=72.9, actual_time=72.9, full_norm=0.000480568, ablation_norm=0.000239422, difference=0.000241146, ratio=0.498206, alignment=1
+  direction=1, ablation=no_fresh_phase, target=100, actual_time=100, full_norm=0.000132942, ablation_norm=7.90595e-06, difference=0.000125036, ratio=0.0594694, alignment=1
+  direction=1, ablation=no_fresh_phase, target=150, actual_time=150, full_norm=8.79652e-06, ablation_norm=1.43741e-08, difference=8.78215e-06, ratio=0.00163406, alignment=1
+  direction=1, ablation=no_fresh_phase, target=200, actual_time=200, full_norm=5.13095e-07, ablation_norm=2.6065e-11, difference=5.13069e-07, ratio=5.07995e-05, alignment=1
+  direction=1, ablation=no_fresh_phase, target=250, actual_time=250, full_norm=2.95215e-08, ablation_norm=4.72573e-14, difference=2.95215e-08, ratio=1.60078e-06, alignment=1
+  direction=1, ablation=no_fresh_phase, target=320, actual_time=320, full_norm=5.41126e-10, ablation_norm=6.85866e-18, difference=5.41126e-10, ratio=1.26748e-08, alignment=1
+
+Interpretation constraints
+--------------------------
+* Exact crossover is computed at the original dt rather than the report sampling stride.
+* A principal future-input alignment is omitted when the largest future singular value is degenerate.
+* Propagated influence below one can still dominate after the homogeneous response decays.
+* Recent-memory horizons use vector reconstruction error and therefore include cancellation.
+* Ablation ratios near a zero of the full tangent are ill-conditioned; absolute norms and alignment must also be inspected.
+* Time resolution: dt=0.01.

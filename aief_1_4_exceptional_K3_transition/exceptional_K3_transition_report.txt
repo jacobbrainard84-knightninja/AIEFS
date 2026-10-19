@@ -1,0 +1,61 @@
+AIEF exceptional K3 transition audit
+====================================
+
+Identity and replay
+-------------------
+Seed: 4619122171158768524
+K3 nodes: [2, 7, 11]
+K3 edge indices: [25, 29, 59]
+Trajectory rows: 32001
+Support stable at every recorded state: True
+Final replay exact: True
+Final replay maximum absolute error: 0
+
+Active-set transition
+---------------------
+K3 active-set switch steps: [12405]
+First switch state step: 12405
+First switch state elapsed time: 124.05
+Legacy reported switch time: 124.06
+K3 saturated count: 1 -> 2
+K3 tangent nullity: 2 -> 1
+Required rate condition: one_active_node_incident_pair_equal -> two_active_nodes_all_three_equal
+Required equality defect: 0 -> 1.57456e-07
+Least-squares CD=LC residual: 2.19807e-16 -> 3.59963e-07
+
+Split and late K3 algebra
+-------------------------
+Split: active=1, nullity=2, rates=[0.09826945523623588,0.015,0.09826945523623588], LS_CDLC=4.24e-16, scalar_CDLC=0.282
+Late: active=2, nullity=1, rates=[0.12631578887965866,0.1263157888774352,0.12631578887965866], LS_CDLC=5.08e-12, scalar_CDLC=7.76e-12
+Late maximum |rate-2eta/c|: 5.96249e-10
+Late maximum |1-R|: 5.38316e-09
+Late maximum |w-c/2|: 2.70883e-09
+
+Pre-switch free-edge test
+-------------------------
+Maximum one-active required pair-rate defect: 0
+Maximum one-active LS CD=LC residual: 4.44086e-16
+Free unsaturated-unsaturated edge rows: 12405
+Maximum |free-edge rate-gamma|: 0
+
+Post-switch restoration
+-----------------------
+Sustained LS CD=LC <= 1e-10: step=26785, state_time=267.85, time_after_switch=143.8
+Sustained LS CD=LC <= 1e-08: step=18722, state_time=187.22, time_after_switch=63.17
+
+Boundary-tolerance switch sensitivity
+-------------------------------------
+  tol=1e-12: initial=1, switch_step=-1, legacy_time=nan, final=1
+  tol=1e-10: initial=1, switch_step=16489, legacy_time=164.9, final=2
+  tol=1e-09: initial=1, switch_step=12405, legacy_time=124.06, final=2
+  tol=1e-08: initial=1, switch_step=8160, legacy_time=81.61, final=3
+  tol=1e-07: initial=1, switch_step=2794, legacy_time=27.95, final=3
+
+Interpretation constraints
+--------------------------
+* Controller balance on active rows does not imply the edge field is zero.
+* A nonzero field with C_active p=0 is tangent drift along the current face.
+* The all-node controller equation is not imposed on the remaining unsaturated K3 node.
+* The one-active and two-active K3 rate conditions are exact finite-dimensional algebra.
+* Residuals from this replay are numerical evidence about the saved dt trajectory.
+* Continuum switch claims require consistently regenerated smaller-dt runs.

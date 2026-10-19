@@ -1,0 +1,43 @@
+AIEF parameter-free triangular closure analysis
+===============================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+POD/geometric unsigned angle: 0.00129727752 degrees
+
+One-step closure
+----------------
+  axis=POD, direction=0: median_a_residual=0.000521296, max_a_residual=0.000521654, median_g_residual=5.83889e-09, max_g_residual=1.33796e-07, median_transverse=0.00147619
+  axis=POD, direction=1: median_a_residual=1.07922e-09, max_a_residual=6.35241e-09, median_g_residual=9.34216e-09, max_g_residual=2.13173e-07, median_transverse=3.05452e-09
+  axis=geometric, direction=0: median_a_residual=0.00052927, max_a_residual=0.000529628, median_g_residual=5.83889e-09, max_g_residual=1.33796e-07, median_transverse=0.00149883
+  axis=geometric, direction=1: median_a_residual=7.99866e-06, max_a_residual=8.00576e-06, median_g_residual=9.34216e-09, max_g_residual=2.13173e-07, median_transverse=2.26394e-05
+
+Free rollouts
+-------------
+  axis=POD, direction=0, start=150: a_RMSE=0.342184, g_RMSE=0.00129487, final_a_error=0.740256, final_g_error=0.00337922, predicted_a_rate=0.0559068, actual_a_rate=0.0570967
+  axis=POD, direction=0, start=200: a_RMSE=0.341246, g_RMSE=9.95154e-05, final_a_error=0.745544, final_g_error=0.000256776, predicted_a_rate=0.0548882, actual_a_rate=0.057128
+  axis=POD, direction=0, start=250: a_RMSE=0.340942, g_RMSE=7.29357e-06, final_a_error=0.740543, final_g_error=1.82666e-05, predicted_a_rate=0.0518174, actual_a_rate=0.0571325
+  axis=POD, direction=1, start=150: a_RMSE=0.00103148, g_RMSE=0.00205993, final_a_error=0.0053719, final_g_error=0.00537244, predicted_a_rate=0.0571064, actual_a_rate=0.0570796
+  axis=POD, direction=1, start=200: a_RMSE=7.91789e-05, g_RMSE=0.000158634, final_a_error=0.000409231, final_g_error=0.00040961, predicted_a_rate=0.0571287, actual_a_rate=0.0571253
+  axis=POD, direction=1, start=250: a_RMSE=6.43598e-06, g_RMSE=1.16675e-05, final_a_error=2.92569e-05, final_g_error=2.92412e-05, predicted_a_rate=0.0571325, actual_a_rate=0.057132
+  axis=geometric, direction=0, start=150: a_RMSE=0.349267, g_RMSE=0.00129487, final_a_error=0.760379, final_g_error=0.00337923, predicted_a_rate=0.0558734, actual_a_rate=0.0570967
+  axis=geometric, direction=0, start=200: a_RMSE=0.348321, g_RMSE=9.95155e-05, final_a_error=0.765708, final_g_error=0.000256777, predicted_a_rate=0.0548289, actual_a_rate=0.057128
+  axis=geometric, direction=0, start=250: a_RMSE=0.348008, g_RMSE=7.29358e-06, final_a_error=0.760252, final_g_error=1.82666e-05, predicted_a_rate=0.0516905, actual_a_rate=0.0571325
+  axis=geometric, direction=1, start=150: a_RMSE=0.00436538, g_RMSE=0.00205993, final_a_error=0.00614294, final_g_error=0.00537244, predicted_a_rate=0.0570777, actual_a_rate=0.0570796
+  axis=geometric, direction=1, start=200: a_RMSE=0.00519008, g_RMSE=0.000158634, final_a_error=0.0111603, final_g_error=0.00040961, predicted_a_rate=0.0570762, actual_a_rate=0.0571253
+  axis=geometric, direction=1, start=250: a_RMSE=0.00525129, g_RMSE=1.16675e-05, final_a_error=0.0114558, final_g_error=2.92412e-05, predicted_a_rate=0.0570108, actual_a_rate=0.057132
+
+Implied spectral gap
+--------------------
+  axis=POD, target=250: median_kappa_model=0.0699221, observed_kappa=0.0691581, closure_error=-0.000763924, kappa_variation=1.46418e-07
+  axis=POD, target=320: median_kappa_model=0.0699222, observed_kappa=0.0691227, closure_error=-0.000799488, kappa_variation=6.91337e-09
+  axis=geometric, target=250: median_kappa_model=0.0691215, observed_kappa=0.0691581, closure_error=3.66105e-05, kappa_variation=1.44753e-07
+  axis=geometric, target=320: median_kappa_model=0.0691217, observed_kappa=0.0691227, closure_error=1.04838e-06, kappa_variation=6.83478e-09
+
+Interpretation constraints
+--------------------------
+* The model has no fitted coefficients but uses the measured base lambda[n] sequence.
+* The g equation tests whether projected forcing is asymptotically pure EMA decay.
+* Geometric and POD axes are tested separately; only the geometric axis is analytic a priori.
+* Rollout failure can arise from transverse correction even when one-step scalar closure is accurate.
+* Results remain conditional on this replay and tested tangent directions.

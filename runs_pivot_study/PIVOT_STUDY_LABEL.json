@@ -1,0 +1,71 @@
+{
+  "analysis_v3_compatible": false,
+  "created_unix": 1786396597.9667547,
+  "expected_branch_count": 4,
+  "expected_branches": [
+    "continue",
+    "reset_ema",
+    "reset_B",
+    "future_shuffle"
+  ],
+  "expected_rho_count": 3,
+  "expected_rho_values": [
+    0.75,
+    1.0,
+    1.5
+  ],
+  "expected_seed_count": 40,
+  "freezeable": false,
+  "label": "PIVOT_STUDY",
+  "meta": {
+    "branches": [
+      "continue",
+      "reset_ema",
+      "reset_B",
+      "future_shuffle"
+    ],
+    "experiment_dir": "/home/deck/AI_Programs/SSRH/runs_pivot_study/ebfec9a5c419",
+    "frozen_manifest": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+    "frozen_npz": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "frozen_scalar": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+    "master_seed": 20260714,
+    "mode": "pivot-grid",
+    "n_seeds": 40,
+    "note_location": "Authoritative label also written to runs_pivot_study/ebfec9a5c419/PIVOT_STUDY_LABEL.json",
+    "original_driver_RHO_VALUES": [
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "original_driver_STUDY_BRANCHES": [
+      "continue",
+      "reset_ema",
+      "reset_B",
+      "future_shuffle"
+    ],
+    "project_root": "/home/deck/AI_Programs/SSRH",
+    "rho_values": [
+      0.75,
+      1.0,
+      1.5
+    ],
+    "run_root": "/home/deck/AI_Programs/SSRH/runs_pivot_study"
+  },
+  "not_production": true,
+  "note": "This directory was produced by run_twindow_pivot_study.py. Do not treat outputs as the freezeable full T_window study. AIEF_1_4_Twindow_sensitivity_analysis_v3.py expects the full 40x5x4 production grid and will fail count checks on pivot data.",
+  "production_RHO_VALUES": [
+    0.5,
+    0.75,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "production_STUDY_BRANCHES": [
+    "continue",
+    "reset_ema",
+    "reset_B",
+    "future_shuffle"
+  ]
+}

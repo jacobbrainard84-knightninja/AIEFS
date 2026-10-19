@@ -1,0 +1,47 @@
+AIEF analytic defect-mode and EMA-recurrence audit
+=================================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+
+Analytic/POD defect alignment
+-----------------------------
+  family=biorthogonal, interval=[100,150): POD_cosine=0.999999999996, median_direct_reconstruction_error=2.93582e-06, p95=2.97783e-06
+  family=symmetric, interval=[100,150): POD_cosine=0.999999999994, median_direct_reconstruction_error=3.59774e-06, p95=3.64767e-06
+  family=biorthogonal, interval=[150,200): POD_cosine=0.999999999996, median_direct_reconstruction_error=2.99531e-06, p95=2.99976e-06
+  family=symmetric, interval=[150,200): POD_cosine=0.999999999994, median_direct_reconstruction_error=3.66861e-06, p95=3.67397e-06
+  family=biorthogonal, interval=[200,250): POD_cosine=0.999999999995, median_direct_reconstruction_error=3.00146e-06, p95=3.00193e-06
+  family=symmetric, interval=[200,250): POD_cosine=0.999999999994, median_direct_reconstruction_error=3.67602e-06, p95=3.67655e-06
+  family=biorthogonal, interval=[250,319.99): POD_cosine=0.999999999995, median_direct_reconstruction_error=3.00198e-06, p95=3.00728e-06
+  family=symmetric, interval=[250,319.99): POD_cosine=0.999999999994, median_direct_reconstruction_error=3.67661e-06, p95=3.68098e-06
+
+Pointwise recurrence summaries
+------------------------------
+  object=delta, interval=[100,150): valid=5000, multiplier=0.999430115404, minus_alpha=1.29e-06, EMA_error=1.29e-06, p95_EMA_error=2.55e-06, local_rate=0.0570047, rate-EMA=-0.000129, shape_error=nan, sign_changes=0.0
+  object=delta_R, interval=[100,150): valid=5000, multiplier=0.999439971003, minus_alpha=1.11e-05, EMA_error=1.11e-05, p95_EMA_error=2.75e-05, local_rate=0.0560186, rate-EMA=-0.00111, shape_error=nan, sign_changes=0.0
+  object=delta_S, interval=[100,150): valid=5000, multiplier=0.998882618447, minus_alpha=-0.000546, EMA_error=0.000548, p95_EMA_error=0.00118, local_rate=0.111801, rate-EMA=0.0547, shape_error=nan, sign_changes=0.0
+  object=matrix_biorthogonal, interval=[100,150): valid=5000, multiplier=0.999430115404, minus_alpha=1.29e-06, EMA_error=1.29e-06, p95_EMA_error=2.55e-06, local_rate=0.0570047, rate-EMA=-0.000129, shape_error=2.9e-11, sign_changes=nan
+  object=matrix_symmetric, interval=[100,150): valid=5000, multiplier=0.999430115416, minus_alpha=1.29e-06, EMA_error=1.29e-06, p95_EMA_error=2.55e-06, local_rate=0.0570047, rate-EMA=-0.000129, shape_error=3.23e-11, sign_changes=nan
+  object=delta, interval=[150,200): valid=5000, multiplier=0.999429026987, minus_alpha=1.97e-07, EMA_error=1.97e-07, p95_EMA_error=4.82e-07, local_rate=0.0571136, rate-EMA=-1.97e-05, shape_error=nan, sign_changes=0.0
+  object=delta_R, interval=[150,200): valid=5000, multiplier=0.999430775821, minus_alpha=1.95e-06, EMA_error=2.24e-06, p95_EMA_error=5.09e-06, local_rate=0.0569386, rate-EMA=-0.000195, shape_error=nan, sign_changes=0.0
+  object=delta_S, interval=[150,200): valid=4001, multiplier=0.999420961204, minus_alpha=-7.87e-06, EMA_error=0.0073, p95_EMA_error=0.0962, local_rate=0.0579207, rate-EMA=0.000787, shape_error=nan, sign_changes=0.0
+  object=matrix_biorthogonal, interval=[150,200): valid=5000, multiplier=0.999429026988, minus_alpha=1.97e-07, EMA_error=1.97e-07, p95_EMA_error=4.82e-07, local_rate=0.0571136, rate-EMA=-1.97e-05, shape_error=1.05e-11, sign_changes=nan
+  object=matrix_symmetric, interval=[150,200): valid=5000, multiplier=0.99942902699, minus_alpha=1.97e-07, EMA_error=1.97e-07, p95_EMA_error=4.82e-07, local_rate=0.0571136, rate-EMA=-1.97e-05, shape_error=8.38e-12, sign_changes=nan
+  object=delta, interval=[200,250): valid=5000, multiplier=0.999428852138, minus_alpha=2.23e-08, EMA_error=2.23e-08, p95_EMA_error=6.1e-08, local_rate=0.0571311, rate-EMA=-2.23e-06, shape_error=nan, sign_changes=0.0
+  object=delta_R, interval=[200,250): valid=5000, multiplier=0.99942892622, minus_alpha=9.64e-08, EMA_error=1.29e-05, p95_EMA_error=9.11e-05, local_rate=0.0571237, rate-EMA=-9.64e-06, shape_error=nan, sign_changes=0.0
+  object=delta_S, interval=[200,250): valid=0, multiplier=nan, minus_alpha=nan, EMA_error=nan, p95_EMA_error=nan, local_rate=nan, rate-EMA=nan, shape_error=nan, sign_changes=0.0
+  object=matrix_biorthogonal, interval=[200,250): valid=5000, multiplier=0.999428852141, minus_alpha=2.23e-08, EMA_error=2.23e-08, p95_EMA_error=6.1e-08, local_rate=0.0571311, rate-EMA=-2.23e-06, shape_error=1.63e-10, sign_changes=nan
+  object=matrix_symmetric, interval=[200,250): valid=5000, multiplier=0.999428852143, minus_alpha=2.23e-08, EMA_error=2.23e-08, p95_EMA_error=6.1e-08, local_rate=0.0571311, rate-EMA=-2.23e-06, shape_error=8.46e-11, sign_changes=nan
+  object=delta, interval=[250,319.99): valid=6999, multiplier=0.999428832083, minus_alpha=2.24e-09, EMA_error=2.52e-09, p95_EMA_error=6.69e-09, local_rate=0.0571331, rate-EMA=-2.24e-07, shape_error=nan, sign_changes=0.0
+  object=delta_R, interval=[250,319.99): valid=6999, multiplier=0.999432186892, minus_alpha=3.36e-06, EMA_error=0.000436, p95_EMA_error=0.00383, local_rate=0.0567974, rate-EMA=-0.000336, shape_error=nan, sign_changes=0.0
+  object=delta_S, interval=[250,319.99): valid=0, multiplier=nan, minus_alpha=nan, EMA_error=nan, p95_EMA_error=nan, local_rate=nan, rate-EMA=nan, shape_error=nan, sign_changes=0.0
+  object=matrix_biorthogonal, interval=[250,319.99): valid=6999, multiplier=0.999428832083, minus_alpha=2.24e-09, EMA_error=6.18e-09, p95_EMA_error=3.55e-08, local_rate=0.0571331, rate-EMA=-2.24e-07, shape_error=5.03e-09, sign_changes=nan
+  object=matrix_symmetric, interval=[250,319.99): valid=6999, multiplier=0.999428832081, minus_alpha=2.23e-09, EMA_error=4.78e-09, p95_EMA_error=1.88e-08, local_rate=0.0571331, rate-EMA=-2.24e-07, shape_error=2.67e-09, sign_changes=nan
+
+Interpretation constraints
+--------------------------
+* POD directions are compared with projected analytic defects, not with raw E* in the wrong quotient space.
+* Direct reconstruction error includes the smaller right and secondary symmetry mismatches.
+* Pointwise EMA agreement establishes a shared multiplier, not causal control by EMA memory.
+* Ratios are censored below the configured signal floor.
+* Results remain conditional on one replay and fixed winner branch.

@@ -1,0 +1,35 @@
+AIEF scalar spectral-gap reduction analysis
+===========================================
+
+Late POD direction: [0.5773410255782927, -0.5773687559683237, -0.5773410255782931]
+EMA rate 1/T_window: 0.0571333333
+
+Late scalar recurrence diagnostics
+----------------------------------
+  direction=0: median_invariance_defect=1.13208e-05, max_invariance_defect=1.13208e-05, median_scalar_residual=0.000521282, max_scalar_residual=0.000521308, median_weight_rate=0.127056, total_rate=0.0571325, forcing_rate=0.0571331
+  direction=1: median_invariance_defect=1.13208e-05, max_invariance_defect=1.13208e-05, median_scalar_residual=1.08421e-09, max_scalar_residual=1.16785e-09, median_weight_rate=0.127056, total_rate=0.057132, forcing_rate=0.057133
+
+Target-wise spectral-gap tests
+-------------------------------
+  direction=0, target=150: observed_kappa=0.0729118, rB=0.126942, rg=0.0559123, predicted_gap=0.0710293, closure_error=0.00188243, forcing_R2=0.999915
+  direction=0, target=200: observed_kappa=0.0694548, rB=0.127049, rg=0.057036, predicted_gap=0.0700129, closure_error=-0.000558139, forcing_R2=0.999999
+  direction=0, target=250: observed_kappa=0.06915, rB=0.127055, rg=0.0571258, predicted_gap=0.0699293, closure_error=-0.000779324, forcing_R2=1
+  direction=0, target=320: observed_kappa=0.0691225, rB=0.127056, rg=0.0571331, predicted_gap=0.0699224, closure_error=-0.000799895, forcing_R2=1
+  direction=1, target=150: observed_kappa=0.0746451, rB=0.126942, rg=0.0551524, predicted_gap=0.0717893, closure_error=0.00285581, forcing_R2=0.999762
+  direction=1, target=200: observed_kappa=0.0696454, rB=0.127049, rg=0.0569785, predicted_gap=0.0700705, closure_error=-0.000425054, forcing_R2=0.999999
+  direction=1, target=250: observed_kappa=0.0691663, rB=0.127055, rg=0.0571214, predicted_gap=0.0699338, closure_error=-0.000767472, forcing_R2=1
+  direction=1, target=320: observed_kappa=0.0691229, rB=0.127056, rg=0.057133, predicted_gap=0.0699225, closure_error=-0.000799574, forcing_R2=1
+
+Closed two-state recurrence
+---------------------------
+  model=direction_0: matrix=[[0.9987408086683115,0.5640296294194374],[-2.390498036300328e-07,0.999624796664644]], train_RMSE=1.4799e-10, validation_RMSE=1.1187e-09, rollout_RMSE=2.33631e-06, final_rollout_error=1.58452e-05, eigen_rates=[0.10637863717750612,0.05713370973683625]
+  model=direction_1: matrix=[[0.998731699421544,0.9979283141726912],[-1.478288825601795e-07,0.9996404387802149]], train_RMSE=4.51907e-11, validation_RMSE=3.25691e-10, rollout_RMSE=3.36142e-06, final_rollout_error=2.74202e-05, eigen_rates=[0.10572429108522106,0.0571340755819639]
+  model=pooled: matrix=[[0.9993877740220697,0.05944504706921386],[-8.76668190581203e-09,0.9994415169679873]], train_RMSE=1.53617e-07, validation_RMSE=1.59546e-05, rollout_RMSE=0.0187768, final_rollout_error=0.0880598, eigen_rates=[0.05997096340167773,0.05713423507676523]
+
+Interpretation constraints
+--------------------------
+* The scalar recurrence is an exact projection plus a measured transverse residual; small residual is required for closure.
+* Spectral-gap estimates use related quantities from one trajectory and are deterministic mechanism checks, not independent statistical replications.
+* Exponential forcing fits use absolute scalar amplitudes and report sign changes separately.
+* The two-state model is fitted without an intercept and evaluated on a disjoint late validation interval.
+* A good two-state fit on two directions does not establish universality beyond this replay and tangent subspace.

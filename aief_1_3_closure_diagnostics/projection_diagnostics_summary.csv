@@ -1,0 +1,106 @@
+cohort,condition,metric,display_label,n_total,n_valid,n_invalid,invalid_fraction,mean,std,median,minimum,maximum,fraction_zero,fraction_nonzero
+validation_A,baseline,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9721722499999998,0.00020491293883012935,0.97215625,0.97165,0.972475,0.0,1.0
+validation_A,baseline,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.9721722499999998,0.00020491293883012935,0.97215625,0.97165,0.972475,0.0,1.0
+validation_A,baseline,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0023132991982333278,0.00013801150757553925,0.00231395116225145,0.0020986379257073,0.0028460253203608,0.0,1.0
+validation_A,baseline,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.002380321494411888,0.00014550332152266326,0.0023914753930157,0.0021553107857879,0.0029512133098103,0.0,1.0
+validation_A,baseline,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.04723850000149544,0.00021996363335818986,0.0471425000014954,0.0471425000014944,0.0477425000014963,0.0,1.0
+validation_A,baseline,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.05000000000149523,3.8417416548777333e-16,0.0500000000014951,0.050000000001495,0.0500000000014961,0.0,1.0
+validation_A,baseline,Projection_active_given_violation,projection active given violation,50,50,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+validation_A,no_delay,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9721002499999999,0.00023395365459850977,0.9721,0.9716,0.9725125,0.0,1.0
+validation_A,no_delay,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.9721002499999999,0.00023395365459850977,0.9721,0.9716,0.9725125,0.0,1.0
+validation_A,no_delay,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0024171633044959163,7.78035391133678e-06,0.0024156219399673,0.0024038468207435,0.0024457802242044,0.0,1.0
+validation_A,no_delay,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0024837297222792,1.9992735097547976e-17,0.0024837297222792,0.0024837297222791,0.0024837297222793,0.0,1.0
+validation_A,no_delay,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.047142500001495356,4.906538933386797e-17,0.04714250000149535,0.0471425000014953,0.0471425000014954,0.0,1.0
+validation_A,no_delay,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.05000000000149507,4.5437835560060705e-17,0.0500000000014951,0.050000000001495,0.0500000000014951,0.0,1.0
+validation_A,no_delay,Projection_active_given_violation,projection active given violation,50,50,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+validation_A,no_gap,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9721722499999998,0.00020491293883012935,0.97215625,0.97165,0.972475,0.0,1.0
+validation_A,no_gap,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,no_gap,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,no_gap,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,no_gap,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,-33.544608265826106,11.43517649155056,-42.93938539351598,-42.99895490249841,-18.99973353460136,0.0,1.0
+validation_A,no_gap,G_min_over_time,minimum post-projection gap,50,50,0,0.0,-33.544608265826106,11.43517649155056,-42.93938539351598,-42.99895490249841,-18.99973353460136,0.0,1.0
+validation_A,no_gap,Projection_active_given_violation,projection active given violation,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,no_mu,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.98801,6.314665470158186e-05,0.988,0.98785,0.988175,0.0,1.0
+validation_A,no_mu,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.98801,6.314665470158186e-05,0.988,0.98785,0.988175,0.0,1.0
+validation_A,no_mu,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0027804621080725262,0.0001542474827644503,0.00287537696518705,0.00236130991816,0.0029183872295718,0.0,1.0
+validation_A,no_mu,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.00301988726284042,0.00015264104103769564,0.0031121789226013,0.0025541977898173,0.0031122311063098,0.0,1.0
+validation_A,no_mu,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.046582735905010775,6.211529217538424e-05,0.046617045783601,0.0464763584815991,0.0467197950367758,0.0,1.0
+validation_A,no_mu,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.05000000000149409,1.1470812255482868e-16,0.0500000000014941,0.0500000000014939,0.0500000000014945,0.0,1.0
+validation_A,no_mu,Projection_active_given_violation,projection active given violation,50,50,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+validation_A,shuffle_R,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,shuffle_R,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,shuffle_R,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,shuffle_R,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_A,shuffle_R,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.9537610743072468,0.002389384852497722,0.9535039306230314,0.948783506209678,0.9580788227865198,0.0,1.0
+validation_A,shuffle_R,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.9537610743072468,0.002389384852497722,0.9535039306230314,0.948783506209678,0.9580788227865198,0.0,1.0
+validation_A,shuffle_R,Projection_active_given_violation,projection active given violation,50,0,50,1.0,,,,,,,
+validation_B,baseline,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9722015000000002,0.00018497702560048537,0.97219375,0.9717125,0.9725,0.0,1.0
+validation_B,baseline,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.9722015000000002,0.00018497702560048537,0.97219375,0.9717125,0.9725,0.0,1.0
+validation_B,baseline,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.002286367785065384,0.0001593171494439971,0.0023872644197265,0.0018928858100065,0.0024415372468953,0.0,1.0
+validation_B,baseline,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0023548592955646803,0.00016134567898413142,0.0024837297222791,0.0019398115243499,0.0024837297222794,0.0,1.0
+validation_B,baseline,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.04723785015855816,0.00021851693484861774,0.0471425000014954,0.0471425000014948,0.0477425000014963,0.0,1.0
+validation_B,baseline,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.05000000000149523,3.805070767136917e-16,0.0500000000014951,0.050000000001495,0.0500000000014961,0.0,1.0
+validation_B,baseline,Projection_active_given_violation,projection active given violation,50,50,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+validation_B,no_delay,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9721012499999999,0.0002455764901206949,0.97213125,0.971425,0.9725375,0.0,1.0
+validation_B,no_delay,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.9721012499999999,0.0002455764901206949,0.97213125,0.971425,0.9725375,0.0,1.0
+validation_B,no_delay,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.002416841969728659,7.841810505373527e-06,0.0024152909365889,0.0024011727691917,0.0024422846647421,0.0,1.0
+validation_B,no_delay,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0024837297222792,1.9992735097547976e-17,0.0024837297222792,0.0024837297222791,0.0024837297222793,0.0,1.0
+validation_B,no_delay,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.047142500001495335,4.943687995239386e-17,0.0471425000014953,0.0471425000014953,0.0471425000014954,0.0,1.0
+validation_B,no_delay,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.05000000000149507,4.074495811829725e-17,0.0500000000014951,0.050000000001495,0.0500000000014951,0.0,1.0
+validation_B,no_delay,Projection_active_given_violation,projection active given violation,50,50,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+validation_B,no_gap,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9722015000000002,0.00018497702560048537,0.97219375,0.9717125,0.9725,0.0,1.0
+validation_B,no_gap,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,no_gap,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,no_gap,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,no_gap,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,-32.024319327146536,11.765300853017173,-38.99696771706968,-42.99788604225379,-14.999834910968588,0.0,1.0
+validation_B,no_gap,G_min_over_time,minimum post-projection gap,50,50,0,0.0,-32.024319327146536,11.765300853017173,-38.99696771706968,-42.99788604225379,-14.999834910968588,0.0,1.0
+validation_B,no_gap,Projection_active_given_violation,projection active given violation,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,no_mu,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.9879932499999999,4.951073116001844e-05,0.988,0.9878625,0.988125,0.0,1.0
+validation_B,no_mu,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.9879932499999999,4.951073116001844e-05,0.988,0.9878625,0.988125,0.0,1.0
+validation_B,no_mu,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.002744768147838666,0.0001843165403575959,0.00286658944283125,0.0023609292846557,0.0029117990224975,0.0,1.0
+validation_B,no_mu,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0029887601175238475,0.00018726798956183273,0.0031121788920020496,0.0025554763168438,0.0031121969486566,0.0,1.0
+validation_B,no_mu,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.046567671660508674,4.901323671670651e-05,0.0465658556151856,0.046480171250962,0.046618708508846,0.0,1.0
+validation_B,no_mu,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.050000000001494065,8.068235998053637e-17,0.0500000000014941,0.0500000000014939,0.0500000000014941,0.0,1.0
+validation_B,no_mu,Projection_active_given_violation,projection active given violation,50,50,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+validation_B,shuffle_R,Pre_gap_violation_fraction,pre-gap violation fraction,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,shuffle_R,Projection_active_fraction,active projection fraction,50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,shuffle_R,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,shuffle_R,Projection_norm_max,maximum projection magnitude (Frobenius norm),50,50,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+validation_B,shuffle_R,G_min_pre_over_time,minimum pre-projection gap,50,50,0,0.0,0.9537492613973657,0.0024987256082924744,0.9542155420777634,0.9484216396683328,0.958199037720119,0.0,1.0
+validation_B,shuffle_R,G_min_over_time,minimum post-projection gap,50,50,0,0.0,0.9537492613973657,0.0024987256082924744,0.9542155420777634,0.9484216396683328,0.958199037720119,0.0,1.0
+validation_B,shuffle_R,Projection_active_given_violation,projection active given violation,50,0,50,1.0,,,,,,,
+pooled,baseline,Pre_gap_violation_fraction,pre-gap violation fraction,100,100,0,0.0,0.9721868749999999,0.00019574676721468835,0.97218125,0.97165,0.9725,0.0,1.0
+pooled,baseline,Projection_active_fraction,active projection fraction,100,100,0,0.0,0.9721868749999999,0.00019574676721468835,0.97218125,0.97165,0.9725,0.0,1.0
+pooled,baseline,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),100,100,0,0.0,0.002299833491649356,0.00014965256569441984,0.002379599986116,0.0018928858100065,0.0028460253203608,0.0,1.0
+pooled,baseline,Projection_norm_max,maximum projection magnitude (Frobenius norm),100,100,0,0.0,0.0023675903949882835,0.00015415545155142145,0.0024837297222791,0.0019398115243499,0.0029512133098103,0.0,1.0
+pooled,baseline,G_min_pre_over_time,minimum pre-projection gap,100,100,0,0.0,0.047238175080026805,0.00021924171816022238,0.0471425000014954,0.0471425000014944,0.0477425000014963,0.0,1.0
+pooled,baseline,G_min_over_time,minimum post-projection gap,100,100,0,0.0,0.05000000000149524,3.824633722804046e-16,0.0500000000014951,0.050000000001495,0.0500000000014961,0.0,1.0
+pooled,baseline,Projection_active_given_violation,projection active given violation,100,100,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+pooled,no_delay,Pre_gap_violation_fraction,pre-gap violation fraction,100,100,0,0.0,0.9721007499999998,0.0002398360116829816,0.97211875,0.971425,0.9725375,0.0,1.0
+pooled,no_delay,Projection_active_fraction,active projection fraction,100,100,0,0.0,0.9721007499999998,0.0002398360116829816,0.97211875,0.971425,0.9725375,0.0,1.0
+pooled,no_delay,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),100,100,0,0.0,0.0024170026371122867,7.812794858569005e-06,0.0024156198804202,0.0024011727691917,0.0024457802242044,0.0,1.0
+pooled,no_delay,Projection_norm_max,maximum projection magnitude (Frobenius norm),100,100,0,0.0,0.0024837297222791996,1.999725012628019e-17,0.0024837297222792,0.0024837297222791,0.0024837297222793,0.0,1.0
+pooled,no_delay,G_min_pre_over_time,minimum pre-projection gap,100,100,0,0.0,0.04714250000149534,4.8789849469563064e-17,0.0471425000014953,0.0471425000014953,0.0471425000014954,0.0,1.0
+pooled,no_delay,G_min_over_time,minimum post-projection gap,100,100,0,0.0,0.05000000000149509,4.724566441002609e-17,0.0500000000014951,0.050000000001495,0.0500000000014951,0.0,1.0
+pooled,no_delay,Projection_active_given_violation,projection active given violation,100,100,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+pooled,no_gap,Pre_gap_violation_fraction,pre-gap violation fraction,100,100,0,0.0,0.9721868749999999,0.00019574676721468835,0.97218125,0.97165,0.9725,0.0,1.0
+pooled,no_gap,Projection_active_fraction,active projection fraction,100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,no_gap,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,no_gap,Projection_norm_max,maximum projection magnitude (Frobenius norm),100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,no_gap,G_min_pre_over_time,minimum pre-projection gap,100,100,0,0.0,-32.78446379648633,11.62628927868761,-42.9168909635445,-42.99895490249841,-14.999834910968588,0.0,1.0
+pooled,no_gap,G_min_over_time,minimum post-projection gap,100,100,0,0.0,-32.78446379648633,11.62628927868761,-42.9168909635445,-42.99895490249841,-14.999834910968588,0.0,1.0
+pooled,no_gap,Projection_active_given_violation,projection active given violation,100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,no_mu,Pre_gap_violation_fraction,pre-gap violation fraction,100,100,0,0.0,0.9880016250000001,5.7354571526602866e-05,0.988,0.98785,0.988175,0.0,1.0
+pooled,no_mu,Projection_active_fraction,active projection fraction,100,100,0,0.0,0.9880016250000001,5.7354571526602866e-05,0.988,0.98785,0.988175,0.0,1.0
+pooled,no_mu,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),100,100,0,0.0,0.002762615127955596,0.00017088285810336692,0.0028707036421296,0.0023609292846557,0.0029183872295718,0.0,1.0
+pooled,no_mu,Projection_norm_max,maximum projection magnitude (Frobenius norm),100,100,0,0.0,0.0030043236901821343,0.00017154159395228565,0.00311217890841995,0.0025541977898173,0.0031122311063098,0.0,1.0
+pooled,no_mu,G_min_pre_over_time,minimum pre-projection gap,100,100,0,0.0,0.04657520378275973,5.6453842325792365e-05,0.046609523606293196,0.0464763584815991,0.0467197950367758,0.0,1.0
+pooled,no_mu,G_min_over_time,minimum post-projection gap,100,100,0,0.0,0.05000000000149406,1.0118420620018989e-16,0.0500000000014941,0.0500000000014939,0.0500000000014945,0.0,1.0
+pooled,no_mu,Projection_active_given_violation,projection active given violation,100,100,0,0.0,1.0,0.0,1.0,1.0,1.0,0.0,1.0
+pooled,shuffle_R,Pre_gap_violation_fraction,pre-gap violation fraction,100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,shuffle_R,Projection_active_fraction,active projection fraction,100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,shuffle_R,Projection_norm_mean_active,mean active projection magnitude (Frobenius norm),100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,shuffle_R,Projection_norm_max,maximum projection magnitude (Frobenius norm),100,100,0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+pooled,shuffle_R,G_min_pre_over_time,minimum pre-projection gap,100,100,0,0.0,0.9537551678523064,0.002444673742169094,0.95362994451399,0.9484216396683328,0.958199037720119,0.0,1.0
+pooled,shuffle_R,G_min_over_time,minimum post-projection gap,100,100,0,0.0,0.9537551678523064,0.002444673742169094,0.95362994451399,0.9484216396683328,0.958199037720119,0.0,1.0
+pooled,shuffle_R,Projection_active_given_violation,projection active given violation,100,0,100,1.0,,,,,,,

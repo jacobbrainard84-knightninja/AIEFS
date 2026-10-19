@@ -1,0 +1,20 @@
+{
+  "analysis": "AIEF-1.4 augmented spectral audit v2 (fundamental-state restriction)",
+  "evidence_class": "diagnostic mechanism exploration",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "r_EMA": 0.05713333333333142,
+    "alpha": 0.9994288298464774,
+    "mu_phase": 0.689918,
+    "perturbation": 1e-08
+  },
+  "state_variables": "h_old(3) + B(3) + C(12) = 18 fundamental vars",
+  "outputs": [
+    "augmented_eigenvalues.csv",
+    "augmented_spectrum_report.txt",
+    "analysis_manifest.json"
+  ],
+  "tested_hypothesis": "No eigenvalue in (r_EMA, mu_phase); alpha is unique slow pole",
+  "not_a_proof": true
+}

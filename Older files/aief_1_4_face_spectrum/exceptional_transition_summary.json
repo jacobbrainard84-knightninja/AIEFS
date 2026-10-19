@@ -1,0 +1,22 @@
+{
+  "captured_stages": [
+    "late",
+    "post_switch",
+    "pre_switch",
+    "split",
+    "time_100",
+    "time_120",
+    "time_123",
+    "time_125",
+    "time_150"
+  ],
+  "requested_checkpoint_times": [
+    100.0,
+    120.0,
+    123.0,
+    125.0,
+    150.0
+  ],
+  "switch_step": 12405,
+  "switch_time": 124.06
+}

@@ -1,0 +1,9 @@
+left_branch,right_branch,outcome,difference_definition,exploratory_margin,n_valid,mean_difference,ci90_low,ci90_high,ci95_low,ci95_high,equivalent_by_90pct_CI,equivalent_by_95pct_CI_conservative,fraction_seed_differences_within_margin,note
+continue,reset_B,Weighted_similarity_late,left_minus_right,0.01,40,-1.2545297681021416e-06,-3.7637969459915208e-06,2.0763555125258293e-10,-3.76390076100637e-06,2.921983602993672e-10,True,True,1.0,exploratory post-outcome margin
+continue,reset_B,Retention_contrast_late,left_minus_right,0.015151515151515152,40,0.0,0.0,0.0,0.0,0.0,True,True,1.0,exploratory post-outcome margin
+continue,reset_B,P_mean_late,left_minus_right,0.015151515151515152,40,0.0,0.0,0.0,0.0,0.0,True,True,1.0,exploratory post-outcome margin
+continue,reset_ema,Weighted_similarity_late,left_minus_right,0.01,40,0.006821699678197226,9.503682489586662e-10,0.019992029147517354,5.3209290376554645e-11,0.020228563589298375,False,False,0.975,exploratory post-outcome margin
+continue,reset_ema,Retention_contrast_late,left_minus_right,0.015151515151515152,40,0.00996740237691002,0.0,0.02596740237691002,0.0,0.02793480475382004,False,False,0.95,exploratory post-outcome margin
+continue,reset_ema,P_mean_late,left_minus_right,0.015151515151515152,40,0.0035966764418377344,0.0,0.009657282502443798,0.0,0.0102236559139785,True,True,0.95,exploratory post-outcome margin
+reset_B,continue,normalized_late_mean_frobenius_distance,nonnegative_distance,0.01,40,9.163819447435182e-06,6.35224583438158e-07,2.1142001423439795e-05,8.047344416946409e-08,2.3959534923422894e-05,True,True,1.0,exploratory one-sided distance margin
+reset_ema,continue,normalized_late_mean_frobenius_distance,nonnegative_distance,0.01,40,0.03417629249987764,1.6661892262465815e-05,0.07986395715040152,1.0294440366034677e-05,0.09118286201909911,False,False,0.95,exploratory one-sided distance margin

@@ -1,0 +1,63 @@
+AIEF intertwining and controller-equilibrium analysis
+====================================================
+
+Intertwining
+------------
+Seeds: 40
+Median CD=LC residual: 3.19796e-13
+Maximum CD=LC residual: 1.42698e-12
+Median tangent commutator: 1.61247e-13
+Multiplicity matches: 38/40
+
+Controller equilibrium
+----------------------
+Median controller residual: 2.75885e-12
+Maximum controller residual: 0.0969322
+Median edge-balance residual: 1.85734e-12
+
+Repeated fingerprint consistency
+--------------------------------
+  geometry_only 14aecd02f5aeb94a: seeds=2, max_spectrum_error=7.22866e-13, same=True, max_CDLC=4.9e-13
+  geometry_only 2b177b7da6cac989: seeds=22, max_spectrum_error=2.31531e-12, same=True, max_CDLC=4.91e-13
+  geometry_only 64c52ca6d685b8e1: seeds=9, max_spectrum_error=2.56217e-12, same=True, max_CDLC=4.91e-13
+  geometry_plus_rates 07f892d076a10acc: seeds=2, max_spectrum_error=5.03431e-13, same=True, max_CDLC=3.98e-13
+  geometry_plus_rates 806dee29e27c1ae3: seeds=2, max_spectrum_error=9.85878e-14, same=True, max_CDLC=2.15e-13
+  geometry_plus_rates ccb3288420826ec6: seeds=4, max_spectrum_error=5.15421e-13, same=True, max_CDLC=4.91e-13
+  geometry_plus_rates dd135d71da61c124: seeds=3, max_spectrum_error=3.752e-13, same=True, max_CDLC=2.67e-13
+  labeled_face 3bdfb4c570dc7116: seeds=10, max_spectrum_error=2.56217e-12, same=True, max_CDLC=5.22e-13
+  labeled_face 704fba7c1b319e34: seeds=6, max_spectrum_error=1.5527e-12, same=True, max_CDLC=4.62e-13
+  labeled_face 9961a1ce7b7ee3e2: seeds=6, max_spectrum_error=1.42819e-12, same=True, max_CDLC=4.34e-13
+  labeled_face aae02280e373342b: seeds=6, max_spectrum_error=1.7869e-12, same=True, max_CDLC=4.24e-13
+  labeled_face c6c8302b4dd4fa84: seeds=4, max_spectrum_error=1.08857e-12, same=True, max_CDLC=4.91e-13
+  labeled_face f45f68f9953c10f7: seeds=2, max_spectrum_error=7.22866e-13, same=True, max_CDLC=4.9e-13
+
+Unique-direction modal prediction
+---------------------------------
+  unique_direction_count: 200
+  reliable_unique_direction_count: 197
+  all_amplitudes_success_count: 196
+  median_success_count: 196
+  reliable_all_amplitudes_success_fraction: 0.9898477157360406
+  reliable_median_success_fraction: 0.9898477157360406
+  median_unique_direction_R2: 0.9999982972649254
+  median_unique_direction_RMSE: 0.00032672743392392497
+
+Exceptional switching layer
+---------------------------
+  split: face=248a6d985749bc6f, dim=9, channels=9, CDLC=1.43e-12, commutator=9.62e-13, controller_residual=0.0969
+  time_100: face=6fd9e17d4647a368, dim=9, channels=9, CDLC=2.22e-14, commutator=1.25e-14, controller_residual=0.122
+  time_120: face=6fd9e17d4647a368, dim=9, channels=9, CDLC=2.18e-14, commutator=1.23e-14, controller_residual=0.122
+  time_123: face=6fd9e17d4647a368, dim=9, channels=9, CDLC=2.19e-14, commutator=1.23e-14, controller_residual=0.122
+  pre_switch: face=6fd9e17d4647a368, dim=9, channels=8, CDLC=2.19e-14, commutator=1.23e-14, controller_residual=0.122
+  post_switch: face=a64b354e39d6fb8c, dim=8, channels=9, CDLC=6.83e-08, commutator=5.56e-08, controller_residual=0.17
+  time_125: face=a64b354e39d6fb8c, dim=8, channels=9, CDLC=6.48e-08, commutator=5.27e-08, controller_residual=0.17
+  time_150: face=a64b354e39d6fb8c, dim=8, channels=8, CDLC=1.58e-08, commutator=1.29e-08, controller_residual=0.17
+  late: face=a64b354e39d6fb8c, dim=8, channels=8, CDLC=9.65e-13, commutator=7.85e-13, controller_residual=0.17
+
+Interpretation constraints
+--------------------------
+* CD=LC is tested numerically using a least-squares node-space intertwiner.
+* Geometry signatures are descriptive, not complete isomorphism invariants.
+* Mature channel values may be discrete empirically without forming a universal finite alphabet.
+* Exceptional post-switch states can temporarily violate exact channel invariance.
+* Modal success is counted by unique seed/direction, not repeated amplitude rows.

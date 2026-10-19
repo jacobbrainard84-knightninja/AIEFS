@@ -1,0 +1,78 @@
+======================================================================
+AIEF-1.4 Coupling-Lock Audit
+======================================================================
+
+r_EMA: 0.057133   dt: 0.01   alpha: 0.999428829846
+
+Tests:  G_i + omega_i -> 0  for each K3 node (2, 7, 11).
+
+G_i = sum_k B_{ik} * sin(h_k - theta_i)
+
+If eps_i = omega_i + G_i decays at r_EMA, the adaptive coupling
+compensates the intrinsic frequency with EMA-rate convergence.
+
+Decomposition per edge shows whether compensation is achieved via:
+  - weight adjustment (B_{ik} changing)
+  - phase alignment (sin(h_k - theta_i) evolving)
+  - both simultaneously
+
+----------------------------------------------------------------------
+Lock Error |eps_i| = |omega_i + G_i| at Final Step (t=320):
+----------------------------------------------------------------------
+  node 2:  omega=1.500000  G=-0.437391  eps=1.062609e+00  |eps|=1.062609e+00
+  node 7:  omega=1.510000  G=-0.447391  eps=1.062609e+00  |eps|=1.062609e+00
+  node 11:  omega=1.040000  G=0.022609  eps=1.062609e+00  |eps|=1.062609e+00
+
+----------------------------------------------------------------------
+Lock Error Decay Rates by Interval:
+----------------------------------------------------------------------
+  Interval           node2_rate   node7_rate  node11_rate
+  ---------------- ------------ ------------ ------------
+  [  0,50 )          0.000469     0.000469     0.000523
+  [ 50,100)          0.000048     0.000048     0.000056
+  [100,150)          0.000003     0.000003     0.000003
+  [150,200)          0.000000     0.000000     0.000000
+  [200,250)          0.000000     0.000000     0.000000
+  [250,300)          0.000000     0.000000     0.000000
+  [300,320)          0.000000     0.000000     0.000000
+
+----------------------------------------------------------------------
+Per-Edge Decomposition, Final Interval [300,320):
+----------------------------------------------------------------------
+  Node 2 (omega = 1.500000):
+    Edge 25.0:  B=3.166667e-01  sin=-4.941130e-01  contrib=-1.564691e-01
+      B_rate=0.000000  sin_rate=0.000000  contrib_rate=0.000000
+    Edge 29.0:  B=3.166667e-01  sin=-8.871217e-01  contrib=-2.809219e-01
+      B_rate=-0.000000  sin_rate=0.000000  contrib_rate=-0.000000
+
+  Node 7 (omega = 1.510000):
+    Edge 25.0:  B=3.166667e-01  sin=-5.190975e-01  contrib=-1.643809e-01
+      B_rate=0.000000  sin_rate=0.000000  contrib_rate=0.000000
+    Edge 59.0:  B=3.166667e-01  sin=-8.937161e-01  contrib=-2.830101e-01
+      B_rate=-0.000000  sin_rate=0.000000  contrib_rate=-0.000000
+
+  Node 11 (omega = 1.040000):
+    Edge 29.0:  B=3.166667e-01  sin=2.845802e-02  contrib=9.011707e-03
+      B_rate=-0.000000  sin_rate=0.000000  contrib_rate=0.000000
+    Edge 59.0:  B=3.166667e-01  sin=4.293890e-02  contrib=1.359732e-02
+      B_rate=-0.000000  sin_rate=0.000000  contrib_rate=0.000000
+
+----------------------------------------------------------------------
+Mechanism Assessment:
+----------------------------------------------------------------------
+
+If B_rate ~ 0 and sin_rate ~ 0 for all edges, but contrib_rate ~ 0 and
+eps_rate ~ r_EMA:  the compensation is achieved by cancellation BETWEEN
+edges (one edge's contribution opposes another's), not by individual
+edge-level convergence.  The B and sin terms are individually stationary
+but their sum across edges converges.
+
+If B_rate ~ r_EMA:  the compensation is achieved by weight adjustment.
+
+If sin_rate ~ r_EMA:  the compensation is achieved by phase alignment.
+
+If both rates ~ 0 but eps_rate ~ r_EMA across nodes:  the compensation
+is a global balance between node-level contributions, not edge-level.
+
+Evidence class: diagnostic mechanism exploration.
+No interpretation is forced.  The numbers speak.

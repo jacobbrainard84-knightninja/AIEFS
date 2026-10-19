@@ -1,0 +1,77 @@
+{
+  "alpha_EMA": 0.9994288298464774,
+  "analysis": "AIEF-1.4 biorthogonal triangular closure",
+  "average_start": 250.0,
+  "command": [
+    "AIEF_1_4_biorthogonal_triangular_closure.py",
+    "--duhamel-npz",
+    "aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--pod-start",
+    "250",
+    "--late-start",
+    "200",
+    "--left-reference-times",
+    "200,250,319.99",
+    "--average-start",
+    "250",
+    "--rollout-starts",
+    "150,200,250",
+    "--sample-stride",
+    "10",
+    "--scalar-tol",
+    "1e-30",
+    "--output-dir",
+    "aief_1_4_biorthogonal_triangular_closure"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "inputs": {
+    "duhamel_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+      "sha256": "08285f872f9d103f487f6de1328d163a678dec3fa8eed88be626c80569275871"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    }
+  },
+  "interpretation_constraints": [
+    "Fixed left covectors are reference modes of selected late matrices.",
+    "The adjoint-bundle a recurrence is exact by construction; g EMA closure and rollout are the nontrivial tests.",
+    "Large biorthogonal condition indicates sensitivity to perturbation/noise.",
+    "No coefficients are fitted; alpha_EMA is fixed and lambda sequences are measured from the base cocycle.",
+    "Results remain conditional on this replay and tested directions."
+  ],
+  "late_start": 200.0,
+  "left_reference_times": [
+    200.0,
+    250.0,
+    319.99
+  ],
+  "outputs": [
+    "biorthogonal_coordinate_summary.csv",
+    "biorthogonal_one_step_summary.csv",
+    "biorthogonal_one_step_trajectory.csv",
+    "biorthogonal_rollout_summary.csv",
+    "biorthogonal_rollout_trajectory.csv",
+    "biorthogonal_covector_trajectory.csv",
+    "biorthogonal_closure_arrays.npz",
+    "biorthogonal_triangular_report.txt"
+  ],
+  "pod_start": 250.0,
+  "rollout_starts": [
+    150.0,
+    200.0,
+    250.0
+  ],
+  "sample_stride": 10,
+  "scalar_tolerance": 1e-30,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_biorthogonal_triangular_closure.py",
+    "sha256": "c725a9ebe760d2d89e9d587cdc75b4af137b918b3884c27a78859b81dcc272ec"
+  }
+}

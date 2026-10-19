@@ -1,0 +1,57 @@
+AIEF K3 radial observable and subsystem analysis
+================================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+Final replay exact: True
+
+Exact identity errors
+---------------------
+  squared_magnitude_forward: max=6.79144e-16, median=1.24234e-16
+  squared_magnitude_reverse: max=6.93889e-16, median=1.27039e-16
+  directed_magnitude_forward: max=8.32667e-17, median=1.56626e-17
+  directed_magnitude_reverse: max=8.32667e-17, median=1.56737e-17
+  symmetrized_R: max=3.88578e-16, median=5.55112e-17
+  weight_difference_update: max=1.02484e-16, median=2.25514e-17
+
+Interval observable diagnostics
+-------------------------------
+  channel=forward, interval=[0,100): DeltaM_rate=0.0517205, R2=0.996422, alpha_error=3.32e-05, alignment_ratio=1.05815, alignment_error=0.0581, radial_fraction=0.0394589, source_memory=0.95585, source_difference=0.074294, min_midpoint=0.651741
+  channel=reverse, interval=[0,100): DeltaM_rate=0.0521942, R2=0.996733, alpha_error=2.84e-05, alignment_ratio=1.04976, alignment_error=0.0498, radial_fraction=0.04768, source_memory=0.92404, source_difference=0.0977407, min_midpoint=0.722255
+  channel=symmetrized, interval=[0,100): DeltaM_rate=0.0531227, R2=0.997923, alpha_error=2.39e-05, alignment_ratio=nan, alignment_error=nan, radial_fraction=nan, source_memory=nan, source_difference=nan, min_midpoint=nan
+  channel=forward, interval=[100,150): DeltaM_rate=0.0569869, R2=0.999999, alpha_error=1.29e-06, alignment_ratio=1.00227, alignment_error=0.00227, radial_fraction=0.000605271, source_memory=0.998686, source_difference=0.00182296, min_midpoint=0.937197
+  channel=reverse, interval=[100,150): DeltaM_rate=0.0570289, R2=1, alpha_error=9.13e-07, alignment_ratio=1.0016, alignment_error=0.0016, radial_fraction=0.000752486, source_memory=0.997847, source_difference=0.00243892, min_midpoint=0.970849
+  channel=symmetrized, interval=[100,150): DeltaM_rate=0.0570195, R2=1, alpha_error=1.01e-06, alignment_ratio=nan, alignment_error=nan, radial_fraction=nan, source_memory=nan, source_difference=nan, min_midpoint=nan
+  channel=forward, interval=[150,200): DeltaM_rate=0.0571189, R2=1, alpha_error=1.25e-07, alignment_ratio=1.00022, alignment_error=0.00022, radial_fraction=3.49008e-05, source_memory=0.999897, source_difference=0.000134524, min_midpoint=0.938626
+  channel=reverse, interval=[150,200): DeltaM_rate=0.0571238, R2=1, alpha_error=8.24e-08, alignment_ratio=1.00014, alignment_error=0.000144, radial_fraction=4.33961e-05, source_memory=0.999836, source_difference=0.000179225, min_midpoint=0.971996
+  channel=symmetrized, interval=[150,200): DeltaM_rate=0.057122, R2=1, alpha_error=9.92e-08, alignment_ratio=nan, alignment_error=nan, radial_fraction=nan, source_memory=nan, source_difference=nan, min_midpoint=nan
+  channel=forward, interval=[200,250): DeltaM_rate=0.0571321, R2=1, alpha_error=1.1e-08, alignment_ratio=1.00002, alignment_error=1.92e-05, radial_fraction=2.00603e-06, source_memory=0.999993, source_difference=9.45645e-06, min_midpoint=0.938722
+  channel=reverse, interval=[200,250): DeltaM_rate=0.0571325, R2=1, alpha_error=6.88e-09, alignment_ratio=1.00001, alignment_error=1.21e-05, radial_fraction=2.49429e-06, source_memory=0.999988, source_difference=1.25668e-05, min_midpoint=0.972071
+  channel=symmetrized, interval=[200,250): DeltaM_rate=0.0571323, R2=1, alpha_error=8.68e-09, alignment_ratio=nan, alignment_error=nan, radial_fraction=nan, source_memory=nan, source_difference=nan, min_midpoint=nan
+  channel=forward, interval=[250,319.99): DeltaM_rate=0.0571333, R2=1, alpha_error=2.17e-09, alignment_ratio=1, alignment_error=9.44e-07, radial_fraction=6.51195e-08, source_memory=1, source_difference=3.74652e-07, min_midpoint=0.938728
+  channel=reverse, interval=[250,319.99): DeltaM_rate=0.0571333, R2=1, alpha_error=1.84e-09, alignment_ratio=1, alignment_error=5.71e-07, radial_fraction=8.09691e-08, source_memory=1, source_difference=4.97033e-07, min_midpoint=0.972076
+  channel=symmetrized, interval=[250,319.99): DeltaM_rate=0.0571333, R2=1, alpha_error=2.4e-09, alignment_ratio=nan, alignment_error=nan, radial_fraction=nan, source_memory=nan, source_difference=nan, min_midpoint=nan
+
+Symmetrized resonance
+---------------------
+  [0,100): DeltaR_rate=0.0531227, alpha_error=2.39e-05, cancellation=1
+  [100,150): DeltaR_rate=0.0570195, alpha_error=1.01e-06, cancellation=1
+  [150,200): DeltaR_rate=0.057122, alpha_error=9.92e-08, cancellation=1
+  [200,250): DeltaR_rate=0.0571323, alpha_error=8.68e-09, cancellation=1
+  [250,319.99): DeltaR_rate=0.0571333, alpha_error=2.4e-09, cancellation=1
+
+Observable subsystem fits
+-------------------------
+  interval=[0,100): a_R=1.00123075663, b_B=-0.00173652, R2=1, RMSE=4.27e-05, condition=28.8347, corr=0.996568
+  interval=[100,150): a_R=1.00266808705, b_B=-0.00320194, R2=1, RMSE=4.66e-07, condition=15385.5, corr=1
+  interval=[150,200): a_R=1.00001625415, b_B=-0.000580219, R2=1, RMSE=4.88e-09, condition=17142.4, corr=1
+  interval=[200,250): a_R=0.999776351045, b_B=-0.00034323, R2=1, RMSE=2.05e-10, condition=107454, corr=1
+  interval=[250,319.99): a_R=0.999697405948, b_B=-0.000265258, R2=1, RMSE=1.3e-09, condition=957611, corr=1
+
+Interpretation constraints
+--------------------------
+* Squared-magnitude recurrences are exact; radial/tangential decompositions are geometric diagnostics.
+* DeltaA ~= DeltaM/2 is the precise condition for an effective alpha multiplier of DeltaM.
+* Forward and reverse directed channels are analyzed before symmetrization.
+* A well-fit but ill-conditioned (DeltaB,DeltaR) regression does not identify unique subsystem coefficients.
+* Results remain conditional on one replay and fixed K3 branch.

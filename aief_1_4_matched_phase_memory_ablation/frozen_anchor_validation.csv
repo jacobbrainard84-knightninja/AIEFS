@@ -1,0 +1,4 @@
+seed,branch,pass,B_final_exact,B_mean_late_exact,P_full_exact,P_immediate_exact,P_recovery_exact,P_late_exact,R_physical_future_exact,R_driver_future_exact,sample_times_exact,density_trajectory_exact,similarity_trajectory_exact,production_branch,matched_branch,similarity_trajectory_max_diff
+11242426753702356865,B_carrier_only,True,True,True,True,True,True,True,True,True,True,True,True,B_carrier_only,carrier_reset__B_preserved,
+11242426753702356865,full_reset,False,True,True,True,True,True,True,True,True,True,True,False,full_reset,full_reset__B_zero,
+11242426753702356865,continue,True,True,True,True,True,True,True,True,True,True,True,True,continue,continue,

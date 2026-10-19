@@ -1,0 +1,13 @@
+{
+  "final_B_drift": 0.20893854278186944,
+  "final_replay_allclose_1e12": true,
+  "final_replay_exact": true,
+  "first_switch_step": 12405,
+  "first_switch_time": 124.06,
+  "maximum_B_drift": 0.20893854278186944,
+  "post_switch_max_stationarity_ratio": 8.813848174066108e-05,
+  "post_switch_mean_stationarity_ratio": 7.893059517783126e-06,
+  "pre_switch_mean_stationarity_ratio": 0.14685940684975718,
+  "seed": "4619122171158768524",
+  "switch_count": 1
+}

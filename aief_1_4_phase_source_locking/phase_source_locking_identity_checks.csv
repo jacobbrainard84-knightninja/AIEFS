@@ -1,0 +1,5 @@
+identity,maximum_absolute_error,median_absolute_error
+tracking_recurrence_forward,2.375035573339615e-16,7.315712070937596e-17
+alignment_decomposition_forward,6.661338147750939e-16,1.1102230246251565e-16
+tracking_recurrence_reverse,2.8609792490763985e-16,7.24179908552185e-17
+alignment_decomposition_reverse,6.745905917204809e-16,1.1690409924824952e-16

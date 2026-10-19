@@ -1,0 +1,210 @@
+======================================================================
+AIEF-1.4 Phase-Increment Cancellation Audit (v2)
+======================================================================
+
+alpha_EMA: 0.999428829846
+r_EMA:    0.057133
+dt:       0.01
+
+Tests: does the source-increment decay arise from cancellation
+between three individually-O(1) phase contributions?
+
+  Delta phi_sep = phi_omega + phi_G + phi_h
+
+  phi_omega = dt*(omega_ia - omega_ib)   [intrinsic, constant]
+  phi_G     = dt*(G_ia,n - G_ib,n)        [coupling, dynamic]
+  phi_h     = -(dh_ja,n - dh_jb,n)        [history, dynamic]
+
+Cancellation index = |phi_total| / (|phi_omega| + |phi_G| + |phi_h|)
+  index << 1  =>  strong cancellation (analogous to T1 ~= -T2)
+  index ~ 1   =>  one component dominates or no cancellation
+
+----------------------------------------------------------------------
+Interval-by-Interval Analysis
+----------------------------------------------------------------------
+
+Channel: fixed_left (forward)
+  Interval              |eps|    |omega|        |G|       |dh|    CancIdx   omegaG_v_h
+  ---------------- ---------- ---------- ---------- ---------- ---------- ------------
+    [0,50)         2.041311e-05 1.000000e-04 9.965502e-05 2.083991e-05 9.261294e-02 9.598616e-01
+    [50,100)       1.197042e-06 1.000000e-04 9.995952e-05 1.237526e-06 5.949602e-03 9.366464e-01
+    [100,150)      6.886650e-08 1.000000e-04 9.999759e-05 7.127251e-08 3.442140e-04 9.346889e-01
+    [150,200)      3.972750e-09 1.000000e-04 9.999986e-05 4.111796e-09 1.986335e-05 9.345792e-01
+    [200,250)      2.284335e-10 1.000000e-04 9.999999e-05 2.364294e-10 1.142166e-06 9.345740e-01
+    [250,300)      1.312677e-11 1.000000e-04 1.000000e-04 1.358624e-11 6.563385e-08 9.345735e-01
+    [300,320)      1.777192e-12 1.000000e-04 1.000000e-04 1.839418e-12 8.885960e-09 9.345735e-01
+
+  Decay rates for absolute component magnitudes:
+  Interval           total_rate   omega_rate       G_rate       h_rate
+  ---------------- ------------ ------------ ------------ ------------
+    [0,50)             0.037090     0.000000    -0.000029     0.036634
+    [50,100)           0.057635    -0.000000    -0.000026     0.057559
+    [100,150)          0.057003     0.000000    -0.000002     0.056999
+    [150,200)          0.057099     0.000000    -0.000000     0.057099
+    [200,250)          0.057129    -0.000000    -0.000000     0.057129
+    [250,300)          0.057133    -0.000000    -0.000000     0.057133
+    [300,320)          0.057133     0.000000    -0.000000     0.057133
+
+  Sign agreement fractions:
+    [0,50)         omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+    [50,100)       omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+    [100,150)      omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+    [150,200)      omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+    [200,250)      omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+    [250,300)      omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+    [300,320)      omega-G: 0.000  omega-h: 0.000  G-h: 1.000
+
+Channel: fixed_left (reverse)
+  Interval              |eps|    |omega|        |G|       |dh|    CancIdx   omegaG_v_h
+  ---------------- ---------- ---------- ---------- ---------- ---------- ------------
+    [0,50)         1.994487e-05 4.700000e-03 4.720376e-03 3.449814e-07 2.117109e-03 9.585291e-01
+    [50,100)       1.160838e-06 4.700000e-03 4.701202e-03 4.162401e-08 1.234771e-04 9.330850e-01
+    [100,150)      6.679476e-08 4.700000e-03 4.700069e-03 2.475424e-09 7.105771e-06 9.309944e-01
+    [150,200)      3.852988e-09 4.700000e-03 4.700004e-03 1.430736e-10 4.098922e-07 9.308680e-01
+    [200,250)      2.215438e-10 4.700000e-03 4.700000e-03 8.227585e-12 2.356849e-08 9.308607e-01
+    [250,300)      1.273098e-11 4.700000e-03 4.700000e-03 4.727330e-13 1.354359e-09 9.308593e-01
+    [300,320)      1.723583e-12 4.700000e-03 4.700000e-03 6.394885e-14 1.833599e-10 9.308643e-01
+
+  Decay rates for absolute component magnitudes:
+  Interval           total_rate   omega_rate       G_rate       h_rate
+  ---------------- ------------ ------------ ------------ ------------
+    [0,50)             0.037202     0.000000     0.000125     0.007044
+    [50,100)           0.057625    -0.000000     0.000018     0.055215
+    [100,150)          0.057005     0.000000     0.000001     0.056862
+    [150,200)          0.057100     0.000000     0.000000     0.057091
+    [200,250)          0.057129    -0.000000     0.000000     0.057128
+    [250,300)          0.057133    -0.000000     0.000000     0.057133
+    [300,320)          0.057134     0.000000     0.000000     0.057132
+
+  Sign agreement fractions:
+    [0,50)         omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+    [50,100)       omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+    [100,150)      omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+    [150,200)      omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+    [200,250)      omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+    [250,300)      omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+    [300,320)      omega-G: 0.000  omega-h: 1.000  G-h: 0.000
+
+Channel: right_mode (forward)
+  Interval              |eps|    |omega|        |G|       |dh|    CancIdx   omegaG_v_h
+  ---------------- ---------- ---------- ---------- ---------- ---------- ------------
+    [0,50)         3.449814e-07 1.000000e-04 9.965502e-05 0.000000e+00 1.727887e-03 1.000000e+00
+    [50,100)       4.048324e-08 1.000000e-04 9.995952e-05 0.000000e+00 2.024572e-04 1.000000e+00
+    [100,150)      2.406012e-09 1.000000e-04 9.999759e-05 0.000000e+00 1.203021e-05 1.000000e+00
+    [150,200)      1.390467e-10 1.000000e-04 9.999986e-05 0.000000e+00 6.952339e-07 1.000000e+00
+    [200,250)      7.995877e-12 1.000000e-04 9.999999e-05 0.000000e+00 3.997938e-08 1.000000e+00
+    [250,300)      4.594740e-13 1.000000e-04 1.000000e-04 0.000000e+00 2.297370e-09 1.000000e+00
+    [300,320)      6.222540e-14 1.000000e-04 1.000000e-04 0.000000e+00 3.111270e-10 1.000000e+00
+
+  Decay rates for absolute component magnitudes:
+  Interval           total_rate   omega_rate       G_rate       h_rate
+  ---------------- ------------ ------------ ------------ ------------
+    [0,50)             0.009245     0.000000    -0.000029          nan
+    [50,100)           0.055265    -0.000000    -0.000026          nan
+    [100,150)          0.056866     0.000000    -0.000002          nan
+    [150,200)          0.057092     0.000000    -0.000000          nan
+    [200,250)          0.057128    -0.000000    -0.000000          nan
+    [250,300)          0.057132    -0.000000    -0.000000          nan
+    [300,320)          0.057135     0.000000    -0.000000          nan
+
+  Sign agreement fractions:
+    [0,50)         omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+    [50,100)       omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+    [100,150)      omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+    [150,200)      omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+    [200,250)      omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+    [250,300)      omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+    [300,320)      omega-G: 0.000  omega-h: 0.000  G-h: 0.000
+
+Channel: right_mode (reverse)
+  Interval              |eps|    |omega|        |G|       |dh|    CancIdx   omegaG_v_h
+  ---------------- ---------- ---------- ---------- ---------- ---------- ------------
+    [0,50)         3.449814e-07 0.000000e+00 0.000000e+00 3.449814e-07 1.000000e+00 1.000000e+00
+    [50,100)       4.162401e-08 0.000000e+00 0.000000e+00 4.162401e-08 1.000000e+00 1.000000e+00
+    [100,150)      2.475424e-09 0.000000e+00 0.000000e+00 2.475424e-09 1.000000e+00 1.000000e+00
+    [150,200)      1.430736e-10 0.000000e+00 0.000000e+00 1.430736e-10 1.000000e+00 1.000000e+00
+    [200,250)      8.227585e-12 0.000000e+00 0.000000e+00 8.227585e-12 1.000000e+00 1.000000e+00
+    [250,300)      4.727330e-13 0.000000e+00 0.000000e+00 4.727330e-13 1.000000e+00 1.000000e+00
+    [300,320)      6.394885e-14 0.000000e+00 0.000000e+00 6.394885e-14 1.000000e+00 1.000000e+00
+
+  Decay rates for absolute component magnitudes:
+  Interval           total_rate   omega_rate       G_rate       h_rate
+  ---------------- ------------ ------------ ------------ ------------
+    [0,50)             0.007044          nan          nan     0.007044
+    [50,100)           0.055215          nan          nan     0.055215
+    [100,150)          0.056862          nan          nan     0.056862
+    [150,200)          0.057091          nan          nan     0.057091
+    [200,250)          0.057128          nan          nan     0.057128
+    [250,300)          0.057133          nan          nan     0.057133
+    [300,320)          0.057132          nan          nan     0.057132
+
+  Sign agreement fractions:
+    [0,50)         omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+    [50,100)       omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+    [100,150)      omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+    [150,200)      omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+    [200,250)      omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+    [250,300)      omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+    [300,320)      omega-G: 1.000  omega-h: 0.000  G-h: 0.000
+
+----------------------------------------------------------------------
+Late-Window (t >= 250) Summary (median over all late steps)
+----------------------------------------------------------------------
+
+  fixed_left forward:
+    |phi_omega| = 1.000000e-04
+    |phi_G|     = 1.000000e-04
+    |phi_h|     = 7.673140e-12
+    |phi_total| = 7.413630e-12
+    Cancellation index  = 3.706815e-08
+    omega+G vs h index  = 9.345735e-01
+
+  fixed_left reverse:
+    |phi_omega| = 4.700000e-03
+    |phi_G|     = 4.700000e-03
+    |phi_h|     = 2.671197e-13
+    |phi_total| = 7.189994e-12
+    Cancellation index  = 7.648930e-10
+    omega+G vs h index  = 9.308596e-01
+
+  right_mode forward:
+    |phi_omega| = 1.000000e-04
+    |phi_G|     = 1.000000e-04
+    |phi_h|     = 0.000000e+00
+    |phi_total| = 2.595094e-13
+    Cancellation index  = 1.297547e-09
+    omega+G vs h index  = 1.000000e+00
+
+  right_mode reverse:
+    |phi_omega| = 0.000000e+00
+    |phi_G|     = 0.000000e+00
+    |phi_h|     = 2.671197e-13
+    |phi_total| = 2.671197e-13
+    Cancellation index  = 1.000000e+00
+    omega+G vs h index  = 1.000000e+00
+
+----------------------------------------------------------------------
+Interpretation Guide
+----------------------------------------------------------------------
+
+If cancellation_index << 1 while individual |phi_*| remain O(1),
+the three phase components nearly cancel.  The EMA-rate decay of
+the net source increment S_n then arises from this cancellation
+at the phase level, not from any single component's decay.
+
+If cancellation_index -> 0 monotonically, the cancellation is
+tightening over time — consistent with the system approaching
+a phase-locked asymptotic regime.
+
+If canc_omegaG_vs_h << canc_index, the primary cancellation is
+between (omega+G) and h — i.e., the coupling tracks the intrinsic
+frequency, and history opposes their sum.
+
+Compare with downstream: T1 ~= -T2 at the alignment layer.
+If both layers show cancellation, the structural motif is:
+  phase level:  omega + G + dh ~= 0
+  alignment:    T1 + T2 ~= 0
+  proposal:     exact stable recurrence (forced).
+
+This is mechanism illumination, not a proof.
+Evidence class: diagnostic mechanism exploration.

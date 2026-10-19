@@ -1,0 +1,6 @@
+boundary_tolerance,initial_K3_active_count,first_active_count_increase_step,state_elapsed_time,legacy_reported_time,final_K3_active_count
+1e-12,1,-1,,,1
+1e-10,1,16489,164.89000000000001,164.9,2
+1e-09,1,12405,124.05,124.06,2
+1e-08,1,8160,81.60000000000001,81.61,3
+1e-07,1,2794,27.94,27.95,3

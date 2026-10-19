@@ -1,0 +1,61 @@
+{
+  "alpha_EMA": 0.9994288298464774,
+  "analysis": "AIEF-1.4 analytic defect mode and pointwise EMA recurrence",
+  "c0": 0.99985,
+  "command": [
+    "AIEF_1_4_defect_recurrence_analytic_mode.py",
+    "--cocycle-npz",
+    "aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--late-start",
+    "100",
+    "--intervals",
+    "100,150,200,250,320",
+    "--signal-floor",
+    "1e-15",
+    "--output-dir",
+    "aief_1_4_defect_recurrence_analytic_mode"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "inputs": {
+    "cocycle_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+      "sha256": "c3aa9683fefbfb1d80b426833b4312fb5b3532ba449af9889138b0d603e39e58"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    }
+  },
+  "interpretation_constraints": [
+    "The raw analytic defect assumes scale and secondary symmetry mismatches are negligible; their measured remainders are reported separately.",
+    "POD comparisons use the projected analytic defect in the matching quotient space.",
+    "Pointwise EMA recurrence establishes a common multiplier, not causal derivation from EMA state equations.",
+    "Ratios are censored below the configured signal floor.",
+    "Results remain conditional on one replay and winner branch."
+  ],
+  "intervals": [
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "late_start": 100.0,
+  "outputs": [
+    "defect_coefficient_trajectory.csv",
+    "defect_recurrence_summary.csv",
+    "analytic_defect_POD_comparison.csv",
+    "analytic_defect_recurrence_arrays.npz",
+    "analytic_defect_recurrence_report.txt"
+  ],
+  "signal_floor": 1e-15,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_defect_recurrence_analytic_mode.py",
+    "sha256": "66a3984002bce6524ebfab4f6f35d5fcbdf5a3affb8fd69a564699d47552594d"
+  }
+}

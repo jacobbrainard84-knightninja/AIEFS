@@ -1,0 +1,114 @@
+{
+  "K3_edges": [
+    25,
+    29,
+    59
+  ],
+  "K3_nodes": [
+    2,
+    7,
+    11
+  ],
+  "amplitude_fractions": [
+    0.001,
+    0.01,
+    0.1
+  ],
+  "analysis": "AIEF-1.4 stable cocycle controls and coupled-vs-frozen comparison",
+  "boundary_tolerance": 1e-09,
+  "command": [
+    "AIEF_1_4_cocycle_controls_coupled_comparison.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--cocycle-npz",
+    "aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+    "--cocycle-step",
+    "aief_1_4_frozen_driver_cocycle/frozen_cocycle_step_diagnostics.csv",
+    "--seed",
+    "4619122171158768524",
+    "--boundary-tol",
+    "1e-9",
+    "--scale-epsilon",
+    "1e-12",
+    "--sample-stride",
+    "10",
+    "--amplitude-fractions",
+    "1e-3,1e-2,1e-1",
+    "--dense-window-times",
+    "0.1,1",
+    "--dense-window-start-stride",
+    "1",
+    "--output-dir",
+    "aief_1_4_cocycle_controls_coupled"
+  ],
+  "dense_window_start_stride": 1,
+  "dense_window_times": [
+    0.1,
+    1.0
+  ],
+  "dependencies": {
+    "branch_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_actual_admissibility_branch_audit.py",
+      "sha256": "0cde24499becfffcb9857ecfb359671534bfa6d85961483174d2811e2ce8101e"
+    },
+    "component_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_component_controller_audit.py",
+      "sha256": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e"
+    },
+    "frozen_cocycle": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_frozen_driver_cocycle_analysis.py",
+      "sha256": "67be9224445b56d40d2f0e2cee7ad10fb3d2fcaf3fe134905231092b60d0fc82"
+    },
+    "stationarity": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "sha256": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc"
+    }
+  },
+  "dt": 0.01,
+  "final_replay_exact": true,
+  "final_replay_max_error": 0.0,
+  "future_steps": 32000,
+  "inputs": {
+    "cocycle_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+      "sha256": "c3aa9683fefbfb1d80b426833b4312fb5b3532ba449af9889138b0d603e39e58"
+    },
+    "cocycle_step": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_frozen_driver_cocycle/frozen_cocycle_step_diagnostics.csv",
+      "sha256": "444cb9353b0b05e4d19fc7c89f4d37665d5c565f0c234f9890563615d36255f6"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "Stable finite-time exponents are not asserted asymptotic Oseledets exponents.",
+    "Constant and diagonal-only cocycles are controlled counterfactuals, not additive causal decompositions.",
+    "The coupled comparison is a centered nonlinear feedback diagnostic, not yet an analytic augmented Jacobian.",
+    "Branch preservation and chi are checked dynamically for every perturbation.",
+    "This is a deterministic analysis of one frozen seed, not independent population evidence."
+  ],
+  "matrix_recompute_max_error": 0.0,
+  "outputs": [
+    "stable_cocycle_spectra.csv",
+    "dense_sliding_window_amplification.csv",
+    "coupled_frozen_centered_comparison.csv",
+    "coupled_frozen_centered_summary.csv",
+    "cocycle_control_matrices.npz",
+    "cocycle_controls_coupled_report.txt"
+  ],
+  "sample_stride": 10,
+  "scale_epsilon": 1e-12,
+  "seed": "4619122171158768524",
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_cocycle_controls_coupled_comparison.py",
+    "sha256": "450314a342092aa5c2e704a0c87dfc52e087c82a2b8885c6e469be95e3666fb7"
+  }
+}

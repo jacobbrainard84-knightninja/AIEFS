@@ -1,0 +1,30 @@
+{
+  "analysis": "pivot-seed-contrasts-v1",
+  "baseline_rho": 1.0,
+  "bootstrap": 10000,
+  "bootstrap_seed": 20260811,
+  "created_unix": 1786406212.072393,
+  "csv": "/home/deck/AI_Programs/SSRH/runs_pivot_study/ebfec9a5c419/AIEF_1_4_Twindow_sensitivity_ebfec9a5c419_scalar_summary.csv",
+  "frame": {
+    "branches": [
+      "continue",
+      "future_shuffle",
+      "reset_B",
+      "reset_ema"
+    ],
+    "n_rows": 480,
+    "n_seeds": 40,
+    "rho_values": [
+      0.75,
+      1.0,
+      1.5
+    ]
+  },
+  "note": "Pivot-only seed-level contrasts. Not analysis_v3. Not a substitute for the full 5-rho production study.",
+  "output_dir": "/home/deck/AI_Programs/SSRH/runs_pivot_study/ebfec9a5c419/pivot_seed_contrasts",
+  "primary_outcomes": [
+    "Weighted_similarity_late_fixed_physical",
+    "Retention_contrast_late_fixed_physical",
+    "P_mean_late_fixed_physical"
+  ]
+}

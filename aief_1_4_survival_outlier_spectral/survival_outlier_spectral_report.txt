@@ -1,0 +1,54 @@
+AIEF-1.4 survival, basin-feature, spectral, and residual analysis
+================================================================
+
+Recovery-time means are conditional on recovery; recovery probability and restricted mean unrecovered time account for censoring.
+B_carrier_only/full_reset remains exploratory because r2 used unmatched phase resets.
+
+Sustained recovery
+------------------
+continue
+  similarity90: recovered=40/40, prob=1.000, KM_median=0.01, RMUT=0.01, conditional_mean=0.01
+  density90: recovered=40/40, prob=1.000, KM_median=0.01, RMUT=0.01, conditional_mean=0.01
+reset_ema
+  similarity90: recovered=39/40, prob=0.975, KM_median=13.51, RMUT=21.3598, conditional_mean=13.7023
+  density90: recovered=39/40, prob=0.975, KM_median=22.01, RMUT=35.5723, conditional_mean=28.2792
+reset_B
+  similarity90: recovered=40/40, prob=1.000, KM_median=5.01, RMUT=4.7725, conditional_mean=4.7725
+  density90: recovered=40/40, prob=1.000, KM_median=3.51, RMUT=3.56, conditional_mean=3.56
+reset_B_ema
+  similarity90: recovered=38/40, prob=0.950, KM_median=29.01, RMUT=45.372, conditional_mean=30.9179
+  density90: recovered=39/40, prob=0.975, KM_median=22.01, RMUT=36.7723, conditional_mean=29.51
+B_carrier_only
+  similarity90: recovered=34/40, prob=0.850, KM_median=14.51, RMUT=68.521, conditional_mean=24.1424
+  density90: recovered=27/40, prob=0.675, KM_median=85.51, RMUT=151.994, conditional_mean=71.1026
+full_reset
+  similarity90: recovered=25/40, prob=0.625, KM_median=69.01, RMUT=156.719, conditional_mean=58.75
+  density90: recovered=33/40, prob=0.825, KM_median=84.01, RMUT=120.908, conditional_mean=78.6767
+future_shuffle
+  similarity90: recovered=0/40, prob=0.000, KM_median=nan, RMUT=320, conditional_mean=nan
+  density90: recovered=0/40, prob=0.000, KM_median=nan, RMUT=320, conditional_mean=nan
+
+Primary recovery contrasts
+--------------------------
+  continue - reset_B / similarity90: restricted_time_delta=-4.7625, 95% CI=[-5.1375, -4.275], recovery_probability_delta=0.000
+  continue - reset_ema / similarity90: restricted_time_delta=-21.3498, 95% CI=[-36.7743, -13.5375], recovery_probability_delta=0.025
+  reset_B - reset_B_ema / similarity90: restricted_time_delta=-40.5995, 95% CI=[-62.9737, -25.1625], recovery_probability_delta=0.050
+  continue - future_shuffle / similarity90: restricted_time_delta=-319.99, 95% CI=[-319.99, -319.99], recovery_probability_delta=1.000
+  continue - reset_B / density90: restricted_time_delta=-3.55, 95% CI=[-3.65, -3.5], recovery_probability_delta=0.000
+  continue - reset_ema / density90: restricted_time_delta=-35.5622, 95% CI=[-56.6493, -21.875], recovery_probability_delta=0.025
+  reset_B - reset_B_ema / density90: restricted_time_delta=-33.2122, 95% CI=[-55.3743, -18.5], recovery_probability_delta=0.025
+  continue - future_shuffle / density90: restricted_time_delta=-319.99, 95% CI=[-319.99, -319.99], recovery_probability_delta=1.000
+
+reset_B residual localization
+-----------------------------
+  normalized residual mean=9.16382e-06
+  participation ratio median=5.32513
+  largest-edge fraction median=0.516288
+
+Interpretation constraints
+--------------------------
+* Censored recovery times must not be treated as ordinary missing values.
+* Feature associations are descriptive and high-dimensional relative to n=40.
+* B is symmetric; adjacency spectra are real, not non-Hermitian.
+* Largest adjacency eigenvalue is bounded by the row-sum constraint and may mainly report cap saturation.
+* Split/late/final spectra do not constitute a continuous spectral-recovery trajectory.

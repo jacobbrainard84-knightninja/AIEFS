@@ -1,0 +1,13 @@
+scope,control,metric,endpoint_role,expected_direction_control_minus_baseline,difference_definition,n_total_pairs,n_valid_pairs,valid_pair_fraction,n_pairs,baseline_rate,control_rate,rate_difference,discordance_direction,both_nondegenerate,baseline_only_degenerate,control_only_degenerate,both_degenerate,mcnemar_exact_p_two_sided
+validation_A,shuffle_R,P_degenerate,primary,positive,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,1.0,1.0,increased_in_control,0,0,20,0,1.9073486328125e-06
+validation_B,shuffle_R,P_degenerate,primary,positive,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,1.0,1.0,increased_in_control,0,0,20,0,1.9073486328125e-06
+pooled,shuffle_R,P_degenerate,primary,positive,control_rate_minus_baseline_rate,40,40,1.0,40,0.0,1.0,1.0,increased_in_control,0,0,40,0,1.8189894035458565e-12
+validation_A,no_delay,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,0.0,0.0,no_rate_difference,20,0,0,0,1.0
+validation_B,no_delay,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,0.0,0.0,no_rate_difference,20,0,0,0,1.0
+pooled,no_delay,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,40,40,1.0,40,0.0,0.0,0.0,no_rate_difference,40,0,0,0,1.0
+validation_A,no_mu,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,0.0,0.0,no_rate_difference,20,0,0,0,1.0
+validation_B,no_mu,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,0.0,0.0,no_rate_difference,20,0,0,0,1.0
+pooled,no_mu,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,40,40,1.0,40,0.0,0.0,0.0,no_rate_difference,40,0,0,0,1.0
+validation_A,no_gap,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,0.3,0.3,increased_in_control,14,0,6,0,0.03125
+validation_B,no_gap,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,20,20,1.0,20,0.0,0.3,0.3,increased_in_control,14,0,6,0,0.03125
+pooled,no_gap,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,40,40,1.0,40,0.0,0.3,0.3,increased_in_control,28,0,12,0,0.00048828125

@@ -1,0 +1,71 @@
+{
+  "alpha_EMA": 0.9994288298464774,
+  "analysis": "AIEF-1.4 parameter-free triangular closure",
+  "command": [
+    "AIEF_1_4_parameter_free_triangular_closure.py",
+    "--duhamel-npz",
+    "aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+    "--memory-fits",
+    "aief_1_4_feedback_rank_memory_reduction/target_time_memory_fits.csv",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--pod-start",
+    "250",
+    "--late-start",
+    "200",
+    "--rollout-starts",
+    "150,200,250",
+    "--sample-stride",
+    "10",
+    "--scalar-tol",
+    "1e-30",
+    "--output-dir",
+    "aief_1_4_parameter_free_triangular_closure"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "inputs": {
+    "duhamel_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+      "sha256": "08285f872f9d103f487f6de1328d163a678dec3fa8eed88be626c80569275871"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "memory_fits": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_feedback_rank_memory_reduction/target_time_memory_fits.csv",
+      "sha256": "22ab9bb774dd494e6fef7bbec05be38d2185f1546704e628f72210a99dce28df"
+    }
+  },
+  "interpretation_constraints": [
+    "No coefficients are fitted; lambda[n] is measured from the validated base cocycle and alpha_EMA is fixed by the model.",
+    "POD and geometric axes are tested separately.",
+    "The triangular model is intended only for the late regime.",
+    "A successful rollout on this replay does not establish universality across seeds or branches."
+  ],
+  "late_start": 200.0,
+  "outputs": [
+    "triangular_one_step_trajectory.csv",
+    "triangular_one_step_summary.csv",
+    "triangular_rollout_trajectory.csv",
+    "triangular_rollout_summary.csv",
+    "triangular_gap_summary.csv",
+    "triangular_closure_arrays.npz",
+    "parameter_free_triangular_report.txt"
+  ],
+  "pod_start": 250.0,
+  "rollout_starts": [
+    150.0,
+    200.0,
+    250.0
+  ],
+  "sample_stride": 10,
+  "scalar_tolerance": 1e-30,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_parameter_free_triangular_closure.py",
+    "sha256": "2501356483e98bcf07419f6605bf5a96c4d91d4def063f95bc473fa6f52f2f2b"
+  }
+}

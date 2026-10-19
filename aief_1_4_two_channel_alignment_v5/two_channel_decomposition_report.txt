@@ -1,0 +1,85 @@
+======================================================================
+AIEF-1.4 Two-Channel Directed Alignment Decomposition (Version 5 Production)
+======================================================================
+
+alpha_EMA: 0.999428829846
+dt: 0.01
+c0 = 1 - gamma*dt: 0.99985
+a_R = dt*(eta+mu): 0.0007
+r_EMA = -log(alpha)/dt: 0.057133
+
+Final replay exact: True
+All-step resonance ordering R_25 > R_59 > R_29: PASS
+Minimum Left Gap (R_25 - R_59): 5.35277e-09
+Minimum Right Gap (R_59 - R_29): 2.01542e-11
+
+----------------------------------------------------------------------
+Split-State & Per-Step Proposal Branch Diagnostics
+----------------------------------------------------------------------
+  All-step winner map (7,2,7) active: True
+  All-step gate active: True (Active steps: 32000 / 32000)
+  All-step controllers clipped: True
+  Maximum Isolation Error: 0.000000e+00
+  Minimum Winner Margin: 4.440892e-14
+
+----------------------------------------------------------------------
+Exact EMA-Layer Identity Verification (Max Absolute Errors)
+----------------------------------------------------------------------
+  Alignment residual e_n = T1_n + T2_n:           ALL PASSED
+  Radial recurrence:                               ALL PASSED
+  Symmetrized R identity D_sym = Delta R:          ALL PASSED
+  Phase balance separation:                        ALL PASSED
+  Phase balance mean:                              ALL PASSED
+
+----------------------------------------------------------------------
+Exact Proposal-Layer Identity Verification (V5 Additions)
+----------------------------------------------------------------------
+  Prop 3.1  d_n = c0*b_n + a_R*r_n:                ALL PASSED
+  Prop 4.1/4.2  b_{n+1} = sigma_n * d_n:          ALL PASSED
+  Prop 5.1  d_{n+1} = lambda_n*d_n + a_R*r_{n+1}: ALL PASSED
+
+----------------------------------------------------------------------
+Branch Multiplier Analysis (Late, t >= 250)
+----------------------------------------------------------------------
+  Fixed-left  lambda_L median: 0.99873824668  r_L: 0.126255
+  Right-mode  lambda_R median: 0.499369154879  r_R: 69.440967
+  r_EMA: 0.057133
+  r_L - r_EMA: 0.069122
+  r_R - r_EMA: 69.383833
+
+  Interpretation:
+    - Both lambda < 1 always: stable filter confirmed.
+    - lambda_R << lambda_L: right channel is nearly memoryless,
+      explaining earlier right-invariance vs delayed left-closure.
+    - Both r_L, r_R > r_EMA: nonresonant forcing-dominated transfer.
+      Proposal differences inherit r_EMA from resonance forcing.
+
+----------------------------------------------------------------------
+Structural Chain (Theorem-Level, Exact Implementation Identities)
+----------------------------------------------------------------------
+  multiplier-controller fiber
+    -> fiber-affine action
+    -> right defect s_2 - s_7  (final: 4.440892e-14)
+    -> left defect  beta_25 - beta_59  (final: 8.543074e-09)
+
+  Each defect is proportional to the corresponding proposal difference
+  (Proposition 10.1, verified to floating-point precision).
+
+----------------------------------------------------------------------
+Dynamical Chain (Replay Evidence, Finite-Horizon)
+----------------------------------------------------------------------
+  delayed phase-balance and EMA feedback
+    -> radial and proposal-difference decay at r_EMA
+    -> right- and fixed-left-defect decay
+    -> approach to fixed analytic pair closure (u_*, v)
+
+  Status: downstream links conditionally proved and numerically verified.
+  The upstream link (phase-balance -> alignment decay) remains an open
+  derivation problem.  See operator-cocycle closure note for details.
+
+----------------------------------------------------------------------
+Evidence Classification
+----------------------------------------------------------------------
+  This is production replay evidence on one frozen seed/branch.
+  It does not establish infinite-time limits, universal theorems,
+  or generality across seeds, winner maps, or parameter regimes.

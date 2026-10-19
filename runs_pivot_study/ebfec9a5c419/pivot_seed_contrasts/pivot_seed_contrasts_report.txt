@@ -1,0 +1,75 @@
+AIEF-1.4 T_window PIVOT seed-level contrasts
+========================================================================
+analysis_version: pivot-seed-contrasts-v1
+n_seeds: 40
+rho_values: [0.75, 1.0, 1.5]
+branches: ['continue', 'future_shuffle', 'reset_B', 'reset_ema']
+n_rows: 480
+
+Interpretation constraints
+------------------------------------------------------------------------
+* Seed is the independent unit; edges are not.
+* This is a pivot (reduced rho set), not the full production study.
+* Bootstrap CIs are seed-level percentile intervals.
+* Do not treat driver Freezeable=True as analysis_v3 readiness.
+
+Regime contrasts (continue): mean Delta = Y(rho) - Y(1.0)
+------------------------------------------------------------------------
+  rho=0.75  P_mean_late_fixed_physical: mean=0.00265152  95% CI=[-0.00378788, 0.00833333]  n=40
+  rho=0.75  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  Weighted_similarity_late_fixed_physical: mean=0.000527877  95% CI=[-4.996e-17, 0.00158363]  n=40
+  rho=1.50  P_mean_late_fixed_physical: mean=-0.00681818  95% CI=[-0.0166667, 0.00227273]  n=40
+  rho=1.50  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.50  Weighted_similarity_late_fixed_physical: mean=0.000527877  95% CI=[-1.18902e-12, 0.00158363]  n=40
+
+Branch gaps vs continue: mean G = Y(branch) - Y(continue)
+------------------------------------------------------------------------
+  rho=0.75  future_shuffle  P_mean_late_fixed_physical: mean=-0.303759  95% CI=[-0.310573, -0.296961]  n=40
+  rho=0.75  future_shuffle  Retention_contrast_late_fixed_physical: mean=-0.999912  95% CI=[-0.99999, -0.9998]  n=40
+  rho=0.75  future_shuffle  Weighted_similarity_late_fixed_physical: mean=-0.401764  95% CI=[-0.437321, -0.365278]  n=40
+  rho=0.75  reset_B  P_mean_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  reset_B  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  reset_B  Weighted_similarity_late_fixed_physical: mean=-2.00071e-11  95% CI=[-4.50309e-11, -2.77486e-16]  n=40
+  rho=0.75  reset_ema  P_mean_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  reset_ema  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  reset_ema  Weighted_similarity_late_fixed_physical: mean=-8.2932e-12  95% CI=[-1.87027e-11, -6.18616e-14]  n=40
+  rho=1.00  future_shuffle  P_mean_late_fixed_physical: mean=-0.301136  95% CI=[-0.3091, -0.293561]  n=40
+  rho=1.00  future_shuffle  Retention_contrast_late_fixed_physical: mean=-1  95% CI=[-1, -1]  n=40
+  rho=1.00  future_shuffle  Weighted_similarity_late_fixed_physical: mean=-0.524231  95% CI=[-0.538318, -0.508817]  n=40
+  rho=1.00  reset_B  P_mean_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.00  reset_B  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.00  reset_B  Weighted_similarity_late_fixed_physical: mean=1.25453e-06  95% CI=[-2.92198e-10, 3.76389e-06]  n=40
+  rho=1.00  reset_ema  P_mean_late_fixed_physical: mean=-0.00359668  95% CI=[-0.0102237, 0]  n=40
+  rho=1.00  reset_ema  Retention_contrast_late_fixed_physical: mean=-0.0099674  95% CI=[-0.0279348, 0]  n=40
+  rho=1.00  reset_ema  Weighted_similarity_late_fixed_physical: mean=-0.0068217  95% CI=[-0.0202286, -5.31928e-11]  n=40
+  rho=1.50  future_shuffle  P_mean_late_fixed_physical: mean=-0.294318  95% CI=[-0.303409, -0.284848]  n=40
+  rho=1.50  future_shuffle  Retention_contrast_late_fixed_physical: mean=-1  95% CI=[-1, -1]  n=40
+  rho=1.50  future_shuffle  Weighted_similarity_late_fixed_physical: mean=-0.545609  95% CI=[-0.552986, -0.538022]  n=40
+  rho=1.50  reset_B  P_mean_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.50  reset_B  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.50  reset_B  Weighted_similarity_late_fixed_physical: mean=-6.53949e-14  95% CI=[-9.26429e-14, -4.21382e-14]  n=40
+  rho=1.50  reset_ema  P_mean_late_fixed_physical: mean=0.00946934  95% CI=[0.00189394, 0.0170455]  n=40
+  rho=1.50  reset_ema  Retention_contrast_late_fixed_physical: mean=-0.0124603  95% CI=[-0.0226648, -0.00255102]  n=40
+  rho=1.50  reset_ema  Weighted_similarity_late_fixed_physical: mean=-0.00604558  95% CI=[-0.0109731, -0.00122742]  n=40
+
+Branch DID: mean I = G(rho) - G(1.0)
+------------------------------------------------------------------------
+  rho=0.75  future_shuffle  P_mean_late_fixed_physical: mean=-0.00262225  95% CI=[-0.0083162, 0.00382548]  n=40
+  rho=0.75  future_shuffle  Retention_contrast_late_fixed_physical: mean=8.7781e-05  95% CI=[1.15836e-05, 0.000195798]  n=40
+  rho=0.75  future_shuffle  Weighted_similarity_late_fixed_physical: mean=0.122468  95% CI=[0.0939693, 0.151415]  n=40
+  rho=0.75  reset_B  P_mean_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  reset_B  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=0.75  reset_B  Weighted_similarity_late_fixed_physical: mean=-1.25455e-06  95% CI=[-3.76391e-06, 2.78198e-10]  n=40
+  rho=0.75  reset_ema  P_mean_late_fixed_physical: mean=0.00359668  95% CI=[0, 0.0102237]  n=40
+  rho=0.75  reset_ema  Retention_contrast_late_fixed_physical: mean=0.0099674  95% CI=[0, 0.0279348]  n=40
+  rho=0.75  reset_ema  Weighted_similarity_late_fixed_physical: mean=0.0068217  95% CI=[4.73558e-11, 0.0202286]  n=40
+  rho=1.50  future_shuffle  P_mean_late_fixed_physical: mean=0.00681818  95% CI=[-0.00265152, 0.0170455]  n=40
+  rho=1.50  future_shuffle  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.50  future_shuffle  Weighted_similarity_late_fixed_physical: mean=-0.0213775  95% CI=[-0.036251, -0.00736835]  n=40
+  rho=1.50  reset_B  P_mean_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.50  reset_B  Retention_contrast_late_fixed_physical: mean=0  95% CI=[0, 0]  n=40
+  rho=1.50  reset_B  Weighted_similarity_late_fixed_physical: mean=-1.25453e-06  95% CI=[-3.7639e-06, 2.92127e-10]  n=40
+  rho=1.50  reset_ema  P_mean_late_fixed_physical: mean=0.013066  95% CI=[0.00246031, 0.0261285]  n=40
+  rho=1.50  reset_ema  Retention_contrast_late_fixed_physical: mean=-0.0024929  95% CI=[-0.0148642, 0.0127759]  n=40
+  rho=1.50  reset_ema  Weighted_similarity_late_fixed_physical: mean=0.000776118  95% CI=[-0.00816268, 0.0138437]  n=40
+

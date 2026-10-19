@@ -1,0 +1,58 @@
+{
+  "analysis": "AIEF-1.4 trajectory, sustained-recovery, and equivalence",
+  "analysis_seed": 20260716,
+  "bootstrap_repetitions": 20000,
+  "equivalence_note": "exploratory post-outcome margins",
+  "equivalence_specs": [
+    [
+      "continue",
+      "reset_B",
+      "Weighted_similarity_late",
+      0.01
+    ],
+    [
+      "continue",
+      "reset_B",
+      "Retention_contrast_late",
+      0.015151515151515152
+    ],
+    [
+      "continue",
+      "reset_B",
+      "P_mean_late",
+      0.015151515151515152
+    ],
+    [
+      "continue",
+      "reset_ema",
+      "Weighted_similarity_late",
+      0.01
+    ],
+    [
+      "continue",
+      "reset_ema",
+      "Retention_contrast_late",
+      0.015151515151515152
+    ],
+    [
+      "continue",
+      "reset_ema",
+      "P_mean_late",
+      0.015151515151515152
+    ]
+  ],
+  "npz_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+  "npz_sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f",
+  "plots": [
+    "/home/deck/AI_Programs/SSRH/aief_1_4_trajectory_recovery/similarity_recovery_envelope.png",
+    "/home/deck/AI_Programs/SSRH/aief_1_4_trajectory_recovery/density_recovery_envelope.png"
+  ],
+  "recovery_end_time": 87.5,
+  "scalar_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+  "scalar_sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda",
+  "source_manifest_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+  "source_manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+  "trajectory_bands": "empirical 2.5% and 97.5% seed quantiles",
+  "window_time": 17.5,
+  "zero_similarity_convention": "NaN cosine from zero vector mapped to 0 for recovery/loss calculations only"
+}

@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "baseline_diagonal_exact_zero": true,
+    "baseline_full_matrix_exact_binary": true,
+    "baseline_matrices_square_and_finite": true,
+    "baseline_matrices_symmetric": true,
+    "baseline_unique_edges_exact_binary": true,
+    "baseline_unique_edges_tolerant_binary": true,
+    "cohorts_seed_disjoint": true,
+    "expected_cohort_count": true,
+    "matrix_scalar_consistent": true,
+    "projection_activity_subset_of_violation": true,
+    "projection_metrics_all_finite": true,
+    "seed_coverage_complete": true
+  },
+  "closure_passed": true,
+  "counts": {
+    "baseline_matrices": 100,
+    "cohorts": 2,
+    "matrix_scalar_checks": 500,
+    "projection_summary_rows": 105
+  },
+  "settings": {
+    "allow_seed_overlap": false,
+    "binary_atol": 1e-12,
+    "consistency_atol": 1e-12,
+    "expected_cohorts": 2,
+    "expected_seeds": 50,
+    "matrix_atol": 1e-12
+  },
+  "warnings": {
+    "validation_A": [],
+    "validation_B": []
+  }
+}

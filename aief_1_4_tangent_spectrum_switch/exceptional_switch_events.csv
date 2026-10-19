@@ -1,0 +1,2 @@
+seed,step,time_since_split,saturated_changed,outward_changed,changed_saturated_nodes,changed_outward_nodes,P_F_over_F
+4619122171158768524,12405,124.06,True,False,2,,8.813848174066108e-05

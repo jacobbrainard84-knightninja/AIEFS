@@ -1,0 +1,16 @@
+{
+  "analysis": "AIEF-1.4 controller boundary margin diagnostic",
+  "evidence_class": "diagnostic mechanism exploration",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "r_EMA": 0.05713333333333142,
+    "scale_epsilon": 1e-12
+  },
+  "outputs": [
+    "controller_margin_trajectory.csv",
+    "controller_margin_intervals.csv",
+    "controller_margin_report.txt",
+    "analysis_manifest.json"
+  ]
+}

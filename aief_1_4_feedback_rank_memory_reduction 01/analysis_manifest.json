@@ -1,0 +1,93 @@
+{
+  "analysis": "AIEF-1.4 feedback rank and target-time memory reduction",
+  "command": [
+    "AIEF_1_4_feedback_rank_memory_reduction.py",
+    "--duhamel-npz",
+    "aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--target-times",
+    "10,50,72.86,100,150,200,250,320",
+    "--intervals",
+    "0,10,50,100,150,200,250,320",
+    "--thresholds",
+    "0.5,0.1,0.01",
+    "--curve-stride",
+    "10",
+    "--fit-error-min",
+    "0.01",
+    "--fit-error-max",
+    "0.8",
+    "--vector-norm-tol",
+    "1e-20",
+    "--output-dir",
+    "aief_1_4_feedback_rank_memory_reduction"
+  ],
+  "curve_stride": 10,
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "fit_error_max": 0.8,
+  "fit_error_min": 0.01,
+  "inputs": {
+    "duhamel_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+      "sha256": "08285f872f9d103f487f6de1328d163a678dec3fa8eed88be626c80569275871"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    }
+  },
+  "interpretation_constraints": [
+    "Exponential fits characterize operational reconstruction error, not automatically an intrinsic kernel.",
+    "Weighted and unit-vector POD answer different rank questions.",
+    "A one-seed two-direction POD does not establish a universal invariant manifold.",
+    "EMA parameter sensitivity requires consistently regenerated base trajectories."
+  ],
+  "intervals": [
+    0.0,
+    10.0,
+    50.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "late_feedback_direction": [
+    0.5773410255782938,
+    -0.5773687559683229,
+    -0.5773410255782933
+  ],
+  "outputs": [
+    "target_time_memory_fits.csv",
+    "target_time_memory_curves.csv",
+    "pod_rank_by_interval.csv",
+    "propagated_forcing_rank_by_target.csv",
+    "instantaneous_feedback_rank.csv",
+    "late_channel_scalar_projection.csv",
+    "feedback_rank_memory_report.txt"
+  ],
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_feedback_rank_memory_reduction.py",
+    "sha256": "2cbeb1a6ea0bdc905c40a6b4a796edb7740166cd53141d1bd22c03d9922fe510"
+  },
+  "target_times": [
+    10.0,
+    50.0,
+    72.86,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "thresholds": [
+    0.01,
+    0.1,
+    0.5
+  ],
+  "vector_norm_tolerance": 1e-20
+}
