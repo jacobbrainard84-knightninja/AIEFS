@@ -1,0 +1,26 @@
+{
+ "no_gap_active_weight_mean_sd": [
+  2.6653669301867113,
+  0.0020232220073033817
+ ],
+ "eta_over_gamma": 2.666666666666667,
+ "no_gap_total_weight_mean": 127.85765164105656,
+ "shuffle_mean_R_driver_past": 0.37135180411190044,
+ "R_star": 0.4285714285714285,
+ "no_mu_max_edge": 0.40432566506718054,
+ "baseline": {
+  "n": 100,
+  "distinct": 16,
+  "eq_pred": 50,
+  "subset": 95,
+  "D_B_mean": 0.3059090909090909
+ },
+ "no_delay": {
+  "n": 100,
+  "distinct": 1,
+  "eq_pred": 100,
+  "subset": 100,
+  "D_B_mean": 0.3333333333333334
+ },
+ "n_pred": 22
+}
