@@ -1,0 +1,17 @@
+== gate_idempotence: python AI Agent Audits/evidence/scripts/gate_idempotence.py (cwd=repo root)
+AI Agent Audits/evidence/scripts/gate_idempotence.py:11: RuntimeWarning: divide by zero encountered in divide
+  s = np.minimum(1.0, cap / (rs + eps)); B *= np.minimum.outer(s, s); np.fill_diagonal(B, 0)
+n 20000
+triggered 13727
+bitwise_idempotent 20000
+max_abs_GG_minus_G 0.0
+second_trigger 0
+max_rowsum_out_minus_cap 0.0
+eps0_bitwise_idem 17022
+eps0_max_abs 5.551115123125783e-17
+tightest_row_margin_after_gate {'min': 3.459454944731988e-13, 'max': 1.000310945187266e-12, 'median': 9.349188090368443e-13, 'eps_over_cap_times_cap': 1e-12}
+one_minus_scale_vs_relative_excess {'0.001': 0.0009990010005765937, '1e-09': 1.001579041925993e-09, '1e-13': 1.6786572132332367e-12, '0.0': 1.5790702079243601e-12, '-1e-09': 0.0}
+predicted_jump_eps_over_cap 1.5789473684210527e-12
+eps0_vs_euclidean_projection_max_abs_diff [0.04266147842982754, 0.04182706382852956, 0.046260421727772144, 0.03711569895074901, 0.043793974741291264]
+eps0_sqdist_excess_over_euclid [0.019605119329959737, 0.01994079272477066, 0.01932189320895024, 0.019136085364885237, 0.015559650829717074]
+exit 0
