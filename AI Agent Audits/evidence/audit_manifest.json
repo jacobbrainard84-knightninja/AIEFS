@@ -1,0 +1,488 @@
+{
+ "created": "2026-10-23",
+ "audited_repo": "github.com/jacobbrainard84-knightninja/AIEFS",
+ "audited_commit": "e47bad150792425eb8e962ff636c69289eedd8b1",
+ "report_commits": {
+  "55be461f3da5b71c86fced8023a276f5868f4c23": "adds AI Agent Audits/AIEFS_audit.md (original)",
+  "f7246a364060237001fa35115f1ea691e620d048": "adds AI Agent Audits/AIEFS_salvage.md (original)"
+ },
+ "note_inputs": "Inputs hashed from the read-only clone at e47bad1; the two later commits add only report files (checked via GitHub API).",
+ "run_from": "repository root",
+ "environment": "evidence/ENVIRONMENT.md",
+ "inputs_sha256": {
+  "AIEF_1_3_falsification_updated.py": "c1442c3b9f24451335abc76a1dbadb30d90d3bd23adc618303be9f5010a9af3e",
+  "aief_experiment_engine_v1.py": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+  "AIEF_1_4_Twindow_sensitivity.py": "633d1a21502598021d456bff7ff39b4065b5e5d05218c4411a4f36d53e0956ee",
+  "AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md": "f2e14f7d9cca7a8b08a7117c6c5f3933422f2c61ac15a593dd29d8e08ab10527",
+  "AI_AGENT_HANDOFF_PROMPT.md": "5c24dbdfa9f71e2feccc16369ab2001c81f37baeec786bef686eabf2985311c3",
+  "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f",
+  "runs/5a9f093a2fe0/manifest.json": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+  "runs/b57562a8ee77/AIEF_1_4_Twindow_sensitivity_b57562a8ee77_branch_diagnostics.npz": "55a419c790d0a46bad2a52488d9de018a539ad3daa3759eee849cebf4df468c2",
+  "aief_1_4_scalar_spectral_gap_reduction/scalar_spectral_gap_report.txt": "a1cd56de72377b6d3d1a4f0d615dcb793044160af6f05cc566c2bb2ccbcd247b",
+  "aief_1_4_matched_phase_memory_ablation/analysis_manifest.json": "3ce915cc8c422df2a2a2713550a4ed7a540b86ad5d14b9cd73ae5b8c9d780c60",
+  "lean/AIEFProofs/AIEFProofs.lean": "5b696824caba90ecc29f506bc1039b5d59e9bd53fd36da49e7526ca0ba6d0a16",
+  "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean": "37c26f569ab24351c6482c1b8259adbee84d843506d54002699da54417eaf241",
+  "lean/AIEFProofs/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+  "lean/AIEFProofs/lake-manifest.json": "baa1bc12c21222b19b8436aaf1b7800b54b484b1cfe8065b6911ff3463271e08",
+  "runs/c3da1ac707bf/* (aggregate of 254 files: sha256 over sorted 'path sha256' lines)": "37b5f06dd0f555d2dac398e56fd73fde97efcf18f39ad066c93b8a9c267779ae",
+  "runs/73dca37cf93f/* (aggregate of 254 files: sha256 over sorted 'path sha256' lines)": "0486b62c820b319195abdb1625da50b78757d6b55425dadb9102af8035b8dd38"
+ },
+ "inputs_missing": [],
+ "findings": [
+  {
+   "point": [
+    13,
+    14
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/repro13.py\"",
+   "outputs": [
+    "results/repro13.json",
+    "logs/repro13.log"
+   ],
+   "type": "confirmatory",
+   "basis": "RAN",
+   "summary": "500/500 archived AIEF-1.3 runs bit-exact; means equal audit section 3"
+  },
+  {
+   "point": [
+    1,
+    4,
+    8
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/archived13_closedform.py\"",
+   "outputs": [
+    "results/archived13_closedform.json"
+   ],
+   "type": "confirmatory",
+   "basis": "RAN",
+   "summary": "repo-omega baseline: 16 distinct topologies (audit said 7), equal to closed-form set 50/100, subset 95/100; no_delay 1 topology = set 100/100; no_gap active weight 2.6654 vs eta/gamma 2.667; shuffle mean R 0.371 < R* 0.4286"
+  },
+  {
+   "point": [
+    1,
+    4
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/freq_predictor.py\"",
+   "outputs": [
+    "logs/freq_predictor.log"
+   ],
+   "type": "confirmatory",
+   "basis": "RAN",
+   "summary": "per-manifest distinct topologies 11 and 11; per-seed corr(P,R_pred) 0.927/0.919; seed-averaged 0.990/0.988"
+  },
+  {
+   "point": [
+    1,
+    3
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/omega_random.py\"",
+   "outputs": [
+    "results/omega_random.json",
+    "logs/omega_random.log"
+   ],
+   "type": "confirmatory (rerun of first pass)",
+   "basis": "RAN",
+   "summary": "identical to first pass: precision/recall uniform no_delay 0.717/0.575, baseline 0.600/0.508, clustered 0.933/0.282, 0.838/0.267"
+  },
+  {
+   "point": [
+    4,
+    7
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/omega_multistab.py\"",
+   "outputs": [
+    "results/omega_multistab.json"
+   ],
+   "type": "confirmatory (rerun)",
+   "basis": "RAN",
+   "summary": "mean Jaccard 0.514; baseline vs no_delay 0.516; distinct per omega [4,2,3,4,2,4,1,4,4,4]"
+  },
+  {
+   "point": [
+    1,
+    2,
+    7
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/delay_paired_heldout.py\" && python \"AI Agent Audits/evidence/scripts/analyze_delay_heldout.py\"",
+   "outputs": [
+    "results/delay_paired_edges_uniform.csv",
+    "results/delay_paired_edges_clustered.csv",
+    "results/delay_paired_runs.json",
+    "results/delay_heldout_analysis.json"
+   ],
+   "type": "confirmatory (tests requested by the collaborator, designed before running)",
+   "basis": "RAN",
+   "summary": "held-out AUC/logloss and paired delay statistics; see AIEFS_audit_response.md section 5. Distinct-topology and Jaccard contrasts are exploratory."
+  },
+  {
+   "point": [
+    5
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/gate_idempotence.py\"",
+   "outputs": [
+    "results/gate_idempotence.json"
+   ],
+   "type": "confirmatory",
+   "basis": "RAN",
+   "summary": "20000/20000 bitwise idempotent; jump 1.579e-12 = eps/cap; eps=0 Euclidean projection differs 0.037-0.046"
+  },
+  {
+   "point": [
+    5
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/mathcheck.py\"",
+   "outputs": [
+    "logs/mathcheck.log"
+   ],
+   "type": "confirmatory (rerun)",
+   "basis": "RAN",
+   "summary": "interior witness margin 6.67e-13; KL projection differs 0.022-0.030"
+  },
+  {
+   "point": [
+    9
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/kappa_rows.py\"",
+   "outputs": [
+    "results/kappa_rows.json"
+   ],
+   "type": "confirmatory",
+   "basis": "RAN",
+   "summary": "row rates sum F/c 0.12419, 0.12420, 0.12208 (label corrected); repo fitted gap 0.0699224 vs observed 0.0691225"
+  },
+  {
+   "point": [
+    9
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/kappa_tw.py\" all && python \"AI Agent Audits/evidence/scripts/analyze_kappa_tw.py\"",
+   "outputs": [
+    "results/kappa_tw_all.json",
+    "results/kappa_tw_summary.json",
+    "results/kappa_tw_components.csv"
+   ],
+   "type": "confirmatory (prediction stated in salvage 3.5); twin_early K3 statistic exploratory",
+   "basis": "RAN",
+   "summary": "292 slow components over 5 T_w: r_B vs discrete Prop 8.3 max rel err 3.1e-5; kappa vs discrete closed form max abs err 5.3e-6; K3: 1 of 115 components has a slow channel (rho=1); 114 fully saturated"
+  },
+  {
+   "point": [
+    6
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/ablation14_topology.py\"",
+   "outputs": [
+    "results/ablation14_topology.json"
+   ],
+   "type": "confirmatory (rerun of salvage table)",
+   "basis": "RAN",
+   "summary": "reset_B Jaccard 1.000, reset_ema 0.992, reset_B_ema 0.913 (Jaccard vs continue); reset_B_ema equals the closed-form set in 32/40 seeds"
+  },
+  {
+   "point": [
+    6
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/matched_phase_check.py\"",
+   "outputs": [
+    "results/matched_phase_check.json"
+   ],
+   "type": "exploratory",
+   "basis": "RAN",
+   "summary": "Weighted_similarity_late +0.064 [0.041,0.089]; repo canonical analysis_manifest reports FAILED (provenance caveat)"
+  },
+  {
+   "point": [
+    14
+   ],
+   "command": "bash \"AI Agent Audits/evidence/scripts/lean_check.sh\"",
+   "outputs": [
+    "logs/lean_build_original.log",
+    "logs/lean_build_patched.log",
+    "logs/lean_sorry_grep.log"
+   ],
+   "type": "confirmatory",
+   "basis": "RAN",
+   "summary": "as committed BUILD_EXIT 1 (bad import ControllerFiberProjector); import removed: 1235 jobs OK; no sorry/axiom/admit"
+  },
+  {
+   "point": [
+    11
+   ],
+   "command": "bash \"AI Agent Audits/evidence/scripts/terminology_grep.sh\"",
+   "outputs": [
+    "logs/terminology_grep.log"
+   ],
+   "type": "descriptive",
+   "basis": "RAN",
+   "summary": "term counts; gauge appears once (comment); Ehresmann/holonomy/fiber bundle 0"
+  },
+  {
+   "point": [
+    10,
+    11
+   ],
+   "command": "read AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md Prop 2.9, 8.1, 8.3, 9.2, 11.1",
+   "outputs": [],
+   "type": "n/a",
+   "basis": "READ",
+   "summary": "kappa is the eigenvalue log-modulus gap of the conditional triangular augmented operator; exact discrete rate is the repo's Prop 8.3"
+  },
+  {
+   "point": [
+    12
+   ],
+   "command": "web literature search 2026-10-23",
+   "outputs": [],
+   "type": "n/a",
+   "basis": "SEARCHED (not exhaustive)",
+   "summary": "prior art: Seliger et al. 2002; Timms & English 2014; Picallo & Riecke 2011; Berner et al. 2023; Miller & MacKay 1994. Exact combination not found"
+  },
+  {
+   "point": [
+    2,
+    7,
+    "priority ordering"
+   ],
+   "command": "reasoning",
+   "outputs": [],
+   "type": "n/a",
+   "basis": "INFERRED",
+   "summary": "judgments on collaborator overreach and priority ordering are reasoning, not runs"
+  }
+ ],
+ "files_sha256": {
+  "AIEFS_audit.md": {
+   "bytes": 21714,
+   "sha256": "273beacce6ad93fdf1c15780b7ce55d31cdf87b4f945fde7d15c0a63dc8ce937"
+  },
+  "AIEFS_audit_response.md": {
+   "bytes": 20210,
+   "sha256": "331becd7119bd95c447371c5ed776adfab727eb729535eae199eb77b41844733"
+  },
+  "AIEFS_salvage.md": {
+   "bytes": 25619,
+   "sha256": "aa9d9d40c22284ce1b2bce1119f932cfb85d89d9dd073411594931378640b90e"
+  },
+  "README.md": {
+   "bytes": 3147,
+   "sha256": "8f7ac44d886078a326ad1682414b63a80955d3755f16fa9e505d0bce1156324a"
+  },
+  "evidence/ENVIRONMENT.md": {
+   "bytes": 1694,
+   "sha256": "d86c23e6e8d4a132ba1c139868f606f247658a7042b027b4181f657b2a046abc"
+  },
+  "evidence/REPRODUCE.md": {
+   "bytes": 3422,
+   "sha256": "ddff9f19e93e6419fc98af58e4167dfb1a0cd3e262f471c7fd2c817fe708ae27"
+  },
+  "evidence/logs/ablation14_topology.log": {
+   "bytes": 906,
+   "sha256": "b5578f68391a5e7b3be8513e50e6c144e4173ee7d1e5846bd569eb826cfc1316"
+  },
+  "evidence/logs/analyze_delay.log": {
+   "bytes": 11605,
+   "sha256": "4e41b9bd6befe958bbff94fa301d536e28cbf8c6e65ac4f5703facd31a96ac28"
+  },
+  "evidence/logs/analyze_kappa_tw.log": {
+   "bytes": 6673,
+   "sha256": "d40f4ec86ba44f3c6b7d764d65f7f6a3303310622a1b199bba814472eb0ccea3"
+  },
+  "evidence/logs/archived13_closedform.log": {
+   "bytes": 577,
+   "sha256": "679a19aaa7561dbb65d83d653bc84298543cc01789c449a5aa399b03f13b5bd1"
+  },
+  "evidence/logs/delay_paired.log": {
+   "bytes": 142,
+   "sha256": "664334ee833eae4fa122f58cfc341db9b812d25f28e855129252e0052610e96d"
+  },
+  "evidence/logs/freq_predictor.log": {
+   "bytes": 728,
+   "sha256": "c62406d5a14f7b1bdfde84d70610f85086c0a87e184c056c7b4110f5c0488348"
+  },
+  "evidence/logs/gate_idempotence.log": {
+   "bytes": 1162,
+   "sha256": "1299845112edae6f7aa53c81472dd0fb9e17330f1367874eddfb6f707f9ad323"
+  },
+  "evidence/logs/kappa_rows.log": {
+   "bytes": 2300,
+   "sha256": "ed843f6154cbfd6b7e4252c1af3bd0194f5527ba151d396fb17972e11c10a561"
+  },
+  "evidence/logs/kappa_tw.log": {
+   "bytes": 1219,
+   "sha256": "15d0c7939fa097d23a74a263d9257e7fc28d68119f5d80b759202385bb6b8ff1"
+  },
+  "evidence/logs/lean_build_original.log": {
+   "bytes": 526,
+   "sha256": "f79e295dd718b461e7d0efb29dd6d0374346056625ecf14f70921d8675b16110"
+  },
+  "evidence/logs/lean_build_patched.log": {
+   "bytes": 55,
+   "sha256": "61e12dbac67a8ee55921705c3449e14f57262b535727bb2ef3563642eb280a83"
+  },
+  "evidence/logs/lean_sorry_grep.log": {
+   "bytes": 39,
+   "sha256": "9f2023fba279baa8df577e8862b3b96240439a9a7bba191d522acf014e7ff1e6"
+  },
+  "evidence/logs/matched_phase_check.log": {
+   "bytes": 2095,
+   "sha256": "93d6c54f1ecf9c419b8626ad8f332f06c1945c41aac2849d5c57280a7ab96aaf"
+  },
+  "evidence/logs/mathcheck.log": {
+   "bytes": 735,
+   "sha256": "1966e38abf325fc0a93c925924b18013b4ddc766f22e279ed07c6dcdb3628e8c"
+  },
+  "evidence/logs/omega_multistab.log": {
+   "bytes": 296,
+   "sha256": "3ef71b4c32b8aa574f466a917fdfb33b760de062403f37d092d84ca645e64760"
+  },
+  "evidence/logs/omega_random.log": {
+   "bytes": 735,
+   "sha256": "5ff96a10bb6d895911f37221cd6b4293acec7b518188e8fe250029ea79cdaeb6"
+  },
+  "evidence/logs/repro13.log": {
+   "bytes": 1163,
+   "sha256": "e8c0d16b3e44b6563fdae484ea6c6f8bec793499477fc1f8062b4f3384fb3ea3"
+  },
+  "evidence/logs/terminology_grep.log": {
+   "bytes": 527,
+   "sha256": "6a174f49c3161c328adfb9c2e60938267b67005e6789dff4be50900b084ad801"
+  },
+  "evidence/results/ablation14_topology.json": {
+   "bytes": 1004,
+   "sha256": "a1ac4fc96f4e17c784ba81a3f3c192306e1454ac12dd2fece529366314a4ded0"
+  },
+  "evidence/results/archived13_closedform.json": {
+   "bytes": 543,
+   "sha256": "1cc48e5d221f5f0fd3b016fb8a1e02a89d1a295f72b4ed5f481dc1d9652b2dbf"
+  },
+  "evidence/results/delay_heldout_analysis.json": {
+   "bytes": 11472,
+   "sha256": "dceef756c139f5e6296a6cad172174bd8e70e142103f153b40bd7e64bf526ffa"
+  },
+  "evidence/results/delay_paired_edges_clustered.csv": {
+   "bytes": 693079,
+   "sha256": "a80248eeec1159b3b0522588849e2465e31de70d26af8b3c62aca1930af5fc15"
+  },
+  "evidence/results/delay_paired_edges_uniform.csv": {
+   "bytes": 617673,
+   "sha256": "9972f74d560f813413f90f5ddbcddbdccb5d231ab803d1caf27d36fc80a13b26"
+  },
+  "evidence/results/delay_paired_runs.json": {
+   "bytes": 58114,
+   "sha256": "c83a072f0bc0a5dd9c3c83e5ceb47f761c190ff687cf79eb7f6b4310a661c0cc"
+  },
+  "evidence/results/gate_idempotence.json": {
+   "bytes": 972,
+   "sha256": "02805aee4c3f40c5abd46201561b96e6ea9319d7e5e5bbf5dc1f0a787ab98ea3"
+  },
+  "evidence/results/kappa_rows.json": {
+   "bytes": 2351,
+   "sha256": "515f3c888ace8eb83622a821503a792f2adf64eba58367ea721c5ba31fef0538"
+  },
+  "evidence/results/kappa_tw_all.json": {
+   "bytes": 435237,
+   "sha256": "7fa3ea75ebf138cf7edae8d74d29d3e42f764493ab4802392427714dc80de290"
+  },
+  "evidence/results/kappa_tw_components.csv": {
+   "bytes": 108083,
+   "sha256": "57b0c21a98ce6a75579bbbed93dc9553ded383dc3fab9c225174a61fa358b868"
+  },
+  "evidence/results/kappa_tw_summary.json": {
+   "bytes": 6568,
+   "sha256": "3d4a0afd1b6d63f437601af8242085531b6605f8436731d4ccc6129fba5bf772"
+  },
+  "evidence/results/matched_phase_check.json": {
+   "bytes": 2286,
+   "sha256": "e83d290813b323bc4ee23d741432d8ca70fac5e8fe5945f5f7f63a7eeab2cbf2"
+  },
+  "evidence/results/omega_multistab.json": {
+   "bytes": 25555,
+   "sha256": "5fc4cf5e41f4f5b27abb5b61b06ee3161413024cfb94b4f8defdde5449b89b0e"
+  },
+  "evidence/results/omega_random.json": {
+   "bytes": 65528,
+   "sha256": "31f21dd2df7078330ace63f502b5f919a56be2b6969c86ac4d64109bbb75bbd4"
+  },
+  "evidence/results/repro13.json": {
+   "bytes": 221423,
+   "sha256": "bc18ba41d71757e8c5069b0f2d29bf704c20dcbd696effdf162c7b5f01dbda16"
+  },
+  "evidence/run_all.sh": {
+   "bytes": 1480,
+   "sha256": "8ffaae385e8b1934236a4a883c621576d161fedac5aff6ac5f97f16169324d90"
+  },
+  "evidence/scripts/_common.py": {
+   "bytes": 716,
+   "sha256": "3ecc445f9f5a0e01e0b4f2fea7417ecd6f9627b352ba5e78218e9243264236dd"
+  },
+  "evidence/scripts/ablation14_topology.py": {
+   "bytes": 1578,
+   "sha256": "5cdf3845ad7eb69f29ea5cdd4b6cc1f40a582732930ad0408ec936bd0c21858e"
+  },
+  "evidence/scripts/analyze_delay_heldout.py": {
+   "bytes": 11520,
+   "sha256": "edc13b3628bb09e106af0c7cf7b93481a51589f41f3d2de80e613edce4b229d2"
+  },
+  "evidence/scripts/analyze_kappa_tw.py": {
+   "bytes": 4064,
+   "sha256": "fc4481c6351ca7d0f490deece68ffb6dd9ce9cb1926a355965b024d429e2cfba"
+  },
+  "evidence/scripts/archived13_closedform.py": {
+   "bytes": 1828,
+   "sha256": "e0ea79fb73bfa4724286d76ee187c90c8732da14d5b3d217fd5669b642518890"
+  },
+  "evidence/scripts/delay_paired_heldout.py": {
+   "bytes": 2948,
+   "sha256": "7d0133f1dd6e781ff91bcef4495ae21306206bbaf557223d915bbb7bef705cf3"
+  },
+  "evidence/scripts/freq_predictor.py": {
+   "bytes": 1705,
+   "sha256": "803b87dfb963ab5e45e36088670fd5fd42e9c8adf7bdb0767bdfccee0195d665"
+  },
+  "evidence/scripts/gate_idempotence.py": {
+   "bytes": 3783,
+   "sha256": "ff9fcf15f4062fb5164c88b7f82d2fbcd5667fca7ec4d7a54be7cd1a8f2a2115"
+  },
+  "evidence/scripts/kappa_rows.py": {
+   "bytes": 1961,
+   "sha256": "4e9330cdbef41411d2471e0ec5889be44dd286dd563c222c1608c7de3750039b"
+  },
+  "evidence/scripts/kappa_tw.py": {
+   "bytes": 6323,
+   "sha256": "9b135e54465b1c6ce68e77f9c5831edc77b6d9914c237daa1616aaff4ae5d081"
+  },
+  "evidence/scripts/lean_check.sh": {
+   "bytes": 1012,
+   "sha256": "33a23cd2c1f29c01133332e42427a559fd09b74a2b2c795710ff8bc768ff74d4"
+  },
+  "evidence/scripts/matched_phase_check.py": {
+   "bytes": 1444,
+   "sha256": "fb4b9728684e6090df9cbcc787eee842302e9bac43e778d681064db41680f487"
+  },
+  "evidence/scripts/mathcheck.py": {
+   "bytes": 2851,
+   "sha256": "d37f40e6e11aced30fdb6150e9a5e96040227830292455af8055acf1799792d3"
+  },
+  "evidence/scripts/omega_multistab.py": {
+   "bytes": 1360,
+   "sha256": "c6c9264e78a5a2c1e3b942f22c4122323f7080711a06a522e22a676051996dc1"
+  },
+  "evidence/scripts/omega_random.py": {
+   "bytes": 2949,
+   "sha256": "2c279dd0286af588ea2732eab32f473382cc521a375261b452211fecaecc5699"
+  },
+  "evidence/scripts/repro13.py": {
+   "bytes": 1944,
+   "sha256": "4b77d20ff91f3bc172e7a142e8c609bbe9270a9b6e6a4afc3d5977e2c4aa3098"
+  },
+  "evidence/scripts/terminology_grep.sh": {
+   "bytes": 490,
+   "sha256": "05c0fee235510cb2c8161118f25ba778b5feede5867b1420c7ce3436bf3825f7"
+  }
+ },
+ "publication_edits": [
+  "Log header lines and Python warning lines had absolute local paths rewritten to 'AI Agent Audits/evidence/...'; Lean logs had the temporary build directory rewritten to '<tmpcopy>'. No other log content was altered.",
+  "No logs were subsampled or truncated: every file is under 1 MB.",
+  "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it. Rerunning delay_paired_heldout.py reproduced the published CSVs/JSON byte-identically.",
+  "AIEFS_audit.md / AIEFS_salvage.md are the v2 texts: in-place marked corrections; absolute local paths and the author's user/host name were replaced by neutral descriptions.",
+  "PII in the repository's own PDFs is referenced by path only and not reproduced."
+ ]
+}
