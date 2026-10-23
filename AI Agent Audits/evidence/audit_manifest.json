@@ -382,8 +382,8 @@
    "sha256": "7fa3ea75ebf138cf7edae8d74d29d3e42f764493ab4802392427714dc80de290"
   },
   "evidence/results/kappa_tw_components.csv": {
-   "bytes": 108083,
-   "sha256": "57b0c21a98ce6a75579bbbed93dc9553ded383dc3fab9c225174a61fa358b868"
+   "bytes": 107676,
+   "sha256": "bbefd3af4e450c63c173694c304a139b5e1f5e4e25653ff1c3572af6cc38ddf8"
   },
   "evidence/results/kappa_tw_summary.json": {
    "bytes": 6568,
@@ -422,8 +422,8 @@
    "sha256": "edc13b3628bb09e106af0c7cf7b93481a51589f41f3d2de80e613edce4b229d2"
   },
   "evidence/scripts/analyze_kappa_tw.py": {
-   "bytes": 4064,
-   "sha256": "fc4481c6351ca7d0f490deece68ffb6dd9ce9cb1926a355965b024d429e2cfba"
+   "bytes": 4085,
+   "sha256": "98ea1a6a027643d8c6776cb5088718be761e20dfa574d3e974b3921e233fa023"
   },
   "evidence/scripts/archived13_closedform.py": {
    "bytes": 1828,
