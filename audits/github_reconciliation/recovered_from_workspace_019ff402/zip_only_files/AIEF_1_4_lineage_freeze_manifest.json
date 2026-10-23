@@ -1,0 +1,22 @@
+{
+  "files": {
+    "AIEF_1_4_FORWARD_PLAN.md": "df7f3c4f793f811812f8f4cc344ebbcc558aca2f91b218ee82d242e6d55878e5",
+    "AIEF_1_4_OPERATOR_COCYCLE_CLOSURE_THEOREM_NOTE.md": "af93f4fe1a07c519e30d5b12a7c2e1fa875c40bfeee35e2a7e4a8afbc97c3e94",
+    "AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md": "92ba23f163a8555bd8562712b4bf682deecc7aa67e2b1f891e33c72f0d31cbab",
+    "AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md": "f8273647db8c4ba90518601e625e8c2c84678bf7fabbba86987c7d459a350a72",
+    "AIEF_1_4_analysis_lineage.csv": "a633819df8a2c512d7ade3378b40e85c2288527a513b6a6d86c823b836a481a6",
+    "AIEF_1_4_operator_cocycle_closure_note.md": "4d6f585d578f6f6f04b2a12550ae9b634c28bb79f9b61e10a0bc7e7721156b39",
+    "AIEF_1_4_superseded_claims.csv": "2e841ec6aff2139652271e324c5ff126011fc8a686237562d938e47f353d2727",
+    "AIEF_HISTORIC_UNFOLDING.md": "6a0117621da57e34be43dd8183cc3dc7395c9d463d7ea69f65ab7cf161ee0c6d",
+    "AI_AGENT_HANDOFF_PROMPT.md": "e50443113589bf3353240515aa4ec2fbcff68b82574af8ea6ba2235d516c6556"
+  },
+  "freeze_date": "2026-07-26",
+  "generator": {
+    "path": "AIEF_1_4_freeze_analysis_lineage.py",
+    "sha256": "10db7dfc2d40fc7c67b0a2bdb23e13cbb71f21acd2cd9bcf2995e408d34a52c7"
+  },
+  "hash_note": "Current workspace source hashes are not substitutes for historical execution hashes in per-analysis manifests.",
+  "lineage_row_count": 32,
+  "production_run_hash": "5a9f093a2fe0",
+  "superseded_claim_count": 18
+}

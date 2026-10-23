@@ -1,0 +1,135 @@
+AIEF active-face spectrum and exceptional transition analysis
+=============================================================
+
+Seeds with fingerprints: 40
+Distinct labeled face hashes: 12
+Distinct invariant signatures: 33
+
+Analytic fixed-stratum spectral classes
+---------------------------------------
+  dimension=7, rate=0.1894736842, seeds=1, multiplicities={"-0.189473684209+0.000000000000j":1,"-0.189473684210+0.000000000000j":1,"-0.252631578947+0.000000000000j":5}
+  dimension=7, rate=0.1894736842, seeds=1, multiplicities={"-0.189473684210+0.000000000000j":2,"-0.252631578947+0.000000000000j":5}
+  dimension=7, rate=0.1894736842, seeds=1, multiplicities={"-0.189473684210+0.000000000000j":2,"-0.252631578946+0.000000000000j":5}
+  dimension=9, rate=0.015, seeds=1, multiplicities={"-0.015000000000+0.000000000000j":1,"-0.098269455236+0.000000000000j":1,"-0.189473684205+0.000000000000j":1,"-0.189473684206+0.000000000000j":1,"-0.252631578946+0.000000000000j":1,"-0.252631578947+0.000000000000j":4}
+  dimension=9, rate=0.3157894737, seeds=3, multiplicities={"-0.315789473682+0.000000000000j":5,"-0.315789473683+0.000000000000j":4}
+  dimension=9, rate=0.3157894737, seeds=1, multiplicities={"-0.315789473682+0.000000000000j":6,"-0.315789473683+0.000000000000j":3}
+  dimension=9, rate=0.3157894737, seeds=1, multiplicities={"-0.315789473683+0.000000000000j":1,"-0.315789473684+0.000000000000j":8}
+  dimension=9, rate=0.3157894737, seeds=6, multiplicities={"-0.315789473683+0.000000000000j":9}
+  dimension=9, rate=0.3157894737, seeds=7, multiplicities={"-0.315789473682+0.000000000000j":9}
+  dimension=9, rate=0.3157894737, seeds=2, multiplicities={"-0.315789473682+0.000000000000j":1,"-0.315789473683+0.000000000000j":8}
+  dimension=9, rate=0.3157894737, seeds=1, multiplicities={"-0.315789473684+0.000000000000j":9}
+  dimension=9, rate=0.3157894737, seeds=2, multiplicities={"-0.315789473682+0.000000000000j":2,"-0.315789473683+0.000000000000j":7}
+  dimension=9, rate=0.3157894737, seeds=1, multiplicities={"-0.315789473681+0.000000000000j":1,"-0.315789473682+0.000000000000j":8}
+  dimension=11, rate=0.1894736842, seeds=1, multiplicities={"-0.189473684210+0.000000000000j":2,"-0.315789473681+0.000000000000j":5,"-0.315789473682+0.000000000000j":4}
+  dimension=11, rate=0.1894736842, seeds=2, multiplicities={"-0.189473684208+0.000000000000j":2,"-0.315789473682+0.000000000000j":9}
+  dimension=11, rate=0.1894736842, seeds=1, multiplicities={"-0.189473684209+0.000000000000j":2,"-0.315789473683+0.000000000000j":9}
+  dimension=11, rate=0.1894736842, seeds=4, multiplicities={"-0.189473684210+0.000000000000j":2,"-0.315789473682+0.000000000000j":9}
+  dimension=11, rate=0.1894736842, seeds=2, multiplicities={"-0.189473684210+0.000000000000j":2,"-0.315789473683+0.000000000000j":9}
+  dimension=11, rate=0.1894736842, seeds=1, multiplicities={"-0.189473684208+0.000000000000j":2,"-0.315789473682+0.000000000000j":2,"-0.315789473683+0.000000000000j":7}
+  dimension=14, rate=0.2526315789, seeds=1, multiplicities={"-0.252631578947+0.000000000000j":5,"-0.315789473666+0.000000000000j":5,"-0.315789473667+0.000000000000j":4}
+
+Fingerprint-to-spectrum consistency
+-----------------------------------
+  geometry_only 14aecd02f5aeb94a: seeds=2, rate_range=7.22866e-13, same_rate_1e10=True, same_full_spectrum=False
+  geometry_only 2b177b7da6cac989: seeds=22, rate_range=2.31531e-12, same_rate_1e10=True, same_full_spectrum=False
+  geometry_only 64c52ca6d685b8e1: seeds=9, rate_range=2.56217e-12, same_rate_1e10=True, same_full_spectrum=False
+  geometry_plus_rates 07f892d076a10acc: seeds=2, rate_range=5.61218e-14, same_rate_1e10=True, same_full_spectrum=True
+  geometry_plus_rates 806dee29e27c1ae3: seeds=2, rate_range=3.83027e-15, same_rate_1e10=True, same_full_spectrum=True
+  geometry_plus_rates ccb3288420826ec6: seeds=4, rate_range=5.15421e-13, same_rate_1e10=True, same_full_spectrum=True
+  geometry_plus_rates dd135d71da61c124: seeds=3, rate_range=3.24463e-13, same_rate_1e10=True, same_full_spectrum=True
+  labeled_face 3bdfb4c570dc7116: seeds=10, rate_range=2.56217e-12, same_rate_1e10=True, same_full_spectrum=False
+  labeled_face 704fba7c1b319e34: seeds=6, rate_range=1.50263e-12, same_rate_1e10=True, same_full_spectrum=False
+  labeled_face 9961a1ce7b7ee3e2: seeds=6, rate_range=1.42819e-12, same_rate_1e10=True, same_full_spectrum=False
+  labeled_face aae02280e373342b: seeds=6, rate_range=1.76514e-12, same_rate_1e10=True, same_full_spectrum=False
+  labeled_face c6c8302b4dd4fa84: seeds=4, rate_range=9.11937e-13, same_rate_1e10=True, same_full_spectrum=False
+  labeled_face f45f68f9953c10f7: seeds=2, rate_range=7.22866e-13, same_rate_1e10=True, same_full_spectrum=False
+
+Numerical/analytic Jacobian agreement
+-------------------------------------
+  step=1e-06: matrix relative error median=3.93954e-11, eigenvalue max error median=1.25038e-11, stratum preserved=1.000
+  step=3e-06: matrix relative error median=1.24753e-11, eigenvalue max error median=4.02821e-12, stratum preserved=1.000
+  step=1e-05: matrix relative error median=3.85323e-12, eigenvalue max error median=1.23976e-12, stratum preserved=1.000
+  step=3e-05: matrix relative error median=1.28078e-12, eigenvalue max error median=4.29156e-13, stratum preserved=1.000
+  step=0.0001: matrix relative error median=3.8397e-13, eigenvalue max error median=1.21015e-13, stratum preserved=1.000
+  step=0.0003: matrix relative error median=1.22277e-13, eigenvalue max error median=3.19831e-14, stratum preserved=1.000
+  step=0.001: matrix relative error median=3.82426e-14, eigenvalue max error median=8.49321e-15, stratum preserved=1.000
+
+Exceptional transition
+----------------------
+  switch_step: 12405
+  requested_checkpoint_times: [120.0]
+  captured_stages: ['late', 'post_switch', 'pre_switch', 'split', 'time_120']
+  switch_time: 124.06
+
+Face/rate cross-tab
+-------------------
+  geom=14aecd02f5aeb94a, aug=2cf5514fdead0bb3, dim=7, analytic_rate=0.18947368420946087, class=slow, directions=5, seeds=1, observed_mean=0.21765
+  geom=14aecd02f5aeb94a, aug=d294646895211be6, dim=7, analytic_rate=0.18947368421018373, class=slow, directions=5, seeds=1, observed_mean=0.22796
+  geom=2b177b7da6cac989, aug=0a90cfa80be08fc9, dim=9, analytic_rate=0.3157894736814206, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=1659e561214524e3, dim=9, analytic_rate=0.31578947368223453, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=1c6ea29224a637bd, dim=9, analytic_rate=0.31578947368197074, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=2de3a963e490d6ee, dim=9, analytic_rate=0.3157894736821514, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=3b6d0425621290fe, dim=9, analytic_rate=0.3157894736823916, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=7b7d0d2b3877912c, dim=9, analytic_rate=0.3157894736824113, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=806dee29e27c1ae3, dim=9, analytic_rate=0.31578947368286064, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=806dee29e27c1ae3, dim=9, analytic_rate=0.3157894736828568, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=9dabfa924a701bca, dim=9, analytic_rate=0.3157894736824954, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=af32d066365ca848, dim=9, analytic_rate=0.31578947368222166, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=c04d83214330be0b, dim=9, analytic_rate=0.315789473682082, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=c5ee06cfcc08c626, dim=9, analytic_rate=0.3157894736837359, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=ccb3288420826ec6, dim=9, analytic_rate=0.3157894736832496, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=ccb3288420826ec6, dim=9, analytic_rate=0.31578947368284876, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=ccb3288420826ec6, dim=9, analytic_rate=0.3157894736830174, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=ccb3288420826ec6, dim=9, analytic_rate=0.3157894736827342, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=dd135d71da61c124, dim=9, analytic_rate=0.3157894736819312, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=dd135d71da61c124, dim=9, analytic_rate=0.3157894736822557, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=dd135d71da61c124, dim=9, analytic_rate=0.3157894736819449, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=e3d136d5f1d6e726, dim=9, analytic_rate=0.31578947368241506, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=e48911c9443d998d, dim=9, analytic_rate=0.31578947368212723, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=2b177b7da6cac989, aug=e491756b5b26e49e, dim=9, analytic_rate=0.31578947368343385, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=64c52ca6d685b8e1, aug=07f892d076a10acc, dim=11, analytic_rate=0.18947368420962285, class=other, directions=2, seeds=1, observed_mean=0.261172
+  geom=64c52ca6d685b8e1, aug=07f892d076a10acc, dim=11, analytic_rate=0.18947368420962285, class=slow, directions=3, seeds=1, observed_mean=0.237274
+  geom=64c52ca6d685b8e1, aug=07f892d076a10acc, dim=11, analytic_rate=0.18947368420967897, class=other, directions=2, seeds=1, observed_mean=0.253978
+  geom=64c52ca6d685b8e1, aug=07f892d076a10acc, dim=11, analytic_rate=0.18947368420967897, class=slow, directions=2, seeds=1, observed_mean=0.234745
+  geom=64c52ca6d685b8e1, aug=07f892d076a10acc, dim=11, analytic_rate=0.18947368420967897, class=typical, directions=1, seeds=1, observed_mean=0.306127
+  geom=64c52ca6d685b8e1, aug=25f78fa97f296893, dim=11, analytic_rate=0.18947368420905605, class=other, directions=4, seeds=1, observed_mean=0.283321
+  geom=64c52ca6d685b8e1, aug=25f78fa97f296893, dim=11, analytic_rate=0.18947368420905605, class=slow, directions=1, seeds=1, observed_mean=0.212315
+  geom=64c52ca6d685b8e1, aug=26793e8b1ce90b16, dim=11, analytic_rate=0.18947368421016234, class=other, directions=2, seeds=1, observed_mean=0.265545
+  geom=64c52ca6d685b8e1, aug=26793e8b1ce90b16, dim=11, analytic_rate=0.18947368421016234, class=slow, directions=2, seeds=1, observed_mean=0.230225
+  geom=64c52ca6d685b8e1, aug=26793e8b1ce90b16, dim=11, analytic_rate=0.18947368421016234, class=typical, directions=1, seeds=1, observed_mean=0.306662
+  geom=64c52ca6d685b8e1, aug=3659a8766236791a, dim=11, analytic_rate=0.18947368421005456, class=other, directions=3, seeds=1, observed_mean=0.287772
+  geom=64c52ca6d685b8e1, aug=3659a8766236791a, dim=11, analytic_rate=0.18947368421005456, class=slow, directions=2, seeds=1, observed_mean=0.22524
+  geom=64c52ca6d685b8e1, aug=6683bef31abd1738, dim=11, analytic_rate=0.18947368420806243, class=other, directions=3, seeds=1, observed_mean=0.259778
+  geom=64c52ca6d685b8e1, aug=6683bef31abd1738, dim=11, analytic_rate=0.18947368420806243, class=slow, directions=2, seeds=1, observed_mean=0.236267
+  geom=64c52ca6d685b8e1, aug=b1f018ff70fc10b0, dim=11, analytic_rate=0.18947368420760016, class=other, directions=2, seeds=1, observed_mean=0.26033
+  geom=64c52ca6d685b8e1, aug=b1f018ff70fc10b0, dim=11, analytic_rate=0.18947368420760016, class=slow, directions=2, seeds=1, observed_mean=0.241212
+  geom=64c52ca6d685b8e1, aug=b1f018ff70fc10b0, dim=11, analytic_rate=0.18947368420760016, class=typical, directions=1, seeds=1, observed_mean=0.311815
+  geom=64c52ca6d685b8e1, aug=b54c595f9f37059f, dim=11, analytic_rate=0.1894736842077195, class=other, directions=2, seeds=1, observed_mean=0.26512
+  geom=64c52ca6d685b8e1, aug=b54c595f9f37059f, dim=11, analytic_rate=0.1894736842077195, class=slow, directions=2, seeds=1, observed_mean=0.234456
+  geom=64c52ca6d685b8e1, aug=b54c595f9f37059f, dim=11, analytic_rate=0.1894736842077195, class=typical, directions=1, seeds=1, observed_mean=0.304729
+  geom=64c52ca6d685b8e1, aug=ee57001f81a95ff1, dim=11, analytic_rate=0.18947368420975563, class=other, directions=2, seeds=1, observed_mean=0.278442
+  geom=64c52ca6d685b8e1, aug=ee57001f81a95ff1, dim=11, analytic_rate=0.18947368420975563, class=slow, directions=3, seeds=1, observed_mean=0.224237
+  geom=655e0f6492c19e81, aug=ab6054460bf1ec5d, dim=9, analytic_rate=0.015, class=amplitude_unreliable, directions=3, seeds=1, observed_mean=0.168583
+  geom=655e0f6492c19e81, aug=ab6054460bf1ec5d, dim=9, analytic_rate=0.015, class=slow, directions=2, seeds=1, observed_mean=0.158063
+  geom=92ecb568a4b5a7fe, aug=8701e4b031407f1d, dim=9, analytic_rate=0.31578947368212773, class=typical, directions=5, seeds=1, observed_mean=0.315339
+  geom=98960b32a6801790, aug=dc56ebe3075dd7d3, dim=11, analytic_rate=0.189473684210065, class=other, directions=3, seeds=1, observed_mean=0.263865
+  geom=98960b32a6801790, aug=dc56ebe3075dd7d3, dim=11, analytic_rate=0.189473684210065, class=slow, directions=2, seeds=1, observed_mean=0.222896
+  geom=aaad232e68fe332e, aug=6369a11a50c217ee, dim=7, analytic_rate=0.18947368420995325, class=other, directions=1, seeds=1, observed_mean=0.250798
+  geom=aaad232e68fe332e, aug=6369a11a50c217ee, dim=7, analytic_rate=0.18947368420995325, class=slow, directions=4, seeds=1, observed_mean=0.222301
+  geom=be68c2d65b45a5bc, aug=3fcce2388580c72d, dim=14, analytic_rate=0.2526315789466494, class=other, directions=5, seeds=1, observed_mean=0.283548
+  geom=d810ec51ff744b91, aug=8d06a358028731f3, dim=11, analytic_rate=0.1894736842098878, class=other, directions=3, seeds=1, observed_mean=0.278485
+  geom=d810ec51ff744b91, aug=8d06a358028731f3, dim=11, analytic_rate=0.1894736842098878, class=slow, directions=2, seeds=1, observed_mean=0.228032
+  geom=db7e1d4c31dc4662, aug=b7201b175b4c2407, dim=9, analytic_rate=0.3157894736817076, class=typical, directions=5, seeds=1, observed_mean=0.315339
+
+Modal trajectory prediction
+---------------------------
+  median RMSE=0.000326729, median R2=0.999998, median max error=0.000524989
+  R2>=0.95: 784/800
+
+Interpretation constraints
+--------------------------
+* A face class includes support, saturation, outward set, endpoint controllers, and equilibrium rates.
+* Repeated rational-looking rates must be derived from gamma, alpha, incidence, and weights before being called quantized.
+* The exceptional split Jacobian is not a stationary-face Jacobian; pre/post/late stages are reported separately.
+* Negative spectral abscissa is frozen-fast local evidence, not full coupled stability.
+* B_carrier_only/full_reset phase matching is unrelated to this analysis.

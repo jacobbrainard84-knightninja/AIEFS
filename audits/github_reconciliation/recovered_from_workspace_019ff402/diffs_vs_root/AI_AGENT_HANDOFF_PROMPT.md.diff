@@ -1,0 +1,151 @@
+--- worktree/AI_AGENT_HANDOFF_PROMPT.md
++++ zip:workspace-019ff402/AI_AGENT_HANDOFF_PROMPT.md
+@@ -468,13 +468,14 @@
+ 
+ ## 9. Current operator/cocycle program and immediate task
+ 
+-The former stationarity/perturbation task has been completed and superseded by a deeper fixed-branch and augmented-cocycle analysis. Read:
++The former stationarity/perturbation task has been completed and superseded by a fixed-branch, augmented-cocycle, and asymptotic-operator program. Read:
+ 
+ ```text
+ AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md
+-```
+-
+-New principal scripts include:
++AIEF_1_4_FORWARD_PLAN.md
++```
++
++Principal operator/cocycle scripts now include:
+ 
+ ```text
+ AIEF_1_4_exceptional_tangent_analysis.py
+@@ -490,42 +491,93 @@
+ AIEF_1_4_augmented_duhamel_feedback_analysis.py
+ AIEF_1_4_duhamel_memory_alignment_analysis.py
+ AIEF_1_4_feedback_rank_memory_reduction.py
+-```
+-
+-The exceptional K3 winner branch is fixed over the replay. The frozen weight cocycle, full augmented directional tangent, and direction-wise Duhamel decomposition have been validated numerically. The late tested response is nearly rank one and has a stable operational memory-envelope rate near `0.06913` for targets after approximately `T=200`.
+-
+-Immediate task: remain within the saved arrays and test the proposed scalar/spectral-gap reduction directly. With late POD direction `v`, compute:
+-
+-```text
+-a_n      = v^T b_n
+-g_n      = v^T f_n
+-lambda_n = v^T K_n v
+-```
+-
+-and audit:
+-
+-```text
+-||(I-vv^T) K_n v||
+-a_{n+1} - lambda_n a_n - g_n
+-late -log|lambda_n|/dt
+-late forcing-envelope rate of |g_n|
+-kappa_T versus r_B,T - r_g,T
+-```
+-
+-Then fit and out-of-sample test a closed two-state recurrence such as:
+-
+-```text
+-g_{n+1} = rho g_n + chi a_n
+-```
+-
+-Do not run a naive `T_window` future-only sweep from the saved split state: the stored EMA, phase, and history were generated under the original parameter. A valid sensitivity study must regenerate the complete base state for each parameter value and should be separately versioned.
+-
+-Parallel unresolved tasks remain:
+-
+-1. complete the matched-phase `B_carrier_only/full_reset` correction;
+-2. prove the ideal-map and full composed directional theorems;
+-3. perform consistent timestep/safeguard convergence;
+-4. only afterward consider a mirror/proximal AIEF-1.5 model or quasiperiodic analysis.
++AIEF_1_4_scalar_spectral_gap_reduction.py
++AIEF_1_4_propagation_gap_geometric_control.py
++AIEF_1_4_parameter_free_triangular_closure.py
++AIEF_1_4_biorthogonal_triangular_closure.py
++AIEF_1_4_nested_operator_family_audit.py
++AIEF_1_4_defect_recurrence_analytic_mode.py
++AIEF_1_4_defect_causal_ema_trace.py
++```
++
++### Current established replay-specific chain
++
++For exceptional seed `4619122171158768524` and the tested K3 directions:
++
++- positive support and effective winner map are fixed over the replay;
++- the `1e-9` classifier event is not an implemented edge-branch switch;
++- the frozen weight cocycle is non-normal, has a modest early transient, and accurately predicts frozen nonlinear perturbations;
++- the full augmented directional tangent on `(theta,B,C,history)` predicts coupled perturbations with median K3 error around `5e-4` while tested branches remain preserved;
++- the direction-wise Duhamel decomposition is numerically exact and residual forcing matches the differentiated `R -> B` pathway;
++- the late response is nearly rank one and the operational recent-forcing envelope stabilizes near `kappa ~0.06913` after the transient;
++- the geometric right direction is `v=(1,-1,-1)/sqrt(3)`;
++- the analytic left covector is `u=sqrt(3)/2*(1,0,-1)` and fixed biorthogonal coordinates repair the direction-0 scalar rollout;
++- the K3 matrices lie in nested sparse/right-invariant/biorthogonal/symmetric families;
++- the dominant left-breaking defect has implementation-derived raw shape
++  ```text
++  E* = [[-1,0,-1],[0,0,0],[0,0,0]]
++  ```
++  and preserves the right line exactly;
++- projected analytic defect shapes match numerical defect POD directions at cosine `1-O(1e-12)`;
++- the dominant coefficient mismatch and family-defect matrices obey the EMA multiplier pointwise to approximately `1e-9` late.
++
++### Productive negative result and resolved observable mechanism
++
++The full directed complex EMA difference does **not** decay at the EMA rate. Its norm and the phase-source-difference norm remain persistent. Retire the simple causal story:
++
++```text
++homogeneous decay of full complex Delta C -> Delta R
++```
++
++Subsequent analyses resolved the missing observation layer:
++
++- both directed squared-magnitude differences acquire the EMA multiplier before symmetrization;
++- forward/reverse magnitude differences reinforce rather than cancel;
++- the persistent complex difference becomes tangential to the complex midpoint;
++- source and memory angular separations lock;
++- the exact alignment residual splits into comparable terms with `T1/T2 -> -1`;
++- source increments and tracking errors exhibit a replay-supported Jordan-resonant form;
++- source mean and separation increments acquire the EMA-rate envelope through cancellation of intrinsic-frequency, projected-coupling, and delayed-history terms.
++
++The current replay-specific chain is:
++
++```text
++delayed phase-balance cancellation
++-> Delta z converges to a nonzero complex limit
++-> resonant EMA tracking E_n ~ (A+B n) alpha^n
++-> persistent tangential complex separation
++-> radial magnitude alpha-mode
++-> Delta R -> Delta B -> proposal -> operator defect
++```
++
++Do not call `lambda_B/alpha_EMA` a loop gain. It is a relative-retention factor. A genuine loop gain requires cross-block return operators.
++
++### Immediate task
++
++Do not add another local exceptional-seed diagnostic. The next task is formal consolidation and scoped generalization:
++
++1. convert `AIEF_1_4_OPERATOR_COCYCLE_CLOSURE_THEOREM_NOTE.md` and `AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md` into a proof-oriented manuscript with exact assumptions and proof status;
++2. use the frozen lineage artifacts
++   ```text
++   AIEF_1_4_analysis_lineage.csv
++   AIEF_1_4_superseded_claims.csv
++   AIEF_1_4_operator_cocycle_closure_note.md
++   AIEF_1_4_lineage_freeze_manifest.json
++   ```
++   as the claim/evidence registry;
++3. test geometric/dual invariant subspaces on existing ordinary `K4`, `K5`, and `K6` components;
++4. complete the matched-phase `B_carrier_only/full_reset` correction;
++5. only afterward run fully regenerated EMA and timestep/safeguard studies.
++
++Do not run a naive `T_window` future-only sweep from the saved split state. The stored EMA, phase, and history were generated under the original parameter.
++
++Parallel open theory remains:
++
++- full composed Hadamard directional differentiability away from gate/coherence singularities;
++- derivation of delayed phase-balance convergence from the coupled nonlinear equations;
++- joint timestep/slack/safeguard limit;
++- generality beyond this seed, branch, and two directions;
++- full-state geometry only after phase quotient and history-consistency controls.
+ 
+ ---
+ 

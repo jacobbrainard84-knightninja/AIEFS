@@ -1,0 +1,61 @@
+--- worktree/AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md
++++ zip:workspace-019ff402/AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md
+@@ -241,6 +241,58 @@
+ 
+ This distinction is forced by the new branch-margin result and should be retained in all manuscript statements.
+ 
++### Saved sign audit
++
++The additional trajectory extraction reports
++
++\[
++\begin{array}{c|cc|cc}
++&\min\Delta x&\min\Delta R&\text{sign changes}&\text{all positive}\\ \hline
++\text{fixed-left}&5.42267\times10^{-9}&5.35277\times10^{-9}&0&\text{yes}\\
++\text{right-mode}&2.81997\times10^{-14}&2.01542\times10^{-11}&0&\text{yes}
++\end{array}
++\]
++
++Thus the saved trajectory approaches the tie boundary inside the positive proposal and resonance cones. Because
++
++\[
++d_{n+1}^j=\lambda_n^jd_n^j+a_Rr_{n+1}^j
++\]
++
++with \(\lambda_n^j,a_R>0\), positivity of \(r_{n+1}^j\) is a sufficient inductive barrier against a finite winner crossing. The future proof target can therefore be sharpened to one-sided resonance ordering:
++
++\[
++R_{25,n}>R_{59,n}>R_{29,n}
++\]
++
++for every finite step, with both differences tending to zero.
++
++The final right-mode proposal difference is already near floating-point resolution. Its fitted tail and winner label should therefore be treated as deterministic finite-replay facts, not evidence of a numerically robust positive margin.
++
++### Asymptotic transfer-gain check
++
++If \(r_{n+1}/r_n\to\alpha\) and \(\lambda_n\to\lambda_*<\alpha\), the exact recurrence implies
++
++\[
++\frac{d_n}{r_n}
++\to
++G_*
++=
++\frac{dt(\eta+\mu)\alpha}{\alpha-\lambda_*}.
++\]
++
++Using \(dt(\eta+\mu)=0.0007\):
++
++\[
++\begin{array}{c|cc}
++\text{channel}&G_*\text{ predicted}&(\Delta x/\Delta R)\text{ final}\\ \hline
++\text{fixed-left}&1.0130571021&1.0130571619\\
++\text{right-mode}&0.0013990334&0.0014019490
++\end{array}
++\]
++
++The fixed-left relative discrepancy is approximately \(5.9\times10^{-8}\). The right-mode discrepancy is approximately \(2.1\times10^{-3}\), consistent with that channel already operating near the numerical floor. This supplies a parameter-free amplitude closure in addition to the rate closure.
++
+ ---
+ 
+ ## 7. Updated evidence hierarchy

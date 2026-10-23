@@ -1,0 +1,79 @@
+AIEF-1.3 paired seed-level analysis
+====================================
+
+Continuous differences are baseline minus control.
+Bootstrap confidence intervals and raw effect magnitudes are primary.
+Sign-flip p-values are supporting symmetry-based tests, not design-based randomization tests.
+Pooled confidence intervals use a stratified paired bootstrap.
+Correlation comparisons are non-estimable when either member is degenerate.
+
+Cohorts: validation_A, validation_B
+
+shuffle_R
+---------
+  D_B [primary]: valid=100/100, base=0.305909, control=0.000000, delta=0.305909, 95% CI=[0.298939, 0.313030], dz=8.434, relative=1.000, positive=1.000, p_sign(supporting)=0.000010
+  P_mean [primary]: valid=100/100, base=0.305909, control=0.000000, delta=0.305909, 95% CI=[0.298939, 0.313030], dz=8.434, relative=1.000, positive=1.000, p_sign(supporting)=0.000010
+  P_max [primary]: valid=100/100, base=1.000000, control=0.000000, delta=1.000000, 95% CI=[1.000000, 1.000000], dz=nan, relative=1.000, positive=1.000, p_sign(supporting)=0.000010
+  P_nonzero_fraction [secondary]: valid=100/100, base=0.305909, control=0.000000, delta=0.305909, 95% CI=[0.298788, 0.313030], dz=8.434, relative=1.000, positive=1.000, p_sign(supporting)=0.000010
+  Cov_physical [secondary]: valid=100/100, base=0.188322, control=0.000000, delta=0.188322, 95% CI=[0.185481, 0.191059], dz=13.007, relative=nan, positive=1.000, p_sign(supporting)=0.000010
+  Total_edge_weight [secondary]: valid=100/100, base=3.638500, control=0.060335, delta=3.578165, 95% CI=[3.543531, 3.612670], dz=20.276, relative=0.983, positive=1.000, p_sign(supporting)=0.000010
+  Effective_edges [secondary]: valid=100/100, base=14.596224, control=30.061692, delta=-15.465468, 95% CI=[-16.266071, -14.659044], dz=-3.773, relative=-1.060, positive=0.000, p_sign(supporting)=0.000010
+  P_degenerate [primary]: base=0.000, control=1.000, delta(control-base)=1.000, direction=increased_in_control, p_McNemar=0.000000
+  cohort check D_B: validation_A=0.308788, validation_B=0.303030, A-B=0.005758, 95% CI=[-0.008182, 0.020000], same_direction=True
+  cohort check P_mean: validation_A=0.308788, validation_B=0.303030, A-B=0.005758, 95% CI=[-0.007879, 0.020303], same_direction=True
+  cohort check P_max: validation_A=1.000000, validation_B=1.000000, A-B=0.000000, 95% CI=[0.000000, 0.000000], same_direction=True
+
+no_delay
+--------
+  Corr_physical [primary]: valid=100/100, base=0.995217, control=0.998545, delta=-0.003328, 95% CI=[-0.004526, -0.002318], dz=-0.582, relative=nan, positive=0.010, p_sign(supporting)=0.000010
+  FisherZ_Corr_physical [sensitivity]: valid=100/100, base=3.226103, control=3.612495, delta=-0.386391, 95% CI=[-0.498018, -0.223342], dz=-0.538, relative=nan, positive=0.010, p_sign(supporting)=0.000010
+  D_B [primary]: valid=100/100, base=0.305909, control=0.333333, delta=-0.027424, 95% CI=[-0.034697, -0.020303], dz=-0.756, relative=-0.090, positive=0.010, p_sign(supporting)=0.000010
+  P_mean [primary]: valid=100/100, base=0.305909, control=0.333333, delta=-0.027424, 95% CI=[-0.034394, -0.020455], dz=-0.756, relative=-0.090, positive=0.010, p_sign(supporting)=0.000010
+  Effective_edges [secondary]: valid=100/100, base=14.596224, control=15.882353, delta=-1.286129, 95% CI=[-1.687610, -0.819957], dz=-0.575, relative=-0.088, positive=0.500, p_sign(supporting)=0.000010
+  r_mean [secondary]: valid=100/100, base=0.547742, control=0.565857, delta=-0.018115, 95% CI=[-0.022999, -0.013543], dz=-0.744, relative=-0.033, positive=0.170, p_sign(supporting)=0.000010
+  P_degenerate [secondary]: base=0.000, control=0.000, delta(control-base)=0.000, direction=no_rate_difference, p_McNemar=1.000000
+  cohort check D_B: validation_A=-0.024545, validation_B=-0.030303, A-B=0.005758, 95% CI=[-0.007879, 0.020303], same_direction=True
+  cohort check Corr_physical: validation_A=-0.002733, validation_B=-0.003923, A-B=0.001190, 95% CI=[-0.000855, 0.003586], same_direction=True
+  cohort check P_mean: validation_A=-0.024545, validation_B=-0.030303, A-B=0.005758, 95% CI=[-0.007879, 0.020000], same_direction=True
+
+no_mu
+-----
+  D_B [primary]: valid=100/100, base=0.305909, control=0.034848, delta=0.271061, 95% CI=[0.260303, 0.281667], dz=4.900, relative=0.886, positive=1.000, p_sign(supporting)=0.000010
+  P_mean [secondary]: valid=100/100, base=0.305909, control=0.034768, delta=0.271142, 95% CI=[0.260015, 0.282104], dz=4.771, relative=0.886, positive=1.000, p_sign(supporting)=0.000010
+  Total_edge_weight [primary]: valid=100/100, base=3.638500, control=3.781173, delta=-0.142673, 95% CI=[-0.178256, -0.107711], dz=-0.788, relative=-0.039, positive=0.520, p_sign(supporting)=0.000010
+  Mean_row_sum [secondary]: valid=100/100, base=0.606417, control=0.630195, delta=-0.023779, 95% CI=[-0.029779, -0.017974], dz=-0.788, relative=-0.039, positive=0.520, p_sign(supporting)=0.000010
+  Effective_edges [primary]: valid=100/100, base=14.596224, control=34.359402, delta=-19.763178, 95% CI=[-20.519886, -18.980089], dz=-4.969, relative=-1.354, positive=0.000, p_sign(supporting)=0.000010
+  Weight_gini [primary]: valid=100/100, base=0.761212, control=0.481644, delta=0.279568, 95% CI=[0.268052, 0.290578], dz=4.887, relative=nan, positive=1.000, p_sign(supporting)=0.000010
+  Weight_entropy [primary]: valid=100/100, base=0.683085, control=0.884019, delta=-0.200934, 95% CI=[-0.207726, -0.194257], dz=-5.792, relative=-0.294, positive=0.000, p_sign(supporting)=0.000010
+  Nonzero_edge_fraction [secondary]: valid=100/100, base=0.305909, control=1.000000, delta=-0.694091, 95% CI=[-0.701212, -0.686970], dz=-19.135, relative=-2.269, positive=0.000, p_sign(supporting)=0.000010
+  Projection_norm_mean_active [secondary]: valid=100/100, base=0.002300, control=0.002763, delta=-0.000463, 95% CI=[-0.000506, -0.000419], dz=-2.065, relative=-0.201, positive=0.010, p_sign(supporting)=0.000010
+  P_degenerate [secondary]: base=0.000, control=0.000, delta(control-base)=0.000, direction=no_rate_difference, p_McNemar=1.000000
+  cohort check D_B: validation_A=0.273333, validation_B=0.268788, A-B=0.004545, 95% CI=[-0.016970, 0.026068], same_direction=True
+  cohort check Total_edge_weight: validation_A=-0.132307, validation_B=-0.153038, A-B=0.020731, 95% CI=[-0.048909, 0.093033], same_direction=True
+  cohort check Effective_edges: validation_A=-19.684911, validation_B=-19.841445, A-B=0.156535, 95% CI=[-1.400957, 1.718827], same_direction=True
+  cohort check Weight_gini: validation_A=0.277067, validation_B=0.282069, A-B=-0.005002, 95% CI=[-0.027493, 0.017018], same_direction=True
+  cohort check Weight_entropy: validation_A=-0.197781, validation_B=-0.204087, A-B=0.006306, 95% CI=[-0.006717, 0.020064], same_direction=True
+
+no_gap
+------
+  D_B [primary]: valid=100/100, base=0.305909, control=0.726818, delta=-0.420909, 95% CI=[-0.478030, -0.362879], dz=-1.417, relative=-1.376, positive=0.000, p_sign(supporting)=0.000010
+  P_mean [secondary]: valid=100/100, base=0.305909, control=0.726818, delta=-0.420909, 95% CI=[-0.477879, -0.361970], dz=-1.417, relative=-1.376, positive=0.000, p_sign(supporting)=0.000010
+  G_min_over_time [primary]: valid=100/100, base=0.050000, control=-32.784464, delta=32.834464, 95% CI=[30.556932, 35.073198], dz=2.810, relative=nan, positive=1.000, p_sign(supporting)=0.000010
+  Total_edge_weight [primary]: valid=100/100, base=3.638500, control=127.857652, delta=-124.219152, 95% CI=[-134.588362, -113.633173], dz=-2.314, relative=-34.140, positive=0.000, p_sign(supporting)=0.000010
+  Effective_edges [secondary]: valid=100/100, base=14.596224, control=47.969983, delta=-33.373759, 95% CI=[-37.102261, -29.586082], dz=-1.727, relative=-2.286, positive=0.000, p_sign(supporting)=0.000010
+  r_mean [secondary]: valid=100/100, base=0.547742, control=0.735002, delta=-0.187260, 95% CI=[-0.213161, -0.161051], dz=-1.401, relative=-0.342, positive=0.050, p_sign(supporting)=0.000010
+  Corr_physical [secondary]: valid=49/100, base=0.994670, control=0.971978, delta=0.022691, 95% CI=[0.017545, 0.027419], dz=1.265, relative=nan, positive=0.918, p_sign(supporting)=0.000010
+  P_degenerate [secondary]: base=0.000, control=0.510, delta(control-base)=0.510, direction=increased_in_control, p_McNemar=0.000000
+  cohort check D_B: validation_A=-0.438182, validation_B=-0.403636, A-B=-0.034545, 95% CI=[-0.150000, 0.079394], same_direction=True
+  cohort check G_min_over_time: validation_A=33.594608, validation_B=32.074319, A-B=1.520289, 95% CI=[-3.114324, 6.075456], same_direction=True
+  cohort check Total_edge_weight: validation_A=-127.756820, validation_B=-120.681484, A-B=-7.075336, 95% CI=[-27.870348, 13.796113], same_direction=True
+
+Interpretation notes
+--------------------
+* Raw differences and bootstrap CIs are the headline results.
+* Paired Cohen dz is undefined when the paired SD is zero but the mean is nonzero.
+* Relative differences are emitted only for eligible nonnegative ratio-scale metrics.
+* Do not compare baseline and shuffle_R using Fisher-z if shuffle_R is degenerate.
+* Treat no_gap correlation as conditional on the finite paired subset.
+* Phi is intentionally excluded because it is unstable near zero density.
+* Cohort compatibility uses a bootstrap difference of cohort mean effects; with two cohorts it is diagnostic, not a random-effects meta-analysis.

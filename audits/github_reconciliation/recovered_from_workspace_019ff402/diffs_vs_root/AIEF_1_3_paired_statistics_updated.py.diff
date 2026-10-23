@@ -1,0 +1,16 @@
+--- worktree/AIEF_1_3_paired_statistics_updated.py
++++ zip:workspace-019ff402/AIEF_1_3_paired_statistics_updated.py
+@@ -48,11 +48,11 @@
+ DEFAULT_COHORTS = (
+     (
+         "validation_A",
+-        "/home/deck/AI_Programs/SSRH/runs/87dfe5798954/AIEF_1_3_87dfe5798954_scalar_summary.csv",
++        "runs/c3da1ac707bf/AIEF_1_3_c3da1ac707bf_scalar_summary.csv",
+     ),
+     (
+         "validation_B",
+-        "/home/deck/AI_Programs/SSRH/runs/5a338105785a/AIEF_1_3_5a338105785a_scalar_summary.csv",
++        "runs/73dca37cf93f/AIEF_1_3_73dca37cf93f_scalar_summary.csv",
+     ),
+ )
+ 

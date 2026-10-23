@@ -1,0 +1,173 @@
+{
+  "source_archive": "workspace-019ff402-3611-7903-99ce-0679e00cb830.zip",
+  "source_archive_sha256": "3075fa389945d0e0c5c0750b231b21a3d47bc6a2daa770b07216c6a149c6c170",
+  "policy": "Additive non-destructive recovery into audits/github_reconciliation/; zero root files overwritten.",
+  "recovered_items": [
+    {
+      "member": "AIEF_1_3_closure_diagnostics.py",
+      "relation": "DIVERGENT_ZIP_UPDATED_DEFAULT_COHORT_PATHS",
+      "worktree_sha256": "fb3a026a5be606c090a7f84166671ec1b8df57221d202cfe3b528cdff61935da",
+      "zip_sha256": "6b5d5a16152a1839eb363e77cc36e88cd12d83401f32b2f042647964052eeb2a",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_closure_diagnostics.py.diff"
+    },
+    {
+      "member": "AIEF_1_3_closure_diagnostics_updated.py",
+      "relation": "DIVERGENT_ZIP_UPDATED_DEFAULT_COHORT_PATHS",
+      "worktree_sha256": "dea07357fef0036bc06710c51612de9ea1963dcae544d34c8d88e53beb28c03f",
+      "zip_sha256": "70530ecf3a9382dbd1e5f38c41ca660531801b7c7517c81c0ef980fe6e26e050",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_closure_diagnostics_updated.py.diff"
+    },
+    {
+      "member": "AIEF_1_3_paired_statistics.py",
+      "relation": "DIVERGENT_ZIP_UPDATED_DEFAULT_COHORT_PATHS",
+      "worktree_sha256": "c7227ac6ff6d6c0ca9c4329896491e737ca01e47589b90c0d7a550f942a1d56e",
+      "zip_sha256": "9094d73116bc52508376c063031466bc92f69efef58766506a8a64817724037a",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_paired_statistics.py.diff"
+    },
+    {
+      "member": "AIEF_1_3_paired_statistics_updated.py",
+      "relation": "DIVERGENT_ZIP_UPDATED_DEFAULT_COHORT_PATHS",
+      "worktree_sha256": "ce3914c2ba80040821c62da3eba4587cac270ca82c27634396663915504bf26e",
+      "zip_sha256": "a9b79ae7026883e2f7ccc9407fd39f6f731ea376fa8415f6a3cce753f53d2562",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_paired_statistics_updated.py.diff"
+    },
+    {
+      "member": "AIEF_1_4_CONDITIONAL_PROPOSAL_EQUALIZATION_THEOREM.md",
+      "relation": "DIVERGENT_ZIP_HAS_EXPANDED_REVISION",
+      "worktree_sha256": "a297d9da962a2f4cfc56759f89b3e4a80514ac47b400f4ae2de1e57428fcc859",
+      "zip_sha256": "0bc28448c9d54a6d69bf9bf43c9d0784257380fdec776a3a40204b6293f0b5ac",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_CONDITIONAL_PROPOSAL_EQUALIZATION_THEOREM.md.diff"
+    },
+    {
+      "member": "AIEF_1_4_CONTROLLER_FIBER_CLAIM_REGISTRY.csv",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "2fb5517d31f0fba87e629e5de4c373065224fa98b0c10cfbb337318b3ae0f791",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_CONTROLLER_FIBER_CLAIM_REGISTRY.csv"
+    },
+    {
+      "member": "AIEF_1_4_CONTROLLER_FIBER_FREEZE_MANIFEST.json",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "f12bb55db63d543b0ab78cd62b518e071d2d593a08dd65f0b6dd8e0241379541",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_CONTROLLER_FIBER_FREEZE_MANIFEST.json"
+    },
+    {
+      "member": "AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md",
+      "relation": "DIVERGENT_ZIP_HAS_EXPANDED_REVISION",
+      "worktree_sha256": "602c56e5b37ba165a7522dafff9c61aa93d06640b660f827a7cea37a1923b850",
+      "zip_sha256": "92ba23f163a8555bd8562712b4bf682deecc7aa67e2b1f891e33c72f0d31cbab",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md.diff"
+    },
+    {
+      "member": "AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md",
+      "relation": "DIVERGENT_ZIP_HAS_EXPANDED_REVISION",
+      "worktree_sha256": "e77f0843b96050b4885e2c8b5d4d89b90d629995c6f41fe0a1ae649d181d4194",
+      "zip_sha256": "b508c4e0817bc7cea2b28ccb91dcdd0e89b577a5a048acdef6c59a92fe34fdf6",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md.diff"
+    },
+    {
+      "member": "AIEF_1_4_analysis_lineage.csv",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "a633819df8a2c512d7ade3378b40e85c2288527a513b6a6d86c823b836a481a6",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_analysis_lineage.csv"
+    },
+    {
+      "member": "AIEF_1_4_freeze_analysis_lineage.py",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "10db7dfc2d40fc7c67b0a2bdb23e13cbb71f21acd2cd9bcf2995e408d34a52c7",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_freeze_analysis_lineage.py"
+    },
+    {
+      "member": "AIEF_1_4_lineage_freeze_manifest.json",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "41eb3406b656eda8e7825d32e0a9571db5099ec2f3d07357bac5773ce275e4dd",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_lineage_freeze_manifest.json"
+    },
+    {
+      "member": "AIEF_1_4_memory_ablation_plan.md",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "aa2169233f0930145682950fa178a00d105ebe69cf35a0e462caffccb492c907",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_memory_ablation_plan.md"
+    },
+    {
+      "member": "AIEF_1_4_memory_ablation_updated.py",
+      "relation": "DIVERGENT_WORKTREE_IS_FROZEN_SOURCE_AUTHORITY",
+      "worktree_sha256": "a94acae3f6b7cc2baef62c53eaaa07acac346ce073e18d8f566e22bef7d03549",
+      "zip_sha256": "34d37908479f766c4036b35975b334935a5b5fb60c0c437d7649db8d14473257",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_memory_ablation_updated.py.diff"
+    },
+    {
+      "member": "AIEF_1_4_operator_cocycle_closure_note.md",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "4d6f585d578f6f6f04b2a12550ae9b634c28bb79f9b61e10a0bc7e7721156b39",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_operator_cocycle_closure_note.md"
+    },
+    {
+      "member": "AIEF_1_4_stationarity_perturbation_analysis.py",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "5a24adebe03d13f5933e883f3536abc71b93cd5aaf1938c017418351457e352b",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_stationarity_perturbation_analysis.py"
+    },
+    {
+      "member": "AIEF_1_4_trajectory_recovery_equivalence.py",
+      "relation": "DIVERGENT_MINOR_REFACTOR_DIFF",
+      "worktree_sha256": "0dc933c445a7131c445ffd95f763be96c1b638b3335f4f2899b1ad349767c773",
+      "zip_sha256": "2e540b819d1df3541dd35f573135a43a0411dc56b65e3cc939f75b4a8ca4e765",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_trajectory_recovery_equivalence.py.diff"
+    },
+    {
+      "member": "AIEF_MATCHED_PHASE_CODING_AGENT_PROMPT.md",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "d30928bd278ed60408c473f4f8d92c72b3998718093f1db2157dc64cea2a6d67",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_MATCHED_PHASE_CODING_AGENT_PROMPT.md"
+    },
+    {
+      "member": "AI_AGENT_HANDOFF_PROMPT.md",
+      "relation": "DIVERGENT_ZIP_HAS_EXPANDED_REVISION",
+      "worktree_sha256": "5c24dbdfa9f71e2feccc16369ab2001c81f37baeec786bef686eabf2985311c3",
+      "zip_sha256": "e50443113589bf3353240515aa4ec2fbcff68b82574af8ea6ba2235d516c6556",
+      "diff_path": "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AI_AGENT_HANDOFF_PROMPT.md.diff"
+    },
+    {
+      "member": "results_embedded.bin",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "f19dde89409305378a3e0e3256d579e5fec6ce59c14779911e522b40497f454b",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/results_embedded.bin"
+    },
+    {
+      "member": "results_embedded.docx",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "f19dde89409305378a3e0e3256d579e5fec6ce59c14779911e522b40497f454b",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/results_embedded.docx"
+    },
+    {
+      "member": "uploads/Results.pdf",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "a82abed2bbc3fa703e213b5ca31dae93e6edb09d9b65a00e67d376f0e81775c5",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/Results.pdf"
+    },
+    {
+      "member": "uploads/channel_invariance_report.txt",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "940eb896a51777a55ee286fc096733ab9d99eaed7de843734da45f2aa965012d",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/channel_invariance_report.txt"
+    },
+    {
+      "member": "uploads/exceptional_tangent_report.txt",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "646615c4539ead85b7b9c227a69720a1cb0fb10951d3481f46bd22af3076ebd9",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/exceptional_tangent_report.txt"
+    },
+    {
+      "member": "uploads/face_spectrum_report.txt",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "0366698cc05d711ed56fd7714ee78b446bf7c5070287abe5e546289fbb177f5b",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/face_spectrum_report.txt"
+    },
+    {
+      "member": "uploads/trajectory_recovery_report.txt",
+      "relation": "ZIP_ONLY_MISSING_FROM_WORKTREE",
+      "sha256": "2360ad923aff4b48ca2c0c29ff4eecd8f8eff4131371a5e0d22e5c3f6de0d76f",
+      "saved_to": "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/trajectory_recovery_report.txt"
+    }
+  ]
+}
