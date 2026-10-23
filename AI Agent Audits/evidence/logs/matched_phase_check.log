@@ -1,0 +1,10 @@
+== matched_phase_check: python AI Agent Audits/evidence/scripts/matched_phase_check.py (cwd=repo root)
+P_mean_late {'n': 40, 'mean': -0.01760951449983707, 'ci95': [-0.026670732934180503, -0.008573126221896385], 'n_pos': 12, 'n_neg': 25, 'per_source_means': {'carrier_reset': -0.018904578038449, 'full_reset': -0.016314450961225146}}
+Weighted_similarity_late {'n': 40, 'mean': 0.06415367319994265, 'ci95': [0.040491943006563315, 0.0885790188769976], 'n_pos': 31, 'n_neg': 9, 'per_source_means': {'carrier_reset': 0.06868215221365882, 'full_reset': 0.05962519418622649}}
+Retention_selected_late {'n': 40, 'mean': 0.007287077708070408, 'ci95': [-0.015848163527565698, 0.030627433166429074], 'n_pos': 24, 'n_neg': 11, 'per_source_means': {'carrier_reset': 0.0027565339301332398, 'full_reset': 0.011817621486007577}}
+Emergence_unselected_late {'n': 40, 'mean': -0.02706176757843588, 'ci95': [-0.03686325219103053, -0.017468224028520753], 'n_pos': 6, 'n_neg': 23, 'per_source_means': {'carrier_reset': -0.02719640627699261, 'full_reset': -0.026927128879879147}}
+D_B_final {'n': 40, 'mean': -0.017992424242424233, 'ci95': [-0.027462121212121205, -0.00871212121212121], 'n_pos': 7, 'n_neg': 25, 'per_source_means': {'carrier_reset': -0.018939393939393933, 'full_reset': -0.017045454545454537}}
+Minimum_similarity {'n': 40, 'mean': 0.10077556208048381, 'ci95': [0.08002536553598392, 0.11944067465653428], 'n_pos': 37, 'n_neg': 3, 'per_source_means': {'carrier_reset': 0.10893864749517441, 'full_reset': 0.0926124766657932}}
+seed_status_counts {'success': 40}
+canonical_dir_manifest {'anchor_failed': True, 'error': 'Anchor validation FAILED for seed=11242426753702356865. Check frozen_anchor_validation.csv for details.', 'failed_seeds': ['11242426753702356865'], 'freezeable': False, 'full_cohort': False, 'initial_match_failed': False, 'run_scope': 'partial', 'seed_status': {'11242426753702356865': 'failed: RuntimeError: Anchor validation FAILED for seed=11242426753702356865. Check frozen_anchor_validation.csv for details.'}, 'seeds_requested': ['11242426753702356865'], 'status': 'FAILED'}
+exit 0

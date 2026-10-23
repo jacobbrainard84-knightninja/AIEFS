@@ -1,0 +1,13 @@
+✖ [1180/1236] Running job computation
+error: AIEFProofs: some modules have bad imports
+✖ [1234/1236] Running AIEFProofs.ControllerFiberProjector
+error: no such file or directory (error code: 4294967294)
+  file: <tmpcopy>/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean
+✖ [1235/1236] Running AIEFProofs
+error: AIEFProofs.lean: bad import 'AIEFProofs.ControllerFiberProjector'
+Some required targets logged failures:
+- job computation
+- AIEFProofs.ControllerFiberProjector
+- AIEFProofs
+error: build failed
+BUILD_EXIT 1
