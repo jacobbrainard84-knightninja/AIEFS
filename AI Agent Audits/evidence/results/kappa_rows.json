@@ -1,0 +1,44 @@
+{
+ "T_w": 17.502917152858814,
+ "alpha": 0.9994288298464774,
+ "two_eta_over_c": 0.12631578947368421,
+ "r_g": 0.05713333333333332,
+ "kappa_cont": 0.0691824561403509,
+ "rB_discrete_R1": 0.12625500450081154,
+ "kappa_discrete_R1": 0.06912167116748011,
+ "row_rates": {
+  "2": {
+   "sumF_over_c": 0.12419292191137614,
+   "gam_plus_sumF_over_c_WRONG_extra_gamma": 0.13919292191137614
+  },
+  "7": {
+   "sumF_over_c": 0.12419532273222272,
+   "gam_plus_sumF_over_c_WRONG_extra_gamma": 0.13919532273222274
+  },
+  "11": {
+   "sumF_over_c": 0.12207872105063049,
+   "gam_plus_sumF_over_c_WRONG_extra_gamma": 0.1370787210506305
+  }
+ },
+ "repo": {
+  "observed_kappa_t320": 0.0691225,
+  "rB_fit": 0.127056,
+  "rg_fit": 0.0571331,
+  "predicted_gap": 0.0699224
+ },
+ "rel_err_cont_vs_obs": 0.0008673896394212806,
+ "repo_rB_minus_2eta_over_c": 0.0007402105263157877,
+ "repo_report_lines_with_kappa": [
+  "AIEF scalar spectral-gap reduction analysis",
+  "Target-wise spectral-gap tests",
+  "  direction=0, target=150: observed_kappa=0.0729118, rB=0.126942, rg=0.0559123, predicted_gap=0.0710293, closure_error=0.00188243, forcing_R2=0.999915",
+  "  direction=0, target=200: observed_kappa=0.0694548, rB=0.127049, rg=0.057036, predicted_gap=0.0700129, closure_error=-0.000558139, forcing_R2=0.999999",
+  "  direction=0, target=250: observed_kappa=0.06915, rB=0.127055, rg=0.0571258, predicted_gap=0.0699293, closure_error=-0.000779324, forcing_R2=1",
+  "  direction=0, target=320: observed_kappa=0.0691225, rB=0.127056, rg=0.0571331, predicted_gap=0.0699224, closure_error=-0.000799895, forcing_R2=1",
+  "  direction=1, target=150: observed_kappa=0.0746451, rB=0.126942, rg=0.0551524, predicted_gap=0.0717893, closure_error=0.00285581, forcing_R2=0.999762",
+  "  direction=1, target=200: observed_kappa=0.0696454, rB=0.127049, rg=0.0569785, predicted_gap=0.0700705, closure_error=-0.000425054, forcing_R2=0.999999",
+  "  direction=1, target=250: observed_kappa=0.0691663, rB=0.127055, rg=0.0571214, predicted_gap=0.0699338, closure_error=-0.000767472, forcing_R2=1",
+  "  direction=1, target=320: observed_kappa=0.0691229, rB=0.127056, rg=0.057133, predicted_gap=0.0699225, closure_error=-0.000799574, forcing_R2=1",
+  "* Spectral-gap estimates use related quantities from one trajectory and are deterministic mechanism checks, not independent statistical replications."
+ ]
+}
