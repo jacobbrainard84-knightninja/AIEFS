@@ -1,0 +1,13 @@
+== repro13: python AI Agent Audits/evidence/scripts/repro13.py
+AI Agent Audits/evidence/scripts/repro13.py:27: RuntimeWarning: Mean of empty slice
+  summ[c] = dict(n=len(rr), **{k: float(np.nanmean([r['scalars'][k][0] for r in rr])) for k in ['D_B', 'Corr_physical', 'Total_edge_weight', 'Effective_edges']})
+runs 500 bit-exact 500
+baseline {'n': 100, 'D_B': 0.3059090909090909, 'Corr_physical': 0.9952171167679806, 'Total_edge_weight': 3.638499999933411, 'Effective_edges': 14.596223638985892}
+shuffle_R {'n': 100, 'D_B': 0.0, 'Corr_physical': nan, 'Total_edge_weight': 0.06033464454055355, 'Effective_edges': 30.061691955612595}
+no_delay {'n': 100, 'D_B': 0.3333333333333334, 'Corr_physical': 0.9985447393332136, 'Total_edge_weight': 3.7999999999939837, 'Effective_edges': 15.882352941176409}
+no_mu {'n': 100, 'D_B': 0.034848484848484844, 'Corr_physical': 0.24538749885866318, 'Total_edge_weight': 3.7811727094649954, 'Effective_edges': 34.35940167564288}
+no_gap {'n': 100, 'D_B': 0.7268181818181819, 'Corr_physical': 0.9719782540306436, 'Total_edge_weight': 127.85765164105656, 'Effective_edges': 47.9699825720864}
+
+real	4m45.390s
+user	31m55.639s
+sys	0m0.548s

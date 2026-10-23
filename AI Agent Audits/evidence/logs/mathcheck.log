@@ -1,0 +1,13 @@
+== mathcheck: python AI Agent Audits/evidence/scripts/mathcheck.py (cwd=repo root)
+N 12 cap 0.6333333333333333
+witness: input rowsum 0.9500000000000002 output rowsum 0.6333333333326666 margin 6.666889262874065e-13 min edge 0.057575757575696954 output!=input True
+  rowsum=cap*(1+0.001): scale applied 0.9990009989994234
+  rowsum=cap*(1+1e-09): scale applied 0.999999998998421
+  rowsum=cap*(1+1e-14): scale applied 0.9999999999984109
+  at boundary scale 0.9999999999984209
+KL-proj vs AIEF map: max|diff| per trial [0.0237 0.0296 0.0234 0.0251 0.0222] KL(AIEF)-KL(proj) >0: [0.09632 0.1601  0.14079 0.10989 0.14373]
+same fiber: True
+fiber-affine residual: 6.071532165918825e-18
+C v = [0 0]
+Jordan residual -1.7763568394002505e-14
+exit 0

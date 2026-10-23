@@ -1,0 +1,9 @@
+== omega_random: python AI Agent Audits/evidence/scripts/omega_random.py
+uniform   no_delay n=20 err=0 exact=1 subset=5 precision=0.717 recall=0.575 meanD_B=0.190 mean n_pred=15.7 n_act=12.6 Corr_phys=0.711 corr(P,Rpred)=0.613
+uniform   baseline n=40 err=0 exact=0 subset=9 precision=0.600 recall=0.508 meanD_B=0.201 mean n_pred=15.7 n_act=13.2 Corr_phys=0.712 corr(P,Rpred)=0.508
+clustered no_delay n=20 err=0 exact=3 subset=17 precision=0.933 recall=0.282 meanD_B=0.158 mean n_pred=34.4 n_act=10.4 Corr_phys=0.588 corr(P,Rpred)=0.599
+clustered baseline n=40 err=0 exact=3 subset=26 precision=0.838 recall=0.267 meanD_B=0.166 mean n_pred=34.4 n_act=10.9 Corr_phys=0.634 corr(P,Rpred)=0.520
+
+real	1m14.696s
+user	7m30.650s
+sys	0m0.097s
