@@ -1,0 +1,7 @@
+== delay_paired: python AI Agent Audits/evidence/scripts/delay_paired_heldout.py
+runs 240
+
+real	2m20.759s
+user	15m36.260s
+sys	0m0.199s
+exit 0
