@@ -1,6 +1,12 @@
 # AIEFS — Independent Audit (read-only)
 
-Repo: https://github.com/jacobbrainard84-knightninja/AIEFS (main), cloned to `/workspace/AIEFS`. Nothing was pushed, committed, or filed. All scratch scripts and logs are in `/workspace/audit/`.
+> **Status (2026-10-23): PARTIALLY SUPERSEDED.** The original text is from commit 55be461. It has been corrected in place after adjudicating a collaborator's 14-point critique; see `AIEFS_audit_response.md` (the current ledger). Corrections are marked **[Correction 2026-10-23 …]**, and retracted text is ~~struck~~.
+> - **Unaffected:** the reproducibility, hygiene, PII, Lean-import and test findings (H3, H4, M2–M6, L1–L8).
+> - **Superseded or scoped:** H1, H2, M1 and §10.
+> - **Publication edits:** absolute local paths were replaced with neutral descriptions, and the author's user/host name is no longer spelled out.
+> - **Script paths:** first-pass paths `audit/*.py` refer to the original scratch directory. Re-packaged equivalents are in `evidence/scripts/` (see `evidence/REPRODUCE.md`).
+
+Repo: https://github.com/jacobbrainard84-knightninja/AIEFS (main), cloned read-only to a local scratch directory. Nothing was pushed, committed, or filed. First-pass scratch scripts and logs were kept locally (`audit/`); re-packaged scripts, logs and results are in `evidence/`.
 Legend: **[V]** = verified (I read or ran it). **[S]** = suspicion or inference, not proven.
 
 ## 1. Verdict
@@ -8,12 +14,12 @@ Legend: **[V]** = verified (I read or ran it). **[S]** = suspicion or inference,
 The AIEF‑1.3 numerical pipeline is real, deterministic, and reproducible. I re-ran all 500 archived runs (2 manifests × 5 conditions × 50 seeds) from the repo's own driver, and all 500 matched the archived matrices and scalars bit-for-bit (max |diff| = 0.0). The archived per-condition means match the handoff's headline numbers.
 
 What those numbers *mean* is much weaker than the project's framing:
-- The "emergent" sparse topology is fixed by the hard-coded natural frequencies ω, through a closed-form threshold that needs no simulation. With delay removed, all 100 seeds give the identical 22-edge graph, and it is exactly that closed-form set.
-- The headline Corr_physical ≈ 0.995 is close to tautological, because B is driven by the very R it is correlated against.
+- The "emergent" sparse topology is fixed by the hard-coded natural frequencies ω, through a closed-form threshold that needs no simulation. With delay removed, all 100 seeds give the identical 22-edge graph, and it is exactly that closed-form set. **[Correction 2026-10-23, response #4: "fixed by ω" holds only for the repo's ω without delay. With delay there are 16 distinct baseline topologies at the repo's ω; for random ω the outcome is multistable, and the closed-form set is an informative predictor (precision 0.59–0.98, recall 0.18–0.57), not a guaranteed superset]**
+- The headline Corr_physical ≈ 0.995 is close to tautological, because B is driven by the very R it is correlated against. **[Correction 2026-10-23, response #2: "close to tautological" was too strong. In held-out tests the past R beats a Δω-only predictor at the repo's ω (AUC 0.999995 vs 0.972) and is better calibrated on uniform random ω, but it is worse on clustered ω (AUC 0.46 vs 0.65). Weights at the split alone give AUC 1.0, so the statistic mainly measures persistence]**
 - The 1.4 "operator/memory" results rest on a single frozen replay of one exceptional seed. The repo's own manuscript admits this.
 - The Lean "formalization" does not build: the root imports a module that doesn't exist. The only real theorem is the kernel of a 2×3 integer matrix.
 - The admissibility step is a scaling heuristic, not a projection, Bregman or otherwise.
-- Repo hygiene is poor: no README, LICENSE, or requirements; a 346 MB history; committed build artifacts and zips; hard-coded `/home/deck` paths; raw AI chat logs containing the owner's email; and third-party "All rights reserved" PDFs.
+- Repo hygiene is poor: no README, LICENSE, or requirements; a 346 MB history; committed build artifacts and zips; hard-coded absolute home-directory paths; raw AI chat logs containing the owner's email; and third-party "All rights reserved" PDFs.
 
 The internal documents (handoff, manuscript) are often *more* careful than the claims made to the collaborator. The collaborator, an AI assistant, amplified rather than tested those claims.
 
@@ -21,20 +27,20 @@ The internal documents (handoff, manuscript) are often *more* careful than the c
 
 | # | Sev | Finding | Evidence | Fix |
 |---|-----|---------|----------|-----|
-| H1 | High | The sparse topology is fixed by ω, not "emerging". A closed-form uncoupled-EMA threshold gives the exact `no_delay` topology for 100/100 seeds. Baseline topologies are a subset of that set in 95/100 seeds and equal to it in 50/100. Only 7 distinct baseline outcomes exist. **[V]** | Update rule `AIEF_1_3_falsification_updated.py:433`; ω hard-coded at `:55`; the seed only sets initial θ and B (`:383-384`), with no noise. Scripts: `audit/freq_predictor.py`, `audit/summ.py` | State the closed-form predictor in the docs. Report D_B and topology relative to the predictor. Test ω-randomized ensembles. |
-| H2 | High | Corr_physical ≈ 0.995 is near-circular. B rises iff R > μ/(η+μ) = 0.4286, so P_future is a thresholded function of R. The uncoupled prediction alone gives corr 0.99 against seed-averaged P. **[V]** | `:433`; handoff claim `AI_AGENT_HANDOFF_PROMPT.md:113` | Use a non-circular target, e.g. predict held-out dynamics, or compare against the ω-only null. |
+| H1 | High | The sparse topology is fixed by ω, not "emerging". A closed-form uncoupled-EMA threshold gives the exact `no_delay` topology for 100/100 seeds. Baseline topologies are a subset of that set in 95/100 seeds and equal to it in 50/100. ~~Only 7 distinct baseline outcomes exist.~~ **[V]** **[Correction 2026-10-23, response #1: there are 16 distinct baseline topologies (11 per 50-seed manifest), per `evidence/results/archived13_closedform.json`. "Fixed by ω" is scoped to no_delay at the repo's ω; see #4]** | Update rule `AIEF_1_3_falsification_updated.py:433`; ω hard-coded at `:55`; the seed only sets initial θ and B (`:383-384`), with no noise. Scripts: `audit/freq_predictor.py`, `audit/summ.py` | State the closed-form predictor in the docs. Report D_B and topology relative to the predictor. Test ω-randomized ensembles. |
+| H2 | High | Corr_physical ≈ 0.995 is near-circular. B rises iff R > μ/(η+μ) = 0.4286, so P_future is a thresholded function of R. The uncoupled prediction alone gives corr 0.99 against seed-averaged P. **[V]** | `:433`; handoff claim `AI_AGENT_HANDOFF_PROMPT.md:113` | Use a non-circular target, e.g. predict held-out dynamics, or compare against the ω-only null. **[Correction 2026-10-23, response #2: done; see the response ledger]** |
 | H3 | High | The Lean project does not build. The root imports `AIEFProofs.ControllerFiberProjector`, which exists nowhere in the repo, not even as a build artifact. The only substantive theorem is ker[[1,1,0],[1,0,1]] = span(1,−1,−1). **[V]** | `lean/AIEFProofs/AIEFProofs.lean:5`; `lean/AIEFProofs/AIEFProofs/ControllerFiber.lean` | Commit the missing module or drop the import. Add CI that runs `lake build`. Describe the proof's scope honestly. |
-| H4 | High | Outsiders cannot reproduce anything: no README, LICENSE, requirements, or entry-point docs. Diagnostics scripts hard-code `/home/deck/...` paths. **[V]** | Repo root; `AIEF_1_3_closure_diagnostics_updated.py:37`, `:38`, `:42`, `:43`; `AIEF_1_3_closure_diagnostics.py:24-30` | Add a README with exact commands, a pinned `requirements.txt`, and a LICENSE. Use repo-relative paths or CLI arguments. |
-| M1 | Medium | The "projection" is not a projection. The map w = x·min(s_i,s_j) can return a strictly interior point ≠ x, so it is not a Bregman or metric projection onto C. Exact KL projection differs by about 0.02–0.03 per edge and has lower KL in 5/5 random trials. The gate also has an O(ε/c) ≈ 1.6e‑12 jump at the boundary. **[V]** | `AIEF_1_3_falsification_updated.py:446-447`; `audit/mathcheck.py` and `.log` | Call it "admissibility scaling", or implement a true projection (Dykstra/KKT) if theory needs one. |
+| H4 | High | Outsiders cannot reproduce anything: no README, LICENSE, requirements, or entry-point docs. Diagnostics scripts hard-code absolute home-directory paths. **[V]** | Repo root; `AIEF_1_3_closure_diagnostics_updated.py:37`, `:38`, `:42`, `:43`; `AIEF_1_3_closure_diagnostics.py:24-30` | Add a README with exact commands, a pinned `requirements.txt`, and a LICENSE. Use repo-relative paths or CLI arguments. |
+| M1 | Medium | The "projection" is not a projection. The map w = x·min(s_i,s_j) can return a strictly interior point ≠ x, so it is not a Bregman or metric projection onto C. Exact KL projection differs by about 0.02–0.03 per edge and has lower KL in 5/5 random trials. The gate also has an O(ε/c) ≈ 1.6e‑12 jump at the boundary. **[V]** **[Correction 2026-10-23, response #5: the interior output lies only 6.7e‑13 below c, an ε-level artifact, and the jump (1.579e‑12 = ε/cap) is numerically immaterial. The gate is bitwise idempotent (20000/20000). "Not a projection" rests on the ε=0 comparisons: Euclidean projection differs by 0.037–0.046 and KL projection by 0.022–0.030 per edge]** | `AIEF_1_3_falsification_updated.py:446-447`; `audit/mathcheck.py` and `.log` | Call it "admissibility scaling", or implement a true projection (Dykstra/KKT) if theory needs one. |
 | M2 | Medium | The 1.4 memory/operator claims rest on one frozen replay of one exceptional seed (4619122171158768524). The κ≈0.069 "spectral gap" is an unproven hypothesis, by the repo's own account. **[V]** | `AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md:19`; `AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md:344`, `:368`; `AIEF_1_4_OPERATOR_COCYCLE_CLOSURE_THEOREM_NOTE.md:1022`, `:1202` | Multi-seed replication with CIs before claiming any "mechanism". |
 | M3 | Medium | Tests: the modular package passes 40, skips 2, and the two skipped are the only numerical/oracle tests. The 1.3/1.4 drivers have no tests. The root `test_01.py` is a shell paste (`df -h …`). **[V]** | `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests_modular/test_twindow_oracle_equivalence.py:20`; `test_twindow_one_condition.py:13-14`; `test_01.py:1` | Add a fast golden-seed regression test, like the one I ran (4 s per run). |
-| M4 | Medium | Public PII and third-party copyright. The owner's gmail appears in raw chat-log PDFs. The Holland Atom papers are marked "All rights reserved" and include an author email. **[V]** | `Project Histories/Project Lead History 10.pdf` (text-dump lines 12767, 13415, 13460); `Papers/The Holland Atom_Paper_1_30.May.2026_v1.pdf` | Remove the PDFs, or get permission. Scrub history (owner decision, and destructive). |
+| M4 | Medium | Public PII and third-party copyright. The owner's personal email address appears in raw chat-log PDFs. The Holland Atom papers are marked "All rights reserved" and include an author email. **[V]** | `Project Histories/Project Lead History 10.pdf` (text-dump lines 12767, 13415, 13460); `Papers/The Holland Atom_Paper_1_30.May.2026_v1.pdf` | Remove the PDFs, or get permission. Scrub history (owner decision, and destructive). |
 | M5 | Medium | Bloat and duplication. `.git` is 346 MB with 2760 tracked files, plus zips of directories that are also committed and CSVs up to 66.5 MB (one duplicated). Two SSRH draft PDFs are byte-identical. **[V]** | `workspace-019ff402-….zip`, `AIEF_Experiments/aief_modular_platform_v1_analysis_v4.zip`, `Project Origins/…draft.pdf` vs `draft 02.pdf` (cmp identical) | Use Git LFS or external storage for data, delete the zips and duplicates, and add a `.gitattributes`. |
 | M6 | Medium | Claims made to the collaborator go beyond the repo: "spectral fact", "genuinely new memory mechanism", "Lean proof scaffolding", "100+ seeds, 7 conditions". **[V]** (see §9) | §9 | Align external pitches with the handoff's hedged language. |
 | L1 | Low | Φ uses an arbitrary constant D_B* = 0.30, so Φ is just a rescaled 1/D_B. | `AIEF_1_3_falsification_updated.py:82`, `:526` | Justify D_B* or drop Φ. |
 | L2 | Low | `config_hash` covers the platform/python string, so identical configs hash differently on different machines. | `:640-642`, `:751` | Keep the environment in the manifest but out of the hash. |
 | L3 | Low | 17 `.pyc` files are committed even though `.gitignore:1` lists `__pycache__/`. The `.lake` build outputs are committed too. | `git ls-files` | `git rm --cached`. |
-| L4 | Low | A committed OnlyOffice lock file leaks the user/host name ("deck,steamdeck"). | `.~lock.AI_AGENT_HANDOFF_PROMPT.md#` | Delete it and ignore `.~lock*`. |
+| L4 | Low | A committed OnlyOffice lock file leaks the author's user and host names (not repeated here). | `.~lock.AI_AGENT_HANDOFF_PROMPT.md#` | Delete it and ignore `.~lock*`. |
 | L5 | Low | `probe_02.py` calls `np` without importing numpy (NameError). | `probe_02.py:12` | Import it or delete the script. |
 | L6 | Low | The Lean header cites a LICENSE file that doesn't exist. The Lean lock-hash file doesn't cover any `.lean` source. | `ControllerFiber.lean:3`; `AIEF_LEAN_PROJECT_LOCK_HASHES.txt` | Add a LICENSE and hash the sources. |
 | L7 | Low | The arXiv filename is wrong (2804.05652 should be 2304.05652). Two `.odt` files have literal `%20` in their names. | `Papers/2804.05652v1.pdf`; `Project Origins/Solar%20System…odt` | Rename. |
@@ -58,10 +64,10 @@ All 500 runs were exact replicas. The numbers are honest. The interpretation is 
 
 - **No randomness in the dynamics.** The seed only draws θ0 and B0 (`:383-384`).
 - **Delay is not necessary, by the repo's own statement.** Under `no_delay`, all 100 initial conditions converge to one identical graph: D_B = 22/66, W = 3.8. That graph is exactly the set of edges where the uncoupled EMA magnitude |(1−α)/(1−α e^{iΔω dt})| > μ/(η+μ). The handoff itself concedes "Explicit delay is not necessary" (`AI_AGENT_HANDOFF_PROMPT.md:152`).
-- **The baseline adds little.** With delay, 50% of baseline seeds land on that same graph, and almost all the rest land on a subset of it. In total there are 7 distinct outcomes.
+- **The baseline adds little.** With delay, 50% of baseline seeds land on that same graph, and almost all the rest land on a subset of it. ~~In total there are 7 distinct outcomes.~~ **[Correction 2026-10-23, response #1: 16 distinct outcomes; equal to the closed-form set in 50/100 seeds and a subset in 95/100]**
 - **shuffle_R → 0 is expected.** Shuffling drops mean R to 0.371, below 0.4286, so B decays. This shows the threshold works; it does not show "memory".
 - **Math checks** (`audit/mathcheck.log`):
-  - The interior-output witness: proposal row-sum 0.95 > c = 0.6333, output row-sum c − 6.7e‑13, output ≠ input. This means it is not a projection.
+  - The interior-output witness: proposal row-sum 0.95 > c = 0.6333, output row-sum c − 6.7e‑13, output ≠ input. This means it is not a projection. **[Correction 2026-10-23, response #5: this witness is ε-level only; see M1]**
   - Gate jump ≈ 1.6e‑12.
   - Exact KL projection vs the AIEF map: they differ by 0.022–0.030 per edge, and the KL gap is 0.10–0.16 > 0.
   - The fiber-affine identity A(y)−A(x) = M(q)(y−x) on a shared fiber holds (residual 6e‑18). It is correct, and trivially so: on a fixed fiber the scale matrix is constant.
@@ -70,13 +76,13 @@ All 500 runs were exact replicas. The numbers are honest. The interpretation is 
 
 ## 4. Axis 2: Correctness and bugs
 - `probe_02.py:12` raises NameError (`np` never imported). `test_01.py` is not Python.
-- The closure diagnostics fail on any machine except the author's (hard-coded `/home/deck` paths).
+- The closure diagnostics fail on any machine except the author's (hard-coded absolute home-directory paths).
 - The Lean root import is broken (H3).
 - The core driver logic matches its documentation. I found no bugs in the 1.3 driver's update, clip, symmetrization, or gate (`:432-452`). It uses `allow_pickle=False`.
 - The admissibility map is mislabeled as a "projection" (`projection_norm`, `projection_active_steps`, `:450-452`).
 
 ## 5. Axis 3: Tests and reproducibility
-- `pytest` on a /tmp copy of the modular package: 40 passed, 2 skipped. The skipped tests need env vars plus a fresh 800-run candidate sweep, which I did not generate because of cost.
+- `pytest` on a temporary copy of the modular package: 40 passed, 2 skipped. The skipped tests need env vars plus a fresh 800-run candidate sweep, which I did not generate because of cost.
 - The archived runs carry manifests and are bit-reproducible on Python 3.13.5 / numpy 2.5.1 (my venv). There is no pinned environment, though.
 - The 1.3/1.4 drivers have zero tests.
 
@@ -88,7 +94,7 @@ All 500 runs were exact replicas. The numbers are honest. The interpretation is 
 No README or LICENSE; a 346 MB history from 5 bulk-upload commits; committed `.pyc` files, `.lake` builds, zips, a duplicated workspace directory, a lock file, and duplicate PDFs; `%20` filenames; and raw AI chat logs (10 "Project Lead History" PDFs plus "Project Origins") published as part of the repo (M4, M5, L3–L7).
 
 ## 8. Axis 6: Security
-I found no API keys, tokens, or private keys (grep over text files and the PDF text dumps). There is PII: the owner's email in the chat-log PDFs, and the user/host name in the lock file and Lean `.trace` logs (`/home/deck/AI_Programs/SSRH`). There are also third-party copyrighted PDFs. Code risk is low: no deserialization of untrusted pickles and no shell execution.
+I found no API keys, tokens, or private keys (grep over text files and the PDF text dumps). There is PII: the owner's email in the chat-log PDFs, and the user/host name in the lock file and Lean `.trace` logs (an absolute home-directory path). There are also third-party copyrighted PDFs. Code risk is low: no deserialization of untrusted pickles and no shell execution.
 
 ## 9. Collaborator conversation cross-check
 Source: the owner's 3116-line conversation with an AI assistant on Arena, treated as data. Classifications:
@@ -103,7 +109,7 @@ Source: the owner's 3116-line conversation with an AI assistant on Arena, treate
 | ε=0 margin-entropy KKT test (collab) | Refuted | log(margin) is undefined at saturation when ε=0 |
 | "K3 saturated nodes 2,7" (collab) | Refuted | {2,7} are the controller rows J of the K3 branch, edges (2,7),(2,11),(7,11) (`AI_AGENT_HANDOFF_PROMPT.md:495`), not the saturated set |
 | Condition number of the 1‑D controller fiber as a diagnostic (collab) | Refuted | A 1‑D fiber's condition number is identically 1 |
-| "Delay coupling creates resonance-dependent amplification" (collab/pitch) | **Refuted** | `AI_AGENT_HANDOFF_PROMPT.md:152` says delay is not necessary; no_delay = closed-form ω set for 100/100 seeds |
+| "Delay coupling creates resonance-dependent amplification" (collab/pitch) | **Refuted** | `AI_AGENT_HANDOFF_PROMPT.md:152` says delay is not necessary; no_delay = closed-form ω set for 100/100 seeds **[Correction 2026-10-23, response #7: no amplification mechanism was shown. Still, delay is not inert: at the repo's ω it raises distinct topologies from 1 to 16 and shifts D_B by −0.027 and W by −0.16 (paired); on random ω it increases multistability]** |
 | "Sparse structure emerges from noise" (pitch) | **Refuted** | There is no noise (`:383-384`), and the topology is predicted from ω (H1) |
 | κ≈0.069 is a "spectral fact" (collab) | Overclaim | `AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md:368`: "motivates, but does not prove" |
 | Jordan-resonant lemma (both) | Verified, trivial | Induction; residual 1.8e‑14 |
@@ -126,12 +132,12 @@ Source: the owner's 3116-line conversation with an AI assistant on Arena, treate
 - `audit/repro13.py`, 500 runs → `audit/repro13.log`. `audit/summ.py` → `audit/summ.log`: 500/500 exact; means in §3.
 - `audit/freq_predictor.py` plus an inline check: no_delay topology = closed form in 50/50 and 50/50 seeds; baseline equal in 24/50 and 26/50, subset in 48/50 and 47/50; per-seed corr(P, R_pred) 0.927 / 0.919; seed-averaged 0.990 / 0.988.
 - `audit/mathcheck.py` → `audit/mathcheck.log` (projection, gate, KL, fiber, Lean kernel, Jordan).
-- pytest on a /tmp copy of `aief_modular_platform_v1_analysis_v4`: 40 passed, 2 skipped.
-- grep for secrets and PII, `cmp` on the PDFs, `git ls-files`/`du`, Lean source inspection. Lean itself was not compiled; the broken build is inferred from the missing module plus the absent build artifact.
+- pytest on a temporary copy of `aief_modular_platform_v1_analysis_v4`: 40 passed, 2 skipped.
+- grep for secrets and PII, `cmp` on the PDFs, `git ls-files`/`du`, Lean source inspection. ~~Lean itself was not compiled; the broken build is inferred from the missing module plus the absent build artifact.~~ **[Correction 2026-10-23, response #14: Lean was compiled later (lean4 v4.33.1, mathlib v4.33.1). `lake build` as committed fails with "bad import 'AIEFProofs.ControllerFiberProjector'" (BUILD_EXIT 1). With that import removed it completes (1235 jobs) with no sorry/axiom/admit. See `evidence/logs/lean_build_*.log`. H3 is now verified by an actual build]**
 
 ## 11. Prioritized remediation
 1. Remove PII and third-party PDFs. Decide whether to rewrite history (destructive; owner's call).
-2. Add a README, LICENSE, and pinned requirements. Replace `/home/deck` paths.
+2. Add a README, LICENSE, and pinned requirements. Replace the hard-coded absolute home-directory paths.
 3. Fix or remove the Lean import, and add a `lake build` CI.
 4. Publish the ω closed-form null. Reframe D_B and Corr_physical against it, and run ω-randomized ensembles.
 5. Rename the "projection" to admissibility scaling, or implement a true projection.
