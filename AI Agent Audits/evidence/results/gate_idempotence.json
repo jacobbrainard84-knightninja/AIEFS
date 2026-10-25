@@ -1,4 +1,10 @@
 {
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "gate_idempotence.py",
+  "status": "ok",
+  "warnings": []
+ },
  "n": 20000,
  "triggered": 13727,
  "bitwise_idempotent": 20000,

@@ -1,4 +1,10 @@
 {
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "analyze_kappa_tw.py",
+  "status": "ok",
+  "warnings": []
+ },
  "n_replays": 200,
  "replay_bitexact": 160,
  "replay_max_diff": 2.503552920529728e-14,
