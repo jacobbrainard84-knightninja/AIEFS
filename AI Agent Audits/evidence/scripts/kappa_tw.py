@@ -1,9 +1,14 @@
-"""NEW (response round). Point 9: test kappa(T_w) = k*eta/c - 1/T_w across the five S01 T_window values.
+"""ROUND-3 CORRECTION (2026-10-24, response-2 #2): the matrix in (a) is a central-difference quotient, NOT a Jacobian.
+At a saturated clique the endpoint scales tie and the gate is not differentiable there, so 'J' averages one-sided slopes.
+Its slow eigenvalues happen to agree with the restricted fiber multiplier (kappa_cycle_kernel.py; max rel diff 4.5e-4 in
+r_B over the 292 shared components) because the slow eigenvectors lie in the cycle kernel, where the map is linear. Use
+kappa_cycle_kernel.py / kappa_cycle_kernel_summary.json for the rates; this script is kept unchanged for provenance.
+NEW (response round). Point 9: test kappa(T_w) = k*eta/c - 1/T_w across the five S01 T_window values.
 Inputs: S01 run runs/b57562a8ee77 (seed list + saved continue-branch B_final, used to check replay fidelity).
 For each (seed, rho): replay the repo engine exactly (AIEF_1_4_Twindow_sensitivity.create_model_config(rho),
 engine.simulate_prefix, then the unperturbed 'continue' dynamics via engine.advance_state) to future time
 t_target=250 (the repo's kappa target time). At that state, for every connected component of supp(B) with >=3 nodes:
-  (a) frozen-driver one-step Jacobian J of the B update+gate (R frozen at its current value), central differences;
+  (a) frozen-driver one-step central-difference matrix J ('Jacobian' in the round-2 text; see correction above) of the B update+gate (R frozen at its current value), central differences;
       r_B = -log(max|eig J|)/dt  (exact discrete selected-channel rate, the collaborator's -log|lambda_B|/dt);
   (b) full nonlinear twin run: perturb B along the slowest eigenvector (eps=1e-6), run both copies 40 time units,
       fit log|projection| slope on [1,8] (early, intrinsic pole) and [25,40] (late);
