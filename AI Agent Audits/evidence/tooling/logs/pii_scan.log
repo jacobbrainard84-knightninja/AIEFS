@@ -1,0 +1,5 @@
+$ python "AI Agent Audits/evidence/tooling/pii_scan.py" --private <local literal file, not published>   (2026-10-24)
+scanned 99 files, 3930825 bytes, 5 private literals
+self-pattern lines not scanned for paths/emails: evidence/tooling/pii_scan.py:20, evidence/tooling/pii_scan.py:4, evidence/tooling/pii_scan.py:43, evidence/tooling/pii_scan.py:5
+CLEAN
+exit 0

@@ -1,0 +1,9 @@
+== self-test 2026-10-24: copy of the tree plus two planted files (plant.md: a fake /home path, a fake address, a fake GitHub-token shape, a fake device user code; cr.txt: CRLF). Expect exactly these 5 findings.
+scanned <tree+2> files
+CR       cr.txt
+ABS_PATH plant.md:1: <planted value, masked in this log>
+EMAIL    plant.md:2: <planted value, masked in this log>
+GITHUB_TOKEN plant.md:3: <planted value, masked in this log>
+DEVICE_CODE plant.md:4: <planted value, masked in this log>
+FOUND 5 issue(s)
+exit 1
