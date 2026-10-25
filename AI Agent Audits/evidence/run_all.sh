@@ -7,7 +7,7 @@
 #   UPDATE=1 bash ".../run_all.sh"   additionally copies the fresh results and logs into results/ and logs/.
 #   PY=/path/to/python               selects the interpreter (default: python).
 # Heavy steps (kappa_tw, kappa_cycle_kernel, delay_paired, omega_*, repro13) take about 0.5-6 min each on 7 cores;
-# about 25 min total. Pool(7) is used; peak RAM about 3 GB.
+# about 25 min total. Round 4 (2026-10-25): added rate_law_census_r4 (seconds; reads the kappa_cycle_kernel results). Pool(7) is used; peak RAM about 3 GB.
 set -uo pipefail
 B="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BR="$(realpath -s --relative-to="$PWD" "$B")"
@@ -36,6 +36,7 @@ run kappa_tw           kappa_tw.py all
 run analyze_kappa_tw   analyze_kappa_tw.py
 run kappa_cycle_kernel kappa_cycle_kernel.py
 run analyze_kappa_cycle_kernel analyze_kappa_cycle_kernel.py
+run rate_law_census_r4 rate_law_census_r4.py
 run delay_paired       delay_paired_heldout.py
 run analyze_delay      analyze_delay_heldout.py
 run frozen_topology_check frozen_topology_check.py
