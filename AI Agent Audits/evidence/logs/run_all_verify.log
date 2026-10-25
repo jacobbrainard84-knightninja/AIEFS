@@ -1,4 +1,4 @@
-# run_all.sh console output, round 3 (2026-10-24); command from the repo root: bash "AI Agent Audits/evidence/run_all.sh" (no UPDATE). Temp-dir path redacted.
+# run_all.sh console output, round 4 (2026-10-25); command from the repo root: bash "AI Agent Audits/evidence/run_all.sh" (no UPDATE), run on the round-4 tree rebased onto main 43ce98f, after the UPDATE=1 run in run_all_update_r4.log. Temp-dir path redacted.
 ok: mathcheck
 ok: gate_idempotence
 ok: freq_predictor
@@ -11,6 +11,7 @@ ok: kappa_tw
 ok: analyze_kappa_tw
 ok: kappa_cycle_kernel
 ok: analyze_kappa_cycle_kernel
+ok: rate_law_census_r4
 ok: delay_paired
 ok: analyze_delay
 ok: frozen_topology_check
@@ -18,5 +19,6 @@ ok: omega_random
 ok: omega_multistab
 ok: repro13
 == comparing committed AI Agent Audits/evidence/results with fresh outputs in the temp dir
-fresh outputs kept in <tmp>
+fresh outputs kept in <TMPDIR>
 ALL OK: every step exited 0 and every committed result is byte-identical
+exit 0
