@@ -1,0 +1,6 @@
+runs 500 exact 500 mismatch 0
+baseline 100 {'D_B': 0.3059, 'Corr_physical': 0.9952, 'Total_edge_weight': 3.6385, 'Effective_edges': 14.5962}
+shuffle_R 100 {'D_B': 0.0, 'Corr_physical': 'nan', 'Total_edge_weight': 0.0603, 'Effective_edges': 30.0617}
+no_delay 100 {'D_B': 0.3333, 'Corr_physical': 0.9985, 'Total_edge_weight': 3.8, 'Effective_edges': 15.8824}
+no_mu 100 {'D_B': 0.0348, 'Corr_physical': 0.2454, 'Total_edge_weight': 3.7812, 'Effective_edges': 34.3594}
+no_gap 100 {'D_B': 0.7268, 'Corr_physical': 0.972, 'Total_edge_weight': 127.8577, 'Effective_edges': 47.97}
