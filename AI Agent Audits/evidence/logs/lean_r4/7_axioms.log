@@ -1,0 +1,311 @@
+AXIOMS AIEFProofs.ControllerFiber.PPerp_mulVec_PPar [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.eq_5 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff_exists_smul [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_PPar [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.finrank_ker_K4 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.rinv5 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.finrank_ker_of_right_inverse [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.range_PPar_iff_ker_CCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.rinv4 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.SPerp.match_1 [AIEFProofs.ControllerFiberProjector]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.id_eq_PPar_add_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_sq_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp [AIEFProofs.ControllerFiberProjector]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.match_1 [AIEFProofs.ControllerFiber]: [propext]
+AXIOMS AIEFProofs.CompleteGraphIncidence.rinv.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_two [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.inc.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src4 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_ne_zero [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src5 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_eq_iff_PPerp_eq [AIEFProofs.ControllerFiberQuotient]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.inc_vRay_self [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.complete5 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_00 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst6 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.IsCompleteEdgeList [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_coords_iff.match_1_1 [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_one [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.SPerp.eq_1 [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_apply [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.inc_neg_vRay_self [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_vCtrl [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst3.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.CompleteGraphIncidence.rinv3 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_02 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_coords_iff.match_1_3 [AIEFProofs.ControllerFiber]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.PPar [AIEFProofs.ControllerFiberProjector]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_mulVec_sub [AIEFProofs.ControllerFiberQuotient]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst5 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.CompleteGraphIncidence.inc [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_sub [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_zero [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.complete3 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst4 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.PPar.match_1 [AIEFProofs.ControllerFiberProjector]: []
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_eq_zero_iff_locked_ratio [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.complete4 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl.eq_2 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS hello [AIEFProofs.Basic]: []
+AXIOMS AIEFProofs.ControllerFiber.PPar_mulVec_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src6 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.CompleteGraphIncidence.inc_vRay_other [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.rinv6 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_one [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.SPerp.eq_2 [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst6.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl.eq_3 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_eq_SPerp_CCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst3 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.eq_6 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.eq_2 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src3 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.SPerp.eq_3 [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_zero [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_symmetric [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.eq_3 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl.match_1 [AIEFProofs.ControllerFiber]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.controller_fiber_tfae [AIEFProofs.ControllerFiberQuotient]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst4.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.vRay.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.SPerp [AIEFProofs.ControllerFiberProjector]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.complete6 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.finrank_ker_K5 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.ker_K3_eq_bot [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_apply_comm [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src4.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src6.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.CompleteGraphIncidence.vRay_two_eq_vCtrl [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_sq_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_dot_vCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src5.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.eq_4 [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_dot_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.src3.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.PPar_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_eq_iff_PPar_sub [AIEFProofs.ControllerFiberQuotient]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.dst5.eq_1 [AIEFProofs.CompleteGraphIncidence]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_symmetric [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.univ_fin3 [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.finrank_ker_K3 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_selfAdjoint [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.sum_fin3 [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.finrank_ker_K6 [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_eq_iff_exists_smul [AIEFProofs.ControllerFiberQuotient]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_01 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.im_PPar_inter_im_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp.eq_1 [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_11 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.vRay_not_mem_ker [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_mulVec_vCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_dot_smul [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.vRay [AIEFProofs.CompleteGraphIncidence]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_12 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_10 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.rinv [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_SPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.CompleteGraphIncidence.inc3_rows_eq_CCtrl [AIEFProofs.CompleteGraphIncidence]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_coords_iff [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AUDITED 115 project declarations
+'AIEFProofs.CompleteGraphIncidence.finrank_ker_of_right_inverse' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.complete3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.complete4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.complete5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.complete6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.rinv3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.rinv4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.rinv5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.rinv6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.finrank_ker_K3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.finrank_ker_K4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.finrank_ker_K5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.finrank_ker_K6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.ker_K3_eq_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.inc_vRay_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.inc_vRay_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.inc_neg_vRay_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.vRay_not_mem_ker' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.inc3_rows_eq_CCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphIncidence.vRay_two_eq_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_00' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_01' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_02' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_10' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_11' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_12' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_zero' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_one' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_two' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.univ_fin3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.sum_fin3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_coords_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_eq_zero_iff_locked_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff_exists_smul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_apply_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_dot_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_dot_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_mulVec_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_selfAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_sq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_mulVec_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_mulVec_PPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_sq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_dot_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_PPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.range_PPar_iff_ker_CCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.id_eq_PPar_add_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.im_PPar_inter_im_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_SPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_eq_SPerp_CCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_mulVec_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_eq_iff_exists_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_eq_iff_PPerp_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_eq_iff_PPar_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.controller_fiber_tfae' depends on axioms: [propext, Classical.choice, Quot.sound]
