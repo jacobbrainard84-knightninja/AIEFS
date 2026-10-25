@@ -1,0 +1,81 @@
+--- a/ControllerFiberProjector.v191.original.lean
++++ b/ControllerFiberProjector.v191.fixed.lean
+@@ -80,7 +80,6 @@
+   rw [PPar_mulVec, vCtrl_dot_vCtrl]
+   funext i
+   simp
+-  ring
+ 
+ lemma PPerp_mulVec (x : Fin 3 → ℚ) :
+     PPerp *ᵥ x = fun i => x i - (PPar *ᵥ x) i := by
+@@ -121,28 +120,29 @@
+     rw [vCtrl_dot_smul]
+     ring
+   funext i
+-  simp [Pi.smul_apply, hS]
+-  ring
+-
+-/-- Idempotence: `P⊥² = P⊥` as an action on vectors. -/
+-theorem PPerp_sq_mulVec (x : Fin 3 → ℚ) :
+-    PPerp *ᵥ (PPerp *ᵥ x) = PPerp *ᵥ x := by
+-  funext i
+-  simp [PPerp_mulVec, PPar_sq_mulVec]
++  simp only [Pi.smul_apply, smul_eq_mul, hS]
+ 
+ /-- Orthogonality: `P∥ P⊥ = 0` as an action on vectors. -/
+ theorem PPar_mulVec_PPerp (x : Fin 3 → ℚ) :
+     PPar *ᵥ (PPerp *ᵥ x) = 0 := by
+-  rw [PPerp_mulVec, PPar_mulVec, PPar_mulVec x]
++  rw [PPerp_mulVec, PPar_mulVec]
+   have hdiff :
+       ∑ j, vCtrl j * (x j - (PPar *ᵥ x) j) = 0 := by
+     have hPx : PPar *ᵥ x =
+         ((1 / 3 : ℚ) * ∑ k, vCtrl k * x k) • vCtrl := PPar_mulVec x
+     rw [hPx, sum_fin3]
+-    simp [Pi.smul_apply]
++    simp only [Pi.smul_apply, smul_eq_mul, sum_fin3, vCtrl_zero, vCtrl_one, vCtrl_two]
+     ring
+   funext i
+-  simp [Pi.smul_apply, hdiff]
++  simp only [Pi.smul_apply, smul_eq_mul, hdiff]
++  simp
++
++/-- Idempotence: `P⊥² = P⊥` as an action on vectors. -/
++theorem PPerp_sq_mulVec (x : Fin 3 → ℚ) :
++    PPerp *ᵥ (PPerp *ᵥ x) = PPerp *ᵥ x := by
++  rw [PPerp_mulVec (PPerp *ᵥ x), PPar_mulVec_PPerp]
++  funext i
++  simp
+ 
+ /-- Complementary orthogonality: `P⊥ P∥ = 0`. -/
+ theorem PPerp_mulVec_PPar (x : Fin 3 → ℚ) :
+@@ -159,8 +159,7 @@
+       CCtrl *ᵥ (((1 / 3 : ℚ) * ∑ j, vCtrl j * x j) • vCtrl)
+         = ((1 / 3 : ℚ) * ∑ j, vCtrl j * x j) • (CCtrl *ᵥ vCtrl) := by
+     funext i
+-    simp [Matrix.mulVec, dotProduct, sum_fin3, Pi.smul_apply,
+-      CCtrl_mulVec_apply_zero, CCtrl_mulVec_apply_one]
++    simp [Matrix.mulVec, dotProduct, sum_fin3, Pi.smul_apply]
+     ring
+   rw [hx, CCtrl_mulVec_vCtrl]
+   simp
+@@ -175,9 +174,9 @@
+   · intro hx
+     refine ⟨x, ?_⟩
+     rcases (CCtrl_mulVec_eq_zero_iff_exists_smul x).mp hx with ⟨a, ha⟩
+-    rw [ha, PPar_mulVec, vCtrl_dot_smul]
++    rw [ha, PPar_mulVec]
+     funext i
+-    simp [Pi.smul_apply]
++    simp only [Pi.smul_apply, smul_eq_mul, vCtrl_dot_smul]
+     ring
+ 
+ /-- Direct-sum decomposition of the ambient edge space. -/
+@@ -185,7 +184,6 @@
+     x = (fun i => (PPar *ᵥ x) i + (PPerp *ᵥ x) i) := by
+   funext i
+   simp [PPerp_mulVec]
+-  ring
+ 
+ end ControllerFiber
+ end AIEFProofs
