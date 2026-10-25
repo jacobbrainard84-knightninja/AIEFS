@@ -1,0 +1,51 @@
+{
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "frozen_topology_check.py",
+  "status": "ok",
+  "warnings": []
+ },
+ "B_C": 0.12,
+ "archived_repo_omega": {
+  "c3da1ac707bf/baseline": {
+   "runs": 50,
+   "edges": 3300,
+   "edges_changing_status": 0
+  },
+  "c3da1ac707bf/no_delay": {
+   "runs": 50,
+   "edges": 3300,
+   "edges_changing_status": 0
+  },
+  "73dca37cf93f/baseline": {
+   "runs": 50,
+   "edges": 3300,
+   "edges_changing_status": 0
+  },
+  "73dca37cf93f/no_delay": {
+   "runs": 50,
+   "edges": 3300,
+   "edges_changing_status": 0
+  }
+ },
+ "random_omega_delay_experiment": {
+  "uniform/baseline": {
+   "edges": 3960,
+   "edges_changing_status": 0
+  },
+  "uniform/no_delay": {
+   "edges": 3960,
+   "edges_changing_status": 0
+  },
+  "clustered/baseline": {
+   "edges": 3960,
+   "edges_changing_status": 0
+  },
+  "clustered/no_delay": {
+   "edges": 3960,
+   "edges_changing_status": 0
+  }
+ },
+ "total_edges": 29040,
+ "total_edges_changing_status": 0
+}

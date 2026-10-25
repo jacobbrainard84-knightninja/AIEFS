@@ -1,4 +1,10 @@
 {
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "delay_paired_heldout.py",
+  "status": "ok",
+  "warnings": []
+ },
  "omegas": {
   "uniform_0": [
    1.315397575392415,
