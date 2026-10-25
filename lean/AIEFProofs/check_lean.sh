@@ -12,7 +12,12 @@
 #
 # Steps (each logged to its own file in LOG_DIR):
 #   1 toolchain   lean-toolchain pin, elan/lake present, `lean --version` matches the pin
-#   2 pins        lake-manifest mathlib rev/inputRev; optional sha256 lock file
+#   2 pins        lake-manifest mathlib rev/inputRev; optional sha256 lock file;
+#                 REQUIRED source hash file AIEF_LEAN_SOURCE_SHA256SUMS.txt (every project .lean file
+#                 and this script; fails on any mismatch, missing entry or unlisted .lean file).
+#                 After an intentional source change, regenerate it from this directory with:
+#                   sha256sum AIEFProofs.lean $(find AIEFProofs -name '*.lean' | sort) check_lean.sh \
+#                     > AIEF_LEAN_SOURCE_SHA256SUMS.txt
 #   3 imports     every `import AIEFProofs.X` in the root resolves to a file; orphan report
 #   4 cache       `lake exe cache get` (prebuilt Mathlib oleans)
 #   5 build       rm -rf .lake/build (unless REUSE_BUILD=1), then `lake build`; job count, warnings, errors
@@ -69,7 +74,15 @@ PY
 if [ -f AIEF_LEAN_PROJECT_LOCK_HASHES.txt ]; then
   sha256sum -c AIEF_LEAN_PROJECT_LOCK_HASHES.txt >> "$LOG_DIR/2_pins.log" 2>&1 || fail 2 "AIEF_LEAN_PROJECT_LOCK_HASHES.txt does not match"
 fi
-pass 2 "mathlib rev $EXPECTED_MATHLIB_REV"
+SUMS=AIEF_LEAN_SOURCE_SHA256SUMS.txt
+[ -f "$SUMS" ] || fail 2 "$SUMS is missing (see the regeneration command in the header of check_lean.sh)"
+{ echo "\$ sha256sum -c --strict $SUMS"; sha256sum -c --strict "$SUMS"; } >> "$LOG_DIR/2_pins.log" 2>&1 \
+  || fail 2 "$SUMS does not match the sources (see 2_pins.log); if the change is intentional, regenerate it"
+UNLISTED="$( { echo "$LIB.lean"; find "$LIB" -name '*.lean' | sort; echo check_lean.sh; } \
+  | while read -r f; do awk '{print $2}' "$SUMS" | sed 's/^\*//' | grep -qxF -- "$f" || echo "$f"; done )"
+[ -z "$UNLISTED" ] || fail 2 "files not covered by $SUMS: $(echo $UNLISTED)"
+echo "source hashes OK: $(wc -l < "$SUMS") entries" >> "$LOG_DIR/2_pins.log"
+pass 2 "mathlib rev $EXPECTED_MATHLIB_REV; $SUMS verified ($(wc -l < "$SUMS") files)"
 
 # ---- 3 imports / orphans ---------------------------------------------------
 python3 - "$LIB" > "$LOG_DIR/3_imports.log" 2>&1 <<'PY'
@@ -105,7 +118,7 @@ pass 3 "all root imports resolve"
 # ---- 4 cache ---------------------------------------------------------------
 if [ "${SKIP_CACHE:-0}" != 1 ]; then
   ( time lake exe cache get ) > "$LOG_DIR/4_cache.log" 2>&1 || fail 4 "lake exe cache get failed (network? see 4_cache.log)"
-  pass 4 "mathlib cache: $(grep -E 'Decompressed|unpacked|already|Completed' "$LOG_DIR/4_cache.log" | tail -1)"
+  pass 4 "mathlib cache: $(grep -iE 'Decompressed|unpacked|already|Completed' "$LOG_DIR/4_cache.log" | tail -1)"
 else
   say "SKIP step 4 (SKIP_CACHE=1)"
 fi
