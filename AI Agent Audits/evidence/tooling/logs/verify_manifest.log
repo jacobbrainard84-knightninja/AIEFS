@@ -1,4 +1,4 @@
-$ python "AI Agent Audits/evidence/verify_manifest.py" --inputs   (from the repo root, 2026-10-24)
-checked 96 published files and 24 inputs; 2 post-manifest logs listed but not hashed
+$ python "AI Agent Audits/evidence/verify_manifest.py" --inputs   (from the repo root, 2026-10-25)
+checked 142 published files and 24 inputs; 2 post-manifest logs listed but not hashed
 OK
 exit 0

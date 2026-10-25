@@ -1,14 +1,18 @@
 {
- "created": "2026-10-24",
+ "created": "2026-10-25",
  "audited_repo": "github.com/jacobbrainard84-knightninja/AIEFS",
  "audited_commit": "e47bad150792425eb8e962ff636c69289eedd8b1",
  "report_commits": {
   "55be461f3da5b71c86fced8023a276f5868f4c23": "adds AI Agent Audits/AIEFS_audit.md (original)",
   "f7246a364060237001fa35115f1ea691e620d048": "adds AI Agent Audits/AIEFS_salvage.md (original)",
-  "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6); this round-3 tree is NOT pushed"
+  "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6)",
+  "60e60297e6dd34887348e6f858c32b3829d72f69": "head of the round-3 publication (22 commits 7d752fd..60e6029)",
+  "0b5b1082561b7717a0ea465d76bb9ebefa26b770": "Lean: ControllerFiberProjector.lean",
+  "dc0250a0586c8316b594ed5e424fffb9c84e93e8": "head after tooling, lean_recovery and cleanup (56 commits 0f5ef7a..dc0250a)",
+  "43ce98fdeba2226e0869f7376dbe0a7bd67d94c2": "base of round 4: licence files, executable bits, Lean copyright/SPDX headers, licensing inventory, 4 third-party PDFs removed (1a81cb6..43ce98f); round 4 was committed on top of it on 2026-10-25, including the inventory re-encoding to inventory.json.gz.b64"
  },
  "note_inputs": "Inputs hashed from the read-only clone at e47bad1; later commits add only files under 'AI Agent Audits/'.",
- "point_labels": "'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md",
+ "point_labels": "'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md; 'R3 n' = point n of AIEFS_audit_response_3.md",
  "run_from": "repository root",
  "environment": "evidence/ENVIRONMENT.md",
  "inputs_sha256": {
@@ -30,8 +34,8 @@
   "AIEF_1_4_component_controller_audit.py": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e",
   "AIEF_1_4_augmented_tangent_cocycle_analysis.py": "0192656f21b5c4b3d09adebb15d0554ead0fca755860bb85f9fa03f75452e964",
   "aief_1_4_augmented_spectrum/augmented_spectrum_report.txt": "e84941ea4c4630abcad49bcb323bfee567c34e1768b2f9e32ace3c6765c6b06d",
-  "lean/AIEFProofs/AIEFProofs.lean": "5b696824caba90ecc29f506bc1039b5d59e9bd53fd36da49e7526ca0ba6d0a16",
-  "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean": "37c26f569ab24351c6482c1b8259adbee84d843506d54002699da54417eaf241",
+  "lean/AIEFProofs/AIEFProofs.lean": "a2937f75f0c84b850a8b764f719677b61bde3dbed094783d7406783cd8e52831",
+  "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean": "b51e07e83ac173decfbe276afd48a4871caf34edd20aad643a8897addec63411",
   "lean/AIEFProofs/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
   "lean/AIEFProofs/lake-manifest.json": "baa1bc12c21222b19b8436aaf1b7800b54b484b1cfe8065b6911ff3463271e08",
   "runs/c3da1ac707bf/* (aggregate of 254 files: sha256 over sorted 'path sha256' lines)": "37b5f06dd0f555d2dac398e56fd73fde97efcf18f39ad066c93b8a9c267779ae",
@@ -199,7 +203,7 @@
    ],
    "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps): 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"
+   "summary": "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps) [round 4: split as 264 two-sided + 110 one-sided K3, see rate_law_census_r4]: 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"
   },
   {
    "point": [
@@ -226,7 +230,47 @@
    ],
    "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction"
+   "summary": "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction; round 4: nonbinary_P_future_count 0/29040 and P_future label vs split status differs 0/29040 (P_future averages B > B_C over every future step)"
+  },
+  {
+   "point": [
+    "R3 1",
+    "R3 2",
+    "R3 3"
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/rate_law_census_r4.py\"",
+   "outputs": [
+    "results/rate_law_census_r4.json",
+    "logs/rate_law_census_r4.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "374 resolved = 264 two-sided fiber (lambda to 2.07e-8 rel, kappa to 2.07e-6) + 110 all-tied K3 one-sided rays (294 slow rays, lambda to 1.7e-7); 32 poorly resolved; finite-eps fixed point changes lambda by 1.6e-12 rel; derived tie patterns 1/sqrt(2k(k-1)), sqrt(2/(k+1)) match synthetic equal-weight K3-K8 to 4.4e-10, fail for unequal-edge K4; -v_c ray lambda/lambda_2 in [0.33333, 0.33337]"
+  },
+  {
+   "point": [
+    "R3 8"
+   ],
+   "command": "python \"AI Agent Audits/evidence/proposals/aief_1_4_full_state_spectrum.py\"",
+   "outputs": [
+    "proposals/results/full_state_spectrum.json",
+    "proposals/results/full_state_spectrum.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN (proposal; repo original not edited)",
+   "summary": "closed 966-dim state (history 612 + B 66 + Re/Im C 288), one replay, central difference h=1e-7: EMA pole is NOT the unique slow pole (one step: 10 rates in the gap, 0.189328 x2, 0.252355 x5, 0.650-0.669 x3; T=500: 13); J+/J- differ by 0.49937 (mixed branch); citations of the 18-coordinate result: proposals/augmented_spectrum_citations.md"
+  },
+  {
+   "point": [
+    "R3 L1-L6"
+   ],
+   "command": "cd lean/AIEFProofs && STRICT_ORPHANS=1 LOG_DIR=<dir> bash check_lean.sh",
+   "outputs": [
+    "logs/lean_r4/"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "round 4 local clone, sources rebased onto main 43ce98f (new copyright/SPDX headers; see logs/lean_r4/NOTE.txt): 7/7 steps PASS, 8713 jobs, 12 warnings (all Smoke.lean header linter), 0 markers, 115 declarations, 0 disallowed axioms; source SHA256SUMS (8 files) enforced; negative tests fail at step 2"
   },
   {
    "point": [
@@ -291,7 +335,7 @@
    ],
    "type": "reproduction check",
    "basis": "RAN",
-   "summary": "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok"
+   "summary": "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok; round 4: 19 steps, UPDATE=1 run (logs/run_all_update_r4.log) differed only in frozen_topology_check.json (DIFFERS) and rate_law_census_r4.json (NEW), then a verify run reported ALL OK"
   },
   {
    "point": [
@@ -316,7 +360,7 @@
    ],
    "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues"
+   "summary": "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues. SCOPE: 'AI Agent Audits/' only; says nothing about the rest of the repository (repo-wide privacy/copyright unresolved, owner decision)"
   },
   {
    "point": [
@@ -341,6 +385,16 @@
    "type": "n/a",
    "basis": "RAN",
    "summary": "this manifest"
+  },
+  {
+   "point": [
+    "R3 1-9"
+   ],
+   "command": "python \"AI Agent Audits/evidence/tooling/round4/corrections_r4.py\"",
+   "outputs": [],
+   "type": "n/a",
+   "basis": "RAN",
+   "summary": "applies the dated [Correction 2026-10-25, response-3 #N] notes to response_2, README, salvage and response (anchors must match exactly once; refuses to run twice)"
   },
   {
    "point": [
@@ -393,20 +447,24 @@
    "sha256": "26da9ffe02f514a847235d77fb2753b01d00e064f93835c7b5724daef768e69b"
   },
   "AIEFS_audit_response.md": {
-   "bytes": 26441,
-   "sha256": "68986b0d3e2ac0e329a6c627bef835d48784623b6fb1d7101d23400c9e028d66"
+   "bytes": 26761,
+   "sha256": "08dbbe87d3bc5b78cf19a52f22d89a6cb57fc1bdc86723eeafa4ae297983eeb5"
   },
   "AIEFS_audit_response_2.md": {
-   "bytes": 29259,
-   "sha256": "1e2b550eb6747f25025d21f9cc23152b60dd0bad1d5fe4801d5d1e7cbb78cddd"
+   "bytes": 32267,
+   "sha256": "4a3fd1e046da6c72bc6d3d413466e6bf90a6f8e1060c165eaddbb39055e9b9a2"
+  },
+  "AIEFS_audit_response_3.md": {
+   "bytes": 26077,
+   "sha256": "68a24872cfdfbaf8d14557034f469f7b132dd4b9b41489c66b67f0d17054ccb1"
   },
   "AIEFS_salvage.md": {
-   "bytes": 29083,
-   "sha256": "a2581d88b715afa94e85b944222bb63948933e1e85003ae2a680882e308716fb"
+   "bytes": 29471,
+   "sha256": "8eb3fee79710f77c2b6b346b30e6329ba395085cff3eac87f6f49b20bf00feca"
   },
   "README.md": {
-   "bytes": 6688,
-   "sha256": "dbb41739587e93f0c5f8e0191edb7cae1c4f37198e488402ad548f7b477a4c86"
+   "bytes": 7811,
+   "sha256": "d3d390f4d06b08978a403463e7227c3a9bd8ed3e4004e3946f3050e3d8300f9a"
   },
   "evidence/ENVIRONMENT.md": {
    "bytes": 1748,
@@ -449,8 +507,8 @@
    "sha256": "eb032d4bdb2759a99a5855851100c702765192676b0d3f623bfdd92c2cc88d2c"
   },
   "evidence/logs/frozen_topology_check.log": {
-   "bytes": 821,
-   "sha256": "93b3817457cc674e564a60039bea707499f13ae895492df2c4af70c389fd7353"
+   "bytes": 1940,
+   "sha256": "92356a80a26aa08f3c2279d0bea21fe18db47e4720fa5b152c8e5fb76430d843"
   },
   "evidence/logs/gate_idempotence.log": {
    "bytes": 1147,
@@ -476,6 +534,62 @@
    "bytes": 55,
    "sha256": "61e12dbac67a8ee55921705c3449e14f57262b535727bb2ef3563642eb280a83"
   },
+  "evidence/logs/lean_r4/1_toolchain.log": {
+   "bytes": 290,
+   "sha256": "ab6b247c56dba2b6b0e182e2ff11222281d2702e0e10a5e93876cd4d721738f1"
+  },
+  "evidence/logs/lean_r4/2_pins.log": {
+   "bytes": 1265,
+   "sha256": "96ac58e13d538a50b4b6b2dca3e54fa9f8c212fd64848dd40085b694d060859e"
+  },
+  "evidence/logs/lean_r4/3_imports.log": {
+   "bytes": 499,
+   "sha256": "8aab7ac8b037ab59c7cba7a32399e4f250c156a1a201c807cf39176c917ee551"
+  },
+  "evidence/logs/lean_r4/3_reachable_modules.txt": {
+   "bytes": 177,
+   "sha256": "2adbd5136ce13fda40259454a71295ba43f88d60b43b6b2a25130147b275bf24"
+  },
+  "evidence/logs/lean_r4/4_cache.log": {
+   "bytes": 180,
+   "sha256": "83611e0c37dcf1b20243d27221faba767039ecf5cc5b3a3a60c5f0489685ea9b"
+  },
+  "evidence/logs/lean_r4/5_build.log": {
+   "bytes": 2912,
+   "sha256": "60a4a033e4cfdd8987d39c1efc157675a1ee67fc79aea1101f47da5f2243bc82"
+  },
+  "evidence/logs/lean_r4/5_build_diagnostics.txt": {
+   "bytes": 960,
+   "sha256": "5318fb1250b162a6e3c8512316cf6a0d271edd762e60442549968d2e2cb1ded4"
+  },
+  "evidence/logs/lean_r4/6_markers.log": {
+   "bytes": 24,
+   "sha256": "8f3687bd24bb07a531aec455b2db53c0753bc913c1a491871ed60042de67b7be"
+  },
+  "evidence/logs/lean_r4/7_axioms.log": {
+   "bytes": 20442,
+   "sha256": "726459dd0560c0e79b9be3bbfa1df582e1c40e84175b01925e3dd99361de572b"
+  },
+  "evidence/logs/lean_r4/7_axioms_check.lean": {
+   "bytes": 5190,
+   "sha256": "130af6cd28c645036c6e5d3fbe6a7271e0895175e1237c49cdfffb8017a8f84f"
+  },
+  "evidence/logs/lean_r4/7_axioms_summary.txt": {
+   "bytes": 5995,
+   "sha256": "47fd41c284dc932e69e75532788dff960978c55406967b086e1a6a00b612544a"
+  },
+  "evidence/logs/lean_r4/NOTE.txt": {
+   "bytes": 808,
+   "sha256": "081ac046b47bad7b572343a3449b4ad18f06f12fcc3153d5bd4a40625fbd3589"
+  },
+  "evidence/logs/lean_r4/source_sha256.txt": {
+   "bytes": 920,
+   "sha256": "ad3c1a54eb3752adc32addc446b6b38bb7e175fd0468df7e119313855e60c8b4"
+  },
+  "evidence/logs/lean_r4/summary.txt": {
+   "bytes": 1534,
+   "sha256": "cb5e855adca201d8d415fed42fccb293e967486b3a10e30e4872ecb1128fc9a8"
+  },
   "evidence/logs/lean_sorry_grep.log": {
    "bytes": 39,
    "sha256": "9f2023fba279baa8df577e8862b3b96240439a9a7bba191d522acf014e7ff1e6"
@@ -496,17 +610,41 @@
    "bytes": 699,
    "sha256": "561692f2292dd998cc229405162535793973ddc8929791c7b88cc86233545b31"
   },
+  "evidence/logs/rate_law_census_r4.log": {
+   "bytes": 7265,
+   "sha256": "64fb01d51c97bde14bf3c8f5794a84e41701aafe6c3e6c6145cbd93b9158dd2c"
+  },
   "evidence/logs/repro13.log": {
    "bytes": 1912,
    "sha256": "fb87029fd0bb033fdabd581679525d978002f1777919075316b12073e8c098c1"
   },
+  "evidence/logs/run_all_update_r4.log": {
+   "bytes": 905,
+   "sha256": "63886d2ffaca80ab98d9566d2093eef1436c629391eabadc28d3dd2b9b1cf8e8"
+  },
   "evidence/logs/run_all_verify.log": {
-   "bytes": 713,
-   "sha256": "e84ff431c5fa8b0ffc387687a7313384c28646fccd80e168481c1f7c7dfe32bc"
+   "bytes": 846,
+   "sha256": "7011e90c3e9f9c325927ba956270603fc5cb4c5fc79c9ab35332b6dd000256cc"
   },
   "evidence/logs/terminology_grep.log": {
    "bytes": 527,
    "sha256": "6a174f49c3161c328adfb9c2e60938267b67005e6789dff4be50900b084ad801"
+  },
+  "evidence/proposals/aief_1_4_full_state_spectrum.py": {
+   "bytes": 9912,
+   "sha256": "cb1edffe293b2be701091e97902ab05f2fbf1f488129fa6cdc548e2347d85a46"
+  },
+  "evidence/proposals/augmented_spectrum_citations.md": {
+   "bytes": 3887,
+   "sha256": "35b3fa8f63aa2297e62f40528170f6275067f305950598c80abdc5f49108fe0b"
+  },
+  "evidence/proposals/results/full_state_spectrum.json": {
+   "bytes": 64887,
+   "sha256": "e609ff4c235f7f8d1eca1fdb44dc3ffaed3a7967ec63aefccbd0b966021eb143"
+  },
+  "evidence/proposals/results/full_state_spectrum.log": {
+   "bytes": 19369,
+   "sha256": "290f041fa3930aefc12538f0a5172d4e98f884d1117cef14b7df77231064837e"
   },
   "evidence/results/ablation14_topology.json": {
    "bytes": 1129,
@@ -537,8 +675,8 @@
    "sha256": "6084bd9432ef5b008a60c438f14bf3283e3a87cd029cdf6415e5ebaced24e11e"
   },
   "evidence/results/frozen_topology_check.json": {
-   "bytes": 969,
-   "sha256": "4c20f7d06f0a91db7f857829b8b7113f1a973fc6f47d0839fe161c3d0e12f3a9"
+   "bytes": 2140,
+   "sha256": "bbcf8d3b5a64a5c0279510ab82467af474c36cd6e8a21073f7badf8da526ed75"
   },
   "evidence/results/gate_idempotence.json": {
    "bytes": 1094,
@@ -580,13 +718,17 @@
    "bytes": 65636,
    "sha256": "896c79769bd47686cf4254d913387e090c0cbf22442bae68d71d616b51268afb"
   },
+  "evidence/results/rate_law_census_r4.json": {
+   "bytes": 7295,
+   "sha256": "4f0b9ba73d9aa1d69c19bd8ed7fd326dd16d37432eb3bbf22602aace0ec8def2"
+  },
   "evidence/results/repro13.json": {
    "bytes": 461297,
    "sha256": "70ae79f1ec72632e4cd2c84ef221322a169baa29484a596db7d0c7befd0e71b4"
   },
   "evidence/run_all.sh": {
-   "bytes": 3359,
-   "sha256": "3cda5d15271c94c753090daf090290b09a351331d18d81d7526ee55c1e9356d7"
+   "bytes": 3500,
+   "sha256": "027dbeff8dc31f862f83728f7d214705dfbcac208afc071fa544b4ef9eadd4d1"
   },
   "evidence/scripts/_common.py": {
    "bytes": 1628,
@@ -625,8 +767,8 @@
    "sha256": "803b87dfb963ab5e45e36088670fd5fd42e9c8adf7bdb0767bdfccee0195d665"
   },
   "evidence/scripts/frozen_topology_check.py": {
-   "bytes": 1957,
-   "sha256": "0e123f22054d7a1632d87bd3a8ff8d0c96a5c309c15f66405ad1b3e6a25f970c"
+   "bytes": 3771,
+   "sha256": "9893a016a6be992e50f0648831a486c9d9bbcbe58716c095c11d0ccffc11830c"
   },
   "evidence/scripts/gate_idempotence.py": {
    "bytes": 3783,
@@ -664,6 +806,10 @@
    "bytes": 2918,
    "sha256": "8c0544c14f25d3baa7c45cac6e56cd8ae7e2a6f5dcc272af732c7ab461268595"
   },
+  "evidence/scripts/rate_law_census_r4.py": {
+   "bytes": 11348,
+   "sha256": "7ad6f3049d96657ecf7dfedce5f405dd840534855c344c6b9beaa0251c84c915"
+  },
   "evidence/scripts/repro13.py": {
    "bytes": 4550,
    "sha256": "74dc8657aeece3ce021be72312dbfeb84362eff0dba8bd193117362303a587fb"
@@ -685,8 +831,8 @@
    "sha256": "7091306b17c5660dd6c4bc1edecc24164571f3810620d5ac0bf3aa002de7d358"
   },
   "evidence/tooling/make_manifest.py": {
-   "bytes": 13436,
-   "sha256": "16856435e4e5212543bcbcfe1a6ee92f71d64a798f29ff0011e94e35cb74ce31"
+   "bytes": 16517,
+   "sha256": "062cdea79a800b578598da660ce6bebb73de13235b123bf3cbe216089203ca4c"
   },
   "evidence/tooling/pii_scan.py": {
    "bytes": 3799,
@@ -764,6 +910,10 @@
    "bytes": 592,
    "sha256": "1c223e24f66cbcfd660f90356e21ac3b6deb36eb385027d390e8c7f1c6a4c083"
   },
+  "evidence/tooling/round4/corrections_r4.py": {
+   "bytes": 10825,
+   "sha256": "6d8e821a3d28306466572d20b3b4d7f6e15d4f656c18dc16cb5ee339e687d230"
+  },
   "evidence/tooling/verify_github_blobs.py": {
    "bytes": 1769,
    "sha256": "abb51d700f04827fd735082ba26481393144f49f97b68e21121481a779ea4b6c"
@@ -771,6 +921,94 @@
   "evidence/verify_manifest.py": {
    "bytes": 2339,
    "sha256": "ed6a504db717a45542d1b5de238cd8328ca5f88e3215478acda6ba00c12fbb68"
+  },
+  "lean_recovery/LEAN_STATUS.md": {
+   "bytes": 11281,
+   "sha256": "58a642644216d050ae3075511d99fb2bec240c14766941ea876af94223ec084f"
+  },
+  "lean_recovery/RESULTS.md": {
+   "bytes": 10117,
+   "sha256": "d175e082b14e2cbf4a254f22f2faef8d0e567075562189a8550f2bff3729ee64"
+  },
+  "lean_recovery/SHA256SUMS": {
+   "bytes": 1672,
+   "sha256": "972d9e615104d7bbd2e610b8489b3258a12a3e7fa9f1b5de3612bd6c1cf4017e"
+  },
+  "lean_recovery/fixed/ControllerFiberProjector.v191.fixed.lean": {
+   "bytes": 5750,
+   "sha256": "a020ecd979dff64412cac5efee89fcec5a06897b04b91942d568edd5d4445b98"
+  },
+  "lean_recovery/fixed/ControllerFiberProjector.v303.fixed.lean": {
+   "bytes": 9300,
+   "sha256": "52a2f2736987b700db0c8ad13ae59210f74be0b2304341fcc5777f2151e250e5"
+  },
+  "lean_recovery/logs/v191_fixed.log": {
+   "bytes": 18952,
+   "sha256": "6fd0894ac260f11edaa97808cafecf4c4a439737fa9db028eebb202a8a872e93"
+  },
+  "lean_recovery/logs/v191_original.log": {
+   "bytes": 13986,
+   "sha256": "c7040917c589b8f08e777de89be513ea9e042c09a23607a476e8238c65973b7b"
+  },
+  "lean_recovery/logs/v303_fixed.log": {
+   "bytes": 23438,
+   "sha256": "82236508dfdb1bb8cbe00bbb7ba0de4effc173ec823086725e00c459e619460f"
+  },
+  "lean_recovery/logs/v303_original.log": {
+   "bytes": 16392,
+   "sha256": "b689b54a02c806f84df02dc20ae44d84921325c6d2d847b948d3005979584718"
+  },
+  "lean_recovery/logs/verify_0b5b108_plus_0003.log": {
+   "bytes": 23704,
+   "sha256": "335761481699ed0e396fade1858c5965e65efd9880910185cab7bcd7a8c4a133"
+  },
+  "lean_recovery/logs/verify_main.log": {
+   "bytes": 26024,
+   "sha256": "c117e9bb309e74ecd761f003b0b9cb6e7ea9bf20db5943d20fd46cf48b4aa0f4"
+  },
+  "lean_recovery/originals/ControllerFiberProjector.v191.original.lean": {
+   "bytes": 5695,
+   "sha256": "898195afa6504bcb5a7c50f02b2e4646505c9005bcfd74ad21996a37d5aa019c"
+  },
+  "lean_recovery/originals/ControllerFiberProjector.v303.original.lean": {
+   "bytes": 9367,
+   "sha256": "ca9a7010203509046d78aa2cdf0781729f0f12dc5fe4fddf1acd3e9952a1fa95"
+  },
+  "lean_recovery/originals/v191_vs_v303.diff": {
+   "bytes": 5851,
+   "sha256": "f619a6279b37d5441297f1744a5fc18d4c39a6a77229c5ffc7168b1b1561d21e"
+  },
+  "lean_recovery/patches/v191-original-to-fixed.patch": {
+   "bytes": 2605,
+   "sha256": "9750042a0c6147913b539818bbbffd2b60ea45d96a1e3135fac33db9573b18cd"
+  },
+  "lean_recovery/patches/v303-original-to-fixed.patch": {
+   "bytes": 3375,
+   "sha256": "2e3dd0d14a89dfab28d16d37696df11c6d472ffa8bd5c844574e68824a7fd5a8"
+  },
+  "lean_recovery/scripts/check_statements.py": {
+   "bytes": 508,
+   "sha256": "393493ab14b0ad69f4b4fd609ab1672760a03f2bee2e3702d5db96e92e9ade0b"
+  },
+  "lean_recovery/scripts/mkfix.py": {
+   "bytes": 4322,
+   "sha256": "891b312cf264a5f77c6e3247386351a9f4156df5612fd77d1e59f90799eb1947"
+  },
+  "licensing_inventory/INVENTORY.md": {
+   "bytes": 20967,
+   "sha256": "6b6d18442efd6e584be632fe5d21e592f4afec50daa6dbe8d02e12bcfa712701"
+  },
+  "licensing_inventory/inventory.json.gz.b64": {
+   "bytes": 226940,
+   "sha256": "3ef50e649e29705b065d7ebc823351a6cbdf0aa79e06568b30b85a6c72964985"
+  },
+  "licensing_inventory/scripts/inventory.py": {
+   "bytes": 18159,
+   "sha256": "c2ed8fdcd0ca2cad8544390f2287a20bde7742571e38de57d83009012ab9c5c6"
+  },
+  "licensing_inventory/scripts/make_report.py": {
+   "bytes": 14445,
+   "sha256": "c78ddb39d820a3708fa79ba18d21b224018afa900ed95544c72b6d9ac722be3e"
   }
  },
  "post_manifest_logs": [
@@ -782,7 +1020,7 @@
   "Log header lines had the local interpreter path replaced by 'python' and absolute or relative-escape paths rewritten to 'AI Agent Audits/evidence/...'; Lean logs had the temporary build directory rewritten to '<tmpcopy>'. No other log content was altered.",
   "No logs were subsampled or truncated: every file is under 1 MB.",
   "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it.",
-  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23 and 2026-10-24); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
+  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23, 2026-10-24 and 2026-10-25); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
   "evidence/tooling/round*/ and adhoc_commands.md are redacted copies: local paths -> <placeholders>, the owner's e-mail -> <owner-email-redacted>, user/host-name literals -> <redacted>. The literal list is a local file that is not published.",
   "PII in the repository's own PDFs is referenced by path only and not reproduced."
  ]
