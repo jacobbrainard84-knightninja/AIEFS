@@ -1,12 +1,14 @@
 {
- "created": "2026-10-23",
+ "created": "2026-10-24",
  "audited_repo": "github.com/jacobbrainard84-knightninja/AIEFS",
  "audited_commit": "e47bad150792425eb8e962ff636c69289eedd8b1",
  "report_commits": {
   "55be461f3da5b71c86fced8023a276f5868f4c23": "adds AI Agent Audits/AIEFS_audit.md (original)",
-  "f7246a364060237001fa35115f1ea691e620d048": "adds AI Agent Audits/AIEFS_salvage.md (original)"
+  "f7246a364060237001fa35115f1ea691e620d048": "adds AI Agent Audits/AIEFS_salvage.md (original)",
+  "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6); this round-3 tree is NOT pushed"
  },
- "note_inputs": "Inputs hashed from the read-only clone at e47bad1; the two later commits add only report files (checked via GitHub API).",
+ "note_inputs": "Inputs hashed from the read-only clone at e47bad1; later commits add only files under 'AI Agent Audits/'.",
+ "point_labels": "'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md",
  "run_from": "repository root",
  "environment": "evidence/ENVIRONMENT.md",
  "inputs_sha256": {
@@ -20,6 +22,14 @@
   "runs/b57562a8ee77/AIEF_1_4_Twindow_sensitivity_b57562a8ee77_branch_diagnostics.npz": "55a419c790d0a46bad2a52488d9de018a539ad3daa3759eee849cebf4df468c2",
   "aief_1_4_scalar_spectral_gap_reduction/scalar_spectral_gap_report.txt": "a1cd56de72377b6d3d1a4f0d615dcb793044160af6f05cc566c2bb2ccbcd247b",
   "aief_1_4_matched_phase_memory_ablation/analysis_manifest.json": "3ce915cc8c422df2a2a2713550a4ed7a540b86ad5d14b9cd73ae5b8c9d780c60",
+  "test_output/analysis_manifest.json": "2a57bc255b74395f265ab39578da0a13e5a48622decdf943d4e53dd689be04e5",
+  "test_output/matched_phase_paired_contrasts.csv": "f6f18904bd5c836db0b780569ed6e0c3133b783dcf15d43700e64d8283ba9454",
+  "test_output/matched_phase_seed_status.csv": "b9fe373b212d21d2e84613429e39ff8867caed81c195702f318b2c4cd7deb1ae",
+  "aief_1_4_augmented_spectrum.py": "7b54aa888250cf608069b6f3cc91b7ce366083d6d667d3d14e579f7cd6f01054",
+  "AIEF_1_4_stationarity_perturbation_analysis_updated.py": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc",
+  "AIEF_1_4_component_controller_audit.py": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e",
+  "AIEF_1_4_augmented_tangent_cocycle_analysis.py": "0192656f21b5c4b3d09adebb15d0554ead0fca755860bb85f9fa03f75452e964",
+  "aief_1_4_augmented_spectrum/augmented_spectrum_report.txt": "e84941ea4c4630abcad49bcb323bfee567c34e1768b2f9e32ace3c6765c6b06d",
   "lean/AIEFProofs/AIEFProofs.lean": "5b696824caba90ecc29f506bc1039b5d59e9bd53fd36da49e7526ca0ba6d0a16",
   "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean": "37c26f569ab24351c6482c1b8259adbee84d843506d54002699da54417eaf241",
   "lean/AIEFProofs/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
@@ -31,77 +41,82 @@
  "findings": [
   {
    "point": [
-    13,
-    14
+    "R1 13",
+    "R1 14",
+    "R2 8"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/repro13.py\"",
    "outputs": [
     "results/repro13.json",
     "logs/repro13.log"
    ],
-   "type": "confirmatory",
+   "type": "reproduction check",
    "basis": "RAN",
-   "summary": "500/500 archived AIEF-1.3 runs bit-exact; means equal audit section 3"
+   "summary": "all 38 stored keys compared: 78/500 runs bit-exact on every key; 500/500 bit-exact on the 7 arrays and 4 headline scalars; the other 422 differ only in S_spectral, Weight_gini, Projection_norm_max/_mean_active (<=4.9e-15 abs, <=1.3e-12 rel); status ok_with_warnings"
   },
   {
    "point": [
-    1,
-    4,
-    8
+    "R1 1",
+    "R1 4",
+    "R1 8"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/archived13_closedform.py\"",
    "outputs": [
-    "results/archived13_closedform.json"
+    "results/archived13_closedform.json",
+    "logs/archived13_closedform.log"
    ],
-   "type": "confirmatory",
+   "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "repo-omega baseline: 16 distinct topologies (audit said 7), equal to closed-form set 50/100, subset 95/100; no_delay 1 topology = set 100/100; no_gap active weight 2.6654 vs eta/gamma 2.667; shuffle mean R 0.371 < R* 0.4286"
+   "summary": "repo-omega baseline: 16 distinct topologies, equal to closed-form set 50/100, subset 95/100; no_delay 1 topology = set 100/100; no_gap active weight 2.6654 vs eta/gamma 2.667; shuffle mean R 0.371 < R* 0.4286"
   },
   {
    "point": [
-    1,
-    4
+    "R1 1",
+    "R1 4"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/freq_predictor.py\"",
    "outputs": [
     "logs/freq_predictor.log"
    ],
-   "type": "confirmatory",
+   "type": "reproduction check",
    "basis": "RAN",
    "summary": "per-manifest distinct topologies 11 and 11; per-seed corr(P,R_pred) 0.927/0.919; seed-averaged 0.990/0.988"
   },
   {
    "point": [
-    1,
-    3
+    "R1 1",
+    "R1 3"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/omega_random.py\"",
    "outputs": [
     "results/omega_random.json",
     "logs/omega_random.log"
    ],
-   "type": "confirmatory (rerun of first pass)",
+   "type": "reproduction check",
    "basis": "RAN",
-   "summary": "identical to first pass: precision/recall uniform no_delay 0.717/0.575, baseline 0.600/0.508, clustered 0.933/0.282, 0.838/0.267"
+   "summary": "identical to round-1 pass: precision/recall uniform no_delay 0.717/0.575, baseline 0.600/0.508; clustered 0.933/0.282, 0.838/0.267"
   },
   {
    "point": [
-    4,
-    7
+    "R1 4",
+    "R1 7"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/omega_multistab.py\"",
    "outputs": [
-    "results/omega_multistab.json"
+    "results/omega_multistab.json",
+    "logs/omega_multistab.log"
    ],
-   "type": "confirmatory (rerun)",
+   "type": "reproduction check",
    "basis": "RAN",
    "summary": "mean Jaccard 0.514; baseline vs no_delay 0.516; distinct per omega [4,2,3,4,2,4,1,4,4,4]"
   },
   {
    "point": [
-    1,
-    2,
-    7
+    "R1 1",
+    "R1 2",
+    "R1 7",
+    "R2 5",
+    "R2 6"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/delay_paired_heldout.py\" && python \"AI Agent Audits/evidence/scripts/analyze_delay_heldout.py\"",
    "outputs": [
@@ -110,87 +125,139 @@
     "results/delay_paired_runs.json",
     "results/delay_heldout_analysis.json"
    ],
-   "type": "confirmatory (tests requested by the collaborator, designed before running)",
+   "type": "controlled exploratory analysis with fixed recorded design",
    "basis": "RAN",
-   "summary": "held-out AUC/logloss and paired delay statistics; see AIEFS_audit_response.md section 5. Distinct-topology and Jaccard contrasts are exploratory."
+   "summary": "held-out AUC/logloss for the final threshold edge (B_final > B_C; identical to P_future > 0.5 here: 0/29040 label differences); sample diversity: mean distinct four-seed topologies 2.93 vs 2.33 (uniform), 2.0 vs 1.4 (clustered); not basin counts"
   },
   {
    "point": [
-    5
+    "R1 5",
+    "R2 1"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/gate_idempotence.py\"",
    "outputs": [
-    "results/gate_idempotence.json"
+    "results/gate_idempotence.json",
+    "logs/gate_idempotence.log"
    ],
-   "type": "confirmatory",
+   "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "20000/20000 bitwise idempotent; jump 1.579e-12 = eps/cap; eps=0 Euclidean projection differs 0.037-0.046"
+   "summary": "20000/20000 bitwise idempotent; jump 1.579e-12 = eps/cap; eps=0 differs from the Euclidean projection by 0.037-0.046 at the sampled points"
   },
   {
    "point": [
-    5
+    "R1 5",
+    "R2 1"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/mathcheck.py\"",
    "outputs": [
     "logs/mathcheck.log"
    ],
-   "type": "confirmatory (rerun)",
+   "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "interior witness margin 6.67e-13; KL projection differs 0.022-0.030"
+   "summary": "witness x outside C maps to the interior (margin 6.67e-13 = c*eps/(q+eps)) and A(x) != x: exact no-go for smooth strictly convex Bregman / PD-metric projection at eps=1e-12; KL projection differs 0.022-0.030 at the sampled points"
   },
   {
    "point": [
-    9
+    "R1 9"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/kappa_rows.py\"",
    "outputs": [
-    "results/kappa_rows.json"
+    "results/kappa_rows.json",
+    "logs/kappa_rows.log"
    ],
-   "type": "confirmatory",
+   "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "row rates sum F/c 0.12419, 0.12420, 0.12208 (label corrected); repo fitted gap 0.0699224 vs observed 0.0691225"
+   "summary": "row rates sum F/c 0.12419, 0.12420, 0.12208; repo fitted gap 0.0699224 vs observed 0.0691225"
   },
   {
    "point": [
-    9
+    "R1 9",
+    "R2 2"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/kappa_tw.py\" all && python \"AI Agent Audits/evidence/scripts/analyze_kappa_tw.py\"",
    "outputs": [
     "results/kappa_tw_all.json",
     "results/kappa_tw_summary.json",
-    "results/kappa_tw_components.csv"
+    "results/kappa_tw_components.csv",
+    "logs/kappa_tw.log",
+    "logs/analyze_kappa_tw.log"
    ],
-   "type": "confirmatory (prediction stated in salvage 3.5); twin_early K3 statistic exploratory",
+   "type": "controlled exploratory analysis with fixed recorded design",
    "basis": "RAN",
-   "summary": "292 slow components over 5 T_w: r_B vs discrete Prop 8.3 max rel err 3.1e-5; kappa vs discrete closed form max abs err 5.3e-6; K3: 1 of 115 components has a slow channel (rho=1); 114 fully saturated"
+   "summary": "central-difference matrix (not a Jacobian at ties): 292 slow components over 5 T_w, r_B vs discrete Prop 8.3 max rel err 3.1e-5; its K3 census is superseded by kappa_cycle_kernel"
   },
   {
    "point": [
-    6
+    "R2 2"
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/kappa_cycle_kernel.py\" && python \"AI Agent Audits/evidence/scripts/analyze_kappa_cycle_kernel.py\"",
+   "outputs": [
+    "results/kappa_cycle_kernel.json",
+    "results/kappa_cycle_kernel_summary.json",
+    "logs/kappa_cycle_kernel.log",
+    "logs/analyze_kappa_cycle_kernel.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps): 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"
+  },
+  {
+   "point": [
+    "R1 6",
+    "R2 4"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/ablation14_topology.py\"",
    "outputs": [
-    "results/ablation14_topology.json"
+    "results/ablation14_topology.json",
+    "logs/ablation14_topology.log"
    ],
-   "type": "confirmatory (rerun of salvage table)",
+   "type": "reproduction check",
    "basis": "RAN",
-   "summary": "reset_B Jaccard 1.000, reset_ema 0.992, reset_B_ema 0.913 (Jaccard vs continue); reset_B_ema equals the closed-form set in 32/40 seeds"
+   "summary": "reset_B Jaccard 1.000, reset_ema 0.992, reset_B_ema 0.913 (vs continue); reset_B_ema equals the closed-form set in 32/40 seeds"
   },
   {
    "point": [
-    6
+    "R2 4"
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/frozen_topology_check.py\"",
+   "outputs": [
+    "results/frozen_topology_check.json",
+    "logs/frozen_topology_check.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction"
+  },
+  {
+   "point": [
+    "R1 6",
+    "R2 3"
    ],
    "command": "python \"AI Agent Audits/evidence/scripts/matched_phase_check.py\"",
    "outputs": [
-    "results/matched_phase_check.json"
+    "results/matched_phase_check.json",
+    "logs/matched_phase_check.log"
    ],
-   "type": "exploratory",
+   "type": "controlled exploratory analysis with fixed recorded design",
    "basis": "RAN",
-   "summary": "Weighted_similarity_late +0.064 [0.041,0.089]; repo canonical analysis_manifest reports FAILED (provenance caveat)"
+   "summary": "reads test_output/ (its analysis_manifest: 40/40 seeds, 0 failures, validation passing; hashes recorded); Weighted_similarity_late +0.0642 [0.0405, 0.0886], 31/40 positive; the FAILED manifest is a different 1-seed partial run (aief_1_4_matched_phase_memory_ablation)"
   },
   {
    "point": [
-    14
+    "R2 9"
+   ],
+   "command": "python \"AI Agent Audits/evidence/scripts/evolution_checks.py\"",
+   "outputs": [
+    "results/evolution_checks.json",
+    "logs/evolution_checks.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "repo augmented-spectrum procedure: restore_state does not restore theta (drift 0.0156 -> 0.272); forward vs reversed column order max |dJ| 9896 (max entry 10491); slowest rates repo -1068, -542, corrected -9.57, 0.05713; 18-vector not closed (history[1]: 1.0 x delta, theta: 5.6e-4 x delta); no rate in the repo's gap window"
+  },
+  {
+   "point": [
+    "R1 14"
    ],
    "command": "bash \"AI Agent Audits/evidence/scripts/lean_check.sh\"",
    "outputs": [
@@ -198,13 +265,13 @@
     "logs/lean_build_patched.log",
     "logs/lean_sorry_grep.log"
    ],
-   "type": "confirmatory",
+   "type": "deterministic numerical check",
    "basis": "RAN",
-   "summary": "as committed BUILD_EXIT 1 (bad import ControllerFiberProjector); import removed: 1235 jobs OK; no sorry/axiom/admit"
+   "summary": "as committed BUILD_EXIT 1 (bad import ControllerFiberProjector); import removed: 1235 jobs OK; no sorry/axiom/admit (not rerun in round 3)"
   },
   {
    "point": [
-    11
+    "R1 11"
    ],
    "command": "bash \"AI Agent Audits/evidence/scripts/terminology_grep.sh\"",
    "outputs": [
@@ -216,8 +283,80 @@
   },
   {
    "point": [
-    10,
-    11
+    "R2 9"
+   ],
+   "command": "bash \"AI Agent Audits/evidence/run_all.sh\"",
+   "outputs": [
+    "logs/run_all_verify.log"
+   ],
+   "type": "reproduction check",
+   "basis": "RAN",
+   "summary": "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok"
+  },
+  {
+   "point": [
+    "R2 9"
+   ],
+   "command": "python \"AI Agent Audits/evidence/verify_manifest.py\" --inputs",
+   "outputs": [
+    "tooling/logs/verify_manifest.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "every listed file and repo input matches size/sha256; no unlisted files"
+  },
+  {
+   "point": [
+    "packaging"
+   ],
+   "command": "python \"AI Agent Audits/evidence/tooling/pii_scan.py\" --private <local file, not published>",
+   "outputs": [
+    "tooling/logs/pii_scan.log",
+    "tooling/logs/pii_scan_selftest.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues"
+  },
+  {
+   "point": [
+    "packaging"
+   ],
+   "command": "python \"AI Agent Audits/evidence/tooling/verify_github_blobs.py\" <tree JSON of c9907a6> \"AI Agent Audits\"",
+   "outputs": [
+    "tooling/logs/verify_github_blobs_c9907a6.log"
+   ],
+   "type": "deterministic numerical check",
+   "basis": "RAN",
+   "summary": "the round-2 staging tree is IDENTICAL (58/58 git blob sha1) to 'AI Agent Audits/' at github c9907a6"
+  },
+  {
+   "point": [
+    "packaging"
+   ],
+   "command": "python \"AI Agent Audits/evidence/tooling/make_manifest.py\"",
+   "outputs": [
+    "audit_manifest.json"
+   ],
+   "type": "n/a",
+   "basis": "RAN",
+   "summary": "this manifest"
+  },
+  {
+   "point": [
+    "provenance"
+   ],
+   "command": "tooling/round1, round2, round3, adhoc_commands.md",
+   "outputs": [],
+   "type": "n/a",
+   "basis": "RAN (scratch; redacted copies)",
+   "summary": "scratch scripts and ad-hoc commands used to build rounds 1-3; redacted copies are for audit, not runnable verbatim; see AIEFS_audit_response_2.md 'Provenance gaps'"
+  },
+  {
+   "point": [
+    "R1 10",
+    "R1 11",
+    "R2 2"
    ],
    "command": "read AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md Prop 2.9, 8.1, 8.3, 9.2, 11.1",
    "outputs": [],
@@ -227,7 +366,7 @@
   },
   {
    "point": [
-    12
+    "R1 12"
    ],
    "command": "web literature search 2026-10-23",
    "outputs": [],
@@ -237,8 +376,8 @@
   },
   {
    "point": [
-    2,
-    7,
+    "R1 2",
+    "R1 7",
     "priority ordering"
    ],
    "command": "reasoning",
@@ -250,64 +389,84 @@
  ],
  "files_sha256": {
   "AIEFS_audit.md": {
-   "bytes": 21714,
-   "sha256": "273beacce6ad93fdf1c15780b7ce55d31cdf87b4f945fde7d15c0a63dc8ce937"
+   "bytes": 23088,
+   "sha256": "26da9ffe02f514a847235d77fb2753b01d00e064f93835c7b5724daef768e69b"
   },
   "AIEFS_audit_response.md": {
-   "bytes": 20210,
-   "sha256": "331becd7119bd95c447371c5ed776adfab727eb729535eae199eb77b41844733"
+   "bytes": 26441,
+   "sha256": "68986b0d3e2ac0e329a6c627bef835d48784623b6fb1d7101d23400c9e028d66"
+  },
+  "AIEFS_audit_response_2.md": {
+   "bytes": 29259,
+   "sha256": "1e2b550eb6747f25025d21f9cc23152b60dd0bad1d5fe4801d5d1e7cbb78cddd"
   },
   "AIEFS_salvage.md": {
-   "bytes": 25619,
-   "sha256": "aa9d9d40c22284ce1b2bce1119f932cfb85d89d9dd073411594931378640b90e"
+   "bytes": 29083,
+   "sha256": "a2581d88b715afa94e85b944222bb63948933e1e85003ae2a680882e308716fb"
   },
   "README.md": {
-   "bytes": 3147,
-   "sha256": "8f7ac44d886078a326ad1682414b63a80955d3755f16fa9e505d0bce1156324a"
+   "bytes": 6688,
+   "sha256": "dbb41739587e93f0c5f8e0191edb7cae1c4f37198e488402ad548f7b477a4c86"
   },
   "evidence/ENVIRONMENT.md": {
-   "bytes": 1694,
-   "sha256": "d86c23e6e8d4a132ba1c139868f606f247658a7042b027b4181f657b2a046abc"
+   "bytes": 1748,
+   "sha256": "7fa1a31fd05987f118fcdf9088a83e4d01a1b921b7e05b2b1194955eaccd90c9"
   },
   "evidence/REPRODUCE.md": {
-   "bytes": 3422,
-   "sha256": "ddff9f19e93e6419fc98af58e4167dfb1a0cd3e262f471c7fd2c817fe708ae27"
+   "bytes": 7450,
+   "sha256": "4711ea5a61f928e3e20ab20517ee035583586c8c39162dfeaedd2c3445bed1a2"
   },
   "evidence/logs/ablation14_topology.log": {
-   "bytes": 906,
-   "sha256": "b5578f68391a5e7b3be8513e50e6c144e4173ee7d1e5846bd569eb826cfc1316"
+   "bytes": 891,
+   "sha256": "efab77486e1041cdc17c66dd72c134deeff487da4f66ec329df1331da204b89b"
   },
   "evidence/logs/analyze_delay.log": {
-   "bytes": 11605,
-   "sha256": "4e41b9bd6befe958bbff94fa301d536e28cbf8c6e65ac4f5703facd31a96ac28"
+   "bytes": 21235,
+   "sha256": "7e533bfc38875e7609846091e6a20de72cd87b4a6772a216aa8e00ea9e7629df"
+  },
+  "evidence/logs/analyze_kappa_cycle_kernel.log": {
+   "bytes": 8401,
+   "sha256": "415df01f5a81d073e0524565c30970a8797daef5f4cf46611efa0ecdb955fc59"
   },
   "evidence/logs/analyze_kappa_tw.log": {
-   "bytes": 6673,
-   "sha256": "d40f4ec86ba44f3c6b7d764d65f7f6a3303310622a1b199bba814472eb0ccea3"
+   "bytes": 6658,
+   "sha256": "344edba9f7fb8acfacb946fa80ac0b70e508bcee8db759d94d7f4512e58a7b01"
   },
   "evidence/logs/archived13_closedform.log": {
-   "bytes": 577,
-   "sha256": "679a19aaa7561dbb65d83d653bc84298543cc01789c449a5aa399b03f13b5bd1"
+   "bytes": 562,
+   "sha256": "b754eeadf9d432efdc9c6176cdc3bf9396710d13e617c9f80462a0b6944f4307"
   },
   "evidence/logs/delay_paired.log": {
-   "bytes": 142,
-   "sha256": "664334ee833eae4fa122f58cfc341db9b812d25f28e855129252e0052610e96d"
+   "bytes": 98,
+   "sha256": "56223a4d81fa4d91189296861fbbed1a448b22974979d8fa6a3876a7acce2bdf"
+  },
+  "evidence/logs/evolution_checks.log": {
+   "bytes": 1729,
+   "sha256": "d3855581ccb3ce90b453dc5bfb050eaaeece241dbfd2b0110b41fbd42465d8ea"
   },
   "evidence/logs/freq_predictor.log": {
-   "bytes": 728,
-   "sha256": "c62406d5a14f7b1bdfde84d70610f85086c0a87e184c056c7b4110f5c0488348"
+   "bytes": 713,
+   "sha256": "eb032d4bdb2759a99a5855851100c702765192676b0d3f623bfdd92c2cc88d2c"
+  },
+  "evidence/logs/frozen_topology_check.log": {
+   "bytes": 821,
+   "sha256": "93b3817457cc674e564a60039bea707499f13ae895492df2c4af70c389fd7353"
   },
   "evidence/logs/gate_idempotence.log": {
-   "bytes": 1162,
-   "sha256": "1299845112edae6f7aa53c81472dd0fb9e17330f1367874eddfb6f707f9ad323"
+   "bytes": 1147,
+   "sha256": "6cd26ffef24eaa0465e002cb1a4094c5ff490f089f0e8da72b8d9c7ce81bf9a1"
+  },
+  "evidence/logs/kappa_cycle_kernel.log": {
+   "bytes": 105,
+   "sha256": "7d76802279e24ff1b35fc552257dfa6256090fd73c0f5df4bd38507174b02450"
   },
   "evidence/logs/kappa_rows.log": {
-   "bytes": 2300,
-   "sha256": "ed843f6154cbfd6b7e4252c1af3bd0194f5527ba151d396fb17972e11c10a561"
+   "bytes": 2285,
+   "sha256": "9c1b7fdc6e0bb5fec0b60fa6493bc09296e5e1e857eb9d2ad76dd3315b4ad68c"
   },
   "evidence/logs/kappa_tw.log": {
-   "bytes": 1219,
-   "sha256": "15d0c7939fa097d23a74a263d9257e7fc28d68119f5d80b759202385bb6b8ff1"
+   "bytes": 1181,
+   "sha256": "d045b0d685d9002d8018d3c772e9a1d07963db21edd8e3951f30ea09f7d8e177"
   },
   "evidence/logs/lean_build_original.log": {
    "bytes": 526,
@@ -322,40 +481,44 @@
    "sha256": "9f2023fba279baa8df577e8862b3b96240439a9a7bba191d522acf014e7ff1e6"
   },
   "evidence/logs/matched_phase_check.log": {
-   "bytes": 2095,
-   "sha256": "93d6c54f1ecf9c419b8626ad8f332f06c1945c41aac2849d5c57280a7ab96aaf"
+   "bytes": 3712,
+   "sha256": "b24f7a491b711e63aa40ca57a9139d9b56d7d38ffba392a694860aa182b318e9"
   },
   "evidence/logs/mathcheck.log": {
-   "bytes": 735,
-   "sha256": "1966e38abf325fc0a93c925924b18013b4ddc766f22e279ed07c6dcdb3628e8c"
+   "bytes": 720,
+   "sha256": "359669b2bdef26010240e2521960f62acbc7d65fca67a643d05f4d911f00e236"
   },
   "evidence/logs/omega_multistab.log": {
-   "bytes": 296,
-   "sha256": "3ef71b4c32b8aa574f466a917fdfb33b760de062403f37d092d84ca645e64760"
+   "bytes": 260,
+   "sha256": "7be9d70036403535318f50c901e5cf68385a1b02685fa566c3de2419e2e1a832"
   },
   "evidence/logs/omega_random.log": {
-   "bytes": 735,
-   "sha256": "5ff96a10bb6d895911f37221cd6b4293acec7b518188e8fe250029ea79cdaeb6"
+   "bytes": 699,
+   "sha256": "561692f2292dd998cc229405162535793973ddc8929791c7b88cc86233545b31"
   },
   "evidence/logs/repro13.log": {
-   "bytes": 1163,
-   "sha256": "e8c0d16b3e44b6563fdae484ea6c6f8bec793499477fc1f8062b4f3384fb3ea3"
+   "bytes": 1912,
+   "sha256": "fb87029fd0bb033fdabd581679525d978002f1777919075316b12073e8c098c1"
+  },
+  "evidence/logs/run_all_verify.log": {
+   "bytes": 713,
+   "sha256": "e84ff431c5fa8b0ffc387687a7313384c28646fccd80e168481c1f7c7dfe32bc"
   },
   "evidence/logs/terminology_grep.log": {
    "bytes": 527,
    "sha256": "6a174f49c3161c328adfb9c2e60938267b67005e6789dff4be50900b084ad801"
   },
   "evidence/results/ablation14_topology.json": {
-   "bytes": 1004,
-   "sha256": "a1ac4fc96f4e17c784ba81a3f3c192306e1454ac12dd2fece529366314a4ded0"
+   "bytes": 1129,
+   "sha256": "6d82d1295a5083c8d6904f7f5706b7d87e8b624a61e809c6bd0adc7e7ca18110"
   },
   "evidence/results/archived13_closedform.json": {
-   "bytes": 543,
-   "sha256": "1cc48e5d221f5f0fd3b016fb8a1e02a89d1a295f72b4ed5f481dc1d9652b2dbf"
+   "bytes": 670,
+   "sha256": "60b880ff6f76f968c26dab118eb7c052de6555717dd4db034c3d42fb3d264279"
   },
   "evidence/results/delay_heldout_analysis.json": {
-   "bytes": 11472,
-   "sha256": "dceef756c139f5e6296a6cad172174bd8e70e142103f153b40bd7e64bf526ffa"
+   "bytes": 21472,
+   "sha256": "6de7bb1aad4b41dea7957ea880eb7c76bdb44247844eb57668dbc814c9c07a59"
   },
   "evidence/results/delay_paired_edges_clustered.csv": {
    "bytes": 693079,
@@ -366,16 +529,32 @@
    "sha256": "9972f74d560f813413f90f5ddbcddbdccb5d231ab803d1caf27d36fc80a13b26"
   },
   "evidence/results/delay_paired_runs.json": {
-   "bytes": 58114,
-   "sha256": "c83a072f0bc0a5dd9c3c83e5ceb47f761c190ff687cf79eb7f6b4310a661c0cc"
+   "bytes": 58240,
+   "sha256": "5799e03de3d1ae9bd7c301fefbd5876131b4a0d7574d019aa0392e3929ba8ab7"
+  },
+  "evidence/results/evolution_checks.json": {
+   "bytes": 1761,
+   "sha256": "6084bd9432ef5b008a60c438f14bf3283e3a87cd029cdf6415e5ebaced24e11e"
+  },
+  "evidence/results/frozen_topology_check.json": {
+   "bytes": 969,
+   "sha256": "4c20f7d06f0a91db7f857829b8b7113f1a973fc6f47d0839fe161c3d0e12f3a9"
   },
   "evidence/results/gate_idempotence.json": {
-   "bytes": 972,
-   "sha256": "02805aee4c3f40c5abd46201561b96e6ea9319d7e5e5bbf5dc1f0a787ab98ea3"
+   "bytes": 1094,
+   "sha256": "6c80289776969803e25adb62a849eecd033a5f54d37f0c84f72616a48b55e442"
+  },
+  "evidence/results/kappa_cycle_kernel.json": {
+   "bytes": 785209,
+   "sha256": "78330914e4159c9afcc43b7985c5ff2d76c3bc496451f814a7b6fb896206e81b"
+  },
+  "evidence/results/kappa_cycle_kernel_summary.json": {
+   "bytes": 8423,
+   "sha256": "a422bfc0d9d5c7bda51fb12c72ad8e7f57e6ff5d265d458e1a76cfda6755e0d9"
   },
   "evidence/results/kappa_rows.json": {
-   "bytes": 2351,
-   "sha256": "515f3c888ace8eb83622a821503a792f2adf64eba58367ea721c5ba31fef0538"
+   "bytes": 2467,
+   "sha256": "e63331770152ec5ee385ef6ba72ec5ef75d407415ce9e24aa36464d6f7e509b9"
   },
   "evidence/results/kappa_tw_all.json": {
    "bytes": 435237,
@@ -386,44 +565,48 @@
    "sha256": "bbefd3af4e450c63c173694c304a139b5e1f5e4e25653ff1c3572af6cc38ddf8"
   },
   "evidence/results/kappa_tw_summary.json": {
-   "bytes": 6568,
-   "sha256": "3d4a0afd1b6d63f437601af8242085531b6605f8436731d4ccc6129fba5bf772"
+   "bytes": 6690,
+   "sha256": "d4fb9949c4395865eb57e5664fbb50958dded23c8334387c3981056f8e5181fc"
   },
   "evidence/results/matched_phase_check.json": {
-   "bytes": 2286,
-   "sha256": "e83d290813b323bc4ee23d741432d8ca70fac5e8fe5945f5f7f63a7eeab2cbf2"
+   "bytes": 4227,
+   "sha256": "d5492ef1f9d8d4f8dbcdd0058a3b15c292753774e414e55d6272bbd574c145ae"
   },
   "evidence/results/omega_multistab.json": {
    "bytes": 25555,
    "sha256": "5fc4cf5e41f4f5b27abb5b61b06ee3161413024cfb94b4f8defdde5449b89b0e"
   },
   "evidence/results/omega_random.json": {
-   "bytes": 65528,
-   "sha256": "31f21dd2df7078330ace63f502b5f919a56be2b6969c86ac4d64109bbb75bbd4"
+   "bytes": 65636,
+   "sha256": "896c79769bd47686cf4254d913387e090c0cbf22442bae68d71d616b51268afb"
   },
   "evidence/results/repro13.json": {
-   "bytes": 221423,
-   "sha256": "bc18ba41d71757e8c5069b0f2d29bf704c20dcbd696effdf162c7b5f01dbda16"
+   "bytes": 461297,
+   "sha256": "70ae79f1ec72632e4cd2c84ef221322a169baa29484a596db7d0c7befd0e71b4"
   },
   "evidence/run_all.sh": {
-   "bytes": 1480,
-   "sha256": "8ffaae385e8b1934236a4a883c621576d161fedac5aff6ac5f97f16169324d90"
+   "bytes": 3359,
+   "sha256": "3cda5d15271c94c753090daf090290b09a351331d18d81d7526ee55c1e9356d7"
   },
   "evidence/scripts/_common.py": {
-   "bytes": 716,
-   "sha256": "3ecc445f9f5a0e01e0b4f2fea7417ecd6f9627b352ba5e78218e9243264236dd"
+   "bytes": 1628,
+   "sha256": "969c1ba8d543a6221845933ad55adc2bd501fadaaefbb22a57141bd52ae0192d"
   },
   "evidence/scripts/ablation14_topology.py": {
    "bytes": 1578,
    "sha256": "5cdf3845ad7eb69f29ea5cdd4b6cc1f40a582732930ad0408ec936bd0c21858e"
   },
   "evidence/scripts/analyze_delay_heldout.py": {
-   "bytes": 11520,
-   "sha256": "edc13b3628bb09e106af0c7cf7b93481a51589f41f3d2de80e613edce4b229d2"
+   "bytes": 13983,
+   "sha256": "16d229dd5e35567124da4e0dd8d8ba035bee6831ba57638acced5b45a80ac9ea"
+  },
+  "evidence/scripts/analyze_kappa_cycle_kernel.py": {
+   "bytes": 8017,
+   "sha256": "07b467caaf6b0e770acd66bc6a819f938ee3e4ae87bb80c414f378f9de8d1921"
   },
   "evidence/scripts/analyze_kappa_tw.py": {
-   "bytes": 4085,
-   "sha256": "98ea1a6a027643d8c6776cb5088718be761e20dfa574d3e974b3921e233fa023"
+   "bytes": 4428,
+   "sha256": "0dfa075a173bb914b1dbe59096540f7761b7e0809df1f36c2ff681dda6ba0f19"
   },
   "evidence/scripts/archived13_closedform.py": {
    "bytes": 1828,
@@ -433,56 +616,174 @@
    "bytes": 2948,
    "sha256": "7d0133f1dd6e781ff91bcef4495ae21306206bbaf557223d915bbb7bef705cf3"
   },
+  "evidence/scripts/evolution_checks.py": {
+   "bytes": 4778,
+   "sha256": "37c331dafa60d07aaa9a4bce8f100b9f8bd7e2b1662b44dede3a0c3af6ed35c0"
+  },
   "evidence/scripts/freq_predictor.py": {
    "bytes": 1705,
    "sha256": "803b87dfb963ab5e45e36088670fd5fd42e9c8adf7bdb0767bdfccee0195d665"
   },
+  "evidence/scripts/frozen_topology_check.py": {
+   "bytes": 1957,
+   "sha256": "0e123f22054d7a1632d87bd3a8ff8d0c96a5c309c15f66405ad1b3e6a25f970c"
+  },
   "evidence/scripts/gate_idempotence.py": {
    "bytes": 3783,
    "sha256": "ff9fcf15f4062fb5164c88b7f82d2fbcd5667fca7ec4d7a54be7cd1a8f2a2115"
+  },
+  "evidence/scripts/kappa_cycle_kernel.py": {
+   "bytes": 11097,
+   "sha256": "347276307142acb84214c156ccbc601b6729b804311cfa3a1270ac13d2a8e873"
   },
   "evidence/scripts/kappa_rows.py": {
    "bytes": 1961,
    "sha256": "4e9330cdbef41411d2471e0ec5889be44dd286dd563c222c1608c7de3750039b"
   },
   "evidence/scripts/kappa_tw.py": {
-   "bytes": 6323,
-   "sha256": "9b135e54465b1c6ce68e77f9c5831edc77b6d9914c237daa1616aaff4ae5d081"
+   "bytes": 6991,
+   "sha256": "c9a5e13c8a0179c1d8cc626af573400f7ef782a1394e64f693b1357b76d8eb50"
   },
   "evidence/scripts/lean_check.sh": {
    "bytes": 1012,
    "sha256": "33a23cd2c1f29c01133332e42427a559fd09b74a2b2c795710ff8bc768ff74d4"
   },
   "evidence/scripts/matched_phase_check.py": {
-   "bytes": 1444,
-   "sha256": "fb4b9728684e6090df9cbcc787eee842302e9bac43e778d681064db41680f487"
+   "bytes": 4509,
+   "sha256": "6d676ec627a1c0a757d9f792f448ea0124b369cefd4d0b1af4b8ea9ecafd5db6"
   },
   "evidence/scripts/mathcheck.py": {
    "bytes": 2851,
    "sha256": "d37f40e6e11aced30fdb6150e9a5e96040227830292455af8055acf1799792d3"
   },
   "evidence/scripts/omega_multistab.py": {
-   "bytes": 1360,
-   "sha256": "c6c9264e78a5a2c1e3b942f22c4122323f7080711a06a522e22a676051996dc1"
+   "bytes": 1355,
+   "sha256": "662388fa2d668d8941af0810a4e1dddf40493472c4ef862d7c07f7e75d0b23b9"
   },
   "evidence/scripts/omega_random.py": {
-   "bytes": 2949,
-   "sha256": "2c279dd0286af588ea2732eab32f473382cc521a375261b452211fecaecc5699"
+   "bytes": 2918,
+   "sha256": "8c0544c14f25d3baa7c45cac6e56cd8ae7e2a6f5dcc272af732c7ab461268595"
   },
   "evidence/scripts/repro13.py": {
-   "bytes": 1944,
-   "sha256": "4b77d20ff91f3bc172e7a142e8c609bbe9270a9b6e6a4afc3d5977e2c4aa3098"
+   "bytes": 4550,
+   "sha256": "74dc8657aeece3ce021be72312dbfeb84362eff0dba8bd193117362303a587fb"
   },
   "evidence/scripts/terminology_grep.sh": {
    "bytes": 490,
    "sha256": "05c0fee235510cb2c8161118f25ba778b5feede5867b1420c7ce3436bf3825f7"
+  },
+  "evidence/tooling/adhoc_commands.md": {
+   "bytes": 13339,
+   "sha256": "a4558e06b46d0b308454a85ebaeaa7e737d1270e37b57afc947fe5beaa3a5956"
+  },
+  "evidence/tooling/logs/pii_scan_selftest.log": {
+   "bytes": 509,
+   "sha256": "472600cced10762f7eaca6ba4bff552f78840ede6976c54ce7e5714f68de7d17"
+  },
+  "evidence/tooling/logs/verify_github_blobs_c9907a6.log": {
+   "bytes": 545,
+   "sha256": "7091306b17c5660dd6c4bc1edecc24164571f3810620d5ac0bf3aa002de7d358"
+  },
+  "evidence/tooling/make_manifest.py": {
+   "bytes": 13436,
+   "sha256": "16856435e4e5212543bcbcfe1a6ee92f71d64a798f29ff0011e94e35cb74ce31"
+  },
+  "evidence/tooling/pii_scan.py": {
+   "bytes": 3799,
+   "sha256": "e9bfd2e890ba877aad2f41e20d979bb3bcefa5da7184a512598909058b9ba798"
+  },
+  "evidence/tooling/round1/deep/omega_multistab.json": {
+   "bytes": 25555,
+   "sha256": "5fc4cf5e41f4f5b27abb5b61b06ee3161413024cfb94b4f8defdde5449b89b0e"
+  },
+  "evidence/tooling/round1/deep/omega_multistab.log": {
+   "bytes": 173,
+   "sha256": "67ff8505cfc479f70917c2fefe5bd28300d404f4faf0c9fde116987b44633bdf"
+  },
+  "evidence/tooling/round1/deep/omega_multistab.py": {
+   "bytes": 1496,
+   "sha256": "e87d0e4ef6ce46803d701697ca84a4e7035b6ae5637974315097e6303cd0a744"
+  },
+  "evidence/tooling/round1/deep/omega_random.json": {
+   "bytes": 65528,
+   "sha256": "31f21dd2df7078330ace63f502b5f919a56be2b6969c86ac4d64109bbb75bbd4"
+  },
+  "evidence/tooling/round1/deep/omega_random.log": {
+   "bytes": 618,
+   "sha256": "72b1b30ca709df4c8033a720386a641952104c232886ae61ee81864c91d1e6b3"
+  },
+  "evidence/tooling/round1/deep/omega_random.py": {
+   "bytes": 3045,
+   "sha256": "53ada7938698c314161086d4f3a066f1baa375b84d2e61e15b12629952c36cb9"
+  },
+  "evidence/tooling/round1/freq_predictor.py": {
+   "bytes": 1769,
+   "sha256": "6dd979bb79fccce6555cc95d7ce10bc1760a476a388d6b5bf0c3868e5a7193a2"
+  },
+  "evidence/tooling/round1/mathcheck.log": {
+   "bytes": 645,
+   "sha256": "a8107f4c0d705efc86729ffaf02f385c5f42bb60748dff9fea1481d54fe2c64a"
+  },
+  "evidence/tooling/round1/mathcheck.py": {
+   "bytes": 2915,
+   "sha256": "ed8b2e536570849c9790ba0c8a6f191cc4057809a62d61a7b4a0f9cb25e2c15c"
+  },
+  "evidence/tooling/round1/repro13.log": {
+   "bytes": 156279,
+   "sha256": "b09ef9264055800602befd57545e6a14bdcd575be6f96b3efa1653760130d4b8"
+  },
+  "evidence/tooling/round1/repro13.py": {
+   "bytes": 825,
+   "sha256": "0fd750093674b8119c918062dd932bce733eea060c770a4fa747b8e9ca157854"
+  },
+  "evidence/tooling/round1/summ.log": {
+   "bytes": 573,
+   "sha256": "26c94c38c44e6ddde408495b694ea355ba6adc23bdce64fffc9a96f150278d5f"
+  },
+  "evidence/tooling/round1/summ.py": {
+   "bytes": 1002,
+   "sha256": "7033fee58292fe2fc327d15f458e4b62524b2d6a07a57176526631ea6e11f701"
+  },
+  "evidence/tooling/round2/make_manifest_v2.py": {
+   "bytes": 7638,
+   "sha256": "fd1cb0c75389f9dc6f5eec4543737f7e1c93afa5120e3b32c5332845521c0e42"
+  },
+  "evidence/tooling/round2/make_v2.py": {
+   "bytes": 17435,
+   "sha256": "dfe0deddf8cf80760f87f326022435a9154a3802345441c1329ce2b470ee81ed"
+  },
+  "evidence/tooling/round3/collect_tooling.py": {
+   "bytes": 4521,
+   "sha256": "0e6376a34bfa72dfc455ccbc044016ec02c866f775a080c1f63bba014fadfc60"
+  },
+  "evidence/tooling/round3/corrections.py": {
+   "bytes": 8057,
+   "sha256": "03ab48aca2e0da3584fb9b9e24e1120b977bdbef69d3049633b579b761fdc167"
+  },
+  "evidence/tooling/round3/kck_one.py": {
+   "bytes": 592,
+   "sha256": "1c223e24f66cbcfd660f90356e21ac3b6deb36eb385027d390e8c7f1c6a4c083"
+  },
+  "evidence/tooling/verify_github_blobs.py": {
+   "bytes": 1769,
+   "sha256": "abb51d700f04827fd735082ba26481393144f49f97b68e21121481a779ea4b6c"
+  },
+  "evidence/verify_manifest.py": {
+   "bytes": 2339,
+   "sha256": "ed6a504db717a45542d1b5de238cd8328ca5f88e3215478acda6ba00c12fbb68"
   }
  },
+ "post_manifest_logs": [
+  "evidence/tooling/logs/verify_manifest.log",
+  "evidence/tooling/logs/pii_scan.log"
+ ],
+ "post_manifest_logs_note": "Written after this manifest by verify_manifest.py and pii_scan.py; they cannot be hashed here without circularity. verify_manifest.py treats them as listed but unhashed; regenerate them with the commands in findings.",
  "publication_edits": [
-  "Log header lines and Python warning lines had absolute local paths rewritten to 'AI Agent Audits/evidence/...'; Lean logs had the temporary build directory rewritten to '<tmpcopy>'. No other log content was altered.",
+  "Log header lines had the local interpreter path replaced by 'python' and absolute or relative-escape paths rewritten to 'AI Agent Audits/evidence/...'; Lean logs had the temporary build directory rewritten to '<tmpcopy>'. No other log content was altered.",
   "No logs were subsampled or truncated: every file is under 1 MB.",
-  "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it. Rerunning delay_paired_heldout.py reproduced the published CSVs/JSON byte-identically.",
-  "AIEFS_audit.md / AIEFS_salvage.md are the v2 texts: in-place marked corrections; absolute local paths and the author's user/host name were replaced by neutral descriptions.",
+  "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it.",
+  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23 and 2026-10-24); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
+  "evidence/tooling/round*/ and adhoc_commands.md are redacted copies: local paths -> <placeholders>, the owner's e-mail -> <owner-email-redacted>, user/host-name literals -> <redacted>. The literal list is a local file that is not published.",
   "PII in the repository's own PDFs is referenced by path only and not reproduced."
  ]
 }
