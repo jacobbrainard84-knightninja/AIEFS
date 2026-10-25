@@ -10,42 +10,62 @@
   "c3da1ac707bf/baseline": {
    "runs": 50,
    "edges": 3300,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   },
   "c3da1ac707bf/no_delay": {
    "runs": 50,
    "edges": 3300,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   },
   "73dca37cf93f/baseline": {
    "runs": 50,
    "edges": 3300,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   },
   "73dca37cf93f/no_delay": {
    "runs": 50,
    "edges": 3300,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   }
  },
  "random_omega_delay_experiment": {
   "uniform/baseline": {
    "edges": 3960,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   },
   "uniform/no_delay": {
    "edges": 3960,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   },
   "clustered/baseline": {
    "edges": 3960,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   },
   "clustered/no_delay": {
    "edges": 3960,
-   "edges_changing_status": 0
+   "edges_changing_status": 0,
+   "nonbinary_P_future_count": 0,
+   "P_future_label_differs_from_split_status": 0
   }
  },
  "total_edges": 29040,
- "total_edges_changing_status": 0
+ "total_edges_changing_status": 0,
+ "total_nonbinary_P_future_count": 0,
+ "total_P_future_label_differs_from_split_status": 0,
+ "P_future_definition": "fraction of ALL future-window steps (stride 1) with B > B_C (AIEF_1_3_falsification_updated.run_aief: P_sum += B > B_C)",
+ "interpretation": "if total_nonbinary_P_future_count == 0 and the label-difference count is 0, every tested edge keeps its split-time threshold status at every step of the future window (finite-horizon threshold freezing); continuous weights may still move"
 }
