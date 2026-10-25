@@ -26,3 +26,19 @@ checkpoints/
 Thumbs.db
 .vscode/
 .idea/
+
+# Lean / Lake build outputs and local check logs
+.lake/
+lake-packages/
+.check_logs/
+
+# Editor / office lock, swap and backup files
+.~lock.*#
+*.swp
+*.swo
+*~
+.#*
+
+# Audit evidence logs are deliberately tracked (do not ignore them)
+!AI Agent Audits/**/logs/
+!AI Agent Audits/**/*.log
