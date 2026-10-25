@@ -1,0 +1,24 @@
+check_lean.sh  project=AIEFProofs  utc=20261025T033458Z
+git HEAD: dc0250a0586c8316b594ed5e424fffb9c84e93e8  dirty_files: 8
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474; AIEF_LEAN_SOURCE_SHA256SUMS.txt verified (8 files)
+  AIEFProofs imports AIEFProofs.Basic
+  AIEFProofs imports AIEFProofs.ControllerFiber
+  AIEFProofs imports AIEFProofs.ControllerFiberProjector
+  AIEFProofs imports AIEFProofs.ControllerFiberQuotient
+  AIEFProofs imports AIEFProofs.CompleteGraphIncidence
+  AIEFProofs imports AIEFProofs.Smoke
+  AIEFProofs.CompleteGraphIncidence imports AIEFProofs.ControllerFiber
+  AIEFProofs.ControllerFiberQuotient imports AIEFProofs.ControllerFiberProjector
+  AIEFProofs.ControllerFiberProjector imports AIEFProofs.ControllerFiber
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: Already decompressed 8690 file(s)
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+PASS step 5: Build completed successfully (8713 jobs); warnings=12 (listed in 5_build_diagnostics.txt)
+PASS step 6: scanned 7 files, hits=0
+PASS step 5: Build completed successfully (8713 jobs); warnings=12 (listed in 5_build_diagnostics.txt)
+PASS step 6: scanned 7 files, hits=0
+PASS step 7: AUDITED 115 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in <LOG_DIR>)
+PASS step 7: AUDITED 115 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in <LOG_DIR>)
