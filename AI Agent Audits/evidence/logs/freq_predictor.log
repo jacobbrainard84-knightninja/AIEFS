@@ -1,4 +1,4 @@
-== freq_predictor: python AI Agent Audits/evidence/scripts/freq_predictor.py (cwd=repo root)
+== freq_predictor: python AI Agent Audits/evidence/scripts/freq_predictor.py 
 R threshold for B>0: 0.4285714285714285  for B>B_c (uncapped): 0.4542857142857143
 edges with uncoupled R_pred > thr_pos: 22  > thr_Bc: 22 of 66
 c3da1ac707bf mean corr(P_future, -|dw|)=0.813  mean corr(P_future, uncoupled R_pred)=0.927  active edges all within freq-near set: 48 / 50  distinct topologies: 11  mean D_B=0.309
