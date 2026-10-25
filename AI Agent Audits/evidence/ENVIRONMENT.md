@@ -1,4 +1,4 @@
-# Environment used for the audit runs (2026-10-23)
+# Environment used for the audit runs (2026-10-23; round-3 runs on 2026-10-24 used the same environment)
 
 - OS: Linux 6.12 x86_64 (container), 7 worker processes (multiprocessing Pool ≤ 7), ~4 GB RAM.
 - Python 3.13.5 (virtualenv)

@@ -1,4 +1,4 @@
-== ablation14_topology: python AI Agent Audits/evidence/scripts/ablation14_topology.py (cwd=repo root)
+== ablation14_topology: python AI Agent Audits/evidence/scripts/ablation14_topology.py 
 continue {'eq_closed_form': 11, 'subset': 37, 'jaccard_pred': 0.8814015151515152, 'jaccard_continue': 1.0}
 reset_ema {'eq_closed_form': 11, 'subset': 38, 'jaccard_pred': 0.8865530303030305, 'jaccard_continue': 0.992}
 reset_B {'eq_closed_form': 11, 'subset': 37, 'jaccard_pred': 0.8814015151515152, 'jaccard_continue': 1.0}
