@@ -1,6 +1,7 @@
-# Proposed path in the repo: .github/workflows/lean.yml   (REPO ROOT, not lean/AIEFProofs/.github)
-# GitHub only runs workflows from the repository root .github/workflows/, so the template
-# workflows under lean/AIEFProofs/.github/workflows/ have never run.
+# Location: .github/workflows/lean.yml at the REPOSITORY ROOT (active since commit 1f9afc9;
+# Actions run #31, id 40153641197, passed at dc0250a).
+# GitHub only runs workflows from the repository root .github/workflows/. The template
+# workflows under lean/AIEFProofs/.github/workflows/ are nested and are never run by GitHub.
 name: Lean proof check
 
 on:
@@ -43,10 +44,10 @@ jobs:
           axiom-audit-root: AIEFProofs
           leanchecker: false               # set true to re-check the environment with leanchecker (slow with Mathlib)
       # Same script the owner runs locally; cache/build are already warm, so this is fast.
-      - name: check_lean.sh (toolchain pin, imports/orphans, markers, axioms)
+      - name: check_lean.sh (toolchain pin, source hashes, imports/no orphans, markers, axioms)
         run: |
           chmod +x ./check_lean.sh
-          SKIP_CACHE=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" ./check_lean.sh
+          SKIP_CACHE=1 STRICT_ORPHANS=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" ./check_lean.sh
       - name: Upload check logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
