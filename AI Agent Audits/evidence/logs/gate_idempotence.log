@@ -1,4 +1,4 @@
-== gate_idempotence: python AI Agent Audits/evidence/scripts/gate_idempotence.py (cwd=repo root)
+== gate_idempotence: python AI Agent Audits/evidence/scripts/gate_idempotence.py 
 AI Agent Audits/evidence/scripts/gate_idempotence.py:11: RuntimeWarning: divide by zero encountered in divide
   s = np.minimum(1.0, cap / (rs + eps)); B *= np.minimum.outer(s, s); np.fill_diagonal(B, 0)
 n 20000
