@@ -1,4 +1,4 @@
-== analyze_delay: python AI Agent Audits/evidence/scripts/analyze_delay_heldout.py
+== analyze_delay: python AI Agent Audits/evidence/scripts/analyze_delay_heldout.py 
 {
  "point7_delay": {
   "uniform": {
@@ -191,7 +191,50 @@
    "jaccard_cross_seed_within_baseline": 0.8334753390754478
   }
  },
+ "label_equality": {
+  "uniform_baseline": {
+   "runs": 60,
+   "runs_with_any_label_difference": 0,
+   "edges_differing": 0,
+   "edges_total": 3960,
+   "edges_with_P_within_1em6_of_half": 0
+  },
+  "uniform_no_delay": {
+   "runs": 60,
+   "runs_with_any_label_difference": 0,
+   "edges_differing": 0,
+   "edges_total": 3960,
+   "edges_with_P_within_1em6_of_half": 0
+  },
+  "clustered_baseline": {
+   "runs": 60,
+   "runs_with_any_label_difference": 0,
+   "edges_differing": 0,
+   "edges_total": 3960,
+   "edges_with_P_within_1em6_of_half": 0
+  },
+  "clustered_no_delay": {
+   "runs": 60,
+   "runs_with_any_label_difference": 0,
+   "edges_differing": 0,
+   "edges_total": 3960,
+   "edges_with_P_within_1em6_of_half": 0
+  },
+  "repo_omega_baseline": {
+   "runs": 100,
+   "runs_with_any_label_difference": 0,
+   "edges_differing": 0,
+   "edges_total": 6600
+  },
+  "repo_omega_no_delay": {
+   "runs": 100,
+   "runs_with_any_label_difference": 0,
+   "edges_differing": 0,
+   "edges_total": 6600
+  }
+ },
  "point2_heldout": {
+  "target": "final_threshold_edge",
   "uniform_baseline": {
    "heldout_omega_LOGO": {
     "Rpred_only (Delta-omega closed form)": {
@@ -246,7 +289,10 @@
      60
     ]
    },
-   "rpast_beats_rpred_pearson_runs": 50
+   "rpast_beats_rpred_pearson_runs": 50,
+   "correlation_valid_runs": 60,
+   "correlation_undefined_runs_constant_P": 0,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
   },
   "clustered_baseline": {
    "heldout_omega_LOGO": {
@@ -302,7 +348,10 @@
      37
     ]
    },
-   "rpast_beats_rpred_pearson_runs": 29
+   "rpast_beats_rpred_pearson_runs": 29,
+   "correlation_valid_runs": 37,
+   "correlation_undefined_runs_constant_P": 23,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
   },
   "uniform_no_delay": {
    "heldout_omega_LOGO": {
@@ -358,7 +407,10 @@
      60
     ]
    },
-   "rpast_beats_rpred_pearson_runs": 50
+   "rpast_beats_rpred_pearson_runs": 50,
+   "correlation_valid_runs": 60,
+   "correlation_undefined_runs_constant_P": 0,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
   },
   "clustered_no_delay": {
    "heldout_omega_LOGO": {
@@ -414,7 +466,313 @@
      39
     ]
    },
-   "rpast_beats_rpred_pearson_runs": 34
+   "rpast_beats_rpred_pearson_runs": 34,
+   "correlation_valid_runs": 39,
+   "correlation_undefined_runs_constant_P": 21,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
+  },
+  "repo_omega_baseline": {
+   "heldout_seed_10fold": {
+    "Rpred_only (Delta-omega closed form)": {
+     "auc": 0.9721571614088772,
+     "logloss": 0.12363179578107605,
+     "n": 6600,
+     "pos_rate": 0.3059090909090909
+    },
+    "Rpast_only (endogenous, = Corr_physical input)": {
+     "auc": 0.9999952427490034,
+     "logloss": 0.0028647873210402765,
+     "n": 6600,
+     "pos_rate": 0.3059090909090909
+    },
+    "Rpred+Rpast": {
+     "auc": 0.9999948102716402,
+     "logloss": 0.0035292672803444816,
+     "n": 6600,
+     "pos_rate": 0.3059090909090909
+    },
+    "Bsplit_only (weights at split)": {
+     "auc": 1.0,
+     "logloss": 5.422233373613503e-06,
+     "n": 6600,
+     "pos_rate": 0.3059090909090909
+    }
+   },
+   "mean_pearson_P_Rpred": 0.9229877004238037,
+   "mean_pearson_P_Rpast": 0.9952171167679801,
+   "rpast_beats_rpred_runs": 100,
+   "n": 100
+  },
+  "repo_omega_no_delay": {
+   "heldout_seed_10fold": {
+    "Rpred_only (Delta-omega closed form)": {
+     "auc": 1.0,
+     "logloss": 2.67766021884848e-06,
+     "n": 6600,
+     "pos_rate": 0.3333333333333333
+    },
+    "Rpast_only (endogenous, = Corr_physical input)": {
+     "auc": 1.0,
+     "logloss": 2.2960113065300735e-06,
+     "n": 6600,
+     "pos_rate": 0.3333333333333333
+    },
+    "Rpred+Rpast": {
+     "auc": 1.0,
+     "logloss": 1.3771868791829903e-06,
+     "n": 6600,
+     "pos_rate": 0.3333333333333333
+    },
+    "Bsplit_only (weights at split)": {
+     "auc": 1.0,
+     "logloss": 5.252143700544348e-06,
+     "n": 6600,
+     "pos_rate": 0.3333333333333333
+    }
+   },
+   "mean_pearson_P_Rpred": 0.9954972554417537,
+   "mean_pearson_P_Rpast": 0.9985447393332133,
+   "rpast_beats_rpred_runs": 100,
+   "n": 100
+  }
+ },
+ "point2_heldout_P_future_gt_half": {
+  "target": "P_future_gt_half",
+  "uniform_baseline": {
+   "heldout_omega_LOGO": {
+    "Rpred_only (Delta-omega closed form)": {
+     "auc": 0.8327824579193761,
+     "logloss": 0.4455482455211511,
+     "n": 3960,
+     "pos_rate": 0.22171717171717173
+    },
+    "Rpast_only (endogenous, = Corr_physical input)": {
+     "auc": 0.844394263701794,
+     "logloss": 0.26076166301498777,
+     "n": 3960,
+     "pos_rate": 0.22171717171717173
+    },
+    "Rpred+Rpast": {
+     "auc": 0.857055960171412,
+     "logloss": 0.2656452522243048,
+     "n": 3960,
+     "pos_rate": 0.22171717171717173
+    },
+    "Bsplit_only (weights at split)": {
+     "auc": 1.0,
+     "logloss": 0.00024760638338396074,
+     "n": 3960,
+     "pos_rate": 0.22171717171717173
+    }
+   },
+   "per_run_correlations": {
+    "pearson_P_Rpred": [
+     0.5362653105037236,
+     0.5531956670086209,
+     60
+    ],
+    "pearson_P_Rpast": [
+     0.745470987112927,
+     0.9775057207448401,
+     60
+    ],
+    "spearman_P_Rpred": [
+     0.5199195850489189,
+     0.5774790299114468,
+     60
+    ],
+    "spearman_P_Rpast": [
+     0.6081030164160576,
+     0.7417378525667763,
+     60
+    ],
+    "partial_P_Rpast_given_Rpred": [
+     0.681264513434414,
+     0.9672693650773531,
+     60
+    ]
+   },
+   "rpast_beats_rpred_pearson_runs": 50,
+   "correlation_valid_runs": 60,
+   "correlation_undefined_runs_constant_P": 0,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
+  },
+  "clustered_baseline": {
+   "heldout_omega_LOGO": {
+    "Rpred_only (Delta-omega closed form)": {
+     "auc": 0.6523178275674532,
+     "logloss": 0.31909789451174003,
+     "n": 3960,
+     "pos_rate": 0.10656565656565657
+    },
+    "Rpast_only (endogenous, = Corr_physical input)": {
+     "auc": 0.4570646655539451,
+     "logloss": 0.30402428850826285,
+     "n": 3960,
+     "pos_rate": 0.10656565656565657
+    },
+    "Rpred+Rpast": {
+     "auc": 0.6510271688023598,
+     "logloss": 0.30168165068870667,
+     "n": 3960,
+     "pos_rate": 0.10656565656565657
+    },
+    "Bsplit_only (weights at split)": {
+     "auc": 1.0,
+     "logloss": 0.00014068900930587982,
+     "n": 3960,
+     "pos_rate": 0.10656565656565657
+    }
+   },
+   "per_run_correlations": {
+    "pearson_P_Rpred": [
+     0.45611560769552506,
+     0.4120364181301041,
+     37
+    ],
+    "pearson_P_Rpast": [
+     0.5533218616286059,
+     0.44899592169078406,
+     37
+    ],
+    "spearman_P_Rpred": [
+     0.37596293012187665,
+     0.32645798844048723,
+     37
+    ],
+    "spearman_P_Rpast": [
+     0.47619783275564026,
+     0.39008963025515847,
+     37
+    ],
+    "partial_P_Rpast_given_Rpred": [
+     0.4364577550342099,
+     0.3305396289655925,
+     37
+    ]
+   },
+   "rpast_beats_rpred_pearson_runs": 29,
+   "correlation_valid_runs": 37,
+   "correlation_undefined_runs_constant_P": 23,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
+  },
+  "uniform_no_delay": {
+   "heldout_omega_LOGO": {
+    "Rpred_only (Delta-omega closed form)": {
+     "auc": 0.8828872644306416,
+     "logloss": 0.3957396629806464,
+     "n": 3960,
+     "pos_rate": 0.20656565656565656
+    },
+    "Rpast_only (endogenous, = Corr_physical input)": {
+     "auc": 0.8499733090131494,
+     "logloss": 0.23971775785286953,
+     "n": 3960,
+     "pos_rate": 0.20656565656565656
+    },
+    "Rpred+Rpast": {
+     "auc": 0.867974161879668,
+     "logloss": 0.24173895847677532,
+     "n": 3960,
+     "pos_rate": 0.20656565656565656
+    },
+    "Bsplit_only (weights at split)": {
+     "auc": 1.0,
+     "logloss": 0.0002779452522315362,
+     "n": 3960,
+     "pos_rate": 0.20656565656565656
+    }
+   },
+   "per_run_correlations": {
+    "pearson_P_Rpred": [
+     0.626693507923093,
+     0.7692773255071108,
+     60
+    ],
+    "pearson_P_Rpast": [
+     0.7465594490239106,
+     0.9864896349256009,
+     60
+    ],
+    "spearman_P_Rpred": [
+     0.5734248729179091,
+     0.6990871776542079,
+     60
+    ],
+    "spearman_P_Rpast": [
+     0.602029726761619,
+     0.73415210101763,
+     60
+    ],
+    "partial_P_Rpast_given_Rpred": [
+     0.6579865226392723,
+     0.9640872250595669,
+     60
+    ]
+   },
+   "rpast_beats_rpred_pearson_runs": 50,
+   "correlation_valid_runs": 60,
+   "correlation_undefined_runs_constant_P": 0,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
+  },
+  "clustered_no_delay": {
+   "heldout_omega_LOGO": {
+    "Rpred_only (Delta-omega closed form)": {
+     "auc": 0.7253135100193924,
+     "logloss": 0.27877942711114306,
+     "n": 3960,
+     "pos_rate": 0.09848484848484848
+    },
+    "Rpast_only (endogenous, = Corr_physical input)": {
+     "auc": 0.4729559003088415,
+     "logloss": 0.285901219074093,
+     "n": 3960,
+     "pos_rate": 0.09848484848484848
+    },
+    "Rpred+Rpast": {
+     "auc": 0.7107390648567119,
+     "logloss": 0.2730601740913866,
+     "n": 3960,
+     "pos_rate": 0.09848484848484848
+    },
+    "Bsplit_only (weights at split)": {
+     "auc": 1.0,
+     "logloss": 0.00020508764970933213,
+     "n": 3960,
+     "pos_rate": 0.09848484848484848
+    }
+   },
+   "per_run_correlations": {
+    "pearson_P_Rpred": [
+     0.5065002501517689,
+     0.4120364181301041,
+     39
+    ],
+    "pearson_P_Rpast": [
+     0.5309545860457453,
+     0.37943744240739524,
+     39
+    ],
+    "spearman_P_Rpred": [
+     0.3998387571914699,
+     0.32645798844048723,
+     39
+    ],
+    "spearman_P_Rpast": [
+     0.43607428589732994,
+     0.3660045413076616,
+     39
+    ],
+    "partial_P_Rpast_given_Rpred": [
+     0.38728407563699346,
+     0.3314034960806796,
+     39
+    ]
+   },
+   "rpast_beats_rpred_pearson_runs": 34,
+   "correlation_valid_runs": 39,
+   "correlation_undefined_runs_constant_P": 21,
+   "correlation_note": "per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)"
   },
   "repo_omega_baseline": {
    "heldout_seed_10fold": {
@@ -512,8 +870,4 @@
   }
  }
 }
-
-real	0m3.257s
-user	0m4.715s
-sys	0m0.096s
 exit 0

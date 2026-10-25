@@ -1,4 +1,4 @@
-== analyze_kappa_tw: python AI Agent Audits/evidence/scripts/analyze_kappa_tw.py (cwd=repo root)
+== analyze_kappa_tw: python AI Agent Audits/evidence/scripts/analyze_kappa_tw.py 
 {
  "n_replays": 200,
  "replay_bitexact": 160,

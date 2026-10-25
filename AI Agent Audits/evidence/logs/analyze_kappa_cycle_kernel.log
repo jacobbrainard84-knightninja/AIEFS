@@ -1,0 +1,376 @@
+== analyze_kappa_cycle_kernel: python AI Agent Audits/evidence/scripts/analyze_kappa_cycle_kernel.py 
+{
+ "n_replays": 200,
+ "n_seeds": 40,
+ "n_components": 406,
+ "cohort_caveat": "40 fixed seeds x 5 T_w (one S01 run); the same seed contributes the same component pattern at several T_w; counts are not independent replications",
+ "components_by_type": {
+  "K6": 179,
+  "K4": 88,
+  "K3": 115,
+  "K5": 24
+ },
+ "nonzero_fiber_by_type": {
+  "K6 (degree k=5)": 179,
+  "K4 (degree k=3)": 88,
+  "K3 (degree k=2)": 5,
+  "K5 (degree k=4)": 24
+ },
+ "nonzero_fiber_distinct_seeds_by_type": {
+  "K3": 5,
+  "K4": 32,
+  "K5": 10,
+  "K6": 40
+ },
+ "fiber_dim_check": {
+  "complete_all_tied_components": 373,
+  "all_tied_with_dim_eq_m_minus_n": 373
+ },
+ "fiber_checks": {
+  "n_directions": 2231,
+  "max_AJh": 6.680104551e-16,
+  "max_rel_residual": 1.333218752e-05,
+  "max_pm_asymmetry": 2.365093218e-05,
+  "max_leak_outside_component": 0.0,
+  "max_lam_spread_within_component": 7.36146007e-06
+ },
+ "multiplier_vs_closed_form": {
+  "max_rel_err_lam": 4.789539093e-06,
+  "max_rel_err_lam_vs_state_formula": 4.789544691e-06,
+  "max_rel_err_rate": 0.003793553036,
+  "max_abs_err_kappa": 0.0004789550600000081,
+  "worst": {
+   "seed": 172180395821707403,
+   "rho": 2.0,
+   "type": "K3",
+   "R_min": 0.9999999973,
+   "rel_err_rate": 0.003793553036
+  }
+ },
+ "per_rho": {
+  "0.5": {
+   "T_w": 8.751458576,
+   "by_k": {
+    "3": {
+     "n": 24,
+     "kappa_closed_form": 0.07505611429,
+     "kappa_fiber_range": [
+      0.07505611392,
+      0.07505611434
+     ]
+    },
+    "4": {
+     "n": 2,
+     "kappa_closed_form": 0.1380841402,
+     "kappa_fiber_range": [
+      0.1380841401,
+      0.1380841402
+     ]
+    },
+    "5": {
+     "n": 40,
+     "kappa_closed_form": 0.2010724658,
+     "kappa_fiber_range": [
+      0.2010724655,
+      0.2010724658
+     ]
+    }
+   }
+  },
+  "0.75": {
+   "T_w": 13.12718786,
+   "by_k": {
+    "3": {
+     "n": 17,
+     "kappa_closed_form": 0.1131450032,
+     "kappa_fiber_range": [
+      0.1131450027,
+      0.1131450031
+     ]
+    },
+    "4": {
+     "n": 3,
+     "kappa_closed_form": 0.1761730291,
+     "kappa_fiber_range": [
+      0.1761730289,
+      0.1761730291
+     ]
+    },
+    "5": {
+     "n": 37,
+     "kappa_closed_form": 0.2391613547,
+     "kappa_fiber_range": [
+      0.2391613544,
+      0.2391613546
+     ]
+    }
+   }
+  },
+  "1.0": {
+   "T_w": 17.50291715,
+   "by_k": {
+    "2": {
+     "n": 1,
+     "kappa_closed_form": 0.06912167133,
+     "kappa_fiber_range": [
+      0.06911959994,
+      0.06911959994
+     ]
+    },
+    "3": {
+     "n": 15,
+     "kappa_closed_form": 0.1321894476,
+     "kappa_fiber_range": [
+      0.1321894472,
+      0.1321894476
+     ]
+    },
+    "4": {
+     "n": 5,
+     "kappa_closed_form": 0.1952174735,
+     "kappa_fiber_range": [
+      0.1952174733,
+      0.1952174735
+     ]
+    },
+    "5": {
+     "n": 36,
+     "kappa_closed_form": 0.2582057992,
+     "kappa_fiber_range": [
+      0.2582057989,
+      0.2582057991
+     ]
+    }
+   }
+  },
+  "1.5": {
+   "T_w": 26.25437573,
+   "by_k": {
+    "3": {
+     "n": 14,
+     "kappa_closed_form": 0.1512338921,
+     "kappa_fiber_range": [
+      0.1512338918,
+      0.151233892
+     ]
+    },
+    "4": {
+     "n": 5,
+     "kappa_closed_form": 0.214261918,
+     "kappa_fiber_range": [
+      0.2142619178,
+      0.214261918
+     ]
+    },
+    "5": {
+     "n": 35,
+     "kappa_closed_form": 0.2772502436,
+     "kappa_fiber_range": [
+      0.2772502433,
+      0.2772502436
+     ]
+    }
+   }
+  },
+  "2.0": {
+   "T_w": 35.00583431,
+   "by_k": {
+    "2": {
+     "n": 4,
+     "kappa_closed_form": 0.09768833799,
+     "kappa_fiber_range": [
+      0.09739586567,
+      0.09816729305
+     ]
+    },
+    "3": {
+     "n": 18,
+     "kappa_closed_form": 0.1607561143,
+     "kappa_fiber_range": [
+      0.1606754587,
+      0.1608365916
+     ]
+    },
+    "4": {
+     "n": 9,
+     "kappa_closed_form": 0.2237841402,
+     "kappa_fiber_range": [
+      0.2236972196,
+      0.2238664296
+     ]
+    },
+    "5": {
+     "n": 31,
+     "kappa_closed_form": 0.2867724658,
+     "kappa_fiber_range": [
+      0.2866726627,
+      0.2868223828
+     ]
+    }
+   }
+  }
+ },
+ "old_central_difference_vs_fiber": {
+  "old_slow=True new_fiber=True": 292,
+  "max_rel_diff_old_rB_vs_fiber_rate": 0.0004536745284448964,
+  "old_slow=False new_fiber=False": 110,
+  "old_slow=False new_fiber=True": 4
+ },
+ "step_resolution": {
+  "rule": "tied if |s_i - s_j| <= tie_tol (1e-9); delta_c = geometric mean of max tied gap and min untied gap, capped at min untied gap/100, clipped to [1e-11, 1e-5]; resolved if delta_c >= 100 x max tied gap and min untied gap >= 100 x delta_c",
+  "n_resolved": 374,
+  "n_poorly_resolved": 32,
+  "poorly_resolved_by_rho": {
+   "2.0": 32
+  },
+  "poorly_resolved_by_type": {
+   "K6": 15,
+   "K3": 4,
+   "K5": 3,
+   "K4": 10
+  },
+  "poorly_resolved_max_rel_err_rate": 0.003793553036,
+  "resolved_max_rel_err_rate": 1.64063597e-05,
+  "resolved_max_rel_err_lam": 2.071385042e-08,
+  "resolved_max_abs_err_kappa": 2.0713899999968977e-06,
+  "note": "poorly resolved components are near-ties still converging at t=250 (gaps ~1e-12..1e-8 at T_w=35); their tie/strict classification depends on the snapshot time and tolerance"
+ },
+ "tie_nonadditivity_all_tied_resolved": {
+  "K3": {
+   "n": 110,
+   "min_rel_nonadditivity": 0.4999849618,
+   "max_rel_nonadditivity": 0.5,
+   "min_rel_odd_defect": 0.816449549,
+   "max_rel_odd_defect": 0.8164965811
+  },
+  "K4": {
+   "n": 78,
+   "min_rel_nonadditivity": 0.2886649606,
+   "max_rel_nonadditivity": 0.2886776783,
+   "min_rel_odd_defect": 0.7070864698,
+   "max_rel_odd_defect": 0.7071067815
+  },
+  "K5": {
+   "n": 21,
+   "min_rel_nonadditivity": 0.2041162876,
+   "max_rel_nonadditivity": 0.2041258145,
+   "min_rel_odd_defect": 0.6324460579,
+   "max_rel_odd_defect": 0.6324555325
+  },
+  "K6": {
+   "n": 164,
+   "min_rel_nonadditivity": 0.158106417,
+   "max_rel_nonadditivity": 0.158115041,
+   "min_rel_odd_defect": 0.5773404572,
+   "max_rel_odd_defect": 0.5773502698
+  }
+ },
+ "K3": {
+  "n_K3_components": 115,
+  "n_distinct_seeds": 34,
+  "all_tied": 110,
+  "all_tied_by_rho": {
+   "0.75": 26,
+   "1.0": 25,
+   "1.5": 26,
+   "2.0": 18,
+   "0.5": 15
+  },
+  "with_two_sided_fiber": [
+   {
+    "seed": 172180395821707403,
+    "rho": 2.0,
+    "J": [
+     3,
+     4
+    ],
+    "s_spread": 1.487374446e-09,
+    "min_untied_gap": 1.486547774e-09,
+    "delta": 1.486547774e-11,
+    "resolved": false,
+    "kappa_fiber": 0.09816729305,
+    "kappa_closed_form": 0.09768833799
+   },
+   {
+    "seed": 4619122171158768524,
+    "rho": 1.0,
+    "J": [
+     2,
+     7
+    ],
+    "s_spread": 4.65854831e-07,
+    "min_untied_gap": 4.65852409e-07,
+    "delta": 1.062225811e-09,
+    "resolved": true,
+    "kappa_fiber": 0.06911959994,
+    "kappa_closed_form": 0.06912167133
+   },
+   {
+    "seed": 9036321132460399255,
+    "rho": 2.0,
+    "J": [
+     4,
+     8
+    ],
+    "s_spread": 1.342905342e-09,
+    "min_untied_gap": 1.340839106e-09,
+    "delta": 1.340839106e-11,
+    "resolved": false,
+    "kappa_fiber": 0.09739586567,
+    "kappa_closed_form": 0.09768833799
+   },
+   {
+    "seed": 9082055256280075172,
+    "rho": 2.0,
+    "J": [
+     4,
+     8
+    ],
+    "s_spread": 2.539858324e-09,
+    "min_untied_gap": 2.537537958e-09,
+    "delta": 2.537537958e-11,
+    "resolved": false,
+    "kappa_fiber": 0.09767205512,
+    "kappa_closed_form": 0.09768833799
+   },
+   {
+    "seed": 12123519807951751650,
+    "rho": 2.0,
+    "J": [
+     8,
+     9
+    ],
+    "s_spread": 3.617473876e-09,
+    "min_untied_gap": 3.616929312e-09,
+    "delta": 3.616929312e-11,
+    "resolved": false,
+    "kappa_fiber": 0.09760263588,
+    "kappa_closed_form": 0.09768833799
+   }
+  ],
+  "tied_with_one_sided_slow_direction_plus": 110,
+  "one_sided_plus_all_nodes_max_rel_err_lam_vs_closed_form_k2": 1.7896881451018342e-05,
+  "one_sided_plus_all_nodes_max_rel_residual": 2.529008726e-05,
+  "one_sided_plus_slow_nodes_per_component_by_rho": {
+   "0.5": {
+    "3": 15
+   },
+   "0.75": {
+    "3": 26
+   },
+   "1.0": {
+    "3": 25
+   },
+   "1.5": {
+    "3": 26
+   },
+   "2.0": {
+    "1": 18
+   }
+  },
+  "one_sided_minus_all_nodes_min_rel_err_lam": 0.6666309010058893,
+  "tied_with_one_sided_slow_direction_minus": 0,
+  "note": "v_c = +1 on the edge opposite node c, -1 on the two edges at c. On an all-tied K3, +v_c lowers row c only, so c stops controlling and the other two rows are preserved: a ONE-SIDED slow direction at rate r_{B,2}; -v_c is not."
+ }
+}
+exit 0
