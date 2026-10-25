@@ -5,21 +5,23 @@ Point 7: paired delay on/off: per-run scalar differences (cluster = omega set), 
          within-condition vs cross-condition (a systematic delay effect => J(base,base') > J(base,nodelay')).
 Point 2: does the endogenous R_physical_past (the repo's Corr_physical input) beat the Delta-omega-only closed-form R_pred
          on HELD-OUT omega sets (leave-one-omega-set-out) and HELD-OUT seeds (repo omega, 10-fold by seed)?
-         Targets: y = B_final > B_C (edge persists); continuous P_future (Spearman/Pearson). Logistic regression via IRLS."""
+         Binary targets (round 3, 2026-10-24): 'final_threshold_edge' y = B_final > B_C (what the round-2 table actually used),
+         and 'P_future_gt_half' y = P_future > 0.5 (what the round-2 table was mislabeled as). Their per-run equality is
+         checked and recorded in 'label_equality'. Continuous P_future: Spearman/Pearson. Logistic regression via IRLS."""
 import sys, os, json, csv, itertools, numpy as np
 sys.path.insert(0, os.path.dirname(__file__)); from _common import *
 import AIEF_1_3_falsification_updated as f
 E = f.EDGES; BC = f.B_C
 rows = []
 for kd in ['uniform', 'clustered']:
-    with open(OUT / f'delay_paired_edges_{kd}.csv') as fh: rows += list(csv.DictReader(fh))
+    with open(inp(f'delay_paired_edges_{kd}.csv')) as fh: rows += list(csv.DictReader(fh))
 runs = {}
 for r in rows:
     key = (r['kind'], int(r['k']), r['cond'], int(r['seed']))
     runs.setdefault(key, {q: [] for q in ['dw', 'Rpred', 'Rpast', 'P', 'Bf', 'Bsplit']})
     for q in runs[key]: runs[key][q].append(float(r[q]))
 runs = {k: {q: np.array(v) for q, v in d.items()} for k, d in runs.items()}
-meta = {(r['kind'], r['k'], r['cond'], r['seed']): r for r in json.load(open(OUT / 'delay_paired_runs.json'))['runs']}
+meta = {(r['kind'], r['k'], r['cond'], r['seed']): r for r in json.load(open(inp('delay_paired_runs.json')))['runs']}
 rng = np.random.default_rng(0)
 def boot(x, n=10000):
     x = np.asarray(x, float); x = x[np.isfinite(x)]; m = [x[rng.integers(0, len(x), len(x))].mean() for _ in range(n)]
@@ -110,34 +112,56 @@ p7['repo_omega_archived'] = dict(n_seeds=n,
     jaccard_cross_seed_within_baseline=float(np.mean([jac(Ab[i], Ab[j]) for i in range(n) for j in range(i + 1, n)])))
 res['point7_delay'] = p7
 # ---------------- Point 2: held-out predictors ----------------
-p2 = {}
-for cond in ['baseline', 'no_delay']:
-    for kd in ['uniform', 'clustered']:
-        groups, cor = [], dict(pearson_P_Rpred=[], pearson_P_Rpast=[], spearman_P_Rpred=[], spearman_P_Rpast=[], partial_P_Rpast_given_Rpred=[])
+TARGETS = {'final_threshold_edge': lambda r: r['Bf'] > BC, 'P_future_gt_half': lambda r: r['P'] > 0.5}
+# label equality, every analysed run (random omega: CSV values at 9 significant digits; repo omega: exact archived npz)
+leq = {}; WARN = []
+for kd in ['uniform', 'clustered']:
+    for cond in ['baseline', 'no_delay']:
+        diff_runs = 0; diff_edges = 0; near_half = 0; n = 0
         for k in range(15):
-            X = {c: np.concatenate([runs[(kd, k, cond, s)][c] for s in range(1, 5)]) for c in ['Rpred', 'Rpast', 'Bsplit']}
-            y = np.concatenate([runs[(kd, k, cond, s)]['Bf'] > BC for s in range(1, 5)]).astype(float)
-            groups.append((X, y))
-            for s in range(1, 5):
-                r = runs[(kd, k, cond, s)]
-                if np.std(r['P']) == 0: continue
-                cor['pearson_P_Rpred'].append(pearsonr(r['P'], r['Rpred'])[0]); cor['pearson_P_Rpast'].append(pearsonr(r['P'], r['Rpast'])[0])
-                cor['spearman_P_Rpred'].append(spearmanr(r['P'], r['Rpred'])[0]); cor['spearman_P_Rpast'].append(spearmanr(r['P'], r['Rpast'])[0])
-                # partial correlation of P with Rpast controlling for Rpred (linear residualisation)
-                ep = r['P'] - np.polyval(np.polyfit(r['Rpred'], r['P'], 1), r['Rpred']); er = r['Rpast'] - np.polyval(np.polyfit(r['Rpred'], r['Rpast'], 1), r['Rpred'])
-                cor['partial_P_Rpast_given_Rpred'].append(float(np.corrcoef(ep, er)[0, 1]) if np.std(er) > 0 and np.std(ep) > 0 else float('nan'))
-        p2[f'{kd}_{cond}'] = dict(heldout_omega_LOGO=heldout(groups, FEATS),
-                                  per_run_correlations={q: [float(np.nanmean(v)), float(np.nanmedian(v)), len(v)] for q, v in cor.items()},
-                                  rpast_beats_rpred_pearson_runs=int(sum(a > b for a, b in zip(cor['pearson_P_Rpast'], cor['pearson_P_Rpred']))))
-# repo omega, held-out seeds (10 folds by seed)
+            for s_ in range(1, 5):
+                r = runs[(kd, k, cond, s_)]; a, b = TARGETS['final_threshold_edge'](r), TARGETS['P_future_gt_half'](r); n += 1
+                diff_runs += bool((a != b).any()); diff_edges += int((a != b).sum()); near_half += int((np.abs(r['P'] - 0.5) < 1e-6).sum())
+        leq[f'{kd}_{cond}'] = dict(runs=n, runs_with_any_label_difference=diff_runs, edges_differing=diff_edges, edges_total=n * len(E[0]), edges_with_P_within_1em6_of_half=near_half)
 for cond in ['baseline', 'no_delay']:
-    L = AR[cond]; folds = [L[i::10] for i in range(10)]
-    groups = [({'Rpred': np.concatenate([Rpr] * len(fo)), 'Rpast': np.concatenate([x['Rpast'] for x in fo]), 'Bsplit': np.concatenate([x['Bsplit'] for x in fo])},
-               np.concatenate([x['Bf'] > BC for x in fo]).astype(float)) for fo in folds]
-    pr = [pearsonr(x['P'], Rpr)[0] for x in L if np.std(x['P']) > 0]; pp = [pearsonr(x['P'], x['Rpast'])[0] for x in L if np.std(x['P']) > 0]
-    p2[f'repo_omega_{cond}'] = dict(heldout_seed_10fold=heldout(groups, FEATS), mean_pearson_P_Rpred=float(np.mean(pr)), mean_pearson_P_Rpast=float(np.mean(pp)),
-                                    rpast_beats_rpred_runs=int(sum(a > b for a, b in zip(pp, pr))), n=len(pp))
-res['point2_heldout'] = p2
+    L = AR[cond]; a = [x['Bf'] > BC for x in L]; b = [x['P'] > 0.5 for x in L]
+    leq[f'repo_omega_{cond}'] = dict(runs=len(L), runs_with_any_label_difference=int(sum((u != v).any() for u, v in zip(a, b))),
+                                     edges_differing=int(sum((u != v).sum() for u, v in zip(a, b))), edges_total=len(L) * len(E[0]))
+res['label_equality'] = leq
+for TGT, yfun in TARGETS.items():
+  p2 = {}
+  for cond in ['baseline', 'no_delay']:
+      for kd in ['uniform', 'clustered']:
+          groups, skipped, cor = [], 0, dict(pearson_P_Rpred=[], pearson_P_Rpast=[], spearman_P_Rpred=[], spearman_P_Rpast=[], partial_P_Rpast_given_Rpred=[])
+          for k in range(15):
+              X = {c: np.concatenate([runs[(kd, k, cond, s)][c] for s in range(1, 5)]) for c in ['Rpred', 'Rpast', 'Bsplit']}
+              y = np.concatenate([yfun(runs[(kd, k, cond, s)]) for s in range(1, 5)]).astype(float)
+              groups.append((X, y))
+              for s in range(1, 5):
+                  r = runs[(kd, k, cond, s)]
+                  if np.std(r['P']) == 0:
+                    skipped += 1; continue
+                  cor['pearson_P_Rpred'].append(pearsonr(r['P'], r['Rpred'])[0]); cor['pearson_P_Rpast'].append(pearsonr(r['P'], r['Rpast'])[0])
+                  cor['spearman_P_Rpred'].append(spearmanr(r['P'], r['Rpred'])[0]); cor['spearman_P_Rpast'].append(spearmanr(r['P'], r['Rpast'])[0])
+                  # partial correlation of P with Rpast controlling for Rpred (linear residualisation)
+                  ep = r['P'] - np.polyval(np.polyfit(r['Rpred'], r['P'], 1), r['Rpred']); er = r['Rpast'] - np.polyval(np.polyfit(r['Rpred'], r['Rpast'], 1), r['Rpred'])
+                  cor['partial_P_Rpast_given_Rpred'].append(float(np.corrcoef(ep, er)[0, 1]) if np.std(er) > 0 and np.std(ep) > 0 else float('nan'))
+          p2[f'{kd}_{cond}'] = dict(heldout_omega_LOGO=heldout(groups, FEATS),
+                                    per_run_correlations={q: [float(np.nanmean(v)), float(np.nanmedian(v)), len(v)] for q, v in cor.items()},
+                                    rpast_beats_rpred_pearson_runs=int(sum(a > b for a, b in zip(cor['pearson_P_Rpast'], cor['pearson_P_Rpred']))),
+                                    correlation_valid_runs=60 - skipped, correlation_undefined_runs_constant_P=skipped,
+                                    correlation_note='per_run_correlations = [nanmean, nanmedian, n_valid]; runs with constant P_future are excluded (correlation undefined)')
+          if skipped and TGT == 'final_threshold_edge': WARN.append(f'{kd}_{cond}: {skipped}/60 runs have constant P_future; correlation undefined, excluded')
+  # repo omega, held-out seeds (10 folds by seed)
+  for cond in ['baseline', 'no_delay']:
+      L = AR[cond]; folds = [L[i::10] for i in range(10)]
+      groups = [({'Rpred': np.concatenate([Rpr] * len(fo)), 'Rpast': np.concatenate([x['Rpast'] for x in fo]), 'Bsplit': np.concatenate([x['Bsplit'] for x in fo])},
+                 np.concatenate([yfun(x) for x in fo]).astype(float)) for fo in folds]
+      pr = [pearsonr(x['P'], Rpr)[0] for x in L if np.std(x['P']) > 0]; pp = [pearsonr(x['P'], x['Rpast'])[0] for x in L if np.std(x['P']) > 0]
+      if len(pr) < len(L) and TGT == 'final_threshold_edge': WARN.append(f'repo_omega_{cond}: {len(L) - len(pr)}/{len(L)} runs have constant P_future; correlation undefined, excluded')
+      p2[f'repo_omega_{cond}'] = dict(heldout_seed_10fold=heldout(groups, FEATS), mean_pearson_P_Rpred=float(np.mean(pr)), mean_pearson_P_Rpast=float(np.mean(pp)),
+                                      rpast_beats_rpred_runs=int(sum(a > b for a, b in zip(pp, pr))), n=len(pp))
+  res['point2_heldout' if TGT == 'final_threshold_edge' else 'point2_heldout_P_future_gt_half'] = dict(target=TGT, **p2)
 # ---------------- Point 1: closed-form set as subgraph? (replication on the new omega sets) ----------------
 RSTAR = f.MU / (f.ETA + f.MU); p1 = {}
 for kd in ['uniform', 'clustered']:
@@ -150,5 +174,5 @@ for kd in ['uniform', 'clustered']:
                 sub += bool(np.all(pred[act])); ex += bool(np.all(act == pred))
         p1[f'{kd}_{cond}'] = dict(runs=nruns, subset=sub, exact=ex, precision_pooled=tp / max(tp + fp, 1), recall_pooled=tp / max(tp + fn, 1))
 res['point1_subgraph_replication'] = p1
-dump('delay_heldout_analysis.json', res)
+dump('delay_heldout_analysis.json', res, status='ok_with_warnings' if WARN else 'ok', warnings=WARN)
 print(json.dumps(res, indent=1))

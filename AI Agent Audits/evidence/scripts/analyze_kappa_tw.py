@@ -1,10 +1,13 @@
 """Summarise results/kappa_tw_all.json -> results/kappa_tw_summary.json and results/kappa_tw_components.csv.
+ROUND-3 CORRECTION (2026-10-24, response-2 #2): 'Jacobian' below is a central-difference matrix, not a derivative (ties);
+the K3 statement '(fully saturated K3s have none: ...)' is wrong as a statement about slow directions: every all-tied K3 has a
+ONE-SIDED slow direction (see kappa_cycle_kernel_summary.json). Kept unchanged for provenance.
 A component 'has a slow selected B-channel' if its frozen one-step Jacobian has an eigenvalue with |lambda| > 0.99
 (fully saturated K3s have none: their lineality space is {0})."""
 import sys, os, json, csv, numpy as np
 sys.path.insert(0, os.path.dirname(__file__)); from _common import *
 eta, gam, dt, c = 0.04, 0.015, 0.01, 0.95 / 1.5
-res = json.load(open(OUT / 'kappa_tw_all.json'))
+res = json.load(open(inp('kappa_tw_all.json')))
 rows = []
 for r in res:
     for cp in r['comps']:
