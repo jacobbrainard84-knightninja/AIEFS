@@ -21,4 +21,4 @@ if __name__=='__main__':
         js+= [J(b[i],b[j]) for i in range(4) for j in range(i+1,4)]; jd+=[J(x,nd) for x in b]
         distinct.append(len({tuple(x) for x in b}))
     print('random omega: mean pairwise Jaccard between 4 seeds (baseline)=%.3f'%np.mean(js),' distinct topologies per omega (of 4):',distinct,' Jaccard(baseline,no_delay)=%.3f'%np.mean(jd))
-    json.dump(res,open(OUT/'omega_multistab.json','w'))
+    dump('omega_multistab.json', res, indent=None)

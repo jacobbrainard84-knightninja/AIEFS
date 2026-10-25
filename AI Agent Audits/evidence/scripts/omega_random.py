@@ -33,7 +33,7 @@ if __name__=='__main__':
         centers=rng.uniform(1.0,2.0,rng.integers(2,5)); om=list(rng.choice(centers,12)+rng.normal(0,0.02,12))
         for cond,seed in [('no_delay',1),('baseline',1),('baseline',2)]: jobs.append(('clustered',k,om,cond,seed))
     with Pool(7) as p: res=p.map(job,jobs)
-    json.dump(dict(jobs=[j[:2]+(list(map(float,j[2])),)+j[3:] for j in jobs],res=res),open(OUT/'omega_random.json','w'),indent=0,default=float)
+    dump('omega_random.json', dict(jobs=[j[:2]+(list(map(float,j[2])),)+j[3:] for j in jobs],res=res), indent=0)
     import collections
     for kind in ['uniform','clustered']:
         for cond in ['no_delay','baseline']:
