@@ -1,0 +1,610 @@
+git: git version 2.47.3   bash: 5.2.37(1)-release   sandbox: (temp dir)
+
+=== U1 upload --dry-run lists new/modified/skipped, changes nothing
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 0 behind origin/main
+    | 
+    | == Files to upload (4):
+    |     [modified] shared.txt
+    |     [new] .env.example
+    |     [new] AI Agent Audits/new file with spaces.md
+    |     [new] weird [name] *star*.txt
+    | == Skipped (9) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     big data.bin  <- too large: 2 MB > 1 MB limit
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Missing locally but NOT deleted on GitHub (1; use --include-deletions to delete them there):
+    |     old_upstream.txt
+    | 
+    | (dry-run: nothing staged, committed or pushed)
+    rc=0
+  PASS: exit 0
+  PASS: lists file with spaces
+  PASS: lists glob-char name
+  PASS: lists modified shared.txt
+  PASS: skips big file (size)
+  PASS: skips deploy/.env.production
+  PASS: skips credentials.json
+  PASS: skips vault.kdbx
+  PASS: skips api_token.txt
+  PASS: allows .env.example
+  PASS: ignored .env not listed at all
+  PASS: skips id_rsa
+  PASS: skips *.pem
+  PASS: skips token content
+  PASS: skips nested git repo
+  PASS: ignored run.log not listed
+  PASS: ignored .pyc not listed
+  PASS: deletion reported but not staged
+  PASS: remote unchanged
+  PASS: index still clean
+
+=== U2 upload --yes uploads only the allowed files, never deletions
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 0 behind origin/main
+    | 
+    | == Files to upload (4):
+    |     [modified] shared.txt
+    |     [new] .env.example
+    |     [new] AI Agent Audits/new file with spaces.md
+    |     [new] weird [name] *star*.txt
+    | == Skipped (9) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     big data.bin  <- too large: 2 MB > 1 MB limit
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Missing locally but NOT deleted on GitHub (1; use --include-deletions to delete them there):
+    |     old_upstream.txt
+    | == Pushing to origin/main (no force) ...
+    | To /tmp/synctest.oV34FA/github.git
+    |    aacfdd3..42442b9  HEAD -> main
+    | 
+    | Uploaded. Commit: 42442b9 Upload via upload_new.sh 2026-10-25T01:57:13Z (4 file(s))
+    |         42442b965ac3abb3127eed0de5a4dde8a5273ecb
+    rc=0
+  PASS: exit 0
+  PASS: remote has file with spaces
+  PASS: remote has glob-char file
+  PASS: remote shared.txt updated
+  PASS: remote lacks .env
+  PASS: remote lacks deploy/.env.production
+  PASS: remote lacks credentials.json
+  PASS: remote lacks vault.kdbx
+  PASS: remote lacks api_token.txt
+  PASS: remote lacks id_rsa
+  PASS: remote lacks keys/server.pem
+  PASS: remote lacks notes_with_key.txt
+  PASS: remote lacks big data.bin
+  PASS: remote lacks run.log
+  PASS: remote lacks __pycache__/m.cpython-313.pyc
+  PASS: remote lacks nested
+  PASS: remote still has old_upstream.txt (no deletion)
+  PASS: prints commit line
+  PASS: commit message timestamped
+
+=== U3 second run: nothing new
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 0 behind origin/main
+    | 
+    | == Files to upload (0):
+    | == Skipped (9) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     big data.bin  <- too large: 2 MB > 1 MB limit
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Missing locally but NOT deleted on GitHub (1; use --include-deletions to delete them there):
+    |     old_upstream.txt
+    | 
+    | Nothing to upload. GitHub already has everything (that is not ignored/skipped).
+    rc=0
+  PASS: exit 0
+  PASS: says nothing new
+
+=== U4 --include-deletions deletes on GitHub, custom -m
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 0 behind origin/main
+    | 
+    | == Files to upload (0):
+    | == Skipped (9) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     big data.bin  <- too large: 2 MB > 1 MB limit
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Deletions to upload (1) -- these files will be REMOVED on GitHub:
+    |     old_upstream.txt
+    | == Pushing to origin/main (no force) ...
+    | To /tmp/synctest.oV34FA/github.git
+    |    42442b9..9dc9823  HEAD -> main
+    | 
+    | Uploaded. Commit: 9dc9823 remove old file
+    |         9dc9823c41fcc5236ceca5186fd5ec691c422844
+    rc=0
+  PASS: exit 0
+  PASS: remote no longer has old_upstream.txt
+  PASS: custom message
+
+=== U5 remote ahead: upload integrates first (rebase), then pushes; history linear
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    9dc9823..30d9d1d  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | == Integrating 1 new commit(s) from GitHub (pull --rebase --autostash) ...
+    | From /tmp/synctest.oV34FA/github
+    |  * branch            main       -> FETCH_HEAD
+    | Updating 9dc9823..30d9d1d
+    | Created autostash: 0ec55e9
+    | Fast-forward
+    |  other_new.txt | 1 +
+    |  1 file changed, 1 insertion(+)
+    |  create mode 100644 other_new.txt
+    | Applied autostash.
+    | 
+    | == Files to upload (2):
+    |     [modified] src/main.py
+    |     [new] mine_new.txt
+    | == Skipped (9) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     big data.bin  <- too large: 2 MB > 1 MB limit
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Pushing to origin/main (no force) ...
+    | To /tmp/synctest.oV34FA/github.git
+    |    30d9d1d..7ffec13  HEAD -> main
+    | 
+    | Uploaded. Commit: 7ffec13 Upload via upload_new.sh 2026-10-25T01:57:13Z (2 file(s))
+    |         7ffec13d56f86d5ff1658f9b470c352b8f1efeb0
+    rc=0
+  PASS: exit 0
+  PASS: mine got other_new.txt
+  PASS: remote has mine_new.txt
+  PASS: no merge commits
+
+=== U6 uncommitted local edit conflicts with remote: stops, nothing pushed, edit safe in stash
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    7ffec13..76a150b  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | == Integrating 1 new commit(s) from GitHub (pull --rebase --autostash) ...
+    | From /tmp/synctest.oV34FA/github
+    |  * branch            main       -> FETCH_HEAD
+    | Updating 7ffec13..76a150b
+    | Created autostash: c55d215
+    | Fast-forward
+    |  conflict.txt | 2 +-
+    |  1 file changed, 1 insertion(+), 1 deletion(-)
+    | Applying autostash resulted in conflicts.
+    | Your changes are safe in the stash.
+    | You can run "git stash pop" or "git stash drop" at any time.
+    | upload_new.sh: ERROR: GitHub's changes were integrated, but re-applying your uncommitted changes conflicted.
+    |   Your changes are safe in 'git stash list' (top entry) and/or marked in 'git status'.
+    |   Resolve the conflicted files, then 'git stash drop' once satisfied, and rerun upload_new.sh.
+    rc=1
+  PASS: exit nonzero
+  PASS: explains stash
+  PASS: remote unchanged
+  PASS: local edit recoverable from stash or tree
+
+=== U7 committed local change conflicts with remote: rebase stops with instructions
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    76a150b..a9538a7  main       -> origin/main
+    |    local is 1 commit(s) ahead, 1 behind origin/main
+    | == Integrating 1 new commit(s) from GitHub (pull --rebase --autostash) ...
+    | From /tmp/synctest.oV34FA/github
+    |  * branch            main       -> FETCH_HEAD
+    | Rebasing (1/1)Auto-merging conflict.txt
+    | CONFLICT (content): Merge conflict in conflict.txt
+    | error: could not apply 5913b3f... local conflicting
+    | hint: Resolve all conflicts manually, mark them as resolved with
+    | hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+    | hint: You can instead skip this commit: run "git rebase --skip".
+    | hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+    | hint: Disable this message with "git config advice.mergeConflict false"
+    | Could not apply 5913b3f... local conflicting
+    | upload_new.sh: ERROR: integrating GitHub's changes failed; nothing was uploaded.
+    |   If a rebase is in progress: fix the files listed by 'git status', 'git add' them, then
+    |   'git rebase --continue'  -- or undo everything with 'git rebase --abort'.
+    |   If git refused because untracked files would be overwritten, move those files aside and rerun.
+    |   Your local changes are never discarded; if they were auto-stashed, see 'git stash list'.
+    rc=1
+  PASS: exit nonzero
+  PASS: rebase instructions
+  PASS: remote unchanged
+
+=== U8 refuses pre-staged changes (e.g. left by 'git add -f')
+    | Files are already staged (git diff --cached --name-only):
+    |     forced.log
+    | upload_new.sh: ERROR: the index already has staged changes. Review them, then unstage everything with
+    |       git restore --staged :/
+    |   (this keeps all files on disk) and run upload_new.sh again.
+    rc=1
+  PASS: exit nonzero
+  PASS: tells how to unstage
+
+=== U9 refuses to push an unpushed commit that contains force-added ignored / oversized files
+    | == Fetching origin ...
+    |    local is 1 commit(s) ahead, 0 behind origin/main
+    |    unpushed commit contains 'forced2.log', which .gitignore excludes (was it added with 'git add -f'?)
+    | upload_new.sh: ERROR: local commits that are not on GitHub contain files that should not be uploaded (see above).
+    |   Undo those commits but keep every file on disk with:   git reset --mixed origin/main
+    |   then rerun upload_new.sh (it will skip those files).
+    rc=1
+  PASS: exit nonzero
+  PASS: names the ignored file
+  PASS: suggests reset --mixed
+  PASS: remote unchanged
+
+=== U10 no --yes and no answer -> aborts, nothing changed
+    rc=1
+  PASS: exit nonzero
+  PASS: remote unchanged
+
+=== U11 push rejected race is reported (simulated via pre-receive hook), commit kept locally
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 0 behind origin/main
+    | 
+    | == Files to upload (2):
+    |     [new] big data.bin
+    |     [new] race.txt
+    | == Skipped (8) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Pushing to origin/main (no force) ...
+    | remote: simulated rejection        
+    | To /tmp/synctest.oV34FA/github.git
+    |  ! [remote rejected] HEAD -> main (pre-receive hook declined)
+    | error: failed to push some refs to '/tmp/synctest.oV34FA/github.git'
+    | upload_new.sh: ERROR: push was rejected (probably someone pushed meanwhile). Your commit is safe locally.
+    |   Rerun upload_new.sh: it will integrate GitHub's new commits first and push again.
+    rc=1
+  PASS: exit nonzero
+  PASS: explains rerun
+  PASS: commit kept locally
+    | == Fetching origin ...
+    |    local is 1 commit(s) ahead, 0 behind origin/main
+    | 
+    | == Files to upload (0):
+    | == Already committed locally, not yet on GitHub (1 commit(s), 2 file(s)):
+    |     big data.bin
+    |     race.txt
+    | == Skipped (8) -- NOT uploaded:
+    |     api_token.txt  <- looks private: token file
+    |     credentials.json  <- looks private: credentials file
+    |     deploy/.env.production  <- looks private: environment/secrets file
+    |     id_rsa  <- looks private: SSH private key
+    |     keys/server.pem  <- looks private: key/certificate file
+    |     nested  <- directory with its own .git (would become a broken gitlink/submodule)
+    |     notes_with_key.txt  <- contents look like a key/token
+    |     vault.kdbx  <- looks private: password database
+    | == Pushing to origin/main (no force) ...
+    | To /tmp/synctest.oV34FA/github.git
+    |    a9538a7..5f13f22  HEAD -> main
+    | 
+    | Uploaded. Commit: 5f13f22 Upload via upload_new.sh 2026-10-25T01:57:14Z (2 file(s))
+    |         5f13f2296d00285e6ce1ec46a3c3b5a51bd08254
+    rc=0
+  PASS: rerun pushes it
+
+=== D1 download --dry-run shows incoming, changes nothing
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    5f13f22..942ca92  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     942ca92 2026-10-25 other: change
+    | 
+    |  2 files changed, 2 insertions(+), 1 deletion(-)
+    |    new files (1):
+    |     AI Agent Audits/round 4/new report.md
+    |    changed files (1):
+    |     AI Agent Audits/report one.md
+    | 
+    | (dry-run: nothing changed)
+    rc=0
+  PASS: exit 0
+  PASS: lists new file with spaces
+  PASS: lists changed file
+  PASS: HEAD unchanged
+
+=== D2 clean tree: fast-forward
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     942ca92 2026-10-25 other: change
+    | 
+    |  2 files changed, 2 insertions(+), 1 deletion(-)
+    |    new files (1):
+    |     AI Agent Audits/round 4/new report.md
+    |    changed files (1):
+    |     AI Agent Audits/report one.md
+    | == Fast-forwarding to origin/main ...
+    | 
+    | == Done: 5f13f22 -> 942ca92
+    |    M AI Agent Audits/report one.md
+    |    + AI Agent Audits/round 4/new report.md
+    |    summary: 1 new, 1 changed, 0 deleted-on-GitHub
+    rc=0
+  PASS: exit 0
+  PASS: new file arrived
+  PASS: at origin/main
+  PASS: summary printed
+
+=== D3 dirty tree, non-overlapping: stash -> ff -> unstash
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    942ca92..1ef1427  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     1ef1427 2026-10-25 other: change
+    | 
+    |  1 file changed, 1 insertion(+)
+    |    changed files (1):
+    |     other_new.txt
+    | == Backed up 1 local file(s) to /tmp/synctest.oV34FA/mine/.git/download_new_backup/20261025T015714Z
+    | == Stashed your uncommitted changes (stash: 'download_new.sh autostash 20261025T015714Z')
+    | == Fast-forwarding to origin/main ...
+    | == Re-applied your uncommitted changes
+    | 
+    | == Done: 942ca92 -> 1ef1427
+    |    M other_new.txt
+    |    summary: 0 new, 1 changed, 0 deleted-on-GitHub
+    rc=0
+  PASS: exit 0
+  PASS: local edit kept
+  PASS: untracked kept
+  PASS: remote change arrived
+  PASS: stash empty
+
+=== D4 dirty tree overlapping with remote edit: conflict reported, nothing lost
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    1ef1427..0bef45e  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     0bef45e 2026-10-25 other: change
+    | 
+    |  1 file changed, 1 insertion(+), 1 deletion(-)
+    |    changed files (1):
+    |     conflict.txt
+    | !! also changed locally (your edits are stashed and re-applied; may conflict) (1):
+    |     conflict.txt
+    | == Backed up 1 local file(s) to /tmp/synctest.oV34FA/mine/.git/download_new_backup/20261025T015714Z
+    | == Stashed your uncommitted changes (stash: 'download_new.sh autostash 20261025T015714Z')
+    | == Fast-forwarding to origin/main ...
+    | Auto-merging conflict.txt
+    | CONFLICT (content): Merge conflict in conflict.txt
+    | The stash entry is kept in case you need it again.
+    | 
+    | == Done: 1ef1427 -> 0bef45e
+    |    M conflict.txt
+    |    summary: 0 new, 1 changed, 0 deleted-on-GitHub
+    | 
+    | !! Your uncommitted changes conflicted with GitHub's changes in:
+    |     conflict.txt
+    |    Nothing was discarded: your changes are still in 'git stash list' (top entry) and copies are in
+    |    /tmp/synctest.oV34FA/mine/.git/download_new_backup/20261025T015714Z. Edit the conflicted files, then 'git add' them and 'git stash drop'.
+    rc=2
+  PASS: exit 2
+  PASS: names conflicted file
+  PASS: stash kept
+  PASS: local text recoverable
+  PASS: backup copy exists
+
+=== D5 upstream untracks build files (the .lake cleanup) while they are modified locally: kept, no conflict
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    0bef45e..5f3f3cc  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     5f3f3cc 2026-10-25 other: change
+    | 
+    |  2 files changed, 2 deletions(-)
+    |    deleted on GitHub (your local copy is KEPT as an untracked file) (2):
+    |     lean/AIEFProofs/.lake/build/A.olean
+    |     shared.txt
+    | == Backed up 2 local file(s) to /tmp/synctest.oV34FA/mine/.git/download_new_backup/20261025T015714Z
+    | == Fast-forwarding to origin/main ...
+    | 
+    | == Done: 0bef45e -> 5f3f3cc
+    |    - lean/AIEFProofs/.lake/build/A.olean
+    |    - shared.txt
+    |    summary: 0 new, 0 changed, 2 deleted-on-GitHub
+    |    2 file(s) deleted on GitHub were kept on your disk (now untracked; ignored ones are hidden from git status).
+    |    (these had local edits; your edited version is what was kept) (1):
+    |     lean/AIEFProofs/.lake/build/A.olean
+    rc=0
+  PASS: exit 0
+  PASS: local .olean kept with local content
+  PASS: olean no longer tracked
+  PASS: shared.txt kept on disk (untracked)
+  PASS: git status clean except kept untracked
+
+=== D6 --apply-deletions removes upstream-deleted files
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    5f3f3cc..ebeaf31  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     ebeaf31 2026-10-25 other: change
+    | 
+    |  1 file changed, 2 deletions(-)
+    |    deleted on GitHub (will be removed locally) (1):
+    |     other_new.txt
+    | == Backed up 1 local file(s) to /tmp/synctest.oV34FA/mine/.git/download_new_backup/20261025T015715Z
+    | == Fast-forwarding to origin/main ...
+    | 
+    | == Done: 5f3f3cc -> ebeaf31
+    |    - other_new.txt
+    |    summary: 0 new, 0 changed, 1 deleted-on-GitHub
+    rc=0
+  PASS: exit 0
+  PASS: file removed
+
+=== D7 local untracked and ignored files that GitHub now adds: stop, never overwrite
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    ebeaf31..6dc88c4  main       -> origin/main
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     6dc88c4 2026-10-25 other: change
+    | 
+    |  2 files changed, 2 insertions(+)
+    |    new files (2):
+    |     collide.log
+    |     collide.txt
+    | !! exist locally as untracked/ignored files and would be overwritten (2):
+    |     collide.log
+    |     collide.txt
+    |    Move or rename these local files (or commit them under another name), then rerun.
+    | download_new.sh: ERROR: stopped: local untracked/ignored files would be overwritten (listed above). Nothing changed.
+    rc=1
+  PASS: exit nonzero
+  PASS: lists both
+  PASS: local untracked untouched
+  PASS: local ignored untouched
+  PASS: HEAD unchanged
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     6dc88c4 2026-10-25 other: change
+    | 
+    |  2 files changed, 2 insertions(+)
+    |    new files (2):
+    |     collide.log
+    |     collide.txt
+    | == Fast-forwarding to origin/main ...
+    | 
+    | == Done: ebeaf31 -> 6dc88c4
+    |    + collide.log
+    |    + collide.txt
+    |    summary: 2 new, 0 changed, 0 deleted-on-GitHub
+    rc=0
+  PASS: after moving aside it downloads
+
+=== D8 diverged: stop and explain; --rebase replays local commit
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    6dc88c4..8ac2ef3  main       -> origin/main
+    |    local is 1 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     8ac2ef3 2026-10-25 other: change
+    | 
+    |  1 file changed, 1 insertion(+)
+    |    new files (1):
+    |     remote_only.txt
+    | !! DIVERGED: you have 1 local commit(s) that GitHub does not have:
+    |     f34a850 local only
+    | download_new.sh: ERROR: stopped: your branch and GitHub have diverged; nothing changed. Options:
+    |   * rerun with --rebase to replay your 1 local commit(s) on top of GitHub's, or
+    |   * run upload_new.sh (it rebases and then uploads), or
+    |   * inspect with: git log --oneline --graph HEAD origin/main
+    rc=1
+  PASS: exit nonzero
+  PASS: says diverged
+  PASS: remote file not yet here
+    | == Fetching origin ...
+    |    local is 1 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     8ac2ef3 2026-10-25 other: change
+    | 
+    |  1 file changed, 1 insertion(+)
+    |    new files (1):
+    |     remote_only.txt
+    | !! DIVERGED: you have 1 local commit(s) that GitHub does not have:
+    |     f34a850 local only
+    | == Rebasing your 1 local commit(s) onto origin/main ...
+    | Rebasing (1/1)Successfully rebased and updated refs/heads/main.
+    | 
+    | == Done: f34a850 -> af45da3
+    |    + remote_only.txt
+    |    summary: 1 new, 0 changed, 0 deleted-on-GitHub
+    rc=0
+  PASS: exit 0
+  PASS: both files present
+  PASS: local commit on top of remote
+
+=== D9 diverged with conflicting commit + --rebase: stops with instructions, abort restores
+    | == Fetching origin ...
+    | From /tmp/synctest.oV34FA/github
+    |    8ac2ef3..04aa516  main       -> origin/main
+    |    local is 2 commit(s) ahead, 1 behind origin/main
+    | 
+    | == Coming down from GitHub (1 commit(s)):
+    |     04aa516 2026-10-25 other: change
+    | 
+    |  1 file changed, 1 insertion(+), 1 deletion(-)
+    |    changed files (1):
+    |     conflict.txt
+    | !! DIVERGED: you have 2 local commit(s) that GitHub does not have:
+    |     3e65bac local conflict 4
+    |     af45da3 local only
+    | == Rebasing your 2 local commit(s) onto origin/main ...
+    | Rebasing (1/2)Rebasing (2/2)Auto-merging conflict.txt
+    | CONFLICT (content): Merge conflict in conflict.txt
+    | error: could not apply 3e65bac... local conflict 4
+    | hint: Resolve all conflicts manually, mark them as resolved with
+    | hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+    | hint: You can instead skip this commit: run "git rebase --skip".
+    | hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+    | hint: Disable this message with "git config advice.mergeConflict false"
+    | Could not apply 3e65bac... local conflict 4
+    | download_new.sh: ERROR: rebase stopped on a conflict. Nothing is lost:
+    |   * fix the files 'git status' lists, 'git add' them, then 'git rebase --continue'
+    |   * or undo the rebase completely with 'git rebase --abort'
+    |   
+    |   * copies of your local files are in /tmp/synctest.oV34FA/mine/.git/download_new_backup/20261025T015715Z
+    rc=1
+  PASS: exit nonzero
+  PASS: abort instructions
+  PASS: abort restores original commit
+
+=== D10 nothing new
+    | == Fetching origin ...
+    |    local is 0 commit(s) ahead, 0 behind origin/main
+    | Already up to date: nothing new on GitHub.
+    rc=0
+  PASS: exit 0 + up to date
+
+RESULT: 108 passed, 0 failed
