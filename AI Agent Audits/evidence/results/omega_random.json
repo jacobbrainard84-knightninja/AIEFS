@@ -1,4 +1,10 @@
 {
+"_meta": {
+"schema": "aiefs-audit-result/1",
+"script": "omega_random.py",
+"status": "ok",
+"warnings": []
+},
 "jobs": [
 [
 "uniform",

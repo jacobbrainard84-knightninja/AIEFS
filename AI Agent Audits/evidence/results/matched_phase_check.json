@@ -1,4 +1,10 @@
 {
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "matched_phase_check.py",
+  "status": "ok",
+  "warnings": []
+ },
  "P_mean_late": {
   "n": 40,
   "mean": -0.01760951449983707,
@@ -86,22 +92,70 @@
  "seed_status_counts": {
   "success": 40
  },
- "canonical_dir_manifest": {
-  "anchor_failed": true,
-  "error": "Anchor validation FAILED for seed=11242426753702356865. Check frozen_anchor_validation.csv for details.",
-  "failed_seeds": [
-   "11242426753702356865"
-  ],
-  "freezeable": false,
-  "full_cohort": false,
-  "initial_match_failed": false,
-  "run_scope": "partial",
-  "seed_status": {
-   "11242426753702356865": "failed: RuntimeError: Anchor validation FAILED for seed=11242426753702356865. Check frozen_anchor_validation.csv for details."
+ "provenance": {
+  "source_directory": "test_output",
+  "manifest": {
+   "path": "test_output/analysis_manifest.json",
+   "sha256": "2a57bc255b74395f265ab39578da0a13e5a48622decdf943d4e53dd689be04e5",
+   "analysis": "AIEF-1.4 matched phase memory ablation",
+   "version": "1.0",
+   "run_metadata": {
+    "all_seeds_count": 40,
+    "full_cohort": true,
+    "requested_seed_count": 40,
+    "run_scope": "full_cohort"
+   },
+   "success_count": 40,
+   "failure_count": 0,
+   "failed_seeds": [],
+   "freezeable": true,
+   "validation": {
+    "anchor_validation_pass_count": 120,
+    "anchor_validation_total_count": 120,
+    "initial_match_pass_count": 80,
+    "initial_match_total_count": 80,
+    "verify_anchors": true,
+    "split_state_immutability_all_passed": true
+   },
+   "frozen_authorities": {
+    "manifest": {
+     "path": "runs/5a9f093a2fe0/manifest.json",
+     "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+     "path": "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+     "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    },
+    "scalar_csv": {
+     "path": "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+     "sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda"
+    }
+   },
+   "note": "absolute paths in the manifest were reduced to repo-relative names"
   },
-  "seeds_requested": [
-   "11242426753702356865"
-  ],
-  "status": "FAILED"
+  "source_and_dependency_sha256_match_repo": {
+   "AIEF_1_4_matched_phase_memory_ablation.py": true,
+   "AIEF_1_4_memory_ablation_updated.py": true,
+   "AIEF_1_4_trajectory_recovery_equivalence.py": true
+  },
+  "frozen_authorities_sha256_match_repo": {
+   "manifest": true,
+   "npz": true,
+   "scalar_csv": true
+  },
+  "consumed_files": {
+   "test_output/matched_phase_paired_contrasts.csv": "f6f18904bd5c836db0b780569ed6e0c3133b783dcf15d43700e64d8283ba9454",
+   "test_output/matched_phase_seed_status.csv": "b9fe373b212d21d2e84613429e39ff8867caed81c195702f318b2c4cd7deb1ae"
+  }
+ },
+ "failed_partial_run_elsewhere": {
+  "path": "aief_1_4_matched_phase_memory_ablation/analysis_manifest.json",
+  "sha256": "3ce915cc8c422df2a2a2713550a4ed7a540b86ad5d14b9cd73ae5b8c9d780c60",
+  "status": "FAILED",
+  "run_scope": "partial",
+  "seeds_requested": 1,
+  "anchor_failed": true,
+  "full_cohort": false,
+  "note": "a failed 1-seed partial run; NOT the source of the numbers above (round-3 correction)"
  }
 }
