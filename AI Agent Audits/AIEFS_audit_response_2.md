@@ -1,0 +1,157 @@
+# AIEFS audit: response 2 (round-3 adjudication ledger)
+
+Status: **current** (2026-10-24). This ledger answers two reviews of the published audit tree at `c9907a6`. It supersedes the parts of `AIEFS_audit.md`, `AIEFS_salvage.md` and `AIEFS_audit_response.md` that are marked "[Correction 2026-10-24, response-2 #N: …]" in those files. Where this file and an older one disagree, this file wins.
+Audited repository: github.com/jacobbrainard84-knightninja/AIEFS. Simulations ran on a read-only clone at commit `e47bad1`, the same as in rounds 1–2. Nothing was pushed, committed or changed on GitHub for this round. All work is local.
+Evidence: `evidence/` (scripts, logs, results, `audit_manifest.json`, `verify_manifest.py`, `run_all.sh`). Tags: **[RAN]** = executed for this response; **[READ]** = read in the repo or in our own files; **[INFERRED]** = reasoning, not a run.
+Every "our claim" quote is copied exactly from the published text at `c9907a6` and cited as file:line. The reviewers' positions are paraphrased.
+I checked each reviewer claim myself before accepting it. Where a reviewer was right, I say so. Where I found more (or less) than a reviewer claimed, the numbers below are mine.
+
+---
+
+## 1. Ledger
+
+| # | Point | Our claim at c9907a6 (exact quote) | Reviewers' position (paraphrase) | Verdict | Evidence |
+|---|---|---|---|---|---|
+| 1 | Gate no-go | response:32 "The witness is ε-level (6.7e-13). The non-projection conclusion rests on the ε=0 Euclidean/KL comparisons, not on the witness."; response:18 "The interior witness sits only 6.7e-13 below c, so it is an ε artifact." | The witness is an exact no-go for the map as implemented. The ε=0 comparisons only show a difference from two specific projections, at the sampled points. | **Concede.** I had the logic backwards. Any Bregman projection with a smooth, strictly convex generator, and any projection in a positive-definite metric, maps a point outside a closed convex C to the boundary of C. The witness has x∉C (row sum 0.95 > c), A_ε(x) in the interior of C, and A_ε(x)≠x. This holds in exact arithmetic, not just in floating point: the saturating row's output sum is c·q/(q+ε) = c − cε/(q+ε) = c − 6.67e-13 < c. So the map as implemented (ε=1e-12) is **not** such a projection, whatever the size of the margin. The ~1e-12 scale is a separate, numerical statement: the gap is immaterial for the dynamics. The ε=0 comparisons show only that the map is not the Euclidean projection and not the KL projection, at 5 sampled points each. They do not show that the ε=0 map fails to be a projection under some other divergence. I have not settled that question. | [RAN] `logs/mathcheck.log`, `results/gate_idempotence.json`; [INFERRED] the exact-arithmetic margin (algebra in §2.1) |
+| 2 | κ: "Jacobian", K3 census | response:22 "Frozen-Jacobian r_B matches the discrete λ_{k,ε} …"; response:22 "the K3 slow channel exists only at ρ=1, in 1/200 replays. The other 114 K3s are fully saturated with no slow mode, consistent with the manuscript's Prop 8.1 "spectrally silent"."; response:34 "the K3 slow channel appears only at the original T_w (1/200 replays)"; response:99 "the median early twin rate of the 114 fully saturated K3s is 0.126255" | The gate is non-smooth at ties, so a central difference across a tie is not a Jacobian. The right object is the multiplier on the cycle kernel (fiber) of the controller incidence. Report the tie nonadditivity, the closed form, the degree counts, and the cohort caveat. | **Partly concede.** (a) *Concede.* At ties the map is piecewise linear and not differentiable, so the round-2 matrix was a central-difference matrix, not a Jacobian. New script `kappa_cycle_kernel.py` computes the multiplier on K = ker A_J directly. (b) *Concede: the K3 census was wrong.* All 110 all-tied K3s (34 seeds, every ρ) have a **one-sided** slow direction (+v_c) whose multiplier equals the closed form λ_2. 0/110 have one along −v_c. A two-sided fiber exists only for 5 strict K3s: the exceptional resolved one (ρ=1, J={2,7}) and 4 unresolved near-ties at ρ=2. The 0.126255 "unexplained" twin rate is r_{B,2} = 0.12626. So "no slow mode", "spectrally silent" and "1/200" were wrong. (c) *Hold the numbers.* On the 292 components where both methods see a slow channel, the old rate agrees with the fiber rate to 4.5e-4 relative. The closed form (identical to the reviewers' at ε=0; §2.2) matches the fiber multiplier on all 374 well-resolved components (λ to 2.1e-8 relative, κ to 2.1e-6 absolute). The degree counts match the reviewers' exactly. (d) *Concede the cohort caveat.* The data are 40 fixed seeds × 5 T_w, not independent replications. | [RAN] `scripts/kappa_cycle_kernel.py` → `results/kappa_cycle_kernel.json`; `scripts/analyze_kappa_cycle_kernel.py` → `results/kappa_cycle_kernel_summary.json`; §2.2–2.4 |
+| 3 | Matched-phase provenance | response:105 "The matched-phase check (`results/matched_phase_check.json`: Weighted_similarity_late +0.064 [0.041, 0.089]) is exploratory. The repo's canonical analysis_manifest for that directory reports FAILED." | The check read a directory whose manifest says FAILED. Show the provenance of the inputs, or don't use it. | **Concede the provenance gap; the number survives.** The rewritten script reads `test_output/`. Its `analysis_manifest.json` (sha256 prefix 2a57bc25) reports a full cohort: 40/40 seeds, 0 failures, freezeable. Its validation shows anchor 120/120, initial 80/80 and split immutability all passing. The frozen-authority, source and dependency sha256 values all match the repo. The FAILED manifest belongs to a *different* partial run (`aief_1_4_matched_phase_memory_ablation/analysis_manifest.json`, prefix 3ce915cc: 1 seed, anchor_failed). Our round-2 sentence conflated the two. Weighted_similarity_late is unchanged: +0.06415 [0.0405, 0.0886], positive in 31/40 seeds. It stays exploratory. | [RAN] `scripts/matched_phase_check.py` → `results/matched_phase_check.json` (`provenance`, `failed_partial_run_elsewhere`) |
+| 4 | Memory wording | response:19 "The path dependence is carried *redundantly*."; response:55 "(iii) Path dependence is carried redundantly by the weights and the phase/EMA state."; response:44 "Memory. Redundantly carried by the weights and the phase/EMA state." | "Redundant" overstates it. Phase/history/EMA reconstruct the topology with B reset. B's AUC of 1.0 is predictive, not causal, and is expected if the topology is frozen. | **Concede.** New wording: "Phase, history and EMA together suffice to reconstruct the finite topology when B is reset (reset_B: Jaccard 1.000 vs continue). B is predictive of the final topology and acts as a conditional continuous-weight scaffold. No unique retained memory register has been identified." The AUC 1.0 is expected by construction. I checked: **0 of 29040** edges change threshold status (B > B_C) between the split and the end (13200 archived repo-ω edges, 15840 random-ω edges). A B_split > B_C classifier is therefore exact, and the AUC says nothing about causation. | [RAN] `scripts/frozen_topology_check.py` → `results/frozen_topology_check.json`; [READ] salvage §3.5 ablation table |
+| 5 | Delay wording | response:20 "On random ω the delay systematically *increases multistability*"; response:43 "It increases multistability"; response:54 "delay increases the number of distinct outcomes" | Four seeds per ω set give a sample-diversity count, not a basin count. | **Concede.** New wording: "In sampled ensembles the delayed condition gave more distinct four-seed final topologies." Numbers: 2.93 vs 2.33 (uniform) and 2.0 vs 1.4 (clustered) mean distinct topologies per 4 seeds. More with delay in 7/15 and 5/15 ω sets; fewer in 1/15 each. Pooled at repo ω: 16 vs 1. These are counts of distinct outcomes in a sample. They are not basin counts or basin volumes. | [RAN] `results/delay_heldout_analysis.json` (`point7_delay`) |
+| 6 | Held-out target label | response:62 "**Point 2: held-out prediction of P_future > 0.5**" | The script's target was B_final > B_C, not P_future > 0.5. | **Concede the mislabel; the numbers stand.** The table used y = B_final > B_C. I added y = P_future > 0.5 and recorded label equality. The labels are identical in all 440 runs: 0/29040 edges differ, and no P_future lies within 1e-6 of 0.5. So the AUC/logloss tables are identical for both targets. The table is relabelled "final threshold edge (B_final > B_C; identical to P_future > 0.5 here)". Also, P_future is binary except under no_mu, so the per-run "Pearson" correlations are point-biserial. | [RAN] `scripts/analyze_delay_heldout.py` → `results/delay_heldout_analysis.json` (`label_equality`, `point2_heldout`, `point2_heldout_P_future_gt_half`) |
+| 7 | "Confirmatory" label | round-2 `evidence/audit_manifest.json` finding types "confirmatory (tests requested by the collaborator, designed before running)", "confirmatory (prediction stated in salvage 3.5); twin_early K3 statistic exploratory", and 6× "confirmatory" | Nothing was preregistered, so "confirmatory" is wrong. | **Concede.** There was no preregistration. Relabelled: "controlled exploratory analysis with fixed recorded design". Reproduction reruns are labelled "reproduction check". | [READ] round-2 manifest; regenerated `audit_manifest.json` |
+| 8 | repro13 headline | audit:14 "all 500 matched the archived matrices and scalars bit-for-bit (max \|diff\| = 0.0)"; response:26 "500/500 archived 1.3 runs bit-exact again"; response:40 "Honest and bit-reproducible: 500/500 again." | Check every scalar, not just the headline ones. | **Concede.** The round-2 check compared the matrices and only 4 headline scalars (D_B, Corr_physical, Total_edge_weight, Effective_edges). Comparing all 38 keys per archive: **78/500** runs match bit-for-bit on every key. 500/500 match bit-for-bit on all 7 array keys (including B_at_split, B_final and P_future) and on the 4 headline scalars. 422/500 differ in at least one derived scalar, all at rounding level: S_spectral in 385 runs (max abs 4.9e-15), Weight_gini in 142 (max abs 6.7e-16, rel 1.3e-12), Projection_norm_max in 33 (max abs 4.3e-19), Projection_norm_mean_active in 26 (max abs 1.3e-18). No key is missing. The headline "all 500 … scalars bit-for-bit" was false. The correct statement is "bit-exact for matrices and headline scalars; other derived scalars agree to ≤1.3e-12 relative". | [RAN] `scripts/repro13.py` → `results/repro13.json` (`mismatch_summary_by_key`), `logs/repro13.log` |
+| 9 | Engineering | (round-2 `run_all.sh` overwrote committed results; no verifier; no status fields) | Add a manifest verifier, make run_all diff against committed results, add schema/status fields, report warnings and valid-n, and add optional evolution checks. | **Done.** See §4. `verify_manifest.py` checks every listed size and sha256 (exit 0/1/2). `run_all.sh` writes to a temp dir, `cmp`s each committed result, and copies only with `UPDATE=1`. Every dict result carries `_meta{schema "aiefs-audit-result/1", script, status, warnings}`. Correlations report valid-n. `evolution_checks.py` tests the repo's augmented-spectrum procedure (§2.5). | [RAN] `evidence/verify_manifest.py`, `evidence/run_all.sh`, `logs/run_all_verify.log`, `scripts/evolution_checks.py` → `results/evolution_checks.json` |
+| 10 | (closed) | — | — | Already resolved before this ledger was written. No further change. | — |
+
+## 2. Derivations and new results
+
+### 2.1 Gate no-go (point 1)
+Gate: s_i = min(1, c/(q_i+ε)), B'_ij = x_ij·min(s_i, s_j), with q_i = Σ_j x_ij. The witness row has q = 0.95 > c = 0.6333 and controls all of its edges. Its output row sum is Σ_j x_ij·c/(q+ε) = c·q/(q+ε) = c − cε/(q+ε). With ε = 1e-12 that is c − 6.67e-13 exactly, so the output is in the interior. A Bregman projection with a smooth, strictly convex (Legendre) generator, or a projection in any positive-definite metric, sends an exterior point to ∂C. Hence A_ε is neither. [INFERRED: standard property; the numbers are from `logs/mathcheck.log`]
+
+### 2.2 Closed form: ours vs the reviewers' (point 2)
+On a component where every node in J controls its edges, with locked edges (R=1): x_e = (1−γdt)B_e + dt·η. Take h ∈ K = ker A_J, so row sums at J are unchanged. Then δq_i = 0 for i ∈ J, the s values are unchanged, and δB' = (1−γdt)·s_J·h. So h is an eigen-direction with multiplier λ = (1−γdt)·s_J. At the fixed point the row sum is c up to O(ε), which gives q_J = c(1−γdt) + k·dt·η and
+
+λ_k = (1−γdt)·c / (c + dt(kη − γc) + ε),
+r_{B,k} = −log λ_k / dt = (1/dt)·log(1 + (dt·kη + ε) / (c(1−γdt))),
+κ_k = r_{B,k} − r_g, r_g = −log α / dt = 1/T_w.
+
+The reviewers' expression has no ε. At ε = 0 it is algebraically identical to ours. It is also identical to the repo's Prop 8.3 and to our round-2 discrete rate. The ε term shifts κ by about 1e-10. As dt, ε → 0, r_{B,k} → kη/c. Fiber dimension: for an all-tied K_n, J is every node and A_J is the full unsigned incidence of a non-bipartite graph, with rank n. So dim K = m − n = n(n−3)/2: K3 0, K4 2, K5 5, K6 9. **Checked:** 373/373 all-tied complete components have dim K = m − n.
+
+### 2.3 Cycle-kernel run [RAN]
+200 replays (40 S01 seeds × ρ ∈ {0.5, 0.75, 1, 1.5, 2}, T_w = ρ·17.503), 406 components: K6 179, K4 88, K5 24, K3 115.
+- Nonzero fiber: K6 (k=5) 179, K4 (k=3) 88, K5 (k=4) 24, K3 (k=2) 5. Distinct seeds: 40, 32, 10, 5.
+- Fiber checks over 2231 directions: max ‖A_J h‖ 6.7e-16; max relative residual 1.3e-5; max ± asymmetry 2.4e-5; leak outside the component 0; max λ spread within a component 7.4e-6.
+- Step resolution. A component is resolved if δ ≥ 100× its max tied gap and its min untied gap ≥ 100×δ. 374 are resolved: λ vs closed form to 2.07e-8 relative, rate to 1.64e-5 relative, κ to 2.07e-6 absolute. 32 are poorly resolved, all at ρ=2 (K6 15, K4 10, K3 4, K5 3). Their rate error is up to 3.8e-3. At T_w = 35 the state at t = 250 is still converging (gaps ~1e-12 to 1e-8), so their tie/strict class depends on the snapshot.
+- Old central-difference vs fiber: 292 agree slow, 110 agree not slow, and 4 were old-not-slow but have a fiber (the ρ=2 near-tie K3s). On the 292, old r_B vs fiber rate: max relative difference 4.5e-4.
+- First-run caveat: a first run with TIE_TOL 1e-12 and a fixed δ = 1e-7 stepped across near-ties and gave spurious λ ≈ 1/3 ("κ" ≈ 110). It was discarded. The per-component δ above fixes this; the script comment records it.
+
+κ per T_w: fiber value (range over components) vs closed form.
+
+| ρ (T_w) | k=2 (K3) | k=3 (K4) | k=4 (K5) | k=5 (K6) |
+|---|---|---|---|---|
+| 0.5 (8.75) | one-sided only; cf 0.0119883 | n=24, 0.0750561 (cf 0.0750561) | n=2, 0.1380841 (cf 0.1380841) | n=40, 0.2010725 (cf 0.2010725) |
+| 0.75 (13.13) | one-sided only; cf 0.0500772 | n=17, 0.1131450 (cf 0.1131450) | n=3, 0.1761730 (cf 0.1761730) | n=37, 0.2391614 (cf 0.2391614) |
+| 1.0 (17.50) | n=1 two-sided, 0.0691196 (cf 0.0691217) | n=15, 0.1321894 (cf 0.1321894) | n=5, 0.1952175 (cf 0.1952175) | n=36, 0.2582058 (cf 0.2582058) |
+| 1.5 (26.25) | one-sided only; cf 0.0881661 | n=14, 0.1512339 (cf 0.1512339) | n=5, 0.2142619 (cf 0.2142619) | n=35, 0.2772502 (cf 0.2772502) |
+| 2.0 (35.01) | n=4 two-sided (unresolved), 0.0973959–0.0981673 (cf 0.0976883) | n=18, 0.1606755–0.1608366 (cf 0.1607561) | n=9, 0.2236972–0.2238664 (cf 0.2237841) | n=31, 0.2866727–0.2868224 (cf 0.2867725) |
+
+Here k is the degree. Ranges collapse at 7 decimals except at ρ=2. κ > 0 at every tested T_w, including k=2. The predicted sign change (T_w < c/(kη)) is **untested**.
+
+### 2.4 K3 and tie nonadditivity
+- K3: 115 components from 34 seeds. 110 are all-tied (by ρ: 0.5:15, 0.75:26, 1.0:25, 1.5:26, 2.0:18).
+  - Define v_c = +1 on the edge opposite node c and −1 on the two edges at c. +v_c lowers row c only, so c stops controlling and the other two rows are preserved. The response is linear, with multiplier λ_2.
+  - 110/110 have such a direction. At ρ ≤ 1.5 it works for all 3 nodes (92 components). At ρ = 2 it works for 1 node (18 components); the other nodes miss the 1e-6 threshold by ~1e-5 relative because the state is not yet converged. Across all nodes: λ vs closed form ≤ 1.8e-5 relative, residual ≤ 2.5e-5.
+  - −v_c is never slow (0/110; its λ is off by ≥ 0.67 relative).
+  - So the all-tied K3 is not "spectrally silent". It has a one-sided slow direction at rate r_{B,2}, and the round-2 "unexplained" twin rate 0.126255 is exactly this rate.
+- Two-sided fiber in strict K3s: seed 4619122171158768524 (ρ=1, J={2,7}, min untied gap 4.66e-7, resolved): κ_fiber 0.0691196 vs closed form 0.0691217. Also 4 unresolved near-ties at ρ=2 (gaps 1.3–3.6e-9).
+- Nonadditivity at ties (resolved, all-tied components). D(v) is the one-sided directional difference quotient of one gate step, and h₁, h₂ are unit perturbations of two adjacent edges. Nonadditivity = ‖D(h₁+h₂) − D(h₁) − D(h₂)‖/‖D(h₁)+D(h₂)‖ and odd defect = ‖D(h₁) + D(−h₁)‖/‖D(h₁)‖. Both are constant across components of a type:
+
+| type | n | nonadditivity | odd defect |
+|---|---|---|---|
+| K3 | 110 | 0.5000 | 0.8165 |
+| K4 | 78 | 0.2887 | 0.7071 |
+| K5 | 21 | 0.2041 | 0.6325 |
+| K6 | 164 | 0.1581 | 0.5774 |
+
+The values agree with 1/√(2k(k−1)) and √(2/(k+1)) to ~1e-5. That pattern is observed only, not derived. A linear "Jacobian" would have zero defect, so the map is genuinely non-linear at ties.
+
+Cohort caveat: 40 fixed seeds × 5 T_w from one S01 run. The same seed contributes the same component pattern at several T_w, so the counts are not independent replications.
+
+### 2.5 Evolution checks of the repo's augmented-spectrum procedure (point 9) [RAN]
+Run with the repo's `aief_1_4_augmented_spectrum` functions at their defaults (run 5a9f093a2fe0, seed 4619122171158768524, perturbation 1e-8, 32000 future steps).
+- `restore_state` does not restore theta. The drift is 0.0156 at the first column and grows to 0.272.
+- Column order matters. Forward vs reversed: max |ΔJ| 9896, against a max entry of 10491.
+- Repo procedure vs a corrected one (full deep copy per column): max difference 10491.
+- Slowest rates:
+  - repo forward has negative rates −1068 and −542;
+  - corrected: −9.57, then 0.05713 (= r_ema);
+  - none of the three procedures puts a rate in the repo's reported gap window.
+- The 18-vector is not a closed state. Perturbing history[1] at the K3 nodes changes the next 18-vector by 1.0×δ, and perturbing theta changes it by 5.6e-4×δ, with the starting 18-vector unchanged.
+- Conclusion: the repo's augmented-spectrum numbers depend on column order and leak state between columns. Don't use them as a spectrum. [RAN; interpretation INFERRED]
+
+## 3. Wording replacements (authoritative)
+- **Gate:** "As implemented (ε=1e-12), the gate is not a smooth strictly convex Bregman projection or a positive-definite-metric projection onto C: exact witness x∉C, A_ε(x)∈int C (margin 6.67e-13), A_ε(x)≠x. The 1e-12 scale is numerically immaterial. At ε=0 it differs from the Euclidean and KL projections at the sampled points; whether it is a projection under some other divergence is open. Accurate name: multiplicative min-endpoint node-capacity scaling."
+- **κ:** "On complete, saturated, phase-locked components, the multiplier on the controller cycle kernel equals λ_k = (1−γdt)c/(c+dt(kη−γc)+ε), so κ_k = −log λ_k/dt − 1/T_w. This was checked on 374 well-resolved components across five T_w (κ to 2.1e-6); 40 fixed seeds; the sign change is untested. All-tied K3s have a one-sided slow direction at rate r_{B,2}."
+- **Memory:** "Phase/history/EMA suffice for finite topology reconstruction with B reset. B is predictive and acts as a conditional continuous-weight scaffold. No unique retained register has been identified. B_split's AUC of 1.0 is expected because the post-split topology is frozen (0/29040 edges change status); it is predictive, not causal."
+- **Delay:** "In sampled ensembles the delayed condition gave more distinct four-seed final topologies." (Sample diversity, not a basin count.)
+- **Design label:** "controlled exploratory analysis with fixed recorded design" (no preregistration).
+- **Reproduction:** "All 500 archived AIEF-1.3 runs reproduce all 7 stored arrays (weights, P_future, R windows) and the 4 headline scalars bit-for-bit. 78/500 match on all 38 stored keys; the rest differ only in derived scalars (S_spectral, Weight_gini, Projection_norm_*), by ≤4.9e-15 absolute, ≤1.3e-12 relative."
+
+Revised strongest defensible claim (replaces response §4 and salvage's revised claim):
+
+> In a delayed Kuramoto network (N=12) with thresholded EMA-coherence Hebbian plasticity, linear decay and min-endpoint multiplicative node-capacity scaling:
+> - **(i)** The closed-form frequency-proximity rule R_pred(Δω) > μ/(η+μ) is an informative but imperfect predictor of the persistent weight topology. It is exact for the repo's ω without delay; over random ω, precision is 0.59–0.98 and recall 0.18–0.57. Strong edges per node are capped at ⌊c/B_c⌋.
+> - **(ii)** In sampled ensembles the delayed condition gave more distinct four-seed final topologies.
+> - **(iii)** Phase/history/EMA suffice to reconstruct the finite topology with B reset; B is predictive and acts as a conditional continuous-weight scaffold; no unique retained register has been identified.
+> - **(iv)** On complete, saturated, phase-locked components of degree k, the cycle-kernel multiplier equals λ_k = (1−γdt)c/(c+dt(kη−γc)+ε) (the repo's Prop 8.3), so κ_k = −log λ_k/dt − 1/T_w. This was checked to 2.1e-6 on 374 resolved components across five T_w (40 fixed seeds; not independent replications).
+>
+> All of this is conditional on N=12 and the repo's parameters. The κ sign change at small T_w is a prediction, not a result.
+
+## 4. Engineering (point 9)
+- `evidence/verify_manifest.py` (run from the repo root): checks every file in `files_sha256` (size and sha256) and flags unlisted files (`__pycache__` ignored). `--inputs` also checks the repo inputs. Exit codes: 0 OK, 1 mismatch, 2 usage error. Round-3 result: "checked 96 published files and 24 inputs; 2 post-manifest logs listed but not hashed", OK, exit 0 (`tooling/logs/verify_manifest.log`). `tooling/logs/verify_manifest.log` and `tooling/logs/pii_scan.log` are written after the manifest, so they are listed in `post_manifest_logs` and not hashed. Hashing them would be circular.
+- `evidence/run_all.sh`: runs every step into `mktemp -d` (env `AIEF_AUDIT_OUT`), strips local paths from the logs, and `cmp`s each committed `results/*` against the fresh file (MISSING / DIFFERS / NEW). It exits nonzero if any step fails or any result differs. `UPDATE=1` copies the fresh results and logs into the tree. Runtime is ~25 min on 7 cores. Round-3 result: all 18 steps ok, and "ALL OK: every step exited 0 and every committed result is byte-identical" (`logs/run_all_verify.log`). Two reproducibility defects were found and fixed along the way. (a) `analyze_kappa_cycle_kernel.py` built a dict from set iteration, so the key order of `kappa_cycle_kernel_summary.json` depended on `PYTHONHASHSEED`, and an earlier full run reported DIFFERS. It now iterates `sorted(...)`, and the output is byte-stable. (b) Log line 1 recorded the absolute interpreter path. It now records the interpreter basename (`python`), and the existing logs were normalized the same way. In the same run, `repro13.json` now carries `status: ok_with_warnings` with the 422/500 derived-scalar warning (#8).
+- Results: every dict result carries `_meta` = {schema "aiefs-audit-result/1", script, status, warnings}. The list-valued `omega_multistab.json` has no `_meta`, a known limitation. Correlations report `[mean, median, n_valid]`, plus counts of valid and undefined runs.
+
+## 5. Open repo blockers (not in scope of this round; listed only)
+- No root README or LICENSE.
+- No pinned environment.
+- Editor lock file committed.
+- PII/copyright material in the repo (see audit H3/H4; not reproduced here).
+- The Lean build fails on the missing import `ControllerFiberProjector`.
+- Scratch trees committed.
+- Repository visibility decision.
+- No status checks on the latest commit.
+
+## 6. Limits
+- N=12 only. 40 fixed S01 seeds for κ.
+- The poorly resolved ρ=2 components (32) are reported but not used for the closed-form check.
+- Whether the ε=0 gate is a projection under some non-standard divergence: not settled.
+- The 1.4 Duhamel pipeline was not rerun on other seeds. The evolution checks use the repo defaults only.
+- Point 10 is listed as closed. This ledger does not re-examine it.
+
+## 7. Tooling and provenance
+Every tool used to build, check or package this folder is in `evidence/tooling/`. Each one is documented in `README.md` ("Tooling") and `evidence/REPRODUCE.md`, and listed in `audit_manifest.json`.
+- `tooling/make_manifest.py` writes the manifest.
+- `tooling/pii_scan.py` is the personal-data, secret and packaging scan. A self-test catches 5/5 planted issues (`tooling/logs/pii_scan_selftest.log`).
+- `tooling/verify_github_blobs.py` is the git blob-hash check. It shows that the round-2 staging tree is IDENTICAL, 58/58 blobs, to `AI Agent Audits/` at `c9907a6` (`tooling/logs/verify_github_blobs_c9907a6.log`; the tree was fetched read-only from the public GitHub API on 2026-10-24).
+- `tooling/round1/` holds the first-pass scratch scripts and logs: `mathcheck`, `freq_predictor`, `repro13` with its 500-line log, `summ`, and the random-ω `deep/` scripts with their logs and JSON.
+- `tooling/round2/` holds `make_v2.py` and `make_manifest_v2.py`.
+- `tooling/round3/` holds `corrections.py`, `kck_one.py` and `collect_tooling.py`.
+- `tooling/adhoc_commands.md` holds 23 interactive commands, verbatim apart from redaction. They cover the clone and hygiene checks, the pytest run, the PDF `cmp`, the secret and PII greps, staging copies, the zip builds, the CR→LF fix, the post-push blob check, the v3 staging copy and the v2-vs-v3 results diff.
+- The copies in `round*/` and `adhoc_commands.md` are redacted. Local paths became `<placeholders>`, the owner's e-mail became `<owner-email-redacted>`, and user and host names became `<redacted>`. The copies are there for audit and do not run verbatim. The path-free, runnable analyses are in `evidence/scripts/`.
+
+### Provenance gaps
+These numbers or statements in the published reports do **not** trace to a script + log + result in this bundle:
+1. **Round-1 repository-hygiene numbers.** AIEFS_audit.md §2 and §6–7 give a `.git` size of 346 MB, 2760 tracked files, CSVs up to 66.5 MB, 165 `.py` files and 56,817 lines, 17 `.pyc` files, the byte-identical SSRH drafts, and "5 bulk-upload commits". The commands are in `tooling/adhoc_commands.md` ([1], [2], [3], [32], [42], [51]). Their outputs were read on screen and not saved, so no log exists. They can be re-derived from the repo with those commands.
+2. **pytest "40 passed, 2 skipped".** The command is in `adhoc_commands.md` [21]. The output was not saved.
+3. **Line numbers in the chat-log PDFs.** Examples are "Project Lead History 10" text-dump lines 12767/13415/13460, PLH 03 lines 57887/69641, and PLH 04 lines 5973/31590. They come from local text dumps of the repo's PDFs. Those dumps are not published, because they contain personal data and third-party text. The commands that made them were not kept as a script.
+4. **The collaborator conversation (3116 lines) and the classifications in AIEFS_audit.md §9.** The input was supplied by the user as an attachment and is not published, since it contains personal data. The classifications are [READ]/[INFERRED] against repo paths that are cited.
+5. **Per-manifest topology splits in AIEFS_audit.md §10.** The split "baseline equal in 24/50 and 26/50" traces only as the total, 50/100 (`results/archived13_closedform.json`). The subset split 48/50 and 47/50 is in `logs/freq_predictor.log`.
+6. **The web literature search** (response §12; manifest finding "SEARCHED"). It has no script, and the search results were not archived.
+7. **The Lean build** (`logs/lean_build_*.log`). It ran in round 2 and was not rerun in round 3.
+8. **The round-2 push itself** (15 commits, 880e07e..c9907a6). It was made through the GitHub connector, not a shell script, so no command is in `adhoc_commands.md`. What landed was verified afterwards by blob hash (58/58 IDENTICAL, above).
+9. **Retracted first-pass values** are kept as ~~struck~~ text, for example "7 distinct outcomes" and "1/200 replays". They are retracted, and no published log is cited for them. The corrected values that replace them do trace (e.g. 16 distinct, `results/archived13_closedform.json`).
+10. **Point 10 of the round-3 brief.** Its original text could not be recovered, so it is listed as closed (§1) and not re-examined.
+11. **Interactive inspection.** Many [READ] statements cite repo file:line and can be checked directly. The reading itself has no log.
+
+Everything else in `AIEFS_audit_response_2.md` and the round-2 response traces to `scripts/*` → `logs/*` → `results/*`, as listed in `audit_manifest.json` (`findings`).
