@@ -1,4 +1,4 @@
-== mathcheck: python AI Agent Audits/evidence/scripts/mathcheck.py (cwd=repo root)
+== mathcheck: python AI Agent Audits/evidence/scripts/mathcheck.py 
 N 12 cap 0.6333333333333333
 witness: input rowsum 0.9500000000000002 output rowsum 0.6333333333326666 margin 6.666889262874065e-13 min edge 0.057575757575696954 output!=input True
   rowsum=cap*(1+0.001): scale applied 0.9990009989994234
