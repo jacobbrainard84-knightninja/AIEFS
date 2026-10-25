@@ -1,0 +1,56 @@
+# Proposed path in the repo: .github/workflows/lean.yml   (REPO ROOT, not lean/AIEFProofs/.github)
+# GitHub only runs workflows from the repository root .github/workflows/, so the template
+# workflows under lean/AIEFProofs/.github/workflows/ have never run.
+name: Lean proof check
+
+on:
+  push:
+    paths:
+      - "lean/**"
+      - ".github/workflows/lean.yml"
+  pull_request:
+    paths:
+      - "lean/**"
+      - ".github/workflows/lean.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read            # read-only; this workflow never pushes, tags, or opens PRs
+
+concurrency:
+  group: lean-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: lean/AIEFProofs
+    steps:
+      # Actions pinned to full commit SHAs (tag in comment) so the run is auditable/reproducible.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: leanprover/lean-action@24581d74d674803a25a81b10b059c5c0cdd344c6 # v1.6.2
+        with:
+          lake-package-directory: lean/AIEFProofs
+          use-mathlib-cache: true          # lake exe cache get
+          build: true                      # lake build (fails on any error, incl. bad imports)
+          test: false
+          lint: false
+          axiom-audit: true                # independent axiom audit (leanprover-community/axiom-audit)
+          axiom-audit-allow: propext,Classical.choice,Quot.sound
+          axiom-audit-root: AIEFProofs
+          leanchecker: false               # set true to re-check the environment with leanchecker (slow with Mathlib)
+      # Same script the owner runs locally; cache/build are already warm, so this is fast.
+      - name: check_lean.sh (toolchain pin, imports/orphans, markers, axioms)
+        run: |
+          chmod +x ./check_lean.sh
+          SKIP_CACHE=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" ./check_lean.sh
+      - name: Upload check logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lean-check-logs
+          path: lean-check-logs/
+          retention-days: 30
