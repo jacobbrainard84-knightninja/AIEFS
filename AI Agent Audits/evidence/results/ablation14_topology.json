@@ -1,4 +1,10 @@
 {
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "ablation14_topology.py",
+  "status": "ok",
+  "warnings": []
+ },
  "n_seeds": 40,
  "n_pred_edges": 22,
  "table": {

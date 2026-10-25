@@ -1,13 +1,9 @@
-== repro13: python AI Agent Audits/evidence/scripts/repro13.py
-AI Agent Audits/evidence/scripts/repro13.py:27: RuntimeWarning: Mean of empty slice
-  summ[c] = dict(n=len(rr), **{k: float(np.nanmean([r['scalars'][k][0] for r in rr])) for k in ['D_B', 'Corr_physical', 'Total_edge_weight', 'Effective_edges']})
-runs 500 bit-exact 500
-baseline {'n': 100, 'D_B': 0.3059090909090909, 'Corr_physical': 0.9952171167679806, 'Total_edge_weight': 3.638499999933411, 'Effective_edges': 14.596223638985892}
-shuffle_R {'n': 100, 'D_B': 0.0, 'Corr_physical': nan, 'Total_edge_weight': 0.06033464454055355, 'Effective_edges': 30.061691955612595}
-no_delay {'n': 100, 'D_B': 0.3333333333333334, 'Corr_physical': 0.9985447393332136, 'Total_edge_weight': 3.7999999999939837, 'Effective_edges': 15.882352941176409}
-no_mu {'n': 100, 'D_B': 0.034848484848484844, 'Corr_physical': 0.24538749885866318, 'Total_edge_weight': 3.7811727094649954, 'Effective_edges': 34.35940167564288}
-no_gap {'n': 100, 'D_B': 0.7268181818181819, 'Corr_physical': 0.9719782540306436, 'Total_edge_weight': 127.85765164105656, 'Effective_edges': 47.9699825720864}
-
-real	4m45.390s
-user	31m55.639s
-sys	0m0.548s
+== repro13: python AI Agent Audits/evidence/scripts/repro13.py 
+runs 500 keys per npz [38] all-keys bit-exact 78 matrices+4-scalars bit-exact 500
+baseline {'n': 100, 'D_B': 0.3059090909090909, 'Corr_physical': 0.9952171167679806, 'Total_edge_weight': 3.638499999933411, 'Effective_edges': 14.596223638985892, 'n_finite': {'D_B': 100, 'Corr_physical': 100, 'Total_edge_weight': 100, 'Effective_edges': 100}}
+shuffle_R {'n': 100, 'D_B': 0.0, 'Corr_physical': nan, 'Total_edge_weight': 0.06033464454055355, 'Effective_edges': 30.061691955612595, 'n_finite': {'D_B': 100, 'Corr_physical': 0, 'Total_edge_weight': 100, 'Effective_edges': 100}}
+no_delay {'n': 100, 'D_B': 0.3333333333333334, 'Corr_physical': 0.9985447393332136, 'Total_edge_weight': 3.7999999999939837, 'Effective_edges': 15.882352941176409, 'n_finite': {'D_B': 100, 'Corr_physical': 100, 'Total_edge_weight': 100, 'Effective_edges': 100}}
+no_mu {'n': 100, 'D_B': 0.034848484848484844, 'Corr_physical': 0.24538749885866318, 'Total_edge_weight': 3.7811727094649954, 'Effective_edges': 34.35940167564288, 'n_finite': {'D_B': 100, 'Corr_physical': 100, 'Total_edge_weight': 100, 'Effective_edges': 100}}
+no_gap {'n': 100, 'D_B': 0.7268181818181819, 'Corr_physical': 0.9719782540306436, 'Total_edge_weight': 127.85765164105656, 'Effective_edges': 47.9699825720864, 'n_finite': {'D_B': 100, 'Corr_physical': 49, 'Total_edge_weight': 100, 'Effective_edges': 100}}
+mismatch magnitudes {'S_spectral': {'n_runs': 385, 'max_abs_diff': 4.884981308350689e-15, 'max_rel_diff': 2.2384274210234776e-15}, 'Projection_norm_mean_active': {'n_runs': 26, 'max_abs_diff': 1.3010426069826053e-18, 'max_rel_diff': 4.481259875780541e-16}, 'Weight_gini': {'n_runs': 142, 'max_abs_diff': 6.661338147750939e-16, 'max_rel_diff': 1.2908390819567237e-12}, 'Projection_norm_max': {'n_runs': 33, 'max_abs_diff': 4.336808689942018e-19, 'max_rel_diff': 1.8862077937235848e-16}}
+exit 0
