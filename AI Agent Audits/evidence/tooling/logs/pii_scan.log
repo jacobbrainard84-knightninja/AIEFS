@@ -1,11 +1,11 @@
-$ python "AI Agent Audits/evidence/tooling/pii_scan.py"   (2026-10-25)
-scanned 145 files, 4629392 bytes
+$ python "AI Agent Audits/evidence/tooling/pii_scan.py"   (2026-10-28)
+scanned 148 files, 4645763 bytes
 self-pattern lines not scanned for paths/emails: evidence/tooling/pii_scan.py:20, evidence/tooling/pii_scan.py:4, evidence/tooling/pii_scan.py:43, evidence/tooling/pii_scan.py:5
 CLEAN
 exit 0
 
-$ python "AI Agent Audits/evidence/tooling/pii_scan.py" --private <local literal file, not published>   (2026-10-25)
-scanned 145 files, 4629734 bytes, 5 private literals
+$ python "AI Agent Audits/evidence/tooling/pii_scan.py" --private <local literal file, not published>   (2026-10-28)
+scanned 148 files, 4645763 bytes, 5 private literals
 self-pattern lines not scanned for paths/emails: evidence/tooling/pii_scan.py:20, evidence/tooling/pii_scan.py:4, evidence/tooling/pii_scan.py:43, evidence/tooling/pii_scan.py:5
 CLEAN
 exit 0

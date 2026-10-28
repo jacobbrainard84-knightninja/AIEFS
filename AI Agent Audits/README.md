@@ -11,7 +11,7 @@ This folder holds independent, read-only audits of this repository, along with t
 | `AIEFS_audit_response_3.md` | **Current.** This is the authoritative ledger | 2026-10-25 | Round-4 ruling: 374-census split, exact vs conditional rate law and finite-ε fixed point, K3 zero lineality and one-sided rays, derived tie patterns, P_future check, Bregman domain, publication commits, PII scope, quarantine of the 18-coordinate spectrum, Lean (Part B) |
 | `AIEFS_audit_response_2.md` | **Superseded where marked** by `AIEFS_audit_response_3.md` (`[Correction 2026-10-25, response-3 #N]` notes); was the round-3 ledger | 2026-10-24; corrected 2026-10-25 | Round-3 ruling on two reviews of the published tree (commit `c9907a6`): gate no-go, cycle-kernel κ and K3 census, matched-phase provenance, memory and delay wording, held-out target label, design labels, full-key reproduction, engineering. Each point gets concede / partly concede / dispute, with exact quotes, the derivation, the evidence, and the fix |
 | `AIEFS_audit_response.md` | **Partly superseded** by `AIEFS_audit_response_2.md`; corrected in place with `[Correction 2026-10-24, response-2 #N]` notes | 2026-10-23; corrected 2026-10-24 | Point-by-point ruling on a collaborator's 14-point critique of the two reports. Each point gets concede / partly concede / hold, with exact quotes from our text and the evidence. Also covers the critique's own overreach, revised conclusions, and a revised strongest claim |
-| `evidence/` | Current | 2026-10-23; updated 2026-10-24 | Scripts, logs, results, manifest, environment, and reproduction steps |
+| `evidence/` | Current | 2026-10-23; updated 2026-10-24 and 2026-10-28 | Scripts, logs, results, manifest, environment, and reproduction steps; `evidence/reproductions/` holds standalone reproduction records |
 
 Where the documents disagree, `AIEFS_audit_response_3.md` takes precedence, then `AIEFS_audit_response_2.md`, then `AIEFS_audit_response.md`.
 
@@ -38,6 +38,8 @@ evidence/
   logs/                stdout of each script; absolute local paths have been rewritten (see manifest)
   results/             JSON / CSV outputs
   tooling/             the packaging and provenance tooling (see "Tooling" below and REPRODUCE.md)
+  reproductions/       standalone reproduction records: a note, the exact compare script and its output log
+                       (b2a95dfbfbe3_REPRODUCTION.md: the re-run in a Project Histories zip matches runs/5a9f093a2fe0)
 ```
 
 ## Tooling
@@ -62,7 +64,7 @@ python "AI Agent Audits/evidence/tooling/pii_scan.py"           # personal-data 
 bash "AI Agent Audits/evidence/run_all.sh"                      # rerun everything into a temp dir and diff against results/
 ```
 
-For individual steps, see `evidence/REPRODUCE.md`. Every script is deterministic with fixed seeds. The delay-paired experiment reproduced byte-identically. The 500-run AIEF-1.3 replay is bit-exact on all 7 stored arrays and the 4 headline scalars; 78/500 runs are bit-exact on all 38 stored keys, and the rest differ only in derived scalars by ≤1.3e-12 relative (`AIEFS_audit_response_2.md`, #8).
+For individual steps, see `evidence/REPRODUCE.md`. Reproduction records added later live in `evidence/reproductions/`, each with its own rerun command. For example, `python "AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py"` checks that run `b2a95dfbfbe3` (stored in the `Project Histories` folder, in zip `workspace-019ff425-….zip`) matches `runs/5a9f093a2fe0` on all 40 seeds, to a maximum absolute difference of 6.7e-16 (2026-10-28). Every script is deterministic with fixed seeds. The delay-paired experiment reproduced byte-identically. The 500-run AIEF-1.3 replay is bit-exact on all 7 stored arrays and the 4 headline scalars; 78/500 runs are bit-exact on all 38 stored keys, and the rest differ only in derived scalars by ≤1.3e-12 relative (`AIEFS_audit_response_2.md`, #8).
 
 ## Conventions
 
