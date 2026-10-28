@@ -168,6 +168,8 @@ Effective_edges   ~14.6
 Total edge weight ~3.64
 ```
 
+Scope note (audit correction 2026-10-23): Corr_physical ~0.995 holds only for the repo's hand-picked frequencies (omega). With random frequencies it drops to about 0.71 (uniform) and 0.59-0.63 (clustered). It is not tautological, but it mostly measures persistence. See `AI Agent Audits/AIEFS_salvage.md` (section 3.1, row 2) and `AI Agent Audits/AIEFS_audit_response.md` (point 2). Do not cite 0.995 as a general result.
+
 Threshold topology became completely frozen during the future evaluation window. Closure analysis later established that every baseline persistence value was exactly binary.
 
 ### `shuffle_R`
