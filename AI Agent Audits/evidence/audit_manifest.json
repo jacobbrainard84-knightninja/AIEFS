@@ -439,6 +439,20 @@
    "type": "n/a",
    "basis": "INFERRED",
    "summary": "judgments on collaborator overreach and priority ordering are reasoning, not runs"
+  },
+  {
+   "point": [
+    "6b49a7b review",
+    "reproduction b2a95dfbfbe3"
+   ],
+   "command": "python \"AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py\"",
+   "outputs": [
+    "reproductions/compare_b2a95dfbfbe3.log",
+    "reproductions/b2a95dfbfbe3_REPRODUCTION.md"
+   ],
+   "type": "reproduction check",
+   "basis": "RAN",
+   "summary": "2026-10-28, repo at 6b49a7b: run b2a95dfbfbe3 inside the Project Histories zip workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip (sha256 281bf33b...) reproduces runs/5a9f093a2fe0 on 40/40 seeds; model/protocol/randomization identical; max abs diff 6.7e-16 (seeds and scalar CSV), 5.6e-16 (branch diagnostics); source files differ only in comments/blank lines plus one equivalent tuple-unpacking rewrite"
   }
  ],
  "files_sha256": {
@@ -1009,6 +1023,18 @@
   "licensing_inventory/scripts/make_report.py": {
    "bytes": 14445,
    "sha256": "c78ddb39d820a3708fa79ba18d21b224018afa900ed95544c72b6d9ac722be3e"
+  },
+  "evidence/reproductions/b2a95dfbfbe3_REPRODUCTION.md": {
+   "bytes": 4877,
+   "sha256": "54aaf2f0874a35bb0d0e1703d0d918aeeda2b6627c3cded9c7db3eae58b532de"
+  },
+  "evidence/reproductions/compare_b2a95dfbfbe3.py": {
+   "bytes": 6562,
+   "sha256": "66ee634b80717dce106ff325d2712834c3631a7e7ea044bc06f0d7169682994f"
+  },
+  "evidence/reproductions/compare_b2a95dfbfbe3.log": {
+   "bytes": 2147,
+   "sha256": "a707b4a7ed9f669e559e1b05c6781b7ff9cdeb094b60b20ae0e86aa5c9a05380"
   }
  },
  "post_manifest_logs": [
@@ -1022,6 +1048,7 @@
   "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it.",
   "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23, 2026-10-24 and 2026-10-25); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
   "evidence/tooling/round*/ and adhoc_commands.md are redacted copies: local paths -> <placeholders>, the owner's e-mail -> <owner-email-redacted>, user/host-name literals -> <redacted>. The literal list is a local file that is not published.",
-  "PII in the repository's own PDFs is referenced by path only and not reproduced."
+  "PII in the repository's own PDFs is referenced by path only and not reproduced.",
+  "2026-10-28: added evidence/reproductions/ (note, compare script, log) and updated README.md; the compare script prints no absolute paths and no platform strings. inputs_sha256 and earlier findings are unchanged (still the e47bad1 audit inputs)."
  ]
 }
