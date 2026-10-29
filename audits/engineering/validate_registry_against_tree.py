@@ -112,7 +112,7 @@ def main():
         summary[name] = {"rows": len(rows), "flags": dict(sorted(cnt.items()))}
         if a.write:
             with path.open("w", encoding="utf-8", newline="") as f:
-                w = csv.DictWriter(f, fieldnames=fields, lineterminator="\r\n")
+                w = csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
                 w.writeheader(); w.writerows(rows)
     inv_paths = {r["path"] for r in csv.DictReader((ROOT / "registry" / "artifacts.csv").open(encoding="utf-8")) if r["container"] == "worktree"}
     not_inv = sorted(p for p in head if p not in inv_paths)
