@@ -22,16 +22,48 @@ Flags (relocation_map.csv, which is per path or directory):
   PRESENT_SAME_COUNT / PRESENT_COUNT_CHANGED / MISSING_DELETED_ON_MAIN / MISSING_OTHER
 
 Usage:  python3 audits/engineering/validate_registry_against_tree.py [--write] [--base e47bad1]
-Without --write it only prints counts. With --write it rewrites the two CSVs (CRLF, same column order + 2 columns).
+                                                                  [--edited-since REV]
+Without --write it only prints counts. With --write it rewrites the two CSVs (LF line endings, UTF-8,
+same column order + 2 columns).
+
+Merge-prep edits (the PRESENT_CHANGED_SHA note): by default the files edited by merge prep after
+the merge are the hard-coded EDITED_BY_MERGE_PREP paths below. They were originally computed with
+`--edited-since ce8cced`, a merge commit that exists only in an unpublished local repository, so
+that default crashed on every fresh clone. `--edited-since REV` still overrides the set with
+`git diff --name-only REV HEAD`; REV must exist in the clone, otherwise the script exits 2 with a
+message. Run with no options on a fresh clone of 9d46d9b, --write leaves both CSVs byte-identical.
 """
 import argparse, collections, csv, hashlib, io, json, subprocess, sys, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 COL, NOTE = "tree_check_2026_10_28", "tree_check_note"
+BASE_DEFAULT = "e47bad1"
+# Inventoried files edited by merge prep after the merge (= `git diff --name-only ce8cced HEAD`
+# restricted to PRESENT_CHANGED_SHA rows; ART-0744 and ART-0746, ERRATA E7). Frozen snapshot as of
+# 9d46d9b: a later edit to another PRESENT_CHANGED_SHA row is noted "changed on main or in the merge".
+EDITED_BY_MERGE_PREP = (
+    "lean/AIEFProofs/AIEFProofs/Basic.lean",
+    "lean/AIEFProofs/AIEFProofs/Smoke.lean",
+)
 
 def git(*a):
     return subprocess.run(["git", *a], cwd=ROOT, check=True, capture_output=True).stdout
+
+def require_commit(rev, option, given, default=None):
+    r = subprocess.run(["git", "cat-file", "-e", f"{rev}^{{commit}}"], cwd=ROOT, capture_output=True)
+    if r.returncode != 0:
+        shallow = git("rev-parse", "--is-shallow-repository").decode().strip() == "true"
+        fetch = "fetch full history (git fetch --unshallow; this is a shallow clone)" if shallow else "fetch it"
+        if option == "--edited-since":
+            alt = "or omit --edited-since to use the built-in default list"
+        elif given and rev != default:
+            alt = f"or omit --base to use the default {default}"
+        else:
+            alt = f"or pass --base with a commit that exists ({rev} is the default --base)"
+        sys.stderr.write(f"error: {option} {rev}: no such commit in this clone (git cat-file -e failed); "
+                         f"{fetch}, {alt}.\n")
+        sys.exit(2)
 
 def tracked(rev):
     return [p for p in git("ls-tree", "-r", "--name-only", "-z", rev).decode().split("\0") if p]
@@ -46,14 +78,26 @@ def sha_file(p):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
-    ap.add_argument("--base", default="e47bad1", help="merge base used by the arena inventory")
-    ap.add_argument("--edited-since", default="ce8cced", help="merge commit; files changed after it are noted as merge-prep edits")
+    ap.add_argument("--base", default=None, metavar="REV",
+                    help=f"merge base used by the arena inventory (default {BASE_DEFAULT})")
+    ap.add_argument("--edited-since", default=None, metavar="REV",
+                    help="optional merge commit; files changed after it are noted as merge-prep edits "
+                         "(default: the built-in EDITED_BY_MERGE_PREP list)")
     a = ap.parse_args()
     if git("status", "--porcelain", "--untracked-files=no").strip():
         sys.exit("working tree has uncommitted changes to tracked files; commit or stash first")
+    base_given = a.base is not None
+    if not base_given:
+        a.base = BASE_DEFAULT
+    require_commit(a.base, "--base", given=base_given, default=BASE_DEFAULT)
+    if a.edited_since is not None:
+        require_commit(a.edited_since, "--edited-since", given=True)
     head = tracked("HEAD"); head_set = set(head)
     base_set = set(tracked(a.base))
-    edited = set(p for p in git("diff", "--name-only", "-z", a.edited_since, "HEAD").decode().split("\0") if p)
+    if a.edited_since is None:
+        edited = set(EDITED_BY_MERGE_PREP)
+    else:
+        edited = set(p for p in git("diff", "--name-only", "-z", a.edited_since, "HEAD").decode().split("\0") if p)
     sha = {p: sha_file(p) for p in head}
     by_sha = collections.defaultdict(list)
     for p, h in sha.items():

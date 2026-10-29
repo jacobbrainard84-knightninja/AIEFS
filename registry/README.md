@@ -11,6 +11,8 @@ python3 audits/engineering/verify_inventory.py
 > **2026-10-28 (local merge-prep into `main`, pending auditor review).** On the merged tree, `verify_inventory.py`
 > fails at check [1/5]. It conserves the file list of `e47bad1`, and `main` has since deleted 52 inventoried files.
 > Use `python3 audits/engineering/validate_registry_against_tree.py` instead (add `--write` to refresh the flags).
+> It runs on a fresh clone with no options; it needs the `--base` commit (`e47bad1`), so fetch full history
+> (`git fetch --unshallow`) in a shallow clone. `--edited-since REV` is optional and must name a commit present in the clone.
 > It records each row's current state in two appended columns, `tree_check_2026_10_28` and `tree_check_note`.
 > The controlled-vocabulary columns were checked separately and are still valid. Audit verdicts were added as
 > **new columns**, so existing `artifact_status` values stay inside the vocabulary. Status moves made per the audit
