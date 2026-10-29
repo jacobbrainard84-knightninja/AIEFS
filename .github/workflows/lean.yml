@@ -21,10 +21,12 @@ on:
     paths:
       - "lean/**"
       - ".github/workflows/lean.yml"
+      - "tools/ci/lean_presence.sh"
   pull_request:
     paths:
       - "lean/**"
       - ".github/workflows/lean.yml"
+      - "tools/ci/lean_presence.sh"
   workflow_dispatch:
 
 permissions:
@@ -58,8 +60,10 @@ jobs:
         env:
           REQUIRED: ${{ matrix.required }}
           SCRIPT: ${{ matrix.script }}
-        # Skips only when the project directory is absent (and required: false); a present directory
-        # without its lakefile or check script is an error. Tested by tools/ci/tests/test_lean_presence.py.
+        # Skips only when nothing at all exists at PROJECT_DIR (and required: false). A file or symlink
+        # there, or a directory whose lakefile or check script is missing or empty, is an error. Keep
+        # this run line, the if: conditions below and the absence of continue-on-error exactly as
+        # they are: tools/ci/tests/test_lean_presence.py asserts them.
         run: bash tools/ci/lean_presence.sh "$PROJECT_DIR" "$SCRIPT" "$REQUIRED"
       - uses: leanprover/lean-action@24581d74d674803a25a81b10b059c5c0cdd344c6 # v1.6.2
         if: steps.present.outputs.present == 'true'

@@ -7,12 +7,15 @@
 #   REQUIRED      "true" or "false"
 # Writes present=true|false to $GITHUB_OUTPUT (stdout if unset) and notes to $GITHUB_STEP_SUMMARY.
 #
-#   directory missing, REQUIRED=false             -> ::warning::, present=false, exit 0 (skip)
-#   directory missing, REQUIRED=true              -> ::error::, exit 1
-#   directory present, lakefile + script present  -> present=true, exit 0
-#   directory present, lakefile or script missing -> ::error::, exit 1 (never a silent skip:
-#                                                    deleting/renaming the check cannot disable it)
-# A lakefile is lakefile.toml or lakefile.lean. Run from the repository root.
+#   nothing at PROJECT_DIR, REQUIRED=false       -> ::warning::, present=false, exit 0 (skip)
+#   nothing at PROJECT_DIR, REQUIRED=true        -> ::error::, exit 1
+#   PROJECT_DIR is a file or a symlink (even a dangling one or one to a directory) -> ::error::, exit 1
+#   directory with non-empty lakefile + non-empty script -> present=true, exit 0
+#   directory with a lakefile or script missing, empty or not a regular file -> ::error::, exit 1
+#                                                   (never a silent skip: deleting, renaming or
+#                                                   emptying the check cannot disable it)
+# A lakefile is lakefile.toml or lakefile.lean; any that is present must be non-empty.
+# Only present=true and present=false are ever emitted. Run from the repository root.
 set -euo pipefail
 
 if [ "$#" -ne 3 ]; then
@@ -28,7 +31,8 @@ note() {  # job summary line (Actions only)
   if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then echo "$1" >> "$GITHUB_STEP_SUMMARY"; fi
 }
 
-if [ ! -d "$dir" ]; then
+# Skip only when NOTHING exists at the path (not even a dangling symlink).
+if [ ! -e "$dir" ] && [ ! -L "$dir" ]; then
   if [ "$required" = "true" ]; then
     echo "::error::$dir is missing but required"
     exit 1
@@ -38,13 +42,32 @@ if [ ! -d "$dir" ]; then
   note "SKIPPED: $dir is not on this branch (required: false)"
   exit 0
 fi
+# Something exists: it must be a real directory (a symlink, even to a directory, or a plain file is an error).
+if [ -L "$dir" ] || [ ! -d "$dir" ]; then
+  echo "::error::$dir exists but is not a plain directory (symlink or file); the Lean check cannot be skipped"
+  exit 1
+fi
 
 missing=()
-if [ ! -f "$dir/lakefile.toml" ] && [ ! -f "$dir/lakefile.lean" ]; then
+# Lakefile: at least one of lakefile.toml / lakefile.lean, and every one present must be a non-empty file.
+have_lakefile=0
+for lf in lakefile.toml lakefile.lean; do
+  if [ -e "$dir/$lf" ] || [ -L "$dir/$lf" ]; then
+    if [ -f "$dir/$lf" ] && [ -s "$dir/$lf" ]; then
+      have_lakefile=1
+    else
+      missing+=("a non-empty $lf (it is empty or not a regular file)")
+    fi
+  fi
+done
+if [ "$have_lakefile" -eq 0 ] && [ "${#missing[@]}" -eq 0 ]; then
   missing+=("lakefile.toml or lakefile.lean")
 fi
+# Check script: must be a non-empty regular file (a 0-byte script would "pass" by doing nothing).
 if [ ! -f "$dir/$script" ]; then
   missing+=("$script")
+elif [ ! -s "$dir/$script" ]; then
+  missing+=("a non-empty $script (it is 0 bytes)")
 fi
 if [ "${#missing[@]}" -gt 0 ]; then
   joined=$(printf '%s, ' "${missing[@]}")
