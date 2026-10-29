@@ -18,6 +18,9 @@ Second pass 2026-10-28 (MERGE_CHECK.md required + minor fixes, owner SSRH correc
   * artifact_status / evidence_scope still stay inside the verify_inventory.py vocabulary; where the audited
     label has no vocabulary value (e.g. 'Quarantined', 'controlled exploratory analysis with fixed recorded
     design', 'Speculative / untested origin hypothesis') the label is in audited_status and the row note says so.
+Line endings (2026-10-28, work/post-push-1): both outputs are written with LF ("\n"), matching the
+branch after the upload converted registry CSVs to LF. Neither output is hash-pinned. The input
+LINEAGE_IN is pinned (CRLF bytes, ART-2845) and is only read, never written.
 Audit file abbreviations used in audit_source (all under "AI Agent Audits/"):
   audit  = AIEFS_audit.md            salvage = AIEFS_salvage.md
   resp1  = AIEFS_audit_response.md   resp2   = AIEFS_audit_response_2.md
@@ -72,7 +75,8 @@ EXISTING = {
    "on 2026-10-28 (MERGE_CHECK Q2); the run outputs themselves stay frozen. REPRODUCING.md §5 re-ran the v4 analysis: hashes match."),
  "IMPL-MODULAR-01": (None, "Supported (implementation identity; not re-tested by the audit)",
    "not adjudicated by the audits; resp2 Provenance gaps item 2 (line 146): the round-1 pytest output was not saved",
-   "Researcher 001 re-ran tests_modular on 2026-10-28: 41 passed, 1 skipped (Python 3.13.5, numpy 2.5.1, scipy 1.18.1, pandas 3.1.0). "
+   "Researcher 001 re-ran tests_modular on 2026-10-28 with AIEF_RUN_SLOW_TESTS=1 and the repository root on PYTHONPATH: 41 passed, 1 skipped "
+   "(default run: 40 passed, 2 skipped; see AUD-MODULAR-ORACLE) (Python 3.13.5, numpy 2.5.1, scipy 1.18.1, pandas 3.1.0). "
    "That does not by itself re-test the 344-array max_abs_diff=0 identity. 2026-10-28: the personal device name in the arena "
    "statement/caveat was replaced by 'a second Linux host (glibc 2.40)' (privacy; see PRIVACY_SCRUB_LIST.md P5)."),
  "LEAN-CF-01": (None, "Supported (audit-verified; trivial linear algebra, scope-limited)",
@@ -277,6 +281,109 @@ NEW = [
   "After the audit run, Smoke.lean (narrow imports instead of 'import Mathlib') and Basic.lean (header only) were changed and "
   "AIEF_LEAN_SOURCE_SHA256SUMS.txt updated (ERRATA E7). Re-run after that change: cached build by Auditor Seat 002 at 886daf6: 7/7 PASS, 115 declarations, 3 allowed axioms, 0 warnings, 1,591 build jobs (earlier cached run at 11de659: PASS, 12 warnings, all in Smoke.lean)."),
 
+ # ---- Post-push review items, 2026-10-28 (branch work/post-push-1; local, not pushed, not audited) ----
+ # These are NOT audit-round verdicts. Findings use audited_status 'Finite numerical observation' (not audited) or 'Supported' (audit evidence)
+ # at the stated scope; AUD-TIMESTEP and AUD-B-SCAFFOLD are OPEN ITEMS ('Not established'), not findings
+ # against existing claims.
+ ("AUD-V4-HELDEVENT", "AIEF_1_4_TWINDOW_SENSITIVITY",
+  "Blocker for citing Analysis v4 held-event rows at exact-duration boundaries (the fixed_physical_17p5 held events): "
+  "_held_index (AIEF_1_4_Twindow_sensitivity_analysis_v4.py:555) "
+  "uses searchsorted(times, times[index] + duration, side='left'). Floating-point rounding can put times[index] + duration "
+  "just above the saved sample that is exactly `duration` later, so an event held exactly the required duration is rejected. "
+  "On a synthetic indicator on v4's own saved grid (spacing 0.5), 32 of the 605 valid start positions held exactly 17.5 are missed "
+  "(first: t = 16.01 to 33.51, where v4 effectively requires 18.0); misses also occur on np.arange(0, T, dt) grids with dt = 0.01, 0.05, 0.1.",
+  "Supported", "Finite numerical observation",
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py;"
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py;"
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests/test_v4_1_held_event.py",
+  "Synthetic indicator series only. Whether any saved v4 output row changes was NOT checked: the v4.1 candidate "
+  "(tolerance 1e-6 x grid step on the end check) is unaudited and has not been run on real trajectories. "
+  "Only grid-multiple hold durations (fixed_physical 17.5) can be hit; the T_window-nominal holds (17.5029 x rho) are not grid multiples, "
+  "so they and the non-held (first-crossing / sustained) estimands are not affected by this defect. 605 = every start whose 17.5 hold ends "
+  "on or before the last saved sample; the last start is held correctly by v4 (the test covers it).",
+  "(new)", "Finite numerical observation (post-push review, synthetic test; not audited)",
+  "not from audit rounds 1-4; post-push review 2026-10-28; tests/test_v4_1_held_event.py",
+  "v4 is hash-pinned (registry/artifacts.csv ART-0063) and is not edited; the candidate fix is a new file. "
+  "Until v4.1 is audited, or the affected fixed_physical_17p5 held rows are shown unchanged, cite those EMP-AIEF14-03 held-event "
+  "numbers with this caveat."),
+ ("AUD-V4-RECOVERY-WORDING", "AIEF_1_4_TWINDOW_SENSITIVITY",
+  "Analysis v4 reports first-crossing and held events as 'recovery', but _first_index / _held_index return index 0 when the "
+  "signal is already at or above target at the first saved sample, so a 'recovery' event can be retention (never dropped). "
+  "Retention (held from the first saved sample without dropping) and recovery (dropped below, then re-crossed and held) "
+  "should be worded and reported separately.",
+  "Supported", "Finite numerical observation",
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py;"
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py;"
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests/test_v4_1_held_event.py",
+  "Definition / wording finding from reading v4 (lines 531-558) and a synthetic classification test. How many saved v4 "
+  "events are retention rather than recovery was not counted. The v4.1 candidate adds event types held_retention and "
+  "held_recovery and a held_classification column; it is unaudited.",
+  "(new)", "Finite numerical observation (post-push review; code reading plus synthetic test; not audited)",
+  "not from audit rounds 1-4; post-push review 2026-10-28",
+  "Applies to the 'recovery' wording around EMP-AIEF14-03 outputs; the run outputs themselves are not changed."),
+ ("AUD-MODULAR-ORACLE", "PLATFORM_V1_V4",
+  "The modular platform is not oracle-certified by the tests in this repository: tests_modular/test_twindow_oracle_equivalence.py "
+  "is skipped unless AIEF_MODULAR_RUN is set and a pre-generated runs/b57562a8ee77 directory is supplied. The slow engine-comparison "
+  "test (tests_modular/test_twindow_one_condition.py) needs AIEF_RUN_SLOW_TESTS=1 and the repository root on PYTHONPATH, and is "
+  "otherwise skipped; pytest.ini sets pythonpath = ., so the rest of the suite imports without PYTHONPATH.",
+  "Supported", "Implementation identity",
+  "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests_modular/test_twindow_oracle_equivalence.py;README.md;REPRODUCING.md;"
+  "audits/engineering/PATH_AND_LOCK_DEPENDENCY_AUDIT.md",
+  "Re-run 2026-10-28 in the platform directory: default `pytest -q` gives 40 passed, 2 skipped; with AIEF_RUN_SLOW_TESTS=1 and the "
+  "repository root on PYTHONPATH, 41 passed, 1 skipped (only the oracle test skipped). Neither run re-tests the 344-array max_abs_diff = 0 identity of IMPL-MODULAR-01; "
+  "that identity rests on the arena record until the oracle test is run with the certification directory.",
+  "(new)", "Finite numerical observation (post-push review; oracle test skipped by default; not audited)",
+  "not from audit rounds 1-4; post-push review 2026-10-28; related: resp2 Provenance gaps item 2 (line 146)",
+  "Qualifies IMPL-MODULAR-01; does not contradict it. Slow-test PYTHONPATH / AIEF_RUN_SLOW_TESTS setting: README.md (modular platform tests), "
+  "REPRODUCING.md §3, PATH_AND_LOCK_DEPENDENCY_AUDIT.md item 3."),
+ ("AUD-TIMESTEP", A,
+  "OPEN ITEM: timestep accuracy is unverified. No timestep/safeguard convergence study (for example dt, dt/2, dt/4) has been "
+  "run for Engine v1 or the modular platform; reported trajectories, rates and topologies hold for the dt used (0.01) only.",
+  "Incomplete", "Conjecture",
+  "AIEF_1_4_FORWARD_PLAN.md;AI_AGENT_HANDOFF_PROMPT.md",
+  "Open item, not a finding against any existing claim. FORWARD_PLAN §2 'Timestep/safeguard study' (line 360) and "
+  "HANDOFF prompt line 527 list the study as future work.",
+  "(new)", "Not established (open item; no timestep study run)",
+  "not from audit rounds 1-4; post-push review 2026-10-28",
+  "What would test it: a separately versioned, regenerated dt sweep reporting topology agreement and trajectory "
+  "differences across dt. Related: the ~2e-8 rate-law gap (AUD-RATELAW) also waits on a step-size sweep."),
+ ("AUD-B-SCAFFOLD", A,
+  "OPEN ITEM: 'B is a conditional (continuous-weight) scaffold' is audit wording (resp1 #6, line 19; resp2 #4). The conditions "
+  "under which B acts as a scaffold have not been stated as a testable claim or tested.",
+  "Incomplete", "Conjecture",
+  "AI Agent Audits/AIEFS_audit_response.md;AI Agent Audits/AIEFS_audit_response_2.md",
+  "Open item, not a finding against EMP-AIEF14-01: the reset_B reconstruction result and its audit-qualified wording stand.",
+  "(new)", "Not established (open item; wording only, no test)",
+  "resp1 #6 (line 19); resp2 #4 (line 18); post-push review 2026-10-28",
+  "What would test it: state which state variables are held fixed and which B perturbations are applied, then run an "
+  "ablation that varies B with phase/history/EMA fixed and reports the effect on later topology."),
+ ("AUD-CORR-0995-SCOPE", A,
+  "Corr_physical ~0.995 is scoped to the repository's fixed natural-frequency vector. First pass with random omega: mean "
+  "~0.71 (uniform; 0.711/0.712, 20/20 and 40/40 runs defined) and 0.59-0.63 (clustered; 0.588/0.634, means over the defined runs only: "
+  "15/20 no_delay and 30/40 baseline; source AI Agent Audits/evidence/logs/omega_random.log, results/omega_random.json, "
+  "AIEFS_salvage.md §3.1). Replication (delay_heldout_analysis.json, "
+  "per-run point-biserial corr(P, past R), mean / median): uniform baseline 0.745 / 0.978 and no_delay 0.747 / 0.986 "
+  "(60/60 runs defined); clustered baseline 0.553 / 0.449 (37/60 defined) and no_delay 0.531 / 0.379 (39/60 defined).",
+  "Supported", "Finite numerical observation",
+  "AI Agent Audits/evidence/results/delay_heldout_analysis.json;AI Agent Audits/evidence/results/frozen_topology_check.json;"
+  "AI Agent Audits/evidence/logs/omega_random.log;AI Agent Audits/evidence/results/omega_random.json;"
+  "AI Agent Audits/AIEFS_salvage.md;AI Agent Audits/AIEFS_audit_response.md",
+  "Scope: fixed repository omega only; the random-omega numbers are within-run correlations, not a cross-seed law. Pinned "
+  "documents are not edited. The inline side branch fix/corr-0995-scope (and its v2 revision), which edits the pinned "
+  "HANDOFF prompt / HISTORIC_UNFOLDING, is not being merged (owner decision 2026-10-28, option A); ERRATA_2026-10-28.md E9 is the record of the scope note.",
+  "(new)", "Supported (audit evidence re-read; scope note)",
+  "resp1 #3 (line 16) and §3 item 3 (line 42); §5 per-run correlations (lines 73-75); evidence/results/delay_heldout_analysis.json; see AUD-CORR-0995",
+  "Extends AUD-CORR-0995 and ERRATA E1 with the replication numbers; scoped wording for the pinned docs is in ERRATA E9. No number in a pinned file changes."),
+ ("AUD-RESP1-UNIFORM", A,
+  "Erratum: AIEFS_audit_response.md §3 item 3 (line 42) says past R 'adds over Δω-only for uniform and repo ω'. For uniform "
+  "no_delay this holds only on log loss (0.240 vs 0.396); on held-out AUC past R is worse (0.850 vs 0.883). For uniform "
+  "baseline it holds on both (AUC 0.844 vs 0.833; log loss 0.261 vs 0.446).",
+  "Supported", "Finite numerical observation",
+  "AI Agent Audits/AIEFS_audit_response.md;AI Agent Audits/evidence/results/delay_heldout_analysis.json;ERRATA_2026-10-28.md",
+  "The numbers are the audit's own (held-out table, lines 66-69; point2_heldout in the JSON). Only the summary wording at line 42 is corrected.",
+  "(new)", "Supported (audit's own numbers; wording corrected in ERRATA E8)",
+  "resp1 §3 item 3 (line 42) vs §5 table (lines 68-69); evidence/results/delay_heldout_analysis.json",
+  "AIEFS_audit_response.md is hash-pinned (audit_manifest.json) and is not edited; the correction lives in ERRATA_2026-10-28.md E8."),
 ]
 O = "HISTORICAL_PROJECT_ORIGINS"
 UNS = "Speculative / untested origin hypothesis"
@@ -362,7 +469,7 @@ def main():
             r["audited_status"], r["audited_qualifier"] = split_audited(r["audited_status"])
         cols = BASE_COLS + NEW_COLS
         cols.insert(cols.index("audited_status") + 1, "audited_qualifier")
-        w = csv.DictWriter(f, fieldnames=cols, lineterminator="\r\n")
+        w = csv.DictWriter(f, fieldnames=cols, lineterminator="\n")
         w.writeheader(); w.writerows(out)
     print(f"claims.csv: {len(out)} rows ({len(rows)} input incl. any prior AUD/SSRH rows)")
     build_lineage()
@@ -422,7 +529,7 @@ def build_lineage():
     cols = ["sequence", "analysis_id", "scope", "evidence_class", "prior_freeze_status", "principal_result_short",
             "superseded_claim", "audited_status", "audit_source", "reconciliation_note"]
     with open(LINEAGE_OUT, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=cols, lineterminator="\r\n"); w.writeheader()
+        w = csv.DictWriter(f, fieldnames=cols, lineterminator="\n"); w.writeheader()
         for r in rows:
             seq = int(r["sequence"]); aud, src, note = lineage_verdict(seq)
             w.writerow(dict(sequence=seq, analysis_id=r["analysis_id"], scope=r["scope"], evidence_class=r["evidence_class"],
