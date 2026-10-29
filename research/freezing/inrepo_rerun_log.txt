@@ -1,0 +1,14 @@
+In-repo re-run, 2026-10-29 (America/Toronto), after copying this directory into the repo and making the
+script paths repo-relative. Python 3 with numpy 2.5.4. Outputs were written to a temporary directory and
+compared byte-for-byte with the committed files; the committed files are the originals.
+
+$ python research/freezing/freeze_check.py --crosscheck --out <tmp>/results.json   (from the repo root)
+crosscheck max|B_mine-B_engine| over 3000 steps: 0.0     (engine: ./aief_experiment_engine_v1.py)
+results.json: byte-identical to research/freezing/results.json
+stdout after the crosscheck line: identical to run_log.txt
+
+$ python guard_check.py; python clique7_check.py; python margins.py   (in a temporary copy of this directory)
+guard_check.json, clique7_check.json, margins.json: byte-identical to the committed files
+stdout: identical to guard_check_log.txt and clique7_check_log.txt
+
+Totals from results.json: 1412 certified (run, T) pairs, 0 violations.
