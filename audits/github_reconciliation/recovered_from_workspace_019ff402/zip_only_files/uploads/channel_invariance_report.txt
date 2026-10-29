@@ -1,0 +1,56 @@
+AIEF tangent-channel invariance analysis
+========================================
+
+Channel invariance
+------------------
+Seeds: 40
+Tangent-invariant seeds: 40/40
+Multiplicity matches: 40/40
+Median commutator: 1.61247e-13
+
+Repeated fingerprint consistency
+--------------------------------
+  geometry_only 14aecd02f5aeb94a: seeds=2, classes=1, max_error=7.22866e-13, same=True
+  geometry_only 2b177b7da6cac989: seeds=22, classes=1, max_error=2.31531e-12, same=True
+  geometry_only 64c52ca6d685b8e1: seeds=9, classes=1, max_error=2.56217e-12, same=True
+  geometry_plus_rates 07f892d076a10acc: seeds=2, classes=1, max_error=5.03431e-13, same=True
+  geometry_plus_rates 806dee29e27c1ae3: seeds=2, classes=1, max_error=9.85878e-14, same=True
+  geometry_plus_rates ccb3288420826ec6: seeds=4, classes=1, max_error=5.15421e-13, same=True
+  geometry_plus_rates dd135d71da61c124: seeds=3, classes=1, max_error=3.752e-13, same=True
+  labeled_face 3bdfb4c570dc7116: seeds=10, classes=1, max_error=2.56217e-12, same=True
+  labeled_face 704fba7c1b319e34: seeds=6, classes=1, max_error=1.5527e-12, same=True
+  labeled_face 9961a1ce7b7ee3e2: seeds=6, classes=1, max_error=1.42819e-12, same=True
+  labeled_face aae02280e373342b: seeds=6, classes=1, max_error=1.7869e-12, same=True
+  labeled_face c6c8302b4dd4fa84: seeds=4, classes=1, max_error=1.08857e-12, same=True
+  labeled_face f45f68f9953c10f7: seeds=2, classes=1, max_error=7.22866e-13, same=True
+
+Unique-direction modal prediction
+---------------------------------
+  unique_direction_count: 200
+  reliable_unique_direction_count: 197
+  all_amplitudes_success_count: 196
+  median_success_count: 196
+  reliable_all_amplitudes_success_fraction: 0.9898477157360406
+  reliable_median_success_fraction: 0.9898477157360406
+  median_unique_direction_R2: 0.9999982972649254
+  median_unique_direction_RMSE: 0.00032672743392392497
+
+Exceptional stages
+------------------
+  split: face=248a6d985749bc6f, dim=9, rate=0.015, channels=[{"multiplicity":1,"rate":0.015},{"multiplicity":1,"rate":0.09826945523623593},{"multiplicity":2,"rate":0.18947368420535265},{"multiplicity":5,"rate":0.25263157894654914}], commutator=9.62e-13
+  time_100: face=6fd9e17d4647a368, dim=9, rate=0.015, channels=[{"multiplicity":1,"rate":0.015000000000000041},{"multiplicity":1,"rate":0.1261460840335144},{"multiplicity":2,"rate":0.1894736842107972},{"multiplicity":5,"rate":0.252631578947735}], commutator=1.25e-14
+  time_120: face=6fd9e17d4647a368, dim=9, rate=0.015, channels=[{"multiplicity":1,"rate":0.015000000000000027},{"multiplicity":1,"rate":0.12626143277148452},{"multiplicity":2,"rate":0.18947368421082056},{"multiplicity":5,"rate":0.2526315789477355}], commutator=1.23e-14
+  time_123: face=6fd9e17d4647a368, dim=9, rate=0.015, channels=[{"multiplicity":1,"rate":0.015},{"multiplicity":1,"rate":0.12626997804990325},{"multiplicity":2,"rate":0.189473684210822},{"multiplicity":5,"rate":0.25263157894773547}], commutator=1.23e-14
+  pre_switch: face=6fd9e17d4647a368, dim=9, rate=0.015, channels=[{"multiplicity":1,"rate":0.014999999999999986},{"multiplicity":1,"rate":0.12627261581510735},{"multiplicity":2,"rate":0.189473684210822},{"multiplicity":5,"rate":0.25263157894773547}], commutator=1.23e-14
+  post_switch: face=a64b354e39d6fb8c, dim=8, rate=0.126272587943, channels=[{"multiplicity":1,"rate":0.12627258794250404},{"multiplicity":2,"rate":0.18947368421082197},{"multiplicity":5,"rate":0.2526315789477355}], commutator=5.56e-08
+  time_125: face=a64b354e39d6fb8c, dim=8, rate=0.126274866092, channels=[{"multiplicity":1,"rate":0.12627486609235697},{"multiplicity":2,"rate":0.18947368421082214},{"multiplicity":5,"rate":0.25263157894773564}], commutator=5.27e-08
+  time_150: face=a64b354e39d6fb8c, dim=8, rate=0.126305964314, channels=[{"multiplicity":1,"rate":0.12630596431375102},{"multiplicity":2,"rate":0.18947368421083344},{"multiplicity":5,"rate":0.25263157894773547}], commutator=1.29e-08
+  late: face=a64b354e39d6fb8c, dim=8, rate=0.126315788879, channels=[{"multiplicity":1,"rate":0.12631578887891748},{"multiplicity":2,"rate":0.1894736842108335},{"multiplicity":5,"rate":0.25263157894773564}], commutator=7.85e-13
+
+Interpretation constraints
+--------------------------
+* Tolerance-based spectrum identity is not bitwise identity.
+* Geometry signatures are descriptive invariants, not complete graph-isomorphism canonical forms.
+* Channel multiplicity follows directly only when the tangent projector commutes with the diagonal channel operator.
+* Modal trajectories repeat amplitudes; unique seed/direction is the independent directional unit.
+* Exceptional split spectra are not assumed to be stationary-face spectra.
