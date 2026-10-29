@@ -1,0 +1,280 @@
+{
+ "date": "2026-10-28",
+ "endpoint": "https://export.arxiv.org/api/query",
+ "queries": [
+  {
+   "query": "all:\"adaptive Kuramoto\" AND all:\"finite time\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:adaptive AND abs:Kuramoto AND abs:topology AND abs:frozen",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"Hebbian\" AND abs:\"Kuramoto\" AND abs:\"normalization\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"Hebbian\" AND abs:\"oscillators\" AND abs:\"budget\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"adaptive couplings\" AND abs:\"Kuramoto\" AND abs:\"synchronization\"",
+   "total": "14",
+   "top": [
+    [
+     "http://arxiv.org/abs/2104.06862v1",
+     "Amplification of explosive width in complex networks"
+    ],
+    [
+     "http://arxiv.org/abs/2409.08348v1",
+     "Synchronization cluster bursting in adaptive oscillators networks"
+    ],
+    [
+     "http://arxiv.org/abs/1912.04405v3",
+     "Explosive higher-order Kuramoto dynamics on simplicial complexes"
+    ],
+    [
+     "http://arxiv.org/abs/2006.00890v2",
+     "Stability of cluster formations in adaptive Kuramoto networks"
+    ],
+    [
+     "http://arxiv.org/abs/2101.05601v1",
+     "Effect of diluted connectivities on cluster synchronization of adaptively coupled oscillator networks"
+    ],
+    [
+     "http://arxiv.org/abs/2512.20410v3",
+     "Metastability induced by non-reciprocal adaptive couplings in Kuramoto models"
+    ],
+    [
+     "http://arxiv.org/abs/2606.05921v1",
+     "Synchronization of topological signals in higher-order adaptive multilayer network"
+    ],
+    [
+     "http://arxiv.org/abs/1008.0333v2",
+     "Adaptive Oscillator Networks with Conserved Overall Coupling: Sequential Firing and Near-Synchronized States"
+    ],
+    [
+     "http://arxiv.org/abs/2606.11585v2",
+     "Kuramoto Attention: Synchronizing Self-Attention on the Torus"
+    ],
+    [
+     "http://arxiv.org/abs/1810.12545v1",
+     "Explosive synchronization in phase-frustrated multiplex networks"
+    ],
+    [
+     "http://arxiv.org/abs/2209.10514v3",
+     "Complex dynamics in adaptive phase oscillator networks"
+    ],
+    [
+     "http://arxiv.org/abs/2110.10473v1",
+     "Collective canard explosions of globally-coupled rotators with adaptive coupling"
+    ],
+    [
+     "http://arxiv.org/abs/2410.07953v1",
+     "Type-III intermittency in emergent bursting dynamics of globally coupled rotators"
+    ],
+    [
+     "http://arxiv.org/abs/2301.07071v3",
+     "Stable Chimera States: A Geometric Singular Perturbation Approach"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"adaptive network\" AND abs:\"eventually constant\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"Hebbian\" AND abs:\"hard bounds\" AND abs:\"finite time\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"synaptic normalization\" AND abs:\"Hebbian\" AND abs:\"convergence\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"Kuramoto\" AND abs:\"time delay\" AND abs:\"adaptive coupling\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"ultimate positivity\" AND abs:\"linear recurrence\"",
+   "total": "10",
+   "top": [
+    [
+     "http://arxiv.org/abs/1309.1914v4",
+     "Ultimate Positivity is Decidable for Simple Linear Recurrence Sequences"
+    ],
+    [
+     "http://arxiv.org/abs/1307.2779v2",
+     "Positivity Problems for Low-Order Linear Recurrence Sequences"
+    ],
+    [
+     "http://arxiv.org/abs/2008.00583v4",
+     "Decision problems for linear recurrences involving arbitrary real numbers"
+    ],
+    [
+     "http://arxiv.org/abs/2308.06421v1",
+     "Characterising Robust Instances of Ultimate Positivity for Linear Dynamical Systems"
+    ],
+    [
+     "http://arxiv.org/abs/2205.09190v1",
+     "On eventual non-negativity and positivity for the weighted sum of powers of matrices"
+    ],
+    [
+     "http://arxiv.org/abs/2305.04870v2",
+     "Robust Positivity Problems for Linear Recurrence Sequences"
+    ],
+    [
+     "http://arxiv.org/abs/2311.06241v1",
+     "Nonnegativity Problems for Matrix Semigroups"
+    ],
+    [
+     "http://arxiv.org/abs/2305.04881v4",
+     "Skolem and Positivity Completeness of Ergodic Markov Chains"
+    ],
+    [
+     "http://arxiv.org/abs/2609.23839v2",
+     "Eventual Nonnegativity of a Matrix Is in P"
+    ],
+    [
+     "http://arxiv.org/abs/2211.02365v6",
+     "On Robustness for the Skolem, Positivity and Ultimate Positivity Problems"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"eventual sign\" AND abs:\"recurrence\" AND abs:\"perturbation\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"threshold\" AND abs:\"adaptive network\" AND abs:\"topology\" AND abs:\"converge\" AND abs:\"finite\"",
+   "total": "1",
+   "top": [
+    [
+     "http://arxiv.org/abs/0811.0980v1",
+     "Self-organized criticality and adaptation in discrete dynamical networks"
+    ]
+   ]
+  },
+  {
+   "query": "abs:Kuramoto AND abs:\"adaptive\" AND abs:delay AND abs:plasticity",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"phase oscillators\" AND abs:\"conserved\" AND abs:coupling AND abs:adaptive",
+   "total": "1",
+   "top": [
+    [
+     "http://arxiv.org/abs/1706.08070v2",
+     "Development of structural correlations and synchronization from adaptive rewiring in networks of Kuramoto oscillators"
+    ]
+   ]
+  },
+  {
+   "query": "abs:Hebbian AND abs:Kuramoto AND abs:\"phase-locking\"",
+   "total": "2",
+   "top": [
+    [
+     "http://arxiv.org/abs/2603.08731v1",
+     "Hebbian-Oscillatory Co-Learning"
+    ],
+    [
+     "http://arxiv.org/abs/2410.19156v1",
+     "Kuramoto Oscillators With Asymmetric Coupling"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"adaptive coupling\" AND abs:Kuramoto AND abs:\"phase-locked\" AND abs:\"sufficient\"",
+   "total": "1",
+   "top": [
+    [
+     "http://arxiv.org/abs/1008.0333v2",
+     "Adaptive Oscillator Networks with Conserved Overall Coupling: Sequential Firing and Near-Synchronized States"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"multiplicative normalization\" AND abs:Hebbian",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"homeostatic\" AND abs:\"Kuramoto\"",
+   "total": "4",
+   "top": [
+    [
+     "http://arxiv.org/abs/1912.06018v3",
+     "The effect of noise on the synchronization dynamics of the Kuramoto model on a large human connectome graph"
+    ],
+    [
+     "http://arxiv.org/abs/1704.02490v1",
+     "Macroscopic and Microscopic Spectral Properties of Multilayer Brain Networks during Local and Global Synchronization"
+    ],
+    [
+     "http://arxiv.org/abs/2503.20708v2",
+     "Fluctuation-dissipation of the Kuramoto model on fruit-fly connectomes"
+    ],
+    [
+     "http://arxiv.org/abs/1903.00385v3",
+     "Critical synchronization dynamics of the Kuramoto model on connectome and small world graphs"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"network topology\" AND abs:\"finite time\" AND abs:\"adaptive\" AND abs:synchronization",
+   "total": "1",
+   "top": [
+    [
+     "http://arxiv.org/abs/1807.03573v1",
+     "Power Network Dynamics on Graphons"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"coevolution\" AND abs:\"phase oscillators\" AND abs:\"pruning\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"Kuramoto\" AND abs:\"adaptive\" AND abs:\"capacity\"",
+   "total": "1",
+   "top": [
+    [
+     "http://arxiv.org/abs/2608.04749v1",
+     "Stochastic Non-Linear Influence in Synchronisation Dynamics"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"discrete-time\" AND abs:\"adaptive\" AND abs:\"Kuramoto\" AND abs:\"Hebbian\"",
+   "total": "0",
+   "top": []
+  },
+  {
+   "query": "abs:\"linear recurrence\" AND abs:\"bounded\" AND abs:\"eventually\" AND abs:\"sign\"",
+   "total": "1",
+   "top": [
+    [
+     "http://arxiv.org/abs/2609.23839v2",
+     "Eventual Nonnegativity of a Matrix Is in P"
+    ]
+   ]
+  },
+  {
+   "query": "abs:\"STDP\" AND abs:\"hard bounds\" AND abs:\"bimodal\"",
+   "total": "0",
+   "top": []
+  }
+ ]
+}

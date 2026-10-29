@@ -1,0 +1,164 @@
+[
+ {
+  "R_spread": 0.0,
+  "edges": [
+   {
+    "edge": [
+     0,
+     1
+    ],
+    "cls": "goff",
+    "N": 952,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555555555538856
+   },
+   {
+    "edge": [
+     2,
+     5
+    ],
+    "cls": "goff",
+    "N": 952,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555555555539109
+   }
+  ]
+ },
+ {
+  "R_spread": 0.0001,
+  "edges": [
+   {
+    "edge": [
+     0,
+     1
+    ],
+    "cls": "goff",
+    "N": 1101,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555621197037315
+   },
+   {
+    "edge": [
+     2,
+     5
+    ],
+    "cls": "goff",
+    "N": 1102,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555634487187997
+   }
+  ]
+ },
+ {
+  "R_spread": 0.0002,
+  "edges": [
+   {
+    "edge": [
+     0,
+     1
+    ],
+    "cls": "goff",
+    "N": 1369,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.1055568684228997
+   },
+   {
+    "edge": [
+     2,
+     5
+    ],
+    "cls": "goff",
+    "N": 1372,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555713425523983
+   }
+  ]
+ },
+ {
+  "R_spread": 0.0003,
+  "edges": [
+   {
+    "edge": [
+     0,
+     1
+    ],
+    "cls": null,
+    "N": null,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555752491297378
+   },
+   {
+    "edge": [
+     2,
+     5
+    ],
+    "cls": null,
+    "N": null,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555792370547909
+   }
+  ]
+ },
+ {
+  "R_spread": 0.0005,
+  "edges": [
+   {
+    "edge": [
+     0,
+     1
+    ],
+    "cls": null,
+    "N": null,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555883800577995
+   },
+   {
+    "edge": [
+     2,
+     5
+    ],
+    "cls": null,
+    "N": null,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10555950280663653
+   }
+  ]
+ },
+ {
+  "R_spread": 0.001,
+  "edges": [
+   {
+    "edge": [
+     0,
+     1
+    ],
+    "cls": null,
+    "N": null,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.1055621213951566
+   },
+   {
+    "edge": [
+     2,
+     5
+    ],
+    "cls": null,
+    "N": null,
+    "last_change": 0,
+    "final_on": false,
+    "B_max_after_T": 0.10556345173063122
+   }
+  ]
+ }
+]
