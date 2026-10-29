@@ -122,6 +122,13 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   0.553/0.531 (defined in 37/39 of 60 runs) (AUD-CORR-0995-SCOPE). Response 1 overstates "past R adds over Δω-only" for
   uniform no_delay: it holds on log loss only (AUC 0.850 vs 0.883; AUD-RESP1-UNIFORM, errata E8).
   The ~0.995 lines in the pinned `AIEF_HISTORIC_UNFOLDING.md` / `AI_AGENT_HANDOFF_PROMPT.md` are scoped by AUD-CORR-0995-SCOPE (errata E9; the inline side branch is not merged).
+  The audit's H2 "near-circular" wording (pinned `AI Agent Audits/AIEFS_audit.md:32`) is superseded: known variant
+  (Chauhan et al. 2022, *Sci Rep*), mechanism-aligned, not circular (errata E12).
+- **Topology freezing is a conditional theorem (research branch `research/freezing`, 2026-10-29; not a repo audit round).**
+  If R stays in a certified band from some step T on, every edge's status is constant from T + N on (explicit N, real
+  arithmetic only, paper proof; per-edge ∃N core in Lean, `lean/AIEFFreezeCore`). Closed-loop phase-locking with a margin is
+  open. The 7-clique gated-OFF certificate needs an R spread ≲ 2e-4. 1,412 certified (run, T) pairs, 0 violations, checked
+  over the finite window up to step 80000 (`RES-FREEZE-01`, `research/freezing/README.md`).
 - **Analysis v4 held events at exact-duration boundaries: blocker.** v4's end check can reject an event held exactly the required
   duration (floating-point rounding; 32 of 605 starts on v4's saved grid in a synthetic test). Only grid-multiple holds are affected,
   i.e. the fixed_physical_17p5 held rows; the T_window-nominal holds are not. Separately, v4's "recovery" events include retention.

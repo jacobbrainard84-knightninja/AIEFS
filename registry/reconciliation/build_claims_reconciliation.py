@@ -384,6 +384,35 @@ NEW = [
   "(new)", "Supported (audit's own numbers; wording corrected in ERRATA E8)",
   "resp1 §3 item 3 (line 42) vs §5 table (lines 68-69); evidence/results/delay_heldout_analysis.json",
   "AIEFS_audit_response.md is hash-pinned (audit_manifest.json) and is not edited; the correction lives in ERRATA_2026-10-28.md E8."),
+
+ # ---- Research branch research/freezing, 2026-10-29 (Researcher 001; local, not pushed, not a repo audit round) ----
+ ("RES-FREEZE-01", A,
+  "Conditional finite-time support freezing for the discrete AIEF weight map (default engine path, real arithmetic): if from "
+  "some step T on every edge's coherence R_e satisfies one of three strict certificate inequalities (OFF, ON, gated-OFF; "
+  "REPORT.md Thms 2-3), then every edge's status B_e > B_c is constant for all n >= T + N, with N explicit in the margin, "
+  "h = gamma*dt, the cap c = (a-delta)/q, the row-sum drive bound and B(T). The min-endpoint capacity gate is handled "
+  "uniformly (Lemma 1 brackets the gate factor at every step). Lemma 1, Thms 2-3 and Corollary 4 are PROVEN (paper proof); "
+  "the scalar comparison core and the per-edge OFF/ON statements (existential N) are machine-checked in Lean 4 "
+  "(lean/AIEFFreezeCore, standard axioms only). Without a hypothesis on R the statement is false (exogenous periodic R: 10 flips).",
+  "Supported", "Conditional theorem",
+  "research/freezing/REPORT.md;research/freezing/README.md;research/freezing/freeze_check.py;research/freezing/results.json;"
+  "research/freezing/clique7_check.py;research/freezing/guard_check.py;lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean;"
+  "lean/AIEFFreezeCore/check_lean_freeze.sh",
+  "Conditional: assumes phase-locking/drift with a margin from step T on; whether the closed loop (phases + delay + EMA + "
+  "gate) always produces it is OPEN (O1), as are ties (O2), which support appears (O3) and an a-priori N (O4). The explicit N "
+  "is paper-level and holds for the real-arithmetic map only (float64 rounding broke it at a 1e-13 margin; the checker "
+  "certifies only margins >= 1e-9). The gated-OFF certificate for a locked 7-clique needs an R spread <~ 2e-4. Numerics: "
+  "1,412 certified (run, T) pairs, 0 violations, where certified means the R-band hypotheses were checked only over the "
+  "finite window [T, 80000), not [T, inf). Novelty: plausibly new as a model-specific certificate theorem but mathematically "
+  "elementary (scalar affine-contraction comparison); the literature search was not exhaustive. Lemma 1, Thm 3 and Cor 4 are "
+  "not in Lean.",
+  "(new)", "Supported (conditional theorem, paper proof; Lean covers the per-edge core only; not a repo audit round)",
+  "not from audit rounds 1-4; research branch research/freezing 2026-10-29; paper proof checked by a read-only research "
+  "audit on 2026-10-28 (verdict: sound with wording fixes R1-R3, applied; that audit file is not in the repo)",
+  "Research note research/freezing/ (copied from a scratch directory without its pre-audit backups). In-repo re-run "
+  "2026-10-29: engine cross-check 0.0 and byte-identical outputs (research/freezing/inrepo_rerun_log.txt). "
+  "lean/AIEFFreezeCore/check_lean_freeze.sh 7/7 PASS locally; not built by .github/workflows/lean.yml. See ERRATA E12 "
+  "for the related H2 wording pointer."),
 ]
 O = "HISTORICAL_PROJECT_ORIGINS"
 UNS = "Speculative / untested origin hypothesis"
