@@ -2,6 +2,18 @@
 # Actions run #31, id 40153641197, passed at dc0250a).
 # GitHub only runs workflows from the repository root .github/workflows/. The template
 # workflows under lean/AIEFProofs/.github/workflows/ are nested and are never run by GitHub.
+#
+# One matrix job per Lake project (fail-fast off, so one failing project does not hide another):
+#   lean/AIEFProofs      check_lean.sh         base project (hash-pinned; must exist)
+#   lean/AIEFProofsKn    check_lean_kn.sh      research/lean-kn  (dim ker = C(n,2) - n, all n >= 3)
+#   lean/AIEFFreezeCore  check_lean_freeze.sh  research/freezing (FreezeCore lemmas)
+# Each project gets its own axiom-audit root (= its lean_lib / module root; axiom-audit audits
+# declarations from modules under that root) and its own log artifact lean-check-logs-<project>.
+# A project with required: false is SKIPPED with a warning only when its directory is absent, so
+# this workflow can merge before or after the research branches. If the directory exists but its
+# lakefile (lakefile.toml or lakefile.lean) or check script is missing, the job fails
+# (tools/ci/lean_presence.sh). Once both research branches are on main, set required: true on their
+# rows so that deleting a whole project also fails CI instead of skipping.
 name: Lean proof check
 
 on:
@@ -24,34 +36,56 @@ concurrency:
 
 jobs:
   lean:
+    name: lean (${{ matrix.project }})
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    defaults:
-      run:
-        working-directory: lean/AIEFProofs
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { project: AIEFProofs,     script: check_lean.sh,        axiom_root: AIEFProofs,     required: true }
+          - { project: AIEFProofsKn,   script: check_lean_kn.sh,     axiom_root: AIEFProofsKn,   required: false }
+          - { project: AIEFFreezeCore, script: check_lean_freeze.sh, axiom_root: AIEFFreezeCore, required: false }
+    env:
+      PROJECT_DIR: lean/${{ matrix.project }}
     steps:
       # Actions pinned to full commit SHAs (tag in comment) so the run is auditable/reproducible.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-      - uses: leanprover/lean-action@24581d74d674803a25a81b10b059c5c0cdd344c6 # v1.6.2
         with:
-          lake-package-directory: lean/AIEFProofs
+          persist-credentials: false
+      - name: Is ${{ matrix.project }} on this branch?
+        id: present
+        env:
+          REQUIRED: ${{ matrix.required }}
+          SCRIPT: ${{ matrix.script }}
+        # Skips only when the project directory is absent (and required: false); a present directory
+        # without its lakefile or check script is an error. Tested by tools/ci/tests/test_lean_presence.py.
+        run: bash tools/ci/lean_presence.sh "$PROJECT_DIR" "$SCRIPT" "$REQUIRED"
+      - uses: leanprover/lean-action@24581d74d674803a25a81b10b059c5c0cdd344c6 # v1.6.2
+        if: steps.present.outputs.present == 'true'
+        with:
+          lake-package-directory: ${{ env.PROJECT_DIR }}
           use-mathlib-cache: true          # lake exe cache get
           build: true                      # lake build (fails on any error, incl. bad imports)
           test: false
           lint: false
           axiom-audit: true                # independent axiom audit (leanprover-community/axiom-audit)
           axiom-audit-allow: propext,Classical.choice,Quot.sound
-          axiom-audit-root: AIEFProofs
+          axiom-audit-root: ${{ matrix.axiom_root }}
           leanchecker: false               # set true to re-check the environment with leanchecker (slow with Mathlib)
       # Same script the owner runs locally; cache/build are already warm, so this is fast.
-      - name: check_lean.sh (toolchain pin, source hashes, imports/no orphans, markers, axioms)
+      - name: ${{ matrix.script }} (toolchain pin, source hashes, imports/no orphans, markers, axioms)
+        if: steps.present.outputs.present == 'true'
+        working-directory: ${{ env.PROJECT_DIR }}
+        env:
+          SCRIPT: ${{ matrix.script }}
         run: |
-          chmod +x ./check_lean.sh
-          SKIP_CACHE=1 STRICT_ORPHANS=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" ./check_lean.sh
+          chmod +x "./$SCRIPT"
+          SKIP_CACHE=1 STRICT_ORPHANS=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" "./$SCRIPT"
       - name: Upload check logs
-        if: always()
+        if: always() && steps.present.outputs.present == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: lean-check-logs
+          name: lean-check-logs-${{ matrix.project }}
           path: lean-check-logs/
           retention-days: 30
