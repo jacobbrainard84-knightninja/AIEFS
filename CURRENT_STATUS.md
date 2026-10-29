@@ -176,8 +176,12 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
 | Are the v4 held-event outputs affected by the end-check bug? | `AUD-V4-HELDEVENT` | Audit the v4.1 candidate, then compare its held rows with the saved v4 outputs. |
 
 **Proposed formal-math steps (proposals, not results; from the Arena AI review):**
-- (a) Generalize `dim ker A_{K_n} = C(n,2) − n` from n = 3…6 (`CompleteGraphIncidence.lean`) to all n ≥ 3, for example
-  through the explicit right inverse. This would be tested by a Lean proof that passes `check_lean.sh`.
+- (a) **Done on research branch `research/lean-kn` (2026-10-29; local, not audited).** `dim ker A_{K_n} = C(n,2) − n` is
+  proved for all n ≥ 3 for the repository's `inc` (n = 3…6 were proved in `CompleteGraphIncidence.lean`), together with
+  full row rank, `m = C(n,2)`, the repository's `rinv` as a right inverse for every n ≥ 3, and `dim ker = 54` for n = 12.
+  New Lake project `lean/AIEFProofsKn/` (imports the pinned `lean/AIEFProofs` unchanged); its `check_lean_kn.sh` passes 7/7.
+  Connected + non-bipartite (characteristic ≠ 2) is sufficient, not necessary; Mathlib's `Sym2`-indexed `incMatrix` has zero
+  diagonal/non-edge columns, so the Mathlib-side version is edge-restricted (`LEAN-KN-01`, `ERRATA_2026-10-28.md` E11).
 - (b) Prove the finite one-sided K3 gate identity. At an all-tied K3, for small t > 0 under explicit positivity and gate
   assumptions, `A(x + t·v_c) − A(x) = t·λ_2·v_c`, and the negative direction is not governed by the same scalar. This would
   be tested by a Lean proof, with no calculus, of both the identity and the inequality.
