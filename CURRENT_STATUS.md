@@ -47,7 +47,7 @@ Every tracked file (`2,760` working-tree files) and every member inside the thre
 | **Multiplier-Controller Fiber & Intertwining** | `Supported` (single-seed case study; "projection" wording rejected — the gate is not a projection, AUD-GATE; strict K3 have one-sided rays, AUD-K3) | `Conditional theorem` / `Finite numerical observation` | `aief_1_4_intertwining_controller 02/` (`40/40`), `aief_1_4_feedback_rank_memory_reduction/`, `aief_1_4_k3_fiber_audit/` (`26` isolated $K_3$ components) | Unnumbered `aief_1_4_intertwining_controller/` is pre-fix (`38/40`, `Superseded`); `01` is a duplicate of `02`. |
 | **Lean 4 Controller Kernel Proof** | `Supported` (audit-verified; trivial linear algebra, LEAN-CF-01). Round-4 package: Lean `v4.33.1`, 6 modules, 115 declarations, standard axioms only (LEAN-R4) | `Formalized theorem` | `lean/AIEFProofs/` (`AIEFProofs.lean`, 6 modules, `check_lean.sh`; `0` `sorry`) | Proves algebraic identity $\ker C_{\{2,7\}} = \operatorname{span}\{(1,-1,-1)\}$ only; winner persistence along trajectories is empirical (`CF05`) / open (`CF12`). |
 | **Operator Theory Draft Manuscript** | `Exploratory` | `Conditional theorem` | `AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md` | **Caveat `CAVEAT-MS-8.4`:** Corollary 8.4 ambient left orthogonality $V^\top D\mathcal{A}_\varepsilon(x_G) = s_k V^\top$ holds at $x_G = x_{\text{common}}\mathbf{1}$, **not** across general fiber perturbations $x_0\mathbf{1}+h$. |
-| **Modular Platform `v1_analysis_v4`** | `Supported` implementation identity, not re-tested by the audit (IMPL-MODULAR-01; tests re-run 2026-10-28: 41 passed, 1 skipped) | `Implementation identity` | `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/` | Supersedes `workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/`. Same-host equivalence vs monolithic code is exact (`0.000e+00`). |
+| **Modular Platform `v1_analysis_v4`** | `Supported` implementation identity, not re-tested by the audit (IMPL-MODULAR-01; tests re-run 2026-10-28: default 40 passed, 2 skipped; 41 passed, 1 skipped with AIEF_RUN_SLOW_TESTS=1 and the repo root on PYTHONPATH) | `Implementation identity` | `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/` | Supersedes `workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/`. Same-host equivalence vs monolithic code is exact (`0.000e+00`). |
 | **Retired Spectral Compression & K3 Subgraph Scan** | `Rejected` | `Finite numerical observation` | `aief_1_4_operator_compression.py` (`24,323.8%` leakage), `aief_1_4_slow_subspace_projection.py` (`7.5e35`), `aief_1_4_observable_jacobian.py`, `aief_1_4_coupling_lock_audit.py`, `aief_1_4_k3_structure_scan.py` (`856` subgraphs) | Preserved byte-for-byte unmodified as negative methodological evidence; never cite as positive support. |
 | **"EMA pole is the unique slow pole" (`aief_1_4_augmented_spectrum/`)** | `Quarantined` (2026-10-28; AUD-SLOWPOLE; ledger `artifact_status` `Rejected`, as the vocabulary has no `Quarantined`) | `Finite numerical observation` | `aief_1_4_augmented_spectrum/augmented_spectrum_report.txt` (file unchanged; caveat in `ERRATA_2026-10-28.md` E2) | Quarantined — invalid derivation; do not cite. Audit proposal on the 966-dim state (one replay, finite-difference, not a proof) gives NO: 10 gap rates. |
 | **Pre-AIEF SSRH origin hypotheses (`Project Origins/`)** | **Speculative / untested origin hypothesis** (owner decision 2026-10-28; SSRH-ORIG-01..07; ledger `Incomplete`) | `Conjecture` | `Project Origins/` PDFs (AI-chat text only; no script or data in the repo) | Not cited as results until a testable form is stated and a test is run. Not retired: nothing was tested and failed. |
@@ -81,7 +81,7 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
 **Where we are (2026-10-28).**
 - The local branch `merge-prep/arena-reconciled` reconciles the arena Milestone 1 work with `main` and the audits.
 - It is **not pushed**. It waits for review by the owner, Auditor Seat 002 and outside reviewers.
-- The claim ledger has 68 rows. Corrections to pinned files are in `ERRATA_2026-10-28.md`.
+- The claim ledger has 75 rows (7 post-push review rows added on local branch `work/post-push-1`, not pushed). Corrections to pinned files are in `ERRATA_2026-10-28.md`.
 - Details, checks and open items are in `MERGE_PREP_REPORT.md`. Working rules are in `OPERATING_MANUAL.md`.
 
 **Where we are: tested model results.** Each item cites its ledger row in `registry/claims.csv`. Cite only at that row's scope.
@@ -118,7 +118,16 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   (other pairs give 0.2627 / 0.7254 and 0.3046 / 0.7140), and the unequal-edge state is not a fixed point. So it refutes
   universality, but it is not a fixed-point counterexample.
 - **Corr_physical ≈ 0.995 holds only for the hand-picked frequencies.** It is ~0.71 for uniform random ω and
-  0.59–0.63 for clustered ω (AUD-CORR-0995; errata E1).
+  0.59–0.63 for clustered ω (AUD-CORR-0995; errata E1). Replication means: uniform 0.745/0.747 (medians ~0.98), clustered
+  0.553/0.531 (defined in 37/39 of 60 runs) (AUD-CORR-0995-SCOPE). Response 1 overstates "past R adds over Δω-only" for
+  uniform no_delay: it holds on log loss only (AUC 0.850 vs 0.883; AUD-RESP1-UNIFORM, errata E8).
+  The ~0.995 lines in the pinned `AIEF_HISTORIC_UNFOLDING.md` / `AI_AGENT_HANDOFF_PROMPT.md` are scoped by AUD-CORR-0995-SCOPE (errata E9; the inline side branch is not merged).
+- **Analysis v4 held events at exact-duration boundaries: blocker.** v4's end check can reject an event held exactly the required
+  duration (floating-point rounding; 32 of 605 starts on v4's saved grid in a synthetic test). Only grid-multiple holds are affected,
+  i.e. the fixed_physical_17p5 held rows; the T_window-nominal holds are not. Separately, v4's "recovery" events include retention.
+  Cite the fixed_physical_17p5 held numbers only with this caveat (AUD-V4-HELDEVENT, AUD-V4-RECOVERY-WORDING). A v4.1 candidate exists and is unaudited.
+- **Modular platform: not oracle-certified by the repo tests.** The oracle-equivalence test is skipped by default, and the slow
+  engine test runs only with `AIEF_RUN_SLOW_TESTS=1` and the repo root on `PYTHONPATH` (default: 40 passed, 2 skipped; AUD-MODULAR-ORACLE).
 - **Matched-phase ablation: exploratory.**
   - Weighted_similarity_late is +0.064 [0.041, 0.089] (31/40).
   - P_mean_late is negative, and the Retention CI spans 0.
@@ -159,6 +168,12 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
 | Slowest mode once symmetries are removed | `AUD-SLOWPOLE` | Quotient out the neutral phase-shift mode of each independently rotating component, then recompute. |
 | Mode content by block | `AUD-SLOWPOLE` | Report participation weights under at least two coordinate scalings, or a scale-invariant measure. |
 | Stability of rates against perturbation size | `AUD-SLOWPOLE` | Repeat at several h values (for example 1e-9 to 1e-5) and report only the modes and rates that stay stable. |
+| Does the T_window DID / horizon-confounding claim hold? | `EMP-AIEF14-03` | An audit test of the DID estimand itself. The audits checked only κ(T_w). |
+| Do Corr_physical and the topology predictor carry over to random frequencies? | `AUD-CORR-0995`, `AUD-TOPO-OMEGA` | Random and clustered ω cohorts with held-out seeds. The audit's numbers already suggest they do not. |
+| Are the results novel? | `AUD-NOVELTY` | A literature review. This is an open owner decision. |
+| Is the timestep accurate? | `AUD-TIMESTEP` | A separately versioned dt sweep (for example dt, dt/2, dt/4) reporting topology agreement and trajectory differences. Open item. |
+| Under which conditions is B a "conditional scaffold"? | `AUD-B-SCAFFOLD` | State the conditions as a testable claim, then an ablation that varies B with phase/history/EMA fixed. Open item. |
+| Are the v4 held-event outputs affected by the end-check bug? | `AUD-V4-HELDEVENT` | Audit the v4.1 candidate, then compare its held rows with the saved v4 outputs. |
 
 **Proposed formal-math steps (proposals, not results; from the Arena AI review):**
 - (a) Generalize `dim ker A_{K_n} = C(n,2) − n` from n = 3…6 (`CompleteGraphIncidence.lean`) to all n ≥ 3, for example
@@ -169,7 +184,3 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
 - (c) Prove scalar action on complete-clique controller kernels under explicit branch assumptions (gate on, clipping
   inactive, no controller switch, `A h = 0`, common scale s). This would be tested by a Lean proof of
   `A(x + (1−γΔt)t·h) − A(x) = (1−γΔt)·s·t·h`.
-
-| Does the T_window DID / horizon-confounding claim hold? | `EMP-AIEF14-03` | An audit test of the DID estimand itself. The audits checked only κ(T_w). |
-| Do Corr_physical and the topology predictor carry over to random frequencies? | `AUD-CORR-0995`, `AUD-TOPO-OMEGA` | Random and clustered ω cohorts with held-out seeds. The audit's numbers already suggest they do not. |
-| Are the results novel? | `AUD-NOVELTY` | A literature review. This is an open owner decision. |

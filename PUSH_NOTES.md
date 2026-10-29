@@ -54,3 +54,8 @@
    changed. To restore the exact bytes, check the files out from local commit
    `487d5a9` in the owner's clone and push with git (also restore CRLF in the
    other files listed above if exact bytes matter).
+
+   Update (local branch `work/post-push-1`, commit a60b0d9): the two **pinned**
+   files were restored to their original CRLF bytes from `487d5a9` and now match
+   their pins; `.gitattributes` marks exactly these two paths `-text`. The other
+   nine files above stay LF (unpinned; the registry build scripts now write LF).
