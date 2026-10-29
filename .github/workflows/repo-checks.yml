@@ -1,5 +1,5 @@
 # Location: .github/workflows/repo-checks.yml at the REPOSITORY ROOT.
-# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, CI-tool self-tests).
+# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, file modes, CI-tool self-tests).
 # The Lean build + axiom allowlist (propext, Classical.choice, Quot.sound; Lean v4.33.1 from
 # lean/AIEFProofs/lean-toolchain) stays in .github/workflows/lean.yml and is NOT duplicated here.
 # All scripts are plain Python 3 stdlib and can be run locally; see docs/REVIEWING.md.
@@ -93,3 +93,20 @@ jobs:
       # Runs "AI Agent Audits/evidence/verify_manifest.py --inputs" if it exists; notice + pass if not.
       - name: check_manifest.py
         run: python tools/ci/check_manifest.py
+
+  file-modes:
+    name: File modes (warn-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      # Warns (::warning, exit 0) for scripts that are not 100755 in the git index: the known list
+      # in check_modes.py, the paths under "Executable bits to restore" in PUSH_NOTES.md, and any
+      # other tracked file with a #! line. Add --strict once the owner has restored the bits.
+      - name: check_modes.py
+        run: python tools/ci/check_modes.py
