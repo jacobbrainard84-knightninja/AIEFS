@@ -1,0 +1,11 @@
+# =====================================================================================
+# PLACEHOLDER -- fallback status vocabulary for tools/ci/lint_claims.py
+# =====================================================================================
+# The single source of truth is the "## Status vocabulary" fenced block in
+# registry/README.md. lint_claims.py reads that block first and only falls back to
+# this file if the block is missing. Do not copy the vocabulary here unless the owner
+# decides to move the source of truth: two copies will drift.
+#
+# Format if ever used: one exact status per line; lines starting with '#' are comments.
+# While this file contains the word PLACEHOLDER, the lint warns whenever it is used.
+# (Intentionally no values below.)

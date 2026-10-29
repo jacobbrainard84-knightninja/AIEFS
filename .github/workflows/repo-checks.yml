@@ -1,0 +1,95 @@
+# Location: .github/workflows/repo-checks.yml at the REPOSITORY ROOT.
+# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, CI-tool self-tests).
+# The Lean build + axiom allowlist (propext, Classical.choice, Quot.sound; Lean v4.33.1 from
+# lean/AIEFProofs/lean-toolchain) stays in .github/workflows/lean.yml and is NOT duplicated here.
+# All scripts are plain Python 3 stdlib and can be run locally; see docs/REVIEWING.md.
+name: Repo checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read            # read-only; this workflow never pushes, tags, comments or opens PRs
+
+concurrency:
+  group: repo-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci-tool-tests:
+    name: CI tool self-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Actions pinned to full commit SHAs (tag in comment), same checkout pin as lean.yml.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: unittest tools/ci/tests
+        run: python -m unittest discover -s tools/ci/tests -v
+
+  claims-lint:
+    name: Claims registry lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      # Vocabulary is read from the '## Status vocabulary' block in registry/README.md.
+      # If registry/claims.csv is absent the step passes with a notice.
+      - name: lint_claims.py
+        run: python tools/ci/lint_claims.py
+
+  hygiene:
+    name: Hygiene scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0              # needed to diff against the PR base / previous push
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Changed files (new binaries, secrets, PII warnings)
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          BASE=""
+          if [ "$EVENT" = "pull_request" ]; then BASE="$PR_BASE"; fi
+          if [ "$EVENT" = "push" ] && [ -n "$PUSH_BEFORE" ] && [ "$PUSH_BEFORE" != "0000000000000000000000000000000000000000" ]; then BASE="$PUSH_BEFORE"; fi
+          if [ -z "$BASE" ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            echo "::notice::no usable base commit; changed-file scan skipped (full scan below still runs)"
+            exit 0
+          fi
+          python tools/ci/hygiene_scan.py --base "$BASE" --pii
+      - name: Full tree (large files, secret files and patterns)
+        run: python tools/ci/hygiene_scan.py
+
+  manifest:
+    name: Manifest hash verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      # Runs "AI Agent Audits/evidence/verify_manifest.py --inputs" if it exists; notice + pass if not.
+      - name: check_manifest.py
+        run: python tools/ci/check_manifest.py
