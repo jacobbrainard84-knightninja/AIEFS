@@ -1,0 +1,24 @@
+# Folders/patterns where binary files (npz, pdf, zip, png, ...) may be ADDED without failing
+# tools/ci/hygiene_scan.py. One pattern per line:
+#   ends with '/'  -> any path under that folder
+#   otherwise      -> fnmatch glob on the repo-relative path ('*' also matches '/')
+# DRAFT, derived from where binaries already live on main (853498f). Owner to confirm.
+# Changing this file changes what CI lets through, so treat edits as a review-worthy change.
+
+# simulation outputs
+runs/
+runs_pivot_study/
+runs_aief14_smoke/
+test_output/
+aief_1_3_*
+aief_1_4_*
+AIEF_Experiments/
+# archives / history / origins / audits
+Older files/
+Project Histories/
+Project Origins/
+AI Agent Audits/
+audits/
+# existing root-level binaries (grandfathered; adding new ones at root is not allowed)
+Results.pdf
+workspace-*.zip
