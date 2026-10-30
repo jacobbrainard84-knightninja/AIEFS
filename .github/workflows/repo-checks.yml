@@ -1,5 +1,6 @@
 # Location: .github/workflows/repo-checks.yml at the REPOSITORY ROOT.
-# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, file modes, CI-tool self-tests).
+# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, file modes, CI-tool self-tests,
+# analysis tests: v4.1 held-event candidate and the modular platform suite).
 # The Lean build + axiom allowlist (propext, Classical.choice, Quot.sound; Lean v4.33.1 from
 # lean/AIEFProofs/lean-toolchain) stays in .github/workflows/lean.yml and is NOT duplicated here.
 # All scripts are plain Python 3 stdlib and can be run locally; see docs/REVIEWING.md.
@@ -110,3 +111,33 @@ jobs:
       # other tracked file with a #! line. Add --strict once the owner has restored the bits.
       - name: check_modes.py
         run: python tools/ci/check_modes.py
+      # --strict fails on the known-list scripts until they are 100755 in the index. The connector
+      # upload writes 100644, so switch to --strict only in (or after) the owner's git push that
+      # restores the bits (see OWNER_STEAMDECK_COMMANDS in the review r026 notes / PUSH_NOTES.md item 2).
+
+  analysis-tests:
+    name: Analysis tests (v4.1 candidate + modular platform)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.13"    # requirements.txt pins were checked on 3.13.5
+      - name: Install pinned requirements
+        run: python -m pip install -r requirements.txt
+      # The platform's pytest.ini (hash-pinned, ART-0083) sets testpaths = tests_modular, so the v4.1
+      # test file is named explicitly here instead of editing pytest.ini. Expected: 13 passed (cbf2ae7 test file).
+      - name: v4.1 held-event tests (synthetic data only)
+        working-directory: AIEF_Experiments/aief_modular_platform_v1_analysis_v4
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python -m pytest -q -p no:cacheprovider tests/test_v4_1_held_event.py
+      # Default run (no AIEF_RUN_SLOW_TESTS): expected 40 passed, 2 skipped (AUD-MODULAR-ORACLE).
+      - name: modular platform tests
+        working-directory: AIEF_Experiments/aief_modular_platform_v1_analysis_v4
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python -m pytest -q -p no:cacheprovider tests_modular
