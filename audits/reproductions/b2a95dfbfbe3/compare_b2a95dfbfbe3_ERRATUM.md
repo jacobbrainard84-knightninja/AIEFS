@@ -54,3 +54,29 @@ sha256 matches the note (`281bf33b…8d17ad`).
 **The original verdict stands.** The NaN masks match, so the gap did not affect the result. The statement
 "NaN patterns are identical" now also holds for the CSV. Ledger row: `AUD-REPRO-B2A95` in `registry/claims.csv`;
 errata entry: `ERRATA_2026-10-28.md` E10.
+
+## Follow-up (v3, 2026-10-29): +inf / -inf masks and a local SHA256SUMS
+
+Raised by an outside review (Researcher 026, Review 2 section 1). v2 checked NaN masks but not infinity masks. On the
+NPZ path, `cmp_arrays` took `np.abs(x - y)` over the non-NaN cells, so a cell that is `+inf` in one run and finite in
+the other gave an `inf` difference (caught by the tolerance, but reported as a number, not as a pattern mismatch), and
+`+inf` in both runs gave `inf - inf = NaN`, which the max would have mishandled. On the CSV path only NaN was masked.
+
+`compare_b2a95dfbfbe3_v3.py` (see `compare_b2a95dfbfbe3_v2_to_v3.diff`) changes only the comparison helpers:
+
+- one helper, `mask_mismatches`, counts cells where exactly one run is NaN, `+inf` or `-inf` (complex arrays: real and
+  imaginary parts separately); `cmp_arrays` (NPZ seed files and branch diagnostics) and the CSV block both use it;
+- any mismatch is a problem, so the verdict becomes NOT REPRODUCED;
+- max abs diffs are taken only over cells that are finite in both runs;
+- new JSON keys: `csv_posinf_mask_mismatches`, `csv_neginf_mask_mismatches`, `csv_nonfinite_cells_rerun`,
+  `csv_nonfinite_cells_official`;
+- `--selftest` runs synthetic checks of the masks (no repo data needed).
+
+Re-run (`compare_b2a95dfbfbe3_v3.log`, numpy 2.5.4, pandas 3.1.0, python 3.13.5): 0 NaN, 0 `+inf` and 0 `-inf`
+mask mismatches; 348 NaN cells and 0 infinite cells in each run; CSV max abs diff 6.66e-16, seed 6.66e-16, branch
+diagnostics 5.55e-16; `problems: []`; **verdict REPRODUCED**, exit 0. Apart from the new keys the JSON output is
+identical to v2's. The sentence "neither has any inf" above is now checked by code, not only by inspection.
+
+v1 (pinned) and v2 are kept unchanged. `SHA256SUMS` in this folder pins every other file in it; check it with
+`cd audits/reproductions/b2a95dfbfbe3 && sha256sum -c SHA256SUMS`. Editing any file here means updating SHA256SUMS
+in the same commit.
