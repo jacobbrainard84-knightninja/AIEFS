@@ -1,6 +1,7 @@
 # Location: .github/workflows/repo-checks.yml at the REPOSITORY ROOT.
-# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, file modes, CI-tool self-tests,
-# analysis tests: v4.1 held-event candidate and the modular platform suite).
+# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, artifact registry pins,
+# current-tree inventory, file modes, CI-tool self-tests, analysis tests: v4.1 held-event candidate and
+# the modular platform suite).
 # The Lean build + axiom allowlist (propext, Classical.choice, Quot.sound; Lean v4.33.1 from
 # lean/AIEFProofs/lean-toolchain) stays in .github/workflows/lean.yml and is NOT duplicated here.
 # All scripts are plain Python 3 stdlib and can be run locally; see docs/REVIEWING.md.
@@ -94,6 +95,23 @@ jobs:
       # Runs "AI Agent Audits/evidence/verify_manifest.py --inputs" if it exists; notice + pass if not.
       - name: check_manifest.py
         run: python tools/ci/check_manifest.py
+
+  artifact-pins:
+    name: Artifact registry pins
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      # Checks every registry/artifacts.csv row (tracked files and .zip members) against its sha256.
+      # Only the drift hard-coded in check_artifact_pins.py is allowed (7 known-changed rows at their
+      # current sha256, 52 rows deleted on main); any other mismatch or missing file fails.
+      - name: check_artifact_pins.py
+        run: python tools/ci/check_artifact_pins.py
 
   file-modes:
     name: File modes (warn-only)
