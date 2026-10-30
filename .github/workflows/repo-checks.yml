@@ -115,6 +115,22 @@ jobs:
       # upload writes 100644, so switch to --strict only in (or after) the owner's git push that
       # restores the bits (see OWNER_STEAMDECK_COMMANDS in the review r026 notes / PUSH_NOTES.md item 2).
 
+  current-inventory:
+    name: Current-tree inventory (registry/artifacts_current.csv)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      # Regenerates the inventory in memory (deterministic) and fails if the committed CSV is stale.
+      # Fix: python3 registry/reconciliation/build_current_inventory.py, then commit the CSV.
+      - name: check_current_inventory.py
+        run: python tools/ci/check_current_inventory.py
+
   analysis-tests:
     name: Analysis tests (v4.1 candidate + modular platform)
     runs-on: ubuntu-latest
