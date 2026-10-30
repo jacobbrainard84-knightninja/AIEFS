@@ -391,6 +391,29 @@ NEW = [
   "(new)", "Supported (audit's own numbers; wording corrected in ERRATA E8)",
   "resp1 §3 item 3 (line 42) vs §5 table (lines 68-69); evidence/results/delay_heldout_analysis.json",
   "AIEFS_audit_response.md is hash-pinned (audit_manifest.json) and is not edited; the correction lives in ERRATA_2026-10-28.md E8."),
+
+ # ---- Research branch research/lean-kn, 2026-10-29 (Researcher 001; local, not pushed, not audited) ----
+ ("LEAN-KN-01", A,
+  "For every n >= 3 and every edge list src, dst : Fin m -> Fin n that lists each pair i < j of K_n exactly once "
+  "(IsCompleteEdgeList), the repository's unsigned incidence matrix AIEFProofs.CompleteGraphIncidence.inc src dst over Q "
+  "has full row rank n, m = C(n,2), and dim ker = C(n,2) - n = n(n-3)/2; the repository's rinv src dst is a right inverse. "
+  "For the 12-node edge list (66 edges), dim ker = 54. Machine-checked in Lean 4 (v4.33.1, Mathlib 0df444a3) without "
+  "sorry, admit or native_decide, using only the axioms propext, Classical.choice, Quot.sound.",
+  "Supported", "Formalized theorem",
+  "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphKn.lean;lean/AIEFProofsKn/AIEFProofsKn/IncMatrixRank.lean;"
+  "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphRightInverse.lean;lean/AIEFProofsKn/check_lean_kn.sh;"
+  "lean/AIEFProofsKn/AIEF_LEAN_KN_SOURCE_SHA256SUMS.txt;lean/AIEFProofsKn/README.md",
+  "Linear algebra of fixed matrices only: says nothing about which edges the dynamics keep or that the gate selects these "
+  "kernels. The general lemma assumes a connected, non-bipartite graph over a field of characteristic != 2; this is sufficient, "
+  "not necessary (rank = #V - #bipartite components in characteristic != 2), and the result fails in characteristic 2. "
+  "Mathlib's Sym2-indexed incMatrix has zero columns for diagonal and non-edge pairs, so the matching Mathlib statement uses "
+  "the edge-restricted matrix edgeIncMatrix.",
+  "(new)", "Supported (machine-checked; check_lean_kn.sh 7/7 PASS locally 2026-10-29; not audited)",
+  "not from audit rounds 1-4; research branch research/lean-kn 2026-10-29; CURRENT_STATUS.md proposed formal-math step (a)",
+  "Generalizes the n = 3..6 cases of CompleteGraphIncidence.lean (LEAN-R4). Supersedes 'only n = 3..6 are proved' in "
+  "lean/AIEFProofs/README.md:105, which is hash-pinned (registry/artifacts.csv ART-0748) and is not edited; see ERRATA "
+  "E11. Separate Lake project lean/AIEFProofsKn that imports the pinned lean/AIEFProofs unchanged (path dependency); "
+  "it is not yet built by .github/workflows/lean.yml."),
 ]
 O = "HISTORICAL_PROJECT_ORIGINS"
 UNS = "Speculative / untested origin hypothesis"
