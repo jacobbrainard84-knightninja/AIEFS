@@ -240,12 +240,15 @@ NEW = [
  ("AUD-REPRO-B2A95", A, "Run b2a95dfbfbe3 reproduces the official run 5a9f093a2fe0 from the committed code (repository commit 6b49a7b): "
   "all 40 seeds; max absolute float difference 6.7e-16 (tolerance 1e-12); NaN patterns identical.", "Supported",
   "Implementation identity", "AI Agent Audits/evidence/reproductions/b2a95dfbfbe3_REPRODUCTION.md;AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.log;"
-  "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v2.log;audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_ERRATUM.md",
+  "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v2.log;audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_ERRATUM.md;"
+  "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.log;audits/reproductions/b2a95dfbfbe3/SHA256SUMS",
   "One run hash; environment numpy 2.5.4, pandas 3.0.6, python 3.13.5 (from the log header).", "(new)",
   "Supported (audit-verified)", "evidence/reproductions/b2a95dfbfbe3_REPRODUCTION.md (line 7) + (line 63) + compare_b2a95dfbfbe3.log",
   "Erratum 2026-10-28 (ERRATA_2026-10-28.md E10): the pinned compare_b2a95dfbfbe3.py checked NaN patterns only for the NPZ files, "
   "not for the scalar-summary CSV (pandas max() skips NaN). The v2 script (audits/reproductions/b2a95dfbfbe3/) adds the CSV NaN-mask "
-  "check: 0 mismatches over 348 NaN cells, max diff 6.66e-16, verdict REPRODUCED; re-run 2026-10-29 from the new location gives the same output."),
+  "check: 0 mismatches over 348 NaN cells, max diff 6.66e-16, verdict REPRODUCED; re-run 2026-10-29 from the new location gives the same output. "
+  "2026-10-29 (review r026, ERRATA E13): v3 adds +inf/-inf mask checks on the NPZ and CSV paths and takes max diffs over cells finite in "
+  "both runs: 0 NaN/+inf/-inf mask mismatches, 348 NaN and 0 inf cells per run, verdict REPRODUCED; SHA256SUMS in the same folder pins the files."),
  ("AUD-NOVELTY", A, "Novelty of the AIEF results is not established either way; the ingredients (delayed Kuramoto, Hebbian plasticity, "
   "normalisation) are prior art.", "Incomplete", "Conjecture", "AI Agent Audits/AIEFS_salvage.md §2", "First-pass literature search only.",
   "(project docs imply new mathematics)", "Not established (audit)", "resp1 ledger #12 (line 25) + §3 item 9 (line 48); salvage §2 (line 71)",
