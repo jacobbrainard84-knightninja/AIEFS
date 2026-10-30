@@ -169,6 +169,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python -m pytest -q -p no:cacheprovider tests/test_v4_1_held_event.py
+      # Current-tree counterpart of verify_inventory.py (which stays the e47bad1 gate and fails at [1/5]
+      # on later trees): snapshot pins, current inventory, vocabularies, Lean lock hashes, authority lock.
+      - name: verify_inventory_current.py
+        run: python audits/engineering/verify_inventory_current.py
       # Default run (no AIEF_RUN_SLOW_TESTS): expected 40 passed, 2 skipped (AUD-MODULAR-ORACLE).
       - name: modular platform tests
         working-directory: AIEF_Experiments/aief_modular_platform_v1_analysis_v4

@@ -19,6 +19,7 @@ python3 tools/ci/hygiene_scan.py --base origin/main --pii  # changed files: secr
 python3 tools/ci/hygiene_scan.py                         # whole tree: >95 MiB files, secret files/patterns
 python3 tools/ci/check_manifest.py                       # AI Agent Audits/evidence/verify_manifest.py --inputs
 python3 tools/ci/check_artifact_pins.py                  # registry/artifacts.csv sha256 pins vs the tree
+python3 tools/ci/check_current_inventory.py              # registry/artifacts_current.csv matches the tree (regenerate: registry/reconciliation/build_current_inventory.py)
 python3 tools/ci/check_modes.py                          # scripts not 100755 in the git index (warn-only)
 python3 -m unittest discover -s tools/ci/tests           # self-tests of the checks
 cd lean/AIEFProofs && ./check_lean.sh                    # only if lean/ changed; needs elan + Lean v4.33.1

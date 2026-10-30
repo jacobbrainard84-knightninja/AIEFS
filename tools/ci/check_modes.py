@@ -36,6 +36,20 @@ KNOWN_EXECUTABLES = (
     "tools/sync/download_new.sh",
     "tools/sync/tests/run_tests.sh",
     "tools/sync/untrack_artifacts.sh",
+    # Added by review r026 (integration/round5): command-line entry points with a #! line. The owner's
+    # git push restores their bits (OWNER_STEAMDECK_COMMANDS.md); until then --strict fails on them.
+    # Paths not tracked yet (the freezing branch) are reported as NOTICE, not errors.
+    "lean/AIEFProofsKn/check_lean_kn.sh",
+    "lean/AIEFFreezeCore/check_lean_freeze.sh",
+    "research/freezing/lean/check.sh",
+    "tools/ci/check_artifact_pins.py",
+    "tools/ci/check_current_inventory.py",
+    "tools/ci/check_modes.py",
+    "tools/ci/lean_presence.sh",
+    "audits/engineering/validate_registry_against_tree.py",
+    "audits/engineering/verify_inventory_current.py",
+    "registry/reconciliation/build_claims_reconciliation.py",
+    "registry/reconciliation/build_current_inventory.py",
 )
 EXEC_MODE = "100755"
 
