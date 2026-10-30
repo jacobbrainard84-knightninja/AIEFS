@@ -2,3 +2,4 @@
 import AIEFProofsKn.IncMatrixRank
 import AIEFProofsKn.CompleteGraphRightInverse
 import AIEFProofsKn.CompleteGraphKn
+import AIEFProofsKn.KernelDimFormula
