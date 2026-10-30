@@ -53,7 +53,8 @@ Framing, used in `CURRENT_STATUS.md` §4:
    `registry/reconciliation/build_claims_reconciliation.py`, not by hand.
 5. Before handing off, run the validators and report the results exactly:
    - `python "AI Agent Audits/evidence/verify_manifest.py"` and the same with `--inputs`
-   - `python audits/engineering/validate_registry_against_tree.py --base e47bad1 --edited-since <merge commit>`
+   - `python audits/engineering/validate_registry_against_tree.py --base e47bad1` (add `--edited-since <merge commit>`
+     only if that commit exists in your clone; the default list of merge-prep edits needs no extra commit)
    - `python audits/engineering/verify_inventory.py` (known to stop at check [1/5]; see `MERGE_PREP_REPORT.md`)
    - `lean/AIEFProofs/check_lean.sh` when Lean files change
 6. Commits are small and clearly described. Never rewrite history unless the owner asks for it.
