@@ -12,8 +12,10 @@
 # A project with required: false is SKIPPED with a warning only when its directory is absent, so
 # this workflow can merge before or after the research branches. If the directory exists but its
 # lakefile (lakefile.toml or lakefile.lean) or check script is missing, the job fails
-# (tools/ci/lean_presence.sh). Once both research branches are on main, set required: true on their
-# rows so that deleting a whole project also fails CI instead of skipping.
+# (tools/ci/lean_presence.sh). Every project whose directory is on the branch must have
+# required: true, so that deleting a whole project fails CI instead of skipping;
+# tools/ci/tests/test_lean_presence.py enforces this (AIEFProofsKn is required since research/lean-kn
+# was merged; flip AIEFFreezeCore to required: true in the same merge that brings research/freezing).
 name: Lean proof check
 
 on:
@@ -46,7 +48,7 @@ jobs:
       matrix:
         include:
           - { project: AIEFProofs,     script: check_lean.sh,        axiom_root: AIEFProofs,     required: true }
-          - { project: AIEFProofsKn,   script: check_lean_kn.sh,     axiom_root: AIEFProofsKn,   required: false }
+          - { project: AIEFProofsKn,   script: check_lean_kn.sh,     axiom_root: AIEFProofsKn,   required: true  }
           - { project: AIEFFreezeCore, script: check_lean_freeze.sh, axiom_root: AIEFFreezeCore, required: false }
     env:
       PROJECT_DIR: lean/${{ matrix.project }}

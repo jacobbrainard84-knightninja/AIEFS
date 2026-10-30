@@ -173,7 +173,8 @@ def steps_of(text):
     return ["\n".join(b) for b in blocks]
 
 
-def workflow_problems(text):
+def workflow_problems(text, repo_root=None):
+    # repo_root: also require required: true on every row whose lean/<project> directory exists there.
     """Ways lean.yml could bypass the presence gate; [] means none found."""
     problems = []
     if re.search(r"(?m)^\s*continue-on-error\s*:", text):
@@ -203,9 +204,17 @@ def workflow_problems(text):
         ifs = re.findall(r"(?m)^\s+if:\s*(.+?)\s*$", b)
         if len(ifs) != 1 or ifs[0] not in (GATE_IF, "always() && " + GATE_IF):
             problems.append(f"step after the gate is not gated exactly on the gate output: {b.split(chr(10))[0].strip()}")
-    if not re.search(r"(?m)^\s+- \{ project: AIEFProofs,.*required: true \}", text):
+    if not re.search(r"(?m)^\s+- \{ project: AIEFProofs,.*required: true\s*\}", text):
         problems.append("the base AIEFProofs row must be required: true")
+    for proj, req in matrix_rows(text):
+        if req != "true" and repo_root is not None and os.path.lexists(os.path.join(repo_root, "lean", proj)):
+            problems.append(f"lean/{proj} is on this branch, so its row must be required: true")
     return problems
+
+
+def matrix_rows(text):
+    """(project, required) for every `- { project: X, ..., required: Y }` matrix row."""
+    return re.findall(r"(?m)^\s+- \{ project: (\w+),.*required: (\w+)\s*\}", text)
 
 
 class WorkflowGuardTests(unittest.TestCase):
@@ -214,7 +223,7 @@ class WorkflowGuardTests(unittest.TestCase):
             self.wf = f.read()
 
     def test_real_workflow_has_no_bypass(self):
-        self.assertEqual(workflow_problems(self.wf), [])
+        self.assertEqual(workflow_problems(self.wf, REPO), [])
 
     def test_paths_filters_include_the_gate_script(self):
         self.assertEqual(self.wf.count('- "tools/ci/lean_presence.sh"'), 2)   # push + pull_request
@@ -250,6 +259,23 @@ class WorkflowGuardTests(unittest.TestCase):
     def test_detects_base_row_made_optional(self):
         self.assertTrue(self.mutated("axiom_root: AIEFProofs,     required: true",
                                      "axiom_root: AIEFProofs,     required: false"))
+
+    def test_matrix_has_the_three_projects(self):
+        self.assertEqual([p for p, _ in matrix_rows(self.wf)], ["AIEFProofs", "AIEFProofsKn", "AIEFFreezeCore"])
+
+    def test_detects_present_project_made_optional(self):
+        # A research project whose directory exists (here: a temp repo with lean/AIEFProofsKn) must be
+        # required: true; an absent one may stay required: false (the row is skipped with a warning).
+        with tempfile.TemporaryDirectory() as root:
+            os.makedirs(os.path.join(root, "lean", "AIEFProofsKn"))
+            kn_true = re.sub(r"(project: AIEFProofsKn,.*required: )\w+", r"\1true", self.wf)
+            kn_false = re.sub(r"(project: AIEFProofsKn,.*required: )\w+", r"\1false", self.wf)
+            fz_false = re.sub(r"(project: AIEFFreezeCore,.*required: )\w+", r"\1false", kn_true)
+            self.assertEqual(workflow_problems(fz_false, root), [])
+            self.assertTrue(workflow_problems(kn_false, root))
+            os.makedirs(os.path.join(root, "lean", "AIEFFreezeCore"))
+            self.assertTrue(workflow_problems(fz_false, root))
+
 
 if __name__ == "__main__":
     unittest.main()
