@@ -13,11 +13,24 @@ verdict on fields that v3 computed but ignored. Every failed gate adds a named e
   - each manifest's source_sha256 must be the sha256 of the source file that run used
   - the source diff must be exactly EXPECTED_SOURCE_DIFF (one tuple-unpacking rewrite)
   - config_hash labels must be exactly (rerun run id, official run id) in every seed file
-  - seed file NAMES must match one to one, and a missing or unreadable file is a named problem, not a crash
+  - seed file NAMES must match one to one
   - float fields: worst abs diff <= TOL (as before) AND worst relative diff <= RTOL (new; tighter, never looser)
+Added on the same branch after review r001 of 1250bbd (gaps G-A to G-E):
+  - the zip's sha256 must be EXPECTED_ZIP_SHA256 (G-B): the zip is not pinned anywhere else, and a zip whose rerun
+    seeds were replaced by the official seeds relabelled to the rerun id otherwise passed with diff 0
+  - an exact copy is SUSPICIOUS: a seed file with no field differing at all, or a scalar-summary CSV or branch
+    diagnostics with every numeric value exactly equal, is a problem (G-B). A genuine rerun differs at ~1e-16; on the
+    genuine data every seed file has 20 to 47 differing fields and the CSV and branch diagnostics differ at ~6e-16
+  - manifest key SETS must match apart from EXPECTED_DIFFERING_KEYS, so an added key fails even if its value is null (G-A)
+  - gated fields must be present: model/protocol/randomization/schema in both manifests, config_hash in every seed
+    file on both sides; absent on both sides is a problem, not a vacuous match (G-C, G-E)
+  - a missing, empty or unreadable file on EITHER side (official run dir, or the zip's manifest, CSV, branch
+    diagnostics, seed files or stub manifest), and text in a numeric CSV cell, is a named problem and a
+    NOT REPRODUCED verdict (exit 1), not a traceback (G-D). 1250bbd covered only the official side and seed files.
 Not gated, on purpose: zip_stub_model_matches_official. That compares a known-wrong stub inside the zip
 (runs/5a9f093a2fe0/manifest.json in the zip; b2a95dfbfbe3_REPRODUCTION.md documents it as the wrong parameters),
-not the rerun, and it is false on the genuine data. It stays an informational key.
+not the rerun, and it is false on the genuine data. It stays an informational key; only the stub's presence and
+readability are required (the zip is pinned, so a missing stub means a different zip).
 Run from the AIEFS repo root (needs numpy and pandas):
     python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py"
     python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py" --selftest   (synthetic checks only)
@@ -30,6 +43,7 @@ from pathlib import Path
 import numpy as np, pandas as pd
 
 TOL = 1e-12    # absolute, as in v1-v3
+EXPECTED_ZIP_SHA256 = "281bf33be105cb6219af7aecb9f8ae547459856c1548fdf646f5caee9f8d17ad"   # b2a95dfbfbe3_REPRODUCTION.md:22
 RTOL = 1e-12   # v4: relative, |x-y| / max(|x|,|y|); applied IN ADDITION to TOL, so it can only tighten
 LABELS = {"config_hash"}   # run-identity labels: expected to differ (the source hash feeds the config hash)
 EXPECTED_DIFFERING_KEYS = {"config_hash", "environment", "source_sha256"}
@@ -80,12 +94,32 @@ if "--selftest" in sys.argv[1:]:
     print("selftest OK"); sys.exit(0)
 if not ZIP.is_file() or not RRUN.is_dir(): print("run from the AIEFS repo root", file=sys.stderr); sys.exit(2)
 sha = lambda b: hashlib.sha256(b).hexdigest()
-zb = ZIP.read_bytes(); z = zipfile.ZipFile(io.BytesIO(zb))
-names = [n for n in z.namelist() if n.startswith(ZRUN) and not n.endswith("/")]
-zread = lambda rel: z.read(ZRUN + rel)
-out = {"comparator": "v4", "zip_folder": ZIP.parent.name, "zip_file": ZIP.name, "zip_sha256": sha(zb), "zip_run_dir": ZRUN,
-       "zip_run_files": len(names), "official_run": str(RRUN)}
+zb = ZIP.read_bytes()
+out = {"comparator": "v4", "zip_folder": ZIP.parent.name, "zip_file": ZIP.name, "zip_sha256": sha(zb),
+       "zip_sha256_expected": EXPECTED_ZIP_SHA256}
 problems = []
+if out["zip_sha256"] != EXPECTED_ZIP_SHA256:
+    problems.append(f"zip sha256 {out['zip_sha256']} is not EXPECTED_ZIP_SHA256 {EXPECTED_ZIP_SHA256}")
+
+def finish():
+    out["problems"] = problems; out["tolerance"] = TOL; out["rel_tolerance"] = RTOL
+    out["verdict"] = "NOT REPRODUCED" if problems else "REPRODUCED"
+    print(json.dumps(out, indent=1, default=str))
+    sys.exit(1 if problems else 0)
+
+try:
+    z = zipfile.ZipFile(io.BytesIO(zb))
+except Exception as e:
+    problems.append(f"zip unreadable ({type(e).__name__})"); finish()
+names = [n for n in z.namelist() if n.startswith(ZRUN) and not n.endswith("/")]
+out.update(zip_run_dir=ZRUN, zip_run_files=len(names), official_run=str(RRUN))
+
+def zread(rel):
+    """bytes of a member of the zip's rerun folder; a missing member raises FileNotFoundError like a missing file."""
+    try:
+        return z.read(ZRUN + rel)
+    except KeyError:
+        raise FileNotFoundError(ZRUN + rel) from None
 
 def load_npz(side, f, getbytes):
     """np.load from bytes; a missing or unreadable file is a named problem (v3 crashed with a Traceback)."""
@@ -98,7 +132,10 @@ def load_npz(side, f, getbytes):
     return None
 
 # --- manifests -------------------------------------------------------------------------------
-mz = json.loads(zread("manifest.json"))
+try:
+    mz = json.loads(zread("manifest.json"))
+except Exception as e:
+    mz = {}; problems.append(f"rerun manifest.json missing or unreadable ({type(e).__name__})")
 try:
     mr = json.loads((RRUN / "manifest.json").read_text())
 except Exception as e:
@@ -106,9 +143,14 @@ except Exception as e:
 for key in ("model", "protocol", "randomization", "schema"):
     out[f"{key}_equal"] = mz.get(key) == mr.get(key)
     if not out[f"{key}_equal"]: problems.append(f"manifest: {key} differs")
+    for side, m in (("rerun", mz), ("official", mr)):   # G-E: absent on both sides must not count as equal
+        if m and key not in m: problems.append(f"manifest: {key} missing in {side} manifest")
 out["manifest_keys_differing"] = sorted(k for k in set(mz) | set(mr) if mz.get(k) != mr.get(k))
 unexpected = sorted(set(out["manifest_keys_differing"]) - EXPECTED_DIFFERING_KEYS)
 if unexpected: problems.append(f"manifest: unexpected differing keys {unexpected}")
+out["manifest_keys_one_side_only"] = sorted(set(mz) ^ set(mr))   # G-A: .get() above treats an added null key as equal
+one_side = sorted(set(out["manifest_keys_one_side_only"]) - EXPECTED_DIFFERING_KEYS)
+if mz and mr and one_side: problems.append(f"manifest: key(s) present in only one manifest {one_side}")
 out["env_rerun"] = {k: v for k, v in mz.get("environment", {}).items() if k != "platform"}
 out["env_official"] = {k: v for k, v in mr.get("environment", {}).items() if k != "platform"}
 out["source_sha256_rerun"] = mz.get("source_sha256"); out["source_sha256_official"] = mr.get("source_sha256")
@@ -137,7 +179,7 @@ only_z, only_r = sorted(set(seeds) - set(oseeds)), sorted(set(oseeds) - set(seed
 if only_z: problems.append(f"seed files missing in official run: {only_z}")
 if only_r: problems.append(f"seed files only in official run: {only_r}")
 if not len(seeds) == len(oseeds) == N_SEEDS: problems.append(f"seed file count: rerun {len(seeds)}, official {len(oseeds)}, expected {N_SEEDS}")
-labels = {}; worst = 0.0; worst_rel = 0.0; nonzero = 0; byte_identical = 0; nfields = 0
+labels = {}; worst = 0.0; worst_rel = 0.0; nonzero = 0; byte_identical = 0; nfields = 0; exact_seeds = []
 for f in seeds:
     if f in only_z: continue
     zbytes = zread(f)
@@ -148,32 +190,51 @@ for f in seeds:
     if A is None or B is None: continue
     try:
         if set(A.files) != set(B.files): problems.append(f"{f}: field sets differ")
+        for side, X in (("rerun", A), ("official", B)):   # G-C: the label gate must not be vacuous
+            for k in LABELS - set(X.files): problems.append(f"{f}: {k} label missing in {side} run")
+        seed_fields = seed_nonzero = 0
         for k in sorted(set(A.files) & set(B.files)):
             if k in LABELS:
                 pair = (str(A[k]), str(B[k])); labels.setdefault(k, set()).add(pair)
                 if pair != (ZID, RID): problems.append(f"{f}:{k}: label {pair} is not ({ZID!r}, {RID!r})")
                 continue
-            nfields += 1; d = cmp_arrays(A[k], B[k])
-            if isinstance(d, str): problems.append(f"{f}:{k}: {d}"); continue
-            worst = max(worst, d[0]); worst_rel = max(worst_rel, d[1]); nonzero += d[0] > 0
+            nfields += 1; seed_fields += 1; d = cmp_arrays(A[k], B[k])
+            if isinstance(d, str): problems.append(f"{f}:{k}: {d}"); seed_nonzero += 1; continue
+            worst = max(worst, d[0]); worst_rel = max(worst_rel, d[1]); nonzero += d[0] > 0; seed_nonzero += d[0] > 0
+        if seed_fields and not seed_nonzero: exact_seeds.append(f)
     except Exception as e:   # a member that fails to decompress or parse
         problems.append(f"{f}: unreadable field ({type(e).__name__})")
 out.update(seed_files_rerun=len(seeds), seed_files_official=len(oseeds),
            seed_fields_compared=nfields, seed_fields_nonzero_diff=nonzero, seed_files_byte_identical=byte_identical,
+           seed_files_with_no_differing_field=len(exact_seeds),
            seed_worst_abs_diff=worst, seed_worst_rel_diff=worst_rel,
            seed_label_fields_rerun_vs_official={k: sorted(v) for k, v in labels.items()})
+if exact_seeds:
+    problems.append(f"SUSPICIOUS: {len(exact_seeds)} seed file(s) identical to the official run in every field "
+                    f"(a genuine rerun differs at ~1e-16), e.g. {exact_seeds[0]}")
 
 # --- scalar summary CSV --------------------------------------------------------------------------
-cz = pd.read_csv(io.BytesIO(zread(f"AIEF_1_4_{ZID}_scalar_summary.csv")))
+try:
+    cz = pd.read_csv(io.BytesIO(zread(f"AIEF_1_4_{ZID}_scalar_summary.csv")))
+except Exception as e:
+    cz = None; problems.append(f"scalar summary CSV: rerun file missing or unreadable ({type(e).__name__})")
 try:
     cr = pd.read_csv(RRUN / f"AIEF_1_4_{RID}_scalar_summary.csv")
 except Exception as e:
     cr = None; problems.append(f"scalar summary CSV: official file missing or unreadable ({type(e).__name__})")
-if cr is not None and list(cz.columns) == list(cr.columns) and cz.shape == cr.shape:
+if cz is not None and cr is not None and list(cz.columns) == list(cr.columns) and cz.shape == cr.shape:
     out["csv_shape"] = [list(cz.shape), list(cr.shape)]
-    num = cz.select_dtypes("number").columns
-    if list(num) != list(cr.select_dtypes("number").columns): problems.append("scalar summary CSV: numeric column sets differ")
-    xz, xr = cz[num].to_numpy(dtype=float), cr[num].to_numpy(dtype=float)
+    nz_, nr_ = list(cz.select_dtypes("number").columns), list(cr.select_dtypes("number").columns)
+    if nz_ != nr_: problems.append("scalar summary CSV: numeric column sets differ")
+    num = [c for c in cz.columns if c in nz_ or c in nr_]
+    xs = []
+    for side, df in (("rerun", cz), ("official", cr)):   # G-D: text in a numeric cell is a problem, not a ValueError
+        x = df[num].apply(pd.to_numeric, errors="coerce")
+        bad = (x.isna() & df[num].notna()).sum()
+        if bad.any(): problems.append(f"scalar summary CSV: non-numeric text in numeric cells of the {side} run: "
+                                      + ", ".join(f"{c} ({int(n)} cells)" for c, n in bad.items() if n))
+        xs.append(x.to_numpy(dtype=float))
+    xz, xr = xs
     mm = mask_mismatches(xz, xr)
     out["csv_nan_mask_mismatches"] = mm["NaN"]
     out["csv_posinf_mask_mismatches"] = mm["+inf"]; out["csv_neginf_mask_mismatches"] = mm["-inf"]
@@ -182,13 +243,16 @@ if cr is not None and list(cz.columns) == list(cr.columns) and cz.shape == cr.sh
     for name, n in mm.items():
         if n: problems.append(f"scalar summary CSV: {name} pattern differs in {n} cells")
     out["csv_worst_abs_diff"], out["csv_worst_rel_diff"] = diffs(xz, xr)
+    if (np.isfinite(xz) & np.isfinite(xr)).any() and out["csv_worst_abs_diff"] == 0:
+        problems.append("SUSPICIOUS: scalar summary CSV numeric cells all exactly equal to the official run "
+                        "(a genuine rerun differs at ~1e-16)")
     text = [c for c in cz.columns if c not in num]
     bad = {c: int((cz[c].astype(str) != cr[c].astype(str)).sum()) for c in text}
     out["csv_nonnumeric_columns"] = text
     out["csv_nonnumeric_equal"] = not any(bad.values())
     if not out["csv_nonnumeric_equal"]:
         problems.append("scalar summary CSV: non-numeric columns differ: " + ", ".join(f"{c} ({n} cells)" for c, n in bad.items() if n))
-elif cr is not None:
+elif cz is not None and cr is not None:
     out["csv_shape"] = [list(cz.shape), list(cr.shape)]; problems.append("scalar summary CSV columns/shape differ")
 
 # --- branch diagnostics --------------------------------------------------------------------------
@@ -205,18 +269,19 @@ if BZ is not None and BR is not None:
             else: bw = max(bw, d[0]); bw_rel = max(bw_rel, d[1])
     except Exception as e:
         problems.append(f"branch diagnostics: unreadable field ({type(e).__name__})")
+if nb and bw == 0 and not any(p.startswith("branch_diagnostics:") for p in problems):
+    problems.append("SUSPICIOUS: branch diagnostics all exactly equal to the official run (a genuine rerun differs at ~1e-16)")
 out["branch_diag_fields"] = nb; out["branch_diag_worst_abs_diff"] = bw; out["branch_diag_worst_rel_diff"] = bw_rel
 
 # --- informational only (see the docstring) -----------------------------------------------------
-stub = json.loads(z.read("runs/5a9f093a2fe0/manifest.json"))
-out["zip_also_contains_stub_runs_5a9f093a2fe0_manifest"] = True
+try:
+    stub = json.loads(z.read("runs/5a9f093a2fe0/manifest.json")); out["zip_also_contains_stub_runs_5a9f093a2fe0_manifest"] = True
+except Exception as e:
+    stub = {}; out["zip_also_contains_stub_runs_5a9f093a2fe0_manifest"] = False
+    problems.append(f"zip stub runs/5a9f093a2fe0/manifest.json missing or unreadable ({type(e).__name__})")
 out["zip_stub_model_matches_official"] = stub.get("model") == mr.get("model")
 
 wa = max(worst, out.get("csv_worst_abs_diff", 1.0), bw); wr = max(worst_rel, out.get("csv_worst_rel_diff", 1.0), bw_rel)
 if wa > TOL: problems.append(f"worst abs diff {wa!r} > TOL {TOL}")
 if wr > RTOL: problems.append(f"worst relative diff {wr!r} > RTOL {RTOL}")
-ok = not problems
-out["problems"] = problems; out["tolerance"] = TOL; out["rel_tolerance"] = RTOL
-out["verdict"] = "REPRODUCED" if ok else "NOT REPRODUCED"
-print(json.dumps(out, indent=1, default=str))
-sys.exit(0 if ok else 1)
+finish()

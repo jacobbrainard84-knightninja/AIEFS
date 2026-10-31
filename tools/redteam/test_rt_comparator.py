@@ -6,13 +6,18 @@ The comparator reads paths relative to its working directory, so each test build
 workspace: read-only symlinks to the zip folder and the two source files, plus a REAL copy of
 runs/5a9f093a2fe0 (the "official" side), which is then tampered. Expected verdict on every
 tampered copy: NOT REPRODUCED (exit 1) AND the specific reason in "problems" (every rejection test
-asserts its own needle, so a crash or an unrelated problem cannot count as a PASS)."""
+asserts its own needle, so a crash or an unrelated problem cannot count as a PASS).
+
+Zip-side tests (added after review r001 of 1250bbd: G-A to G-E) replace the "Project Histories" symlink with a real
+temp folder holding a REBUILT, reduced zip (the rerun folder plus the stub manifest, optionally tampered). A rebuilt zip
+can never match EXPECTED_ZIP_SHA256, so each of those tests asserts its own needle in addition to the sha problem."""
 import csv
 import io
 import json
 import os
 import shutil
 import unittest
+import zipfile
 
 import numpy as np
 
@@ -23,11 +28,23 @@ RUN = "runs/5a9f093a2fe0"
 CSV = "AIEF_1_4_5a9f093a2fe0_scalar_summary.csv"
 DIAG = "AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz"
 ZIP = os.path.join(REPO, "Project Histories", "workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip")
+ZRUN = "runs/frozen_production_20260806/b2a95dfbfbe3/"
+ZSTUB = "runs/5a9f093a2fe0/manifest.json"
+ZID, RID = "b2a95dfbfbe3", "5a9f093a2fe0"
+ZCSV, ZDIAG = f"AIEF_1_4_{ZID}_scalar_summary.csv", f"AIEF_1_4_{ZID}_branch_diagnostics.npz"
 
 
 def load_npz(p):
     with np.load(p, allow_pickle=False) as z:
         return {k: z[k] for k in z.files}
+
+
+def npz_bytes(d):
+    b = io.BytesIO(); np.savez(b, **d); return b.getvalue()
+
+
+def parse(out):
+    return json.loads(out[out.index("{"):out.rindex("}") + 1])
 
 
 @unittest.skipUnless(os.path.isfile(ZIP) and os.path.isdir(os.path.join(REPO, RUN)), "zip or official run missing")
@@ -98,6 +115,22 @@ class Comparator(TempDirMixin, unittest.TestCase):
 
     def seed_file(self):
         return sorted(f for f in os.listdir(self.run_dir) if f.startswith("seed_"))[0]
+
+    def rebuild_zip(self, edit=None, drop=()):
+        """Reduced copy of the zip (rerun folder + stub manifest) in a real temp 'Project Histories' folder.
+        edit(rel, bytes) -> bytes; rel is relative to the rerun folder, or the stub's full name. drop: rel names."""
+        ph = os.path.join(self.w, "Project Histories")
+        os.unlink(ph); os.makedirs(ph)
+        with zipfile.ZipFile(ZIP) as src, \
+                zipfile.ZipFile(os.path.join(ph, os.path.basename(ZIP)), "w", zipfile.ZIP_DEFLATED) as dst:
+            for n in src.namelist():
+                if n.endswith("/") or not (n.startswith(ZRUN) or n == ZSTUB):
+                    continue
+                rel = n[len(ZRUN):] if n.startswith(ZRUN) else n
+                if rel in drop:
+                    continue
+                data = src.read(n)
+                dst.writestr(n, edit(rel, data) if edit else data)
 
     # --- positive control ------------------------------------------------------------
     def test_00_control_untampered_copy_reproduces(self):
@@ -269,6 +302,121 @@ class Comparator(TempDirMixin, unittest.TestCase):
     def test_official_branch_diagnostics_deleted(self):
         os.unlink(os.path.join(self.run_dir, DIAG))
         self.verdict_rejected(f"{DIAG}: missing in official run")
+
+    # --- review r001 of 1250bbd: G-B (zip not pinned; exact copies) ----------------------------
+    def test_zip_rebuilt_unchanged_fails_only_on_zip_sha(self):
+        self.rebuild_zip()
+        out = self.verdict_rejected("zip sha256 ", "is not EXPECTED_ZIP_SHA256 281bf33be105cb6219af7aecb9f8ae547459856c1548fdf646f5caee9f8d17ad")
+        probs = parse(out)["problems"]
+        self.assertEqual(len(probs), 1, probs)   # same members, same data: every other gate still passes
+
+    def test_GB_zip_seeds_replaced_by_official_seeds_relabelled(self):
+        """Review r001 case 31: v4 at 1250bbd said REPRODUCED with diff 0."""
+        def edit(rel, data):
+            if rel.startswith("seed_"):
+                d = load_npz(os.path.join(self.run_dir, rel)); d["config_hash"] = np.array(ZID)
+                return npz_bytes(d)
+            return data
+        self.rebuild_zip(edit)
+        out = self.verdict_rejected("is not EXPECTED_ZIP_SHA256",
+                                    "SUSPICIOUS: 40 seed file(s) identical to the official run in every field")
+        self.assertNotIn("label", "".join(parse(out)["problems"]))   # the relabelling itself passes the label gate
+
+    def test_GB_zip_csv_replaced_by_official_csv(self):
+        with open(os.path.join(self.run_dir, CSV), "rb") as f:
+            official = f.read()
+        self.rebuild_zip(lambda rel, data: official if rel == ZCSV else data)
+        self.verdict_rejected("SUSPICIOUS: scalar summary CSV numeric cells all exactly equal")
+
+    def test_GB_zip_branch_diagnostics_replaced_by_official(self):
+        with open(os.path.join(self.run_dir, DIAG), "rb") as f:
+            official = f.read()
+        self.rebuild_zip(lambda rel, data: official if rel == ZDIAG else data)
+        self.verdict_rejected("SUSPICIOUS: branch diagnostics all exactly equal")
+
+    # --- G-D: zip-side missing / empty / garbled files give a verdict, not a traceback --------
+    def test_zip_manifest_missing(self):
+        self.rebuild_zip(drop=("manifest.json",))
+        self.verdict_rejected("rerun manifest.json missing or unreadable (FileNotFoundError)")
+
+    def test_zip_manifest_empty(self):
+        self.rebuild_zip(lambda rel, data: b"" if rel == "manifest.json" else data)
+        self.verdict_rejected("rerun manifest.json missing or unreadable (JSONDecodeError)")
+
+    def test_zip_csv_missing(self):
+        self.rebuild_zip(drop=(ZCSV,))
+        self.verdict_rejected("scalar summary CSV: rerun file missing or unreadable (FileNotFoundError)")
+
+    def test_zip_csv_empty(self):
+        self.rebuild_zip(lambda rel, data: b"" if rel == ZCSV else data)
+        self.verdict_rejected("scalar summary CSV: rerun file missing or unreadable (EmptyDataError)")
+
+    def test_zip_branch_diagnostics_missing(self):
+        self.rebuild_zip(drop=(ZDIAG,))
+        self.verdict_rejected(f"{ZDIAG}: missing in rerun run")
+
+    def test_zip_seed_member_empty(self):
+        f = self.seed_file()
+        self.rebuild_zip(lambda rel, data: b"" if rel == f else data)
+        self.verdict_rejected(f"{f}: unreadable in rerun run")
+
+    def test_zip_stub_manifest_missing(self):
+        self.rebuild_zip(drop=(ZSTUB,))
+        out = self.verdict_rejected(f"zip stub {ZSTUB} missing or unreadable (KeyError)")
+        self.assertIn('"zip_also_contains_stub_runs_5a9f093a2fe0_manifest": false', out)
+
+    def _text_cell(self, rows):
+        j, _ = self.first_finite_numeric_cell(rows)
+        name = rows[0][j]; rows[1][j] = "abc"
+        return name
+
+    def test_official_csv_text_in_numeric_cell(self):
+        names = []
+        self.edit_csv(lambda rows: names.append(self._text_cell(rows)))
+        self.verdict_rejected(f"non-numeric text in numeric cells of the official run: {names[0]} (1 cells)")
+
+    def test_zip_csv_text_in_numeric_cell(self):
+        names = []
+        def edit(rel, data):
+            if rel != ZCSV:
+                return data
+            rows = list(csv.reader(io.StringIO(data.decode())))
+            names.append(self._text_cell(rows))
+            b = io.StringIO(); csv.writer(b, lineterminator="\n").writerows(rows); return b.getvalue().encode()
+        self.rebuild_zip(edit)
+        self.verdict_rejected(f"non-numeric text in numeric cells of the rerun run: {names[0]} (1 cells)")
+
+    # --- G-A: manifest key sets ----------------------------------------------------------------
+    def test_manifest_null_key_added(self):
+        """Review r001 case 06: a key added with value null passed the .get()-based differing-keys check."""
+        self.set_manifest(lambda m: m.__setitem__("notes", None))
+        out = self.verdict_rejected("manifest: key(s) present in only one manifest ['notes']")
+        self.assertNotIn("unexpected differing keys", out)   # the old check alone would still accept it
+
+    # --- G-C / G-E: gated fields must be present on both sides ------------------------------------
+    def test_seed_config_hash_removed_on_both_sides(self):
+        """Review r001 case 35 (one seed): the label gate was vacuous when the field was absent on both sides."""
+        f = self.seed_file()
+        self.edit_npz(f, lambda d: d.pop("config_hash"))
+        def edit(rel, data):
+            if rel != f:
+                return data
+            d = load_npz(io.BytesIO(data)); d.pop("config_hash"); return npz_bytes(d)
+        self.rebuild_zip(edit)
+        out = self.verdict_rejected(f"{f}: config_hash label missing in rerun run",
+                                    f"{f}: config_hash label missing in official run")
+        self.assertNotIn(f"{f}: field sets differ", out)   # sets are equal, so only the presence gate catches it
+
+    def test_manifest_model_removed_on_both_sides(self):
+        """Review r001 case 39: None == None counted as equal."""
+        self.set_manifest(lambda m: m.pop("model"))
+        def edit(rel, data):
+            if rel != "manifest.json":
+                return data
+            m = json.loads(data); m.pop("model"); return json.dumps(m).encode()
+        self.rebuild_zip(edit)
+        out = self.verdict_rejected("manifest: model missing in rerun manifest", "manifest: model missing in official manifest")
+        self.assertIn('"model_equal": true', out)   # equality alone is vacuous here
 
     def test_selftest_still_passes(self):
         rc, out = run([PY, CMP, "--selftest"], cwd=self.w)

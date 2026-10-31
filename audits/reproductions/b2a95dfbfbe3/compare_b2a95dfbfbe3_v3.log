@@ -1,4 +1,4 @@
-$ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py"   (from the repo root at 395ea53 + red-team suite, branch fix/comparator-v4-gates; numpy 2.5.4, pandas 3.0.6, python 3.13.5; 2026-10-31)
+$ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py"   (from the repo root, branch review/r026-fixes on audit/nanfix-v2 cbf2ae7; numpy 2.5.4, pandas 3.1.0, python 3.13.5; 2026-10-29)
 {
  "zip_folder": "Project Histories",
  "zip_file": "workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip",
@@ -82,4 +82,8 @@ $ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py"   (from 
  "tolerance": 1e-12,
  "verdict": "REPRODUCED"
 }
+exit 0
+
+$ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py" --selftest
+selftest OK
 exit 0

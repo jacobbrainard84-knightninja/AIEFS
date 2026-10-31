@@ -53,9 +53,10 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (84 tests: 73 PASS incl. 11 controls, 11 GAP)
+## Results (100 tests: 89 PASS incl. 11 controls, 11 GAP)
 
-Run on base `395ea53` (main), plus fix #1 (comparator v4, branch `fix/comparator-v4-gates`).
+Run on base `395ea53` (main), plus fix #1 (comparator v4, branch `fix/comparator-v4-gates`, including the
+review r001 additions: 16 comparator tests).
 The original run (74 tests: 61 PASS, 13 GAP) predates fix #1.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
@@ -109,7 +110,8 @@ The original run (74 tests: 61 PASS, 13 GAP) predates fix #1.
 Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py`
 (run unmodified; listed in that folder's `SHA256SUMS`) on a temp copy of `runs/5a9f093a2fe0`.
 Every rejection must be a real verdict: NOT REPRODUCED, exit 1, no traceback, and the specific
-reason in `problems`.
+reason in `problems`. Zip-side tests write a rebuilt, reduced zip into a real temp `Project Histories` folder. A
+rebuilt zip never matches the pinned zip sha256, so each such test also asserts its own reason.
 
 Fix #1 (`fix/comparator-v4-gates`, 2026-10-31) closed the two comparator GAPs (G10, G11). Those tests
 are now normal tests. In the "v3" column, *accepted* means v3 said REPRODUCED and *crash* means v3
@@ -142,10 +144,25 @@ died with a traceback instead of giving a verdict.
 | rerun source file gets an extra code line | PASS ("code line(s) differ") | **accepted** |
 | official scalar-summary CSV deleted | PASS | crash |
 | official branch diagnostics deleted | PASS | crash |
+| *Review r001 of `1250bbd` (G-A to G-E). "1250bbd" column: v4 before these gates* | | *1250bbd* |
+| zip rebuilt with the same members (control for the zip pin) | PASS (only problem: "is not EXPECTED_ZIP_SHA256") | **accepted** |
+| zip seeds replaced by official seeds relabelled to the rerun id (G-B) | PASS (zip sha; "SUSPICIOUS: 40 seed file(s) identical") | **accepted** (diff 0) |
+| zip CSV replaced by the official CSV (G-B) | PASS ("SUSPICIOUS: scalar summary CSV") | **accepted** |
+| zip branch diagnostics replaced by official (G-B) | PASS ("SUSPICIOUS: branch diagnostics") | **accepted** |
+| zip manifest missing / empty (G-D) | PASS ("rerun manifest.json missing or unreadable"; 2 tests) | crash |
+| zip CSV missing / empty (G-D) | PASS ("rerun file missing or unreadable"; 2 tests) | crash |
+| zip branch diagnostics missing (G-D) | PASS ("missing in rerun run") | crash |
+| zip seed member empty | PASS ("unreadable in rerun run") | PASS |
+| zip stub manifest missing (G-D) | PASS ("zip stub … missing or unreadable") | crash |
+| text "abc" in a numeric CSV cell, official / zip side (G-D) | PASS ("non-numeric text in numeric cells"; 2 tests) | crash |
+| official manifest gets `"notes": null` (G-A) | PASS ("present in only one manifest ['notes']") | **accepted** |
+| seed `config_hash` removed on both sides (G-C) | PASS ("config_hash label missing" in both runs) | **accepted** |
+| manifest `model` removed from both manifests (G-E) | PASS ("model missing in rerun/official manifest") | **accepted** |
 | --selftest still passes | PASS ("selftest OK") | n/a |
 
 Not gated, on purpose: `zip_stub_model_matches_official`. It is false on the genuine data, because the zip's stub
-manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md`. See the v4 section of the folder's ERRATUM.
+manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md` (line 50: N = 12, dt = 0.01, T_window = 1.0,
+eta = 0.1). Only its presence and readability are gated. See the v4 section of the folder's ERRATUM.
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
 
