@@ -2,28 +2,29 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 8,
-  "next_round": 9,
-  "total_sources": 43,
+  "last_round_completed": 9,
+  "next_round": 10,
+  "total_sources": 45,
   "sources_per_round": {
     "1": 16,
     "2": 12,
     "3": 5,
     "4": 5,
     "6": 1,
-    "7": 4
+    "7": 4,
+    "9": 2
   },
   "open_leads": 0,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "9": {
-      "theme": "ONE NAMED GAP, ONE TESTABLE QUESTION, AND STOP ADDING",
+    "10": {
+      "theme": "THE LITERATURE LAYER IS DONE. Everything left is either numerical or an owner decision.",
+      "honest_assessment": "Nine rounds, 45 sources, 0 open leads, 47 of 76 claims adjudicated, 23 of 24 AUD-* claims. No claim in the registry has been refuted by the literature. The remaining 29 unadjudicated claims are 12 retired S rows, 6 CF rows that are textbook or conjectural, 7 SSRH-ORIG origin hypotheses awaiting an owner scope decision, AUD-V4-RECOVERY-WORDING which no bibliography can attest, and 3 studies with no external frame. Further searching will not move a verdict.",
       "targets": [
-        "HIGHEST VALUE, AND IT IS NOT LITERATURE: test whether the AIEF capacity gate s_i = min(1, c/(q_i+eps)) behaves like Miller-MacKay multiplicative enforcement, subtractive enforcement, or neither (round 8 F45). That single experiment settles whether the k*eta/c rate law is explained by LIT-0043 or merely resembles its form. Rename AUD-GATE only after.",
-        "THE ONE NAMED LITERATURE GAP (round 8 F49): no source on exploratory-vs-confirmatory analysis / preregistration. One good source would let AUD-LABEL be adjudicated and would strengthen AUD-HELDOUT-LABEL. This is a better use of a search than anything else left.",
-        "Optional: read the LIT-0041 and LIT-0042 abstracts (still VERIFIED_METADATA) to complete the prior-art cluster at VERIFIED_FULL.",
-        "Do NOT adjudicate SSRH-ORIG-01..07 without an owner decision - they are origin hypotheses, not repository results; primary sources are 31 MB of PDFs in Project Origins/.",
-        "The remaining 30 unadjudicated claims are 12 retired S rows, 6 CF rows (textbook/conjectural), AUD-LABEL and AUD-V4-RECOVERY-WORDING (no defensible source), and 10 rows with no external frame. Diminishing returns; say so."
+        "DO NOT run another literature round without a specific question. The marginal round is now negative value.",
+        "THE THREE WORTH DOING, all outside a bibliography: (1) the three-way gate experiment (round 9 F50/F51) - does the per-edge cap select an attractor distinct from global-multiplicative and subtractive? (2) the timestep convergence study (AUD-TIMESTEP), now correctly framed as analysis of the solution map rather than truncation error. (3) make the modular oracle test runnable without a secret environment, or stop calling the default suite certification (AUD-MODULAR-ORACLE).",
+        "OWNER DECISIONS OUTSTANDING: apply the 11+9+6+6 proposed amendments across rounds 3,5,7,8,9; decide whether SSRH-ORIG-01..07 are in scope for a literature layer at all; and PR #1 is still open, MERGEABLE, failing only Hygiene scan.",
+        "If a literature round is run: the only defensible question left is inside LIT-0039's 120 pages - is there an irregular adaptive network example that narrows round 9's structural novelty claim?"
       ]
     }
   },
@@ -49,15 +50,18 @@
     "ROUND 8: 46/76 claims adjudicated. AUD-* is 22/24. No AUD claim is refuted.",
     "ROUND 8 OPEN QUESTION (highest value in the layer): is the AIEF capacity gate multiplicative, subtractive, or neither in Miller-MacKay's (LIT-0043) sense? It is a per-node min-endpoint cap, so probably neither - which would mean AIEFS_salvage.md's claim that multiplicative normalisation 'produces the k*eta/c rates' is unsupported as stated, even though the rate law may be correct.",
     "ROUND 8 NAMED COVERAGE GAP: the bibliography has no source on exploratory-vs-confirmatory analysis or preregistration. AUD-LABEL cannot be adjudicated without one.",
-    "ROUND 8: bears_on_ids is a living mapping, not part of the frozen record. _build_round08.py verifies all 43 snapshot hashes before and after and asserts no identity field changed."
+    "ROUND 8: bears_on_ids is a living mapping, not part of the frozen record. _build_round08.py verifies all 43 snapshot hashes before and after and asserts no identity field changed.",
+    "ROUND 9 SETTLED THE GATE FORM FROM CODE: B *= min(scale_i, scale_j) is a PER-EDGE factor, so B's direction is not preserved and Miller-MacKay's (LIT-0043) convergence theorem is inapplicable. AIEFS_salvage.md's claim that multiplicative normalisation produces the k*eta/c rates is unsupported as stated; the rate law itself is verified and not in doubt.",
+    "ROUND 9 REVERSED THE NOVELTY FRAMING: the specific prior-art models are regular - Timms & English are 1D/2D lattices with periodic BCs, Picallo & Riecke are all-to-all, Earl & Strogatz require uniform in-degree k. The residue is STRUCTURAL (irregular adaptive hypergraph with per-node caps) rather than a three-ingredient subtraction. Round 7's reading was based on titles, not models.",
+    "ROUND 9 RE-VERIFICATION POLICY: LIT-0041/0042 abstracts were read; snapshots and verification_level were deliberately left byte-identical and the new evidence was appended to notes. The frozen record is never rewritten; new evidence goes where new evidence goes. Consequence: verification_level now UNDERSTATES those two sources, which is the accepted cost."
   ],
-  "claims_adjudicated": 46,
+  "claims_adjudicated": 47,
   "adjudication": {
     "file": "ADJUDICATION.csv",
-    "claims_covered": 46,
+    "claims_covered": 47,
     "claims_total": 76,
     "verdicts": {
-      "SUPPORTED": 11,
+      "SUPPORTED": 12,
       "SUPPORTED_WITH_SCOPE": 20,
       "CONTEXT_ONLY": 3,
       "VALIDATED_RETIREMENT": 6,
@@ -65,13 +69,13 @@
       "BOUNDED": 0
     },
     "mapping_health": {
-      "COMPLETE": 43,
+      "COMPLETE": 44,
       "INCOMPLETE": 2,
       "WRONG": 1
     },
     "severity": {
       "HIGH": 4,
-      "MEDIUM": 8,
+      "MEDIUM": 9,
       "LOW": 14,
       "NONE": 20
     },
@@ -79,10 +83,10 @@
       "PRESENT": 26,
       "RELOCATED": 3,
       "UNRESOLVED": 0,
-      "NOT_APPLICABLE": 17
+      "NOT_APPLICABLE": 18
     },
     "baseline": "audits/literature/baseline/claims.csv",
-    "aud_claims_covered": "22/24"
+    "aud_claims_covered": "23/24"
   },
   "registry_baseline": {
     "pinned_in": "audits/literature/baseline/",

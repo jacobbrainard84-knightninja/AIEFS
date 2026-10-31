@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0044",
+  "retrieved": "2026-10-31",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://doi.org/10.1073/pnas.1708274114",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "The preregistration revolution",
+    "authors": "Nosek, B. A.; Ebersole, C. R.; DeHaven, A. C.; Mellor, D. T.",
+    "year": "2018",
+    "venue": "Proceedings of the National Academy of Sciences 115(11), pp. 2600-2606",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1073/pnas.1708274114"
+  },
+  "verbatim_excerpt": "PNAS 115(11):2600-2606, 2018. 'Progress in science relies in part on generating hypotheses with existing observations and testing hypotheses with new observations. This distinction between postdiction and prediction is appreciated conceptually but is not respected in practice. Mistaking generation of postdictions with testing of predictions reduces the credibility of research findings. ... An effective solution is to define the research questions and analysis plan before observing the research outcomes - a process called preregistration. Preregistration distinguishes analyses and outcomes that result from predictions from those that result from postdictions.'",
+  "excerpt_provenance": "publisher landing page, abstract read directly"
+}

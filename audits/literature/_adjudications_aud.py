@@ -55,27 +55,30 @@ AUD_ADJ = [
         verdict="SUPPORTED_WITH_SCOPE", mapping_health="COMPLETE",
         producing_code="PRESENT", severity="HIGH",
         verdict_basis=(
-            "The no-go half is correct and well argued: the gate is not a metric, KL or Bregman "
-            "projection onto the capacity set. The NOMENCLATURE half is a term-of-art mismatch, "
-            "and this is the highest-value finding of the round. LIT-0043 defines 'multiplicative' "
-            "and 'subtractive' constraint enforcement precisely: multiplicative means the whole "
-            "weight vector is rescaled by a common factor so the constraint holds, and Miller & "
-            "MacKay show that is what makes dynamics converge to the principal eigenvector of the "
-            "unconstrained operator; subtractive drives almost every weight to a bound. The AIEF "
-            "gate s_i = min(1, c/(q_i+eps)) is NEITHER: it caps each node independently at its own "
-            "threshold, with no common rescaling and no conserved sum. Calling it 'node-strength "
-            "multiplicative normalisation' borrows a term whose defining property (a single global "
-            "scale factor) it does not have. This is the same class of defect as ERRATA E6 on "
-            "'cycle kernel' - a correct computation under a name from a different object - and it "
-            "matters because LIT-0043's whole result is that the CHOICE of enforcement determines "
-            "the attractor."
+            "THE FORM IS NOW SETTLED FROM THE CODE, not from inference. "
+            "AIEF_1_3_falsification_updated.py:446-447 reads: scale = np.minimum(1.0, cap / "
+            "(row_sum_pre + ZERO_TOL)); B *= np.minimum.outer(scale, scale). So each EDGE is "
+            "multiplied by the MINIMUM OF TWO NODE-SPECIFIC FACTORS - not by a single global "
+            "factor, and nothing is subtracted. That is neither of Miller & MacKay's (LIT-0043) "
+            "two enforcement methods: their multiplicative case rescales the whole weight vector "
+            "by ONE common factor, which is what preserves direction and makes the dynamics "
+            "converge to the principal eigenvector of the unconstrained operator; their "
+            "subtractive case pulls weights to the bounds. Because AIEF's factor varies edge by "
+            "edge, the gate does NOT preserve the direction of B, so LIT-0043's convergence "
+            "theorem simply does not apply to it. The label 'node-strength multiplicative "
+            "normalisation' is half defensible - weights ARE multiplied, and the scale IS derived "
+            "from node strength - but 'multiplicative' there means 'not additive', which is a "
+            "different property from the one that generates Miller-MacKay's result. The no-go "
+            "half of the claim is correct and well argued: it is not a metric, KL or Bregman "
+            "projection onto the capacity set."
         ),
         required_change=(
-            "Rename. 'Node-strength multiplicative normalisation' should become something like "
-            "'per-node capped admissibility scaling' - the gate is a min-endpoint cap, not a "
-            "constraint-conserving rescaling. Keep the no-go statement verbatim; it is correct. If "
-            "a link to LIT-0043 is wanted, it must be the honest one: this gate is neither of the "
-            "two enforcement methods that paper compares."
+            "Rename to something like 'per-edge capped admissibility scaling' and state the "
+            "property that matters: the rescaling factor is per-edge (min of two node factors), "
+            "so it does not preserve the direction of B and LIT-0043's convergence theorem is "
+            "inapplicable. Keep the no-go statement verbatim - it is correct. Consider adding the "
+            "three-way comparison as a testable claim: global-multiplicative, subtractive, and "
+            "this per-edge cap should be run on one small network and their attractors compared."
         ),
     ),
     dict(
@@ -126,10 +129,13 @@ AUD_ADJ = [
             "The strongest formal claim in the corpus: an exact one-step multiplier lambda = "
             "(1-gamma*dt) s_J on the unsigned-incidence controller kernel, with five explicitly "
             "stated hypotheses, checked on 374 components, and a residual it does not explain. "
-            "LIT-0043 is the right external anchor and the repository already reached for it: "
-            "normalisation-as-decay is precisely the Miller-MacKay mechanism by which a conserving "
-            "constraint contributes an extra weight-proportional decay, which is where the -1/T_w "
-            "and the k*eta/c structure come from. On the unexplained ~2e-8 residual, the claim's "
+            "LIT-0043 is the external anchor the repository reached for, but round 9 shows the "
+            "mapping is looser than that: the gate multiplies each edge by min of two node "
+            "factors (see the AUD-GATE row), so it is not Miller-MacKay multiplicative "
+            "enforcement and the -1/T_w + k*eta/c structure is NOT explained by that paper's "
+            "mechanism. The rate law may still be exactly right - it is verified to 2.1e-8 - but "
+            "its DERIVATION currently has no cited basis, and AIEFS_salvage.md's claim that "
+            "multiplicative normalisation produces it is unsupported as stated. On the unexplained ~2e-8 residual, the claim's "
             "own suspicion (finite-difference error on a component with delta in [1e-9, 1e-8)) is "
             "the literature-consistent one: LIT-0014 puts a difference step of that size at the "
             "edge of representable precision against a 2.1e-10 agreement for the well-resolved "
@@ -275,6 +281,33 @@ AUD_ADJ = [
         required_change=(
             "Attach LIT-0013/0012/0014/0038. State that one run hash is one data point and name "
             "what a second independent hash would add."
+        ),
+    ),
+    dict(
+        claim_id="AUD-LABEL", claim_class="EMPIRICAL", literature_role="SCOPE_ONLY",
+        verdict="SUPPORTED", mapping_health="COMPLETE",
+        producing_code="NOT_APPLICABLE", severity="MEDIUM",
+        verdict_basis=(
+            "The claim was blocked in round 8 for lack of any methodology source; that gap is now "
+            "closed and the claim survives intact. What it asserts is a labelling rule - audit "
+            "analyses are 'controlled exploratory analyses with a fixed recorded design' and "
+            "'nothing in the repo was preregistered' - and LIT-0044 supplies exactly the "
+            "distinction it needs: postdiction versus prediction, with preregistration as the "
+            "operation that separates them. The key point from that paper is that the failure mode "
+            "is not dishonesty but hindsight bias - a vague prediction can be rationalised after "
+            "the fact as having been supported - which is why 'exploratory with a fixed recorded "
+            "design' is a coherent and honest category rather than a hedge. LIT-0045 names the "
+            "thing the label is avoiding: HARKing, presenting a post hoc hypothesis as an a priori "
+            "one. The claim does the opposite of HARKing - it discloses the absence of "
+            "preregistration - and the literature says that disclosure costs the confirmatory "
+            "interpretation while leaving the exploratory one intact. That is the correct trade and "
+            "the claim already makes it."
+        ),
+        required_change=(
+            "Attach LIT-0044 and LIT-0045. State the consequence rather than only the rule: no "
+            "result in this repository may be described as confirmatory, and 'fixed recorded "
+            "design' does not substitute for preregistration because it is still post hoc. That "
+            "belongs in the claim, not only in the audit conversation."
         ),
     ),
     dict(
