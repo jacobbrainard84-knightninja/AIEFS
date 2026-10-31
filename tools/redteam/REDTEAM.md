@@ -74,7 +74,7 @@ Run on base `395ea53` (main).
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
 | **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| verifier deleted (was GAP G2; fixed on `fix/check-manifest-missing-verifier`) | check_manifest.py (line 41) | PASS (ERROR "manifest verifier missing", exit 1) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 

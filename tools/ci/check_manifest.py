@@ -11,9 +11,11 @@ It looks for these verifiers (repo-relative) and runs each one that exists, from
     AI Agent Audits/evidence/verify_manifest.py   (checks audit_manifest.json: size + sha256 of every
                                                    published audit file, and with --inputs the hashed
                                                    repository inputs such as runs/ and the 1.3/1.4 scripts)
-If none exists, it prints a notice and exits 0 (not a failure). This wrapper adds no hashes of its own.
+A listed verifier that is missing is an ERROR, not a skip: the check fails closed, because a deleted or
+moved verifier would otherwise turn the CI manifest check into a silent pass (red-team gap G2).
+This wrapper adds no hashes of its own.
 
-Exit status: 0 = all verifiers passed or none present, 1 = a verifier failed, 2 = usage error.
+Exit status: 0 = all verifiers present and passed, 1 = a verifier failed or is missing, 2 = usage error.
 """
 import argparse
 import os
@@ -38,7 +40,11 @@ def main(argv=None):
     ran, failed = 0, 0
     for rel, extra in VERIFIERS:
         if not os.path.isfile(os.path.join(repo, rel)):
-            print(f"NOTICE  {rel} not found; skipped")
+            failed += 1
+            print(f"ERROR   {rel} not found; manifest verifier missing (deleted or moved?), "
+                  f"so the manifest hashes were NOT checked")
+            if os.environ.get("GITHUB_ACTIONS") == "true":
+                print(f"::error file={rel}::manifest verifier missing; manifest hashes not checked")
             continue
         cmd = [sys.executable, rel] + ([] if a.no_inputs else extra)
         print("$ " + " ".join(f'"{c}"' if " " in c else c for c in cmd))
@@ -50,8 +56,6 @@ def main(argv=None):
             print(f"ERROR   {rel} exited {rc}")
             if os.environ.get("GITHUB_ACTIONS") == "true":
                 print(f"::error file={rel}::manifest verification failed (exit {rc})")
-    if ran == 0 and os.environ.get("GITHUB_ACTIONS") == "true":
-        print("::notice::no manifest verifier found; manifest check skipped")
     print(f"== result: {ran} verifier(s) run, {failed} failed -> {'FAIL' if failed else 'PASS'}")
     return 1 if failed else 0
 
