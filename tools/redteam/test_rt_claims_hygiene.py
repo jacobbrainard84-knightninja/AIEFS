@@ -9,7 +9,7 @@ import subprocess
 import unittest
 import zipfile
 
-from rtcommon import PY, REPO, TempDirMixin, gap, run
+from rtcommon import PY, REPO, TempDirMixin, farm, gap, materialize, run
 
 LINT = os.path.join(REPO, "tools/ci/lint_claims.py")
 SCAN = os.path.join(REPO, "tools/ci/hygiene_scan.py")
@@ -18,10 +18,13 @@ SCAN = os.path.join(REPO, "tools/ci/hygiene_scan.py")
 class ClaimsLint(TempDirMixin, unittest.TestCase):
     def setUp(self):
         super().setUp()
-        self.root = os.path.join(self.tmp, "repo")
+        # Symlink mirror of the tree (cited artifacts must resolve); the three files the tests edit
+        # are replaced by real temp copies, so the repo files are never written.
+        self.root = farm(os.path.join(self.tmp, "repo"))
         for rel in ("registry/README.md", "registry/claims.csv", "tools/ci/claim_statuses.txt"):
-            os.makedirs(os.path.dirname(os.path.join(self.root, rel)), exist_ok=True)
-            shutil.copy(os.path.join(REPO, rel), os.path.join(self.root, rel))
+            p = materialize(self.root, rel)
+            os.unlink(p)
+            shutil.copy(os.path.join(REPO, rel), p)
         with open(os.path.join(self.root, "registry/claims.csv"), newline="") as f:
             r = csv.DictReader(f)
             self.cols, self.rows = r.fieldnames, list(r)
@@ -69,20 +72,35 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.write()
         self.assertRejected(*self.lint())
 
-    @gap("lint_claims.py: a row citing an artifact that does not exist passes")
-    def test_GAP_row_citing_nonexistent_artifact(self):
+    # Formerly GAP G3 (fixed on fix/lint-claims-artifacts).
+    def test_row_citing_nonexistent_artifact(self):
         self.rows.append(self.fake_row(supporting_artifacts="runs/000000000000;results/no_such_file.npz"))
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), "RT-FAKE-01: cited artifact does not exist: 'runs/000000000000'",
+                            "RT-FAKE-01: cited artifact does not exist: 'results/no_such_file.npz'")
 
-    @gap("lint_claims.py: a false claim marked Supported with a formal-proof scope passes")
-    def test_GAP_false_claim_marked_proved(self):
+    # Formerly GAP G4 (fixed on fix/lint-claims-artifacts). README.md exists and is even registered as
+    # 'Formalized theorem' in registry/artifacts.csv, but it is not a Lean proof.
+    def test_false_claim_marked_proved(self):
         self.rows.append(self.fake_row(
             statement="The settle threshold is R* = 0.40, proved in Lean.",   # false: R* = 0.4543
             artifact_status="Supported", audited_status="Supported",
             evidence_scope="Formal proof", supporting_artifacts="lean/AIEFProofs/README.md"))
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof (evidence_scope 'Formal proof') "
+                                          "but cites no existing .lean file")
+
+    def test_proved_in_lean_statement_needs_lean_file(self):
+        self.rows.append(self.fake_row(statement="R* = 0.40, proved in Lean."))  # scope stays experimental
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof")
+
+    def test_control_formal_row_citing_real_lean_file_passes(self):
+        self.rows.append(self.fake_row(evidence_scope="Formalized theorem",
+                                       supporting_artifacts="lean/AIEFProofs/AIEFProofs/ControllerFiber.lean"))
+        self.write()
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out[-2000:])
 
     @gap("lint_claims.py: registry/claims.csv deleted -> NOTICE and exit 0")
     def test_GAP_claims_file_missing(self):

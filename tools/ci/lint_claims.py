@@ -32,6 +32,16 @@ Extra rule (warning): rows whose claim_id starts with SSRH-ORIG- are untested or
 They must never be labelled Retired (Retired / Rejected / Quarantined are reserved for claims
 that were tested and failed, or were withdrawn). Such a label produces a warning.
 
+Artifact rules (errors, added for red-team G3/G4, see tools/redteam/REDTEAM.md):
+- Every ';'-separated entry of supporting_artifacts that looks like a path (contains '/' or its first
+  word has a file extension) must resolve to a file or folder in the tree. Trailing words, ':LINE'
+  and '§section' suffixes are allowed ("AI Agent Audits/x.md §2.1"). Plain prose entries ("direct
+  matrix multiplication") are not checked. Known gaps are listed, with a reason, in KNOWN_MISSING_ARTIFACTS.
+- A row that claims a formal / Lean proof (evidence_scope 'Formalized theorem' or any scope mentioning
+  formal/Lean/proof, or a statement such as "proved in Lean") must cite at least one existing .lean
+  file. A registry row is not enough: registry/artifacts.csv marks non-proof files (README.md, CI
+  YAML) under lean/ as 'Formalized theorem' too.
+
 Exit status: 0 = OK (warnings allowed unless --strict), 1 = errors, 2 = usage error.
 """
 import argparse
@@ -45,6 +55,50 @@ ORIGIN_PREFIX = "SSRH-ORIG-"
 FAILED_ONLY_WORDS = ("Retired", "Rejected", "Quarantined")
 CURRENT_STATUS_COLUMNS = ("artifact_status", "audited_status")  # prior_status is history: not checked
 IN_GHA = os.environ.get("GITHUB_ACTIONS") == "true"
+
+# (claim_id, cited path) -> reason. Reviewed known-missing citations; anything else missing is an error.
+KNOWN_MISSING_ARTIFACTS = {
+    ("AUD-REPRO-B2A95", "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.log"):
+        "listed in that folder's SHA256SUMS but never committed (Auditor Seat 002 finding M1); "
+        "restore the log or reword the row",
+}
+_EXT = re.compile(r"^\S+\.[A-Za-z0-9]{1,8}$")
+_SUFFIX = re.compile(r"(:\d+(-\d+)?|\s*\u00a7.*)$")
+FORMAL_SCOPE = re.compile(r"formal|lean|proof|proved|proven", re.I)
+LEAN_PROOF_TEXT = re.compile(r"\b(proved|proven|proof|verified|formali[sz]ed)\b[^.;]{0,40}\bLean\b"
+                             r"|\bLean\b[^.;]{0,20}\b(proof|proved|proven|formali[sz]ation)\b", re.I)
+
+
+def resolve_artifact(repo, entry):
+    """Return the repo-relative path an entry cites if it exists, '' if it is prose, None if missing."""
+    if "/" not in entry and not _EXT.match(entry.split()[0]):
+        return ""
+    words = entry.split()
+    for k in range(len(words), 0, -1):
+        cand = _SUFFIX.sub("", " ".join(words[:k])).strip()
+        full = os.path.abspath(os.path.join(repo, cand))
+        if cand and not os.path.isabs(cand) and full.startswith(os.path.abspath(repo) + os.sep) \
+                and os.path.exists(full):
+            return cand
+    return None
+
+
+def check_artifacts(repo, row, cid, rep, where, line):
+    cited = []
+    for entry in [e.strip() for e in (row.get("supporting_artifacts") or "").split(";") if e.strip()]:
+        got = resolve_artifact(repo, entry)
+        if got is None:
+            reason = KNOWN_MISSING_ARTIFACTS.get((cid, entry))
+            if reason:
+                rep.notice(f"{where}: {cid}: cited artifact '{entry}' is missing (known: {reason})")
+            else:
+                rep.error(f"{where}: {cid}: cited artifact does not exist: '{entry}'", where, line)
+        elif got:
+            cited.append(got)
+    if FORMAL_SCOPE.search(row.get("evidence_scope") or "") or LEAN_PROOF_TEXT.search(row.get("statement") or ""):
+        if not any(c.endswith(".lean") and os.path.isfile(os.path.join(repo, c)) for c in cited):
+            rep.error(f"{where}: {cid}: claims a formal/Lean proof (evidence_scope "
+                      f"'{row.get('evidence_scope', '')}') but cites no existing .lean file", where, line)
 
 
 class Report:
@@ -168,6 +222,7 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
                         hint = " (has leading/trailing spaces)" if val.strip() in allowed else ""
                         rep.error(f"{claims_rel}:{line}: {cid}: {col} '{val}' is not in the status vocabulary{hint}",
                                   claims_rel, line)
+            check_artifacts(repo, row, cid or "(empty claim_id)", rep, claims_rel, line)
             if cid.startswith(ORIGIN_PREFIX):
                 for col in CURRENT_STATUS_COLUMNS:
                     val = row.get(col) or ""

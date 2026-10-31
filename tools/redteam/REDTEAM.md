@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results (76 tests: 65 PASS incl. 12 controls, 11 GAP)
 
 Run on base `395ea53` (main).
 
@@ -87,8 +87,10 @@ Run on base `395ea53` (main).
 | duplicate claim_id | lint_claims | PASS |
 | empty claim_id | lint_claims | PASS |
 | vocabulary missing, --strict | lint_claims | PASS |
-| **GAP** row cites nonexistent artifacts | lint_claims | **GAP**: artifact column never resolved |
-| **GAP** false claim "R* = 0.40, proved in Lean" as Supported/Formal proof | lint_claims | **GAP**: content is not checked against anything |
+| row cites nonexistent artifacts (was GAP G3) | lint_claims | PASS (`cited artifact does not exist`) |
+| false claim "R* = 0.40, proved in Lean" as Supported/Formal proof (was GAP G4) | lint_claims | PASS (`claims a formal/Lean proof ... but cites no existing .lean file`) |
+| "proved in Lean" statement with an experimental scope | lint_claims | PASS |
+| control: Formalized theorem row citing a real .lean file | lint_claims | PASS (accepted) |
 | **GAP** claims.csv missing | lint_claims | **GAP**: exit 0 |
 | **GAP** vocabulary heading removed | lint_claims (non-strict, as CI runs it) | **GAP**: checks skipped, exit 0 |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
@@ -143,8 +145,9 @@ engine's B update, and confirms R* ≈ 0.4543.
 | over tolerance, both orders | PASS |
 | shape mismatch, both orders | PASS |
 
-(A false R* written into `registry/claims.csv` is *not* caught by any repo
-checker; that is the lint GAP above.)
+(A false R* written into `registry/claims.csv` is still not recomputed by any repo
+checker. Since fix/lint-claims-artifacts the lint does reject it when the row claims a
+Lean/formal proof without citing an existing `.lean` file.)
 
 ### Lean: `test_rt_lean.py`
 
@@ -163,3 +166,16 @@ parser are extracted from `lean/AIEFProofs/check_lean.sh`.
 The two marker-scan GAPs are **closed by the axiom audit** (step 7), which
 works on the compiled environment. They only matter if step 7 is skipped or
 broken.
+
+## Fix notes
+
+- **G3 + G4, branch `fix/lint-claims-artifacts`** (`tools/ci/lint_claims.py`). Every path-like
+  `supporting_artifacts` entry must exist in the tree (trailing words, `:LINE` and `§section` are
+  allowed; prose entries are skipped). A row that claims a formal/Lean proof (an `evidence_scope`
+  mentioning formal/Lean/proof, e.g. `Formalized theorem`, or a statement like "proved in Lean")
+  must cite at least one existing `.lean` file. A registry row is not accepted as proof because
+  `registry/artifacts.csv` marks `lean/AIEFProofs/README.md` and the CI YAML there as
+  `Formalized theorem` too. Known missing citations are listed with a reason in
+  `KNOWN_MISSING_ARTIFACTS` (one entry today: AUD-REPRO-B2A95 cites
+  `compare_b2a95dfbfbe3_v3.log`, which was never committed; Auditor Seat 002 finding M1).
+  The claims-lint fixture now mirrors the tree with symlinks so cited artifacts resolve.
