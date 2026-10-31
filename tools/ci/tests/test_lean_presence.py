@@ -226,7 +226,8 @@ class WorkflowGuardTests(unittest.TestCase):
         self.assertEqual(workflow_problems(self.wf, REPO), [])
 
     def test_paths_filters_include_the_gate_script(self):
-        self.assertEqual(self.wf.count('- "tools/ci/lean_presence.sh"'), 2)   # push + pull_request
+        self.assertEqual(self.wf.count('- "tools/ci/lean_presence.sh"'), 1)   # push (pull_request has no filter)
+        self.assertNotIn('pull_request:\n    paths:', self.wf)                 # Lean is a required check on every PR
 
     def mutated(self, old, new):
         self.assertEqual(self.wf.count(old), 1, old)
