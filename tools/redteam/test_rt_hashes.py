@@ -114,20 +114,40 @@ class AuditManifest(TempDirMixin, unittest.TestCase):
         tamper(self.root, "aief_experiment_engine_v1.py", lambda d: d.replace(b"FROZEN_ETA = 0.04", b"FROZEN_ETA = 0.05"))
         self.assertRejected(*self.verify("--inputs"), "INPUT")
 
-    @gap("verify_manifest.py: a manifest that lists no report, no data and no inputs verifies OK")
-    def test_GAP_passed_manifest_with_no_data(self):
-        ev = os.path.join(self.tmp, "fake", "AI Agent Audits", "evidence")
+    def _fake_manifest_repo(self, data_files=()):
+        """A fake repo whose audit manifest lists the verifier plus `data_files` (name -> bytes)."""
+        fake = os.path.join(self.tmp, "fake")
+        ev = os.path.join(fake, EVID)
         os.makedirs(ev)
         shutil.copy(os.path.join(REPO, EVID, "verify_manifest.py"), ev)
         v = os.path.join(ev, "verify_manifest.py")
-        # The only file "published" is the verifier itself; no report, no data, no inputs.
-        fake = {"status": "PASSED", "verdict": "all audits passed",
-                "files_sha256": {"evidence/verify_manifest.py": {"bytes": os.path.getsize(v), "sha256": sha256(v)}},
-                "inputs_sha256": {}}
+        files = {"evidence/verify_manifest.py": {"bytes": os.path.getsize(v), "sha256": sha256(v)}}
+        for name, data in dict(data_files).items():
+            p = os.path.join(fake, "AI Agent Audits", name)
+            with open(p, "wb") as f:
+                f.write(data)
+            files[name] = {"bytes": len(data), "sha256": sha256(p)}
+        m = {"status": "PASSED", "verdict": "all audits passed", "files_sha256": files, "inputs_sha256": {}}
         with open(os.path.join(ev, "audit_manifest.json"), "w") as f:
-            json.dump(fake, f)
-        rc, out = run([PY, os.path.join(ev, "verify_manifest.py")], cwd=os.path.join(self.tmp, "fake"))
-        self.assertRejected(rc, out)
+            json.dump(m, f)
+        return fake
+
+    def test_passed_manifest_with_no_data(self):
+        # G1 (fixed in tools/ci/check_manifest.py; verify_manifest.py itself is hash-pinned in
+        # audit_manifest.json, so the coverage rule lives in the CI wrapper).
+        fake = self._fake_manifest_repo()
+        self.assertRejected(*run([PY, WRAP, "--repo", fake, "--no-inputs"]),
+                            "manifest lists no data files beyond the verifier itself")
+
+    def test_passed_manifest_with_empty_inputs(self):
+        fake = self._fake_manifest_repo({"REPORT.md": b"report\n"})
+        self.assertRejected(*run([PY, WRAP, "--repo", fake]),
+                            "inputs_sha256 is empty, so the --inputs check would verify nothing")
+
+    def test_control_manifest_listing_one_data_file_passes(self):
+        fake = self._fake_manifest_repo({"REPORT.md": b"report\n"})
+        rc, out = run([PY, WRAP, "--repo", fake, "--no-inputs"])
+        self.assertEqual(rc, 0, out[-2000:])
 
 
 class ManifestWrapper(TempDirMixin, unittest.TestCase):

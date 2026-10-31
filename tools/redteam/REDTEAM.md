@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results (76 tests: 64 PASS incl. 12 controls, 12 GAP)
 
 Run on base `395ea53` (main).
 
@@ -72,7 +72,9 @@ Run on base `395ea53` (main).
 | unlisted PASSED.txt added | verify_manifest | PASS (UNLISTED) |
 | corrupted seed in hashed run (--inputs) | verify_manifest | PASS (INPUT) |
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
-| **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
+| PASSED manifest listing only the verifier, no data (was GAP G1) | check_manifest.py coverage rule | PASS ("manifest lists no data files beyond the verifier itself") |
+| PASSED manifest with empty inputs_sha256, inputs mode | check_manifest.py coverage rule | PASS ("inputs_sha256 is empty") |
+| control: manifest listing the verifier + one data file | check_manifest.py --no-inputs | PASS (accepted) |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
 | **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
 
@@ -163,3 +165,13 @@ parser are extracted from `lean/AIEFProofs/check_lean.sh`.
 The two marker-scan GAPs are **closed by the axiom audit** (step 7), which
 works on the compiled environment. They only matter if step 7 is skipped or
 broken.
+
+## Fix notes
+
+- **G1, branch `fix/manifest-nonempty`** (`tools/ci/check_manifest.py`). The verifier
+  `AI Agent Audits/evidence/verify_manifest.py` is hash-pinned in its own `audit_manifest.json`,
+  so the rule lives in the CI wrapper: for each verifier it runs, it also reads the sibling
+  `audit_manifest.json` and fails if it is unreadable, if `files_sha256` lists nothing besides the
+  verifier and the manifest, if a listed file is missing, or (inputs mode) if `inputs_sha256` is
+  empty. The real audit manifest (145 files, 24 inputs) still passes; no other manifest in the repo
+  is checked by `verify_manifest.py`.
