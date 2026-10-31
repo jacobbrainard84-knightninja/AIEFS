@@ -2,8 +2,8 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 9,
-  "next_round": 10,
+  "last_round_completed": 10,
+  "next_round": 11,
   "total_sources": 45,
   "sources_per_round": {
     "1": 16,
@@ -17,14 +17,13 @@
   "open_leads": 0,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "10": {
-      "theme": "THE LITERATURE LAYER IS DONE. Everything left is either numerical or an owner decision.",
-      "honest_assessment": "Nine rounds, 45 sources, 0 open leads, 47 of 76 claims adjudicated, 23 of 24 AUD-* claims. No claim in the registry has been refuted by the literature. The remaining 29 unadjudicated claims are 12 retired S rows, 6 CF rows that are textbook or conjectural, 7 SSRH-ORIG origin hypotheses awaiting an owner scope decision, AUD-V4-RECOVERY-WORDING which no bibliography can attest, and 3 studies with no external frame. Further searching will not move a verdict.",
+    "11": {
+      "theme": "THE LITERATURE LAYER IS CLOSED. Nothing further is worth a search.",
+      "honest_assessment": "Ten rounds, 45 sources, 0 open leads, 47/76 claims adjudicated, 23/24 AUD-* adjudicated. No claim refuted. One question was carried from a citation to a measurement (rounds 8-10) and settled. The remaining 29 unadjudicated claims have no external frame, are retired, or await an owner scope decision. A further literature round has negative expected value.",
       "targets": [
-        "DO NOT run another literature round without a specific question. The marginal round is now negative value.",
-        "THE THREE WORTH DOING, all outside a bibliography: (1) the three-way gate experiment (round 9 F50/F51) - does the per-edge cap select an attractor distinct from global-multiplicative and subtractive? (2) the timestep convergence study (AUD-TIMESTEP), now correctly framed as analysis of the solution map rather than truncation error. (3) make the modular oracle test runnable without a secret environment, or stop calling the default suite certification (AUD-MODULAR-ORACLE).",
-        "OWNER DECISIONS OUTSTANDING: apply the 11+9+6+6 proposed amendments across rounds 3,5,7,8,9; decide whether SSRH-ORIG-01..07 are in scope for a literature layer at all; and PR #1 is still open, MERGEABLE, failing only Hygiene scan.",
-        "If a literature round is run: the only defensible question left is inside LIT-0039's 120 pages - is there an irregular adaptive network example that narrows round 9's structural novelty claim?"
+        "OWNER DECISIONS ARE NOW THE ONLY BLOCKER: ~30 proposed amendments accumulated across rounds 3,5,7,8,9,10; whether SSRH-ORIG-01..07 are in scope for a literature layer; PR #1 open, MERGEABLE, failing only Hygiene scan.",
+        "ENGINEERING, not literature: (1) run the three-way gate comparison against the real engine at T_SIM=800 on the hypergraph - the replica deliberately cannot answer it; (2) the timestep convergence study (AUD-TIMESTEP), framed as analysis of the solution map; (3) make the modular oracle test runnable without a secret environment, or stop calling the default suite certification.",
+        "If a search is ever run again, the only defensible question is inside LIT-0039's 120 pages: an irregular adaptive network example that would narrow round 9's structural novelty claim."
       ]
     }
   },
@@ -53,7 +52,10 @@
     "ROUND 8: bears_on_ids is a living mapping, not part of the frozen record. _build_round08.py verifies all 43 snapshot hashes before and after and asserts no identity field changed.",
     "ROUND 9 SETTLED THE GATE FORM FROM CODE: B *= min(scale_i, scale_j) is a PER-EDGE factor, so B's direction is not preserved and Miller-MacKay's (LIT-0043) convergence theorem is inapplicable. AIEFS_salvage.md's claim that multiplicative normalisation produces the k*eta/c rates is unsupported as stated; the rate law itself is verified and not in doubt.",
     "ROUND 9 REVERSED THE NOVELTY FRAMING: the specific prior-art models are regular - Timms & English are 1D/2D lattices with periodic BCs, Picallo & Riecke are all-to-all, Earl & Strogatz require uniform in-degree k. The residue is STRUCTURAL (irregular adaptive hypergraph with per-node caps) rather than a three-ingredient subtraction. Round 7's reading was based on titles, not models.",
-    "ROUND 9 RE-VERIFICATION POLICY: LIT-0041/0042 abstracts were read; snapshots and verification_level were deliberately left byte-identical and the new evidence was appended to notes. The frozen record is never rewritten; new evidence goes where new evidence goes. Consequence: verification_level now UNDERSTATES those two sources, which is the accepted cost."
+    "ROUND 9 RE-VERIFICATION POLICY: LIT-0041/0042 abstracts were read; snapshots and verification_level were deliberately left byte-identical and the new evidence was appended to notes. The frozen record is never rewritten; new evidence goes where new evidence goes. Consequence: verification_level now UNDERSTATES those two sources, which is the accepted cost.",
+    "ROUND 10 MEASURED THE GATE: 200/200 exactly proportional for global-multiplicative (sin theta 3.1e-16) vs 0/200 for the AIEF per-edge cap (11 distinct factors, median 6 degrees off). LIT-0043's convergence theorem is inapplicable, not merely misattributed. See audits/experiments/gate_form/.",
+    "ROUND 10: the rate law's derivation gap is NOT fillable by finding a better paper. The mechanism requires single-factor rescaling, which the gate provably lacks. The k*eta/c law needs its own derivation or must be restated as empirical regularity.",
+    "ROUND 10: Part B of the experiment is indicative only - 3 seeds, T_SIM 200 vs 800, all-to-all not hypergraph. The rules are distinguishable (B gap 0.60-0.73, partitions match 3/9) but NOT orderable (per-edge ranks [1,2,1]). Do not quote the mean r."
   ],
   "claims_adjudicated": 47,
   "adjudication": {
@@ -95,5 +97,17 @@
     "studies": 15,
     "reason": "registry/claims.csv is absent on origin/main and has 43 rows on the arena base branch; the registry of record has 76. The inbox may not edit registry/, so it pins a byte-exact copy and gate 4 enforces the pin.",
     "gate_behaviour": "gate 4 resolves bears_on_ids against local registry UNION baseline and fails if either pinned file drifts from BASELINE.json; gate 8 takes claim IDs and registry_status from the baseline."
+  },
+  "experiments": {
+    "gate_form": {
+      "path": "audits/experiments/gate_form/",
+      "script": "run_gate_form.py",
+      "results": "results.json",
+      "results_sha256": "90b5382f7342a047c43950625f23ed255c6b7ef28053a2b5711eaa2cd179c0f9",
+      "ran": "2026-10-31",
+      "question": "Is the AIEF capacity gate multiplicative in Miller & MacKay's (LIT-0043) sense, and can their convergence theorem apply to it?",
+      "answer": "No. Global-multiplicative applies 1 factor and is exactly proportional in 200/200 trials (sin theta 3.1e-16). The AIEF per-edge cap applies 11 distinct factors and is proportional in 0/200 (median 6 degrees off). Their theorem is inapplicable.",
+      "scope": "Part A exact (property of the rescaling map). Part B indicative only: T_SIM 200 vs 800, all-to-all not hypergraph, 12-node pure-Python replica. Do not quote Part B as the AIEF attractor."
+    }
   }
 }

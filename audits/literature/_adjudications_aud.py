@@ -55,8 +55,14 @@ AUD_ADJ = [
         verdict="SUPPORTED_WITH_SCOPE", mapping_health="COMPLETE",
         producing_code="PRESENT", severity="HIGH",
         verdict_basis=(
-            "THE FORM IS NOW SETTLED FROM THE CODE, not from inference. "
-            "AIEF_1_3_falsification_updated.py:446-447 reads: scale = np.minimum(1.0, cap / "
+            "THE FORM IS NOW MEASURED, not inferred. `audits/experiments/gate_form/` applies the three "
+            "enforcement rules to 200 random matrices with a row-sum violation and measures the "
+            "angle between vec(B) and vec(B'). The global-multiplicative rule applies ONE factor and "
+            "is exactly proportional in 200/200 trials (residual 3.1e-16, floating-point zero). The "
+            "AIEF gate applies ELEVEN distinct factors and is proportional in 0/200 (median 6 degrees "
+            "off); subtractive is 0/200 at 46 degrees. All three still satisfy the constraint, so the "
+            "comparison is fair. "
+            "The implementation, AIEF_1_3_falsification_updated.py:446-447, reads: scale = np.minimum(1.0, cap / "
             "(row_sum_pre + ZERO_TOL)); B *= np.minimum.outer(scale, scale). So each EDGE is "
             "multiplied by the MINIMUM OF TWO NODE-SPECIFIC FACTORS - not by a single global "
             "factor, and nothing is subtracted. That is neither of Miller & MacKay's (LIT-0043) "
@@ -134,7 +140,9 @@ AUD_ADJ = [
             "factors (see the AUD-GATE row), so it is not Miller-MacKay multiplicative "
             "enforcement and the -1/T_w + k*eta/c structure is NOT explained by that paper's "
             "mechanism. The rate law may still be exactly right - it is verified to 2.1e-8 - but "
-            "its DERIVATION currently has no cited basis, and AIEFS_salvage.md's claim that "
+            "its DERIVATION has no cited basis - and round 10 measured why: the gate applies eleven distinct "
+            "per-edge factors where Miller-MacKay apply one, so their theorem is inapplicable, not "
+            "merely misattributed. AIEFS_salvage.md's claim that "
             "multiplicative normalisation produces it is unsupported as stated. On the unexplained ~2e-8 residual, the claim's "
             "own suspicion (finite-difference error on a component with delta in [1e-9, 1e-8)) is "
             "the literature-consistent one: LIT-0014 puts a difference step of that size at the "
