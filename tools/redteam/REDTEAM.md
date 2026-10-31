@@ -152,12 +152,13 @@ Added on branch `fix/errata-old-files-drift` (finding F4 of the old-files drift 
 `row["anchor_pass"]` expression is read with `ast` from the hash-pinned script
 `AIEF_1_4_matched_phase_memory_ablation.py` (line 1751). The script is not imported or run, and the
 expression is evaluated on hand-built anchor rows. The header count above does not include these
-4 tests (3 PASS including 1 control, 1 GAP); it was left as is to avoid merge conflicts with
+5 tests (4 PASS including 2 controls, 1 GAP); it was left as is to avoid merge conflicts with
 parallel branches.
 
 | Test | Result |
 |---|---|
 | control: 3 passing anchors accepted | PASS (accepted) |
+| control: `verify_anchors=False` with a failed anchor | PASS (anchor_pass=True; catches a dropped or inverted `not verify_anchors`) |
 | one of 3 anchors failed | PASS (anchor_pass=False) |
 | only 2 of 3 anchors present | PASS (anchor_pass=False) |
 | **GAP** seed with no anchor rows, `verify_anchors=True` | **GAP**: `... if seed_anchors else True` reports anchor_pass=True |

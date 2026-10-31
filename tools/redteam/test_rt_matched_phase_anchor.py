@@ -53,6 +53,10 @@ class MatchedPhaseAnchorPass(unittest.TestCase):
     def test_00_control_three_passing_anchors_accepted(self):
         self.assertIs(evaluate(anchors(True, True, True)), True)
 
+    def test_01_control_verify_anchors_false_skips_anchor_check(self):
+        # --no-verify-anchors: the flag must not depend on the anchor rows (catches dropping `not verify_anchors or`).
+        self.assertIs(evaluate(anchors(True, False, True), verify_anchors=False), True)
+
     def test_one_failed_anchor_rejected(self):
         self.assertIs(evaluate(anchors(True, False, True)), False, ACCEPTED + ": one anchor failed")
 
