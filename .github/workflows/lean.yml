@@ -24,11 +24,8 @@ on:
       - "lean/**"
       - ".github/workflows/lean.yml"
       - "tools/ci/lean_presence.sh"
-  pull_request:
-    paths:
-      - "lean/**"
-      - ".github/workflows/lean.yml"
-      - "tools/ci/lean_presence.sh"
+  pull_request:            # no paths filter: every PR runs the Lean matrix, because main's
+                           # ruleset 26247678 requires the three lean (...) checks on every PR
   workflow_dispatch:
 
 permissions:

@@ -22,3 +22,5 @@ audits/
 # existing root-level binaries (grandfathered; adding new ones at root is not allowed)
 Results.pdf
 workspace-*.zip
+# third-party datasets kept as-is, each with a SOURCE.md (added 2026-10-30 for the MFMMS meteorite tar)
+data/external/
