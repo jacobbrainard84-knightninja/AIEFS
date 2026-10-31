@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0026",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1162/rest.90.3.414",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Bootstrap-Based Improvements for Inference with Clustered Errors",
+    "authors": "Cameron, A. C.; Gelbach, J. B.; Miller, D. L.",
+    "year": "2008",
+    "venue": "The Review of Economics and Statistics",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1162/rest.90.3.414"
+  },
+  "verbatim_excerpt": "The Review of Economics and Statistics 90(3):414-427, August 2008; DOI 10.1162/rest.90.3.414. (Bibliographic record only - see notes on content provenance.)",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

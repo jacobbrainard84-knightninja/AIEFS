@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0021",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1007/s10107-005-0633-0",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Lexicographic differentiation of nonsmooth functions",
+    "authors": "Nesterov, Yu.",
+    "year": "2005",
+    "venue": "Mathematical Programming",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1007/s10107-005-0633-0"
+  },
+  "verbatim_excerpt": "Math. Program. 104(2-3):669-700, published 14 July 2005, issue date November 2005. 'This theory ensures an efficient computation of generalized (lexicographic) derivative of a nonsmooth function belonging to a special class of lexicographically smooth functions... it is shown that the system of lexicographic derivatives along a fixed basis correctly represents corresponding nonsmooth function (Newton-Leibnitz formula)... an appropriately defined lexicographic subdifferential ensures a more rigorous selection of a candidate optimal solution than the subdifferential of Clarke.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0017",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2312.00137",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "The Multiverse of Dynamic Mode Decomposition Algorithms",
+    "authors": "Colbrook, M. J.",
+    "year": "2023",
+    "venue": "arXiv",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2312.00137;DOI:10.48550/arXiv.2312.00137"
+  },
+  "verbatim_excerpt": "Submitted 30 Nov 2023 (v1), revised 21 Dec 2023 (v2); review article, 88 pages, 28 figures; math.DS. 'A distinctive feature of this review is its focus on the relationship between DMD and the spectral properties of Koopman operators, with particular emphasis on the theory and practice of DMD algorithms for spectral computations.'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}

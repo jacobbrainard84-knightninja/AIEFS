@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0023",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://www.jstor.org/stable/1912791",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Investigating Causal Relations by Econometric Models and Cross-spectral Methods",
+    "authors": "Granger, C. W. J.",
+    "year": "1969",
+    "venue": "Econometrica",
+    "venue_type": "journal",
+    "identifiers": "JSTOR:1912791"
+  },
+  "verbatim_excerpt": "Econometrica 37(3):424-438, August 1969. 'There occurs on some occasions a difficulty in deciding the direction of causality between two related variables and also whether or not feedback is occurring. Testable definitions of causality and feedback are proposed... it is suggested that the problem often arises due to slowness in recording information or because a sufficiently wide class of possible causal variables has not been used.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

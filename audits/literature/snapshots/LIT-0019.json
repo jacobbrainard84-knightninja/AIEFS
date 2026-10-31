@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0019",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1007/978-3-662-12878-7",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Random Dynamical Systems",
+    "authors": "Arnold, L.",
+    "year": "1998",
+    "venue": "Springer Monographs in Mathematics, Springer",
+    "venue_type": "book",
+    "identifiers": "DOI:10.1007/978-3-662-12878-7;ISBN:3-540-63758-3;MR1723992"
+  },
+  "verbatim_excerpt": "Springer Monographs in Mathematics, Berlin/Heidelberg, 1998; xvi+586 pp.; ISBN 3-540-63758-3; MR1723992. 'The definition of a random dynamical system or cocycle is given in Sect. 1.1 and basic properties are derived (Theorem 1.1.6).'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

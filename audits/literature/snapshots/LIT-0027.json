@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0027",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://www.econ.queensu.ca/research/working-papers/1315",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Reworking Wild Bootstrap Based Inference For Clustered Errors",
+    "authors": "Webb, M. D.",
+    "year": "2013",
+    "venue": "Queen's Economics Department Working Paper 1315",
+    "venue_type": "preprint",
+    "identifiers": "RePEc:qed:wpaper:1315"
+  },
+  "verbatim_excerpt": "Queen's Economics Department Working Paper No. 1315. 'I demonstrate, using Monte Carlo experiments, that these bootstrap procedures perform poorly with fewer than eleven clusters. With few clusters, the wild cluster bootstrap results in p-values that are not point identified. I suggest two alternative wild bootstrap procedures... a 6-point bootstrap weight distribution improves the reliability of inference.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

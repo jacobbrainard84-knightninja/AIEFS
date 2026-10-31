@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0020",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1007/978-1-84628-708-4",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Piecewise-smooth Dynamical Systems: Theory and Applications",
+    "authors": "di Bernardo, M.; Budd, C. J.; Champneys, A. R.; Kowalczyk, P.",
+    "year": "2008",
+    "venue": "Applied Mathematical Sciences, vol. 163, Springer",
+    "venue_type": "book",
+    "identifiers": "DOI:10.1007/978-1-84628-708-4;ISBN:978-1-84628-039-9"
+  },
+  "verbatim_excerpt": "Applied Mathematical Sciences vol. 163, Springer, London, 2008, 481 pp. 'Traditional analysis of dynamical systems has restricted its attention to smooth problems, but it has become increasingly clear that there are distinctive phenomena unique to discontinuous systems that can be analyzed mathematically but which fall outside the usual methodology for smooth dynamical systems.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

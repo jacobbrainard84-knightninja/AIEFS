@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0022",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1080/10556788.2015.1025400",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "A vector forward mode of automatic differentiation for generalized derivative evaluation",
+    "authors": "Khan, K. A.; Barton, P. I.",
+    "year": "2015",
+    "venue": "Optimization Methods and Software",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1080/10556788.2015.1025400"
+  },
+  "verbatim_excerpt": "Optimization Methods and Software 30(6):1185-1212, 2015. 'It is shown here that piecewise differentiable functions are lexicographically smooth in the sense of Nesterov, and that lexicographic derivatives of these functions comprise a particular subset of both the B-subdifferential and the Clarke Jacobian.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0028",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2609.08619",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Phase oscillator networks with multiple and state-dependent delays: A framework for exploring white matter plasticity in neurodynamics",
+    "authors": "Jolly, G.; Nicks, R.; Ruschel, S.; Iskenderoglu, G.; Coombes, S.",
+    "year": "2026",
+    "venue": "arXiv",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2609.08619;DOI:10.48550/arXiv.2609.08619"
+  },
+  "verbatim_excerpt": "Submitted 8 Sep 2026, math.DS, 35 pages; MSC 34K43, 34C15, 37N25, 34K20. 'When understanding how network delays shape emergent properties, the delays are often absorbed in the reduced description as a phase shift. The reduced system is a set of ODEs that loses some information about the full delay differential equation (DDE) system. We adopt a less restrictive approach...'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}

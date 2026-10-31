@@ -2,53 +2,50 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 1,
-  "next_round": 2,
-  "total_sources": 16,
+  "last_round_completed": 2,
+  "next_round": 3,
+  "total_sources": 28,
   "sources_per_round": {
-    "1": 16
+    "1": 16,
+    "2": 12
   },
   "open_leads": 3,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "2": {
-      "theme": "Deepen the falsified-claim dossiers and close the Round 1 gaps",
-      "targets": [
-        "Resolve LEAD-0001 (arXiv:2312.00137 authors) and LEAD-0002 (adaptive-delay Kuramoto authors); verify L. Arnold, Random Dynamical Systems (Springer 1998) and retire LEAD-0003.",
-        "Nonsmooth/active-set literature: Bouligand and lexicographic derivatives, piecewise-smooth dynamical systems (di Bernardo et al.), so REJ-SPEC-02 / S04 / CAVEAT-MS-8.4 have a full methodological chain.",
-        "Causality in dynamical systems: Granger / convergent cross mapping / transfer entropy, to test whether the D_bar paired-ablation metric is a defensible causal estimator or needs a formal identification argument.",
-        "Bootstrap specifics: wild cluster bootstrap (Cameron-Gelbach-Miller 2008, Webb 2013) to decide what EMP-AIEF13-01's 95% CI actually licenses."
-      ]
-    },
     "3": {
-      "theme": "Delay systems and adaptive coupling",
+      "theme": "Verify the cocycle, restore the lock claim, and pin DDE numerics",
       "targets": [
-        "Delay differential equation numerics: method of steps, discontinuity propagation, and the correct treatment of history at a split event (bears on AIEF_1_4_SPLIT_STATE_ABLATION).",
-        "Adaptive/plastic delay networks beyond the two 2026 preprints; state-dependent delay theory (Hartung, Turi, Walther).",
-        "Resonance and frequency selection in delay-coupled oscillator networks (bears on AIEF_1_3 and the T_window programme)."
+        "F10 CARRY-OVER (highest value, lowest cost): test the cocycle composition law Phi(t+s) = Phi(t,theta_s w) Phi(s,w) on the AIEF history-tangent operator at one frozen seed from runs/5a9f093a2fe0. Either outcome is publishable; only the unexamined case is not.",
+        "Restore REJ-LOCK-03 against the published implicit solvability condition for phase-locked frequency in Park & Lefebvre (LIT-0018) and Jolly et al. (LIT-0028), instead of a bare numerical zero-sum test.",
+        "Anchor EMP-AIEF14-03 (the rho in {0.50..2.00} sweep) to external literature; it currently has none.",
+        "Close LEAD-0004 (Strogatz 2000), LEAD-0005 (MacKinnon & Webb intervals), LEAD-0006 (lexicographic Jacobians for reachability).",
+        "DDE numerics: method of steps, discontinuity propagation, correct treatment of history at a split event. Bears directly on AIEF_1_4_SPLIT_STATE_ABLATION."
       ]
     },
     "4": {
       "theme": "Formalization and reproducibility engineering",
       "targets": [
-        "Lean 4 / Mathlib formalization of linear algebra and matrix rank, to state LEAN-CF-01 at the right level of generality (rank-incidence theorem, not a one-off kernel computation).",
-        "Reproducibility standards: ACM badging, RRPR, and the provenance model needed for the Stage 7 CI gates.",
-        "Numerical reproducibility of transcendental functions across libm implementations, to justify the two-tier tolerance gate."
+        "Lean 4 / Mathlib: state the rank-incidence theorem in a form Mathlib can consume, so LEAN-CF-01 generalizes beyond C_{2,7} (Round 1 F4).",
+        "Reproducibility standards for the Stage 7 CI gates; justify the two-tier tolerance (0-ULP on discrete P_*, bounded tolerance on continuous DDE arrays) with LIT-0012/0013/0014.",
+        "Nonsmooth AD tooling that could compute lexicographic derivatives for the CF block in practice (LIT-0022)."
       ]
     },
     "5": {
-      "theme": "Topology of evolving networks and competing metrics",
+      "theme": "Network topology, null models, and competing metrics",
       "targets": [
+        "Motif null-model standards beyond Milo 2002: degree-preserving rewiring and significance thresholds, to restate or retire REJ-K3-04 (Round 1 F3).",
         "Persistent homology / topological persistence as an alternative to thresholded-graph D_bar.",
-        "Motif and null-model standards beyond Milo 2002 (degree-preserving rewiring, significance thresholds) to restate or retire REJ-K3-04.",
-        "Network intervention and knockout methodology, to compare the ablation design against the literature standard."
+        "Network knockout and intervention methodology, to place the ablation design against the literature standard."
       ]
     }
   },
   "known_gaps": [
-    "All Round 1 retrievals are metadata- or abstract-level. No paywalled full text was opened. Theorem-level claims attributed to a source are stated as that source's abstract position unless a numbered theorem was read.",
-    "No forward-citation or citation-graph analysis was performed; the field map is search-driven and therefore recall-limited.",
-    "The repository cites no external literature anywhere in its 2,760-file tree (checked: the manuscript and audits argue from first principles and internal evidence only). Round 1 is therefore the first external bibliography in the project, not a completion of an existing one.",
-    "Round 1 did not read the code of AIEF_1_3_paired_statistics_updated.py closely enough to confirm which bootstrap variant its 95% interval uses; flagged in SOURCES notes for round 2."
+    "All retrievals are metadata- or abstract-level. No paywalled full text was opened; no numbered theorem is attributed to a source that was not read.",
+    "No forward-citation or citation-graph analysis. The field map is search-driven and therefore recall-limited.",
+    "The repository cites no external literature anywhere in its 2,760-file tree. This inbox is the project's first bibliography, not a completion of an existing one.",
+    "OPEN (round 2, F10): it is unverified whether the AIEF history-tangent operator satisfies the cocycle composition law. 'Cocycle' is an identity, not a name. This is the single largest unresolved item in the inbox.",
+    "Cameron, Gelbach & Miller (LIT-0026) content is second-hand via LIT-0002; its own abstract was not read.",
+    "The bootstrap variant used by AIEF_1_3_paired_statistics_updated.py is still unconfirmed by code reading (validity is settled, description is not).",
+    "EMP-AIEF14-03 and REJ-LOCK-03 remain without a defensible external anchor."
   ]
 }

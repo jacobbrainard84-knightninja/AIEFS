@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0018",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://doi.org/10.1186/s13408-020-00091-y",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Synchronization and resilience in the Kuramoto white matter network model with adaptive state-dependent delays",
+    "authors": "Park, S. H.; Lefebvre, J.",
+    "year": "2020",
+    "venue": "The Journal of Mathematical Neuroscience",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1186/s13408-020-00091-y"
+  },
+  "verbatim_excerpt": "J. Math. Neurosci. 10, article 16 (2020), open access, published 16 September 2020. '...we modified the canonical Kuramoto model by enabling all connections with adaptive, phase-dependent delays... plastic delays act as a stabilizing mechanism promoting the network's ability to maintain synchronous activity... global synchronization is more resilient to perturbations and injury towards network architecture.'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}

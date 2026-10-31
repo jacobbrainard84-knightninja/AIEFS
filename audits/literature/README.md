@@ -28,12 +28,12 @@ downstream. The snapshot mechanism below is what makes the rule enforceable.
 | File | Mutability | Contents |
 |---|---|---|
 | `SOURCES.csv` | **append-only** | Master register. One row per verified source. |
-| `LEADS.csv` | append-only | Retrieved-but-**not-citable** items. Missing fields, unconfirmed authorship, secondary sources. |
+| `LEADS.csv` | append-only | Retrieved-but-**not-citable** items. Carries `status` (`OPEN`/`RESOLVED`) and `resolved_as`, so a promoted lead is visibly retired rather than left looking open. |
 | `snapshots/<source_id>.json` | **immutable** | Hashed evidence record: bibliographic fields, verbatim excerpt, retrieval method, provenance of the excerpt. |
 | `ROUND_0N_FINDINGS.md` | append-only | Narrative findings for round N, with `[LIT-xxxx]` citations. |
 | `ROUND_STATE.json` | mutable | Resume state and forward roadmap. |
 | `verify_literature.py` | rarely | The seven gates. Stdlib only. |
-| `_build_roundNN.py` | one per round | Generator that produced that round's snapshots and CSV rows. Kept for reproducibility. |
+| `_build_roundNN.py` | one per round | Generator that produced that round's snapshots and CSV rows. Kept for reproducibility, and **must be idempotent** — it drops and rebuilds only its own round, so a rerun cannot duplicate rows. |
 
 ---
 
@@ -136,6 +136,14 @@ python audits/literature/verify_literature.py        # must PASS (7/7)
 # 6. Commit. Never amend or renumber an existing row.
 ```
 
+### Two lessons from Round 2
+
+1. **Make the builder idempotent.** The round-2 builder originally blind-appended, which meant a
+   correction to a row would have produced a duplicate. It now filters out its own round before
+   rebuilding. Any round that needs a fix after the fact should be re-runnable.
+2. **Retire leads explicitly.** A lead that is silently resolved looks identical to one that was
+   forgotten. `status` + `resolved_as` make the difference machine-checkable.
+
 ### Absolute prohibitions
 
 - **Never renumber, reuse, or delete a `source_id`.** The ID is a permanent handle; findings from
@@ -161,7 +169,7 @@ python audits/literature/verify_literature.py        # must PASS (7/7)
 | `3/7 snapshots` | File exists; SHA-256 matches CSV; embedded title/authors/year agree with the row; excerpt non-empty |
 | `4/7 registry linkage` | Every `bears_on_ids` token resolves in `registry/claims.csv` or `registry/studies.csv` |
 | `5/7 findings coverage` | Every `[LIT-xxxx]` in a findings file exists; every source added in round N is cited in `ROUND_0N_FINDINGS.md` |
-| `6/7 leads` | No `LEAD-` cited as a source; every lead has a `next_action` |
+| `6/7 leads` | No `LEAD-` cited as a source; every lead has a `next_action` and a `status` in {`OPEN`,`RESOLVED`}; `RESOLVED` must point at a real source, `OPEN` must carry no pointer |
 | `7/7 state` | `ROUND_STATE.json` parses; `next_round == last_round_completed + 1`; per-round counts match the CSV |
 
 Gate 5 is what prevents a bibliography from becoming decorative: an uncited source fails the build.

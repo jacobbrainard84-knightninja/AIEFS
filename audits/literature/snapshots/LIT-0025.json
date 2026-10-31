@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0025",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1103/PhysRevLett.85.461",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Measuring Information Transfer",
+    "authors": "Schreiber, T.",
+    "year": "2000",
+    "venue": "Physical Review Letters",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1103/PhysRevLett.85.461"
+  },
+  "verbatim_excerpt": "Physical Review Letters 85(2):461-464, published 10 July 2000. 'The standard time delayed mutual information fails to distinguish information that is actually exchanged from shared information due to common history and input signals. In our new approach, these influences are excluded by appropriate conditioning of transition probabilities.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

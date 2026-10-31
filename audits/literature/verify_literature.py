@@ -249,6 +249,17 @@ def main() -> int:
                     fail(gate, f"bad lead_id {lid!r}")
                 if not (row.get("next_action") or "").strip():
                     fail(gate, f"{lid}: empty next_action")
+                status = (row.get("status") or "").strip()
+                if status not in {"OPEN", "RESOLVED"}:
+                    fail(gate, f"{lid}: status {status!r} not in {{OPEN, RESOLVED}}")
+                resolved = (row.get("resolved_as") or "").strip()
+                if status == "RESOLVED":
+                    if not resolved:
+                        fail(gate, f"{lid}: RESOLVED but no resolved_as pointer")
+                    elif resolved not in seen:
+                        fail(gate, f"{lid}: resolved_as {resolved!r} is not a source in SOURCES.csv")
+                elif resolved:
+                    fail(gate, f"{lid}: OPEN lead must not carry resolved_as {resolved!r}")
                 lead_ids.add(lid)
     all_text = "\n".join(p.read_text(encoding="utf-8") for p in HERE.glob("*.md"))
     for lid in lead_ids:
