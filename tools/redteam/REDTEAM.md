@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (76 tests: 64 PASS incl. 12 controls, 12 GAP)
+## Results
 
 Run on base `395ea53` (main).
 
@@ -76,7 +76,7 @@ Run on base `395ea53` (main).
 | PASSED manifest with empty inputs_sha256, inputs mode | check_manifest.py coverage rule | PASS ("inputs_sha256 is empty") |
 | control: manifest listing the verifier + one data file | check_manifest.py --no-inputs | PASS (accepted) |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| **GAP** verifier deleted | check_manifest.py (line 79) | **GAP**: prints NOTICE and exits 0 |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
