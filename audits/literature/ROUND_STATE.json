@@ -2,8 +2,8 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 4,
-  "next_round": 5,
+  "last_round_completed": 5,
+  "next_round": 6,
   "total_sources": 38,
   "sources_per_round": {
     "1": 16,
@@ -14,13 +14,15 @@
   "open_leads": 0,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "5": {
-      "theme": "CHANGE WHAT THE ROUND DOES: adjudicate the 24 mapped claims, do not add more sources",
+    "6": {
+      "theme": "THE LITERATURE INBOX IS ESSENTIALLY COMPLETE - prefer finishing over adding",
+      "honest_assessment": "Five rounds have produced 38 sources, a clean lead queue, and 24 adjudicated claims. The marginal literature round now has low value; further source addition would not move any verdict. The highest-value remaining work is NOT in this inbox.",
       "targets": [
-        "PRIMARY DELIVERABLE: a claim-by-claim adjudication table (ADJUDICATION.csv + narrative) covering the 24 claims that have at least one source. For each: verdict (SUPPORTED / BOUNDED / CONTRADICTED / CONTEXT_ONLY), the specific source, the claim text as written, and a one-line required registry change if any. This is the deliverable the whole exercise was for; four rounds of sources have not yet produced one.",
-        "Do NOT pad. Search sweep only if a specific adjudication is blocked by a missing source. Decorative citations are the failure mode this inbox exists to prevent.",
-        "Revisit LEAN-CF-01 against LIT-0037: state concretely what a general rank-incidence formalization would look like and whether Mathlib already has the pieces (needs a search of Mathlib's matrix/incidence modules, not just papers).",
-        "Optional high-value: forward-citation pass from LIT-0018 / LIT-0028 to find the applied delay-plasticity literature that keyword search misses. Requires a citation-graph source; if unavailable, record as a permanent limitation rather than papering over it."
+        "RECOMMENDED FIRST: hand the 10 proposed amendments (round 5 section 7) to the owner as a single reviewable patch. These are registry edits and need approval; the inbox must not apply them.",
+        "Optional, genuinely additive: forward-citation pass from LIT-0018 / LIT-0028 / LIT-0016 to test whether the 24/43 map is recall-limited. Requires a citation-graph source; if none is available, record it as a permanent limitation rather than faking coverage.",
+        "Optional: convert ADJUDICATION.csv into a human-readable table appended to the manuscript's claim index (a formatting task, not a research task).",
+        "DO NOT: add more sources to move the claim count. The 19 unadjudicated claims are structurally unadjudicable (12 retired, 6 textbook/conjectural, 1 with no external anchor).",
+        "Outside this inbox and still outstanding: GitHub review Parts 2-3 (user-gated), Milestone 2 Stages 4-7, and the F16 registry/engineering repairs."
       ]
     }
   },
@@ -31,6 +33,39 @@
     "CORRECTION OF RECORD (round 4 F24): LIT-0030 (Earl & Strogatz) requires uniform in-degree k and does NOT apply to the adaptive AIEF network class. Its round-3 use was too strong. REJ-LOCK-03 support rests on LIT-0018 and LIT-0028; LIT-0030 is context only. The LIT-0030 snapshot was deliberately not rewritten (protocol); F24 is authoritative for its scope.",
     "OPEN and OUTSIDE THE INBOX (round 3 F16, handed off in round 4 F22): 5 of 14 studies cite entrypoints that exist nowhere on disk or in any archive, including the entire AIEF 1.0-1.2 codebase registered as Frozen. verify_inventory.py does not check entrypoint referential integrity. This is registry/engineering work, not literature work, and needs owner approval.",
     "EMP-AIEF14-03 and the three unmapped studies remain without a defensible external anchor. Not forced.",
-    "The inbox has reached lead-cleanness (7 leads opened, 7 resolved, 0 open). Further source addition would not change any claim's status."
-  ]
+    "The inbox has reached lead-cleanness (7 leads opened, 7 resolved, 0 open). Further source addition would not change any claim's status.",
+    "ROUND 5: producing_code status is symbol-search evidence, not provenance-manifest evidence. A script was verified to CONTAIN a computation, not to have produced a specific number.",
+    "ROUND 5: 19 claims remain unadjudicated by construction - 12 retired (need no defence), 6 CF claims that are textbook material or open conjectures, and EMP-AIEF14-03 with no defensible external anchor."
+  ],
+  "claims_adjudicated": 24,
+  "adjudication": {
+    "file": "ADJUDICATION.csv",
+    "claims_covered": 24,
+    "claims_total": 43,
+    "verdicts": {
+      "SUPPORTED": 6,
+      "SUPPORTED_WITH_SCOPE": 5,
+      "CONTEXT_ONLY": 2,
+      "VALIDATED_RETIREMENT": 6,
+      "VALIDATED_REJECTION": 5,
+      "BOUNDED": 0
+    },
+    "mapping_health": {
+      "COMPLETE": 21,
+      "INCOMPLETE": 2,
+      "WRONG": 1
+    },
+    "severity": {
+      "HIGH": 1,
+      "MEDIUM": 2,
+      "LOW": 4,
+      "NONE": 17
+    },
+    "producing_code": {
+      "PRESENT": 10,
+      "RELOCATED": 3,
+      "UNRESOLVED": 0,
+      "NOT_APPLICABLE": 11
+    }
+  }
 }

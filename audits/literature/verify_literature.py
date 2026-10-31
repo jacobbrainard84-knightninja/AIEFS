@@ -3,26 +3,30 @@
 
 Gates
 -----
-[1/7] SOURCES.csv schema     exact header, no duplicates, IDs match LIT-\\d{4},
+[1/8] SOURCES.csv schema     exact header, no duplicates, IDs match LIT-\\d{4},
                              IDs dense and ordered, required fields non-empty.
-[2/7] Controlled vocabulary  verification_level / stance / venue_type /
+[2/8] Controlled vocabulary  verification_level / stance / venue_type /
                              relevance_domains all in the documented sets.
-[3/7] Snapshot integrity     every source has snapshots/<id>.json whose SHA-256
+[3/8] Snapshot integrity     every source has snapshots/<id>.json whose SHA-256
                              equals the snapshot_sha256 recorded in SOURCES.csv,
                              and whose embedded bibliographic record agrees with
                              the CSV row (title/authors/year).
-[4/7] Registry linkage       every token in bears_on_ids resolves to a real
+[4/8] Registry linkage       every token in bears_on_ids resolves to a real
                              claim in registry/claims.csv or a study in
                              registry/studies.csv. A citation may not be attached
                              to a nonexistent claim.
-[5/7] Findings coverage      every [LIT-xxxx] token in ROUND_*_FINDINGS.md
+[5/8] Findings coverage      every [LIT-xxxx] token in ROUND_*_FINDINGS.md
                              exists in SOURCES.csv; every source with
                              round_added=N is cited at least once in
                              ROUND_0N_FINDINGS.md (no orphan bibliography).
-[6/7] Leads quarantine       no LEAD-xxxx is cited as if it were a source, and
+[6/8] Leads quarantine       no LEAD-xxxx is cited as if it were a source, and
                              every lead has a next_action.
-[7/7] State consistency      ROUND_STATE.json parses, next_round == completed+1,
+[7/8] State consistency      ROUND_STATE.json parses, next_round == completed+1,
                              and its per-round source counts match SOURCES.csv.
+[8/8] Adjudication           ADJUDICATION.csv covers exactly the claims that
+                             carry at least one source, cites only sources that
+                             map back to that claim, uses closed vocabularies,
+                             and agrees with registry/claims.csv on status.
 
 Usage
 -----
@@ -42,6 +46,12 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 REPO = HERE.parent.parent
+
+ADJ_COLS = [
+    "claim_id", "study_id", "registry_status", "claim_class", "literature_role",
+    "sources", "n_sources", "verdict", "mapping_health", "verdict_basis",
+    "producing_code", "required_change", "severity",
+]
 
 EXPECTED_COLS = [
     "source_id",
@@ -110,8 +120,8 @@ def main() -> int:
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
 
-    # ---------------------------------------------------------------- [1/7]
-    gate = "1/7 schema"
+    # ---------------------------------------------------------------- [1/8]
+    gate = "1/8 schema"
     src_path = HERE / "SOURCES.csv"
     if not src_path.exists():
         fail(gate, "SOURCES.csv missing")
@@ -151,8 +161,8 @@ def main() -> int:
             if not str(row.get(key, "")).strip():
                 fail(gate, f"{row.get('source_id')}: empty required field {key!r}")
 
-    # ---------------------------------------------------------------- [2/7]
-    gate = "2/7 vocabulary"
+    # ---------------------------------------------------------------- [2/8]
+    gate = "2/8 vocabulary"
     for row in rows:
         sid = row["source_id"]
         if row["verification_level"] not in VERIFICATION_LEVELS:
@@ -169,8 +179,8 @@ def main() -> int:
         if not row["canonical_url"].startswith("https://"):
             fail(gate, f"{sid}: canonical_url must be https")
 
-    # ---------------------------------------------------------------- [3/7]
-    gate = "3/7 snapshots"
+    # ---------------------------------------------------------------- [3/8]
+    gate = "3/8 snapshots"
     for row in rows:
         sid = row["source_id"]
         rel = row["snapshot_file"]
@@ -193,8 +203,8 @@ def main() -> int:
         if not snap.get("verbatim_excerpt", "").strip():
             fail(gate, f"{sid}: snapshot carries no verbatim excerpt")
 
-    # ---------------------------------------------------------------- [4/7]
-    gate = "4/7 registry linkage"
+    # ---------------------------------------------------------------- [4/8]
+    gate = "4/8 registry linkage"
     claims_path = REPO / "registry" / "claims.csv"
     studies_path = REPO / "registry" / "studies.csv"
     for p in (claims_path, studies_path):
@@ -212,8 +222,8 @@ def main() -> int:
                 if token not in registry_ids:
                     fail(gate, f"{row['source_id']}: bears_on {token!r} is not in the claim/study registry")
 
-    # ---------------------------------------------------------------- [5/7]
-    gate = "5/7 findings coverage"
+    # ---------------------------------------------------------------- [5/8]
+    gate = "5/8 findings coverage"
     cited: dict[str, set[str]] = {}
     for md in sorted(HERE.glob("ROUND_*_FINDINGS.md")):
         text = md.read_text(encoding="utf-8")
@@ -237,8 +247,8 @@ def main() -> int:
     if not cited:
         warn(gate, "no ROUND_*_FINDINGS.md present")
 
-    # ---------------------------------------------------------------- [6/7]
-    gate = "6/7 leads"
+    # ---------------------------------------------------------------- [6/8]
+    gate = "6/8 leads"
     leads_path = HERE / "LEADS.csv"
     lead_ids: set[str] = set()
     if leads_path.exists():
@@ -269,8 +279,8 @@ def main() -> int:
         if lid not in all_text:
             warn(gate, f"{lid} never mentioned in any findings file")
 
-    # ---------------------------------------------------------------- [7/7]
-    gate = "7/7 state"
+    # ---------------------------------------------------------------- [7/8]
+    gate = "7/8 state"
     state_path = HERE / "ROUND_STATE.json"
     if not state_path.exists():
         fail(gate, "ROUND_STATE.json missing")
@@ -301,6 +311,105 @@ def main() -> int:
             if isinstance(total, int) and total != len(rows):
                 fail(gate, f"state total_sources {total} != CSV rows {len(rows)}")
 
+    # ---------------------------------------------------------------- [8/8]
+    gate = "8/8 adjudication"
+    adj_path = HERE / "ADJUDICATION.csv"
+    if not (claims_path.exists() and studies_path.exists()):
+        # Same fail-closed rule as gate 4: without the registry the coverage
+        # comparison is meaningless, and a silent skip would hide that.
+        fail(gate, "registry missing — adjudication coverage cannot be checked")
+    elif not adj_path.exists():
+        fail(gate, "ADJUDICATION.csv missing; the round-5 deliverable is absent")
+    else:
+        ADJ_VERDICTS = {
+            "SUPPORTED", "SUPPORTED_WITH_SCOPE", "BOUNDED", "CONTEXT_ONLY",
+            "VALIDATED_RETIREMENT", "VALIDATED_REJECTION",
+        }
+        ADJ_MAPPING = {"COMPLETE", "INCOMPLETE", "WRONG"}
+        ADJ_SEVERITY = {"NONE", "LOW", "MEDIUM", "HIGH"}
+        ADJ_CLASS = {"EMPIRICAL", "FORMAL", "IMPLEMENTATION", "REJECTION", "RETIRED"}
+        ADJ_ROLE = {
+            "DESIGN", "INFERENCE", "INTERPRETATION", "FORMALIZATION",
+            "METHOD_VALIDITY", "SCOPE_ONLY",
+        }
+        ADJ_CODE = {"PRESENT", "RELOCATED", "UNRESOLVED", "NOT_APPLICABLE"}
+
+        with adj_path.open(encoding="utf-8", newline="") as fh:
+            adj_rows = list(csv.DictReader(fh))
+        adj_header = list(adj_rows[0].keys()) if adj_rows else []
+        if adj_header and adj_header != ADJ_COLS:
+            fail(gate, f"ADJUDICATION.csv header mismatch: {adj_header}")
+
+        # Every claim carrying at least one source must be adjudicated, and
+        # nothing else may appear. Both directions: a table that quietly drops a
+        # claim is worse than no table at all.
+        claim_ids: set[str] = set()
+        if claims_path.exists():
+            with claims_path.open(encoding="utf-8", newline="") as fh:
+                claim_ids = {c["claim_id"].strip() for c in csv.DictReader(fh) if c.get("claim_id")}
+        claim_sources: dict[str, set[str]] = {}      # claim -> sources citing it
+        source_claims: dict[str, set[str]] = {}      # source -> claims it cites
+        for row in rows:
+            for token in filter(None, (t.strip() for t in row["bears_on_ids"].split(";"))):
+                if token in claim_ids:
+                    claim_sources.setdefault(token, set()).add(row["source_id"])
+                    source_claims.setdefault(row["source_id"], set()).add(token)
+        all_source_ids = {row["source_id"] for row in rows}
+        covered = [r.get("claim_id", "") for r in adj_rows]
+        if len(covered) != len(set(covered)):
+            fail(gate, "duplicate claim_id in ADJUDICATION.csv")
+        missing = set(claim_sources) - set(covered)
+        if missing:
+            fail(gate, f"claims with sources but no adjudication: {sorted(missing)}")
+        extra = set(covered) - set(claim_sources)
+        if extra:
+            fail(gate, f"adjudicated claims that carry no source mapping: {sorted(extra)}")
+
+        reg_status: dict[str, str] = {}
+        if claims_path.exists():
+            with claims_path.open(encoding="utf-8", newline="") as fh:
+                reg_status = {
+                    c["claim_id"]: c["artifact_status"]
+                    for c in csv.DictReader(fh)
+                    if c.get("claim_id")
+                }
+
+        for r in adj_rows:
+            cid = r.get("claim_id", "?")
+            for field, allowed in (
+                ("verdict", ADJ_VERDICTS),
+                ("mapping_health", ADJ_MAPPING),
+                ("severity", ADJ_SEVERITY),
+                ("claim_class", ADJ_CLASS),
+                ("literature_role", ADJ_ROLE),
+                ("producing_code", ADJ_CODE),
+            ):
+                if r.get(field) not in allowed:
+                    fail(gate, f"{cid}: {field} {r.get(field)!r} not in vocabulary")
+            for field in ("verdict_basis", "required_change"):
+                if not (r.get(field) or "").strip():
+                    fail(gate, f"{cid}: empty {field}")
+            if r.get("mapping_health") in {"INCOMPLETE", "WRONG"} and \
+                    (r.get("required_change") or "").strip().lower() in {"", "none"}:
+                fail(gate, f"{cid}: mapping_health={r.get('mapping_health')} "
+                           f"but required_change is 'none'")
+
+            cited = [s.strip() for s in (r.get("sources") or "").split(";") if s.strip()]
+            if (r.get("n_sources") or "").strip() != str(len(cited)):
+                fail(gate, f"{cid}: n_sources {r.get('n_sources')!r} != {len(cited)} cited")
+            for sid in cited:
+                if sid not in all_source_ids:
+                    fail(gate, f"{cid}: cites {sid} which is not in SOURCES.csv")
+                elif cid not in source_claims.get(sid, set()):
+                    fail(gate, f"{cid}: cites {sid}, but {sid} does not list {cid} in bears_on_ids")
+            for sid in sorted(claim_sources.get(cid, set())):
+                if sid not in cited:
+                    fail(gate, f"{cid}: omits mapped source {sid}")
+
+            if cid in reg_status and r.get("registry_status") != reg_status[cid]:
+                fail(gate, f"{cid}: registry_status {r.get('registry_status')!r} "
+                           f"!= registry {reg_status[cid]!r}")
+
     return report(args)
 
 
@@ -315,7 +424,7 @@ def report(args) -> int:
                 print("  " + w)
         return 1
     if not args.quiet:
-        print("LITERATURE INBOX: PASS (7/7 gates)")
+        print("LITERATURE INBOX: PASS (8/8 gates)")
         for w in warnings:
             print("  warning: " + w)
     return 0
