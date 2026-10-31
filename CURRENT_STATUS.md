@@ -127,7 +127,7 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   i.e. the fixed_physical_17p5 held rows; the T_window-nominal holds are not. Separately, v4's "recovery" events include retention.
   Cite the fixed_physical_17p5 held numbers only with this caveat (AUD-V4-HELDEVENT, AUD-V4-RECOVERY-WORDING). A v4.1 candidate exists and is unaudited.
 - **Modular platform: not oracle-certified by the repo tests.** The oracle-equivalence test is skipped by default, and the slow
-  engine test runs only with `AIEF_RUN_SLOW_TESTS=1` and the repo root on `PYTHONPATH` (default: 40 passed, 2 skipped; AUD-MODULAR-ORACLE).
+  engine test runs only with `AIEF_RUN_SLOW_TESTS=1` and the repo root on `PYTHONPATH` (default: 40 passed, 2 skipped; AUD-MODULAR-ORACLE; 43 passed, 2 skipped, 2 xfailed since the R026-S7 driver CLI test).
 - **Matched-phase ablation: exploratory.**
   - Weighted_similarity_late is +0.064 [0.041, 0.089] (31/40).
   - P_mean_late is negative, and the Retention CI spans 0.

@@ -205,9 +205,11 @@ def analysis_contract() -> dict[str, Any]:
         "raw_trajectory_unchanged": True,
         "observation_support": [SUPPORT_START, SUPPORT_END],
         "sample_spacing": SAMPLE_SPACING,
-        "event_time_semantics": "saved_grid_interval_censored",
+        # v4.1 (R026-S8): event times are detections on the saved observation grid, not an
+        # interval-censored estimate; v4 keeps its original label.
+        "event_time_semantics": "detection_on_saved_observation_grid",
         "undefined_similarity": "raw_NaN_derived_recovery_zero",
-        "held_end_check": "searchsorted_left_on_t_plus_duration_minus_1e-6_dt",
+        "held_end_check": "searchsorted_left_on_t_plus_duration_minus_1e-6_x_min_positive_saved_grid_spacing",
         "held_event_types": list(HELD_EVENT_TYPES),
         "hold_duration_systems": [
             "fixed_physical_17p5",
@@ -712,7 +714,10 @@ def _event_row(
         "hold_duration_system": hold_system,
         "hold_duration": hold_duration,
         "held_classification": held_classification,
-        "event_time_semantics": "first_qualifying_saved_sample_interval_censored",
+        # Detection on the saved grid: event_time is the first qualifying saved sample. The bracket
+        # (event_interval_lower, event_interval_upper] is reported for reference only; no
+        # interval-censored estimator uses it.
+        "event_time_semantics": "first_qualifying_saved_sample_detection",
         "event_time": event_time,
         "event_observed": bool(observed),
         "restricted_time": restricted,
@@ -1301,10 +1306,10 @@ def build_report(
         "RECOVERY SEMANTICS",
         f"  Saved observation support: [{SUPPORT_START}, {SUPPORT_END}]",
         f"  Saved-grid spacing: {SAMPLE_SPACING}",
-        "  Event times: first qualifying saved observation; interval-censored.",
+        "  Event times: first qualifying saved observation (detection on the saved grid, not interval-censored).",
         "  Undefined similarity: raw NaN, derived recovery representation uses zero.",
         "  Hold systems: fixed 17.5 units and one nominal current T_window.",
-        "  Held end check: t + duration - 1e-6*dt (v4.1 fix of v4 rounding miss).",
+        "  Held end check: t + duration - 1e-6 x min positive saved-grid spacing, not dt (v4.1 fix of v4 rounding miss).",
         "  Held event types: held (any), held_retention, held_recovery.",
         "  AUC: one-sided deficit over saved support; not labelled full [0,320].",
         "",

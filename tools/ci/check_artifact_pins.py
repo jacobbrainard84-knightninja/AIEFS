@@ -23,6 +23,10 @@ hard-codes the drift known when the check was added (at 9d46d9b) and fails on an
                   also fails until this list is updated in review.
   KNOWN_MISSING   the 52 rows flagged MISSING_DELETED_ON_MAIN. They may stay absent; if one comes
                   back it must match its pinned sha256.
+  REMOVED_AFTER_SNAPSHOT
+                  rows whose file was deliberately removed after 9d46d9b in a reviewed change
+                  (ERRATA_2026-10-28.md names each one). Same rule as KNOWN_MISSING; each entry
+                  also records the pinned sha256, and an entry whose CSV pin differs is an error.
 
 The CSV itself is pinned here too (EXPECTED_CSV_SHA256, EXPECTED_ROWS), so pins cannot be
 bypassed by re-pinning a row, deleting a row, or deleting the CSV. A deliberate change to
@@ -145,6 +149,15 @@ KNOWN_MISSING = {
     'ART-0740': 'lean/AIEFProofs/.lake/config/5/lakefile.olean',
     'ART-0741': 'lean/AIEFProofs/.lake/config/5/lakefile.olean.lock',
     'ART-0742': 'lean/AIEFProofs/.lake/config/5/lakefile.olean.trace',
+}
+
+# artifact_id -> (path, pinned sha256 in registry/artifacts.csv, reason). Files removed after 9d46d9b
+# in a reviewed change. registry/artifacts.csv is a frozen snapshot (E7) and keeps the row; only its
+# owner may re-flag it. The file stays in git history.
+REMOVED_AFTER_SNAPSHOT = {
+    "ART-2717": ("test_01.py",
+                 "ef954b7287bac6c6b3e588964d823927ff7d388373ff035c0d5bf50ca9d90723",
+                 "root scratch file, not valid Python; removed on fix/r026-cleanup (R026-S10)"),
 }
 
 IN_GHA = os.environ.get("GITHUB_ACTIONS") == "true"
@@ -276,7 +289,11 @@ def main(argv=None, known_changed=None, known_missing=None,
                     help="hash files on disk even if they are not tracked by git")
     a = ap.parse_args(argv)
     known_changed = KNOWN_CHANGED if known_changed is None else known_changed
-    known_missing = KNOWN_MISSING if known_missing is None else known_missing
+    removed = {}
+    if known_missing is None:
+        known_missing = dict(KNOWN_MISSING)
+        removed = REMOVED_AFTER_SNAPSHOT
+        known_missing.update({aid: entry[0] for aid, entry in removed.items()})
     expected_sha = EXPECTED_CSV_SHA256 if expected_sha is _DEFAULT else expected_sha
     expected_rows = EXPECTED_ROWS if expected_rows is _DEFAULT else expected_rows
     repo = os.path.abspath(a.repo)
@@ -335,6 +352,10 @@ def main(argv=None, known_changed=None, known_missing=None,
             if not aid or aid in seen:
                 chk.error("BAD_ROW", aid or "?", "empty or duplicate artifact_id"); continue
             seen.add(aid)
+            if aid in removed and removed[aid][1] != row["sha256"].strip().lower():
+                chk.error("ALLOWLIST_DRIFT", aid,
+                          f"REMOVED_AFTER_SNAPSHOT lists sha256 {removed[aid][1][:12]}... but the CSV "
+                          f"row pins {row['sha256'].strip()[:12]}...")
             chk.check_row(row)
     finally:
         chk.close()
