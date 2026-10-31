@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0030",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1103/PhysRevE.67.036204",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Synchronization in oscillator networks with delayed coupling: A stability criterion",
+    "authors": "Earl, M. G.; Strogatz, S. H.",
+    "year": "2003",
+    "venue": "Physical Review E",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1103/PhysRevE.67.036204"
+  },
+  "verbatim_excerpt": "Physical Review E 67, 036204 (2003). Cited consistently across the delay-coupled oscillator literature as establishing the stability criterion for phase-locked states in ring networks of identical phase oscillators with delayed coupling: locking conditions are transcendental in the delay and must be solved for the collective frequency, not checked as an algebraic sum. (Bibliographic record plus the cited characterisation; the abstract itself was not opened - see notes.)",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

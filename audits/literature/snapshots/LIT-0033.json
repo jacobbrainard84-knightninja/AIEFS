@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0033",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://doi.org/10.1007/978-3-031-90653-4_18",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Reachability for Nonsmooth Systems with Lexicographic Jacobians",
+    "authors": "Ji, C.; Zhang, H.; Mitra, S.",
+    "year": "2025",
+    "venue": "Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2025), LNCS, pp. 364-384",
+    "venue_type": "conference",
+    "identifiers": "DOI:10.1007/978-3-031-90653-4_18"
+  },
+  "verbatim_excerpt": "TACAS 2025, pp. 364-384, open access, first online 1 May 2025. 'Reachability analysis for dynamical systems typically relies on the system's Jacobian to bound sensitivity of solutions. This method fails for nonsmooth dynamical systems as the Jacobian becomes undefined at the points where the vector field is non-differentiable... We propose an alternative approach based on lexicographic differentiation... Our algorithm computes linear bounds on sets of lexicographic Jacobians, which give bounds on trajectory sensitivities. This avoids hybridization, eliminates mode transition computations, and yields more accurate reachsets. On nonsmooth models, our method improves accuracy on average by 50%, compared to hybrid algorithms.'",
+  "excerpt_provenance": "canonical landing page, read directly"
+}

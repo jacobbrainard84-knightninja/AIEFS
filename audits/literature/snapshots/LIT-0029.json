@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0029",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1093/acprof:oso/9780198506546.001.0001",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Numerical Methods for Delay Differential Equations",
+    "authors": "Bellen, A.; Zennaro, M.",
+    "year": "2003",
+    "venue": "Numerical Mathematics and Scientific Computation, Oxford University Press",
+    "venue_type": "book",
+    "identifiers": "DOI:10.1093/acprof:oso/9780198506546.001.0001;ISBN:0198506546"
+  },
+  "verbatim_excerpt": "Oxford University Press, 2003, series Numerical Mathematics and Scientific Computation, ISBN 0198506546. Publisher description: '...provides an introduction to the Cauchy problem for delay differential equations. It is aimed at mathematicians, physicists, engineers and other scientists interested in this area of numerical methods.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

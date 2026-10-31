@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0032",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1002/jae.2508",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Wild Bootstrap Inference for Wildly Different Cluster Sizes",
+    "authors": "MacKinnon, J. G.; Webb, M. D.",
+    "year": "2017",
+    "venue": "Journal of Applied Econometrics",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1002/jae.2508"
+  },
+  "verbatim_excerpt": "Journal of Applied Econometrics 32(2):233-254, March 2017. 'The cluster robust variance estimator (CRVE) relies on the number of clusters being sufficiently large. Monte Carlo evidence suggests that the \"rule of 42\" is not true for unbalanced clusters. Rejection frequencies are higher for datasets with 50 clusters proportional to US state populations than with 50 balanced clusters. Using critical values based on the wild cluster bootstrap performs much better. However, this procedure fails when a small number of clusters is treated.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

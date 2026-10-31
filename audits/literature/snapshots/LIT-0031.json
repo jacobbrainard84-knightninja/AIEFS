@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0031",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1016/S0167-2789(00)00094-4",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "From Kuramoto to Crawford: exploring the onset of synchronization in populations of coupled oscillators",
+    "authors": "Strogatz, S. H.",
+    "year": "2000",
+    "venue": "Physica D: Nonlinear Phenomena",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1016/S0167-2789(00)00094-4"
+  },
+  "verbatim_excerpt": "Physica D: Nonlinear Phenomena 143(1-4):1-20, 2000; DOI:10.1016/S0167-2789(00)00094-4. The standard review of the Kuramoto programme: the mean-field order parameter R, the critical coupling, and the open problems surrounding the infinite-N limit and finite-N fluctuations.",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

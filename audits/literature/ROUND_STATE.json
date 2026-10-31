@@ -2,32 +2,25 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 2,
-  "next_round": 3,
-  "total_sources": 28,
+  "last_round_completed": 3,
+  "next_round": 4,
+  "total_sources": 33,
   "sources_per_round": {
     "1": 16,
-    "2": 12
+    "2": 12,
+    "3": 5
   },
-  "open_leads": 3,
+  "open_leads": 1,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "3": {
-      "theme": "Verify the cocycle, restore the lock claim, and pin DDE numerics",
-      "targets": [
-        "F10 CARRY-OVER (highest value, lowest cost): test the cocycle composition law Phi(t+s) = Phi(t,theta_s w) Phi(s,w) on the AIEF history-tangent operator at one frozen seed from runs/5a9f093a2fe0. Either outcome is publishable; only the unexamined case is not.",
-        "Restore REJ-LOCK-03 against the published implicit solvability condition for phase-locked frequency in Park & Lefebvre (LIT-0018) and Jolly et al. (LIT-0028), instead of a bare numerical zero-sum test.",
-        "Anchor EMP-AIEF14-03 (the rho in {0.50..2.00} sweep) to external literature; it currently has none.",
-        "Close LEAD-0004 (Strogatz 2000), LEAD-0005 (MacKinnon & Webb intervals), LEAD-0006 (lexicographic Jacobians for reachability).",
-        "DDE numerics: method of steps, discontinuity propagation, correct treatment of history at a split event. Bears directly on AIEF_1_4_SPLIT_STATE_ABLATION."
-      ]
-    },
     "4": {
-      "theme": "Formalization and reproducibility engineering",
+      "theme": "Formalization, provenance repair, and reproducibility engineering",
       "targets": [
-        "Lean 4 / Mathlib: state the rank-incidence theorem in a form Mathlib can consume, so LEAN-CF-01 generalizes beyond C_{2,7} (Round 1 F4).",
-        "Reproducibility standards for the Stage 7 CI gates; justify the two-tier tolerance (0-ULP on discrete P_*, bounded tolerance on continuous DDE arrays) with LIT-0012/0013/0014.",
-        "Nonsmooth AD tooling that could compute lexicographic derivatives for the CF block in practice (LIT-0022)."
+        "PROVENANCE (highest priority): 5 of 14 studies name canonical entrypoints that exist nowhere (round 3 F16). Decide demotion vs restoration for AIEF_1_0_TO_1_2_FOUNDATIONAL (registered Frozen with zero code), and add gate 6 (entrypoint referential integrity) to audits/engineering/verify_inventory.py.",
+        "Scope AIEF_1_4_TANGENT_AND_COCYCLE: the surviving artifact is a frozen-driver weight-sector cocycle with delta R = 0; Stage B (history/phase/EMA feedback) was never performed. The study title currently claims the full history cocycle.",
+        "Lean 4 / Mathlib: state the rank-incidence theorem in a form Mathlib can consume so LEAN-CF-01 generalizes beyond C_{2,7} (round 1 F4).",
+        "Open LIT-0030's abstract to replace its second-hand content description; open LEAD-0007 (Acta Numerica 2009 survey) to supersede LIT-0029.",
+        "Reproducibility standards for Stage 7 CI; justify the two-tier tolerance (0-ULP on discrete P_*, bounded on continuous DDE arrays) with LIT-0012/0013/0014."
       ]
     },
     "5": {
@@ -42,10 +35,11 @@
   "known_gaps": [
     "All retrievals are metadata- or abstract-level. No paywalled full text was opened; no numbered theorem is attributed to a source that was not read.",
     "No forward-citation or citation-graph analysis. The field map is search-driven and therefore recall-limited.",
-    "The repository cites no external literature anywhere in its 2,760-file tree. This inbox is the project's first bibliography, not a completion of an existing one.",
-    "OPEN (round 2, F10): it is unverified whether the AIEF history-tangent operator satisfies the cocycle composition law. 'Cocycle' is an identity, not a name. This is the single largest unresolved item in the inbox.",
-    "Cameron, Gelbach & Miller (LIT-0026) content is second-hand via LIT-0002; its own abstract was not read.",
-    "The bootstrap variant used by AIEF_1_3_paired_statistics_updated.py is still unconfirmed by code reading (validity is settled, description is not).",
-    "EMP-AIEF14-03 and REJ-LOCK-03 remain without a defensible external anchor."
+    "The repository cites no external literature anywhere in its working tree. This inbox is the project's first bibliography.",
+    "RESOLVED in round 3 (was round 2 F10): the cocycle composition law is automatic for a matrix product and was not worth testing; the substantive condition is branch preservation, which the evidence satisfies (0 winner-signature changes in 32,000 steps). The remaining defect is naming, not mathematics.",
+    "OPEN (round 3 F16): 5 of 14 studies cite entrypoints that exist nowhere on disk or in any archive, including the entire AIEF 1.0-1.2 codebase registered as Frozen. verify_inventory.py does not check entrypoint referential integrity.",
+    "LIT-0030 (Earl & Strogatz) content is characterised from citing works, not its own abstract.",
+    "Cameron, Gelbach & Miller (LIT-0026) content is second-hand via LIT-0002.",
+    "EMP-AIEF14-03 and the three unmapped studies (HISTORICAL_PROJECT_ORIGINS, AIEF_1_4_PIVOT_PILOT, AIEF_1_4_PROPOSAL_EQUALIZATION) remain without a defensible external anchor."
   ]
 }
