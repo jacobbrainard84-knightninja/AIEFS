@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (76 tests: 64 PASS incl. 12 controls, 12 GAP)
+## Results
 
 Run on base `395ea53` (main).
 
@@ -76,7 +76,7 @@ Run on base `395ea53` (main).
 | PASSED manifest with empty inputs_sha256, inputs mode | check_manifest.py coverage rule | PASS ("inputs_sha256 is empty") |
 | control: manifest listing the verifier + one data file | check_manifest.py --no-inputs | PASS (accepted) |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| verifier deleted (was GAP G2; fixed on `fix/check-manifest-missing-verifier`) | check_manifest.py (line 79) | PASS (ERROR "manifest verifier missing", exit 1) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
@@ -175,3 +175,8 @@ broken.
   verifier and the manifest, if a listed file is missing, or (inputs mode) if `inputs_sha256` is
   empty. The real audit manifest (145 files, 24 inputs) still passes; no other manifest in the repo
   is checked by `verify_manifest.py`.
+
+- **G2, branch `fix/check-manifest-missing-verifier`** (`tools/ci/check_manifest.py`, combined here on
+  `fix/check-manifest-g1g2`). A listed verifier that is missing is now an ERROR (exit 1), not a NOTICE
+  and exit 0. The old `ran == 0` notice is dropped. The CI self-test stub verifier now also writes a
+  minimal non-empty manifest, so the G1 coverage rule is satisfied.

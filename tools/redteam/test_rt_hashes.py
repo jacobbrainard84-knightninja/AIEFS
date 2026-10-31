@@ -166,12 +166,15 @@ class ManifestWrapper(TempDirMixin, unittest.TestCase):
         m["files_sha256"][rel]["sha256"] = "0" * 64
         with open(p, "w") as f:
             json.dump(m, f)
-        self.assertRejected(*run([PY, WRAP, "--repo", self.root]), "FAIL")
+        self.assertRejected(*run([PY, WRAP, "--repo", self.root]), "verify_manifest.py exited 1", "-> FAIL")
 
-    @gap("check_manifest.py: verifier deleted -> NOTICE and exit 0 (skip instead of fail)")
-    def test_GAP_verifier_missing_is_skipped_not_failed(self):
+    def test_verifier_missing_fails(self):
+        """Was GAP G2 (NOTICE and exit 0). Fixed on fix/check-manifest-missing-verifier: exit 1 with a named error."""
         os.unlink(os.path.join(self.root, EVID, "verify_manifest.py"))   # temp copy
-        self.assertRejected(*run([PY, WRAP, "--repo", self.root]))
+        rc, out = run([PY, WRAP, "--repo", self.root])
+        self.assertRejected(rc, out, "manifest verifier missing", "NOT checked", "-> FAIL")
+        self.assertEqual(rc, 1, out)
+        self.assertNotIn("Traceback", out)
 
 
 if __name__ == "__main__":
