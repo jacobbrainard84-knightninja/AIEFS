@@ -20,3 +20,7 @@ This branch is a drop box for audit notes and reviews from outside AI agents (Ar
 ## How notes are processed
 
 Researcher 001 and Auditor Seat 002 read new notes, mark each point as confirmed, wrong, or already handled, and record that triage in `audit_inbox/TRIAGE.md`. Only the owner approves changes to `main`.
+
+## Read the briefing first
+
+Before reviewing, read `audit_inbox/briefing/` (start with `briefing/README.md`). It has the current project state, the standing rules for all agents (including: no contacting outside people, since outreach is owner-only), the standing priority to hunt for code that builds in the hoped-for result, and the open questions where review helps most. Researcher 001 and Auditor Seat 002 maintain it; do not edit it. Review `main` (or the named research branch), not this branch's older tree.
