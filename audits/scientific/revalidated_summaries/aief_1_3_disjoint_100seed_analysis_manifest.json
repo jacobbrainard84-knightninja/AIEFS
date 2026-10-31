@@ -1,0 +1,122 @@
+{
+  "analysis": "AIEF-1.3 paired seed-level statistics",
+  "analysis_seed": 20260714,
+  "bootstrap_repetitions": 20000,
+  "cohorts": [
+    {
+      "label": "validation_A",
+      "path": "/home/user/AIEFS/runs/c3da1ac707bf/AIEF_1_3_c3da1ac707bf_scalar_summary.csv",
+      "rows": "250",
+      "sha256": "52e4ca42a60d49dae75aa44ffadbd5e024725c6c5fdae4f94b35be59aa5b1ce5"
+    },
+    {
+      "label": "validation_B",
+      "path": "/home/user/AIEFS/runs/73dca37cf93f/AIEF_1_3_73dca37cf93f_scalar_summary.csv",
+      "rows": "250",
+      "sha256": "c3a0361c16fbd23128ff226f2d20484ae1e1b177d084bc389d3a7c810205d7af"
+    }
+  ],
+  "controls": [
+    "shuffle_R",
+    "no_delay",
+    "no_mu",
+    "no_gap"
+  ],
+  "correlation_clip": 0.999999999999,
+  "difference_definition": "baseline_minus_control",
+  "expected_directions_baseline_minus_control": {
+    "no_gap|D_B": "negative",
+    "no_gap|Effective_edges": "negative",
+    "no_gap|G_min_over_time": "positive",
+    "no_gap|Total_edge_weight": "negative",
+    "no_mu|D_B": "positive",
+    "no_mu|Effective_edges": "negative",
+    "no_mu|Weight_entropy": "negative",
+    "no_mu|Weight_gini": "positive",
+    "shuffle_R|D_B": "positive",
+    "shuffle_R|P_max": "positive",
+    "shuffle_R|P_mean": "positive",
+    "shuffle_R|P_nonzero_fraction": "positive"
+  },
+  "metrics": [
+    "D_B",
+    "Corr_physical",
+    "FisherZ_Corr_physical",
+    "Corr_driver",
+    "FisherZ_Corr_driver",
+    "r_mean",
+    "S_spectral",
+    "G_min_final",
+    "G_min_over_time",
+    "G_min_pre_over_time",
+    "P_mean",
+    "P_variance",
+    "P_max",
+    "P_nonzero_fraction",
+    "Cov_physical",
+    "Cov_driver",
+    "Total_edge_weight",
+    "Mean_row_sum",
+    "Max_row_sum",
+    "Nonzero_edge_fraction",
+    "Effective_edges",
+    "Weight_gini",
+    "Weight_entropy",
+    "Pre_gap_violation_fraction",
+    "Projection_active_fraction",
+    "Projection_norm_mean_active",
+    "Projection_norm_max"
+  ],
+  "notes": [
+    "Pooled bootstrap is stratified by cohort.",
+    "Seeds are paired only within cohort.",
+    "Raw paired differences and bootstrap CIs are primary.",
+    "Sign-flip tests are supporting symmetry-based tests, not design-based randomization tests.",
+    "Cohort heterogeneity is a bootstrap difference of cohort mean paired effects.",
+    "Phi is excluded because it is unstable near zero density.",
+    "Shuffle correlation comparisons may be non-estimable due to degeneracy."
+  ],
+  "primary_metrics_by_control": {
+    "no_delay": [
+      "Corr_physical",
+      "D_B",
+      "P_mean"
+    ],
+    "no_gap": [
+      "D_B",
+      "G_min_over_time",
+      "Total_edge_weight"
+    ],
+    "no_mu": [
+      "D_B",
+      "Effective_edges",
+      "Total_edge_weight",
+      "Weight_entropy",
+      "Weight_gini"
+    ],
+    "shuffle_R": [
+      "D_B",
+      "P_max",
+      "P_mean"
+    ]
+  },
+  "relative_change_metrics": [
+    "D_B",
+    "Effective_edges",
+    "Max_row_sum",
+    "Mean_row_sum",
+    "Nonzero_edge_fraction",
+    "P_max",
+    "P_mean",
+    "P_nonzero_fraction",
+    "P_variance",
+    "Pre_gap_violation_fraction",
+    "Projection_active_fraction",
+    "Projection_norm_max",
+    "Projection_norm_mean_active",
+    "Total_edge_weight",
+    "Weight_entropy",
+    "r_mean"
+  ],
+  "sign_flip_repetitions": 100000
+}

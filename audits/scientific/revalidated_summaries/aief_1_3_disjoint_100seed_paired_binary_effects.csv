@@ -1,0 +1,13 @@
+scope,control,metric,endpoint_role,expected_direction_control_minus_baseline,difference_definition,n_total_pairs,n_valid_pairs,valid_pair_fraction,n_pairs,baseline_rate,control_rate,rate_difference,discordance_direction,both_nondegenerate,baseline_only_degenerate,control_only_degenerate,both_degenerate,mcnemar_exact_p_two_sided
+validation_A,shuffle_R,P_degenerate,primary,positive,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,1.0,1.0,increased_in_control,0,0,50,0,1.7763568394002505e-15
+validation_B,shuffle_R,P_degenerate,primary,positive,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,1.0,1.0,increased_in_control,0,0,50,0,1.7763568394002505e-15
+pooled,shuffle_R,P_degenerate,primary,positive,control_rate_minus_baseline_rate,100,100,1.0,100,0.0,1.0,1.0,increased_in_control,0,0,100,0,1.5777218104420236e-30
+validation_A,no_delay,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,0.0,0.0,no_rate_difference,50,0,0,0,1.0
+validation_B,no_delay,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,0.0,0.0,no_rate_difference,50,0,0,0,1.0
+pooled,no_delay,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,100,100,1.0,100,0.0,0.0,0.0,no_rate_difference,100,0,0,0,1.0
+validation_A,no_mu,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,0.0,0.0,no_rate_difference,50,0,0,0,1.0
+validation_B,no_mu,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,0.0,0.0,no_rate_difference,50,0,0,0,1.0
+pooled,no_mu,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,100,100,1.0,100,0.0,0.0,0.0,no_rate_difference,100,0,0,0,1.0
+validation_A,no_gap,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,0.54,0.54,increased_in_control,23,0,27,0,1.4901161193847656e-08
+validation_B,no_gap,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,50,50,1.0,50,0.0,0.48,0.48,increased_in_control,26,0,24,0,1.1920928955078125e-07
+pooled,no_gap,P_degenerate,secondary,not_predeclared,control_rate_minus_baseline_rate,100,100,1.0,100,0.0,0.51,0.51,increased_in_control,49,0,51,0,8.881784197001252e-16

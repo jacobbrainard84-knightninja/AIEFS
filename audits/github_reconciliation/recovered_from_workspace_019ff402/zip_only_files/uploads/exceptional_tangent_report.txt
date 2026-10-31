@@ -1,0 +1,70 @@
+AIEF exceptional-seed and corrected tangent analysis
+====================================================
+
+Exceptional seed
+----------------
+  seed: 4619122171158768524
+  switch_count: 1
+  first_switch_step: 12405
+  first_switch_time: 124.06
+  pre_switch_mean_stationarity_ratio: 0.14685940684975718
+  post_switch_mean_stationarity_ratio: 7.893059517783126e-06
+  post_switch_max_stationarity_ratio: 8.813848174066108e-05
+  maximum_B_drift: 0.20893854278186944
+  final_B_drift: 0.20893854278186944
+  final_replay_exact: True
+  final_replay_allclose_1e12: True
+
+Corrected tangent perturbations
+-------------------------------
+  delta=0.0001
+    frozen_restoring_coefficient: median=0.315789, min=-33657.8, max=233.435, valid=200/200
+    frozen_restoring_cosine: median=1, min=-0.522944, max=1, valid=200/200
+    frozen_transverse_ratio: median=1.21003e-08, min=3.73207e-09, max=0.999517, valid=200/200
+    predicted_t50: median=2.19497, min=0.00296933, max=3.47049, valid=198/200
+    predicted_t90: median=7.29152, min=0.0098639, max=11.5287, valid=198/200
+    observed_t50: median=2.2, min=2.2, max=4.4, valid=200/200
+    observed_t90: median=7.35, min=7.35, max=14, valid=198/200
+    observed_exponential_rate: median=0.315339, min=0.136767, max=0.315339, valid=200/200
+    observed_exponential_r_squared: median=1, min=0.994943, max=1, valid=200/200
+    final_distance_ratio: median=0.0088257, min=0.0088257, max=0.124056, valid=200/200
+  delta=0.001
+    frozen_restoring_coefficient: median=0.315789, min=-33657.8, max=233.435, valid=200/200
+    frozen_restoring_cosine: median=1, min=-0.522944, max=1, valid=200/200
+    frozen_transverse_ratio: median=1.2104e-09, min=3.73033e-10, max=0.999517, valid=200/200
+    predicted_t50: median=2.19497, min=0.00296933, max=3.47049, valid=198/200
+    predicted_t90: median=7.29152, min=0.0098639, max=11.5287, valid=198/200
+    observed_t50: median=2.2, min=2.2, max=4.4, valid=200/200
+    observed_t90: median=7.35, min=7.35, max=14, valid=198/200
+    observed_exponential_rate: median=0.315339, min=0.136767, max=0.315339, valid=200/200
+    observed_exponential_r_squared: median=1, min=0.994947, max=1, valid=200/200
+    final_distance_ratio: median=0.00882571, min=0.00882569, max=0.124056, valid=200/200
+  delta=0.01
+    frozen_restoring_coefficient: median=0.315789, min=-33657.8, max=233.435, valid=200/200
+    frozen_restoring_cosine: median=1, min=-0.522944, max=1, valid=200/200
+    frozen_transverse_ratio: median=1.21398e-10, min=3.71325e-11, max=0.999517, valid=200/200
+    predicted_t50: median=2.19497, min=0.00296933, max=3.47049, valid=198/200
+    predicted_t90: median=7.29152, min=0.0098639, max=11.5287, valid=198/200
+    observed_t50: median=2.2, min=2.2, max=4.4, valid=200/200
+    observed_t90: median=7.35, min=7.35, max=14.05, valid=198/200
+    observed_exponential_rate: median=0.315339, min=0.136767, max=0.31534, valid=200/200
+    observed_exponential_r_squared: median=1, min=0.994565, max=1, valid=200/200
+    final_distance_ratio: median=0.00882573, min=0.00882558, max=0.124056, valid=200/200
+  delta=0.05
+    frozen_restoring_coefficient: median=0.315789, min=-33657.8, max=233.435, valid=200/200
+    frozen_restoring_cosine: median=1, min=-0.522944, max=1, valid=200/200
+    frozen_transverse_ratio: median=2.43583e-11, min=7.27637e-12, max=0.999517, valid=200/200
+    predicted_t50: median=2.19497, min=0.00296933, max=3.47049, valid=198/200
+    predicted_t90: median=7.29152, min=0.0098639, max=11.5287, valid=198/200
+    observed_t50: median=2.2, min=2.2, max=4.4, valid=200/200
+    observed_t90: median=7.35, min=7.35, max=14.6, valid=198/200
+    observed_exponential_rate: median=0.315338, min=0.136767, max=0.315343, valid=200/200
+    observed_exponential_r_squared: median=1, min=0.990186, max=1, valid=200/200
+    final_distance_ratio: median=0.00882586, min=0.00882513, max=0.124056, valid=200/200
+
+Interpretation constraints
+--------------------------
+* The same tangent direction is reused across all amplitudes within each seed/direction ID.
+* Directions with negligible feasible amplitude are rejected.
+* The exceptional-seed mechanism remains descriptive until its switch is analyzed in detail.
+* Predicted tangent times assume local exponential contraction.

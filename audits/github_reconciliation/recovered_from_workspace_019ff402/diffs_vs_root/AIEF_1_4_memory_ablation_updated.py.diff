@@ -1,0 +1,370 @@
+--- worktree/AIEF_1_4_memory_ablation_updated.py
++++ zip:workspace-019ff402/AIEF_1_4_memory_ablation_updated.py
+@@ -26,6 +26,7 @@
+ 
+ import numpy as np
+ 
++
+ # =============================================================================
+ # Model and protocol
+ # =============================================================================
+@@ -33,13 +34,9 @@
+ WORKFLOW_VERSION = "AIEF-1.4-memory-ablation-r2"
+ 
+ N = 12
+-
+ T_SIM = 800.0
+-
+ DT = 0.01
+-
+ TAU = 0.5
+-
+ OMEGA = np.array(
+     [
+         1.00, 1.02, 1.50, 2.00, 2.01, 1.01,
+@@ -58,6 +55,7 @@
+ B_C = 0.12
+ B_INIT_SCALE = 0.0005
+ ALPHA = float(np.exp(-DT / T_WINDOW))
++
+ BURN_FRACTION = 0.20
+ HISTORY_END_FRACTION = 0.60
+ DELAY_STEPS = int(round(TAU / DT))
+@@ -68,12 +66,15 @@
+ WINDOW_STEPS = int(round(T_WINDOW / DT))
+ RECOVERY_END = min(5 * WINDOW_STEPS, FUTURE_STEPS)
+ DIAGNOSTIC_STRIDE = 50
++
+ EDGES = np.triu_indices(N, k=1)
+ N_EDGES = len(EDGES[0])
+ CAP = (A - DELTA) / Q
++
+ GAP_TOL = 1e-9
+ ZERO_TOL = 1e-12
+ PROJECTION_NORM_TOL = 1e-14
++
+ DEFAULT_MASTER_SEED = 20260714
+ DEFAULT_N_SEEDS = 40
+ DEFAULT_RUN_ROOT = "runs"
+@@ -100,6 +101,7 @@
+     "future_driver_control": ("future_shuffle",),
+ }
+ 
++# These roles are frozen before the production run. Tests remain paired by seed.
+ PRIMARY_OUTCOMES = (
+     "Weighted_similarity_late",
+     "Retention_contrast_late",
+@@ -268,6 +270,7 @@
+ # Utility functions
+ # =============================================================================
+ 
++
+ def validate_configuration() -> None:
+     if OMEGA.shape != (N,) or not np.all(np.isfinite(OMEGA)):
+         raise ValueError("OMEGA must contain N finite frequencies")
+@@ -433,38 +436,45 @@
+     B_previous = state.B.copy()
+     R_physical = compute_R(state)
+     R_driver = R_physical
++
+     if shuffle_driver:
+         values = R_physical[EDGES].copy()
+         rng.shuffle(values)
+         R_driver = np.zeros_like(R_physical)
+         R_driver[EDGES] = values
+         R_driver[(EDGES[1], EDGES[0])] = values
++
+     B_unprojected = state.B + DT * (
+         (ETA + MU) * R_driver - MU - GAMMA * state.B
+     )
+     B_unprojected = np.maximum(B_unprojected, 0.0)
+     B_unprojected = 0.5 * (B_unprojected + B_unprojected.T)
+     np.fill_diagonal(B_unprojected, 0.0)
++
+     proposed_update_norm = float(np.linalg.norm(B_unprojected - B_previous))
+     row_sum_pre = np.sum(B_unprojected, axis=1)
+     g_min_pre = float(np.min(A - Q * row_sum_pre))
+     pre_violation = bool(g_min_pre < DELTA)
++
+     B_projected = B_unprojected
+     if pre_violation:
+         scale = np.minimum(1.0, CAP / (row_sum_pre + ZERO_TOL))
+         B_projected = B_unprojected * np.minimum.outer(scale, scale)
+         np.fill_diagonal(B_projected, 0.0)
++
+     correction_norm = float(np.linalg.norm(B_projected - B_unprojected))
+     projection_active = bool(correction_norm > PROJECTION_NORM_TOL)
+     relative_state = correction_norm / max(
+         float(np.linalg.norm(B_unprojected)), ZERO_TOL
+     )
+     relative_update = correction_norm / max(proposed_update_norm, ZERO_TOL)
++
+     state.B = B_projected
+     row_sum = np.sum(state.B, axis=1)
+     g_min = float(np.min(A - Q * row_sum))
+     if g_min < DELTA - GAP_TOL:
+         raise RuntimeError(f"gap projection failed: {g_min}")
++
+     delayed = state.history[0]
+     coupling = np.sum(
+         state.B * np.sin(delayed[None, :] - state.theta[:, None]), axis=1
+@@ -473,6 +483,7 @@
+         state.theta + DT * (OMEGA + coupling), 2.0 * np.pi
+     )
+     state.history.append(state.theta.copy())
++
+     info = {
+         "pre_violation": pre_violation,
+         "projection_active": projection_active,
+@@ -489,10 +500,12 @@
+ # Prefix and interventions
+ # =============================================================================
+ 
++
+ def simulate_prefix(seed: int) -> tuple[DynamicState, dict[str, np.ndarray]]:
+     root = np.random.SeedSequence(seed)
+     init_sequence, _ = root.spawn(2)
+     rng = np.random.default_rng(init_sequence)
++
+     theta = rng.random(N) * 2.0 * np.pi
+     B = B_INIT_SCALE * rng.random((N, N))
+     B = 0.5 * (B + B.T)
+@@ -506,11 +519,13 @@
+             maxlen=DELAY_STEPS + 1,
+         ),
+     )
++
+     R_past_sum = np.zeros((N, N), dtype=float)
+     R_past_count = 0
+     unused_rng = np.random.default_rng(0)
++
+     for step in range(HIST_END):
+-        R_physical, *_ = advance_state(
++        R_physical, _, _ = advance_state(
+             state,
+             shuffle_driver=False,
+             rng=unused_rng,
+@@ -518,6 +533,7 @@
+         if BURN_END <= step < HIST_END:
+             R_past_sum += R_physical
+             R_past_count += 1
++
+     prefix = {
+         "B_at_split": state.B.copy(),
+         "R_physical_past": R_past_sum / R_past_count,
+@@ -536,14 +552,17 @@
+ ) -> None:
+     if branch in {"reset_ema", "reset_B_ema", "B_carrier_only", "full_reset"}:
+         state.coherence_acc.fill(0.0)
++
+     if branch in {"reset_B", "reset_B_ema", "full_reset"}:
+         state.B.fill(0.0)
++
+     if branch in {"B_carrier_only", "full_reset"}:
+         state.theta = rng.random(N) * 2.0 * np.pi
+         state.history = deque(
+             (state.theta.copy() for _ in range(DELAY_STEPS + 1)),
+             maxlen=DELAY_STEPS + 1,
+         )
++
+     state.B = 0.5 * (state.B + state.B.T)
+     np.fill_diagonal(state.B, 0.0)
+ 
+@@ -551,6 +570,7 @@
+ # =============================================================================
+ # Future branch simulation
+ # =============================================================================
++
+ 
+ def simulate_future(
+     split_state: DynamicState,
+@@ -560,21 +580,26 @@
+ ) -> dict[str, Any]:
+     state = split_state.clone()
+     apply_intervention(state, branch, rng)
++
+     P_sums = {name: np.zeros((N, N), dtype=float) for name in HORIZONS}
+     B_sums = {name: np.zeros((N, N), dtype=float) for name in HORIZONS}
+     counts = {name: 0 for name in HORIZONS}
+     R_physical_sum = np.zeros((N, N), dtype=float)
+     R_driver_sum = np.zeros((N, N), dtype=float)
++
+     projection = ProjectionTotals()
+     r_sum = 0.0
+     r_count = 0
+     r_late_sum = 0.0
+     r_late_count = 0
++
+     sample_times: list[float] = []
+     density_trajectory: list[float] = []
+     similarity_trajectory: list[float] = []
++
+     shuffle_driver = branch == "future_shuffle"
+     B_reference = prefix["B_at_split"]
++
+     for relative_step in range(FUTURE_STEPS):
+         R_physical, R_driver, projection_info = advance_state(
+             state,
+@@ -582,14 +607,17 @@
+             rng=rng,
+         )
+         projection.update(projection_info)
++
+         selected = (state.B > B_C).astype(float)
+         name = horizon_name(relative_step)
+         for horizon in ("full", name):
+             P_sums[horizon] += selected
+             B_sums[horizon] += state.B
+             counts[horizon] += 1
++
+         R_physical_sum += R_physical
+         R_driver_sum += R_driver
++
+         if relative_step % DIAGNOSTIC_STRIDE == 0:
+             r_value = float(np.abs(np.mean(np.exp(1j * state.theta))))
+             r_sum += r_value
+@@ -602,12 +630,14 @@
+                 float(np.count_nonzero(state.B[EDGES] > B_C) / N_EDGES)
+             )
+             similarity_trajectory.append(cosine_edges(B_reference, state.B))
++
+     P = {name: P_sums[name] / counts[name] for name in HORIZONS}
+     B_mean = {name: B_sums[name] / counts[name] for name in HORIZONS}
+     final_weights = state.B[EDGES]
+     final_rows = np.sum(state.B, axis=1)
+     split_selected = prefix["selected_at_split"][EDGES].astype(bool)
+     p_late_edges = P["late"][EDGES]
++
+     retention = (
+         float(np.mean(p_late_edges[split_selected]))
+         if np.any(split_selected)
+@@ -618,6 +648,7 @@
+         if np.any(~split_selected)
+         else np.nan
+     )
++
+     sample_times_array = np.asarray(sample_times, dtype=float)
+     density_array = np.asarray(density_trajectory, dtype=float)
+     similarity_array = np.asarray(similarity_trajectory, dtype=float)
+@@ -625,6 +656,7 @@
+     minimum_similarity = (
+         float(np.min(finite_similarity)) if len(finite_similarity) else np.nan
+     )
++
+     result: dict[str, Any] = {
+         "D_B_final": float(np.count_nonzero(final_weights > B_C) / N_EDGES),
+         "P_mean_full": float(np.mean(P["full"][EDGES])),
+@@ -710,6 +742,7 @@
+         "coherence": split_state.coherence_acc.copy(),
+         "history": np.stack(tuple(split_state.history)),
+     }
++
+     _, branch_root = np.random.SeedSequence(seed).spawn(2)
+     branch_sequences = branch_root.spawn(len(BRANCHES))
+     branch_rng_seeds = {
+@@ -717,6 +750,7 @@
+         for branch, sequence in zip(BRANCHES, branch_sequences)
+     }
+     branch_results: dict[str, dict[str, Any]] = {}
++
+     for branch in BRANCHES:
+         branch_results[branch] = simulate_future(
+             split_state,
+@@ -724,6 +758,7 @@
+             branch,
+             np.random.default_rng(branch_rng_seeds[branch]),
+         )
++
+         if not np.array_equal(split_state.theta, immutable_snapshot["theta"]):
+             raise RuntimeError("branch mutation leaked into split theta")
+         if not np.array_equal(split_state.B, immutable_snapshot["B"]):
+@@ -736,16 +771,19 @@
+             np.stack(tuple(split_state.history)), immutable_snapshot["history"]
+         ):
+             raise RuntimeError("branch mutation leaked into split history")
++
+     continue_result = branch_results["continue"]
+     reference_density = float(continue_result["D_B_final"])
+     reference_late_similarity = float(
+         continue_result["Weighted_similarity_late"]
+     )
+     reference_late_persistence = float(continue_result["P_mean_late"])
++
+     for result in branch_results.values():
+         times = result["sample_times"]
+         density = result["density_trajectory"]
+         similarity = result["similarity_trajectory"]
++
+         result["Time_to_50pct_continue_final_density"] = time_to_at_least(
+             times, density, 0.5 * reference_density
+         )
+@@ -778,6 +816,7 @@
+             and abs(reference_late_similarity) > ZERO_TOL
+             else np.nan
+         )
++
+     if verify_continue:
+         duplicate = simulate_future(
+             split_state,
+@@ -788,6 +827,7 @@
+         for key in ("B_final", "P_full", "P_late"):
+             if not np.array_equal(branch_results["continue"][key], duplicate[key]):
+                 raise RuntimeError(f"continue reproducibility failed for {key}")
++
+     return {
+         "seed": int(seed),
+         "seed_index": int(seed_index),
+@@ -800,6 +840,7 @@
+ # =============================================================================
+ # Checkpoint serialization
+ # =============================================================================
++
+ 
+ def flatten_seed_result(result: dict[str, Any]) -> dict[str, Any]:
+     payload: dict[str, Any] = {
+@@ -862,6 +903,7 @@
+ # =============================================================================
+ # Manifest, output, and CLI
+ # =============================================================================
++
+ 
+ def build_manifest(master_seed: int, seeds: list[int]) -> dict[str, Any]:
+     return {
+@@ -1029,16 +1071,19 @@
+     config_hash = hashlib.sha256(manifest_text.encode()).hexdigest()[:12]
+     run_dir = os.path.join(args.run_root, config_hash)
+     os.makedirs(run_dir, exist_ok=True)
++
+     manifest = {**manifest_base, "config_hash": config_hash}
+     atomic_write_text(
+         os.path.join(run_dir, "manifest.json"),
+         json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False) + "\n",
+     )
++
+     print("Running AIEF-1.4 split-state memory-carrier ablation")
+     print(f"  master seed:   {args.master_seed}")
+     print(f"  paired seeds:  {args.n_seeds}")
+     print(f"  configuration: {config_hash}")
+     print(f"  output:        {run_dir}")
++
+     all_results: list[dict[str, Any]] = []
+     started = time.time()
+     for seed_index, seed in enumerate(seeds):
+@@ -1062,7 +1107,9 @@
+             status = "completed"
+         all_results.append(result)
+         print(f"  seed {seed_index + 1}/{len(seeds)} {status}")
++
+     print(f"Runtime: {time.time() - started:.1f} s\n")
++
+     scalar_rows: list[dict[str, Any]] = []
+     matrix_payload: dict[str, Any] = {}
+     for result in all_results:
+@@ -1082,6 +1129,7 @@
+             )
+             for key in BRANCH_MATRIX_KEYS:
+                 matrix_payload[f"{branch}_seed_{seed}_{key}"] = branch_result[key]
++
+     csv_path = os.path.join(run_dir, f"AIEF_1_4_{config_hash}_scalar_summary.csv")
+     matrix_path = os.path.join(
+         run_dir, f"AIEF_1_4_{config_hash}_branch_diagnostics.npz"

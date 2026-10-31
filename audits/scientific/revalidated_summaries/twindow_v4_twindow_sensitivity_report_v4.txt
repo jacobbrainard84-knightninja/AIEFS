@@ -1,0 +1,36 @@
+================================================================================
+AIEF-1.4 T_window Sensitivity — Analysis v4
+================================================================================
+
+STATUS
+  Separately versioned reanalysis of the existing S01 raw trajectories.
+  No trajectories were regenerated.
+
+RECOVERY SEMANTICS
+  Saved observation support: [0.01, 319.51]
+  Saved-grid spacing: 0.5
+  Event times: first qualifying saved observation; interval-censored.
+  Undefined similarity: raw NaN, derived recovery representation uses zero.
+  Hold systems: fixed 17.5 units and one nominal current T_window.
+  AUC: one-sided deficit over saved support; not labelled full [0,320].
+
+INFERENCE
+  Seed/graph is the inferential unit.
+  One joint seed-resampling plan is reused across all estimands.
+  Primary regime, branch-DID, and topology families have max-t simultaneous bands.
+  Recovery intervals are pointwise; complete-case raw-event estimates are secondary.
+
+COUNTS
+  Seeds: 40
+  Regime summary groups: 24
+  Branch-DID summary groups: 72
+  Topology summary groups: 12
+  Recovery event rows: 9600
+  Conditional recovery-DID groups: 144
+
+INTERPRETATION LIMITS
+  Exact step-level crossings and t=0/t=320 endpoint values are unavailable.
+  Analysis v3 remains the prespecified legacy-compatible analysis.
+  Analysis v4 is not an independent experiment.
+
+================================================================================
