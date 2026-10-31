@@ -35,7 +35,10 @@
     "EMP-AIEF14-03 and the three unmapped studies remain without a defensible external anchor. Not forced.",
     "The inbox has reached lead-cleanness (7 leads opened, 7 resolved, 0 open). Further source addition would not change any claim's status.",
     "ROUND 5: producing_code status is symbol-search evidence, not provenance-manifest evidence. A script was verified to CONTAIN a computation, not to have produced a specific number.",
-    "ROUND 5: 19 claims remain unadjudicated by construction - 12 retired (need no defence), 6 CF claims that are textbook material or open conjectures, and EMP-AIEF14-03 with no defensible external anchor."
+    "ROUND 5: 19 claims remain unadjudicated by construction - 12 retired (need no defence), 6 CF claims that are textbook material or open conjectures, and EMP-AIEF14-03 with no defensible external anchor.",
+    "REGISTRY SUPERSEDED (found 2026-10-31 by remote sweep): the adjudication baseline has 43 claims; integration/round5 has 76 (33 unseen: 24 AUD-*, 2 LEAN-*, 7 SSRH-ORIG-*). Coverage is 24/76 against the registry of record, not 24/43. Two adjudicated rows carry stale status.",
+    "SELF-CORRECTION (2026-10-31): the round-5 basis for LEAN-CF-01/CF06 cited oriented-incidence rank = n - c (LIT-0011). ERRATA E6 and claim AUD-CYCLE-KERNEL establish the object is the UNSIGNED incidence kernel, dim = m - n; the K3 unsigned kernel is 0, not 2. The claim arithmetic stands; the theorem attribution does not.",
+    "F16 refined again: two of the five 'phantom' entrypoints are stale names whose script AND committed outputs exist (AIEF_1_4_intertwining_controller_analysis.py; AIEF_1_3_falsification_updated.py). The defect is bidirectional - two real scripts are registered nowhere. Three token groups remain genuinely absent on all 11 branches."
   ],
   "claims_adjudicated": 24,
   "adjudication": {
@@ -67,5 +70,16 @@
       "UNRESOLVED": 0,
       "NOT_APPLICABLE": 11
     }
+  },
+  "registry_baseline": {
+    "adjudicated_against": "arena/d4a487cc-aiefs registry/claims.csv (43 claims)",
+    "registry_of_record": "origin/integration/round5 (76 claims); origin/audit/nanfix-v2 (75); absent on origin/main",
+    "shared": 43,
+    "missing_from_baseline": 33,
+    "stale_status_rows": [
+      "EMP-AIEF14-02 Frozen->Exploratory",
+      "CF05 Frozen->Supported"
+    ],
+    "note": "ADJUDICATION.csv is gate-8 clean against its own baseline but adjudicates a superseded registry. Re-baseline before quoting coverage."
   }
 }
