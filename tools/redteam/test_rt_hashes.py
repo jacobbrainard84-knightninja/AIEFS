@@ -247,7 +247,8 @@ class ManifestWrapper(TempDirMixin, unittest.TestCase):
                                 self.NOT_RUN, self.FAIL0)
 
     def _repin(self, body):
-        """Stub the verifier AND rewrite its manifest pin to match (manifest itself is pinned in artifacts.csv)."""
+        """Stub the verifier AND rewrite its manifest pin to match. Nothing in CI pins audit_manifest.json itself
+        (registry/artifacts.csv has no 'AI Agent Audits/' rows), so this re-pin is the residual: see GAP G2c below."""
         p = self.stub(body)
         mp = os.path.join(self.root, self.MAN)
         with open(mp) as f:
@@ -267,6 +268,134 @@ class ManifestWrapper(TempDirMixin, unittest.TestCase):
         want = self._repin("print('FAILED: 3 problem(s)')\n")
         self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} exited 0 but did not print its success line '{want}' "
                                               "followed by 'OK'; the manifest hashes are NOT confirmed", self.FAIL1)
+
+
+    # --- Researcher 001 audit of 14072c3 (F1 shadow modules, F3, F4, duplicate keys, F5) ---------------------------
+    MODS = ("hashlib", "json", "glob", "pathlib")
+    PUB = "AIEFS_audit.md"                                  # a published file listed in files_sha256
+
+    def _tamper_pub(self):
+        p = os.path.join(self.root, "AI Agent Audits", self.PUB)   # real copy (copy_real in setUp)
+        old = os.path.getsize(p)
+        with open(p, "ab") as f:
+            f.write(b"TAMPERED\n")
+        return f"SIZE     {self.PUB}: {old + 9} != {old}"
+
+    def _manifest(self):
+        with open(os.path.join(self.root, self.MAN)) as f:
+            return json.load(f)
+
+    def _want(self, m):
+        post = len(set(m.get("post_manifest_logs") or []))
+        return (f"checked {len(m['files_sha256'])} published files and {len(m['inputs_sha256'])} inputs"
+                + (f"; {post} post-manifest logs listed but not hashed" if post else ""))
+
+    def _plant(self, mod, listed):
+        """A fake <mod>.py beside the REAL verifier that prints the success line + OK and exits 0 on import."""
+        m = self._manifest()
+        key = f"evidence/{mod}.py"
+        if listed:
+            m["files_sha256"][key] = {"bytes": 0, "sha256": "0" * 64}   # placeholder, so the count is right
+        body = f"print({self._want(m)!r})\nprint('OK')\nraise SystemExit(0)\n"
+        p = os.path.join(self.root, EVID, f"{mod}.py")
+        with open(p, "w") as f:
+            f.write(body)
+        if listed:
+            m["files_sha256"][key] = {"bytes": os.path.getsize(p), "sha256": sha256(p)}
+            with open(os.path.join(self.root, self.MAN), "w") as f:
+                json.dump(m, f, indent=1)
+
+    def test_unlisted_shadow_module_beside_verifier_refused(self):
+        """F1: a planted stdlib shadow next to the real verifier is refused before anything runs."""
+        for mod in self.MODS:
+            with self.subTest(module=mod):
+                self.tearDown(); self.setUp()                  # fresh temp repo per module
+                self._tamper_pub()
+                self._plant(mod, listed=False)
+                self.assertWrapperFails(*self.wrap(), f"ERROR   {EVID}/{mod}.py: .py file beside the verifier that "
+                                                      f"{self.MAN} does not list; refusing to run the verifier next to it",
+                                        self.NOT_RUN, self.FAIL0)
+
+    def test_listed_shadow_module_cannot_hijack_real_verifier(self):
+        """F1: even a shadow listed (and hashed) in the manifest is not imported: the verifier runs with -I,
+        so the real verifier runs and reports the tampered published file."""
+        for mod in self.MODS:
+            with self.subTest(module=mod):
+                self.tearDown(); self.setUp()                  # fresh temp repo per module
+                size = self._tamper_pub()
+                self._plant(mod, listed=True)
+                self.assertWrapperFails(*self.wrap(), size, f"ERROR   {self.VER} exited 1", self.FAIL1)
+
+    def test_shadow_module_in_repo_root_cannot_hijack_real_verifier(self):
+        """F1 guard for the new launch: the verifier now runs via `python -I -B -c`, whose cwd (the repo root)
+        would be on sys.path without -I. (PYTHONPATH is covered in-process by the CI self-test; here it would
+        hijack check_manifest.py itself, which is outside this check's threat model.)"""
+        for mod in self.MODS:
+            with self.subTest(module=mod):
+                self.tearDown(); self.setUp()
+                size = self._tamper_pub()
+                with open(os.path.join(self.root, f"{mod}.py"), "w") as f:
+                    f.write(f"print({self._want(self._manifest())!r})\nprint('OK')\nraise SystemExit(0)\n")
+                self.assertWrapperFails(*self.wrap(), size, f"ERROR   {self.VER} exited 1", self.FAIL1)
+
+    def test_pycache_beside_verifier_refused(self):
+        os.mkdir(os.path.join(self.root, EVID, "__pycache__"))
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {EVID}/__pycache__: bytecode cache folder beside the verifier; "
+                                              "refusing to run the verifier next to it", self.NOT_RUN, self.FAIL0)
+
+    def test_repinned_stub_with_problem_line_fails(self):
+        """F3: success line + OK at the end no longer hide a problem line printed earlier."""
+        want = self._want(self._manifest())
+        want = self._repin(f"print('SHA256   {self.PUB}')\nprint({want!r})\nprint('OK')\n")
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} exited 0 but printed a problem line 'SHA256   "
+                                              f"{self.PUB}'; the manifest hashes are NOT confirmed", self.FAIL1)
+
+    def test_repinned_stub_printing_success_line_twice_fails(self):
+        want = self._want(self._manifest())
+        want = self._repin(f"print({want!r})\nprint({want!r})\nprint('OK')\n")
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} exited 0 but printed '{want}' 2 times (expected "
+                                              "exactly once); the manifest hashes are NOT confirmed", self.FAIL1)
+
+    def test_unreadable_verifier_fails_with_named_error(self):
+        """F4: was a PermissionError traceback."""
+        if hasattr(os, "geteuid") and os.geteuid() == 0:
+            self.skipTest("root can read chmod 000 files")
+        p = os.path.join(self.root, self.VER)
+        os.chmod(p, 0)
+        try:
+            self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER}: cannot be read (PermissionError: Permission "
+                                                  "denied), so the verifier cannot be authenticated", self.NOT_RUN, self.FAIL0)
+        finally:
+            os.chmod(p, 0o644)
+
+    def test_duplicate_verifier_key_with_stub_hash_last_fails(self):
+        """A second files_sha256 entry for the verifier (the stub's hash, LAST, so json last-wins picked it)."""
+        m = self._manifest()
+        p = self.stub(f"print({self._want(m)!r})\nprint('OK')\n")
+        key = "evidence/verify_manifest.py"
+        pairs = list(m["files_sha256"].items()) + [(key, {"bytes": os.path.getsize(p), "sha256": sha256(p)})]
+        files = "{" + ", ".join(f"{json.dumps(k)}: {json.dumps(v)}" for k, v in pairs) + "}"
+        rest = ", ".join(f"{json.dumps(k)}: {json.dumps(v)}" for k, v in m.items() if k != "files_sha256")
+        with open(os.path.join(self.root, self.MAN), "w") as f:
+            f.write('{"files_sha256": ' + files + ", " + rest + "}")
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.MAN}: cannot read manifest: duplicate key '{key}' "
+                                              "in a JSON object", self.NOT_RUN, self.FAIL0)
+
+    def test_symlinked_evidence_folder_fails(self):
+        """F5: a symlink on the way to the verifier (here the evidence/ folder, pointing inside the repo)."""
+        ev = os.path.join(self.root, EVID)
+        os.rename(ev, ev + "_real"); os.symlink("evidence_real", ev)
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {EVID} is a symlink (a folder on the verifier's path); "
+                                              f"refusing to run {self.VER}", self.NOT_RUN, self.FAIL0)
+
+    @gap("G2c: audit_manifest.json is not pinned outside itself, so a stub whose re-pinned hash is written into the "
+         "manifest and which prints the computed success line + OK passes check_manifest.py (owner item: pin the "
+         "manifest and verify_manifest.py where CI checks them, and make this suite a required CI check)")
+    def test_GAP_repinned_stub_printing_success_line_passes(self):
+        want = self._want(self._manifest())
+        self._tamper_pub()
+        self._repin(f"print({want!r})\nprint('OK')\n")
+        self.assertRejected(*self.wrap())
 
 
 if __name__ == "__main__":

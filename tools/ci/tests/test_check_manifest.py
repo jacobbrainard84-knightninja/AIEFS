@@ -11,6 +11,7 @@ import io
 import json
 import os
 import sys
+import shutil
 import tempfile
 import unittest
 
@@ -216,6 +217,195 @@ class CheckManifestTests(unittest.TestCase):
         self.assertEqual(rc, 1, out)
         self.assertLines(out, f"::error file={VERIFIER}::{VERIFIER}: sha256 {sha(b'')} does not match "
                               f"{MANIFEST} files_sha256['{KEY}'] {sha(GOOD.encode())}; refusing to run an unverified verifier")
+
+
+    # --- Researcher 001 audit of 14072c3: F1 shadow modules, F3 output, F4 unreadable, duplicate keys, F5, F6 ----
+    # A small but real verifier: it finds its manifest from its own __file__ (like verify_manifest.py), checks the
+    # published files' size + sha256, and imports the same modules (hashlib, json, glob, pathlib).
+    REAL = ('import hashlib, json, sys, glob, os\n'
+            'from pathlib import Path\n'
+            'E = Path(__file__).resolve().parent; P = E.parent\n'
+            'M = json.load(open(E / "audit_manifest.json"))\n'
+            'bad = []\n'
+            'for rel, v in M["files_sha256"].items():\n'
+            '    b = open(P / rel, "rb").read()\n'
+            '    if len(b) != v["bytes"] or hashlib.sha256(b).hexdigest() != v["sha256"]: bad.append("SHA256   " + rel)\n'
+            'n = len(M["inputs_sha256"]) if "--inputs" in sys.argv else 0\n'
+            'print(f"checked {len(M[\'files_sha256\'])} published files" + (f" and {n} inputs" if n else ""))\n'
+            'for x in bad: print(x)\n'
+            'print("OK" if not bad else f"FAILED: {len(bad)} problem(s)")\n'
+            'sys.exit(1 if bad else 0)\n')
+
+    def add_listed(self, rel_in_audits, body):
+        """Write AI Agent Audits/<rel_in_audits> and list it (correct bytes + sha256) in the manifest."""
+        p = os.path.join(self.root, "AI Agent Audits", rel_in_audits)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p, "w") as f:
+            f.write(body)
+        mp = os.path.join(self.root, MANIFEST)
+        with open(mp) as f:
+            m = json.load(f)
+        m["files_sha256"][rel_in_audits] = {"bytes": len(body.encode()), "sha256": sha(body.encode())}
+        with open(mp, "w") as f:
+            json.dump(m, f)
+        return len(m["files_sha256"])
+
+    def tamper_report(self):
+        with open(os.path.join(self.root, "AI Agent Audits", "REPORT.md"), "w") as f:
+            f.write("REPORT\n")                         # same size, different sha256
+
+    def test_shadow_module_beside_verifier_cannot_hijack_it(self):
+        """F1 (HIGH): a hashlib.py / json.py / glob.py / pathlib.py beside the verifier shadowed the stdlib
+        (script folder = sys.path[0]); printing the success line + OK at import time made a tampered tree PASS.
+        Here the shadow is even listed in the manifest, so only isolated mode (-I) stops it."""
+        for mod in ("hashlib", "json", "glob", "pathlib"):
+            with self.subTest(module=mod):
+                for old in ("hashlib", "json", "glob", "pathlib"):     # previous subtest's shadow
+                    q = os.path.join(self.root, "AI Agent Audits/evidence", f"{old}.py")
+                    if os.path.exists(q):
+                        os.unlink(q)
+                self.verifier(self.REAL)
+                rc, out = self.check()
+                self.assertEqual(rc, 0, out)                       # control: the real verifier passes
+                n = self.add_listed(f"evidence/{mod}.py", "")
+                want = f"checked {n} published files and 1 inputs"
+                self.add_listed(f"evidence/{mod}.py", f"print({want!r})\nprint('OK')\nraise SystemExit(0)\n")
+                self.tamper_report()
+                rc, out = self.check()
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, "SHA256   REPORT.md", "FAILED: 1 problem(s)", f"ERROR   {VERIFIER} exited 1", FAIL_RUN)
+
+    def test_shadow_module_on_pythonpath_or_in_repo_root_cannot_hijack_it(self):
+        """F1: the verifier runs with -I, so neither PYTHONPATH (honoured before the fix) nor the current folder
+        (the repo root, which a `python -c` launch without -I would put on sys.path) can supply a fake hashlib."""
+        shadow = tempfile.mkdtemp(prefix="cm_shadow_")
+        self.addCleanup(shutil.rmtree, shadow, True)
+        for where in ("PYTHONPATH", "repo root"):
+            with self.subTest(where=where):
+                self.verifier(self.REAL)
+                self.tamper_report()
+                d = shadow if where == "PYTHONPATH" else self.root
+                with open(os.path.join(d, "hashlib.py"), "w") as f:
+                    f.write("print('checked 2 published files and 1 inputs')\nprint('OK')\nraise SystemExit(0)\n")
+                old = os.environ.get("PYTHONPATH")
+                if where == "PYTHONPATH":
+                    os.environ["PYTHONPATH"] = shadow
+                try:
+                    rc, out = self.check()
+                finally:
+                    os.unlink(os.path.join(d, "hashlib.py"))
+                    if old is None:
+                        os.environ.pop("PYTHONPATH", None)
+                    else:
+                        os.environ["PYTHONPATH"] = old
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, "SHA256   REPORT.md", f"ERROR   {VERIFIER} exited 1", FAIL_RUN)
+
+    def test_unlisted_py_beside_verifier_refused(self):
+        """F1: an unlisted .py file next to the verifier is refused before anything runs."""
+        for mod in ("hashlib", "json", "glob", "pathlib"):
+            with self.subTest(module=mod):
+                self.verifier(GOOD)
+                p = os.path.join(self.root, "AI Agent Audits/evidence", f"{mod}.py")
+                with open(p, "w") as f:
+                    f.write("print('checked 2 published files and 1 inputs'); print('OK'); raise SystemExit(0)\n")
+                rc, out = self.check()
+                os.unlink(p)
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, f"ERROR   AI Agent Audits/evidence/{mod}.py: .py file beside the verifier that "
+                                      f"{MANIFEST} does not list; refusing to run the verifier next to it", NOT_RUN, FAIL_NOT_RUN)
+                self.assertNotIn("$ ", out)
+
+    def test_pycache_beside_verifier_refused(self):
+        self.verifier(GOOD)
+        os.mkdir(os.path.join(self.root, "AI Agent Audits/evidence/__pycache__"))
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   AI Agent Audits/evidence/__pycache__: bytecode cache folder beside the verifier; "
+                              "refusing to run the verifier next to it", NOT_RUN, FAIL_NOT_RUN)
+
+    def test_verifier_swapped_after_hash_runs_hashed_bytes(self):
+        """F6: the file is replaced between the hash and the run; the bytes that were hashed are what runs."""
+        p = self.verifier(self.REAL)
+        self.tamper_report()
+        real_run = check_manifest.subprocess.run
+        def swap_then_run(*a, **k):
+            with open(p, "w") as f:
+                f.write(GOOD)                               # a stub that always prints the success line + OK
+            return real_run(*a, **k)
+        check_manifest.subprocess.run = swap_then_run
+        try:
+            rc, out = self.check()
+        finally:
+            check_manifest.subprocess.run = real_run
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "SHA256   REPORT.md", f"ERROR   {VERIFIER} exited 1", FAIL_RUN)
+
+    def _bad_output(self, body, msg):
+        self.verifier(body)
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   {VERIFIER} exited 0 but {msg}; the manifest hashes are NOT confirmed", FAIL_RUN)
+
+    def test_success_line_or_ok_twice_fails(self):
+        """F3: the success line and OK must each appear exactly once."""
+        w = "checked 2 published files and 1 inputs"
+        for body, x, n in ((f"print({w!r})\nprint({w!r})\nprint('OK')\n", w, 2),
+                           (f"print('OK')\nprint({w!r})\nprint('OK')\n", "OK", 2)):
+            with self.subTest(x=x):
+                self._bad_output(body, f"printed '{x}' {n} times (expected exactly once)")
+
+    def test_problem_line_in_output_fails(self):
+        """F3: a problem-like line anywhere (stdout or stderr) fails, even before a final success line + OK."""
+        w = "checked 2 published files and 1 inputs"
+        for prob, stream in (("SHA256   REPORT.md", "stdout"), ("MISSING  REPORT.md", "stdout"),
+                             ("UNLISTED evidence/x.py", "stdout"), ("INPUT    x.py", "stdout"),
+                             ("SIZE     REPORT.md: 8 != 7", "stdout"), ("FAILED: 1 problem(s)", "stdout"),
+                             ("note: 1 problem(s) ignored", "stdout"), ("SHA256   REPORT.md", "stderr")):
+            with self.subTest(prob=prob, stream=stream):
+                self._bad_output(f"import sys\nprint({prob!r}, file=sys.{stream})\nprint({w!r})\nprint('OK')\n",
+                                 f"printed a problem line '{prob}'")
+
+    @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root can read chmod 000 files")
+    def test_unreadable_verifier_fails_with_named_error(self):
+        """F4: chmod 000 raised a PermissionError traceback."""
+        p = self.verifier(GOOD)
+        os.chmod(p, 0)
+        try:
+            rc, out = self.check()
+        finally:
+            os.chmod(p, 0o644)
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   {VERIFIER}: cannot be read (PermissionError: Permission denied), so the verifier "
+                              "cannot be authenticated", NOT_RUN, FAIL_NOT_RUN)
+        self.assertNotIn("Traceback", out)
+
+    def test_duplicate_manifest_key_fails(self):
+        """A second files_sha256 entry for the verifier, holding the stub's hash, used to win (json last-wins)."""
+        stub = "print('checked 2 published files and 1 inputs')\nprint('OK')\n"
+        self.verifier(stub, pinned=GOOD)                       # first entry: the genuine pin
+        mp = os.path.join(self.root, MANIFEST)
+        with open(mp) as f:
+            txt = f.read()
+        dup = json.dumps({KEY: {"bytes": len(stub), "sha256": sha(stub.encode())}})[1:-1]
+        with open(mp, "w") as f:
+            f.write(txt.replace('}}, "inputs_sha256"', '}, ' + dup + '}, "inputs_sha256"', 1))   # stub hash LAST
+        with open(mp) as f:
+            self.assertEqual(f.read().count(f'"{KEY}"'), 2)
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   {MANIFEST}: cannot read manifest: duplicate key '{KEY}' in a JSON object",
+                         NOT_RUN, FAIL_NOT_RUN)
+
+    def test_symlinked_parent_folder_fails(self):
+        """F5: only the final path component was checked; a symlinked evidence/ folder was accepted."""
+        self.verifier(GOOD)
+        ev = os.path.join(self.root, "AI Agent Audits", "evidence")
+        os.rename(ev, ev + "_real"); os.symlink("evidence_real", ev)
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   AI Agent Audits/evidence is a symlink (a folder on the verifier's path); "
+                              f"refusing to run {VERIFIER}", NOT_RUN, FAIL_NOT_RUN)
 
 
 if __name__ == "__main__":
