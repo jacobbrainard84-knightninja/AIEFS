@@ -1,0 +1,43 @@
+{
+  "pinned_from_branch": "origin/integration/round5",
+  "pinned_from_commit": "893e0b6d3f53a2eeae5f60de795eddc5405a47d0",
+  "pinned_on": "2026-10-31",
+  "why": "registry/claims.csv on origin/main does not exist; on the arena base branch it has 43 rows, while integration/round5 has 76. The literature inbox adjudicates against the registry of record, so it pins a byte-exact copy rather than editing registry/ (which the inbox protocol forbids). This directory is a SNAPSHOT, not a registry: nothing here is authoritative and nothing reads it except verify_literature.py.",
+  "files": {
+    "claims.csv": {
+      "sha256": "de2ccb3b8dc257f41b4905047984c8cfae8e2be0808c044d8108429bd5a24bc0",
+      "rows": 76,
+      "columns": [
+        "claim_id",
+        "study_id",
+        "statement",
+        "artifact_status",
+        "evidence_scope",
+        "supporting_artifacts",
+        "scope_boundary_and_caveat",
+        "prior_status",
+        "audited_status",
+        "audited_qualifier",
+        "audit_source",
+        "reconciliation_note",
+        "legacy_list_refs"
+      ]
+    },
+    "studies.csv": {
+      "sha256": "70dea8a01df7e099392dbbc32cd459fbd51d0fbe92be707b8b9ba1029df9001f",
+      "rows": 15,
+      "columns": [
+        "study_id",
+        "title",
+        "era",
+        "artifact_status",
+        "evidence_scope",
+        "canonical_entrypoints",
+        "canonical_evidence_paths",
+        "sample_design",
+        "stage4_target_dir",
+        "summary"
+      ]
+    }
+  }
+}

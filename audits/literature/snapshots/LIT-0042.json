@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0042",
+  "retrieved": "2026-10-31",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1103/PhysRevE.83.036206",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Adaptive oscillator networks with conserved overall coupling: sequential firing and near-synchronized states",
+    "authors": "Picallo, C. B.; Riecke, H.",
+    "year": "2011",
+    "venue": "Physical Review E 83, 036206",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1103/PhysRevE.83.036206;PMID:21517574"
+  },
+  "verbatim_excerpt": "Phys. Rev. E 83, 036206, epub 18 March 2011. PubMed record: 'Adaptive oscillator networks with conserved overall coupling: sequential firing and near-synchronized states', Clara B. Picallo and Hermann Riecke, Instituto de Fisica de Cantabria (IFCA), CSIC-UC, Santander, Spain. PMID 21517574. Abstract not read directly.",
+  "excerpt_provenance": "publisher or index record confirmed across independent citing works; abstract not read"
+}

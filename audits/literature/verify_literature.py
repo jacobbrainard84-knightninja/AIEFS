@@ -99,19 +99,25 @@ def sha256_file(p: pathlib.Path) -> str:
 
 
 def load_registry_ids() -> set[str]:
+    """Claim and study IDs from the local registry AND the pinned baseline.
+
+    The baseline is a byte-exact copy of registry/ from a branch that has more
+    claims than the local checkout (see baseline/BASELINE.json). Both are read so
+    a source may bear on a claim that exists only in the registry of record.
+    """
     ids: set[str] = set()
-    claims = REPO / "registry" / "claims.csv"
-    studies = REPO / "registry" / "studies.csv"
-    if claims.exists():
-        with claims.open(encoding="utf-8", newline="") as fh:
-            for row in csv.DictReader(fh):
-                if row.get("claim_id"):
-                    ids.add(row["claim_id"].strip())
-    if studies.exists():
-        with studies.open(encoding="utf-8", newline="") as fh:
-            for row in csv.DictReader(fh):
-                if row.get("study_id"):
-                    ids.add(row["study_id"].strip())
+    sources = [
+        (REPO / "registry" / "claims.csv", "claim_id"),
+        (REPO / "registry" / "studies.csv", "study_id"),
+        (HERE / "baseline" / "claims.csv", "claim_id"),
+        (HERE / "baseline" / "studies.csv", "study_id"),
+    ]
+    for path, key in sources:
+        if path.exists():
+            with path.open(encoding="utf-8", newline="") as fh:
+                for row in csv.DictReader(fh):
+                    if row.get(key):
+                        ids.add(row[key].strip())
     return ids
 
 
@@ -207,12 +213,27 @@ def main() -> int:
     gate = "4/8 registry linkage"
     claims_path = REPO / "registry" / "claims.csv"
     studies_path = REPO / "registry" / "studies.csv"
-    for p in (claims_path, studies_path):
-        if not p.exists():
-            # Hard failure, not a warning: a silent skip would let the strongest
-            # structural gate be bypassed simply by running from the wrong directory.
-            fail(gate, f"{p} not found — cannot check bears_on_ids. "
-                       "Gate 4 must never degrade to a no-op.")
+    base_claims = HERE / "baseline" / "claims.csv"
+    base_studies = HERE / "baseline" / "studies.csv"
+    base_ok = base_claims.exists() and base_studies.exists()
+    if not base_ok:
+        for p in (claims_path, studies_path):
+            if not p.exists():
+                # Hard failure, not a warning: a silent skip would let the strongest
+                # structural gate be bypassed simply by running from the wrong directory.
+                fail(gate, f"{p} not found and no pinned baseline — cannot check "
+                           "bears_on_ids. Gate 4 must never degrade to a no-op.")
+    # The pinned baseline must still be byte-identical to what BASELINE.json records.
+    manifest_path = HERE / "baseline" / "BASELINE.json"
+    if base_ok and manifest_path.exists():
+        man = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for name, rec in (man.get("files") or {}).items():
+            f = HERE / "baseline" / name
+            if not f.exists():
+                fail(gate, f"baseline/{name} recorded in BASELINE.json but missing")
+            elif sha256_file(f) != rec.get("sha256"):
+                fail(gate, f"baseline/{name} sha256 does not match BASELINE.json — "
+                           "the pinned registry was edited")
     registry_ids = load_registry_ids()
     if not registry_ids:
         fail(gate, "registry yielded no claim/study IDs; linkage would be vacuous")
@@ -314,7 +335,7 @@ def main() -> int:
     # ---------------------------------------------------------------- [8/8]
     gate = "8/8 adjudication"
     adj_path = HERE / "ADJUDICATION.csv"
-    if not (claims_path.exists() and studies_path.exists()):
+    if not (base_ok or (claims_path.exists() and studies_path.exists())):
         # Same fail-closed rule as gate 4: without the registry the coverage
         # comparison is meaningless, and a silent skip would hide that.
         fail(gate, "registry missing — adjudication coverage cannot be checked")
@@ -343,9 +364,12 @@ def main() -> int:
         # Every claim carrying at least one source must be adjudicated, and
         # nothing else may appear. Both directions: a table that quietly drops a
         # claim is worse than no table at all.
+        # Statuses and IDs come from the registry of record: the pinned baseline
+        # when it exists, otherwise the local registry.
+        status_src = base_claims if base_ok else claims_path
         claim_ids: set[str] = set()
-        if claims_path.exists():
-            with claims_path.open(encoding="utf-8", newline="") as fh:
+        if status_src.exists():
+            with status_src.open(encoding="utf-8", newline="") as fh:
                 claim_ids = {c["claim_id"].strip() for c in csv.DictReader(fh) if c.get("claim_id")}
         claim_sources: dict[str, set[str]] = {}      # claim -> sources citing it
         source_claims: dict[str, set[str]] = {}      # source -> claims it cites
@@ -366,8 +390,8 @@ def main() -> int:
             fail(gate, f"adjudicated claims that carry no source mapping: {sorted(extra)}")
 
         reg_status: dict[str, str] = {}
-        if claims_path.exists():
-            with claims_path.open(encoding="utf-8", newline="") as fh:
+        if status_src.exists():
+            with status_src.open(encoding="utf-8", newline="") as fh:
                 reg_status = {
                     c["claim_id"]: c["artifact_status"]
                     for c in csv.DictReader(fh)

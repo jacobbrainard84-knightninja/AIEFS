@@ -19,7 +19,11 @@ import csv
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
-REG = ROOT.parent.parent / "registry"
+# Round 7 re-baseline: adjudicate against the pinned registry of record.
+# registry/claims.csv does not exist on origin/main and has only 43 rows on the
+# arena base branch, while integration/round5 has 76. Editing registry/ is
+# forbidden by the inbox protocol, so a byte-exact copy is pinned in baseline/.
+REG = ROOT / "baseline" if (ROOT / "baseline" / "claims.csv").exists() else ROOT.parent.parent / "registry"
 
 COLS = [
     "claim_id", "study_id", "registry_status", "claim_class", "literature_role",
@@ -79,7 +83,11 @@ ADJ = [
             "name, not lost capability. The interpretive half ('adaptive coupling rather than "
             "bare delay drives persistence') is consistent with the adaptive-delay cluster; "
             "LIT-0039 supplies the review-level framing and LIT-0018/LIT-0016 the specific "
-            "mechanism. Neither was mapped to this claim before round 6."
+            "mechanism. Round 7 added LIT-0040 (Seliger, Young & Tsimring) and "
+            "LIT-0041 (Timms & English) to the mapping: these are the Hebbian-plasticity and "
+            "delay-plus-plasticity ingredients, and together they are what makes \"adaptive "
+            "coupling rather than bare delay\" a claim with prior art behind it rather than a "
+            "local reading."
         ),
         required_change=(
             "Add LIT-0018 and LIT-0016 to bears_on_ids as corroborating CONTEXT; annotate that "
@@ -276,6 +284,36 @@ ADJ = [
         required_change=(
             "Reword to make 'exact' explicitly POINTWISE and normalization-dependent, citing "
             "CAVEAT-MS-8.4 for where the global reading fails."
+        ),
+    ),
+    # ---------------- audit-corpus claims (present only in the pinned baseline) ----
+    dict(
+        claim_id="AUD-NOVELTY", claim_class="EMPIRICAL", literature_role="INTERPRETATION",
+        verdict="SUPPORTED_WITH_SCOPE", mapping_health="COMPLETE",
+        producing_code="NOT_APPLICABLE", severity="MEDIUM",
+        verdict_basis=(
+            "The claim has two halves and the literature settles only one, which is exactly why "
+            "the verdict is scoped rather than plain. Half two - 'the ingredients (delayed "
+            "Kuramoto, Hebbian plasticity, normalisation) are prior art' - is now fully sourced: "
+            "LIT-0040 (Seliger, Young & Tsimring 2002, Hebbian Kuramoto coupling) for plasticity, "
+            "LIT-0041 (Timms & English 2014) for delay plus plasticity, LIT-0042 (Picallo & "
+            "Riecke 2011) for conserved-coupling normalisation, LIT-0043 (Miller & MacKay 1994) "
+            "for multiplicative versus subtractive normalisation, and LIT-0039 (Berner et al. "
+            "2023) as the field review of the whole class. Half one - 'novelty is not established "
+            "either way' - literature cannot close: no search can prove a negative, and the "
+            "repository's own audit says the exact combination (EMA of the delay-compensated "
+            "phasor as driver, plus a min-endpoint hard capacity cap) was not found but the "
+            "search was not exhaustive. LIT-0043 is the sharpest of the five: it is a 1994 result "
+            "showing that the CHOICE of normalisation (multiplicative vs subtractive) determines "
+            "which fixed point is selected - directly relevant to why the capacity cap matters "
+            "rather than being cosmetic."
+        ),
+        required_change=(
+            "Split the row. The prior-art half can move from Incomplete to Supported with the "
+            "five sources attached. The novelty half should stay Incomplete with its caveat, and "
+            "should be restated narrowly: 'no prior art was found for the specific combination', "
+            "not 'novelty is not established either way' - the ingredients' prior-art status IS "
+            "established, and leaving that ambiguous understates the literature."
         ),
     ),
     # ---------------- retirements ----------------

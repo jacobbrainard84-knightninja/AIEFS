@@ -2,27 +2,27 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 6,
-  "next_round": 7,
-  "total_sources": 39,
+  "last_round_completed": 7,
+  "next_round": 8,
+  "total_sources": 43,
   "sources_per_round": {
     "1": 16,
     "2": 12,
     "3": 5,
     "4": 5,
-    "6": 1
+    "6": 1,
+    "7": 4
   },
-  "open_leads": 4,
+  "open_leads": 0,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "7": {
-      "theme": "VERIFY THE FOUR PRIOR-ART LEADS, THEN RE-BASELINE ONTO THE 76-CLAIM REGISTRY",
+    "8": {
+      "theme": "THE 24 AUD-* CLAIMS - the audit corpus has already done most of the literature work",
       "targets": [
-        "Promote or retire LEAD-0008..0011 by fetching each publisher record (Seliger-Young-Tsimring PRE 65:041906; Timms-English PRE 89:032906; Picallo-Riecke PRE 83:036206; Miller-MacKay Neural Computation 6:100). Do NOT promote them on the repository's citation alone.",
-        "Verify the Physics Reports 1031 journal record for LIT-0039 (currently arXiv-only).",
-        "Re-baseline the inbox onto integration/round5's 76-claim registry: add the 33 unseen claims, refresh the 2 stale statuses, add 'Incomplete' to the adjudication vocabulary, and re-run gate 8. Until then every coverage figure is provisional.",
-        "Highest-value new adjudication: AUD-NOVELTY, now that LIT-0039 + the repository's own prior-art list exist.",
-        "Decide whether SSRH-ORIG-01..07 (7 untested origin hypotheses) are in scope for a literature layer at all - they are origin claims, not repository results, and the primary sources are 31 MB of PDFs in Project Origins/."
+        "Adjudicate the 24 AUD-* claims in the pinned baseline. AUD-NOVELTY is done. The rest cover the gate (AUD-GATE, AUD-RATELAW, AUD-KAPPA-TW, AUD-TIES, AUD-CYCLE-KERNEL), reproduction (AUD-REPRO13, AUD-REPRO-B2A95, AUD-MODULAR-ORACLE, AUD-VIMESTEP->AUD-TIMESTEP), scope/labelling (AUD-SCOPE-1.4, AUD-LABEL, AUD-HELDOUT-LABEL, AUD-RESP1-UNIFORM, AUD-CORR-0995-SCOPE), and 3 Incomplete open items (AUD-TIMESTEP, AUD-B-SCAFFOLD, AUD-NOVELTY-remainder).",
+        "Read the LIT-0041 and LIT-0042 abstracts to promote them from VERIFIED_METADATA to VERIFIED_FULL - both are load-bearing for the novelty claim.",
+        "Highest-value NEW question raised by round 7: is the AIEF capacity gate s_i = min(1, c/(q_i+eps)) multiplicative or subtractive in Miller-MacKay's (LIT-0043) sense? Neither, on inspection. That is a citable finding about the gate's form and it bears on AUD-GATE and AUD-RATELAW.",
+        "Do NOT adjudicate the 7 SSRH-ORIG-* claims without an owner decision - they are origin hypotheses, not repository results, and the primary sources are 31 MB of PDFs in Project Origins/."
       ]
     }
   },
@@ -42,29 +42,31 @@
     "ROUND 6: the repository's own prior-art list (AIEFS_audit_response.md point 12) was missing from this inbox entirely. Five citations - Seliger-Young-Tsimring 2002, Timms-English 2014, Picallo-Riecke 2011, Berner 2023, Miller-MacKay 1994 - none of which appeared in rounds 1-5. Lesson recorded: read the repository's own audit record before searching outward.",
     "ROUND 6: LIT-0039 was physically in the repo all along as Papers/2804.05652v1.pdf, under an impossible arXiv ID (2804 cannot exist; correct ID 2304.05652). No Markdown references it, so a Markdown grep could never have found it.",
     "ROUND 6: the archive count was wrong again - main has SEVEN archives, not three. Three are main-only (added 6b49a7b) and were opened for the first time. Full history (198 commits, unshallowed) confirms zero commits ever touched any missing entrypoint filename and no AIEF_1_[012]_ path ever existed.",
-    "ROUND 6: FOUR open leads. The lead queue went 0 -> 4 deliberately; verifying them is the next real work."
+    "ROUND 7: all four round-6 lead titles were WRONG and one (LEAD-0011) was invented outright. Verification corrected them. A citation found inside a document is a prompt to find the record, never a record.",
+    "ROUND 7: the adjudication now runs against a pinned 76-claim baseline, not the local 43-claim registry. Coverage reads 25/76 because the denominator became honest.",
+    "ROUND 7 OPEN QUESTION: the AIEF capacity gate s_i = min(1, c/(q_i+eps)) is a min-endpoint cap, which is arguably NEITHER multiplicative nor subtractive in Miller-MacKay's (LIT-0043) sense. AIEFS_salvage.md claims multiplicative normalisation produces the k*eta/c rates; that mapping is unverified."
   ],
-  "claims_adjudicated": 24,
+  "claims_adjudicated": 25,
   "adjudication": {
     "file": "ADJUDICATION.csv",
-    "claims_covered": 24,
-    "claims_total": 43,
+    "claims_covered": 25,
+    "claims_total": 76,
     "verdicts": {
       "SUPPORTED": 6,
-      "SUPPORTED_WITH_SCOPE": 5,
+      "SUPPORTED_WITH_SCOPE": 6,
       "CONTEXT_ONLY": 2,
       "VALIDATED_RETIREMENT": 6,
       "VALIDATED_REJECTION": 5,
       "BOUNDED": 0
     },
     "mapping_health": {
-      "COMPLETE": 21,
+      "COMPLETE": 22,
       "INCOMPLETE": 2,
       "WRONG": 1
     },
     "severity": {
       "HIGH": 1,
-      "MEDIUM": 2,
+      "MEDIUM": 3,
       "LOW": 4,
       "NONE": 17
     },
@@ -72,18 +74,16 @@
       "PRESENT": 10,
       "RELOCATED": 3,
       "UNRESOLVED": 0,
-      "NOT_APPLICABLE": 11
-    }
+      "NOT_APPLICABLE": 12
+    },
+    "baseline": "audits/literature/baseline/claims.csv"
   },
   "registry_baseline": {
-    "adjudicated_against": "arena/d4a487cc-aiefs registry/claims.csv (43 claims)",
-    "registry_of_record": "origin/integration/round5 (76 claims); origin/audit/nanfix-v2 (75); absent on origin/main",
-    "shared": 43,
-    "missing_from_baseline": 33,
-    "stale_status_rows": [
-      "EMP-AIEF14-02 Frozen->Exploratory",
-      "CF05 Frozen->Supported"
-    ],
-    "note": "ADJUDICATION.csv is gate-8 clean against its own baseline but adjudicates a superseded registry. Re-baseline before quoting coverage."
+    "pinned_in": "audits/literature/baseline/",
+    "pinned_from": "origin/integration/round5 @ 893e0b6",
+    "claims": 76,
+    "studies": 15,
+    "reason": "registry/claims.csv is absent on origin/main and has 43 rows on the arena base branch; the registry of record has 76. The inbox may not edit registry/, so it pins a byte-exact copy and gate 4 enforces the pin.",
+    "gate_behaviour": "gate 4 resolves bears_on_ids against local registry UNION baseline and fails if either pinned file drifts from BASELINE.json; gate 8 takes claim IDs and registry_status from the baseline."
   }
 }

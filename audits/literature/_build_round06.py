@@ -42,7 +42,7 @@ SOURCES = [
         "retrieval_method": "fetch_page",
         "verification_level": "VERIFIED_FULL",
         "relevance_domains": "L1",
-        "bears_on_ids": "EMP-AIEF14-02;EMP-AIEF13-02",
+        "bears_on_ids": "EMP-AIEF14-02;EMP-AIEF13-02;AUD-NOVELTY",
         "stance": "CONTEXT",
         "excerpt": (
             "arXiv:2304.05652 (nlin.AO), submitted 12 Apr 2023, 120 pages. "

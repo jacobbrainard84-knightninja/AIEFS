@@ -202,3 +202,17 @@ is hashed.* It does **not** promise that the field map is complete, that the cit
 fair summary of the papers, or that the literature search is unbiased. Recall is search-limited and
 stated as a gap. Any bot continuing this work should assume the map has holes and look for them
 rather than build on it as authoritative.
+
+## Pinned registry baseline
+
+`baseline/` holds byte-exact copies of `registry/claims.csv` (76 rows) and `registry/studies.csv`
+(15 rows) from `origin/integration/round5`, with `BASELINE.json` recording the source commit,
+sha256 of each file and the reason.
+
+Why a copy and not a merge: `registry/claims.csv` does not exist on `origin/main`, has 43 rows on
+the arena base branch, and has 76 on the integration branch. The inbox protocol forbids editing
+`registry/`, so the registry of record is **pinned**. Gate 4 resolves `bears_on_ids` against the
+union of the local registry and this baseline, and fails if either pinned file's sha256 stops
+matching `BASELINE.json`. Gate 8 takes claim IDs and `registry_status` from the baseline.
+
+A snapshot that can be edited silently is not a snapshot.

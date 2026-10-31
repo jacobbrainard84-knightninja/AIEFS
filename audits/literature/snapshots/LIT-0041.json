@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0041",
+  "retrieved": "2026-10-31",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1103/PhysRevE.89.032906",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Synchronization in phase-coupled Kuramoto oscillator networks with axonal delay and synaptic plasticity",
+    "authors": "Timms, L.; English, L. Q.",
+    "year": "2014",
+    "venue": "Physical Review E 89, 032906",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1103/PhysRevE.89.032906"
+  },
+  "verbatim_excerpt": "Phys. Rev. E 89, 032906 (2014). Bibliographic record confirmed against multiple independent citing works, which give the title, authors, volume, article number and DOI consistently. Abstract not read directly.",
+  "excerpt_provenance": "publisher or index record confirmed across independent citing works; abstract not read"
+}

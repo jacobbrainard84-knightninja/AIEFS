@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0043",
+  "retrieved": "2026-10-31",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1162/neco.1994.6.1.100",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "The Role of Constraints in Hebbian Learning",
+    "authors": "Miller, K. D.; MacKay, D. J. C.",
+    "year": "1994",
+    "venue": "Neural Computation 6(1), pp. 100-126",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1162/neco.1994.6.1.100"
+  },
+  "verbatim_excerpt": "Neural Computation 6(1):100-126, 1994. 'Models of unsupervised, correlation-based (Hebbian) synaptic plasticity are typically unstable... A common method of avoiding these outcomes is to use a constraint that conserves or limits the total synaptic strength over a cell. We study the dynamic effects of such constraints. Two methods of enforcing a constraint are distinguished, multiplicative and subtractive. ... multiplicative enforcement of a constraint results in dynamics that converge to the principal eigenvector of the operator determining unconstrained synaptic development. Subtractive enforcement, in contrast, leads to a final state in which almost all synaptic strengths reach either the maximum or minimum allowed value.'",
+  "excerpt_provenance": "publisher landing page / author abstract page, read directly"
+}

@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0040",
+  "retrieved": "2026-10-31",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1103/PhysRevE.65.041906",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Plasticity and learning in a network of coupled phase oscillators",
+    "authors": "Seliger, P.; Young, S. C.; Tsimring, L. S.",
+    "year": "2002",
+    "venue": "Physical Review E 65, 041906",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1103/PhysRevE.65.041906"
+  },
+  "verbatim_excerpt": "Phys. Rev. E 65, 041906, published 26 March 2002. 'A generalized Kuramoto model of coupled phase oscillators with a slow varying coupling matrix is studied. The dynamics of the coupling coefficients is driven by the phase difference of pairs of oscillators in such a way that the coupling strengthens for synchronized oscillators and weakens for nonsynchronized pairs. The system possesses a family of stable solutions corresponding to synchronized clusters of different sizes. A particular cluster can be formed by applying external driving at a given frequency to a group of oscillators. Once established, the synchronized state is robust against noise and small variations in natural frequencies.'",
+  "excerpt_provenance": "publisher landing page / author abstract page, read directly"
+}
