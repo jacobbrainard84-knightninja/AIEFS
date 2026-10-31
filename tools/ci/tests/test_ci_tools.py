@@ -53,64 +53,175 @@ def write(root, rel, text, mode="w"):
 
 
 class LintClaimsTests(unittest.TestCase):
+    """Each test asserts whole output lines (exact text), not substrings, and the exact result line."""
+
     def setUp(self):
         self.d = tempfile.TemporaryDirectory(); self.root = self.d.name
 
     def tearDown(self):
         self.d.cleanup()
 
-    def repo(self, rows, spec=SPEC, readme=True):
+    def repo(self, rows, spec=SPEC, readme=True, header=HEADER):
         if readme:
             write(self.root, "registry/README.md", README.format(spec=spec))
-        write(self.root, "registry/claims.csv", HEADER + "".join(rows))
+        write(self.root, "registry/claims.csv", header + "".join(rows))
+
+    def lint(self, *extra):
+        return run(lint_claims.main, ["--repo", self.root, *extra])
+
+    def assertLines(self, out, *lines):
+        got = out.splitlines()
+        for ln in lines:
+            self.assertIn(ln, got, out)
+
+    def assertResult(self, out, errors, warnings=0, notices=0, verdict=None):
+        verdict = verdict or ("FAIL" if errors else "PASS")
+        self.assertEqual(out.splitlines()[-1], f"== result: {errors} error(s), {warnings} warning(s), "
+                                               f"{notices} notice(s) -> {verdict}", out)
 
     def test_parse_block(self):
         v = lint_claims.parse_readme_vocab(README.format(spec=SPEC))
-        self.assertEqual(v[0], "Supported"); self.assertIn(SPEC, v); self.assertEqual(len(v), 6)
+        self.assertEqual(v, ["Supported", "Incomplete", "Rejected", "Quarantined", "Retired / Superseded", SPEC])
 
     def test_speculative_accepted_when_listed(self):
         self.repo([f'SSRH-ORIG-01,x,Incomplete,{SPEC},free text (not linted)\n'])
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 0, out); self.assertIn("0 status violation", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out)
+        self.assertLines(out, "registry/claims.csv: 5 columns; linting artifact_status, audited_status",
+                         "checked 1 claim rows; 0 status violation(s)")
+        self.assertResult(out, 0)
 
     def test_speculative_rejected_when_not_listed(self):
         self.repo([f'SSRH-ORIG-01,x,Incomplete,{SPEC},\n'], spec="Exploratory")
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 1, out); self.assertIn("no 'Speculative", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"WARNING vocabulary has no '{SPEC}' status; untested origin ideas need it",
+                         f"ERROR   registry/claims.csv:2: SSRH-ORIG-01: audited_status '{SPEC}' is not in the status vocabulary")
+        self.assertResult(out, 1, 1)
 
-    def test_ssrh_retired_warns(self):
+    def test_strict_turns_warning_into_failure(self):
+        """The only difference between the two runs is --strict: a warning-only input passes without it and
+        fails with it (exit 1, verdict FAIL, same counts)."""
         self.repo(['SSRH-ORIG-02,x,Incomplete,Retired / Superseded,\n'])
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 0, out); self.assertIn("WARNING", out); self.assertIn("never Retired", out)
-        rc, _ = run(lint_claims.main, ["--repo", self.root, "--strict"])
-        self.assertEqual(rc, 1)
+        warning = ("WARNING registry/claims.csv:2: SSRH-ORIG-02: audited_status 'Retired / Superseded' uses Retired; "
+                   f"untested origin hypotheses should be '{SPEC}', never Retired "
+                   "(Retired/Rejected/Quarantined are for tested-and-failed or withdrawn claims)")
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out); self.assertLines(out, warning); self.assertResult(out, 0, 1)
+        rc, out = self.lint("--strict")
+        self.assertEqual(rc, 1, out); self.assertLines(out, warning); self.assertResult(out, 0, 1, verdict="FAIL")
 
     def test_unknown_and_qualified_status_fail(self):
         self.repo(['A-1,x,Supported,Supported (single seed),\n', 'A-2,x,Bogus,Supported,\n'])
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 1); self.assertIn("'Supported (single seed)'", out); self.assertIn("'Bogus'", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out,
+                         "ERROR   registry/claims.csv:2: A-1: audited_status 'Supported (single seed)' is not in the status vocabulary",
+                         "ERROR   registry/claims.csv:3: A-2: artifact_status 'Bogus' is not in the status vocabulary",
+                         "checked 2 claim rows; 2 status violation(s)")
+        self.assertResult(out, 2)
 
     def test_duplicate_id(self):
         self.repo(['A-1,x,Supported,Supported,\n', 'A-1,y,Supported,Supported,\n'])
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 1); self.assertIn("duplicate claim_id", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv:3: duplicate claim_id A-1 (first at line 2)")
+        self.assertResult(out, 1)
 
     def test_missing_claims_fails(self):
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 1, out); self.assertIn("claims registry missing", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   registry/claims.csv not found in {self.root}; claims registry missing, nothing was linted")
+        self.assertResult(out, 1)
 
     def test_no_vocabulary_fails_without_strict(self):
         self.repo(['A-1,x,Anything,Anything,\n'], readme=False)
         write(self.root, "tools/ci/claim_statuses.txt", "# PLACEHOLDER\n# no values\n")
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 1, out); self.assertIn("no status vocabulary found", out)
-        self.assertIn("NOT checked", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   no status vocabulary found (no '## Status vocabulary' fenced block in registry/README.md "
+                              "and no values in tools/ci/claim_statuses.txt); status values were NOT checked")
+        self.assertResult(out, 1, 0, 2)
 
     def test_filled_fallback_used(self):
         self.repo(['A-1,x,Supported,Bogus,\n'], readme=False)
         write(self.root, "tools/ci/claim_statuses.txt", f"# list\nSupported\n{SPEC}\n")
-        rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 1, out); self.assertIn("'Bogus'", out)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "vocabulary: 2 statuses from " + os.path.join(self.root, "tools/ci/claim_statuses.txt"),
+                         "ERROR   registry/claims.csv:2: A-1: audited_status 'Bogus' is not in the status vocabulary")
+        self.assertResult(out, 1, 0, 1)
+
+    # --- G5b / G6b / G6c / G6d and unreadable input: errors, never a silent pass ----------------
+    def test_status_column_renamed_fails(self):
+        self.repo(['A-1,x,Supported,Proved,\n'], header=HEADER.replace("audited_status", "audited_status_v2"))
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv:1: status column 'audited_status' missing from the header; "
+                              "its values were NOT checked",
+                         "registry/claims.csv: 5 columns; linting artifact_status")
+        self.assertResult(out, 1)
+
+    def test_duplicate_header_column_fails(self):
+        self.repo(['A-1,x,Supported,Proved,,Supported\n'], header=HEADER.rstrip("\n") + ",audited_status\n")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv:1: duplicate column 'audited_status' in the header (columns 4, 6)")
+        self.assertResult(out, 1)
+
+    def test_header_only_fails(self):
+        self.repo([])
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv: no data rows (header only); nothing was linted")
+        self.assertResult(out, 1)
+
+    def test_two_vocabulary_headings_fail(self):
+        self.repo(['A-1,x,Supported,Proved,\n'])
+        p = os.path.join(self.root, "registry/README.md")
+        with open(p) as f:
+            txt = f.read()
+        write(self.root, "registry/README.md", "## Status vocabulary\n\n```text\nProved\n```\n\n" + txt)
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/README.md: 2 '## Status vocabulary' headings (lines 1, 9); exactly one is "
+                              "allowed, status values were NOT checked")
+        self.assertResult(out, 1)
+
+    def test_bom_fails(self):
+        for rel in ("registry/claims.csv", "registry/README.md"):
+            with self.subTest(rel=rel):
+                self.repo(['A-1,x,Supported,Supported,\n'])
+                p = os.path.join(self.root, rel)
+                with open(p, "rb") as f:
+                    data = f.read()
+                write(self.root, rel, b"\xef\xbb\xbf" + data, "wb")
+                rc, out = self.lint()
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, f"ERROR   {rel}: starts with a UTF-8 byte-order mark (BOM); save it as UTF-8 without a BOM")
+                self.assertNotIn("Traceback", out)
+
+    def test_non_utf8_fails(self):
+        self.repo([])   # README; claims.csv is overwritten below with a Latin-1 byte
+        write(self.root, "registry/claims.csv", (HEADER + "A-1,x,Supported,Supported,caf\xe9\n").encode("latin-1"), "wb")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        off = len(HEADER) + len("A-1,x,Supported,Supported,caf")
+        self.assertLines(out, f"ERROR   registry/claims.csv:2: not valid UTF-8 (byte 0xe9 at offset {off})")
+        self.assertResult(out, 1)
+
+    @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root can read chmod 000 files")
+    def test_unreadable_fails(self):
+        self.repo(['A-1,x,Supported,Supported,\n'])
+        p = os.path.join(self.root, "registry/claims.csv")
+        os.chmod(p, 0)
+        try:
+            rc, out = self.lint()
+        finally:
+            os.chmod(p, 0o644)
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv: cannot be read (PermissionError: Permission denied)")
+        self.assertResult(out, 1)
 
 
 class HygieneScanTests(unittest.TestCase):

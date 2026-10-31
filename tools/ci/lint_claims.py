@@ -30,6 +30,17 @@ checks cannot run, and a renamed heading must not turn the lint into a silent pa
 If registry/claims.csv does not exist, that is an ERROR (exit 1): there is nothing to lint, and a
 deleted registry must not pass (red-team G5).
 
+Also ERRORs, never a silent pass (red-team G5b, G6b, G6c, G6d):
+  - claims.csv has a header but no data rows (G5b);
+  - a checked status column (default artifact_status, audited_status) is missing from the header,
+    e.g. renamed: its values could not be checked (G6b; this was a NOTICE, and passed even with --strict);
+  - the header repeats a column name: csv.DictReader keeps only the last copy, so an earlier copy
+    would never be checked (G6c);
+  - registry/README.md has more than one '## Status vocabulary' heading: which block is the
+    vocabulary would be ambiguous (G6d; the first block used to win silently);
+  - claims.csv, registry/README.md or the fallback file starts with a UTF-8 byte-order mark (BOM),
+    is not valid UTF-8, or cannot be read: a one-line ERROR, not a traceback.
+
 Extra rule (warning): rows whose claim_id starts with SSRH-ORIG- are untested origin hypotheses.
 They must never be labelled Retired (Retired / Rejected / Quarantined are reserved for claims
 that were tested and failed, or were withdrawn). Such a label produces a warning.
@@ -38,6 +49,7 @@ Exit status: 0 = OK (warnings allowed unless --strict), 1 = errors, 2 = usage er
 """
 import argparse
 import csv
+import io
 import os
 import re
 import sys
@@ -70,8 +82,33 @@ class Report:
         self.notices.append(msg); print(f"NOTICE  {msg}"); self._gha("notice", msg)
 
 
+# ---------------------------------------------------------------- reading files
+def read_text(path, rel, rep):
+    """Return the file's text, or None after a one-line ERROR (unreadable, BOM, not UTF-8)."""
+    try:
+        with open(path, "rb") as f:
+            data = f.read()
+    except OSError as e:
+        rep.error(f"{rel}: cannot be read ({type(e).__name__}: {e.strerror or e})", rel)
+        return None
+    if data.startswith(b"\xef\xbb\xbf"):
+        rep.error(f"{rel}: starts with a UTF-8 byte-order mark (BOM); save it as UTF-8 without a BOM", rel, 1)
+        return None
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError as e:
+        line = data[:e.start].count(b"\n") + 1
+        rep.error(f"{rel}:{line}: not valid UTF-8 (byte 0x{data[e.start]:02x} at offset {e.start})", rel, line)
+        return None
+
+
 # ---------------------------------------------------------------- vocabulary sources
 VOCAB_HEADING = "## Status vocabulary"
+
+
+def vocab_heading_lines(text):
+    """1-based line numbers of every exact vocabulary heading."""
+    return [k + 1 for k, ln in enumerate(text.splitlines()) if ln.strip() == VOCAB_HEADING]
 
 
 def parse_readme_vocab(text):
@@ -102,10 +139,19 @@ def parse_fallback_vocab(text):
     return vals, placeholder
 
 
-def load_vocab(readme_path, fallback_path, rep):
+def load_vocab(readme_path, fallback_path, rep, readme_rel=None, fallback_rel=None):
+    """Return the vocabulary list; [] if none was found; None after an ERROR (unreadable or ambiguous)."""
+    readme_rel, fallback_rel = readme_rel or readme_path, fallback_rel or fallback_path
     if os.path.isfile(readme_path):
-        with open(readme_path, encoding="utf-8") as f:
-            v = parse_readme_vocab(f.read())
+        text = read_text(readme_path, readme_rel, rep)
+        if text is None:
+            return None
+        heads = vocab_heading_lines(text)
+        if len(heads) > 1:
+            rep.error(f"{readme_rel}: {len(heads)} '{VOCAB_HEADING}' headings (lines {', '.join(map(str, heads))}); "
+                      f"exactly one is allowed, status values were NOT checked", readme_rel, heads[1])
+            return None
+        v = parse_readme_vocab(text)
         if v:
             print(f"vocabulary: {len(v)} statuses from '{VOCAB_HEADING}' block in {readme_path}")
             return v
@@ -113,8 +159,10 @@ def load_vocab(readme_path, fallback_path, rep):
     else:
         rep.notice(f"{readme_path} not found; trying fallback")
     if os.path.isfile(fallback_path):
-        with open(fallback_path, encoding="utf-8") as f:
-            v, placeholder = parse_fallback_vocab(f.read())
+        text = read_text(fallback_path, fallback_rel, rep)
+        if text is None:
+            return None
+        v, placeholder = parse_fallback_vocab(text)
         if v:
             if placeholder:
                 rep.warn(f"{fallback_path} is still marked PLACEHOLDER; its values were used anyway")
@@ -129,9 +177,11 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
     if not os.path.isfile(claims):
         rep.error(f"{claims_rel} not found in {repo}; claims registry missing, nothing was linted", claims_rel)
         return
-    vocab = load_vocab(os.path.join(repo, readme_rel), os.path.join(repo, fallback_rel), rep)
-    allowed = set(vocab)
-    if not vocab:
+    vocab = load_vocab(os.path.join(repo, readme_rel), os.path.join(repo, fallback_rel), rep, readme_rel, fallback_rel)
+    allowed = set(vocab or [])
+    if vocab is None:
+        vocab = []          # the ERROR is already reported
+    elif not vocab:
         rep.error(f"no status vocabulary found (no '{VOCAB_HEADING}' fenced block in {readme_rel} and no values "
                   f"in {fallback_rel}); status values were NOT checked", readme_rel)
     elif SPECULATIVE_LABEL in allowed:
@@ -139,48 +189,64 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
     else:
         rep.warn(f"vocabulary has no '{SPECULATIVE_LABEL}' status; untested origin ideas need it")
 
-    with open(claims, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        header = reader.fieldnames or []
-        if "claim_id" not in header:
-            rep.error(f"{claims_rel}: no 'claim_id' column", claims_rel, 1)
-            return
-        checked = [c for c in columns if c in header]
-        for c in columns:
-            if c not in header:
-                rep.notice(f"{claims_rel}: column '{c}' not present; not checked")
-        print(f"{claims_rel}: {len(header)} columns; linting {', '.join(checked) or '(none)'}")
-        seen, n, bad = {}, 0, 0
-        for row in reader:
-            n += 1
-            line = reader.line_num
-            if None in row:
-                rep.error(f"{claims_rel}:{line}: row has more fields than the header", claims_rel, line)
-            cid = (row.get("claim_id") or "").strip()
-            if not cid:
-                rep.error(f"{claims_rel}:{line}: empty claim_id", claims_rel, line)
-            elif cid in seen:
-                rep.error(f"{claims_rel}:{line}: duplicate claim_id {cid} (first at line {seen[cid]})", claims_rel, line)
-            else:
-                seen[cid] = line
-            if vocab:
-                for col in checked:
-                    val = row.get(col) or ""
-                    if val not in allowed:
-                        bad += 1
-                        hint = " (has leading/trailing spaces)" if val.strip() in allowed else ""
-                        rep.error(f"{claims_rel}:{line}: {cid}: {col} '{val}' is not in the status vocabulary{hint}",
-                                  claims_rel, line)
-            if cid.startswith(ORIGIN_PREFIX):
-                for col in CURRENT_STATUS_COLUMNS:
-                    val = row.get(col) or ""
-                    hit = [w for w in FAILED_ONLY_WORDS if w.lower() in val.lower()]
-                    if hit:
-                        rep.warn(f"{claims_rel}:{line}: {cid}: {col} '{val.strip()}' uses {'/'.join(hit)}; "
-                                 f"untested origin hypotheses should be '{SPECULATIVE_LABEL}', never Retired "
-                                 f"(Retired/Rejected/Quarantined are for tested-and-failed or withdrawn claims)",
-                                 claims_rel, line)
-        print(f"checked {n} claim rows; {bad} status violation(s)")
+    text = read_text(claims, claims_rel, rep)
+    if text is None:
+        return
+    reader = csv.DictReader(io.StringIO(text, newline=""))
+    try:
+        _lint_rows(reader, claims_rel, columns, vocab, allowed, rep)
+    except csv.Error as e:
+        rep.error(f"{claims_rel}:{reader.line_num}: not parseable as CSV ({e})", claims_rel, reader.line_num)
+
+
+def _lint_rows(reader, claims_rel, columns, vocab, allowed, rep):
+    header = reader.fieldnames or []
+    if "claim_id" not in header:
+        rep.error(f"{claims_rel}: no 'claim_id' column", claims_rel, 1)
+        return
+    dups = sorted({c for c in header if header.count(c) > 1})
+    for c in dups:   # G6c: DictReader keeps only the last copy, so the others would never be checked
+        where = ", ".join(str(k + 1) for k, h in enumerate(header) if h == c)
+        rep.error(f"{claims_rel}:1: duplicate column '{c}' in the header (columns {where})", claims_rel, 1)
+    checked = [c for c in columns if c in header and c not in dups]
+    for c in columns:
+        if c not in header:   # G6b: a renamed status column must not turn the lint into a silent pass
+            rep.error(f"{claims_rel}:1: status column '{c}' missing from the header; its values were NOT checked",
+                      claims_rel, 1)
+    print(f"{claims_rel}: {len(header)} columns; linting {', '.join(checked) or '(none)'}")
+    seen, n, bad = {}, 0, 0
+    for row in reader:
+        n += 1
+        line = reader.line_num
+        if None in row:
+            rep.error(f"{claims_rel}:{line}: row has more fields than the header", claims_rel, line)
+        cid = (row.get("claim_id") or "").strip()
+        if not cid:
+            rep.error(f"{claims_rel}:{line}: empty claim_id", claims_rel, line)
+        elif cid in seen:
+            rep.error(f"{claims_rel}:{line}: duplicate claim_id {cid} (first at line {seen[cid]})", claims_rel, line)
+        else:
+            seen[cid] = line
+        if vocab:
+            for col in checked:
+                val = row.get(col) or ""
+                if val not in allowed:
+                    bad += 1
+                    hint = " (has leading/trailing spaces)" if val.strip() in allowed else ""
+                    rep.error(f"{claims_rel}:{line}: {cid}: {col} '{val}' is not in the status vocabulary{hint}",
+                              claims_rel, line)
+        if cid.startswith(ORIGIN_PREFIX):
+            for col in CURRENT_STATUS_COLUMNS:
+                val = row.get(col) or ""
+                hit = [w for w in FAILED_ONLY_WORDS if w.lower() in val.lower()]
+                if hit:
+                    rep.warn(f"{claims_rel}:{line}: {cid}: {col} '{val.strip()}' uses {'/'.join(hit)}; "
+                             f"untested origin hypotheses should be '{SPECULATIVE_LABEL}', never Retired "
+                             f"(Retired/Rejected/Quarantined are for tested-and-failed or withdrawn claims)",
+                             claims_rel, line)
+    print(f"checked {n} claim rows; {bad} status violation(s)")
+    if n == 0:   # G5b: a header-only registry must not pass
+        rep.error(f"{claims_rel}: no data rows (header only); nothing was linted", claims_rel, 1)
 
 
 def main(argv=None):

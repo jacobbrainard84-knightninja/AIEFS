@@ -53,9 +53,10 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results
 
-Run on base `395ea53` (main).
+Counts are not hard-coded here; run the suite (`-v`) for the current number of tests, PASSes
+and expected failures (GAPs). Tables reflect branch `fix/lint-claims-fail-closed` on base `395ea53` (main).
 
 ### Hash pins and manifests: `test_rt_hashes.py`
 
@@ -74,9 +75,12 @@ Run on base `395ea53` (main).
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
 | **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| **GAP** verifier deleted | check_manifest.py (`if not os.path.isfile(...)` → `NOTICE ... not found; skipped`) | **GAP**: prints NOTICE and exits 0 (fixed separately on `fix/check-manifest-missing-verifier`; Researcher 001 also reports G2b there: a stub verifier passes) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
+
+Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit 1 and no traceback
+(the earlier "exact messages" wording overstated substring checks).
 
 | Test | Checker | Result |
 |---|---|---|
@@ -86,11 +90,18 @@ Run on base `395ea53` (main).
 | status wrong case | lint_claims | PASS |
 | duplicate claim_id | lint_claims | PASS |
 | empty claim_id | lint_claims | PASS |
-| vocabulary missing, --strict | lint_claims | PASS |
+| --strict changes the verdict: warning-only input (SSRH-ORIG row labelled `Retired / Superseded`) | lint_claims | PASS (exit 0 / PASS without --strict, exit 1 / FAIL with it) |
 | **GAP** row cites nonexistent artifacts | lint_claims | **GAP**: artifact column never resolved |
 | **GAP** false claim "R* = 0.40, proved in Lean" as Supported/Formal proof | lint_claims | **GAP**: content is not checked against anything |
 | claims.csv missing (was GAP G5; fixed on `fix/lint-claims-fail-closed`) | lint_claims | PASS (ERROR "claims registry missing", exit 1) |
 | vocabulary heading removed (was GAP G6; fixed on `fix/lint-claims-fail-closed`) | lint_claims (non-strict, as CI runs it) | PASS (ERROR "no status vocabulary found", exit 1) |
+| status column renamed, value "Proved" (G6b, high; was NOTICE + PASS even with --strict) | lint_claims, with and without --strict | PASS (ERROR "status column 'audited_status' missing from the header", exit 1) |
+| duplicate `audited_status` column, "Proved" in the first copy (G6c; was shadowed) | lint_claims | PASS (ERROR "duplicate column 'audited_status' in the header", exit 1) |
+| header-only claims.csv (G5b; was "checked 0 claim rows", PASS) | lint_claims | PASS (ERROR "no data rows (header only)", exit 1) |
+| earlier duplicate `## Status vocabulary` block adding "Proved" (G6d; first block won) | lint_claims | PASS (ERROR "2 '## Status vocabulary' headings", exit 1) |
+| claims.csv starts with a UTF-8 BOM (was misleading "no 'claim_id' column") | lint_claims | PASS (ERROR "starts with a UTF-8 byte-order mark (BOM)", exit 1) |
+| claims.csv contains a non-UTF-8 byte (was a traceback) | lint_claims | PASS (ERROR "not valid UTF-8 (byte 0xe9 at offset N)", exit 1) |
+| claims.csv unreadable, chmod 000 (was a traceback; skipped as root) | lint_claims | PASS (ERROR "cannot be read (PermissionError: ...)", exit 1) |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
 | .env file | hygiene_scan | PASS |
 | id_rsa file name | hygiene_scan | PASS |
@@ -124,7 +135,7 @@ Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
 | two numeric columns swapped | PASS |
 | manifest model eta changed | PASS |
 | --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `csv_nonnumeric_equal` is computed (line 113) but is not in `ok` (line 130) |
+| **GAP** branch labels swapped in CSV text column | **GAP**: `out["csv_nonnumeric_equal"]` is computed but is not part of the `ok = (...)` verdict expression (v3) |
 | **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`

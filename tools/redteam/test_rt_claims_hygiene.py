@@ -1,6 +1,11 @@
 """Red-team negative controls: the claims lint (tools/ci/lint_claims.py) and the hygiene scan
 (tools/ci/hygiene_scan.py). Known-false inputs are built in temp folders only.
-Tests marked GAP are expected failures: the checker accepts the false input today."""
+Tests marked GAP are expected failures: the checker accepts the false input today.
+
+Claims-lint tests assert the exact ERROR line(s) and the exact final '== result: ...' line, exit code 1 and no
+traceback. The --strict test uses a warning-only input, so it passes without --strict and fails with it.
+G5b/G6b/G6c/G6d (Researcher 001 audit of 37b9026) and BOM / non-UTF-8 / unreadable claims.csv are normal
+negative controls: each was accepted (or crashed) at 37b9026 and is rejected after the fix."""
 import csv
 import io
 import os
@@ -40,35 +45,59 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         row.update(claim_id="RT-FAKE-01", **kw)
         return row
 
+    def assertLintFails(self, rc, out, *lines, errors=1):
+        """Exit 1, no traceback, each given line present as a WHOLE output line, and the exact result line."""
+        self.assertRejected(rc, out)
+        self.assertEqual(rc, 1, out)
+        self.assertNotIn("Traceback", out)
+        got = out.splitlines()
+        for ln in lines:
+            self.assertIn(ln, got, out[-3000:])
+        self.assertEqual(got[-1], f"== result: {errors} error(s), 0 warning(s), 0 notice(s) -> FAIL", out[-3000:])
+
+    def edit_text(self, rel, fn, binary=False):
+        p = os.path.join(self.root, rel)
+        with open(p, "rb" if binary else "r", **({} if binary else {"newline": ""})) as f:
+            data = f.read()
+        with open(p, "wb" if binary else "w", **({} if binary else {"newline": ""})) as f:
+            f.write(fn(data))
+
     def test_00_control_copy_passes(self):
         rc, out = self.lint()
         self.assertEqual(rc, 0, out[-2000:])
+        self.assertEqual(out.splitlines()[-1], "== result: 0 error(s), 0 warning(s), 0 notice(s) -> PASS")
 
     def test_status_outside_vocabulary(self):
         self.rows[0]["audited_status"] = "Proved"
         self.write()
-        self.assertRejected(*self.lint(), "audited_status 'Proved' is not in the status vocabulary")
+        cid = self.rows[0]["claim_id"]
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:2: {cid}: audited_status 'Proved' is not in the status vocabulary")
 
     def test_status_with_trailing_space(self):
-        self.rows[0]["artifact_status"] = self.rows[0]["artifact_status"] + " "
+        val = self.rows[0]["artifact_status"] + " "
+        self.rows[0]["artifact_status"] = val
         self.write()
-        self.assertRejected(*self.lint(), "is not in the status vocabulary (has leading/trailing spaces)")
+        cid = self.rows[0]["claim_id"]
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:2: {cid}: artifact_status '{val}' is not in the "
+                                           "status vocabulary (has leading/trailing spaces)")
 
     def test_status_wrong_case(self):
         bad = self.rows[0]["audited_status"].upper()
         self.rows[0]["audited_status"] = bad
         self.write()
-        self.assertRejected(*self.lint(), f"audited_status '{bad}' is not in the status vocabulary")
+        cid = self.rows[0]["claim_id"]
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:2: {cid}: audited_status '{bad}' is not in the status vocabulary")
 
     def test_duplicate_claim_id(self):
         self.rows.append(dict(self.rows[0]))
         self.write()
-        self.assertRejected(*self.lint(), f"duplicate claim_id {self.rows[0]['claim_id']}")
+        cid = self.rows[0]["claim_id"]
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:{len(self.rows) + 1}: duplicate claim_id {cid} (first at line 2)")
 
     def test_empty_claim_id(self):
         self.rows[0]["claim_id"] = ""
         self.write()
-        self.assertRejected(*self.lint(), ": empty claim_id")
+        self.assertLintFails(*self.lint(), "ERROR   registry/claims.csv:2: empty claim_id")
 
     @gap("lint_claims.py: a row citing an artifact that does not exist passes")
     def test_GAP_row_citing_nonexistent_artifact(self):
@@ -88,30 +117,103 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
     def test_claims_file_missing(self):
         """Was GAP G5 (NOTICE and exit 0). Fixed on fix/lint-claims-fail-closed."""
         os.unlink(os.path.join(self.root, "registry/claims.csv"))
-        rc, out = self.lint()
-        self.assertRejected(rc, out, "claims registry missing", "-> FAIL")
-        self.assertEqual(rc, 1, out)
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv not found in {self.root}; claims registry "
+                                           "missing, nothing was linted")
+
+    VOCAB_MISSING = ("ERROR   no status vocabulary found (no '## Status vocabulary' fenced block in registry/README.md and "
+                     "no values in tools/ci/claim_statuses.txt); status values were NOT checked")
 
     def test_vocabulary_missing_fails_without_strict(self):
         """Was GAP G6 (warning, value checks skipped, exit 0 as CI runs it). Fixed on fix/lint-claims-fail-closed."""
-        p = os.path.join(self.root, "registry/README.md")
-        with open(p) as f:
-            txt = f.read()
-        with open(p, "w") as f:
-            f.write(txt.replace("## Status vocabulary", "## Status words"))
+        self.edit_text("registry/README.md", lambda t: t.replace("## Status vocabulary", "## Status words"))
         self.rows[0]["audited_status"] = "Proved"          # would be an error with a vocabulary
         self.write()
         rc, out = self.lint()
-        self.assertRejected(rc, out, "no status vocabulary found", "NOT checked", "-> FAIL")
+        self.assertRejected(rc, out)
         self.assertEqual(rc, 1, out)
+        self.assertIn(self.VOCAB_MISSING, out.splitlines())
+        self.assertEqual(out.splitlines()[-1], "== result: 1 error(s), 0 warning(s), 2 notice(s) -> FAIL")
 
-    def test_vocabulary_missing_is_caught_with_strict(self):
-        p = os.path.join(self.root, "registry/README.md")
-        with open(p) as f:
-            txt = f.read()
-        with open(p, "w") as f:
-            f.write(txt.replace("## Status vocabulary", "## Status words"))
-        self.assertRejected(*self.lint("--strict"), "no status vocabulary found")
+    def test_strict_fails_a_warning_only_input(self):
+        """--strict must change the verdict: an input whose only finding is a WARNING (an untested SSRH-ORIG origin
+        hypothesis labelled with a valid but 'failed-only' status) passes without --strict and fails with it."""
+        i = next(k for k, r in enumerate(self.rows) if r["claim_id"].startswith("SSRH-ORIG-"))
+        self.rows[i]["audited_status"] = "Retired / Superseded"        # in the vocabulary, so not an ERROR
+        self.write()
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out[-2000:])
+        self.assertEqual(out.splitlines()[-1], "== result: 0 error(s), 1 warning(s), 0 notice(s) -> PASS")
+        rc, out = self.lint("--strict")
+        self.assertRejected(rc, out, f"{self.rows[i]['claim_id']}: audited_status 'Retired / Superseded' uses Retired")
+        self.assertEqual(out.splitlines()[-1], "== result: 0 error(s), 1 warning(s), 0 notice(s) -> FAIL")
+
+    # --- Researcher 001 audit of 37b9026: G5b, G6b, G6c, G6d (were accepted, exit 0) ----------------
+    def test_status_column_renamed(self):
+        """G6b (high): audited_status renamed -> NOTICE '(column not present)' and PASS, even with --strict."""
+        self.cols = [c if c != "audited_status" else "audited_status_v2" for c in self.cols]
+        for r in self.rows:
+            r["audited_status_v2"] = r.pop("audited_status")
+        self.rows[0]["audited_status_v2"] = "Proved"
+        self.write()
+        msg = "ERROR   registry/claims.csv:1: status column 'audited_status' missing from the header; its values were NOT checked"
+        for extra in ((), ("--strict",)):
+            with self.subTest(args=extra):
+                self.assertLintFails(*self.lint(*extra), msg)
+
+    def test_duplicate_status_column(self):
+        """G6c: a second audited_status column shadowed a bad value in the first copy (DictReader keeps the last)."""
+        k = self.cols.index("audited_status")
+        def edit(t):
+            rows = list(csv.reader(io.StringIO(t)))
+            rows[0].append("audited_status")
+            for r in rows[1:]:
+                r.append(r[k])
+            rows[1][k] = "Proved"
+            b = io.StringIO(); csv.writer(b, lineterminator="\n").writerows(rows); return b.getvalue()
+        self.edit_text("registry/claims.csv", edit)
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:1: duplicate column 'audited_status' in the header "
+                                           f"(columns {k + 1}, {len(self.cols) + 1})")
+
+    def test_header_only_claims_csv(self):
+        """G5b: a header with 0 data rows printed 'checked 0 claim rows' and passed."""
+        self.write(rows=[])
+        self.assertLintFails(*self.lint(), "ERROR   registry/claims.csv: no data rows (header only); nothing was linted")
+
+    def test_earlier_duplicate_vocabulary_block(self):
+        """G6d: an EARLIER '## Status vocabulary' block adding 'Proved' silently won (first block was used)."""
+        self.edit_text("registry/README.md", lambda t: "## Status vocabulary\n\n```text\nProved\n```\n\n" + t)
+        self.rows[0]["audited_status"] = "Proved"
+        self.write()
+        rc, out = self.lint()
+        with open(os.path.join(self.root, "registry/README.md")) as f:
+            n = [k + 1 for k, ln in enumerate(f.read().splitlines()) if ln.strip() == "## Status vocabulary"]
+        self.assertEqual(len(n), 2)
+        self.assertLintFails(rc, out, f"ERROR   registry/README.md: 2 '## Status vocabulary' headings (lines {n[0]}, {n[1]}); "
+                                      "exactly one is allowed, status values were NOT checked")
+
+    # --- unreadable input: one-line ERROR, exit 1, no traceback (BOM was a misleading "no 'claim_id' column") ------
+    def test_claims_csv_with_bom(self):
+        self.edit_text("registry/claims.csv", lambda b: b"\xef\xbb\xbf" + b, binary=True)
+        self.assertLintFails(*self.lint(), "ERROR   registry/claims.csv: starts with a UTF-8 byte-order mark (BOM); "
+                                           "save it as UTF-8 without a BOM")
+
+    def test_claims_csv_not_utf8(self):
+        self.edit_text("registry/claims.csv", lambda b: b + b"RT-FAKE-02,x,caf\xe9\n", binary=True)
+        with open(os.path.join(self.root, "registry/claims.csv"), "rb") as f:
+            data = f.read()
+        off = data.index(b"\xe9"); line = data[:off].count(b"\n") + 1
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:{line}: not valid UTF-8 "
+                                           f"(byte 0xe9 at offset {off})")
+
+    @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root can read chmod 000 files")
+    def test_claims_csv_unreadable(self):
+        p = os.path.join(self.root, "registry/claims.csv")
+        os.chmod(p, 0)
+        try:
+            rc, out = self.lint()
+        finally:
+            os.chmod(p, 0o644)
+        self.assertLintFails(rc, out, "ERROR   registry/claims.csv: cannot be read (PermissionError: Permission denied)")
 
 
 GIT_ENV = {"GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
