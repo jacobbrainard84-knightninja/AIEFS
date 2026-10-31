@@ -5,7 +5,9 @@ Tests marked GAP are expected failures: the checker accepts the false input toda
 Claims-lint tests assert the exact ERROR line(s) and the exact final '== result: ...' line, exit code 1 and no
 traceback. The --strict test uses a warning-only input, so it passes without --strict and fails with it.
 G5b/G6b/G6c/G6d (Researcher 001 audit of 37b9026) and BOM / non-UTF-8 / unreadable claims.csv are normal
-negative controls: each was accepted (or crashed) at 37b9026 and is rejected after the fix."""
+negative controls: each was accepted (or crashed) at 37b9026 and is rejected after the fix. Likewise F1 (unterminated
+quote swallowing an appended row), F2 (header name with trailing space), F6 (NUL byte) and F7 (--columns "") from the
+audit of 588d5ee; F5 (indented vocabulary heading) is a GAP."""
 import csv
 import io
 import os
@@ -214,6 +216,71 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         finally:
             os.chmod(p, 0o644)
         self.assertLintFails(rc, out, "ERROR   registry/claims.csv: cannot be read (PermissionError: Permission denied)")
+
+    # --- Researcher 001 audit of 588d5ee: F1, F2, F5, F6, F7 ---------------------------------------
+    def test_unterminated_quote_swallows_appended_row(self):
+        """F1: an unclosed quote opening the LAST field of the last row swallowed an appended 'Proved' row into
+        that field (csv strict=False) and the lint passed, also with --strict."""
+        p = os.path.join(self.root, "registry/claims.csv")
+        with open(p, newline="") as f:
+            data = f.read().rstrip("\n")
+        self.assertTrue(data.endswith(","))                     # fixture: last field of the last row is empty
+        r = csv.reader(io.StringIO(data + "\n", newline=""), strict=True)
+        starts = [1]
+        for _ in r:
+            starts.append(r.line_num + 1)
+        last_start = starts[-2]                                  # first physical line of the last record
+        fake = dict.fromkeys(self.cols, "")                      # no quotes or commas: nothing to close the quote
+        fake.update(claim_id="RT-FAKE-01", statement="R* = 0.40 proved in Lean", artifact_status="Proved",
+                    audited_status="Proved")
+        with open(p, "w", newline="") as f:
+            f.write(data + '"\n' + ",".join(fake[c] for c in self.cols) + "\n")
+        for extra in ((), ("--strict",)):
+            with self.subTest(args=extra):
+                self.assertLintFails(*self.lint(*extra), f"ERROR   registry/claims.csv:{last_start}: not parseable as CSV "
+                                                         "(unexpected end of data)")
+
+    def test_status_column_name_with_trailing_space(self):
+        """F2: an extra 'audited_status ' column (trailing space) holding Proved was not a duplicate (exact names
+        only) and was never checked."""
+        k = self.cols.index("audited_status")
+        def edit(t):
+            rows = list(csv.reader(io.StringIO(t)))
+            rows[0].append("audited_status ")
+            for r in rows[1:]:
+                r.append(r[k])
+            rows[1][-1] = "Proved"
+            b = io.StringIO(); csv.writer(b, lineterminator="\n").writerows(rows); return b.getvalue()
+        self.edit_text("registry/claims.csv", edit)
+        n = len(self.cols) + 1
+        self.assertLintFails(*self.lint(),
+                             f"ERROR   registry/claims.csv:1: column {n} name 'audited_status ' has leading/trailing whitespace",
+                             f"ERROR   registry/claims.csv:1: duplicate column in the header (columns {k + 1}, {n}: "
+                             "'audited_status', 'audited_status ' differ only in case or surrounding whitespace)", errors=2)
+
+    def test_claims_csv_nul_byte(self):
+        """F6: csv accepts NUL bytes on Python >= 3.11, so a NUL in claims.csv passed."""
+        self.edit_text("registry/claims.csv", lambda b: b.replace(b"\n", b"\x00\n", 1), binary=True)
+        with open(os.path.join(self.root, "registry/claims.csv"), "rb") as f:
+            off = f.read().index(b"\x00")
+        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:1: contains a NUL byte (offset {off}); not a text file")
+
+    def test_empty_columns_option(self):
+        """F7: --columns "" linted no column and passed."""
+        self.rows[0]["audited_status"] = "Proved"
+        self.write()
+        self.assertLintFails(*self.lint("--columns", ""),
+                             "ERROR   --columns names no status column; status values were NOT checked")
+
+    @gap("lint_claims.py: an indented '    ## Status vocabulary' (a Markdown code line, not a heading) is used as the vocabulary")
+    def test_GAP_indented_vocabulary_heading(self):
+        """F5 (low): the heading match is ln.strip() == '## Status vocabulary', so a 4-space-indented line, which
+        Markdown renders as code, still selects the block. Here it is the only one and adds 'Proved'."""
+        self.edit_text("registry/README.md", lambda t: t.replace("## Status vocabulary\n", "    ## Status vocabulary\n", 1)
+                       .replace("```text\n", "```text\nProved\n", 1))
+        self.rows[0]["audited_status"] = "Proved"
+        self.write()
+        self.assertRejected(*self.lint())
 
 
 GIT_ENV = {"GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",

@@ -56,7 +56,7 @@ row. The farm skips `__pycache__` for this reason.
 ## Results
 
 Counts are not hard-coded here; run the suite (`-v`) for the current number of tests, PASSes
-and expected failures (GAPs). Tables reflect branch `fix/lint-claims-fail-closed` on base `395ea53` (main).
+and expected failures (GAPs). Tables describe the checkers in the same commit as this file.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
 
@@ -102,6 +102,11 @@ Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit
 | claims.csv starts with a UTF-8 BOM (was misleading "no 'claim_id' column") | lint_claims | PASS (ERROR "starts with a UTF-8 byte-order mark (BOM)", exit 1) |
 | claims.csv contains a non-UTF-8 byte (was a traceback) | lint_claims | PASS (ERROR "not valid UTF-8 (byte 0xe9 at offset N)", exit 1) |
 | claims.csv unreadable, chmod 000 (was a traceback; skipped as root) | lint_claims | PASS (ERROR "cannot be read (PermissionError: ...)", exit 1) |
+| unclosed quote opening the last field swallows an appended "Proved" row (F1; was PASS, also with --strict) | lint_claims, with and without --strict | PASS (ERROR "not parseable as CSV (unexpected end of data)", exit 1) |
+| extra `audited_status ` column (trailing space) holding "Proved" (F2; was not a duplicate, never checked) | lint_claims | PASS (ERROR "has leading/trailing whitespace" and "duplicate column ... differ only in case or surrounding whitespace", exit 1) |
+| NUL byte in claims.csv (F6; csv accepts NUL on Python >= 3.11, was PASS) | lint_claims | PASS (ERROR "contains a NUL byte (offset N)", exit 1) |
+| `--columns ""`, value "Proved" (F7; nothing was checked, PASS) | lint_claims | PASS (ERROR "--columns names no status column", exit 1) |
+| **GAP** only vocabulary heading indented 4 spaces (Markdown code, not a heading), block adds "Proved" (F5, low) | lint_claims | **GAP**: `ln.strip()` match still selects the block |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
 | .env file | hygiene_scan | PASS |
 | id_rsa file name | hygiene_scan | PASS |

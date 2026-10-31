@@ -200,6 +200,7 @@ class LintClaimsTests(unittest.TestCase):
                 self.assertEqual(rc, 1, out)
                 self.assertLines(out, f"ERROR   {rel}: starts with a UTF-8 byte-order mark (BOM); save it as UTF-8 without a BOM")
                 self.assertNotIn("Traceback", out)
+                self.assertResult(out, 1)
 
     def test_non_utf8_fails(self):
         self.repo([])   # README; claims.csv is overwritten below with a Latin-1 byte
@@ -222,6 +223,127 @@ class LintClaimsTests(unittest.TestCase):
         self.assertEqual(rc, 1, out)
         self.assertLines(out, "ERROR   registry/claims.csv: cannot be read (PermissionError: Permission denied)")
         self.assertResult(out, 1)
+
+
+    # --- Researcher 001 audit of 588d5ee: F1, F2, F3, F6, F7 ----------------------------------------
+    def test_unterminated_quote_at_eof_fails(self):
+        """F1: an unclosed quote in the last field of the last row swallowed an appended 'Proved' row into one field
+        (csv strict=False) and the lint passed, also with --strict. Now one ERROR line, exit 1, no traceback."""
+        self.repo(['A-1,x,Supported,Supported,"unclosed\n', 'A-2,x,Supported,Proved,\n'])
+        for extra in ((), ("--strict",)):
+            with self.subTest(args=extra):
+                rc, out = self.lint(*extra)
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, "ERROR   registry/claims.csv:2: not parseable as CSV (unexpected end of data)")
+                self.assertEqual([ln for ln in out.splitlines() if ln.startswith("ERROR")],
+                                 ["ERROR   registry/claims.csv:2: not parseable as CSV (unexpected end of data)"], out)
+                self.assertNotIn("Traceback", out)
+                self.assertResult(out, 1)
+
+    def test_text_after_closing_quote_fails(self):
+        """Parse-error path mid-file: strict=False silently turned '"Supp"orted' into 'Supported'."""
+        self.repo(['A-1,x,"Supp"orted,Supported,\n', 'A-2,x,Supported,Supported,\n'])
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv:2: not parseable as CSV (',' expected after '\"')")
+        self.assertNotIn("Traceback", out)
+        self.assertResult(out, 1)
+
+    def test_header_name_with_whitespace_fails(self):
+        """F2: an extra 'audited_status ' column (trailing space) holding Proved was never checked, and was not
+        caught as a duplicate (exact-name comparison only)."""
+        self.repo(['A-1,x,Supported,Supported,,Proved\n'], header=HEADER.rstrip("\n") + ",audited_status \n")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv:1: column 6 name 'audited_status ' has leading/trailing whitespace",
+                         "ERROR   registry/claims.csv:1: duplicate column in the header (columns 4, 6: 'audited_status', "
+                         "'audited_status ' differ only in case or surrounding whitespace)",
+                         "registry/claims.csv: 6 columns; linting artifact_status")
+        self.assertResult(out, 2)
+
+    def test_header_name_case_duplicate_fails(self):
+        """F2: 'Audited_Status' next to 'audited_status' is a duplicate after casefold()."""
+        self.repo(['A-1,x,Supported,Supported,,Proved\n'], header=HEADER.rstrip("\n") + ",Audited_Status\n")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   registry/claims.csv:1: duplicate column in the header (columns 4, 6: 'audited_status', "
+                              "'Audited_Status' differ only in case or surrounding whitespace)")
+        self.assertResult(out, 1)
+
+    def test_nul_byte_fails(self):
+        """F6: csv accepts NUL on Python >= 3.11, so a NUL byte in claims.csv passed."""
+        self.repo(['A-1,x,Supported,Supported,a\x00b\n'])
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        off = len(HEADER) + len("A-1,x,Supported,Supported,a")
+        self.assertLines(out, f"ERROR   registry/claims.csv:2: contains a NUL byte (offset {off}); not a text file")
+        self.assertResult(out, 1)
+
+    def test_empty_columns_option_fails(self):
+        """F7: --columns "" checked nothing and passed."""
+        self.repo(['A-1,x,Supported,Proved,\n'])
+        for arg in ("", " , "):
+            with self.subTest(columns=arg):
+                rc, out = self.lint("--columns", arg)
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, "ERROR   --columns names no status column; status values were NOT checked")
+                self.assertResult(out, 1)
+
+    def _fallback_repo(self, data):
+        """claims.csv with a bad value, no README (so the fallback is read), fallback bytes as given."""
+        self.repo(['A-1,x,Supported,Bogus,\n'], readme=False)
+        if os.path.exists(os.path.join(self.root, "registry/README.md")):
+            os.unlink(os.path.join(self.root, "registry/README.md"))
+        write(self.root, "tools/ci/claim_statuses.txt", data, "wb")
+        return os.path.join(self.root, "tools/ci/claim_statuses.txt")
+
+    def test_fallback_bom_fails(self):
+        self._fallback_repo(b"\xef\xbb\xbfSupported\n")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   tools/ci/claim_statuses.txt: starts with a UTF-8 byte-order mark (BOM); "
+                              "save it as UTF-8 without a BOM")
+        self.assertNotIn("Traceback", out)
+        self.assertResult(out, 1, 0, 1)
+
+    def test_fallback_non_utf8_fails(self):
+        self._fallback_repo(b"# list\nSupported\ncaf\xe9\n")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "ERROR   tools/ci/claim_statuses.txt:3: not valid UTF-8 (byte 0xe9 at offset 20)")
+        self.assertNotIn("Traceback", out)
+        self.assertResult(out, 1, 0, 1)
+
+    def test_readme_non_utf8_fails(self):
+        self.repo(['A-1,x,Supported,Supported,\n'])
+        p = os.path.join(self.root, "registry/README.md")
+        with open(p, "rb") as f:
+            data = f.read()
+        write(self.root, "registry/README.md", data + b"caf\xe9\n", "wb")
+        rc, out = self.lint()
+        self.assertEqual(rc, 1, out)
+        line = data.count(b"\n") + 1
+        self.assertLines(out, f"ERROR   registry/README.md:{line}: not valid UTF-8 (byte 0xe9 at offset {len(data) + 3})")
+        self.assertNotIn("Traceback", out)
+        self.assertResult(out, 1)
+
+    @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root can read chmod 000 files")
+    def test_readme_and_fallback_unreadable_fail(self):
+        cases = (("registry/README.md", lambda: self.repo(['A-1,x,Supported,Supported,\n']), 0),
+                 ("tools/ci/claim_statuses.txt", lambda: self._fallback_repo(b"Supported\n"), 1))
+        for rel, build, notices in cases:
+            with self.subTest(rel=rel):
+                build()
+                p = os.path.join(self.root, rel)
+                os.chmod(p, 0)
+                try:
+                    rc, out = self.lint()
+                finally:
+                    os.chmod(p, 0o644)
+                self.assertEqual(rc, 1, out)
+                self.assertLines(out, f"ERROR   {rel}: cannot be read (PermissionError: Permission denied)")
+                self.assertNotIn("Traceback", out)
+                self.assertResult(out, 1, 0, notices)
 
 
 class HygieneScanTests(unittest.TestCase):
