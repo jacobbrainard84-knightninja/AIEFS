@@ -478,21 +478,43 @@ NEW = [
   "Split from RES-FREEZE-01 on 2026-10-29 per the external review. In-repo re-run 2026-10-29: engine cross-check 0.0 and "
   "byte-identical outputs (research/freezing/inrepo_rerun_log.txt)."),
  ("RES-FREEZE-NOVELTY", A,
-  "Novelty of the conditional freezing result: plausibly new as a model-specific certificate theorem (finite-time "
-  "threshold-support freezing with an explicit bound under a min-endpoint capacity gate), but mathematically elementary "
-  "(scalar affine-contraction comparison).",
+  "Novelty assessment for the RES-FREEZE rows. Overlap (known variant): the mechanism 'phase-locking => relax-to-target "
+  "Hebbian couplings converge', and hence, given a strict margin, an eventually constant thresholded edge set, is a known "
+  "variant of continuous-time results for damped Hebbian Kuramoto couplings kappa'_ij = mu*Gamma(theta_j - theta_i) - "
+  "gamma*kappa_ij (Cho, Dong & Ha, J. Differential Equations 360 (2023) 523-571, doi 10.1016/j.jde.2023.03.047, with "
+  "inertia; they also prove the locking that AIEFS assumes). Ha, Noh & Park, SIAM J. Appl. Dyn. Syst. 15 (2016) 162-194 "
+  "(doi 10.1137/15M101484X) is related prior art for the law and for normalised adaptive couplings only; its verified "
+  "abstract gives synchronization frameworks, not coupling convergence or edge-set freezing. Residual, plausibly new "
+  "(narrow, mathematically elementary): for the discrete-time, clipped AIEF weight map with the min-endpoint multiplicative "
+  "capacity gate, (i) a bracket on the gate factor that holds whether or not the gate is active (Lemma 1) and (ii) "
+  "strict-margin OFF, ON and gated-OFF certificates (Thms 2-3), which together give finite-step constancy of the strong-edge "
+  "set {B_e > B_c}, conditional on coherence bands holding on [T, inf). The gated-OFF case (capacity forces a locked clique "
+  "of >= 7 below threshold) has no precedent found. The residual does not rest on discrete time (discrete and Euler "
+  "Kuramoto synchronization with fixed couplings is established, e.g. Ha-Kim-Kim-Zhang, J. Math. Phys. 2019; Dong-Ha-Kim, "
+  "SIADS 2020) or on the explicit N (paper-level, real arithmetic, computed from tail R data; Lean has only exists-N).",
   "Incomplete", "Conjecture",
-  "research/freezing/REPORT.md;research/freezing/arxiv_search.py;research/freezing/arxiv_search2.py;"
-  "research/freezing/arxiv_search_log.json",
-  "Not checked exhaustively against the literature: arXiv API queries and a short web search on 2026-10-28 only; no full-text "
-  "search and no Google Scholar. Closest prior work (edge snapping, Hebbian constraints, adaptive Kuramoto) is asymptotic.",
-  "(new; split from RES-FREEZE-01 on 2026-10-29)",
-  "Not established (novelty plausible but not checked exhaustively; elementary)",
-  "not from audit rounds 1-4; the Auditor Seat 002 audit (research/freezing/audit/AUDIT_R002.md) did not re-run the "
-  "literature search; external review by Researcher 026 (Arena AI) 2026-10-29",
-  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. artifact_status 'Incomplete' / evidence_scope 'Conjecture' "
-  "are the nearest verify_inventory.py vocabulary values (as for AUD-B-SCAFFOLD); the exact wording 'Not established' is the "
-  "audited_status."),
+  "research/freezing/audit/AUDIT_R002_NOVELTY.md;research/freezing/REPORT.md;research/freezing/arxiv_search.py;"
+  "research/freezing/arxiv_search2.py;research/freezing/arxiv_search_log.json",
+  "Scope: Literature assessment (non-exhaustive). Novelty only: this row does not change the mathematical status of "
+  "LEAN-FREEZE-CORE, RES-FREEZE-GATED or RES-FREEZE-NUM. The overlap with Cho-Dong-Ha 2023 is a consistency hit only "
+  "(published rigorous continuous-time results agree that couplings settle when phases lock); it does not validate the gate, "
+  "the delay, the EMA or the explicit N, and Cho-Dong-Ha prove the locking (O1) that AIEFS assumes. Model mismatch: the AIEFS "
+  "R is the modulus of a complex EMA and is phase-offset invariant (an anti-phase locked pair has R -> 1), so the published "
+  "K_inf = alpha*cos(Delta theta_inf) limit formulas (Niyogi-English 2009; Bronski et al. 2017) do not carry over literally. "
+  "Searches: arXiv API and web 2026-10-28; arXiv, Crossref and web 2026-10-31; no full-text search and no Google Scholar. "
+  "Cho-Dong-Ha full text, the exact results of Ha-Noh-Park 2016, Cho-Dong-Ha CMS 22 (2024) 2041-2057 and Wang-Dong JDE 441 "
+  "(2025) 113475 were not read.",
+  "(new; split from RES-FREEZE-01 on 2026-10-29; rescoped 2026-10-31)",
+  "Not established: Known variant (partial overlap; consistency hit) — narrow residual plausibly new, search non-exhaustive",
+  "not from audit rounds 1-4; Auditor Seat 002 novelty audit 2026-10-31 (research/freezing/audit/AUDIT_R002_NOVELTY.md; "
+  "verdict agree with changes; its §4 label and statement applied); the 2026-10-28 Auditor Seat 002 audit "
+  "(research/freezing/audit/AUDIT_R002.md) did not re-run the literature search; external review by Researcher 026 (Arena AI) "
+  "2026-10-29",
+  "Split from RES-FREEZE-01 on 2026-10-29 per the external review; rescoped 2026-10-31 per AUDIT_R002_NOVELTY. The audit's "
+  "label is the audited_qualifier and its scope 'Literature assessment (non-exhaustive)' opens scope_boundary_and_caveat, "
+  "because neither is in the checked vocabularies (registry/README.md 'Status vocabulary'; verify_inventory.py evidence_scope). "
+  "audited_status 'Not established' (novelty of the residual is open); artifact_status 'Incomplete' / evidence_scope "
+  "'Conjecture' are the nearest checked values (as for AUD-B-SCAFFOLD). Not Frozen, Retired, Superseded or Rejected."),
 ]
 O = "HISTORICAL_PROJECT_ORIGINS"
 UNS = "Speculative / untested origin hypothesis"

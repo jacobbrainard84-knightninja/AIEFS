@@ -2,7 +2,7 @@
 
 Research note, added 2026-10-29. Full write-up: [`REPORT.md`](REPORT.md). Ledger rows (2026-10-29, split from the former `RES-FREEZE-01`
 after an external review): `LEAN-FREEZE-CORE`, `RES-FREEZE-GATED`, `RES-FREEZE-NUM` and `RES-FREEZE-NOVELTY` in
-`registry/claims.csv`. Audit copy: [`audit/AUDIT_R002.md`](audit/AUDIT_R002.md). Lean: [`lean/AIEFFreezeCore`](../../lean/AIEFFreezeCore/README.md).
+`registry/claims.csv`. Audit copies: [`audit/AUDIT_R002.md`](audit/AUDIT_R002.md) (2026-10-28, maths and numerics) and [`audit/AUDIT_R002_NOVELTY.md`](audit/AUDIT_R002_NOVELTY.md) (2026-10-31, novelty). Lean: [`lean/AIEFFreezeCore`](../../lean/AIEFFreezeCore/README.md).
 
 ## Scope, in one paragraph
 
@@ -46,11 +46,18 @@ are existential (`∃ N`).
   with the R-band hypotheses checked only over the **finite simulated window [T, 80000)** (steps up to
   80000), not over [T, ∞). 5 repo seeds plus no-delay, random-ω, near-identical-ω stress and B-reset
   variants. `results.json`, `run_log.txt`, REPORT.md §4.
-* **Novelty: plausibly new as a model-specific result, but elementary.** The core is comparison with a
-  scalar affine contraction. The search (arXiv API queries and a short web search on 2026-10-28) found no
-  prior statement of finite-time threshold-support freezing with an explicit bound for adaptive/Hebbian
-  Kuramoto networks under a capacity gate; closest work is asymptotic (e.g. edge snapping, Hebbian
-  constraints). The search was **not exhaustive** (no full-text search, no Google Scholar). REPORT.md §5.
+* **Novelty: known variant (partial overlap; consistency hit); narrow residual plausibly new; search non-exhaustive**
+  (rescoped 2026-10-31 after the Auditor Seat 002 novelty audit, [`audit/AUDIT_R002_NOVELTY.md`](audit/AUDIT_R002_NOVELTY.md)).
+  * The mechanism (phases lock ⇒ relax-to-target Hebbian couplings converge ⇒ with a strict margin the thresholded edge set is
+    eventually constant) is a known variant of Cho–Dong–Ha, *J. Differential Equations* 360 (2023) 523–571
+    (doi 10.1016/j.jde.2023.03.047). That paper is continuous-time, has inertia, and *proves* the locking we assume.
+  * Ha–Noh–Park 2016 is related prior art only.
+  * The overlap is a consistency hit only. It does not validate the gate, the delay, the EMA or N.
+  * The plausibly new residual is narrow and elementary: Lemma 1 (a gate-independent bracket) and the strict-margin OFF/ON/gated-OFF
+    certificates (Thms 2–3), especially the capacity-forced OFF state of a locked clique of ≥ 7. It is conditional on the R bands and
+    does not rest on discrete time or on the explicit N.
+  * Our R is phase-offset invariant, so published cos(Δθ) limit formulas do not carry over literally.
+  * Searches: 2026-10-28 and 2026-10-31 (arXiv, Crossref, web). No full-text search and no Google Scholar. REPORT.md §5, §5.1.
 
 ## Files and how to re-run (from the repo root; needs numpy)
 

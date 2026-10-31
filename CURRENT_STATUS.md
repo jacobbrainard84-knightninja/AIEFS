@@ -131,7 +131,7 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   (run, T) certificates (nested, dependent windows from 12 runs; checked up to step 80000). Corollary 4 was revised on 2026-10-29
   after an external review (Researcher 026) and is not yet re-audited. Ledger rows (split from the former RES-FREEZE-01):
   `LEAN-FREEZE-CORE` (Supported, Lean core, branch only), `RES-FREEZE-GATED` (Exploratory, paper proofs), `RES-FREEZE-NUM`
-  (Exploratory, finite numerics), `RES-FREEZE-NOVELTY` (Not established); see `research/freezing/README.md`.
+  (Exploratory, finite numerics), `RES-FREEZE-NOVELTY` (Not established: known variant of Cho–Dong–Ha 2023, a consistency hit only; narrow residual plausibly new; search non-exhaustive); see `research/freezing/README.md`.
 - **Analysis v4 held events at exact-duration boundaries: blocker.** v4's end check can reject an event held exactly the required
   duration (floating-point rounding; 32 of 605 starts on v4's saved grid in a synthetic test). Only grid-multiple holds are affected,
   i.e. the fixed_physical_17p5 held rows; the T_window-nominal holds are not. Separately, v4's "recovery" events include retention.
