@@ -15,8 +15,8 @@ Researcher 001's proposal to rescope it.
 * The split it could not see ("Split not seen", §5) is now committed: `LEAN-FREEZE-CORE`, `RES-FREEZE-GATED`,
   `RES-FREEZE-NUM` and `RES-FREEZE-NOVELTY` in `registry/claims.csv`.
 * The Corollary 4 fix it asks for (§1, §5) is in REPORT.md §3. The proof uses the state-free bound
-  ℓ_f^0 = (1 − ρ_f^{N1})·x*_f, revised on 2026-10-29 after Researcher 026's external review. That revision has not been
-  independently re-audited.
+  ℓ_f^0 = (1 − ρ_f^{N1})·x*_f, revised on 2026-10-29 after Researcher 026's external review. Auditor Seat 002 re-audited
+  that revision on 2026-10-31 and found it correct (`AUDIT_R002_d9c03ef.md`).
 * §4's recommendation is applied in `RES-FREEZE-NOVELTY` and REPORT.md §0/§5. The ledger vocabulary has no value for the
   label or for "Literature assessment (non-exhaustive)", so they sit in the free-text columns. The label is the
   `audited_qualifier`, with `audited_status` `Not established`. The scope sits at the start of

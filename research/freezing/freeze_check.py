@@ -148,7 +148,7 @@ if __name__=='__main__':
     for k in range(2):
         om=np.sort(rr.uniform(1.0,2.0,N)); r=analyse(f'random_omega_U[1,2]#{k}/seed={seeds[k]}',simulate(seeds[k],omega=om))
         r['omega']=om.tolist(); results.append(r); print(r,flush=True)
-    # stress: near-identical frequencies (one 12-cluster), certificate expected to FAIL (c/11 < B_c)
+    # stress: near-identical frequencies (one 12-cluster, c/11 < B_c); the gated-OFF certificate is issued here (fully certified, all 66 edges goff; REPORT section 4)
     om=1.0+0.001*np.arange(N); r=analyse(f'stress_near_identical/seed={seeds[0]}',simulate(seeds[0],omega=om)); r['omega']=om.tolist(); results.append(r); print(r,flush=True)
     # reset_B branch: B:=0 at split step 48000 (EMA kept), certificate tested only for T>=48000
     for s in seeds[:3]:

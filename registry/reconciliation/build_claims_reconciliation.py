@@ -438,26 +438,32 @@ NEW = [
   "2026-10-29: steps 1-3 and 5-7 PASS (build 0 warnings, 5 declarations on standard axioms), step 4 (cache) skipped."),
  ("RES-FREEZE-GATED", A,
   "Conditional finite-time support freezing for the discrete AIEF weight map (default engine path, real arithmetic): if from "
-  "some step T on every edge's coherence R_e stays in a band satisfying one of three strict certificate inequalities (OFF, "
+  "some step T on (T >= 1, or row sums <= c at start; the engine init satisfies this) every edge's coherence R_e stays in a band satisfying one of three strict certificate inequalities (OFF, "
   "ON, gated-OFF; REPORT.md Thms 2-3), every edge's status B_e > B_c is constant for all n >= T + N, N explicit (paper-level). "
   "The min-endpoint capacity gate is handled uniformly (Lemma 1). Corollary 4 (limit form, revised 2026-10-29) gives eventual "
   "constancy when the limsup/liminf data satisfy the inequalities strictly; its proof uses the state-free lower bound "
   "l_f^0 = (1 - rho_f^N1) x*_f (independent of B_f(T)). Lemma 1, Thms 2-3 and Cor 4 are paper proofs. "
   "Without a hypothesis on R the statement is false (exogenous periodic R: 10 flips).",
   "Exploratory", "Conditional theorem",
-  "research/freezing/REPORT.md;research/freezing/README.md;research/freezing/audit/AUDIT_R002.md",
+  "research/freezing/REPORT.md;research/freezing/README.md;research/freezing/audit/AUDIT_R002.md;"
+  "research/freezing/audit/AUDIT_R002_d9c03ef.md",
   "Conditional on the R bands holding on the whole window [T, inf) (Cor 4: on the limit data). Closed-loop phase-locking with "
   "a margin (O1) is OPEN, as are ties (O2), which support appears (O3) and an a-priori N (O4). The explicit N holds for the "
   "real-arithmetic map only (float64 rounding broke it at a 1e-13 margin). The gated-OFF certificate for a locked 7-clique "
   "needs an R spread <~ 2e-4. Corollary 4 was revised on 2026-10-29 after Researcher 026 found that the old proof relied on "
-  "B_f(T) converging; the revision is not yet independently re-audited. Not in Lean except the per-edge core (LEAN-FREEZE-CORE).",
+  "B_f(T) converging; Auditor Seat 002 re-audited the revision on 2026-10-31 and found it correct "
+  "(research/freezing/audit/AUDIT_R002_d9c03ef.md). Lemma 1 and Thms 2 (ON) and 3 need T >= 1, or row sums <= c at start "
+  "(for an arbitrary B(0) the step-0 gate factor can fall below the 1/g floor); Cor 4 is unaffected. Not in Lean except the per-edge core (LEAN-FREEZE-CORE).",
   "(new; split from RES-FREEZE-01 on 2026-10-29)",
-  "Exploratory (conditional paper proofs of Lemma 1, Thms 2-3 and revised Cor 4; stays exploratory until an independent paper "
-  "audit of the current proofs is committed)",
+  "Exploratory (conditional paper proofs of Lemma 1, Thms 2-3 and revised Cor 4; revised Cor 4 re-audited correct 2026-10-31; "
+  "any promotion is the owner's decision)",
   "not from audit rounds 1-4; Auditor Seat 002 audit 2026-10-28 (research/freezing/audit/AUDIT_R002.md; verdict sound with "
-  "wording fixes R1-R3, applied; predates the Cor 4 revision); external review by Researcher 026 (Arena AI) 2026-10-29",
-  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. The committed audit copy covers the pre-revision Cor 4, so "
-  "it does not by itself support promoting this row; promotion needs an independent audit of the revised proofs."),
+  "wording fixes R1-R3, applied; predates the Cor 4 revision); external review by Researcher 026 (Arena AI) 2026-10-29; "
+  "Auditor Seat 002 audit of d9c03ef 2026-10-31 (research/freezing/audit/AUDIT_R002_d9c03ef.md; CLEAN WITH NOTES; revised "
+  "Cor 4 correct; notes applied)",
+  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. AUDIT_R002 covers the pre-revision Cor 4; "
+  "AUDIT_R002_d9c03ef re-audits the revised Cor 4 (correct) and its notes (start hypothesis, wording, line refs) are applied. "
+  "Left Exploratory; promotion is the owner's decision."),
  ("RES-FREEZE-NUM", A,
   "Finite numerical check of the freezing certificates: no finite-window violation was observed among 1,412 issued (run, T) "
   "certificates (all 66 edges certified at T, R-band hypotheses checked over [T, 80000) only; no status change in (T + N, "
@@ -514,7 +520,8 @@ NEW = [
   "label is the audited_qualifier and its scope 'Literature assessment (non-exhaustive)' opens scope_boundary_and_caveat, "
   "because neither is in the checked vocabularies (registry/README.md 'Status vocabulary'; verify_inventory.py evidence_scope). "
   "audited_status 'Not established' (novelty of the residual is open); artifact_status 'Incomplete' / evidence_scope "
-  "'Conjecture' are the nearest checked values (as for AUD-B-SCAFFOLD). Not Frozen, Retired, Superseded or Rejected."),
+  "'Conjecture' are the nearest checked values; precedent: AUD-NOVELTY (registry/README.md), also a novelty row, uses "
+  "Incomplete / Conjecture / Not established. Not Frozen, Retired, Superseded or Rejected."),
 ]
 O = "HISTORICAL_PROJECT_ORIGINS"
 UNS = "Speculative / untested origin hypothesis"

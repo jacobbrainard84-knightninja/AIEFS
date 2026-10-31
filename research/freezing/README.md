@@ -17,16 +17,16 @@ exogenous periodic R makes an edge flip forever (§3.4).
 
 | Statement (REPORT.md §3) | Status | In Lean? |
 |---|---|---|
-| Lemma 1 (gate sandwich: row sums ≤ c, gate factor bracketed by drive quantities) | PROVEN (paper proof), unconditional | no |
-| Theorem 2 (OFF and ON certificates, explicit N) | PROVEN (paper proof), conditional on R on [T,∞) | per-edge ∃N form only: `edge_eventually_off`, `edge_eventually_on` (via `upper_geom`, `eventually_off`, `eventually_on`) |
-| Theorem 3 (gated-OFF certificate for large locked cliques) | PROVEN (paper proof), conditional | no |
-| Corollary 4 (limit form; proof uses the state-free bound ℓ_f^0 = (1 − ρ_f^{N1})·x*_f) | PROVEN (paper proof), conditional; revised 2026-10-29 after external review (Researcher 026), not yet re-audited | no |
+| Lemma 1 (gate sandwich: row sums ≤ c, gate factor bracketed by drive quantities) | PROVEN (paper proof), unconditional for n ≥ 1; n = 0 needs row sums ≤ c at start | no |
+| Theorem 2 (OFF and ON certificates, explicit N) | PROVEN (paper proof), conditional on R on [T,∞); T ≥ 1, or row sums ≤ c at start (ON case) | per-edge ∃N form only: `edge_eventually_off`, `edge_eventually_on` (via `upper_geom`, `eventually_off`, `eventually_on`) |
+| Theorem 3 (gated-OFF certificate for large locked cliques) | PROVEN (paper proof), conditional; T ≥ 1, or row sums ≤ c at start | no |
+| Corollary 4 (limit form; proof uses the state-free bound ℓ_f^0 = (1 − ρ_f^{N1})·x*_f) | PROVEN (paper proof), conditional; revised 2026-10-29 after external review (Researcher 026); re-audited CORRECT by Auditor Seat 002 on 2026-10-31 (`audit/AUDIT_R002_d9c03ef.md`) | no |
 | Unconditional freezing for the weight map | FALSE (numerical counterexample, §3.4) | n/a |
 | Closed-loop locking with margin (O1), ties (O2), multistability (O3), a-priori N (O4) | OPEN | no |
 
 "PROVEN (paper proof)" means a written proof in REPORT.md, checked by a read-only audit (verdict: sound with
 wording fixes, all applied, §9; copy in `audit/AUDIT_R002.md`); it is not machine-checked. The 2026-10-29
-revision of Corollary 4 (REPORT.md §3, §9 Ext-026) postdates that audit and has not been independently re-audited. The Lean file covers only the scalar comparison
+revision of Corollary 4 (REPORT.md §3, §9 Ext-026) postdates that audit; Auditor Seat 002 re-audited it on 2026-10-31 (audit of d9c03ef, CLEAN WITH NOTES, Cor 4 CORRECT; copy in `audit/AUDIT_R002_d9c03ef.md`). The Lean file covers only the scalar comparison
 core and the per-edge OFF/ON statements (with `max(0,·)` clipping and an arbitrary gate factor), and those
 are existential (`∃ N`).
 
