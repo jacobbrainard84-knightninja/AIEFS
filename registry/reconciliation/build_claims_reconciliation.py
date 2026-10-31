@@ -414,34 +414,85 @@ NEW = [
   "lean/AIEFProofs/README.md:105, which is hash-pinned (registry/artifacts.csv ART-0748) and is not edited; see ERRATA "
   "E11. Separate Lake project lean/AIEFProofsKn that imports the pinned lean/AIEFProofs unchanged (path dependency); "
   "it is not yet built by .github/workflows/lean.yml."),
- # ---- Research branch research/freezing, 2026-10-29 (Researcher 001; local, not pushed, not a repo audit round) ----
- ("RES-FREEZE-01", A,
+ # ---- Research branch research/freezing, 2026-10-29 (Researcher 001; local, not a repo audit round) ----
+ # The former single row RES-FREEZE-01 was split into the 4 rows below on 2026-10-29, following the external
+ # review by Researcher 026 (Arena AI), which also found the Corollary 4 gap fixed in research/freezing/REPORT.md.
+ ("LEAN-FREEZE-CORE", A,
+  "Lean 4 formalization of the per-edge freezing core only (lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean): upper_geom "
+  "(scalar affine-contraction comparison), eventually_off / eventually_on, and edge_eventually_off / edge_eventually_on for "
+  "B_{n+1} = lambda_n * max(0, (1-h)B_n + h u_n) with an arbitrary gate factor (lambda in [0,1] for OFF, kappa <= lambda for "
+  "ON) and a strict margin. Conclusions are existential (exists N, for all n >= N); the explicit N is paper-level only. "
+  "No sorry, 0 warnings, standard axioms only (propext, Classical.choice, Quot.sound).",
+  "Supported", "Formalized theorem",
+  "lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean;lean/AIEFFreezeCore/check_lean_freeze.sh;"
+  "lean/AIEFFreezeCore/AIEF_LEAN_FREEZE_SOURCE_SHA256SUMS.txt;research/freezing/audit/AUDIT_R002.md",
+  "Covers only the per-edge exists-N core. Not formalized: Lemma 1 (gate row sums), Theorem 3, Corollary 4, the explicit N, "
+  "the link from lambda to the engine gate, and anything about phases, delay or the EMA. Branch-only: lean/AIEFFreezeCore is "
+  "on research/freezing and not yet on main; on this branch it is a required row of the .github/workflows/lean.yml matrix "
+  "(since main was merged in on 2026-10-31).",
+  "(new; split from RES-FREEZE-01 on 2026-10-29)",
+  "Supported (formalized per-edge exists-N core only; explicit N paper-level; branch-only, not yet on main)",
+  "not from audit rounds 1-4; Auditor Seat 002 audit 2026-10-28 (research/freezing/audit/AUDIT_R002.md §FreezeCore.lean: "
+  "independent build, standard axioms only); external review by Researcher 026 (Arena AI) 2026-10-29",
+  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. research/freezing/lean/check.sh with SKIP_CACHE=1 on "
+  "2026-10-29: steps 1-3 and 5-7 PASS (build 0 warnings, 5 declarations on standard axioms), step 4 (cache) skipped."),
+ ("RES-FREEZE-GATED", A,
   "Conditional finite-time support freezing for the discrete AIEF weight map (default engine path, real arithmetic): if from "
-  "some step T on every edge's coherence R_e satisfies one of three strict certificate inequalities (OFF, ON, gated-OFF; "
-  "REPORT.md Thms 2-3), then every edge's status B_e > B_c is constant for all n >= T + N, with N explicit in the margin, "
-  "h = gamma*dt, the cap c = (a-delta)/q, the row-sum drive bound and B(T). The min-endpoint capacity gate is handled "
-  "uniformly (Lemma 1 brackets the gate factor at every step). Lemma 1, Thms 2-3 and Corollary 4 are PROVEN (paper proof); "
-  "the scalar comparison core and the per-edge OFF/ON statements (existential N) are machine-checked in Lean 4 "
-  "(lean/AIEFFreezeCore, standard axioms only). Without a hypothesis on R the statement is false (exogenous periodic R: 10 flips).",
-  "Supported", "Conditional theorem",
-  "research/freezing/REPORT.md;research/freezing/README.md;research/freezing/freeze_check.py;research/freezing/results.json;"
-  "research/freezing/clique7_check.py;research/freezing/guard_check.py;lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean;"
-  "lean/AIEFFreezeCore/check_lean_freeze.sh",
-  "Conditional: assumes phase-locking/drift with a margin from step T on; whether the closed loop (phases + delay + EMA + "
-  "gate) always produces it is OPEN (O1), as are ties (O2), which support appears (O3) and an a-priori N (O4). The explicit N "
-  "is paper-level and holds for the real-arithmetic map only (float64 rounding broke it at a 1e-13 margin; the checker "
-  "certifies only margins >= 1e-9). The gated-OFF certificate for a locked 7-clique needs an R spread <~ 2e-4. Numerics: "
-  "1,412 certified (run, T) pairs, 0 violations, where certified means the R-band hypotheses were checked only over the "
-  "finite window [T, 80000), not [T, inf). Novelty: plausibly new as a model-specific certificate theorem but mathematically "
-  "elementary (scalar affine-contraction comparison); the literature search was not exhaustive. Lemma 1, Thm 3 and Cor 4 are "
-  "not in Lean.",
-  "(new)", "Supported (conditional theorem, paper proof; Lean covers the per-edge core only; not a repo audit round)",
-  "not from audit rounds 1-4; research branch research/freezing 2026-10-29; paper proof checked by a read-only research "
-  "audit on 2026-10-28 (verdict: sound with wording fixes R1-R3, applied; that audit file is not in the repo)",
-  "Research note research/freezing/ (copied from a scratch directory without its pre-audit backups). In-repo re-run "
-  "2026-10-29: engine cross-check 0.0 and byte-identical outputs (research/freezing/inrepo_rerun_log.txt). "
-  "lean/AIEFFreezeCore/check_lean_freeze.sh 7/7 PASS locally; not built by .github/workflows/lean.yml. See ERRATA E12 "
-  "for the related H2 wording pointer."),
+  "some step T on every edge's coherence R_e stays in a band satisfying one of three strict certificate inequalities (OFF, "
+  "ON, gated-OFF; REPORT.md Thms 2-3), every edge's status B_e > B_c is constant for all n >= T + N, N explicit (paper-level). "
+  "The min-endpoint capacity gate is handled uniformly (Lemma 1). Corollary 4 (limit form, revised 2026-10-29) gives eventual "
+  "constancy when the limsup/liminf data satisfy the inequalities strictly; its proof uses the state-free lower bound "
+  "l_f^0 = (1 - rho_f^N1) x*_f (independent of B_f(T)). Lemma 1, Thms 2-3 and Cor 4 are paper proofs. "
+  "Without a hypothesis on R the statement is false (exogenous periodic R: 10 flips).",
+  "Exploratory", "Conditional theorem",
+  "research/freezing/REPORT.md;research/freezing/README.md;research/freezing/audit/AUDIT_R002.md",
+  "Conditional on the R bands holding on the whole window [T, inf) (Cor 4: on the limit data). Closed-loop phase-locking with "
+  "a margin (O1) is OPEN, as are ties (O2), which support appears (O3) and an a-priori N (O4). The explicit N holds for the "
+  "real-arithmetic map only (float64 rounding broke it at a 1e-13 margin). The gated-OFF certificate for a locked 7-clique "
+  "needs an R spread <~ 2e-4. Corollary 4 was revised on 2026-10-29 after Researcher 026 found that the old proof relied on "
+  "B_f(T) converging; the revision is not yet independently re-audited. Not in Lean except the per-edge core (LEAN-FREEZE-CORE).",
+  "(new; split from RES-FREEZE-01 on 2026-10-29)",
+  "Exploratory (conditional paper proofs of Lemma 1, Thms 2-3 and revised Cor 4; stays exploratory until an independent paper "
+  "audit of the current proofs is committed)",
+  "not from audit rounds 1-4; Auditor Seat 002 audit 2026-10-28 (research/freezing/audit/AUDIT_R002.md; verdict sound with "
+  "wording fixes R1-R3, applied; predates the Cor 4 revision); external review by Researcher 026 (Arena AI) 2026-10-29",
+  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. The committed audit copy covers the pre-revision Cor 4, so "
+  "it does not by itself support promoting this row; promotion needs an independent audit of the revised proofs."),
+ ("RES-FREEZE-NUM", A,
+  "Finite numerical check of the freezing certificates: no finite-window violation was observed among 1,412 issued (run, T) "
+  "certificates (all 66 edges certified at T, R-band hypotheses checked over [T, 80000) only; no status change in (T + N, "
+  "80000]). Exact re-implementation of the default engine path (cross-check 0.0).",
+  "Exploratory", "Finite numerical observation",
+  "research/freezing/freeze_check.py;research/freezing/results.json;research/freezing/run_log.txt;"
+  "research/freezing/inrepo_rerun_log.txt;research/freezing/guard_check.py;research/freezing/clique7_check.py",
+  "The checks are nested and dependent: the 1,412 pairs are nested windows (a 500-step T grid) from 12 runs (5 repo seeds, "
+  "no-delay, 2 random-omega, near-identical-omega stress, 3 B-reset), not independent replications. Only 249 pairs exercise "
+  "the N-step part (N > 0), and 246 of those come from 2 runs (random-omega #0 and stress, 123 each); the other 3 are the "
+  "reset runs at T = 48000. All runs at dt = 0.01 and one parameter set. Hypotheses checked on a finite window, not [T, inf). "
+  "Certificates are issued only for margins >= 1e-9 (MARGIN_GUARD).",
+  "(new; split from RES-FREEZE-01 on 2026-10-29)",
+  "Exploratory (finite numerical; nested, dependent windows from 12 runs; 249 with N > 0, 246 of them from 2 runs; dt = 0.01, "
+  "one parameter set)",
+  "not from audit rounds 1-4; numerics spot-checked by the Auditor Seat 002 audit 2026-10-28 "
+  "(research/freezing/audit/AUDIT_R002.md); external review by Researcher 026 (Arena AI) 2026-10-29",
+  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. In-repo re-run 2026-10-29: engine cross-check 0.0 and "
+  "byte-identical outputs (research/freezing/inrepo_rerun_log.txt)."),
+ ("RES-FREEZE-NOVELTY", A,
+  "Novelty of the conditional freezing result: plausibly new as a model-specific certificate theorem (finite-time "
+  "threshold-support freezing with an explicit bound under a min-endpoint capacity gate), but mathematically elementary "
+  "(scalar affine-contraction comparison).",
+  "Incomplete", "Conjecture",
+  "research/freezing/REPORT.md;research/freezing/arxiv_search.py;research/freezing/arxiv_search2.py;"
+  "research/freezing/arxiv_search_log.json",
+  "Not checked exhaustively against the literature: arXiv API queries and a short web search on 2026-10-28 only; no full-text "
+  "search and no Google Scholar. Closest prior work (edge snapping, Hebbian constraints, adaptive Kuramoto) is asymptotic.",
+  "(new; split from RES-FREEZE-01 on 2026-10-29)",
+  "Not established (novelty plausible but not checked exhaustively; elementary)",
+  "not from audit rounds 1-4; the Auditor Seat 002 audit (research/freezing/audit/AUDIT_R002.md) did not re-run the "
+  "literature search; external review by Researcher 026 (Arena AI) 2026-10-29",
+  "Split from RES-FREEZE-01 on 2026-10-29 per the external review. artifact_status 'Incomplete' / evidence_scope 'Conjecture' "
+  "are the nearest verify_inventory.py vocabulary values (as for AUD-B-SCAFFOLD); the exact wording 'Not established' is the "
+  "audited_status."),
 ]
 O = "HISTORICAL_PROJECT_ORIGINS"
 UNS = "Speculative / untested origin hypothesis"
@@ -479,6 +530,9 @@ SSRH_TEST = {
 }
 
 NEW_IDS = {t[0] for t in NEW}
+# Rows that an earlier run of this script added and that have since been replaced (dropped on input).
+# RES-FREEZE-01 was split into LEAN-FREEZE-CORE, RES-FREEZE-GATED, RES-FREEZE-NUM, RES-FREEZE-NOVELTY on 2026-10-29.
+REPLACED_IDS = {"RES-FREEZE-01"}
 
 def main():
     rows = list(csv.DictReader(open(CLAIMS, newline="", encoding="utf-8")))
@@ -486,7 +540,7 @@ def main():
     out = []
     for r in rows:
         cid = r["claim_id"]
-        if cid.startswith(("AUD-", "SSRH-ORIG-")) or cid in NEW_IDS:
+        if cid.startswith(("AUD-", "SSRH-ORIG-")) or cid in NEW_IDS or cid in REPLACED_IDS:
             continue  # rebuilt below (idempotence)
         prior = r.get("prior_status") or f'{r["artifact_status"]} / {r["evidence_scope"]}'
         r["prior_status"] = prior

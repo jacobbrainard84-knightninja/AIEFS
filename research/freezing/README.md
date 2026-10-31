@@ -1,7 +1,8 @@
 # Conditional finite-time support freezing (AIEF discrete model)
 
-Research note, added 2026-10-29. Full write-up: [`REPORT.md`](REPORT.md). Ledger row: `RES-FREEZE-01` in
-`registry/claims.csv`. Lean: [`lean/AIEFFreezeCore`](../../lean/AIEFFreezeCore/README.md).
+Research note, added 2026-10-29. Full write-up: [`REPORT.md`](REPORT.md). Ledger rows (2026-10-29, split from the former `RES-FREEZE-01`
+after an external review): `LEAN-FREEZE-CORE`, `RES-FREEZE-GATED`, `RES-FREEZE-NUM` and `RES-FREEZE-NOVELTY` in
+`registry/claims.csv`. Audit copy: [`audit/AUDIT_R002.md`](audit/AUDIT_R002.md). Lean: [`lean/AIEFFreezeCore`](../../lean/AIEFFreezeCore/README.md).
 
 ## Scope, in one paragraph
 
@@ -19,12 +20,13 @@ exogenous periodic R makes an edge flip forever (§3.4).
 | Lemma 1 (gate sandwich: row sums ≤ c, gate factor bracketed by drive quantities) | PROVEN (paper proof), unconditional | no |
 | Theorem 2 (OFF and ON certificates, explicit N) | PROVEN (paper proof), conditional on R on [T,∞) | per-edge ∃N form only: `edge_eventually_off`, `edge_eventually_on` (via `upper_geom`, `eventually_off`, `eventually_on`) |
 | Theorem 3 (gated-OFF certificate for large locked cliques) | PROVEN (paper proof), conditional | no |
-| Corollary 4 (limit form) | PROVEN (paper proof), conditional | no |
+| Corollary 4 (limit form; proof uses the state-free bound ℓ_f^0 = (1 − ρ_f^{N1})·x*_f) | PROVEN (paper proof), conditional; revised 2026-10-29 after external review (Researcher 026), not yet re-audited | no |
 | Unconditional freezing for the weight map | FALSE (numerical counterexample, §3.4) | n/a |
 | Closed-loop locking with margin (O1), ties (O2), multistability (O3), a-priori N (O4) | OPEN | no |
 
 "PROVEN (paper proof)" means a written proof in REPORT.md, checked by a read-only audit (verdict: sound with
-wording fixes, all applied, §9); it is not machine-checked. The Lean file covers only the scalar comparison
+wording fixes, all applied, §9; copy in `audit/AUDIT_R002.md`); it is not machine-checked. The 2026-10-29
+revision of Corollary 4 (REPORT.md §3, §9 Ext-026) postdates that audit and has not been independently re-audited. The Lean file covers only the scalar comparison
 core and the per-edge OFF/ON statements (with `max(0,·)` clipping and an arbitrary gate factor), and those
 are existential (`∃ N`).
 
@@ -38,7 +40,9 @@ are existential (`∃ N`).
 * **7-clique certificate needs R spread ≲ 2e-4.** The gated-OFF certificate (Thm 3) for a locked group of 7
   is only issued when the R band on the group is very tight: spread ≲ 2e-4 (issued for w ≤ 2e-4, not for
   w ≥ 3e-4, although the group stays OFF). `clique7_check.py`, REPORT.md §3 Thm 3.
-* **Numerics: 1,412 certified (run, T) pairs, 0 violations.** "Certified" means all 66 edges certified at T
+* **Numerics: no finite-window violation was observed among 1,412 issued (run, T) certificates.** These are nested,
+  dependent windows from 12 runs, not independent replications; only 249 have N > 0, 246 of them from 2 runs; all at
+  dt = 0.01 and one parameter set (`RES-FREEZE-NUM`). "Certified" means all 66 edges certified at T
   with the R-band hypotheses checked only over the **finite simulated window [T, 80000)** (steps up to
   80000), not over [T, ∞). 5 repo seeds plus no-delay, random-ω, near-identical-ω stress and B-reset
   variants. `results.json`, `run_log.txt`, REPORT.md §4.

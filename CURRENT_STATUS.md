@@ -127,8 +127,11 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
 - **Topology freezing is a conditional theorem (research branch `research/freezing`, 2026-10-29; not a repo audit round).**
   If R stays in a certified band from some step T on, every edge's status is constant from T + N on (explicit N, real
   arithmetic only, paper proof; per-edge ∃N core in Lean, `lean/AIEFFreezeCore`). Closed-loop phase-locking with a margin is
-  open. The 7-clique gated-OFF certificate needs an R spread ≲ 2e-4. 1,412 certified (run, T) pairs, 0 violations, checked
-  over the finite window up to step 80000 (`RES-FREEZE-01`, `research/freezing/README.md`).
+  open. The 7-clique gated-OFF certificate needs an R spread ≲ 2e-4. No finite-window violation was observed among 1,412 issued
+  (run, T) certificates (nested, dependent windows from 12 runs; checked up to step 80000). Corollary 4 was revised on 2026-10-29
+  after an external review (Researcher 026) and is not yet re-audited. Ledger rows (split from the former RES-FREEZE-01):
+  `LEAN-FREEZE-CORE` (Supported, Lean core, branch only), `RES-FREEZE-GATED` (Exploratory, paper proofs), `RES-FREEZE-NUM`
+  (Exploratory, finite numerics), `RES-FREEZE-NOVELTY` (Not established); see `research/freezing/README.md`.
 - **Analysis v4 held events at exact-duration boundaries: blocker.** v4's end check can reject an event held exactly the required
   duration (floating-point rounding; 32 of 605 starts on v4's saved grid in a synthetic test). Only grid-multiple holds are affected,
   i.e. the fixed_physical_17p5 held rows; the T_window-nominal holds are not. Separately, v4's "recovery" events include retention.

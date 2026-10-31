@@ -201,11 +201,41 @@ If κ(1−h) < 1 and f_u < B_c, then B_e(n) ≤ B_c for all n ≥ T + N1 + ⌈ l
 
 The code (`freeze_check.py::certificate`, `:55-96`) searches N1 ∈ {0, 1e3, 2e3, 4e3, …, 6.4e4} and takes the minimum. It can certify locked k = 7 and k = 12 cliques, but **only under a very tight R band** on the clique, because κ uses the *lower* drive while f_u uses the *upper* drive and the two nearly cancel. For k = 7 the required R spread is **≲ 2e-4**, not ~1e-3: with i.i.d. R ∈ [1−w, 1] on a 7-clique (`clique7_check.py`, T = 20000, 60000 steps) the certificate is issued for w ≤ 2e-4 (N ≈ 950–1370) and **not** for w ≥ 3e-4 (tested 3e-4, 5e-4, 1e-3), even though the group stays OFF (B ≈ c/6 = 0.10556, margin ≈ 0.0144). The audit's analytic limit at R ≈ 1 is U/u_min − 1 ≲ 4.6e-4, i.e. an R spread of ≈ 2.6e-4. So "groups of ≥ 7 are covered" holds for the limit (c/(k−1) < B_c) but for the certificate only when the band is that tight. k = 12 is the only tested gated case from the closed loop (stress run). Outside the tight band the certificate stays silent (conservative; no false certificate was observed).
 
-### Corollary 4 (limit form): PROVEN (paper proof; not in Lean)
+### Corollary 4 (limit form): PROVEN (paper proof; not in Lean; revised after external review)
 
-Let R̄_e = limsup R_e and R_e = liminf R_e. Suppose every edge satisfies one of the Thm 2/3 inequalities *strictly* when U⁺, u^min and S⁺ are replaced by their limsup/liminf values. Then the support B > B_c is eventually constant.
+*Revision 2026-10-29.* The earlier proof said that the inequalities are "continuous in the limits" and then applied Thm 3 directly. That step fails: in Thm 3, ℓ_f depends on x_T,f = B_f(T), which need not converge as T → ∞, so there is no limit to be continuous in. Researcher 026 (Arena AI) found this gap in an external review; they also gave an equivalent alternative fix, stated after the proof. **This revised statement and proof have not yet been independently re-audited** (the Auditor Seat 002 audit in `audit/AUDIT_R002.md` predates the revision; its "Cor 4 is correct" verdict refers to the old proof).
 
-*Proof.* The inequalities are strict and continuous in (U⁺, u^min, S⁺, ℓ). Tail sups and infs converge to limsup and liminf, so some finite T satisfies them; apply Thms 2–3. ∎
+*Limit data.* For each edge e and node i let Ū_e := max(0, limsup_n u_e(n)), u̲_e := liminf_n u_e(n) and S̄_i := limsup_n S_i(n), with S_i(n) = Σ_j u_ij(n)⁺. All are finite because u_e ∈ [−2, η/γ]. Write x̄*_e for x*_e = h u/(g_e − 1 + h) evaluated at u = u̲_e and at g_e computed from S̄ (only for u̲_e > 0). The tail data U⁺_e(T), u^min_e(T), S_i⁺(T) are the §3 quantities on the window [T, ∞). As T → ∞ they converge monotonically: U⁺(T) ↓ Ū, S⁺(T) ↓ S̄, u^min(T) ↑ u̲.
+
+*Statement.* Suppose every edge e satisfies one of the following strictly at the limit data:
+
+* (OFF) Ū_e < B_c;
+* (ON) u̲_e > 0 and x̄*_e > B_c;
+* (gated-OFF) f̄_u,e < B_c, where f̄_u,e is the f_u of Thm 3 computed from the limit data with ℓ_f := x̄*_f for every edge f with u̲_f > 0 and ℓ_f := 0 otherwise.
+
+Then there is a finite T* such that every edge's status B_e > B_c is constant for all n ≥ T*.
+
+*Which ℓ.* The corollary does **not** use Thm 3's state-dependent ℓ_f = max(0, x*_f − ρ_f^{N1}(x*_f − x_T,f)⁺). Its proof uses the state-free bound **ℓ_f^0 = (1 − ρ_f^{N1})·x*_f** (step 1 below), which does not depend on B_f(T). The hypothesis ℓ_f := x̄*_f above is the N1 → ∞ limit of ℓ_f^0 at the limit data; step 5 fixes one finite N1. The order of choices is: N1 first (from the strict limit inequalities), then T (from the convergence of the tail data). The finite-T code certificate (`freeze_check.py`) keeps the state-dependent ℓ_f of Thm 3, which is a different (and for a given T usually sharper) condition.
+
+*Proof.*
+
+1. *A lower bound that does not depend on B(T).* Fix T and an edge f with u^min_f(T) > 0, and let ρ_f, x*_f be computed from the tail data at T. B ≥ 0 at every step (from the max(0,·) and λ > 0), so x_T,f ≥ 0 and (x*_f − x_T,f)⁺ ≤ x*_f. The ON comparison in the proof of Thm 2 holds from any x_T ≥ 0 and gives, for every k ≥ N1,
+   B_f(T+k) ≥ x*_f − ρ_f^k (x*_f − x_T,f)⁺ ≥ x*_f − ρ_f^{N1} x*_f = ℓ_f^0 := (1 − ρ_f^{N1})·x*_f.
+   This is independent of x_T and of T except through the tail data. Set ℓ_f^0 := 0 if u^min_f(T) ≤ 0. The comparison applies Lemma 1(c) with the lower drive u^min_f and the row-sum bound S⁺ at **every** step n ≥ T, so the lower-drive band u_f(n) ≥ u^min_f(T) (and S_k(n) ≤ S_k⁺(T) at the endpoints k of f) must hold on the whole window [T, ∞), from T on, not only from T + N1 on.
+2. *Thm 3 with ℓ^0.* The proof of Thm 3 uses ℓ_f only as a lower bound on B_f(n) for n ≥ T + N1 (to get s_i ≥ σ_i and hence λ_e ≤ κ_e). ℓ_f^0 is such a bound, so Thm 3 holds verbatim with ℓ_f^0 in place of ℓ_f. Since ℓ_f^0 ≤ ℓ_f this certificate is weaker, but it depends only on the tail data and N1.
+3. *Monotonicity: larger U⁺ or S⁺ and smaller u^min only weaken the bounds.*
+   * OFF: the margin B_c − U⁺ decreases in U⁺.
+   * ON: g_e is non-decreasing in S⁺, so x*_e = h u/(g_e − 1 + h) is non-increasing in S⁺ and increasing in u^min.
+   * ℓ^0: ρ_f = (1−h)/g_f also decreases as S⁺ grows, which on its own would *raise* (1 − ρ_f^{N1}). But ℓ_f^0 = (1 − ρ_f^{N1})x*_f = (h u^min_f/g_f)·Σ_{k=0}^{N1−1} ρ_f^k (it is the N1-th iterate of the ON comparison sequence started at 0), and both h u/g and ρ are non-increasing in g. So ℓ_f^0 is non-increasing in S⁺, non-decreasing in u^min and in N1, and ℓ_f^0 ↑ x*_f as N1 → ∞ because ρ_f < 1.
+   * gated-OFF: σ_i = Σ_j max(0, (1−h)ℓ_ij + h u^min_ij) is non-decreasing in ℓ and u^min; κ_e = min(1, c/σ_i, c/σ_j) is non-increasing in σ; f_u = κhU⁺/(1 − κ(1−h)) is non-decreasing in κ and in U⁺ (the denominator is ≥ h > 0, and κ(1−h) < 1 holds automatically since κ ≤ 1).
+4. *Continuity.* With ℓ^0 written via max(u^min, 0) (it tends to 0 as u^min ↓ 0), each certificate quantity (U⁺, x*, and f_u built from ℓ^0 and a fixed N1) is a continuous function of finitely many data values: g − 1 + h ≥ h > 0, and κ = 1 whenever σ ≤ c, so κ is continuous also near σ = 0.
+5. *Choice of N1.* At the limit data, ℓ_f^0 → x̄*_f as N1 → ∞ (ρ̄_f < 1, ρ̄_f^{N1} → 0), so by continuity f_u → f̄_u,e < B_c. Fix one N1 with f_u < B_c at the limit data for every gated-OFF edge (finitely many edges; a larger N1 only helps, by step 3).
+6. *Choice of T.* By strictness and continuity there is θ > 0 such that every edge's chosen certificate still holds strictly at the perturbed data Ū + θ, u̲ − θ, S̄ + θ (with this N1, and u̲_e − θ > 0 for the ON edges). By the monotone convergence of the tail data there is a T with U⁺(T) ≤ Ū + θ, u^min(T) ≥ u̲ − θ and S⁺(T) ≤ S̄ + θ for all edges and nodes. By step 3, each certificate evaluated at the tail data of this T is at least as strong as at the perturbed data, so it holds.
+7. Apply Thm 2 (OFF, ON) and Thm 3 (with ℓ^0 and this N1) on the window [T, ∞), where the bands hold by the definition of the tail data. Every edge's status is constant from T* = T + max_e N_e on; each N_e is finite (N_off and N_on depend on B(T), which is a fixed number once T is fixed). ∎
+
+*Equivalent alternative (Researcher 026).* The ON bound on the tails gives liminf_n B_f(n) ≥ x*_f(T) for every T, hence liminf B_f ≥ x̄*_f. Pick 0 < ℓ_f < x̄*_f (close enough that f_u < B_c still holds, by continuity) and T_f with B_f(n) ≥ ℓ_f for n ≥ T_f, and run the Thm 3 argument from max(T, T_f) on. The ℓ^0 route above gives the same result and, in addition, an N1 computed from tail data only.
+
+*Remarks.* (a) S̄_i ≤ Σ_j Ū_ij, so by step 3 the corollary also holds (more conservatively) with S̄_i replaced by Σ_j Ū_ij, i.e. stated purely in terms of limsup R and liminf R. (b) The limit data are still a hypothesis about the infinite future (O1, O4); edges whose limit data satisfy none of the three inequalities strictly are not covered (O2). (c) The code (`freeze_check.py::certificate`) implements Thm 3 with the B(T)-dependent ℓ_f, which remains valid for a fixed window; the revision changes no code and no number.
 
 Special cases:
 
@@ -367,11 +397,12 @@ In every simulation we ran (1,412 certified checks over the simulated window), t
 * `lean/check.sh`: wrapper that runs `lean/AIEFFreezeCore/check_lean_freeze.sh`; the Lean formalisation of the scalar and per-edge core is `lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean` (repo paths).
 * `inrepo_rerun_log.txt`: 2026-10-29 in-repo re-run (engine cross-check and byte-identical outputs).
 
-## 9. Audit fixes applied (2026-10-28, from the read-only audit of this work, §2; that audit file is not in the repo)
+## 9. Audit fixes applied (2026-10-28, from the read-only audit of this work, §2; a copy of that audit is now in `audit/AUDIT_R002.md`)
 
 * **R1 (gated-OFF band):** the Thm 3 certificate for a locked group of ≥ 7 needs an R spread ≲ 2e-4 (k = 7), not ~1e-3; at 3e-4 it is not issued although the group stays OFF. Reproduced in `clique7_check.py`. Qualified in §0, §2, the Thm 3 remark, §3.6 and §7: "≥ 7 covered" holds in the limit, and for the certificate only under that tight band.
 * **R2 (float rounding):** added `MARGIN_GUARD = 1e-9` to `freeze_check.py::certificate` (OFF, ON and gated-OFF margins). Stated that the explicit N holds for the real-arithmetic map only, with the 1e-13 counterexample (predicted 215,086, last flip 215,578) in §3.6. `guard_check.py`: with the guard, 0 violations (the 1e-13, 1e-10 and margin-0 cases are no longer certified). The main run was re-run with the guard: 1,412 certified pairs, 0 violations, identical results.
 * **R3 (counts/wording):** "~1,450" → **1,412** certified (run, T) pairs; "certified" is defined in §0 and §4 as checked over the finite window [T, 80000); reset row corrected to B := 0 (not B_init).
 * **Non-blocking:** re-implementation described as "exact on the default engine path" (variants are not engine modes; audit cross-check of 80k steps × 3 seeds cited); proof labels changed to "PROVEN (paper proof)" with the Lean coverage stated; explicit N marked as paper-level only (Lean has ∃N); gate-test caveat updated with the audit's tie scan.
 * Not changed: the theorems, proofs, Lean files, novelty assessment and other content.
+* **Ext-026 (2026-10-29, external review by Researcher 026, Arena AI; Corollary 4):** the old proof applied Thm 3 "by continuity in the limits", but Thm 3's ℓ_f depends on B_f(T), which need not converge. Fixed by using ℓ_f^0 = (1 − ρ_f^{N1})·x*_f (valid since B ≥ 0, independent of B(T)), checking monotonicity in (U⁺, u^min, S⁺) and choosing N1, then T (§3, Cor 4). Status now "revised after external review"; the revision is not yet independently re-audited. No code, number or Lean file changed. The ledger row RES-FREEZE-01 was split into LEAN-FREEZE-CORE, RES-FREEZE-GATED, RES-FREEZE-NUM and RES-FREEZE-NOVELTY in the same change.
 

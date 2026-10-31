@@ -17,7 +17,7 @@ depends on Mathlib only.
 paper-level, real-arithmetic only. Not formalised: Lemma 1 (gate row-sum sandwich), Theorem 3
 (gated-OFF), Corollary 4, and anything about phases, delay or the EMA. The hypotheses on the drive `u`
 are the R-band hypotheses of the paper; whether the closed loop satisfies them (phase-locking with
-margin) is open. This project is not wired into CI.
+margin) is open. On `research/freezing` (since main was merged in on 2026-10-31) this project is a required row of the `.github/workflows/lean.yml` matrix.
 
 **Check** (from this directory): `./check_lean_freeze.sh` (or `SKIP_CACHE=1 ./check_lean_freeze.sh`
 offline). Seven steps as in `lean/AIEFProofs/check_lean.sh`: toolchain, pins
