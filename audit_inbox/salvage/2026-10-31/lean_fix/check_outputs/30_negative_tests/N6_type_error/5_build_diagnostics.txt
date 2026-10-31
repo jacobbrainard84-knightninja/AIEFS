@@ -1,0 +1,4 @@
+error: AIEFProofs/NegTest.lean:1:0: Not a definitional equality: the left-hand side
+error: AIEFProofs/NegTest.lean:1:30: Type mismatch
+error: Lean exited with code 1
+error: build failed

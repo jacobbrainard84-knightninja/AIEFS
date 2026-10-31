@@ -1,0 +1,30 @@
+diff --git a/lean/AIEFProofs/AIEFProofs/ControllerFiber.lean b/lean/AIEFProofs/AIEFProofs/ControllerFiber.lean
+index 37558e4..73158fe 100644
+--- a/lean/AIEFProofs/AIEFProofs/ControllerFiber.lean
++++ b/lean/AIEFProofs/AIEFProofs/ControllerFiber.lean
+@@ -1,8 +1,9 @@
+ /-
+-Copyright (c) 2026 AIEF Proofs. All rights reserved.
++Copyright (c) 2026 Jacob Brainard and AIEF contributors. All rights reserved.
+ Released under Apache 2.0 license as described in the file LICENSE.
+ Authors: AIEF / SSRH
+ -/
++-- SPDX-License-Identifier: Apache-2.0
+ import Mathlib.Algebra.BigOperators.Fin
+ import Mathlib.Data.Matrix.Basic
+ import Mathlib.Tactic.FinCases
+diff --git a/lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean b/lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean
+index 6c64fb2..37c2820 100644
+--- a/lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean
++++ b/lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean
+@@ -1,8 +1,9 @@
+ /-
+-Copyright (c) 2026 AIEF Proofs. All rights reserved.
++Copyright (c) 2026 Jacob Brainard and AIEF contributors. All rights reserved.
+ Released under Apache 2.0 license as described in the file LICENSE.
+ Authors: AIEF / SSRH
+ -/
++-- SPDX-License-Identifier: Apache-2.0
+ import AIEFProofs.ControllerFiber
+ import Mathlib.Algebra.BigOperators.Fin
+ import Mathlib.Data.Matrix.Basic

@@ -1,0 +1,10 @@
+columns: ['artifact_id', 'container', 'path', 'sha256', 'size_bytes', 'artifact_kind', 'study_id', 'artifact_status', 'evidence_scope', 'lock_status', 'duplicate_group_id', 'planned_stage4_target', 'notes', 'tree_check_2026_10_28', 'tree_check_note']
+CHANGED ART-0001 .gitignore 69572a362997 -> 6a81afd0237e tree_check= 
+CHANGED ART-0012 AIEF_1_4_FORWARD_PLAN.md df7f3c4f793f -> 2fba57dda0fa tree_check= 
+CHANGED ART-0101 AIEF_HISTORIC_UNFOLDING.md 6a0117621da5 -> a8d8c2ea2c32 tree_check= 
+CHANGED ART-0103 AI_AGENT_HANDOFF_PROMPT.md 5c24dbdfa9f7 -> a25387a5ce43 tree_check= 
+CHANGED ART-0343 aief_1_4_augmented_spectrum/augmented_spectrum_report.txt e84941ea4c46 -> f092cbc9ded8 tree_check= 
+CHANGED ART-0712 lean/AIEFProofs/.gitignore b3ad09fc93f8 -> 6484ea2efc70 tree_check= 
+CHANGED ART-0743 lean/AIEFProofs/AIEFProofs.lean 5b696824caba -> a2937f75f0c8 tree_check= 
+CHANGED ART-0745 lean/AIEFProofs/AIEFProofs/ControllerFiber.lean 37c26f569ab2 -> b51e07e83ac1 tree_check= 
+CHANGED ART-0748 lean/AIEFProofs/README.md 1391738e9919 -> 04c8ae17ccbc tree_check= 

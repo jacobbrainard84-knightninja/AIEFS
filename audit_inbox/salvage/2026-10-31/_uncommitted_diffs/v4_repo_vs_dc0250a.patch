@@ -1,0 +1,1075 @@
+diff --git a/.github/workflows/lean.yml b/.github/workflows/lean.yml
+index ec6838f..d4a834e 100644
+--- a/.github/workflows/lean.yml
++++ b/.github/workflows/lean.yml
+@@ -1,6 +1,7 @@
+-# Proposed path in the repo: .github/workflows/lean.yml   (REPO ROOT, not lean/AIEFProofs/.github)
+-# GitHub only runs workflows from the repository root .github/workflows/, so the template
+-# workflows under lean/AIEFProofs/.github/workflows/ have never run.
++# Location: .github/workflows/lean.yml at the REPOSITORY ROOT (active since commit 1f9afc9;
++# Actions run #31, id 40153641197, passed at dc0250a).
++# GitHub only runs workflows from the repository root .github/workflows/. The template
++# workflows under lean/AIEFProofs/.github/workflows/ are nested and are never run by GitHub.
+ name: Lean proof check
+ 
+ on:
+@@ -43,10 +44,10 @@ jobs:
+           axiom-audit-root: AIEFProofs
+           leanchecker: false               # set true to re-check the environment with leanchecker (slow with Mathlib)
+       # Same script the owner runs locally; cache/build are already warm, so this is fast.
+-      - name: check_lean.sh (toolchain pin, imports/orphans, markers, axioms)
++      - name: check_lean.sh (toolchain pin, source hashes, imports/no orphans, markers, axioms)
+         run: |
+           chmod +x ./check_lean.sh
+-          SKIP_CACHE=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" ./check_lean.sh
++          SKIP_CACHE=1 STRICT_ORPHANS=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" ./check_lean.sh
+       - name: Upload check logs
+         if: always()
+         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+diff --git a/AI Agent Audits/AIEFS_audit_response.md b/AI Agent Audits/AIEFS_audit_response.md
+index bca6918..87a9ed1 100644
+--- a/AI Agent Audits/AIEFS_audit_response.md	
++++ b/AI Agent Audits/AIEFS_audit_response.md	
+@@ -42,7 +42,7 @@ Every "our claim" quote below is copied exactly from the committed text (audit:
+ 3. **Corr_physical.** Not a tautology, but dominated by persistence. It adds over Δω-only for uniform and repo ω, does worse for clustered ω, and its 0.995 is specific to the repo ω.
+ 4. **Delay.** Not necessary, but not inert either. ~~It increases multistability~~ **[Correction 2026-10-24, response-2 #5: in sampled ensembles the delayed condition gave more distinct four-seed final topologies (a sample-diversity statistic, not a basin count)]** and shifts the scalars at repo ω. No delay-specific topology signature was found on random ω.
+ 5. **Memory.** ~~Redundantly carried by the weights and the phase/EMA state. Neither alone is necessary for the continue outcome.~~ **[Correction 2026-10-24, response-2 #4: Phase/history/EMA suffice for finite topology reconstruction with B reset. B is predictive and acts as a conditional continuous-weight scaffold. No unique retained register has been identified. B_split's AUC 1.0 is expected because 0/29040 edges change threshold status after the split; it is predictive, not causal]**
+-6. **κ.** The repo's own exact discrete rate law holds to ~5e-6 across five T_w for complete saturated locked components (k=3–5). ~~The specific K3 is non-generic (1/40 seeds; 1/200 replays across T_w).~~ **[Correction 2026-10-24, response-2 #2: the two-sided K3 fiber is rare (1 resolved of 200 replays, plus 4 unresolved near-ties); all-tied K3s carry a one-sided slow direction at r_{B,2} in 110/110]** The sign change is untested.
++6. **κ.** The repo's own exact discrete rate law holds to ~5e-6 across five T_w for complete saturated locked components (k=3–5). ~~The specific K3 is non-generic (1/40 seeds; 1/200 replays across T_w).~~ **[Correction 2026-10-24, response-2 #2: the two-sided K3 fiber is rare (1 resolved of 200 replays, plus 4 unresolved near-ties); all-tied K3s carry a one-sided slow direction at r_{B,2} in 110/110]** **[Correction 2026-10-25, response-3 #3: read: zero lineality, one-sided controller-selection rays with the degree-two slow multiplier]** The sign change is untested.
+ 7. **Gate.** Idempotent, but not a metric or KL projection. **[Correction 2026-10-24, response-2 #1: this is an exact no-go, not an ε artifact: x∉C, A_ε(x)∈int C (margin 6.67e-13 in exact arithmetic), A_ε(x)≠x, so the map as implemented is not a smooth strictly convex Bregman or positive-definite-metric projection onto C. The 1e-12 scale is a separate numerical statement. The ε=0 comparisons only rule out the Euclidean and KL projections at the sampled points]** "Multiplicative node-strength normalisation" remains the accurate name.
+ 8. **Lean.** The build as committed fails; it passes once the dangling import is removed. The content is a 2×3 kernel.
+ 9. **Novelty.** Not established either way. The ingredients are prior art.
+@@ -53,7 +53,7 @@ Every "our claim" quote below is copied exactly from the committed text (audit:
+ > - **(i)** The closed-form frequency-proximity rule R_pred(Δω) > μ/(η+μ) is an informative but imperfect predictor of the persistent weight topology. It is exact for the repo's ω without delay; over random ω, precision is 0.59–0.98 and recall 0.18–0.57. Strong edges per node are capped at ⌊c/B_c⌋.
+ > - ~~**(ii)** For generic ω the selected topology is multistable, and delay increases the number of distinct outcomes.~~ **[Correction 2026-10-24, response-2 #5: in sampled ensembles the delayed condition gave more distinct four-seed final topologies (a sample-diversity statistic, not a basin count)]**
+ > - ~~**(iii)** Path dependence is carried redundantly by the weights and the phase/EMA state.~~ **[Correction 2026-10-24, response-2 #4: Phase/history/EMA suffice for finite topology reconstruction with B reset. B is predictive and acts as a conditional continuous-weight scaffold. No unique retained register has been identified. B_split's AUC 1.0 is expected because 0/29040 edges change threshold status after the split; it is predictive, not causal]**
+-> - **(iv)** On complete, saturated, phase-locked components of degree k, the slow weight-relaxation rate equals the closed form −log λ_{k,ε}/dt ≈ kη/c. The relative-retention rate is therefore κ = −log|λ_B/α|/dt ≈ kη/c − 1/T_w. This was verified to ≤5e-6 (absolute, discrete form) across five window lengths and 292 components. **[Correction 2026-10-24, response-2 #2: now checked with the cycle-kernel multiplier on 374 resolved components (κ to 2.1e-6); 40 fixed seeds × 5 T_w, not independent replications]**
++> - **(iv)** On complete, saturated, phase-locked components of degree k, the slow weight-relaxation rate equals the closed form −log λ_{k,ε}/dt ≈ kη/c. The relative-retention rate is therefore κ = −log|λ_B/α|/dt ≈ kη/c − 1/T_w. This was verified to ≤5e-6 (absolute, discrete form) across five window lengths and 292 components. **[Correction 2026-10-24, response-2 #2: now checked with the cycle-kernel multiplier on 374 resolved components (κ to 2.1e-6); 40 fixed seeds × 5 T_w, not independent replications]** **[Correction 2026-10-25, response-3 #1: superseded by response_3 §3: 374 = 264 two-sided (κ to 2.1e-6) + 110 all-tied K3 one-sided rays (κ to 1.7e-5); closed form conditional]**
+ >
+ > All of this is conditional on N=12 and the repo's parameters. The κ sign change at small T_w is a prediction, not a result.
+ 
+diff --git a/AI Agent Audits/AIEFS_audit_response_2.md b/AI Agent Audits/AIEFS_audit_response_2.md
+index 142f652..29ca3ac 100644
+--- a/AI Agent Audits/AIEFS_audit_response_2.md	
++++ b/AI Agent Audits/AIEFS_audit_response_2.md	
+@@ -1,7 +1,7 @@
+ # AIEFS audit: response 2 (round-3 adjudication ledger)
+ 
+-Status: **current** (2026-10-24). This ledger answers two reviews of the published audit tree at `c9907a6`. It supersedes the parts of `AIEFS_audit.md`, `AIEFS_salvage.md` and `AIEFS_audit_response.md` that are marked "[Correction 2026-10-24, response-2 #N: …]" in those files. Where this file and an older one disagree, this file wins.
+-Audited repository: github.com/jacobbrainard84-knightninja/AIEFS. Simulations ran on a read-only clone at commit `e47bad1`, the same as in rounds 1–2. Nothing was pushed, committed or changed on GitHub for this round. All work is local.
++Status: **superseded where marked** by `AIEFS_audit_response_3.md` (2026-10-25); originally current (2026-10-24). This ledger answers two reviews of the published audit tree at `c9907a6`. It supersedes the parts of `AIEFS_audit.md`, `AIEFS_salvage.md` and `AIEFS_audit_response.md` that are marked "[Correction 2026-10-24, response-2 #N: …]" in those files. Where this file and an older one disagree, this file wins.
++Audited repository: github.com/jacobbrainard84-knightninja/AIEFS. Simulations ran on a read-only clone at commit `e47bad1`, the same as in rounds 1–2. ~~Nothing was pushed, committed or changed on GitHub for this round. All work is local.~~ **[Correction 2026-10-25, response-3 #6: stale: round 3 was published at `60e6029` (22 commits from `7d752fd`); followed by `0b5b108` and `0f5ef7a`…`dc0250a`]**
+ Evidence: `evidence/` (scripts, logs, results, `audit_manifest.json`, `verify_manifest.py`, `run_all.sh`). Tags: **[RAN]** = executed for this response; **[READ]** = read in the repo or in our own files; **[INFERRED]** = reasoning, not a run.
+ Every "our claim" quote is copied exactly from the published text at `c9907a6` and cited as file:line. The reviewers' positions are paraphrased.
+ I checked each reviewer claim myself before accepting it. Where a reviewer was right, I say so. Where I found more (or less) than a reviewer claimed, the numbers below are mine.
+@@ -12,8 +12,8 @@ I checked each reviewer claim myself before accepting it. Where a reviewer was r
+ 
+ | # | Point | Our claim at c9907a6 (exact quote) | Reviewers' position (paraphrase) | Verdict | Evidence |
+ |---|---|---|---|---|---|
+-| 1 | Gate no-go | response:32 "The witness is ε-level (6.7e-13). The non-projection conclusion rests on the ε=0 Euclidean/KL comparisons, not on the witness."; response:18 "The interior witness sits only 6.7e-13 below c, so it is an ε artifact." | The witness is an exact no-go for the map as implemented. The ε=0 comparisons only show a difference from two specific projections, at the sampled points. | **Concede.** I had the logic backwards. Any Bregman projection with a smooth, strictly convex generator, and any projection in a positive-definite metric, maps a point outside a closed convex C to the boundary of C. The witness has x∉C (row sum 0.95 > c), A_ε(x) in the interior of C, and A_ε(x)≠x. This holds in exact arithmetic, not just in floating point: the saturating row's output sum is c·q/(q+ε) = c − cε/(q+ε) = c − 6.67e-13 < c. So the map as implemented (ε=1e-12) is **not** such a projection, whatever the size of the margin. The ~1e-12 scale is a separate, numerical statement: the gap is immaterial for the dynamics. The ε=0 comparisons show only that the map is not the Euclidean projection and not the KL projection, at 5 sampled points each. They do not show that the ε=0 map fails to be a projection under some other divergence. I have not settled that question. | [RAN] `logs/mathcheck.log`, `results/gate_idempotence.json`; [INFERRED] the exact-arithmetic margin (algebra in §2.1) |
+-| 2 | κ: "Jacobian", K3 census | response:22 "Frozen-Jacobian r_B matches the discrete λ_{k,ε} …"; response:22 "the K3 slow channel exists only at ρ=1, in 1/200 replays. The other 114 K3s are fully saturated with no slow mode, consistent with the manuscript's Prop 8.1 "spectrally silent"."; response:34 "the K3 slow channel appears only at the original T_w (1/200 replays)"; response:99 "the median early twin rate of the 114 fully saturated K3s is 0.126255" | The gate is non-smooth at ties, so a central difference across a tie is not a Jacobian. The right object is the multiplier on the cycle kernel (fiber) of the controller incidence. Report the tie nonadditivity, the closed form, the degree counts, and the cohort caveat. | **Partly concede.** (a) *Concede.* At ties the map is piecewise linear and not differentiable, so the round-2 matrix was a central-difference matrix, not a Jacobian. New script `kappa_cycle_kernel.py` computes the multiplier on K = ker A_J directly. (b) *Concede: the K3 census was wrong.* All 110 all-tied K3s (34 seeds, every ρ) have a **one-sided** slow direction (+v_c) whose multiplier equals the closed form λ_2. 0/110 have one along −v_c. A two-sided fiber exists only for 5 strict K3s: the exceptional resolved one (ρ=1, J={2,7}) and 4 unresolved near-ties at ρ=2. The 0.126255 "unexplained" twin rate is r_{B,2} = 0.12626. So "no slow mode", "spectrally silent" and "1/200" were wrong. (c) *Hold the numbers.* On the 292 components where both methods see a slow channel, the old rate agrees with the fiber rate to 4.5e-4 relative. The closed form (identical to the reviewers' at ε=0; §2.2) matches the fiber multiplier on all 374 well-resolved components (λ to 2.1e-8 relative, κ to 2.1e-6 absolute). The degree counts match the reviewers' exactly. (d) *Concede the cohort caveat.* The data are 40 fixed seeds × 5 T_w, not independent replications. | [RAN] `scripts/kappa_cycle_kernel.py` → `results/kappa_cycle_kernel.json`; `scripts/analyze_kappa_cycle_kernel.py` → `results/kappa_cycle_kernel_summary.json`; §2.2–2.4 |
++| 1 | Gate no-go | response:32 "The witness is ε-level (6.7e-13). The non-projection conclusion rests on the ε=0 Euclidean/KL comparisons, not on the witness."; response:18 "The interior witness sits only 6.7e-13 below c, so it is an ε artifact." | The witness is an exact no-go for the map as implemented. The ε=0 comparisons only show a difference from two specific projections, at the sampled points. | **[Correction 2026-10-25, response-3 #5: domain: the no-go holds for every Legendre generator differentiable on a neighbourhood of both x and A_ε(x), both in the open positive orthant of edge space; response_3 §2.1]** **Concede.** I had the logic backwards. Any Bregman projection with a smooth, strictly convex generator, and any projection in a positive-definite metric, maps a point outside a closed convex C to the boundary of C. The witness has x∉C (row sum 0.95 > c), A_ε(x) in the interior of C, and A_ε(x)≠x. This holds in exact arithmetic, not just in floating point: the saturating row's output sum is c·q/(q+ε) = c − cε/(q+ε) = c − 6.67e-13 < c. So the map as implemented (ε=1e-12) is **not** such a projection, whatever the size of the margin. The ~1e-12 scale is a separate, numerical statement: the gap is immaterial for the dynamics. The ε=0 comparisons show only that the map is not the Euclidean projection and not the KL projection, at 5 sampled points each. They do not show that the ε=0 map fails to be a projection under some other divergence. I have not settled that question. | [RAN] `logs/mathcheck.log`, `results/gate_idempotence.json`; [INFERRED] the exact-arithmetic margin (algebra in §2.1) |
++| 2 | κ: "Jacobian", K3 census | response:22 "Frozen-Jacobian r_B matches the discrete λ_{k,ε} …"; response:22 "the K3 slow channel exists only at ρ=1, in 1/200 replays. The other 114 K3s are fully saturated with no slow mode, consistent with the manuscript's Prop 8.1 "spectrally silent"."; response:34 "the K3 slow channel appears only at the original T_w (1/200 replays)"; response:99 "the median early twin rate of the 114 fully saturated K3s is 0.126255" | The gate is non-smooth at ties, so a central difference across a tie is not a Jacobian. The right object is the multiplier on the cycle kernel (fiber) of the controller incidence. Report the tie nonadditivity, the closed form, the degree counts, and the cohort caveat. | **Partly concede.** (a) *Concede.* At ties the map is piecewise linear and not differentiable, so the round-2 matrix was a central-difference matrix, not a Jacobian. New script `kappa_cycle_kernel.py` computes the multiplier on K = ker A_J directly. (b) *Concede: the K3 census was wrong.* All 110 all-tied K3s (34 seeds, every ρ) have a **one-sided** slow direction (+v_c) whose multiplier equals the closed form λ_2. 0/110 have one along −v_c. A two-sided fiber exists only for 5 strict K3s: the exceptional resolved one (ρ=1, J={2,7}) and 4 unresolved near-ties at ρ=2. The 0.126255 "unexplained" twin rate is r_{B,2} = 0.12626. So "no slow mode", "spectrally silent" and "1/200" were wrong. (c) *Hold the numbers.* On the 292 components where both methods see a slow channel, the old rate agrees with the fiber rate to 4.5e-4 relative. The closed form (identical to the reviewers' at ε=0; §2.2) matches the fiber multiplier on all 374 well-resolved components (λ to 2.1e-8 relative, κ to 2.1e-6 absolute). **[Correction 2026-10-25, response-3 #1: 374 = 264 resolved two-sided fibers (these bounds) + 110 resolved all-tied K3s with no fiber, checked on one-sided rays (λ to 1.7e-7, κ to 1.7e-5)]** The degree counts match the reviewers' exactly. (d) *Concede the cohort caveat.* The data are 40 fixed seeds × 5 T_w, not independent replications. | [RAN] `scripts/kappa_cycle_kernel.py` → `results/kappa_cycle_kernel.json`; `scripts/analyze_kappa_cycle_kernel.py` → `results/kappa_cycle_kernel_summary.json`; §2.2–2.4 |
+ | 3 | Matched-phase provenance | response:105 "The matched-phase check (`results/matched_phase_check.json`: Weighted_similarity_late +0.064 [0.041, 0.089]) is exploratory. The repo's canonical analysis_manifest for that directory reports FAILED." | The check read a directory whose manifest says FAILED. Show the provenance of the inputs, or don't use it. | **Concede the provenance gap; the number survives.** The rewritten script reads `test_output/`. Its `analysis_manifest.json` (sha256 prefix 2a57bc25) reports a full cohort: 40/40 seeds, 0 failures, freezeable. Its validation shows anchor 120/120, initial 80/80 and split immutability all passing. The frozen-authority, source and dependency sha256 values all match the repo. The FAILED manifest belongs to a *different* partial run (`aief_1_4_matched_phase_memory_ablation/analysis_manifest.json`, prefix 3ce915cc: 1 seed, anchor_failed). Our round-2 sentence conflated the two. Weighted_similarity_late is unchanged: +0.06415 [0.0405, 0.0886], positive in 31/40 seeds. It stays exploratory. | [RAN] `scripts/matched_phase_check.py` → `results/matched_phase_check.json` (`provenance`, `failed_partial_run_elsewhere`) |
+ | 4 | Memory wording | response:19 "The path dependence is carried *redundantly*."; response:55 "(iii) Path dependence is carried redundantly by the weights and the phase/EMA state."; response:44 "Memory. Redundantly carried by the weights and the phase/EMA state." | "Redundant" overstates it. Phase/history/EMA reconstruct the topology with B reset. B's AUC of 1.0 is predictive, not causal, and is expected if the topology is frozen. | **Concede.** New wording: "Phase, history and EMA together suffice to reconstruct the finite topology when B is reset (reset_B: Jaccard 1.000 vs continue). B is predictive of the final topology and acts as a conditional continuous-weight scaffold. No unique retained memory register has been identified." The AUC 1.0 is expected by construction. I checked: **0 of 29040** edges change threshold status (B > B_C) between the split and the end (13200 archived repo-ω edges, 15840 random-ω edges). A B_split > B_C classifier is therefore exact, and the AUC says nothing about causation. | [RAN] `scripts/frozen_topology_check.py` → `results/frozen_topology_check.json`; [READ] salvage §3.5 ablation table |
+ | 5 | Delay wording | response:20 "On random ω the delay systematically *increases multistability*"; response:43 "It increases multistability"; response:54 "delay increases the number of distinct outcomes" | Four seeds per ω set give a sample-diversity count, not a basin count. | **Concede.** New wording: "In sampled ensembles the delayed condition gave more distinct four-seed final topologies." Numbers: 2.93 vs 2.33 (uniform) and 2.0 vs 1.4 (clustered) mean distinct topologies per 4 seeds. More with delay in 7/15 and 5/15 ω sets; fewer in 1/15 each. Pooled at repo ω: 16 vs 1. These are counts of distinct outcomes in a sample. They are not basin counts or basin volumes. | [RAN] `results/delay_heldout_analysis.json` (`point7_delay`) |
+@@ -29,7 +29,7 @@ I checked each reviewer claim myself before accepting it. Where a reviewer was r
+ Gate: s_i = min(1, c/(q_i+ε)), B'_ij = x_ij·min(s_i, s_j), with q_i = Σ_j x_ij. The witness row has q = 0.95 > c = 0.6333 and controls all of its edges. Its output row sum is Σ_j x_ij·c/(q+ε) = c·q/(q+ε) = c − cε/(q+ε). With ε = 1e-12 that is c − 6.67e-13 exactly, so the output is in the interior. A Bregman projection with a smooth, strictly convex (Legendre) generator, or a projection in any positive-definite metric, sends an exterior point to ∂C. Hence A_ε is neither. [INFERRED: standard property; the numbers are from `logs/mathcheck.log`]
+ 
+ ### 2.2 Closed form: ours vs the reviewers' (point 2)
+-On a component where every node in J controls its edges, with locked edges (R=1): x_e = (1−γdt)B_e + dt·η. Take h ∈ K = ker A_J, so row sums at J are unchanged. Then δq_i = 0 for i ∈ J, the s values are unchanged, and δB' = (1−γdt)·s_J·h. So h is an eigen-direction with multiplier λ = (1−γdt)·s_J. At the fixed point the row sum is c up to O(ε), which gives q_J = c(1−γdt) + k·dt·η and
++On a component where every node in J controls its edges, with locked edges (R=1): x_e = (1−γdt)B_e + dt·η. Take h ∈ K = ker A_J, so row sums at J are unchanged. Then δq_i = 0 for i ∈ J, the s values are unchanged, and δB' = (1−γdt)·s_J·h. So h is an eigen-direction with multiplier λ = (1−γdt)·s_J. **[Correction 2026-10-25, response-3 #2: this is the exact statement, under conditions (a)–(e) of response_3 §2.2, incl. equal controlling scales; the closed form below additionally needs the ideal hypotheses R=1 and row sum c, and the finite-ε fixed point moves λ by 1.6e-12]** At the fixed point the row sum is c up to O(ε), which gives q_J = c(1−γdt) + k·dt·η and
+ 
+ λ_k = (1−γdt)·c / (c + dt(kη − γc) + ε),
+ r_{B,k} = −log λ_k / dt = (1/dt)·log(1 + (dt·kη + ε) / (c(1−γdt))),
+@@ -41,7 +41,7 @@ The reviewers' expression has no ε. At ε = 0 it is algebraically identical to
+ 200 replays (40 S01 seeds × ρ ∈ {0.5, 0.75, 1, 1.5, 2}, T_w = ρ·17.503), 406 components: K6 179, K4 88, K5 24, K3 115.
+ - Nonzero fiber: K6 (k=5) 179, K4 (k=3) 88, K5 (k=4) 24, K3 (k=2) 5. Distinct seeds: 40, 32, 10, 5.
+ - Fiber checks over 2231 directions: max ‖A_J h‖ 6.7e-16; max relative residual 1.3e-5; max ± asymmetry 2.4e-5; leak outside the component 0; max λ spread within a component 7.4e-6.
+-- Step resolution. A component is resolved if δ ≥ 100× its max tied gap and its min untied gap ≥ 100×δ. 374 are resolved: λ vs closed form to 2.07e-8 relative, rate to 1.64e-5 relative, κ to 2.07e-6 absolute. 32 are poorly resolved, all at ρ=2 (K6 15, K4 10, K3 4, K5 3). Their rate error is up to 3.8e-3. At T_w = 35 the state at t = 250 is still converging (gaps ~1e-12 to 1e-8), so their tie/strict class depends on the snapshot.
++- Step resolution. A component is resolved if δ ≥ 100× its max tied gap and its min untied gap ≥ 100×δ. **[Correction 2026-10-25, response-3 #1: the 374 split as 264 two-sided + 110 all-tied K3; the bounds in this bullet are the two-sided ones]** 374 are resolved: λ vs closed form to 2.07e-8 relative, rate to 1.64e-5 relative, κ to 2.07e-6 absolute. 32 are poorly resolved, all at ρ=2 (K6 15, K4 10, K3 4, K5 3). Their rate error is up to 3.8e-3. At T_w = 35 the state at t = 250 is still converging (gaps ~1e-12 to 1e-8), so their tie/strict class depends on the snapshot.
+ - Old central-difference vs fiber: 292 agree slow, 110 agree not slow, and 4 were old-not-slow but have a fiber (the ρ=2 near-tie K3s). On the 292, old r_B vs fiber rate: max relative difference 4.5e-4.
+ - First-run caveat: a first run with TIE_TOL 1e-12 and a fixed δ = 1e-7 stepped across near-ties and gave spurious λ ≈ 1/3 ("κ" ≈ 110). It was discarded. The per-component δ above fixes this; the script comment records it.
+ 
+@@ -59,10 +59,10 @@ Here k is the degree. Ranges collapse at 7 decimals except at ρ=2. κ > 0 at ev
+ 
+ ### 2.4 K3 and tie nonadditivity
+ - K3: 115 components from 34 seeds. 110 are all-tied (by ρ: 0.5:15, 0.75:26, 1.0:25, 1.5:26, 2.0:18).
+-  - Define v_c = +1 on the edge opposite node c and −1 on the two edges at c. +v_c lowers row c only, so c stops controlling and the other two rows are preserved. The response is linear, with multiplier λ_2.
++  - Define v_c = +1 on the edge opposite node c and −1 on the two edges at c. +v_c lowers row c only, so c stops controlling and the other two rows are preserved. ~~The response is linear, with multiplier λ_2.~~ **[Correction 2026-10-25, response-3 #3: the response along the ray +v_c is D(+v_c) = λ_2 v_c (one-sided; derived in response_3 §2.4); the K3 has zero lineality and no eigenmode]**
+   - 110/110 have such a direction. At ρ ≤ 1.5 it works for all 3 nodes (92 components). At ρ = 2 it works for 1 node (18 components); the other nodes miss the 1e-6 threshold by ~1e-5 relative because the state is not yet converged. Across all nodes: λ vs closed form ≤ 1.8e-5 relative, residual ≤ 2.5e-5.
+   - −v_c is never slow (0/110; its λ is off by ≥ 0.67 relative).
+-  - So the all-tied K3 is not "spectrally silent". It has a one-sided slow direction at rate r_{B,2}, and the round-2 "unexplained" twin rate 0.126255 is exactly this rate.
++  - So the all-tied K3 is not "spectrally silent". ~~It has a one-sided slow direction at rate r_{B,2},~~ **[Correction 2026-10-25, response-3 #3: it has zero lineality but nontrivial one-sided controller-selection rays +v_c with the degree-two slow multiplier λ_2 (rate r_{B,2})]** and the round-2 "unexplained" twin rate 0.126255 is exactly this rate.
+ - Two-sided fiber in strict K3s: seed 4619122171158768524 (ρ=1, J={2,7}, min untied gap 4.66e-7, resolved): κ_fiber 0.0691196 vs closed form 0.0691217. Also 4 unresolved near-ties at ρ=2 (gaps 1.3–3.6e-9).
+ - Nonadditivity at ties (resolved, all-tied components). D(v) is the one-sided directional difference quotient of one gate step, and h₁, h₂ are unit perturbations of two adjacent edges. Nonadditivity = ‖D(h₁+h₂) − D(h₁) − D(h₂)‖/‖D(h₁)+D(h₂)‖ and odd defect = ‖D(h₁) + D(−h₁)‖/‖D(h₁)‖. Both are constant across components of a type:
+ 
+@@ -73,12 +73,12 @@ Here k is the degree. Ranges collapse at 7 decimals except at ρ=2. κ > 0 at ev
+ | K5 | 21 | 0.2041 | 0.6325 |
+ | K6 | 164 | 0.1581 | 0.5774 |
+ 
+-The values agree with 1/√(2k(k−1)) and √(2/(k+1)) to ~1e-5. That pattern is observed only, not derived. A linear "Jacobian" would have zero defect, so the map is genuinely non-linear at ties.
++The values agree with 1/√(2k(k−1)) and √(2/(k+1)) to ~1e-5. ~~That pattern is observed only, not derived.~~ **[Correction 2026-10-25, response-3 #3: now derived for all-tied K_n with equal edge weights (response_3 §2.3); synthetic K3–K8 to 4.4e-10; fails for unequal edges]** A linear "Jacobian" would have zero defect, so the map is genuinely non-linear at ties.
+ 
+ Cohort caveat: 40 fixed seeds × 5 T_w from one S01 run. The same seed contributes the same component pattern at several T_w, so the counts are not independent replications.
+ 
+ ### 2.5 Evolution checks of the repo's augmented-spectrum procedure (point 9) [RAN]
+-Run with the repo's `aief_1_4_augmented_spectrum` functions at their defaults (run 5a9f093a2fe0, seed 4619122171158768524, perturbation 1e-8, 32000 future steps).
++**[Correction 2026-10-25, response-3 #8: the 18-coordinate result is quarantined; corrected full-state proposal: `evidence/proposals/aief_1_4_full_state_spectrum.py` (verdict NO); citations: `evidence/proposals/augmented_spectrum_citations.md`]** Run with the repo's `aief_1_4_augmented_spectrum` functions at their defaults (run 5a9f093a2fe0, seed 4619122171158768524, perturbation 1e-8, 32000 future steps).
+ - `restore_state` does not restore theta. The drift is 0.0156 at the first column and grows to 0.272.
+ - Column order matters. Forward vs reversed: max |ΔJ| 9896, against a max entry of 10491.
+ - Repo procedure vs a corrected one (full deep copy per column): max difference 10491.
+@@ -90,8 +90,8 @@ Run with the repo's `aief_1_4_augmented_spectrum` functions at their defaults (r
+ - Conclusion: the repo's augmented-spectrum numbers depend on column order and leak state between columns. Don't use them as a spectrum. [RAN; interpretation INFERRED]
+ 
+ ## 3. Wording replacements (authoritative)
+-- **Gate:** "As implemented (ε=1e-12), the gate is not a smooth strictly convex Bregman projection or a positive-definite-metric projection onto C: exact witness x∉C, A_ε(x)∈int C (margin 6.67e-13), A_ε(x)≠x. The 1e-12 scale is numerically immaterial. At ε=0 it differs from the Euclidean and KL projections at the sampled points; whether it is a projection under some other divergence is open. Accurate name: multiplicative min-endpoint node-capacity scaling."
+-- **κ:** "On complete, saturated, phase-locked components, the multiplier on the controller cycle kernel equals λ_k = (1−γdt)c/(c+dt(kη−γc)+ε), so κ_k = −log λ_k/dt − 1/T_w. This was checked on 374 well-resolved components across five T_w (κ to 2.1e-6); 40 fixed seeds; the sign change is untested. All-tied K3s have a one-sided slow direction at rate r_{B,2}."
++- **Gate:** "As implemented (ε=1e-12), the gate is not a smooth strictly convex Bregman projection or a positive-definite-metric projection onto C: exact witness x∉C, A_ε(x)∈int C (margin 6.67e-13), A_ε(x)≠x. The 1e-12 scale is numerically immaterial. At ε=0 it differs from the Euclidean and KL projections at the sampled points; whether it is a projection under some other divergence is open. **[Correction 2026-10-25, response-3 #5: for generators whose differentiable domain contains both x and A_ε(x)]** Accurate name: multiplicative min-endpoint node-capacity scaling."
++- **κ:** **[Correction 2026-10-25, response-3 #2: replaced by response_3 §3 (exact statement λ=(1−γdt)s_J; closed form conditional; 374 = 264 + 110)]** "On complete, saturated, phase-locked components, the multiplier on the controller cycle kernel equals λ_k = (1−γdt)c/(c+dt(kη−γc)+ε), so κ_k = −log λ_k/dt − 1/T_w. This was checked on 374 well-resolved components across five T_w (κ to 2.1e-6); 40 fixed seeds; the sign change is untested. All-tied K3s have a one-sided slow direction at rate r_{B,2}." **[Correction 2026-10-25, response-3 #3: read: zero lineality but nontrivial one-sided controller-selection rays with the degree-two slow multiplier]**
+ - **Memory:** "Phase/history/EMA suffice for finite topology reconstruction with B reset. B is predictive and acts as a conditional continuous-weight scaffold. No unique retained register has been identified. B_split's AUC of 1.0 is expected because the post-split topology is frozen (0/29040 edges change status); it is predictive, not causal."
+ - **Delay:** "In sampled ensembles the delayed condition gave more distinct four-seed final topologies." (Sample diversity, not a basin count.)
+ - **Design label:** "controlled exploratory analysis with fixed recorded design" (no preregistration).
+@@ -103,7 +103,7 @@ Revised strongest defensible claim (replaces response §4 and salvage's revised
+ > - **(i)** The closed-form frequency-proximity rule R_pred(Δω) > μ/(η+μ) is an informative but imperfect predictor of the persistent weight topology. It is exact for the repo's ω without delay; over random ω, precision is 0.59–0.98 and recall 0.18–0.57. Strong edges per node are capped at ⌊c/B_c⌋.
+ > - **(ii)** In sampled ensembles the delayed condition gave more distinct four-seed final topologies.
+ > - **(iii)** Phase/history/EMA suffice to reconstruct the finite topology with B reset; B is predictive and acts as a conditional continuous-weight scaffold; no unique retained register has been identified.
+-> - **(iv)** On complete, saturated, phase-locked components of degree k, the cycle-kernel multiplier equals λ_k = (1−γdt)c/(c+dt(kη−γc)+ε) (the repo's Prop 8.3), so κ_k = −log λ_k/dt − 1/T_w. This was checked to 2.1e-6 on 374 resolved components across five T_w (40 fixed seeds; not independent replications).
++> - **(iv)** On complete, saturated, phase-locked components of degree k, the cycle-kernel multiplier equals λ_k = (1−γdt)c/(c+dt(kη−γc)+ε) (the repo's Prop 8.3), so κ_k = −log λ_k/dt − 1/T_w. This was checked to 2.1e-6 on 374 resolved components across five T_w (40 fixed seeds; not independent replications). **[Correction 2026-10-25, response-3 #1: superseded by the reworded (iv) in response_3 §3: exact statement λ=(1−γdt)s_J; closed form under R=1/row sum c; 264 two-sided (κ to 2.1e-6) + 110 all-tied K3 rays (κ to 1.7e-5)]**
+ >
+ > All of this is conditional on N=12 and the repo's parameters. The κ sign change at small T_w is a prediction, not a result.
+ 
+@@ -115,12 +115,12 @@ Revised strongest defensible claim (replaces response §4 and salvage's revised
+ ## 5. Open repo blockers (not in scope of this round; listed only)
+ - No root README or LICENSE.
+ - No pinned environment.
+-- Editor lock file committed.
++- Editor lock file committed. **[Correction 2026-10-25, response-3 #6: resolved: no longer tracked, cleanup commits `e8bcb0b`…`dc0250a`]**
+ - PII/copyright material in the repo (see audit H3/H4; not reproduced here).
+-- The Lean build fails on the missing import `ControllerFiberProjector`.
++- The Lean build fails on the missing import `ControllerFiberProjector`. **[Correction 2026-10-25, response-3 #6: resolved in `0b5b108`; GitHub Actions run 40153641197 passed at `dc0250a`]**
+ - Scratch trees committed.
+ - Repository visibility decision.
+-- No status checks on the latest commit.
++- No status checks on the latest commit. **[Correction 2026-10-25, response-3 #6: resolved: root workflow `.github/workflows/lean.yml` (`1f9afc9`), run 40153641197 success]**
+ 
+ ## 6. Limits
+ - N=12 only. 40 fixed S01 seeds for κ.
+@@ -148,7 +148,7 @@ These numbers or statements in the published reports do **not** trace to a scrip
+ 4. **The collaborator conversation (3116 lines) and the classifications in AIEFS_audit.md §9.** The input was supplied by the user as an attachment and is not published, since it contains personal data. The classifications are [READ]/[INFERRED] against repo paths that are cited.
+ 5. **Per-manifest topology splits in AIEFS_audit.md §10.** The split "baseline equal in 24/50 and 26/50" traces only as the total, 50/100 (`results/archived13_closedform.json`). The subset split 48/50 and 47/50 is in `logs/freq_predictor.log`.
+ 6. **The web literature search** (response §12; manifest finding "SEARCHED"). It has no script, and the search results were not archived.
+-7. **The Lean build** (`logs/lean_build_*.log`). It ran in round 2 and was not rerun in round 3.
++7. **The Lean build** (`logs/lean_build_*.log`). It ran in round 2 and was not rerun in round 3. **[Correction 2026-10-25, response-3 #9: closed: CI run 40153641197 and the round-4 local run, `evidence/logs/lean_r4/`]**
+ 8. **The round-2 push itself** (15 commits, 880e07e..c9907a6). It was made through the GitHub connector, not a shell script, so no command is in `adhoc_commands.md`. What landed was verified afterwards by blob hash (58/58 IDENTICAL, above).
+ 9. **Retracted first-pass values** are kept as ~~struck~~ text, for example "7 distinct outcomes" and "1/200 replays". They are retracted, and no published log is cited for them. The corrected values that replace them do trace (e.g. 16 distinct, `results/archived13_closedform.json`).
+ 10. **Point 10 of the round-3 brief.** Its original text could not be recovered, so it is listed as closed (§1) and not re-examined.
+diff --git a/AI Agent Audits/AIEFS_salvage.md b/AI Agent Audits/AIEFS_salvage.md
+index 4480403..b7f658f 100644
+--- a/AI Agent Audits/AIEFS_salvage.md	
++++ b/AI Agent Audits/AIEFS_salvage.md	
+@@ -99,7 +99,7 @@ None changes the qualitative phenomenology already in the literature (frequency
+ | 3c | shuffle ablation | **Valid but trivial** | Shuffled mean R = 0.371 < R* = 0.4286, so D_B = 0 is forced |
+ | 4 | Gate = projection / Bregman / entropy geometry | **Incoherent / false as stated** | ~~Not idempotent onto the boundary: interior-output witness;~~ **[Correction 2026-10-23, response #5: the gate is idempotent (20000/20000 bitwise) and the witness is only ε-level (6.7e-13); at ε=0 the Euclidean projection differs by 0.037–0.046]** **[Correction 2026-10-24, response-2 #1: this is an exact no-go, not an ε artifact: x∉C, A_ε(x)∈int C (margin 6.67e-13 in exact arithmetic), A_ε(x)≠x, so the map as implemented is not a smooth strictly convex Bregman or positive-definite-metric projection onto C. The 1e-12 scale is a separate numerical statement. The ε=0 comparisons only rule out the Euclidean and KL projections at the sampled points]** KL projection differs by 0.022–0.030 per edge [RAN, first audit]. It is multiplicative normalisation |
+ | 5a | 1.4 "memory stored in B / split-state memory" | **Valid but modest; ~~the authors' own data says the memory is not in B~~** **[Correction 2026-10-23, response #6: memory is carried redundantly: erasing B alone or EMA alone barely matters, erasing both resets 32/40; B at split predicts the future set with AUC 1.0]** **[Correction 2026-10-24, response-2 #4: Phase/history/EMA suffice for finite topology reconstruction with B reset. B is predictive and acts as a conditional continuous-weight scaffold. No unique retained register has been identified. B_split's AUC 1.0 is expected because 0/29040 edges change threshold status after the split; it is predictive, not causal]** | reset_B reproduces continue exactly (Jaccard 1.000); resets pull towards the ω-default set |
+-| 5b | Operator/cocycle/controller-fiber theory | **Valid linear algebra, oversold; non-generic** | The (7,2,7) K3 appears in 1/40 seeds (repo's own k3_prevalence_report) **[Correction 2026-10-24, response-2 #2: this concerns the two-sided strict K3; all-tied K3s (110 components, 34 seeds) carry a one-sided slow direction at r_{B,2}]** |
++| 5b | Operator/cocycle/controller-fiber theory | **Valid linear algebra, oversold; non-generic** | The (7,2,7) K3 appears in 1/40 seeds (repo's own k3_prevalence_report) **[Correction 2026-10-24, response-2 #2: this concerns the two-sided strict K3; all-tied K3s (110 components, 34 seeds) carry a one-sided slow direction at r_{B,2}]** **[Correction 2026-10-25, response-3 #3: zero lineality; one-sided controller-selection rays with the degree-two slow multiplier, not a mode]** |
+ | 5c | κ ≈ 0.069 "spectral gap" | **Valid; conditional closed form** | κ = 2η/c − 1/T_w = 0.069182 vs observed 0.069122 (0.09%); discrete exact 0.0691217. **[Correction 2026-10-23, response #9: verified across 5 T_w for k=3–5 components]** |
+ | 6 | Lean theorems | **Valid but trivial; broken as committed** | Build fails on a missing import; after removing it, 1235 jobs OK, no sorry. Content is the kernel of a 2×3 matrix |
+ 
+@@ -219,7 +219,7 @@ Every part is backed by runs above; the "generic ω" part rests on 10 + 40 draws
+ > - **(i)** The closed-form frequency-proximity rule R_pred(Δω) > μ/(η+μ) is an informative but imperfect predictor of the persistent weight topology. It is exact for the repo's ω without delay; over random ω, precision is 0.59–0.98 and recall 0.18–0.57. Strong edges per node are capped at ⌊c/B_c⌋.
+ > - ~~**(ii)** For generic ω the selected topology is multistable, and delay increases the number of distinct outcomes.~~ **[Correction 2026-10-24, response-2 #5: in sampled ensembles the delayed condition gave more distinct four-seed final topologies (a sample-diversity statistic, not a basin count)]**
+ > - ~~**(iii)** Path dependence is carried redundantly by the weights and the phase/EMA state.~~ **[Correction 2026-10-24, response-2 #4: Phase/history/EMA suffice for finite topology reconstruction with B reset. B is predictive and acts as a conditional continuous-weight scaffold. No unique retained register has been identified. B_split's AUC 1.0 is expected because 0/29040 edges change threshold status after the split; it is predictive, not causal]**
+-> - **(iv)** On complete, saturated, phase-locked components of degree k, the slow weight-relaxation rate equals the closed form −log λ_{k,ε}/dt ≈ kη/c (the repo's Prop 8.3). The relative-retention rate is therefore κ = −log|λ_B/α|/dt ≈ kη/c − 1/T_w, verified to ≤5e-6 across five window lengths and 292 components. **[Correction 2026-10-24, response-2 #2: rechecked with the cycle-kernel multiplier: 374 resolved components, κ to 2.1e-6; 40 fixed seeds]**
++> - **(iv)** On complete, saturated, phase-locked components of degree k, the slow weight-relaxation rate equals the closed form −log λ_{k,ε}/dt ≈ kη/c (the repo's Prop 8.3). The relative-retention rate is therefore κ = −log|λ_B/α|/dt ≈ kη/c − 1/T_w, verified to ≤5e-6 across five window lengths and 292 components. **[Correction 2026-10-24, response-2 #2: rechecked with the cycle-kernel multiplier: 374 resolved components, κ to 2.1e-6; 40 fixed seeds]** **[Correction 2026-10-25, response-3 #1: superseded by response_3 §3: 374 = 264 two-sided fibers (κ to 2.1e-6) + 110 all-tied K3 one-sided rays (κ to 1.7e-5); exact statement λ=(1−γdt)s_J, closed form conditional on R=1 and row sum c]**
+ >
+ > All of this is conditional on N=12 and the repo's parameters. The κ sign change at small T_w is a prediction, not a result.
+ 
+diff --git a/AI Agent Audits/README.md b/AI Agent Audits/README.md
+index d9853af..dea9780 100644
+--- a/AI Agent Audits/README.md	
++++ b/AI Agent Audits/README.md	
+@@ -8,18 +8,19 @@ This folder holds independent, read-only audits of this repository, along with t
+ |---|---|---|---|
+ | `AIEFS_audit.md` | **Partially superseded.** Corrected in place: struck text plus `[Correction 2026-10-23, response #N]` and `[Correction 2026-10-24, response-2 #N]` notes | Original 2026-10-23 (commit `55be461`); corrected 2026-10-23 and 2026-10-24 | First audit: reproducibility, maths checks, Lean status, claims-vs-evidence |
+ | `AIEFS_salvage.md` | **Revised.** Corrected in place, same convention; the original "strongest claim" is kept and marked SUPERSEDED | Original 2026-10-23 (commit `f7246a3`); revised 2026-10-23 and 2026-10-24 | What survives: closed-form predictions, ablation re-reading, κ analysis |
+-| `AIEFS_audit_response_2.md` | **Current.** This is the authoritative ledger | 2026-10-24 | Round-3 ruling on two reviews of the published tree (commit `c9907a6`): gate no-go, cycle-kernel κ and K3 census, matched-phase provenance, memory and delay wording, held-out target label, design labels, full-key reproduction, engineering. Each point gets concede / partly concede / dispute, with exact quotes, the derivation, the evidence, and the fix |
++| `AIEFS_audit_response_3.md` | **Current.** This is the authoritative ledger | 2026-10-25 | Round-4 ruling: 374-census split, exact vs conditional rate law and finite-ε fixed point, K3 zero lineality and one-sided rays, derived tie patterns, P_future check, Bregman domain, publication commits, PII scope, quarantine of the 18-coordinate spectrum, Lean (Part B) |
++| `AIEFS_audit_response_2.md` | **Superseded where marked** by `AIEFS_audit_response_3.md` (`[Correction 2026-10-25, response-3 #N]` notes); was the round-3 ledger | 2026-10-24; corrected 2026-10-25 | Round-3 ruling on two reviews of the published tree (commit `c9907a6`): gate no-go, cycle-kernel κ and K3 census, matched-phase provenance, memory and delay wording, held-out target label, design labels, full-key reproduction, engineering. Each point gets concede / partly concede / dispute, with exact quotes, the derivation, the evidence, and the fix |
+ | `AIEFS_audit_response.md` | **Partly superseded** by `AIEFS_audit_response_2.md`; corrected in place with `[Correction 2026-10-24, response-2 #N]` notes | 2026-10-23; corrected 2026-10-24 | Point-by-point ruling on a collaborator's 14-point critique of the two reports. Each point gets concede / partly concede / hold, with exact quotes from our text and the evidence. Also covers the critique's own overreach, revised conclusions, and a revised strongest claim |
+ | `evidence/` | Current | 2026-10-23; updated 2026-10-24 | Scripts, logs, results, manifest, environment, and reproduction steps |
+ 
+-Where the documents disagree, `AIEFS_audit_response_2.md` takes precedence, then `AIEFS_audit_response.md`.
++Where the documents disagree, `AIEFS_audit_response_3.md` takes precedence, then `AIEFS_audit_response_2.md`, then `AIEFS_audit_response.md`.
+ 
+ ## What was audited
+ 
+ - Repository: `github.com/jacobbrainard84-knightninja/AIEFS`
+ - Code and data audited at commit `e47bad150792425eb8e962ff636c69289eedd8b1`. The later commits `55be461` and `f7246a3` add only the two original report files, so the audited inputs match the current model code and data.
+ - Input file hashes: `evidence/audit_manifest.json`, under `inputs_sha256`.
+-- The round-2 publication is commits `880e07e..c9907a6`. The round-3 changes in this folder (corrections dated 2026-10-24, `AIEFS_audit_response_2.md` and the new evidence) were prepared locally and are not part of that publication.
++- The round-2 publication is commits `880e07e..c9907a6`. ~~The round-3 changes in this folder (corrections dated 2026-10-24, `AIEFS_audit_response_2.md` and the new evidence) were prepared locally and are not part of that publication.~~ **[Correction 2026-10-25, response-3 #6: stale: round 3 was published at `60e6029` (22 commits, `7d752fd`…`60e6029`); then `0b5b108` (Lean projector) and `0f5ef7a`…`dc0250a` (tooling, lean_recovery, cleanup; 56 commits). The round-4 changes (corrections dated 2026-10-25, `AIEFS_audit_response_3.md`) are local until the owner approves publication]**
+ 
+ ## Evidence layout
+ 
+@@ -44,9 +45,9 @@ evidence/
+ Every script used to build, check or package this folder is included, so other agents can audit the process as well as the results.
+ 
+ - `tooling/make_manifest.py` writes `audit_manifest.json` (input hashes, findings, file hashes).
+-- `tooling/pii_scan.py` scans this folder for e-mail addresses, local paths, token and device-code shapes, binaries, CR line endings and size limits. `--private FILE` adds literals kept in a local, unpublished file; matches are printed as `<private literal #k>`, never as the value. `tooling/logs/pii_scan_selftest.log` shows it catching 5/5 planted issues.
++- `tooling/pii_scan.py` scans this folder for e-mail addresses, local paths, token and device-code shapes, binaries, CR line endings and size limits. `--private FILE` adds literals kept in a local, unpublished file; matches are printed as `<private literal #k>`, never as the value. **Scope: this folder only.** A CLEAN result says nothing about the rest of the repository; repo-wide privacy/copyright is an open owner decision (`AIEFS_audit_response_3.md` #7). `tooling/logs/pii_scan_selftest.log` shows it catching 5/5 planted issues.
+ - `tooling/verify_github_blobs.py` compares the git blob sha1 of local files with a GitHub tree listing. It was used to confirm that the round-2 publication at `c9907a6` is byte-identical to the staged tree (`tooling/logs/verify_github_blobs_c9907a6.log`).
+-- `tooling/round1/`, `tooling/round2/`, `tooling/round3/` hold the scratch scripts (and their logs, where they were kept) from each round. `tooling/adhoc_commands.md` holds the interactive shell commands: staging copies, zip builds, the CR→LF fix, scans, the blob check, and the v2-vs-v3 results diff.
++- `tooling/round1/`, `tooling/round2/`, `tooling/round3/` hold the scratch scripts (and their logs, where they were kept) from each round. `tooling/round4/corrections_r4.py` applied the dated 2026-10-25 corrections. `tooling/adhoc_commands.md` holds the interactive shell commands: staging copies, zip builds, the CR→LF fix, scans, the blob check, and the v2-vs-v3 results diff.
+ - These copies are **redacted**: local paths are replaced by `<placeholders>`, the owner's e-mail by `<owner-email-redacted>`, and user/host names by `<redacted>`. They are there for audit and are not runnable verbatim. The runnable, path-free versions of the analyses are in `scripts/`.
+ - Numbers that cannot be traced to a script, log and result are listed in `AIEFS_audit_response_2.md`, under "Provenance gaps".
+ 
+diff --git a/AI Agent Audits/evidence/audit_manifest.json b/AI Agent Audits/evidence/audit_manifest.json
+index 6346bb2..d24e4ea 100644
+--- a/AI Agent Audits/evidence/audit_manifest.json	
++++ b/AI Agent Audits/evidence/audit_manifest.json	
+@@ -1,14 +1,17 @@
+ {
+- "created": "2026-10-24",
++ "created": "2026-10-25",
+  "audited_repo": "github.com/jacobbrainard84-knightninja/AIEFS",
+  "audited_commit": "e47bad150792425eb8e962ff636c69289eedd8b1",
+  "report_commits": {
+   "55be461f3da5b71c86fced8023a276f5868f4c23": "adds AI Agent Audits/AIEFS_audit.md (original)",
+   "f7246a364060237001fa35115f1ea691e620d048": "adds AI Agent Audits/AIEFS_salvage.md (original)",
+-  "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6); this round-3 tree is NOT pushed"
++  "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6)",
++  "60e60297e6dd34887348e6f858c32b3829d72f69": "head of the round-3 publication (22 commits 7d752fd..60e6029)",
++  "0b5b1082561b7717a0ea465d76bb9ebefa26b770": "Lean: ControllerFiberProjector.lean",
++  "dc0250a0586c8316b594ed5e424fffb9c84e93e8": "head after tooling, lean_recovery and cleanup (56 commits 0f5ef7a..dc0250a); this round-4 tree is NOT pushed"
+  },
+  "note_inputs": "Inputs hashed from the read-only clone at e47bad1; later commits add only files under 'AI Agent Audits/'.",
+- "point_labels": "'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md",
++ "point_labels": "'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md; 'R3 n' = point n of AIEFS_audit_response_3.md",
+  "run_from": "repository root",
+  "environment": "evidence/ENVIRONMENT.md",
+  "inputs_sha256": {
+@@ -30,7 +33,7 @@
+   "AIEF_1_4_component_controller_audit.py": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e",
+   "AIEF_1_4_augmented_tangent_cocycle_analysis.py": "0192656f21b5c4b3d09adebb15d0554ead0fca755860bb85f9fa03f75452e964",
+   "aief_1_4_augmented_spectrum/augmented_spectrum_report.txt": "e84941ea4c4630abcad49bcb323bfee567c34e1768b2f9e32ace3c6765c6b06d",
+-  "lean/AIEFProofs/AIEFProofs.lean": "5b696824caba90ecc29f506bc1039b5d59e9bd53fd36da49e7526ca0ba6d0a16",
++  "lean/AIEFProofs/AIEFProofs.lean": "a2937f75f0c84b850a8b764f719677b61bde3dbed094783d7406783cd8e52831",
+   "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean": "37c26f569ab24351c6482c1b8259adbee84d843506d54002699da54417eaf241",
+   "lean/AIEFProofs/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+   "lean/AIEFProofs/lake-manifest.json": "baa1bc12c21222b19b8436aaf1b7800b54b484b1cfe8065b6911ff3463271e08",
+@@ -199,7 +202,7 @@
+    ],
+    "type": "deterministic numerical check",
+    "basis": "RAN",
+-   "summary": "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps): 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"
++   "summary": "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps) [round 4: split as 264 two-sided + 110 one-sided K3, see rate_law_census_r4]: 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"
+   },
+   {
+    "point": [
+@@ -226,7 +229,47 @@
+    ],
+    "type": "deterministic numerical check",
+    "basis": "RAN",
+-   "summary": "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction"
++   "summary": "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction; round 4: nonbinary_P_future_count 0/29040 and P_future label vs split status differs 0/29040 (P_future averages B > B_C over every future step)"
++  },
++  {
++   "point": [
++    "R3 1",
++    "R3 2",
++    "R3 3"
++   ],
++   "command": "python \"AI Agent Audits/evidence/scripts/rate_law_census_r4.py\"",
++   "outputs": [
++    "results/rate_law_census_r4.json",
++    "logs/rate_law_census_r4.log"
++   ],
++   "type": "deterministic numerical check",
++   "basis": "RAN",
++   "summary": "374 resolved = 264 two-sided fiber (lambda to 2.07e-8 rel, kappa to 2.07e-6) + 110 all-tied K3 one-sided rays (294 slow rays, lambda to 1.7e-7); 32 poorly resolved; finite-eps fixed point changes lambda by 1.6e-12 rel; derived tie patterns 1/sqrt(2k(k-1)), sqrt(2/(k+1)) match synthetic equal-weight K3-K8 to 4.4e-10, fail for unequal-edge K4; -v_c ray lambda/lambda_2 in [0.33333, 0.33337]"
++  },
++  {
++   "point": [
++    "R3 8"
++   ],
++   "command": "python \"AI Agent Audits/evidence/proposals/aief_1_4_full_state_spectrum.py\"",
++   "outputs": [
++    "proposals/results/full_state_spectrum.json",
++    "proposals/results/full_state_spectrum.log"
++   ],
++   "type": "deterministic numerical check",
++   "basis": "RAN (proposal; repo original not edited)",
++   "summary": "closed 966-dim state (history 612 + B 66 + Re/Im C 288), one replay, central difference h=1e-7: EMA pole is NOT the unique slow pole (one step: 10 rates in the gap, 0.189328 x2, 0.252355 x5, 0.650-0.669 x3; T=500: 13); J+/J- differ by 0.49937 (mixed branch); citations of the 18-coordinate result: proposals/augmented_spectrum_citations.md"
++  },
++  {
++   "point": [
++    "R3 L1-L6"
++   ],
++   "command": "cd lean/AIEFProofs && STRICT_ORPHANS=1 LOG_DIR=<dir> bash check_lean.sh",
++   "outputs": [
++    "logs/lean_r4/"
++   ],
++   "type": "deterministic numerical check",
++   "basis": "RAN",
++   "summary": "round 4 local clone of dc0250a + changes: 7/7 steps PASS, 8713 jobs, 12 warnings (all Smoke.lean header linter), 0 markers, 115 declarations, 0 disallowed axioms; source SHA256SUMS (8 files) enforced; negative tests fail at step 2"
+   },
+   {
+    "point": [
+@@ -291,7 +334,7 @@
+    ],
+    "type": "reproduction check",
+    "basis": "RAN",
+-   "summary": "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok"
++   "summary": "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok; round 4: 19 steps, UPDATE=1 run (logs/run_all_update_r4.log) differed only in frozen_topology_check.json (DIFFERS) and rate_law_census_r4.json (NEW), then a verify run reported ALL OK"
+   },
+   {
+    "point": [
+@@ -316,7 +359,7 @@
+    ],
+    "type": "deterministic numerical check",
+    "basis": "RAN",
+-   "summary": "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues"
++   "summary": "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues. SCOPE: 'AI Agent Audits/' only; says nothing about the rest of the repository (repo-wide privacy/copyright unresolved, owner decision)"
+   },
+   {
+    "point": [
+@@ -342,6 +385,16 @@
+    "basis": "RAN",
+    "summary": "this manifest"
+   },
++  {
++   "point": [
++    "R3 1-9"
++   ],
++   "command": "python \"AI Agent Audits/evidence/tooling/round4/corrections_r4.py\"",
++   "outputs": [],
++   "type": "n/a",
++   "basis": "RAN",
++   "summary": "applies the dated [Correction 2026-10-25, response-3 #N] notes to response_2, README, salvage and response (anchors must match exactly once; refuses to run twice)"
++  },
+   {
+    "point": [
+     "provenance"
+@@ -393,20 +446,24 @@
+    "sha256": "26da9ffe02f514a847235d77fb2753b01d00e064f93835c7b5724daef768e69b"
+   },
+   "AIEFS_audit_response.md": {
+-   "bytes": 26441,
+-   "sha256": "68986b0d3e2ac0e329a6c627bef835d48784623b6fb1d7101d23400c9e028d66"
++   "bytes": 26761,
++   "sha256": "08dbbe87d3bc5b78cf19a52f22d89a6cb57fc1bdc86723eeafa4ae297983eeb5"
+   },
+   "AIEFS_audit_response_2.md": {
+-   "bytes": 29259,
+-   "sha256": "1e2b550eb6747f25025d21f9cc23152b60dd0bad1d5fe4801d5d1e7cbb78cddd"
++   "bytes": 32267,
++   "sha256": "4a3fd1e046da6c72bc6d3d413466e6bf90a6f8e1060c165eaddbb39055e9b9a2"
++  },
++  "AIEFS_audit_response_3.md": {
++   "bytes": 23842,
++   "sha256": "2e3e5c67e2d8abc54da75bf83293216ffedde350a6a56cfd126d1e5920716a23"
+   },
+   "AIEFS_salvage.md": {
+-   "bytes": 29083,
+-   "sha256": "a2581d88b715afa94e85b944222bb63948933e1e85003ae2a680882e308716fb"
++   "bytes": 29471,
++   "sha256": "8eb3fee79710f77c2b6b346b30e6329ba395085cff3eac87f6f49b20bf00feca"
+   },
+   "README.md": {
+-   "bytes": 6688,
+-   "sha256": "dbb41739587e93f0c5f8e0191edb7cae1c4f37198e488402ad548f7b477a4c86"
++   "bytes": 7811,
++   "sha256": "d3d390f4d06b08978a403463e7227c3a9bd8ed3e4004e3946f3050e3d8300f9a"
+   },
+   "evidence/ENVIRONMENT.md": {
+    "bytes": 1748,
+@@ -449,8 +506,8 @@
+    "sha256": "eb032d4bdb2759a99a5855851100c702765192676b0d3f623bfdd92c2cc88d2c"
+   },
+   "evidence/logs/frozen_topology_check.log": {
+-   "bytes": 821,
+-   "sha256": "93b3817457cc674e564a60039bea707499f13ae895492df2c4af70c389fd7353"
++   "bytes": 1940,
++   "sha256": "92356a80a26aa08f3c2279d0bea21fe18db47e4720fa5b152c8e5fb76430d843"
+   },
+   "evidence/logs/gate_idempotence.log": {
+    "bytes": 1147,
+@@ -476,6 +533,58 @@
+    "bytes": 55,
+    "sha256": "61e12dbac67a8ee55921705c3449e14f57262b535727bb2ef3563642eb280a83"
+   },
++  "evidence/logs/lean_r4/1_toolchain.log": {
++   "bytes": 290,
++   "sha256": "ab6b247c56dba2b6b0e182e2ff11222281d2702e0e10a5e93876cd4d721738f1"
++  },
++  "evidence/logs/lean_r4/2_pins.log": {
++   "bytes": 1265,
++   "sha256": "96ac58e13d538a50b4b6b2dca3e54fa9f8c212fd64848dd40085b694d060859e"
++  },
++  "evidence/logs/lean_r4/3_imports.log": {
++   "bytes": 499,
++   "sha256": "8aab7ac8b037ab59c7cba7a32399e4f250c156a1a201c807cf39176c917ee551"
++  },
++  "evidence/logs/lean_r4/3_reachable_modules.txt": {
++   "bytes": 177,
++   "sha256": "2adbd5136ce13fda40259454a71295ba43f88d60b43b6b2a25130147b275bf24"
++  },
++  "evidence/logs/lean_r4/4_cache.log": {
++   "bytes": 180,
++   "sha256": "a47bd1f0242513ea0c8ca3a1c05a8e4a0e2522457e1273e787ac1c644d69239d"
++  },
++  "evidence/logs/lean_r4/5_build.log": {
++   "bytes": 2914,
++   "sha256": "9ea8584b86b83193fadb994031ca3928cace44eb898d51f0fe6a44c47ef28d29"
++  },
++  "evidence/logs/lean_r4/5_build_diagnostics.txt": {
++   "bytes": 960,
++   "sha256": "5318fb1250b162a6e3c8512316cf6a0d271edd762e60442549968d2e2cb1ded4"
++  },
++  "evidence/logs/lean_r4/6_markers.log": {
++   "bytes": 24,
++   "sha256": "8f3687bd24bb07a531aec455b2db53c0753bc913c1a491871ed60042de67b7be"
++  },
++  "evidence/logs/lean_r4/7_axioms.log": {
++   "bytes": 20442,
++   "sha256": "726459dd0560c0e79b9be3bbfa1df582e1c40e84175b01925e3dd99361de572b"
++  },
++  "evidence/logs/lean_r4/7_axioms_check.lean": {
++   "bytes": 5190,
++   "sha256": "130af6cd28c645036c6e5d3fbe6a7271e0895175e1237c49cdfffb8017a8f84f"
++  },
++  "evidence/logs/lean_r4/7_axioms_summary.txt": {
++   "bytes": 5995,
++   "sha256": "47fd41c284dc932e69e75532788dff960978c55406967b086e1a6a00b612544a"
++  },
++  "evidence/logs/lean_r4/source_sha256.txt": {
++   "bytes": 920,
++   "sha256": "ee021ae30d50b21775dca086815f70621e48ce8da5a64dedbd05818c2ec67e26"
++  },
++  "evidence/logs/lean_r4/summary.txt": {
++   "bytes": 1269,
++   "sha256": "1ede5ad5f21b774c994514a014d66e72f8169e0bc0a78e16c37fa1105f8b9138"
++  },
+   "evidence/logs/lean_sorry_grep.log": {
+    "bytes": 39,
+    "sha256": "9f2023fba279baa8df577e8862b3b96240439a9a7bba191d522acf014e7ff1e6"
+@@ -496,18 +605,42 @@
+    "bytes": 699,
+    "sha256": "561692f2292dd998cc229405162535793973ddc8929791c7b88cc86233545b31"
+   },
++  "evidence/logs/rate_law_census_r4.log": {
++   "bytes": 7265,
++   "sha256": "64fb01d51c97bde14bf3c8f5794a84e41701aafe6c3e6c6145cbd93b9158dd2c"
++  },
+   "evidence/logs/repro13.log": {
+    "bytes": 1912,
+    "sha256": "fb87029fd0bb033fdabd581679525d978002f1777919075316b12073e8c098c1"
+   },
++  "evidence/logs/run_all_update_r4.log": {
++   "bytes": 905,
++   "sha256": "63886d2ffaca80ab98d9566d2093eef1436c629391eabadc28d3dd2b9b1cf8e8"
++  },
+   "evidence/logs/run_all_verify.log": {
+-   "bytes": 713,
+-   "sha256": "e84ff431c5fa8b0ffc387687a7313384c28646fccd80e168481c1f7c7dfe32bc"
++   "bytes": 799,
++   "sha256": "67cc2f6c2c5f392c1be3f015b7ace4b4e6bad174e9ba6ccd1496dba61dc1203d"
+   },
+   "evidence/logs/terminology_grep.log": {
+    "bytes": 527,
+    "sha256": "6a174f49c3161c328adfb9c2e60938267b67005e6789dff4be50900b084ad801"
+   },
++  "evidence/proposals/aief_1_4_full_state_spectrum.py": {
++   "bytes": 9912,
++   "sha256": "cb1edffe293b2be701091e97902ab05f2fbf1f488129fa6cdc548e2347d85a46"
++  },
++  "evidence/proposals/augmented_spectrum_citations.md": {
++   "bytes": 3887,
++   "sha256": "35b3fa8f63aa2297e62f40528170f6275067f305950598c80abdc5f49108fe0b"
++  },
++  "evidence/proposals/results/full_state_spectrum.json": {
++   "bytes": 64887,
++   "sha256": "e609ff4c235f7f8d1eca1fdb44dc3ffaed3a7967ec63aefccbd0b966021eb143"
++  },
++  "evidence/proposals/results/full_state_spectrum.log": {
++   "bytes": 19369,
++   "sha256": "290f041fa3930aefc12538f0a5172d4e98f884d1117cef14b7df77231064837e"
++  },
+   "evidence/results/ablation14_topology.json": {
+    "bytes": 1129,
+    "sha256": "6d82d1295a5083c8d6904f7f5706b7d87e8b624a61e809c6bd0adc7e7ca18110"
+@@ -537,8 +670,8 @@
+    "sha256": "6084bd9432ef5b008a60c438f14bf3283e3a87cd029cdf6415e5ebaced24e11e"
+   },
+   "evidence/results/frozen_topology_check.json": {
+-   "bytes": 969,
+-   "sha256": "4c20f7d06f0a91db7f857829b8b7113f1a973fc6f47d0839fe161c3d0e12f3a9"
++   "bytes": 2140,
++   "sha256": "bbcf8d3b5a64a5c0279510ab82467af474c36cd6e8a21073f7badf8da526ed75"
+   },
+   "evidence/results/gate_idempotence.json": {
+    "bytes": 1094,
+@@ -580,13 +713,17 @@
+    "bytes": 65636,
+    "sha256": "896c79769bd47686cf4254d913387e090c0cbf22442bae68d71d616b51268afb"
+   },
++  "evidence/results/rate_law_census_r4.json": {
++   "bytes": 7295,
++   "sha256": "4f0b9ba73d9aa1d69c19bd8ed7fd326dd16d37432eb3bbf22602aace0ec8def2"
++  },
+   "evidence/results/repro13.json": {
+    "bytes": 461297,
+    "sha256": "70ae79f1ec72632e4cd2c84ef221322a169baa29484a596db7d0c7befd0e71b4"
+   },
+   "evidence/run_all.sh": {
+-   "bytes": 3359,
+-   "sha256": "3cda5d15271c94c753090daf090290b09a351331d18d81d7526ee55c1e9356d7"
++   "bytes": 3500,
++   "sha256": "027dbeff8dc31f862f83728f7d214705dfbcac208afc071fa544b4ef9eadd4d1"
+   },
+   "evidence/scripts/_common.py": {
+    "bytes": 1628,
+@@ -625,8 +762,8 @@
+    "sha256": "803b87dfb963ab5e45e36088670fd5fd42e9c8adf7bdb0767bdfccee0195d665"
+   },
+   "evidence/scripts/frozen_topology_check.py": {
+-   "bytes": 1957,
+-   "sha256": "0e123f22054d7a1632d87bd3a8ff8d0c96a5c309c15f66405ad1b3e6a25f970c"
++   "bytes": 3771,
++   "sha256": "9893a016a6be992e50f0648831a486c9d9bbcbe58716c095c11d0ccffc11830c"
+   },
+   "evidence/scripts/gate_idempotence.py": {
+    "bytes": 3783,
+@@ -664,6 +801,10 @@
+    "bytes": 2918,
+    "sha256": "8c0544c14f25d3baa7c45cac6e56cd8ae7e2a6f5dcc272af732c7ab461268595"
+   },
++  "evidence/scripts/rate_law_census_r4.py": {
++   "bytes": 11348,
++   "sha256": "7ad6f3049d96657ecf7dfedce5f405dd840534855c344c6b9beaa0251c84c915"
++  },
+   "evidence/scripts/repro13.py": {
+    "bytes": 4550,
+    "sha256": "74dc8657aeece3ce021be72312dbfeb84362eff0dba8bd193117362303a587fb"
+@@ -685,8 +826,8 @@
+    "sha256": "7091306b17c5660dd6c4bc1edecc24164571f3810620d5ac0bf3aa002de7d358"
+   },
+   "evidence/tooling/make_manifest.py": {
+-   "bytes": 13436,
+-   "sha256": "16856435e4e5212543bcbcfe1a6ee92f71d64a798f29ff0011e94e35cb74ce31"
++   "bytes": 16159,
++   "sha256": "4299b6b7c1d7e8ae0ce595e37678622a5594068ccc6ad8a26e304583341e65a0"
+   },
+   "evidence/tooling/pii_scan.py": {
+    "bytes": 3799,
+@@ -764,6 +905,10 @@
+    "bytes": 592,
+    "sha256": "1c223e24f66cbcfd660f90356e21ac3b6deb36eb385027d390e8c7f1c6a4c083"
+   },
++  "evidence/tooling/round4/corrections_r4.py": {
++   "bytes": 10825,
++   "sha256": "6d8e821a3d28306466572d20b3b4d7f6e15d4f656c18dc16cb5ee339e687d230"
++  },
+   "evidence/tooling/verify_github_blobs.py": {
+    "bytes": 1769,
+    "sha256": "abb51d700f04827fd735082ba26481393144f49f97b68e21121481a779ea4b6c"
+@@ -771,6 +916,78 @@
+   "evidence/verify_manifest.py": {
+    "bytes": 2339,
+    "sha256": "ed6a504db717a45542d1b5de238cd8328ca5f88e3215478acda6ba00c12fbb68"
++  },
++  "lean_recovery/LEAN_STATUS.md": {
++   "bytes": 11281,
++   "sha256": "58a642644216d050ae3075511d99fb2bec240c14766941ea876af94223ec084f"
++  },
++  "lean_recovery/RESULTS.md": {
++   "bytes": 10117,
++   "sha256": "d175e082b14e2cbf4a254f22f2faef8d0e567075562189a8550f2bff3729ee64"
++  },
++  "lean_recovery/SHA256SUMS": {
++   "bytes": 1672,
++   "sha256": "972d9e615104d7bbd2e610b8489b3258a12a3e7fa9f1b5de3612bd6c1cf4017e"
++  },
++  "lean_recovery/fixed/ControllerFiberProjector.v191.fixed.lean": {
++   "bytes": 5750,
++   "sha256": "a020ecd979dff64412cac5efee89fcec5a06897b04b91942d568edd5d4445b98"
++  },
++  "lean_recovery/fixed/ControllerFiberProjector.v303.fixed.lean": {
++   "bytes": 9300,
++   "sha256": "52a2f2736987b700db0c8ad13ae59210f74be0b2304341fcc5777f2151e250e5"
++  },
++  "lean_recovery/logs/v191_fixed.log": {
++   "bytes": 18952,
++   "sha256": "6fd0894ac260f11edaa97808cafecf4c4a439737fa9db028eebb202a8a872e93"
++  },
++  "lean_recovery/logs/v191_original.log": {
++   "bytes": 13986,
++   "sha256": "c7040917c589b8f08e777de89be513ea9e042c09a23607a476e8238c65973b7b"
++  },
++  "lean_recovery/logs/v303_fixed.log": {
++   "bytes": 23438,
++   "sha256": "82236508dfdb1bb8cbe00bbb7ba0de4effc173ec823086725e00c459e619460f"
++  },
++  "lean_recovery/logs/v303_original.log": {
++   "bytes": 16392,
++   "sha256": "b689b54a02c806f84df02dc20ae44d84921325c6d2d847b948d3005979584718"
++  },
++  "lean_recovery/logs/verify_0b5b108_plus_0003.log": {
++   "bytes": 23704,
++   "sha256": "335761481699ed0e396fade1858c5965e65efd9880910185cab7bcd7a8c4a133"
++  },
++  "lean_recovery/logs/verify_main.log": {
++   "bytes": 26024,
++   "sha256": "c117e9bb309e74ecd761f003b0b9cb6e7ea9bf20db5943d20fd46cf48b4aa0f4"
++  },
++  "lean_recovery/originals/ControllerFiberProjector.v191.original.lean": {
++   "bytes": 5695,
++   "sha256": "898195afa6504bcb5a7c50f02b2e4646505c9005bcfd74ad21996a37d5aa019c"
++  },
++  "lean_recovery/originals/ControllerFiberProjector.v303.original.lean": {
++   "bytes": 9367,
++   "sha256": "ca9a7010203509046d78aa2cdf0781729f0f12dc5fe4fddf1acd3e9952a1fa95"
++  },
++  "lean_recovery/originals/v191_vs_v303.diff": {
++   "bytes": 5851,
++   "sha256": "f619a6279b37d5441297f1744a5fc18d4c39a6a77229c5ffc7168b1b1561d21e"
++  },
++  "lean_recovery/patches/v191-original-to-fixed.patch": {
++   "bytes": 2605,
++   "sha256": "9750042a0c6147913b539818bbbffd2b60ea45d96a1e3135fac33db9573b18cd"
++  },
++  "lean_recovery/patches/v303-original-to-fixed.patch": {
++   "bytes": 3375,
++   "sha256": "2e3dd0d14a89dfab28d16d37696df11c6d472ffa8bd5c844574e68824a7fd5a8"
++  },
++  "lean_recovery/scripts/check_statements.py": {
++   "bytes": 508,
++   "sha256": "393493ab14b0ad69f4b4fd609ab1672760a03f2bee2e3702d5db96e92e9ade0b"
++  },
++  "lean_recovery/scripts/mkfix.py": {
++   "bytes": 4322,
++   "sha256": "891b312cf264a5f77c6e3247386351a9f4156df5612fd77d1e59f90799eb1947"
+   }
+  },
+  "post_manifest_logs": [
+@@ -782,7 +999,7 @@
+   "Log header lines had the local interpreter path replaced by 'python' and absolute or relative-escape paths rewritten to 'AI Agent Audits/evidence/...'; Lean logs had the temporary build directory rewritten to '<tmpcopy>'. No other log content was altered.",
+   "No logs were subsampled or truncated: every file is under 1 MB.",
+   "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it.",
+-  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23 and 2026-10-24); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
++  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23, 2026-10-24 and 2026-10-25); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
+   "evidence/tooling/round*/ and adhoc_commands.md are redacted copies: local paths -> <placeholders>, the owner's e-mail -> <owner-email-redacted>, user/host-name literals -> <redacted>. The literal list is a local file that is not published.",
+   "PII in the repository's own PDFs is referenced by path only and not reproduced."
+  ]
+diff --git a/AI Agent Audits/evidence/results/frozen_topology_check.json b/AI Agent Audits/evidence/results/frozen_topology_check.json
+index 95260a3..9469ba1 100644
+--- a/AI Agent Audits/evidence/results/frozen_topology_check.json	
++++ b/AI Agent Audits/evidence/results/frozen_topology_check.json	
+@@ -10,42 +10,62 @@
+   "c3da1ac707bf/baseline": {
+    "runs": 50,
+    "edges": 3300,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   },
+   "c3da1ac707bf/no_delay": {
+    "runs": 50,
+    "edges": 3300,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   },
+   "73dca37cf93f/baseline": {
+    "runs": 50,
+    "edges": 3300,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   },
+   "73dca37cf93f/no_delay": {
+    "runs": 50,
+    "edges": 3300,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   }
+  },
+  "random_omega_delay_experiment": {
+   "uniform/baseline": {
+    "edges": 3960,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   },
+   "uniform/no_delay": {
+    "edges": 3960,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   },
+   "clustered/baseline": {
+    "edges": 3960,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   },
+   "clustered/no_delay": {
+    "edges": 3960,
+-   "edges_changing_status": 0
++   "edges_changing_status": 0,
++   "nonbinary_P_future_count": 0,
++   "P_future_label_differs_from_split_status": 0
+   }
+  },
+  "total_edges": 29040,
+- "total_edges_changing_status": 0
++ "total_edges_changing_status": 0,
++ "total_nonbinary_P_future_count": 0,
++ "total_P_future_label_differs_from_split_status": 0,
++ "P_future_definition": "fraction of ALL future-window steps (stride 1) with B > B_C (AIEF_1_3_falsification_updated.run_aief: P_sum += B > B_C)",
++ "interpretation": "if total_nonbinary_P_future_count == 0 and the label-difference count is 0, every tested edge keeps its split-time threshold status at every step of the future window (finite-horizon threshold freezing); continuous weights may still move"
+ }
+\ No newline at end of file
+diff --git a/AI Agent Audits/evidence/run_all.sh b/AI Agent Audits/evidence/run_all.sh
+index 2debde4..523d63e 100644
+--- a/AI Agent Audits/evidence/run_all.sh	
++++ b/AI Agent Audits/evidence/run_all.sh	
+@@ -7,7 +7,7 @@
+ #   UPDATE=1 bash ".../run_all.sh"   additionally copies the fresh results and logs into results/ and logs/.
+ #   PY=/path/to/python               selects the interpreter (default: python).
+ # Heavy steps (kappa_tw, kappa_cycle_kernel, delay_paired, omega_*, repro13) take about 0.5-6 min each on 7 cores;
+-# about 25 min total. Pool(7) is used; peak RAM about 3 GB.
++# about 25 min total. Round 4 (2026-10-25): added rate_law_census_r4 (seconds; reads the kappa_cycle_kernel results). Pool(7) is used; peak RAM about 3 GB.
+ set -uo pipefail
+ B="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ BR="$(realpath -s --relative-to="$PWD" "$B")"
+@@ -36,6 +36,7 @@ run kappa_tw           kappa_tw.py all
+ run analyze_kappa_tw   analyze_kappa_tw.py
+ run kappa_cycle_kernel kappa_cycle_kernel.py
+ run analyze_kappa_cycle_kernel analyze_kappa_cycle_kernel.py
++run rate_law_census_r4 rate_law_census_r4.py
+ run delay_paired       delay_paired_heldout.py
+ run analyze_delay      analyze_delay_heldout.py
+ run frozen_topology_check frozen_topology_check.py
+diff --git a/AI Agent Audits/evidence/scripts/frozen_topology_check.py b/AI Agent Audits/evidence/scripts/frozen_topology_check.py
+index 3d1b946..72d5315 100644
+--- a/AI Agent Audits/evidence/scripts/frozen_topology_check.py	
++++ b/AI Agent Audits/evidence/scripts/frozen_topology_check.py	
+@@ -1,23 +1,39 @@
+-"""NEW (round 3, 2026-10-24). Response-2 point 4: is B_split's AUC 1.0 for the final topology expected?
++"""NEW (round 3, 2026-10-24; extended round 4, 2026-10-25). Response-2 point 4: is B_split's AUC 1.0 for the final topology expected?
+ Counts edges whose threshold status B > B_C changes between the split and the end of the run:
+-  * archived AIEF-1.3 repo-omega runs (runs/c3da1ac707bf, runs/73dca37cf93f; baseline and no_delay; keys B_at_split, B_final);
+-  * the random-omega delay experiment (results/delay_paired_edges_{uniform,clustered}.csv; columns Bsplit, Bf).
++  * archived AIEF-1.3 repo-omega runs (runs/c3da1ac707bf, runs/73dca37cf93f; baseline and no_delay; keys B_at_split, B_final, P_future);
++  * the random-omega delay experiment (results/delay_paired_edges_{uniform,clustered}.csv; columns Bsplit, Bf, P).
+ If no edge changes status, the post-split topology is frozen and a B_split > B_C classifier is exact by construction:
+-B_split is then predictive of the final topology, which says nothing about whether B is causally necessary."""
++B_split is then predictive of the final topology, which says nothing about whether B is causally necessary.
++Round 4 (response-3 #4): endpoint equality alone does not exclude an edge crossing B_C and crossing back. The engine
++(AIEF_1_3_falsification_updated.run_aief) accumulates P_sum += B > B_C at EVERY step of the future window (stride 1, not
++sampled) and stores P_future = P_sum / future_count. So P_future in {0, 1} for an edge means its threshold status is constant
++at every future step. We record nonbinary_P_future_count (P_future not exactly 0 or 1) and the count of edges whose
++P_future label disagrees with the split status (B_split > B_C). Full per-step B trajectories are not saved by the engine; the
++stride-1 P_future is the complete per-step threshold record that exists. CSV values are 9 significant digits, so 0/1 are exact."""
+ import sys, os, glob, numpy as np, pandas as pd
+ sys.path.insert(0, os.path.dirname(__file__)); from _common import *
+ BC = 0.12; iu = np.triu_indices(12, 1); out = {'B_C': BC, 'archived_repo_omega': {}, 'random_omega_delay_experiment': {}}
++nonbin = lambda p: int(np.count_nonzero((p != 0.0) & (p != 1.0)))
+ for run in ['c3da1ac707bf', '73dca37cf93f']:
+     for cond in ['baseline', 'no_delay']:
+-        fs = sorted(glob.glob(f'runs/{run}/{cond}_seed_*.npz')); e = d = 0
++        fs = sorted(glob.glob(f'runs/{run}/{cond}_seed_*.npz')); e = d = nb = pd_ = 0
+         for f in fs:
+-            with np.load(f) as z: a = z['B_at_split'][iu] > BC; b = z['B_final'][iu] > BC
+-            e += a.size; d += int((a != b).sum())
+-        out['archived_repo_omega'][f'{run}/{cond}'] = dict(runs=len(fs), edges=e, edges_changing_status=d)
++            with np.load(f) as z: a = z['B_at_split'][iu] > BC; b = z['B_final'][iu] > BC; p = z['P_future'][iu]
++            e += a.size; d += int((a != b).sum()); nb += nonbin(p); pd_ += int(((p == 1.0) != a).sum())
++        out['archived_repo_omega'][f'{run}/{cond}'] = dict(runs=len(fs), edges=e, edges_changing_status=d,
++            nonbinary_P_future_count=nb, P_future_label_differs_from_split_status=pd_)
+ for kd in ['uniform', 'clustered']:
+     df = pd.read_csv(inp(f'delay_paired_edges_{kd}.csv'))
+     for cond, g in df.groupby('cond'):
+-        out['random_omega_delay_experiment'][f'{kd}/{cond}'] = dict(edges=len(g), edges_changing_status=int(((g.Bsplit > BC) != (g.Bf > BC)).sum()))
+-out['total_edges'] = sum(v['edges'] for s in ['archived_repo_omega', 'random_omega_delay_experiment'] for v in out[s].values())
+-out['total_edges_changing_status'] = sum(v['edges_changing_status'] for s in ['archived_repo_omega', 'random_omega_delay_experiment'] for v in out[s].values())
++        p = g.P.to_numpy(float); a = (g.Bsplit > BC).to_numpy()
++        out['random_omega_delay_experiment'][f'{kd}/{cond}'] = dict(edges=len(g), edges_changing_status=int(((g.Bsplit > BC) != (g.Bf > BC)).sum()),
++            nonbinary_P_future_count=nonbin(p), P_future_label_differs_from_split_status=int(((p == 1.0) != a).sum()))
++groups = [v for s in ['archived_repo_omega', 'random_omega_delay_experiment'] for v in out[s].values()]
++out['total_edges'] = sum(v['edges'] for v in groups)
++out['total_edges_changing_status'] = sum(v['edges_changing_status'] for v in groups)
++out['total_nonbinary_P_future_count'] = sum(v['nonbinary_P_future_count'] for v in groups)
++out['total_P_future_label_differs_from_split_status'] = sum(v['P_future_label_differs_from_split_status'] for v in groups)
++out['P_future_definition'] = 'fraction of ALL future-window steps (stride 1) with B > B_C (AIEF_1_3_falsification_updated.run_aief: P_sum += B > B_C)'
++out['interpretation'] = ('if total_nonbinary_P_future_count == 0 and the label-difference count is 0, every tested edge keeps its split-time threshold '
++                         'status at every step of the future window (finite-horizon threshold freezing); continuous weights may still move')
+ print(out); dump('frozen_topology_check.json', out)
+diff --git a/AI Agent Audits/evidence/tooling/make_manifest.py b/AI Agent Audits/evidence/tooling/make_manifest.py
+index 2557ff4..f2aa689 100644
+--- a/AI Agent Audits/evidence/tooling/make_manifest.py	
++++ b/AI Agent Audits/evidence/tooling/make_manifest.py	
+@@ -1,4 +1,4 @@
+-"""Round 3 (2026-10-24): regenerate evidence/audit_manifest.json (successor of tooling/round2/make_manifest_v2.py).
++"""Round 3 (2026-10-24), updated round 4 (2026-10-25): regenerate evidence/audit_manifest.json (successor of tooling/round2/make_manifest_v2.py).
+ Run from the AIEFS repo root:  python "AI Agent Audits/evidence/tooling/make_manifest.py"
+ Hashes the repo inputs the evidence scripts read (relative to the current directory = repo root), lists every finding
+ with its command, outputs, design type and basis, and hashes every published file under "AI Agent Audits/" except the
+@@ -62,11 +62,17 @@ findings = [
+    "central-difference matrix (not a Jacobian at ties): 292 slow components over 5 T_w, r_B vs discrete Prop 8.3 max rel err 3.1e-5; its K3 census is superseded by kappa_cycle_kernel"),
+  F(["R2 2"], f'python "{S}kappa_cycle_kernel.py" && python "{S}analyze_kappa_cycle_kernel.py"',
+    ["results/kappa_cycle_kernel.json", "results/kappa_cycle_kernel_summary.json", "logs/kappa_cycle_kernel.log", "logs/analyze_kappa_cycle_kernel.log"], DN, "RAN",
+-   "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps): 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"),
++   "multiplier on ker A_J vs closed form lambda_k=(1-gamma dt)c/(c+dt(k eta-gamma c)+eps) [round 4: split as 264 two-sided + 110 one-sided K3, see rate_law_census_r4]: 374 resolved components, lambda to 2.07e-8 rel, kappa to 2.07e-6 abs; 32 poorly resolved (all rho=2); dim K = m-n on 373/373 all-tied complete components; all 110 all-tied K3 have a one-sided slow direction +v_c (0/110 along -v_c); tie nonadditivity K3 0.5 ... K6 0.1581; cohort: 40 fixed seeds x 5 T_w"),
+  F(["R1 6", "R2 4"], f'python "{S}ablation14_topology.py"', ["results/ablation14_topology.json", "logs/ablation14_topology.log"], RC, "RAN",
+    "reset_B Jaccard 1.000, reset_ema 0.992, reset_B_ema 0.913 (vs continue); reset_B_ema equals the closed-form set in 32/40 seeds"),
+  F(["R2 4"], f'python "{S}frozen_topology_check.py"', ["results/frozen_topology_check.json", "logs/frozen_topology_check.log"], DN, "RAN",
+-   "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction"),
++   "0/29040 edges change threshold status (B > B_C) between split and end (13200 archived repo-omega, 15840 random-omega), so B_split's AUC 1.0 is expected by construction; round 4: nonbinary_P_future_count 0/29040 and P_future label vs split status differs 0/29040 (P_future averages B > B_C over every future step)"),
++ F(["R3 1", "R3 2", "R3 3"], f'python "{S}rate_law_census_r4.py"', ["results/rate_law_census_r4.json", "logs/rate_law_census_r4.log"], DN, "RAN",
++   "374 resolved = 264 two-sided fiber (lambda to 2.07e-8 rel, kappa to 2.07e-6) + 110 all-tied K3 one-sided rays (294 slow rays, lambda to 1.7e-7); 32 poorly resolved; finite-eps fixed point changes lambda by 1.6e-12 rel; derived tie patterns 1/sqrt(2k(k-1)), sqrt(2/(k+1)) match synthetic equal-weight K3-K8 to 4.4e-10, fail for unequal-edge K4; -v_c ray lambda/lambda_2 in [0.33333, 0.33337]"),
++ F(["R3 8"], 'python "AI Agent Audits/evidence/proposals/aief_1_4_full_state_spectrum.py"', ["proposals/results/full_state_spectrum.json", "proposals/results/full_state_spectrum.log"], DN, "RAN (proposal; repo original not edited)",
++   "closed 966-dim state (history 612 + B 66 + Re/Im C 288), one replay, central difference h=1e-7: EMA pole is NOT the unique slow pole (one step: 10 rates in the gap, 0.189328 x2, 0.252355 x5, 0.650-0.669 x3; T=500: 13); J+/J- differ by 0.49937 (mixed branch); citations of the 18-coordinate result: proposals/augmented_spectrum_citations.md"),
++ F(["R3 L1-L6"], "cd lean/AIEFProofs && STRICT_ORPHANS=1 LOG_DIR=<dir> bash check_lean.sh", ["logs/lean_r4/"], DN, "RAN",
++   "round 4 local clone of dc0250a + changes: 7/7 steps PASS, 8713 jobs, 12 warnings (all Smoke.lean header linter), 0 markers, 115 declarations, 0 disallowed axioms; source SHA256SUMS (8 files) enforced; negative tests fail at step 2"),
+  F(["R1 6", "R2 3"], f'python "{S}matched_phase_check.py"', ["results/matched_phase_check.json", "logs/matched_phase_check.log"], CE, "RAN",
+    "reads test_output/ (its analysis_manifest: 40/40 seeds, 0 failures, validation passing; hashes recorded); Weighted_similarity_late +0.0642 [0.0405, 0.0886], 31/40 positive; the FAILED manifest is a different 1-seed partial run (aief_1_4_matched_phase_memory_ablation)"),
+  F(["R2 9"], f'python "{S}evolution_checks.py"', ["results/evolution_checks.json", "logs/evolution_checks.log"], DN, "RAN",
+@@ -75,13 +81,14 @@ findings = [
+    "as committed BUILD_EXIT 1 (bad import ControllerFiberProjector); import removed: 1235 jobs OK; no sorry/axiom/admit (not rerun in round 3)"),
+  F(["R1 11"], f'bash "{S}terminology_grep.sh"', ["logs/terminology_grep.log"], "descriptive", "RAN", "term counts; gauge appears once (comment); Ehresmann/holonomy/fiber bundle 0"),
+  F(["R2 9"], 'bash "AI Agent Audits/evidence/run_all.sh"', ["logs/run_all_verify.log"], RC, "RAN",
+-   "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok"),
++   "runs every step above into a temp dir and cmp's each committed result; round 3: every step ok; round 4: 19 steps, UPDATE=1 run (logs/run_all_update_r4.log) differed only in frozen_topology_check.json (DIFFERS) and rate_law_census_r4.json (NEW), then a verify run reported ALL OK"),
+  F(["R2 9"], 'python "AI Agent Audits/evidence/verify_manifest.py" --inputs', ["tooling/logs/verify_manifest.log"], DN, "RAN", "every listed file and repo input matches size/sha256; no unlisted files"),
+  F(["packaging"], f'python "{T}pii_scan.py" --private <local file, not published>', ["tooling/logs/pii_scan.log", "tooling/logs/pii_scan_selftest.log"], DN, "RAN",
+-   "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues"),
++   "no e-mail addresses, local paths, token shapes, device codes, binaries, CR, or size-limit breaches; self-test catches 5/5 planted issues. SCOPE: 'AI Agent Audits/' only; says nothing about the rest of the repository (repo-wide privacy/copyright unresolved, owner decision)"),
+  F(["packaging"], f'python "{T}verify_github_blobs.py" <tree JSON of c9907a6> "AI Agent Audits"', ["tooling/logs/verify_github_blobs_c9907a6.log"], DN, "RAN",
+    "the round-2 staging tree is IDENTICAL (58/58 git blob sha1) to 'AI Agent Audits/' at github c9907a6"),
+  F(["packaging"], f'python "{T}make_manifest.py"', ["audit_manifest.json"], "n/a", "RAN", "this manifest"),
++ F(["R3 1-9"], f'python "{T}round4/corrections_r4.py"', [], "n/a", "RAN", "applies the dated [Correction 2026-10-25, response-3 #N] notes to response_2, README, salvage and response (anchors must match exactly once; refuses to run twice)"),
+  F(["provenance"], "tooling/round1, round2, round3, adhoc_commands.md", [], "n/a", "RAN (scratch; redacted copies)",
+    "scratch scripts and ad-hoc commands used to build rounds 1-3; redacted copies are for audit, not runnable verbatim; see AIEFS_audit_response_2.md 'Provenance gaps'"),
+  F(["R1 10", "R1 11", "R2 2"], "read AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md Prop 2.9, 8.1, 8.3, 9.2, 11.1", [], "n/a", "READ",
+@@ -91,13 +98,16 @@ findings = [
+  F(["R1 2", "R1 7", "priority ordering"], "reasoning", [], "n/a", "INFERRED", "judgments on collaborator overreach and priority ordering are reasoning, not runs"),
+ ]
+ m = dict(
+- created="2026-10-24", audited_repo="github.com/jacobbrainard84-knightninja/AIEFS",
++ created="2026-10-25", audited_repo="github.com/jacobbrainard84-knightninja/AIEFS",
+  audited_commit="e47bad150792425eb8e962ff636c69289eedd8b1",
+  report_commits={"55be461f3da5b71c86fced8023a276f5868f4c23": "adds AI Agent Audits/AIEFS_audit.md (original)",
+                  "f7246a364060237001fa35115f1ea691e620d048": "adds AI Agent Audits/AIEFS_salvage.md (original)",
+-                 "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6); this round-3 tree is NOT pushed"},
++                 "c9907a66d182b8bb95521ac29f83abecf4cd120c": "head of the round-2 publication (880e07e..c9907a6)",
++                 "60e60297e6dd34887348e6f858c32b3829d72f69": "head of the round-3 publication (22 commits 7d752fd..60e6029)",
++                 "0b5b1082561b7717a0ea465d76bb9ebefa26b770": "Lean: ControllerFiberProjector.lean",
++                 "dc0250a0586c8316b594ed5e424fffb9c84e93e8": "head after tooling, lean_recovery and cleanup (56 commits 0f5ef7a..dc0250a); this round-4 tree is NOT pushed"},
+  note_inputs="Inputs hashed from the read-only clone at e47bad1; later commits add only files under 'AI Agent Audits/'.",
+- point_labels="'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md",
++ point_labels="'R1 n' = point n of the round-2 response (AIEFS_audit_response.md); 'R2 n' = point n of AIEFS_audit_response_2.md; 'R3 n' = point n of AIEFS_audit_response_3.md",
+  run_from="repository root", environment="evidence/ENVIRONMENT.md",
+  inputs_sha256=inputs, inputs_missing=missing, findings=findings, files_sha256=files,
+  post_manifest_logs=ATTEST, post_manifest_logs_note='Written after this manifest by verify_manifest.py and pii_scan.py; they cannot be hashed here without circularity. verify_manifest.py treats them as listed but unhashed; regenerate them with the commands in findings.',
+@@ -105,7 +115,7 @@ m = dict(
+   "Log header lines had the local interpreter path replaced by 'python' and absolute or relative-escape paths rewritten to 'AI Agent Audits/evidence/...'; Lean logs had the temporary build directory rewritten to '<tmpcopy>'. No other log content was altered.",
+   "No logs were subsampled or truncated: every file is under 1 MB.",
+   "No binary files are published. A local intermediate .npz from development of the delay experiment was excluded; the published scripts do not write it.",
+-  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23 and 2026-10-24); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
++  "AIEFS_audit.md / AIEFS_salvage.md / AIEFS_audit_response.md carry in-place marked corrections (2026-10-23, 2026-10-24 and 2026-10-25); absolute local paths and the author's user/host name were replaced by neutral descriptions.",
+   "evidence/tooling/round*/ and adhoc_commands.md are redacted copies: local paths -> <placeholders>, the owner's e-mail -> <owner-email-redacted>, user/host-name literals -> <redacted>. The literal list is a local file that is not published.",
+   "PII in the repository's own PDFs is referenced by path only and not reproduced."])
+ json.dump(m, open(E / "audit_manifest.json", "w"), indent=1)
+diff --git a/lean/AIEFProofs/AIEFProofs.lean b/lean/AIEFProofs/AIEFProofs.lean
+index 93d168c..dc26fd2 100644
+--- a/lean/AIEFProofs/AIEFProofs.lean
++++ b/lean/AIEFProofs/AIEFProofs.lean
+@@ -3,3 +3,9 @@ import AIEFProofs.Basic
+ import AIEFProofs.ControllerFiber
+ 
+ import AIEFProofs.ControllerFiberProjector
++
++import AIEFProofs.ControllerFiberQuotient
++
++import AIEFProofs.CompleteGraphIncidence
++
++import AIEFProofs.Smoke
+diff --git a/lean/AIEFProofs/README.md b/lean/AIEFProofs/README.md
+index 9b7fe69..c137c92 100644
+--- a/lean/AIEFProofs/README.md
++++ b/lean/AIEFProofs/README.md
+@@ -1,13 +1,110 @@
+ # AIEFProofs
+ 
+-## GitHub configuration
++A small Lean 4 / Mathlib project. It checks a few exact linear-algebra facts used by the AIEF
++audit. All objects are fixed matrices over `ℚ`. **Nothing here formalizes the AIEF dynamics.**
+ 
+-To set up your new GitHub repository, follow these steps:
++## Build
+ 
+-* Under your repository name, click **Settings**.
+-* In the **Actions** section of the sidebar, click "General".
+-* Check the box **Allow GitHub Actions to create and approve pull requests**.
+-* Click the **Pages** section of the settings sidebar.
+-* In the **Source** dropdown menu, select "GitHub Actions".
++From this directory (`lean/AIEFProofs`):
+ 
+-After following the steps above, you can remove this section from the README file.
++```
++bash check_lean.sh
++```
++
++Use `bash check_lean.sh`, or run `chmod +x check_lean.sh` first. The file may be checked out
++without its executable bit. The owner can fix that permanently with
++`git update-index --chmod=+x lean/AIEFProofs/check_lean.sh`.
++
++`check_lean.sh` runs these steps and fails on the first error:
++
++1. Toolchain pin.
++2. Mathlib pin, plus `AIEF_LEAN_SOURCE_SHA256SUMS.txt`. The source hashes are verified, and an
++   unlisted `.lean` file is an error.
++3. Root imports and orphans. `STRICT_ORPHANS=1`, as set in CI, makes an orphan fatal.
++4. `lake exe cache get`.
++5. A clean `lake build`, with job and warning counts.
++6. Forbidden markers: `sorry`, `admit`, `native_decide`, `axiom`, `unsafe`, `extern`, …
++7. An axiom audit of every project declaration.
++
++Logs go to `.check_logs/<UTC>/`, which is git-ignored. Useful variables are `SKIP_CACHE=1`,
++`REUSE_BUILD=1` and `LOG_DIR=…`.
++
++After an *intentional* source change, regenerate the hash file from this directory:
++
++```
++sha256sum AIEFProofs.lean $(find AIEFProofs -name '*.lean' | sort) check_lean.sh \
++  > AIEF_LEAN_SOURCE_SHA256SUMS.txt
++```
++
++CI: `.github/workflows/lean.yml` at the repository root. The nested
++`lean/AIEFProofs/.github/workflows/` files are the Mathlib project template, and GitHub never
++runs them.
++
++## Pins and allowed axioms
++
++- Toolchain: `leanprover/lean4:v4.33.1` (`lean-toolchain`).
++- Mathlib: tag `v4.33.1`, rev `0df444a360eaa60ab8c11dca51a86af692955474` (`lake-manifest.json`).
++  The pin files are hashed in `AIEF_LEAN_PROJECT_LOCK_HASHES.txt`.
++- Allowed axioms: `propext`, `Classical.choice`, `Quot.sound` only. Step 7 fails on anything
++  else.
++
++## What is proved
++
++Here `CCtrl` is the 2×3 unsigned incidence of controller nodes `{2,7}` on the K3 edges
++`((2,7),(2,11),(7,11))`, and `vCtrl = (1,−1,−1)`.
++
++`ControllerFiber`
++- `CCtrl · vCtrl = 0`, and `vCtrl ≠ 0`.
++- `CCtrl · x = 0` ⇔ `x₀+x₁ = 0 ∧ x₀+x₂ = 0` ⇔ `x₁ = −x₀ ∧ x₂ = −x₀` ⇔ `x = a·vCtrl` for some `a`.
++  So the kernel is exactly the line spanned by `vCtrl`.
++
++`ControllerFiberProjector`
++- Definitions: `PPar = (1/3)·vCtrl vCtrlᵀ` and `PPerp = I − PPar`.
++- Both are entrywise symmetric. `PPar` is self-adjoint for the standard dot product.
++- Both are idempotent, `PPar·PPerp = PPerp·PPar = 0`, and their images are orthogonal.
++- `x = PPar x + PPerp x`, and the two images meet only at `0`.
++- The range of `PPar` is exactly `ker CCtrl`.
++- `CCtrl·PPerp x = CCtrl x`.
++- `PPerp = SPerp ∘ CCtrl`, where `SPerp` is an explicit right inverse with `CCtrl·SPerp y = y`.
++
++`ControllerFiberQuotient` (new)
++- For all `x, y ∈ ℚ³` these are equivalent: `CCtrl x = CCtrl y`; `x − y = a·vCtrl` for some
++  `a`; `PPerp x = PPerp y`; `PPar (x−y) = x−y`.
++  The theorems are `CCtrl_eq_iff_exists_smul`, `CCtrl_eq_iff_PPerp_eq`,
++  `PPerp_eq_iff_PPar_sub` and `controller_fiber_tfae`.
++
++`CompleteGraphIncidence` (new)
++- For any matrix `M` (n×m over ℚ) with a right inverse, `dim ker M = m − n` (rank–nullity).
++- For the lexicographic edge lists of `K₃, K₄, K₅, K₆`:
++  - `decide` certifies that each list contains every pair `i<j` exactly once.
++  - An explicit right inverse of the unsigned incidence is verified.
++  - Hence `dim ker = C(n,2) − n`, which is 0, 2, 5 and 9.
++- K3:
++  - The kernel is `{0}` (zero lineality).
++  - For each node `c`, the ray `v_c` (`+1` on the edge opposite `c`, `−1` on the two edges at
++    `c`) has row `c` of `inc·v_c` equal to `−2` and the other rows equal to `0`. So `−v_c` raises
++    row `c` by 2.
++  - `inc·v_c ≠ 0`.
++  - Rows `{0,1}` of the K3 incidence are `CCtrl`, and `v_2 = vCtrl`.
++- Smoke: two `ring` examples that check the Mathlib import. It has no declarations.
++
++## What is NOT proved
++
++The following are not formalized anywhere in this project.
++
++Some come only from numerical runs: the audit's finite-difference and replay evidence.
++- Engine v1 emits `CCtrl` (or any incidence above) as its controller matrix.
++- Persistence of the controller branch or of the winner map.
++- Delayed contraction, delay effects and multistability.
++- EMA asymptotics, and the EMA rate `r_ema`.
++- Invariance of the fiber under any dynamical operator `K`: `PPerp·K·PPar = 0` is not proved.
++- The one-sided K3 result: that the gate's directional derivative along `+v_c` is
++  `λ₂·v_c` and along `−v_c` is not slow.
++- The clique multiplier `λ_k = (1−γdt)c/(c+dt(kη−γc)+ε)` and its conditions, and any `κ` value.
++- The memory mechanism, and any statement about B, phase, history or EMA as memory.
++
++Others are open problems.
++- `dim ker = C(n,2) − n` for general `n ≥ 3` (only n = 3..6 are proved).
++- A `LinearMap`/`Submodule` form `ker CCtrl = span ℚ {vCtrl}`.
++- Real-valued versions of the statements above.
++- Any link between the gate (`min(1, c/(q+ε))` scaling) and these matrices.
+diff --git a/lean/AIEFProofs/check_lean.sh b/lean/AIEFProofs/check_lean.sh
+index 1bcaee9..d7e23a3 100644
+--- a/lean/AIEFProofs/check_lean.sh
++++ b/lean/AIEFProofs/check_lean.sh
+@@ -12,7 +12,12 @@
+ #
+ # Steps (each logged to its own file in LOG_DIR):
+ #   1 toolchain   lean-toolchain pin, elan/lake present, `lean --version` matches the pin
+-#   2 pins        lake-manifest mathlib rev/inputRev; optional sha256 lock file
++#   2 pins        lake-manifest mathlib rev/inputRev; optional sha256 lock file;
++#                 REQUIRED source hash file AIEF_LEAN_SOURCE_SHA256SUMS.txt (every project .lean file
++#                 and this script; fails on any mismatch, missing entry or unlisted .lean file).
++#                 After an intentional source change, regenerate it from this directory with:
++#                   sha256sum AIEFProofs.lean $(find AIEFProofs -name '*.lean' | sort) check_lean.sh \
++#                     > AIEF_LEAN_SOURCE_SHA256SUMS.txt
+ #   3 imports     every `import AIEFProofs.X` in the root resolves to a file; orphan report
+ #   4 cache       `lake exe cache get` (prebuilt Mathlib oleans)
+ #   5 build       rm -rf .lake/build (unless REUSE_BUILD=1), then `lake build`; job count, warnings, errors
+@@ -69,7 +74,15 @@ PY
+ if [ -f AIEF_LEAN_PROJECT_LOCK_HASHES.txt ]; then
+   sha256sum -c AIEF_LEAN_PROJECT_LOCK_HASHES.txt >> "$LOG_DIR/2_pins.log" 2>&1 || fail 2 "AIEF_LEAN_PROJECT_LOCK_HASHES.txt does not match"
+ fi
+-pass 2 "mathlib rev $EXPECTED_MATHLIB_REV"
++SUMS=AIEF_LEAN_SOURCE_SHA256SUMS.txt
++[ -f "$SUMS" ] || fail 2 "$SUMS is missing (see the regeneration command in the header of check_lean.sh)"
++{ echo "\$ sha256sum -c --strict $SUMS"; sha256sum -c --strict "$SUMS"; } >> "$LOG_DIR/2_pins.log" 2>&1 \
++  || fail 2 "$SUMS does not match the sources (see 2_pins.log); if the change is intentional, regenerate it"
++UNLISTED="$( { echo "$LIB.lean"; find "$LIB" -name '*.lean' | sort; echo check_lean.sh; } \
++  | while read -r f; do awk '{print $2}' "$SUMS" | sed 's/^\*//' | grep -qxF -- "$f" || echo "$f"; done )"
++[ -z "$UNLISTED" ] || fail 2 "files not covered by $SUMS: $(echo $UNLISTED)"
++echo "source hashes OK: $(wc -l < "$SUMS") entries" >> "$LOG_DIR/2_pins.log"
++pass 2 "mathlib rev $EXPECTED_MATHLIB_REV; $SUMS verified ($(wc -l < "$SUMS") files)"
+ 
+ # ---- 3 imports / orphans ---------------------------------------------------
+ python3 - "$LIB" > "$LOG_DIR/3_imports.log" 2>&1 <<'PY'
+@@ -105,7 +118,7 @@ pass 3 "all root imports resolve"
+ # ---- 4 cache ---------------------------------------------------------------
+ if [ "${SKIP_CACHE:-0}" != 1 ]; then
+   ( time lake exe cache get ) > "$LOG_DIR/4_cache.log" 2>&1 || fail 4 "lake exe cache get failed (network? see 4_cache.log)"
+-  pass 4 "mathlib cache: $(grep -E 'Decompressed|unpacked|already|Completed' "$LOG_DIR/4_cache.log" | tail -1)"
++  pass 4 "mathlib cache: $(grep -iE 'Decompressed|unpacked|already|Completed' "$LOG_DIR/4_cache.log" | tail -1)"
+ else
+   say "SKIP step 4 (SKIP_CACHE=1)"
+ fi

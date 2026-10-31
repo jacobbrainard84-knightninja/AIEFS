@@ -1,0 +1,391 @@
+--- AIEF_1_4_Twindow_sensitivity_analysis_v4.py	2026-10-29 00:34:35.528346135 +0000
++++ AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py	2026-10-29 00:34:35.528346135 +0000
+@@ -1,5 +1,43 @@
+ #!/usr/bin/env python3
+-"""AIEF-1.4 T_window sensitivity reanalysis v4.
++"""AIEF-1.4 T_window sensitivity reanalysis v4.1 -- CANDIDATE, UNAUDITED.
++
++STATUS: CANDIDATE / UNAUDITED. DO NOT RUN ON REAL TRAJECTORIES.
++This file is a proposed successor to Analysis v4
++(AIEF_1_4_Twindow_sensitivity_analysis_v4.py, hash-pinned and left
++byte-identical). It has only been exercised on synthetic data in
++tests/test_v4_1_held_event.py. Its outputs must not be cited, registered, or
++compared with v4 bundles until it has been independently audited and
++frozen. main() refuses to run without --allow-unaudited-candidate.
++
++Changes from Analysis v4 (and nothing else)
++--------------------------------------------
++* Held-event end check. v4 used
++  ``searchsorted(times, times[index] + duration, side="left")``. On a
++  floating-point grid ``times[index] + duration`` can round one ulp above the
++  saved sample that is exactly ``duration`` later, so an event held exactly
++  the required duration (e.g. 17.5 on the 0.5-spaced saved grid) was
++  rejected. v4.1 searches for ``times[index] + duration - tol`` with
++  ``tol = HOLD_TOLERANCE_FRACTION * dt`` (``dt`` = smallest positive grid
++  spacing, ``HOLD_TOLERANCE_FRACTION`` = 1e-6). Justification: the rounding
++  error is O(machine-eps * |t|), about 1e-13 here, i.e. ~7 orders of magnitude
++  below tol, while tol is 6 orders of magnitude below one grid step, so a run
++  one step short is still rejected and nominal durations that are not grid
++  multiples (e.g. T_window = 17.5029...) are unaffected unless they lie
++  within tol of a grid multiple.
++* Held events are split into two estimands in addition to the v4-style
++  ``held`` event (kept, with the corrected end check):
++  - ``held_retention``: the condition is true from the first saved sample and
++    stays true, without any drop, for at least the hold duration.
++  - ``held_recovery``: the condition is false at some saved sample (including
++    the first) and afterwards re-crosses and is held for the duration; the
++    event index is the earliest such re-crossing after the first drop.
++  ``held_classification`` (retention / recovery / none) is mutually
++  exclusive with retention taking precedence.
++* Version labels, output file names (``_v4_1``) and the bundle directory
++  (``v4_1``) differ so v4 bundles are never overwritten. Hard-coded row-count
++  checks were updated for the two extra event types.
++
++Original v4 description follows.
+ 
+ Analysis v4 is a separately versioned reanalysis of the existing S01 raw run.
+ It does not regenerate trajectories and does not modify Engine v1, Modular
+@@ -57,8 +95,8 @@
+ from aief_modular.validation import ArtifactIntegrityError
+ 
+ 
+-ANALYSIS_ID = "AIEF_1_4_TWINDOW_ANALYSIS_V4"
+-ANALYSIS_VERSION = "v4.0"
++ANALYSIS_ID = "AIEF_1_4_TWINDOW_ANALYSIS_V4_1_CANDIDATE"
++ANALYSIS_VERSION = "v4.1-candidate-unaudited"
+ STUDY_NAME = "AIEF_1_4_Twindow_sensitivity"
+ EXPECTED_N_SEEDS = 40
+ EXPECTED_RHO_VALUES = (0.5, 0.75, 1.0, 1.5, 2.0)
+@@ -69,6 +107,9 @@
+ SUPPORT_END = float(EXPECTED_SAMPLE_TIMES[-1])
+ SAMPLE_SPACING = 0.5
+ FIXED_HOLD_DURATION = 17.5
++# v4.1: tolerance for the held-event end check, as a fraction of grid spacing.
++HOLD_TOLERANCE_FRACTION = 1e-6
++HELD_EVENT_TYPES = ("held", "held_retention", "held_recovery")
+ 
+ PRIMARY_OUTCOMES = (
+     "Weighted_similarity_late_fixed_physical",
+@@ -141,7 +182,7 @@
+ 
+ def analysis_execution_id() -> str:
+     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+-    return f"analysis_v4_{stamp}_{secrets.token_hex(4)}"
++    return f"analysis_v4_1_{stamp}_{secrets.token_hex(4)}"
+ 
+ 
+ def source_sha256() -> str:
+@@ -160,6 +201,8 @@
+         "sample_spacing": SAMPLE_SPACING,
+         "event_time_semantics": "saved_grid_interval_censored",
+         "undefined_similarity": "raw_NaN_derived_recovery_zero",
++        "held_end_check": "searchsorted_left_on_t_plus_duration_minus_1e-6_dt",
++        "held_event_types": list(HELD_EVENT_TYPES),
+         "hold_duration_systems": [
+             "fixed_physical_17p5",
+             "one_current_Twindow_nominal",
+@@ -538,10 +581,16 @@
+     return _first_index(suffix)
+ 
+ 
+-def _held_index(times: np.ndarray, condition: np.ndarray, duration: float) -> int | None:
+-    """Earliest saved index with a true run spanning at least ``duration``."""
+-    if not np.isfinite(duration) or duration <= 0.0:
+-        raise ValueError("Hold duration must be finite and positive")
++def _hold_tolerance(times: np.ndarray) -> float:
++    """v4.1: end-check tolerance tied to the grid spacing (see module header)."""
++    steps = np.diff(np.asarray(times, dtype=float))
++    positive = steps[steps > 0.0]
++    if len(positive) == 0:
++        return 0.0
++    return HOLD_TOLERANCE_FRACTION * float(positive.min())
++
++
++def _run_end(condition: np.ndarray) -> np.ndarray:
+     run_end = np.empty(len(condition), dtype=np.int64)
+     end = -1
+     for index in range(len(condition) - 1, -1, -1):
+@@ -551,13 +600,64 @@
+             run_end[index] = end
+         else:
+             run_end[index] = index - 1
++    return run_end
++
++
++def _held_from(times: np.ndarray, run_end: np.ndarray, index: int, duration: float, tol: float) -> bool:
++    # v4 used times[index] + duration (no tolerance); see module header.
++    required_end = int(np.searchsorted(times, times[index] + duration - tol, side="left"))
++    return required_end < len(times) and required_end <= run_end[index]
++
++
++def _held_index(times: np.ndarray, condition: np.ndarray, duration: float) -> int | None:
++    """Earliest saved index with a true run spanning at least ``duration``."""
++    if not np.isfinite(duration) or duration <= 0.0:
++        raise ValueError("Hold duration must be finite and positive")
++    tol = _hold_tolerance(times)
++    run_end = _run_end(condition)
++    for index in np.flatnonzero(condition):
++        if _held_from(times, run_end, int(index), duration, tol):
++            return int(index)
++    return None
++
++
++def _held_retention_index(times: np.ndarray, condition: np.ndarray, duration: float) -> int | None:
++    """0 if the condition holds from the first saved sample, without any drop,
++    for at least ``duration``; otherwise None."""
++    if not np.isfinite(duration) or duration <= 0.0:
++        raise ValueError("Hold duration must be finite and positive")
++    if len(condition) == 0 or not condition[0]:
++        return None
++    tol = _hold_tolerance(times)
++    return 0 if _held_from(times, _run_end(condition), 0, duration, tol) else None
++
++
++def _held_recovery_index(times: np.ndarray, condition: np.ndarray, duration: float) -> int | None:
++    """Earliest index after the first drop (first False sample, including
++    index 0) at which the condition re-crosses and is held for ``duration``."""
++    if not np.isfinite(duration) or duration <= 0.0:
++        raise ValueError("Hold duration must be finite and positive")
++    dropped = np.flatnonzero(~np.asarray(condition, dtype=bool))
++    if len(dropped) == 0:
++        return None
++    first_drop = int(dropped[0])
++    tol = _hold_tolerance(times)
++    run_end = _run_end(condition)
+     for index in np.flatnonzero(condition):
+-        required_end = int(np.searchsorted(times, times[index] + duration, side="left"))
+-        if required_end < len(times) and required_end <= run_end[index]:
++        if index > first_drop and _held_from(times, run_end, int(index), duration, tol):
+             return int(index)
+     return None
+ 
+ 
++def classify_held_event(times: np.ndarray, condition: np.ndarray, duration: float) -> str:
++    """Mutually exclusive label: 'retention', 'recovery', or 'none'."""
++    if _held_retention_index(times, condition, duration) is not None:
++        return "retention"
++    if _held_recovery_index(times, condition, duration) is not None:
++        return "recovery"
++    return "none"
++
++
+ def _event_row(
+     *,
+     seed: str,
+@@ -572,6 +672,7 @@
+     hold_duration: float | None,
+     event_index: int | None,
+     imputed_count: int,
++    held_classification: str = "not_applicable",
+ ) -> dict[str, Any]:
+     observed = event_index is not None
+     event_time = float(EXPECTED_SAMPLE_TIMES[event_index]) if observed else float("nan")
+@@ -604,6 +705,7 @@
+         "event_type": event_type,
+         "hold_duration_system": hold_system,
+         "hold_duration": hold_duration,
++        "held_classification": held_classification,
+         "event_time_semantics": "first_qualifying_saved_sample_interval_censored",
+         "event_time": event_time,
+         "event_observed": bool(observed),
+@@ -748,23 +850,37 @@
+                             ("fixed_physical_17p5", FIXED_HOLD_DURATION),
+                             ("one_current_Twindow_nominal", t_window),
+                         ):
+-                            held = _held_index(times, condition, hold_duration)
+-                            event_rows.append(
+-                                _event_row(
+-                                    seed=seed,
+-                                    rho=rho,
+-                                    t_window=t_window,
+-                                    branch=branch,
+-                                    metric=metric,
+-                                    target_definition=target_definition,
+-                                    target_value=target_value,
+-                                    event_type="held",
+-                                    hold_system=hold_system,
+-                                    hold_duration=hold_duration,
+-                                    event_index=held,
+-                                    imputed_count=imputed_count,
+-                                )
++                            classification = classify_held_event(
++                                times, condition, hold_duration
+                             )
++                            for event_type, held in (
++                                ("held", _held_index(times, condition, hold_duration)),
++                                (
++                                    "held_retention",
++                                    _held_retention_index(times, condition, hold_duration),
++                                ),
++                                (
++                                    "held_recovery",
++                                    _held_recovery_index(times, condition, hold_duration),
++                                ),
++                            ):
++                                event_rows.append(
++                                    _event_row(
++                                        seed=seed,
++                                        rho=rho,
++                                        t_window=t_window,
++                                        branch=branch,
++                                        metric=metric,
++                                        target_definition=target_definition,
++                                        target_value=target_value,
++                                        event_type=event_type,
++                                        hold_system=hold_system,
++                                        hold_duration=hold_duration,
++                                        event_index=held,
++                                        imputed_count=imputed_count,
++                                        held_classification=classification,
++                                    )
++                                )
+ 
+                 for metric, reference, target, target_nan, reference_nan in (
+                     ("density", cont_density, density, 0, 0),
+@@ -799,8 +915,8 @@
+ 
+     events = pd.DataFrame(event_rows)
+     auc = pd.DataFrame(auc_rows)
+-    if len(events) != 9600:
+-        raise ArtifactIntegrityError(f"Recovery event row count {len(events)} != 9600")
++    if len(events) != 19200:
++        raise ArtifactIntegrityError(f"Recovery event row count {len(events)} != 19200")
+     if len(auc) != 1600:
+         raise ArtifactIntegrityError(f"Recovery AUC row count {len(auc)} != 1600")
+     return events, auc
+@@ -901,8 +1017,8 @@
+                         }
+                     )
+     result = pd.DataFrame(rows)
+-    if len(result) != 5760:
+-        raise ArtifactIntegrityError(f"Recovery event DID row count {len(result)} != 5760")
++    if len(result) != 11520:
++        raise ArtifactIntegrityError(f"Recovery event DID row count {len(result)} != 11520")
+     return result
+ 
+ 
+@@ -1169,7 +1285,7 @@
+     ]
+     lines = [
+         "=" * 80,
+-        "AIEF-1.4 T_window Sensitivity — Analysis v4",
++        "AIEF-1.4 T_window Sensitivity — Analysis v4.1 (CANDIDATE, UNAUDITED)",
+         "=" * 80,
+         "",
+         "STATUS",
+@@ -1182,6 +1298,8 @@
+         "  Event times: first qualifying saved observation; interval-censored.",
+         "  Undefined similarity: raw NaN, derived recovery representation uses zero.",
+         "  Hold systems: fixed 17.5 units and one nominal current T_window.",
++        "  Held end check: t + duration - 1e-6*dt (v4.1 fix of v4 rounding miss).",
++        "  Held event types: held (any), held_retention, held_recovery.",
+         "  AUC: one-sided deficit over saved support; not labelled full [0,320].",
+         "",
+         "INFERENCE",
+@@ -1201,7 +1319,7 @@
+         "INTERPRETATION LIMITS",
+         "  Exact step-level crossings and t=0/t=320 endpoint values are unavailable.",
+         "  Analysis v3 remains the prespecified legacy-compatible analysis.",
+-        "  Analysis v4 is not an independent experiment.",
++        "  Analysis v4.1 is an unaudited candidate, not an independent experiment.",
+         "",
+         "=" * 80,
+     ]
+@@ -1220,7 +1338,7 @@
+     command_line: str,
+ ) -> Path:
+     execution_id = analysis_execution_id()
+-    version_root = output_root / "v4"
++    version_root = output_root / "v4_1"
+     version_root.mkdir(parents=True, exist_ok=True)
+     final = version_root / execution_id
+     staging = version_root / f".{execution_id}.tmp"
+@@ -1235,7 +1353,7 @@
+             path = staging / filename
+             save_dataframe_atomic(path, frame)
+             output_paths[filename] = path
+-        report_path = staging / "twindow_sensitivity_report_v4.txt"
++        report_path = staging / "twindow_sensitivity_report_v4_1.txt"
+         atomic_write_text(report_path, report)
+         output_paths[report_path.name] = report_path
+ 
+@@ -1448,9 +1566,9 @@
+         "regime": (len(regime_summary), 24),
+         "branch_DID": (len(did_summary), 72),
+         "topology": (len(topology_summary), 12),
+-        "recovery_event": (len(event_summary), 1200),
++        "recovery_event": (len(event_summary), 2400),
+         "recovery_AUC": (len(auc_summary), 80),
+-        "recovery_event_DID": (len(event_did_summary), 720),
++        "recovery_event_DID": (len(event_did_summary), 1440),
+         "recovery_AUC_DID": (len(auc_did_summary), 24),
+     }
+     for label, (observed, expected) in expected_summary_counts.items():
+@@ -1463,20 +1581,20 @@
+         run, regime_summary, did_summary, topology_summary, events, event_did_summary
+     )
+     frames = {
+-        "twindow_paired_regime_contrasts_v4.csv": regime,
+-        "twindow_branch_interactions_v4.csv": branch_did,
+-        "twindow_cross_condition_topology_v4.csv": topology,
+-        "twindow_recovery_events_by_seed_v4.csv": events,
+-        "twindow_recovery_auc_by_seed_v4.csv": auc,
+-        "twindow_recovery_event_interactions_v4.csv": event_did,
+-        "twindow_recovery_auc_interactions_v4.csv": auc_did,
+-        "twindow_regime_summary_v4.csv": regime_summary,
+-        "twindow_branch_DID_summary_v4.csv": did_summary,
+-        "twindow_topology_summary_v4.csv": topology_summary,
+-        "twindow_recovery_event_summary_v4.csv": event_summary,
+-        "twindow_recovery_auc_summary_v4.csv": auc_summary,
+-        "twindow_recovery_event_interaction_summary_v4.csv": event_did_summary,
+-        "twindow_recovery_auc_interaction_summary_v4.csv": auc_did_summary,
++        "twindow_paired_regime_contrasts_v4_1.csv": regime,
++        "twindow_branch_interactions_v4_1.csv": branch_did,
++        "twindow_cross_condition_topology_v4_1.csv": topology,
++        "twindow_recovery_events_by_seed_v4_1.csv": events,
++        "twindow_recovery_auc_by_seed_v4_1.csv": auc,
++        "twindow_recovery_event_interactions_v4_1.csv": event_did,
++        "twindow_recovery_auc_interactions_v4_1.csv": auc_did,
++        "twindow_regime_summary_v4_1.csv": regime_summary,
++        "twindow_branch_DID_summary_v4_1.csv": did_summary,
++        "twindow_topology_summary_v4_1.csv": topology_summary,
++        "twindow_recovery_event_summary_v4_1.csv": event_summary,
++        "twindow_recovery_auc_summary_v4_1.csv": auc_summary,
++        "twindow_recovery_event_interaction_summary_v4_1.csv": event_did_summary,
++        "twindow_recovery_auc_interaction_summary_v4_1.csv": auc_did_summary,
+     }
+     root = Path(output_root) if output_root is not None else Path(run_dir) / "analysis"
+     return _write_bundle(
+@@ -1501,11 +1619,23 @@
+     )
+     parser.add_argument("--bootstrap-seed", required=True, type=int)
+     parser.add_argument("--n-bootstrap", type=int, default=2000)
++    parser.add_argument(
++        "--allow-unaudited-candidate",
++        action="store_true",
++        help="required: acknowledge v4.1 is an unaudited candidate",
++    )
+     return parser.parse_args(argv)
+ 
+ 
+ def main(argv: Sequence[str] | None = None) -> int:
+     args = parse_arguments(argv)
++    if not args.allow_unaudited_candidate:
++        print(
++            "Analysis v4.1 is an UNAUDITED CANDIDATE; refusing to run without "
++            "--allow-unaudited-candidate. Do not run on real trajectories.",
++            file=sys.stderr,
++        )
++        return 2
+     if args.n_bootstrap <= 0:
+         raise ValueError("--n-bootstrap must be positive")
+     final = run_analysis(
+@@ -1515,7 +1645,7 @@
+         n_bootstrap=args.n_bootstrap,
+         command_line=" ".join(sys.argv),
+     )
+-    print(f"Analysis v4 bundle: {final}")
++    print(f"Analysis v4.1 candidate bundle: {final}")
+     print(f"Manifest: {final / 'analysis_manifest.json'}")
+     return 0
+ 

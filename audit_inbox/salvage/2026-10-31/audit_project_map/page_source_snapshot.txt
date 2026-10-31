@@ -1,0 +1,293 @@
+<cursor_untrusted_data_1337 source="ReadCanvas">
+
+Canvas "AIEFS Project Map — current state" (https://cursor.com/canvas/store-88642a02-8c46-4615-99f7-f3c004525fd5/71c3cb27-da90-40ca-9d57-74ef41250a21):
+
+import {
+  Page,
+  Section,
+  Text,
+  Table,
+  Callout,
+  TableOfContents,
+  Segmented,
+  NumberedList,
+  BulletList,
+  Properties,
+  useState,
+} from "grok/canvas";
+import type { TableCell } from "grok/canvas";
+
+type Ty = "all" | "thm" | "num" | "conj" | "def" | "unreg";
+// id, plain statement, type, evidence, conditional, novelty, rediscovery, open gaps, errata, source, unregistered
+type R = [string, string, string, string, string, string, string, string, string, string, string];
+
+const D: R[] = [
+  ["EMP-AIEF13-01", "Shuffling the coherence history wipes out most of the lasting network compared with the normal run.", "num", "float", "", "unchecked", "no", "Outcome forced by construction (shuffled mean R 0.371 < 0.4286); not preregistered", "", "claims.csv:2", ""],
+  ["EMP-AIEF13-02", "Turning off the adaptive feedback (no_mu) shrinks the lasting network a lot; turning off the delay alone changes it a little.", "num", "float", "", "known-variant", "unclear", "Registry caveat is broader than the audit wording", "", "claims.csv:3", ""],
+  ["EMP-AIEF14-01", "Erasing the weights B at the split time: the rest of the state rebuilds the same network.", "num", "float", "", "unchecked", "no", "Note mixes scopes (0/29,040 edges is from 440 audit runs, not the 40 seeds); 'B is a scaffold' untested", "E3", "claims.csv:4", ""],
+  ["EMP-AIEF14-02", "With matched phases at the split, one similarity score rises but mean persistence falls; no mediation claimed.", "num", "float", "", "unchecked", "no", "Exploratory only", "E4", "claims.csv:5", ""],
+  ["EMP-AIEF14-03", "Fixed physical time windows vs EMA-scaled windows removes a confound in the window-length study.", "num", "float", "", "unchecked", "no", "DID estimand untested; held-event rows blocked (AUD-V4-HELDEVENT)", "", "claims.csv:6", ""],
+  ["IMPL-MODULAR-01", "The modular code gives exactly the same arrays as the original single-file code.", "num", "float", "", "n/a", "n/a", "344-array identity not re-run", "", "claims.csv:7", ""],
+  ["LEAN-CF-01", "The 2×3 matrix [[1,1,0],[1,0,1]] has a 1-dimensional null space spanned by (1,−1,−1).", "thm", "Lean", "", "known (elementary)", "no", "Physical relevance needs CF05 (single seed)", "", "claims.csv:8", ""],
+  ["CAVEAT-MS-8.4", "Draft Corollary 8.4 claims too much: the identity holds only at equal-edge points.", "thm", "retracted", "Y", "unchecked", "n/a", "Manuscript text unchanged", "", "claims.csv:9", ""],
+  ["CF01–CF04", "Controller-fiber algebra: admissible directions, clipped-row margin, exact affinity on pieces, kernel ⇔ factorisation C·D = Γ·C.", "thm", "argument", "Y", "unchecked / CF04 known", "no (CF04 unclear)", "Single seed; CF12 open", "", "claims.csv:10–13", ""],
+  ["CF05", "In the exceptional run the K3 winner pattern stays (7,2,7) in all 32,001 saved states.", "num", "float", "", "unchecked", "no", "1 seed; not re-checked by any audit", "", "claims.csv:14", ""],
+  ["CF06", "Given that pattern, the exceptional controller kernel is span(1,−1,−1).", "thm", "Lean", "Y", "unchecked", "no", "Applicability rests on CF05", "", "claims.csv:15", ""],
+  ["CF07–CF09", "Carrier invariance iff s2 = s7; exact left covector; one-sided limit to an analytic family.", "thm", "argument", "Y", "unchecked", "no", "Single seed; CF12 open", "", "claims.csv:16–18", ""],
+  ["CF10", "By the last saved time the K3 block is very close to that analytic family.", "num", "float", "", "unchecked", "no", "1 seed; not re-checked", "", "claims.csv:19", ""],
+  ["CF11", "Conjecture: alignment residuals keep shrinking after t = 320.", "conj", "unverified", "", "unchecked", "n/a", "Open", "", "claims.csv:20", ""],
+  ["CF12", "Conjecture: the winning branch persists forever.", "conj", "unverified", "", "unchecked", "n/a", "Open; load-bearing for the whole CF chain", "", "claims.csv:21", ""],
+  ["S01–S18 (18 rows)", "Retired older interpretations (B is the unique memory, gate is rare repair, equilibrium, loop gain, …). Replacement wording in registry.", "num", "retracted", "", "n/a", "n/a", "S01 replacement itself struck by audit", "E3", "claims.csv:22–39", ""],
+  ["REJ-* (5 rows)", "Rejected: 8-D POD subspace, eps=1e-8 Jacobian, bare zero-sum locking, 856 K3 triangles (really 26), 20-seed folder as N=40.", "num", "retracted", "", "n/a", "n/a", "", "", "claims.csv:40–44", ""],
+  ["AUD-CORR-0995", "The 0.995 link between past coherence and lasting edges holds for the repo's hand-picked frequencies; with random frequencies it drops to ~0.71 (uniform) and 0.59–0.63 (clustered).", "num", "float", "", "known-variant", "yes", "One ω vector for 0.995; no dt study", "E1,E8,E9,E12", "claims.csv:45", ""],
+  ["AUD-TOPO-OMEGA", "Which edges survive is largely set by the natural frequencies; several end networks are possible.", "num", "float", "", "known-variant", "unclear", "States the 0.4286 rule; E12 says 0.4543", "", "claims.csv:46", ""],
+  ["AUD-GATE", "The capacity gate is multiplicative normalisation: idempotent, but not a projection.", "thm", "argument", "Y", "known", "unclear", "Manuscript still says 'projected'", "", "claims.csv:47", ""],
+  ["AUD-SCOPE-1.4", "Scope rule: memory ablation = 40 seeds; whole operator/fiber pipeline = one seed.", "def", "argument", "", "n/a", "n/a", "", "", "claims.csv:48", ""],
+  ["AUD-SLOWPOLE", "Quarantined: 'EMA pole is the unique slow pole' came from a non-closed 18-coordinate state; full 966-dim state has 10 rates in the gap.", "num", "retracted", "", "n/a", "n/a", "966-dim result is a proposal", "E2", "claims.csv:49", ""],
+  ["AUD-RATELAW", "On complete, saturated, locked components the one-step multiplier is λ = (1 − γ·dt)·s_J.", "thm", "argument", "Y", "known-variant", "yes (partial)", "~2e-8 gap waits on dt sweep", "E4,E5", "claims.csv:50", ""],
+  ["AUD-KAPPA-TW", "Slow rate κ_k = k·η/c − 1/T_w for k controlling edges; matches 292 measured components.", "thm", "float", "Y", "known-variant", "yes (partial)", "Only k = 2 gives 2η/c", "E4", "claims.csv:51", ""],
+  ["AUD-FROZEN-TOPO", "After the split no edge crosses the threshold again (0 of 29,040 edge records, 440 runs).", "num", "float", "", "n/a", "n/a", "Finite windows only; forever needs O1", "", "claims.csv:52", ""],
+  ["AUD-DELAY", "Delay is not necessary but not inert: more distinct end networks with delay.", "num", "float", "", "known-variant", "unclear", "No basin count", "", "claims.csv:53", ""],
+  ["AUD-K3", "Ordinary K3 triangles have only one-sided rays, not eigenmodes; only the exceptional K3 has a two-sided fiber.", "thm", "argument", "Y", "unchecked", "n/a", "Manuscript Cor 8.2 still says 'spectrally silent'", "", "claims.csv:54", ""],
+  ["AUD-TIES", "Fully tied K_n: gate derivative non-additivity 1/√(2k(k−1)); not universal (K4 counterexample).", "thm", "argument", "Y", "unchecked", "n/a", "General ties open (O2)", "", "claims.csv:55", ""],
+  ["AUD-REPRO13", "AIEF-1.3 re-runs reproduce bit-for-bit (500/500 runs).", "num", "exact", "", "n/a", "n/a", "", "", "claims.csv:56", ""],
+  ["AUD-REPRO-B2A95", "Run b2a95dfbfbe3 reproduces official run 5a9f093a2fe0 from committed code.", "num", "float", "", "n/a", "n/a", "E10 NaN check is on another branch", "", "claims.csv:57", ""],
+  ["AUD-NOVELTY", "Novelty not established either way; ingredients are prior art.", "conj", "unverified", "", "n/a", "n/a", "Partly stale", "E12", "claims.csv:58", ""],
+  ["AUD-LABEL", "Rule: audit analyses are 'controlled exploratory analyses'; nothing preregistered.", "def", "argument", "", "n/a", "n/a", "", "", "claims.csv:59", ""],
+  ["AUD-HELDOUT-LABEL", "Two held-out targets are the same label in all 440 runs, so 'Pearson' values are point-biserial.", "num", "exact", "", "known (textbook)", "n/a", "", "", "claims.csv:60", ""],
+  ["AUD-CYCLE-KERNEL", "For a fully tied complete graph K_n the relevant kernel (unsigned incidence) has dimension n(n−3)/2: K3 0, K4 2, K5 5, K6 9.", "thm", "Lean", "Y", "known", "yes", "Naming fixed by E6", "E6", "claims.csv:61", ""],
+  ["LEAN-R4", "Round-4 Lean package builds with no sorry and standard axioms only (115 declarations).", "thm", "Lean", "", "known (elementary)", "no", "Stale hashes (E7); CI builds only this project", "E7", "claims.csv:62", ""],
+  ["AUD-V4-HELDEVENT", "Blocker: v4 held-event detection can miss exact-duration boundaries (float rounding).", "num", "float", "", "n/a", "n/a", "Real rows not re-checked; v4.1 unaudited", "", "claims.csv:63", ""],
+  ["AUD-V4-RECOVERY-WORDING", "v4 calls some retention events 'recovery'.", "def", "argument", "", "n/a", "n/a", "Count unknown", "", "claims.csv:64", ""],
+  ["AUD-MODULAR-ORACLE", "Modular platform not oracle-certified by the tests (oracle test skipped).", "num", "float", "", "n/a", "n/a", "", "", "claims.csv:65", ""],
+  ["AUD-TIMESTEP", "OPEN: no dt, dt/2, dt/4 study exists; every number holds for dt = 0.01 only.", "conj", "unverified", "", "n/a", "n/a", "Load-bearing for all numerics", "", "claims.csv:66", ""],
+  ["AUD-B-SCAFFOLD", "OPEN: 'B is a conditional scaffold' not yet stated as a test or tested.", "conj", "unverified", "", "n/a", "n/a", "Untested", "", "claims.csv:67", ""],
+  ["AUD-CORR-0995-SCOPE", "Replication with 15+15 frequency sets × 4 seeds: uniform mean ~0.75 (median ~0.98), clustered ~0.53–0.55.", "num", "float", "", "known-variant", "yes", "", "E8,E9,E12", "claims.csv:68", ""],
+  ["AUD-RESP1-UNIFORM", "Correction: past R beats the frequency-gap predictor on log loss, but on AUC only with delay on.", "num", "retracted", "", "n/a", "n/a", "", "E8", "claims.csv:69", ""],
+  ["RES-FREEZE-01", "Conditional freezing theorem: IF every edge's coherence stays in a certified band from step T, THEN the strong-edge set stops changing by T + N, gate included.", "thm", "argument", "Y", "plausibly new (narrow)", "no", "O1 (load-bearing), O2 ties, O3 which support, O4 a-priori N; Lean core has ∃N only", "E12", "claims.csv:70 (freezing)", ""],
+  ["SSRH-ORIG-01–07 (7 rows)", "Origin ideas outside the AIEF model (delay amplification, Rieger periods, 60Fe, ice phases, Faraday, SINDy).", "conj", "unverified", "", "unchecked", "n/a", "No data or code in repo", "E4", "claims.csv:71–77", ""],
+  ["LEAN-KN-01", "For every complete graph K_n (n ≥ 3) the unsigned incidence kernel has dimension C(n,2) − n (K12: 54). Computer-proved for all n.", "thm", "Lean", "", "known", "no (route from literature)", "Not built by CI until 14c29fe merges", "E11", "claims.csv:70 (lean-kn)", ""],
+  ["U-MODEL", "Model: 12 delay-coupled adaptive Kuramoto oscillators on 66 edges; B⁺ = λ·max(0,(1−h)B + h·u); gate λ = min(1, c/(s+ε)), c = 0.6333.", "def", "exact", "", "known-variant", "n/a", "No dt study", "", "freezing/REPORT.md:109", "U"],
+  ["U-THRESH", "An ungated edge settles above B_c iff R > 0.4543; B* = 0 at R = 3/7 = 0.4286.", "thm", "exact", "Y", "known (elementary)", "n/a", "AUD-TOPO-OMEGA and the literature Page use 0.4286", "", "ERRATA:188–189", "U"],
+  ["U-CLIQUE", "Gated fixed point of a locked k-clique is c/(k−1): k = 6 gives 0.12667 (ON, margin 0.0067); k ≥ 7 are OFF.", "thm", "argument", "Y", "known-variant", "unclear", "Thin margin (5.6% of B_c)", "", "freezing/REPORT.md:127–136", "U"],
+  ["U-O1", "Open conjecture O1: the closed loop always locks/drifts with a margin, so the freezing theorem applies.", "conj", "unverified", "Y", "unchecked", "n/a", "THE most load-bearing gap", "", "freezing/REPORT.md:224–232", "U"],
+  ["U-MULTISTAB", "Same frequencies, different seeds: 19, 22 or 25 strong edges at the end.", "num", "float", "", "known-variant", "unclear", "Which one appears is open (O3)", "", "freezing/results.json", "U"],
+  ["U-FLOATGATE", "The float gate test agrees with the exact rational test.", "num", "exact", "", "n/a", "n/a", "Audit notes only, not in repo", "", "box audit notes", "U"],
+  ["U-MS-2 (2.1–2.14)", "Gated map factorises, is linear on fibers; branch Jacobian; one-sided tie derivative; branch persistence; dual closure.", "thm", "argument", "Y", "unchecked", "n/a", "2.7 persistence = CF12 gap", "", "MS:114–461", "U"],
+  ["U-MS-3", "Directed phase increment and EMA tracking-error recurrence.", "thm", "argument", "Y", "known-variant", "unclear", "'projected' wording", "", "MS:534,588", "U"],
+  ["U-MS-4–7", "Squared-magnitude and alignment identities; fixed-winner K3 block; defect-matrix shape (overlap CF06–CF09).", "thm", "argument", "Y", "unchecked", "n/a", "Single seed; 7.1 'projected' wording", "", "MS:641–1130", "U"],
+  ["U-MS-8.1", "Complete-component lineality dimension C(s,2) − s; Cor 8.2 'K2 and K3 spectrally silent'.", "thm", "argument", "Y", "known", "yes", "8.2 wording retired by AUD-K3, no erratum", "", "MS:1198,1248", "U"],
+  ["U-MS-8.3", "Frozen-driver scalar action and finite-step contraction rate (overlap AUD-RATELAW).", "thm", "argument", "Y", "known-variant", "yes (partial)", "2e-8 gap", "", "MS:1303,1392", "U"],
+  ["U-MS-9", "Biorthogonal scalar recurrence and Duhamel decomposition.", "thm", "argument", "Y", "known-variant", "unclear", "", "", "MS:1470,1504", "U"],
+  ["U-MS-10", "Under a resonant source the EMA tracking error has a Jordan-type n·rⁿ solution.", "thm", "argument", "Y", "known", "yes", "", "", "MS:1534–1597", "U"],
+  ["U-MS-11", "Relative-retention memory rate (replaces retired 'loop gain' S14).", "thm", "argument", "Y", "unchecked", "n/a", "", "", "MS:1667", "U"],
+  ["U-CPE", "Alignment decay ⇒ resonance equalization ⇒ proposal equalization ⇒ branch-matrix closure.", "thm", "argument", "Y", "unchecked", "n/a", "Alignment decay is observed, not derived", "", "CPE note:346,544", "U"],
+  ["U-CFTP", "Controller-fiber package Props 2.1–10.1; open theorem in §13.", "thm", "argument", "Y", "unchecked", "n/a", "§13 open", "", "CFTP note:640", "U"],
+  ["U-NONRESULTS", "Manuscript §14 non-results list (e.g. no full-system Jordan block).", "def", "argument", "", "n/a", "n/a", "", "", "MS:1794", "U"],
+];
+
+const tyLabel: Record<string, string> = { thm: "Theorem", num: "Numerical", conj: "Conjecture", def: "Definition" };
+const evTone = (e: string): TableCell =>
+  e === "Lean" || e === "exact"
+    ? { text: e, tone: "success" }
+    : e === "float"
+      ? "floating-point"
+      : e === "argument"
+        ? { text: e, tone: "warning" }
+        : e === "unverified"
+          ? { text: e, tone: "danger" }
+          : "retracted/corrected";
+const valTone = (v: string): TableCell =>
+  v.startsWith("yes") ? { text: v, tone: "success" } : v.startsWith("unclear") ? { text: v, tone: "warning" } : v;
+
+const count = (t: Ty) =>
+  D.filter((r) => (t === "all" ? true : t === "unreg" ? r[10] === "U" : r[2] === t && r[10] !== "U")).length;
+const tyOptions = [
+  { value: "all" as Ty, label: "All", count: count("all") },
+  { value: "thm" as Ty, label: "Theorems", count: count("thm") },
+  { value: "num" as Ty, label: "Numerical", count: count("num") },
+  { value: "conj" as Ty, label: "Conjectures", count: count("conj") },
+  { value: "def" as Ty, label: "Definitions", count: count("def") },
+  { value: "unreg" as Ty, label: "Unregistered", count: count("unreg") },
+];
+
+export default function AIEFSProjectMap() {
+  const [ty, setTy] = useState<Ty>("all");
+  const shown = D.filter((r) =>
+    ty === "all" ? true : ty === "unreg" ? r[10] === "U" : r[2] === ty && r[10] !== "U",
+  );
+  const rows: TableCell[][] = shown.map((r) => [
+    r[0] + (r[10] === "U" ? " (unregistered)" : ""),
+    r[1],
+    tyLabel[r[2]],
+    evTone(r[3]),
+    r[4] === "Y" ? { text: "yes", tone: "warning" } : "no",
+    r[5],
+    valTone(r[6]),
+    r[7] || "—",
+    r[8] || "—",
+    r[9],
+  ]);
+
+  return (
+    <Page
+      title="AIEFS Project Map — current state"
+      summary="A full map of what the AIEFS project currently claims, how strongly each claim is backed, and what still holds it up. 98 claims: 77 registry rows plus 21 substantive claims with no registry row. Read-only, 2026-10-29: no repo file was changed. Full data in /workspace/research/project_map/."
+      width="wide"
+    >
+      <TableOfContents
+        items={[
+          { label: "In plain words", id: "plain" },
+          { label: "Totals", id: "totals" },
+          { label: "Rediscoveries: evidence the system works", id: "valid" },
+          { label: "Claims map", id: "map" },
+          { label: "What holds what up", id: "deps" },
+          { label: "Next steps (current project only)", id: "next" },
+          { label: "Inconsistencies found", id: "incons" },
+          { label: "Method and caveats", id: "method" },
+        ]}
+      />
+
+      <Section heading="In plain words" id="plain">
+        <Callout lead="The short version" tone="info">
+          AIEFS simulates 12 coupled oscillators whose 66 connections strengthen or fade depending on how in-step the oscillators have been. The main finding is that a stable network forms and then stops changing. The project has a lot of careful bookkeeping (77 registry rows, 12 errata), and 26 of its claims have already been withdrawn or corrected, which is a sign the checking works. Only 5 claims are proved by computer (Lean), and all 5 are linear-algebra facts. The main theorem about the network freezing is conditional: it holds only if the oscillators stay locked, and nobody has proved they do (gap O1). Every simulation number comes from a single step size (dt = 0.01), and no step-size check exists yet.
+        </Callout>
+        <Properties
+          items={[
+            { label: "Lean-proved", value: "Checked line by line by the Lean 4 proof assistant, using only its standard axioms (propext, Classical.choice, Quot.sound). The strongest level." },
+            { label: "Exact computation", value: "Exact arithmetic or bit-for-bit reproduction. No rounding doubt." },
+            { label: "Floating-point numerics", value: "Computer simulation with ordinary rounding, over a stated number of runs and seeds. Strong for those settings only." },
+            { label: "Argument only", value: "A written proof or derivation that no computer has checked." },
+            { label: "Unverified", value: "A conjecture or open item with no supporting check yet." },
+            { label: "Retracted/corrected", value: "The claim as first stated was withdrawn or replaced (errata number or registry status given)." },
+            { label: "Conditional", value: "The statement says 'IF these assumptions hold, THEN …', and the assumptions are not shown to hold for the real dynamics." },
+            { label: "Key numbers", value: "dt = 0.01, delay τ = 0.5, η = 0.04, γ = 0.015, μ = 0.03, B_c = 0.12, gate capacity c = 0.6333." },
+          ]}
+        />
+      </Section>
+
+      <Section heading="Totals" id="totals" caption="98 rows = 77 registry + 21 unregistered. 'Registry' = only the 77 ledger rows. The page groups some rows (S01–S18, REJ-*, SSRH, CF ranges, manuscript sections); the CSV keeps every row.">
+        <Table
+          columns={["Measure", "All 98", "Registry 77"]}
+          rows={[
+            ["Type: numerical observation", "45", "43"],
+            ["Type: theorem", "35", "19"],
+            ["Type: conjecture / open", "13", "12"],
+            ["Type: definition / rule", "5", "3"],
+            [{ text: "Evidence: Lean-proved (primary)", tone: "success" }, "5", "5"],
+            [{ text: "Evidence: exact computation", tone: "success" }, "5", "2"],
+            ["Evidence: floating-point numerics", "18", "17"],
+            [{ text: "Evidence: argument only", tone: "warning" }, "31", "15"],
+            [{ text: "Evidence: unverified", tone: "danger" }, "13", "12"],
+            ["Evidence: retracted/corrected (claim withdrawn)", "26", "26"],
+            ["Any Lean backing (5 + freezing core)", "6", "6"],
+            ["Conditional statements", "33", "16"],
+            ["Rows citing an erratum", "38", "38"],
+            ["Rows whose wording or status was corrected", "44", "44"],
+            ["Unregistered substantive claims", "21", "—"],
+            [{ text: "Independent rediscoveries (validation hits)", tone: "success" }, "3 distinct results (5 rows) + 1 partial (3 rows); 9 rows unclear", "3 + 1"],
+          ]}
+        />
+        <Callout lead="Parameter coverage: what the numbers test vs what is claimed" tone="warning">
+          The theorems are stated for general parameters, but every simulation sits at one point: N = 12 oscillators, dt = 0.01, one set of rate constants (η, γ, μ, B_c, a, q, δ). Only three things vary: the delay τ (0.5 or 0), the window T_w (5 values) and the frequencies ω (the repo's vector plus about 73 random or stress draws). The freezing check covers 12 runs and 1,412 certified (run, T) pairs with 0 violations. But only 249 of those pairs have N &gt; 0, i.e. actually test the 'wait N more steps' part (max N = 1,428). All repo-ω runs have N = 0.
+        </Callout>
+      </Section>
+
+      <Section heading="Rediscoveries: evidence the system works" id="valid" caption="Rule: 'yes' only when a dated repo file shows the project's own derivation before any literature for it appears in the files. First commit add81e6 is 2026-10-18. The first literature search is 2026-10-23.">
+        <Callout lead="Why 'already known' is good news here" tone="success">
+          When the project's AI pipeline derives a result on its own and the result matches published mathematics, that is an outside check that the pipeline finds true things. Three distinct results pass that test, with a fourth partly matching. All of them are in the files before any literature search. The honest caveat is that the files cannot rule out that an AI recalled a textbook fact while writing its derivation.
+        </Callout>
+        <Table
+          columns={["Result the project derived", "Rows", "First appears", "Matches", "Verdict"]}
+          rows={[
+            ["Kernel of the unsigned incidence matrix of a complete graph K_n has dimension C(n,2) − n (K12: 54)", "AUD-CYCLE-KERNEL, U-MS-8.1", "Manuscript Prop 8.1 (MS:1198) and AIEF_HISTORIC_UNFOLDING.md:548 (q_s = C(s,2) − s), both in add81e6, 2026-10-18", "van Nuffelen 1976; Grossman–Kulkarni–Schochetman 1994 (unsigned incidence rank = n for connected non-bipartite graphs)", { text: "yes", tone: "success" }],
+            ["Edges that were coherent in the past are the ones that last; frequencies shape the final network", "AUD-CORR-0995, AUD-CORR-0995-SCOPE", "AIEF_HISTORIC_UNFOLDING.md:166 'Corr_physical ~0.995', add81e6", "Chauhan et al. 2022 (cited via E12 on 2026-10-29); Seliger 2002 and Berner 2019 (salvage :74–76)", { text: "yes", tone: "success" }],
+            ["Resonant forcing gives a Jordan-type n·rⁿ tracking error", "U-MS-10", "Manuscript Prop 10.1 (MS:1534), add81e6", "Repeated-root linear recurrences (e.g. Elaydi, An Introduction to Difference Equations, 2005). This citation was added by this map and is not in the repo.", { text: "yes", tone: "success" }],
+            ["Decay rate generated by node degree under multiplicative normalisation (η/c = 6/95 at degree level)", "AUD-RATELAW, AUD-KAPPA-TW, U-MS-8.3", "AIEF_HISTORIC_UNFOLDING.md:543, add81e6", "Miller & MacKay 1994 (normalisation in Hebbian learning; salvage :78, :137). The analogy matches, but the exact λ formula is project-specific.", { text: "yes (partial)", tone: "success" }],
+          ]}
+        />
+        <Text>
+          There are 9 'unclear' rows: EMP-AIEF13-02, CF04, AUD-TOPO-OMEGA, AUD-GATE, AUD-DELAY, U-CLIQUE, U-MULTISTAB, U-MS-3 and U-MS-9. For each, the matching literature is cited in the same round as the result, or no literature comparison exists, so the order cannot be told. LEAN-KN-01 is counted as 'no' because its all-n proof route (rinv = Mᵀ·Q⁻¹) came from the research sweep, which cites the classical result. The fact itself was rediscovered earlier (row 1 above).
+        </Text>
+      </Section>
+
+      <Section heading="Claims map" id="map" caption="Filter by type. 'Unregistered' = substantive claims found in manuscript, theorem notes, REPORT or ERRATA with no registry row. Source: claims.csv line on research/freezing cc31533 unless marked; MS = AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md. The CSV adds evidence detail, scope and key numbers for every row.">
+        <Segmented<Ty> options={tyOptions} value={ty} onChange={setTy} />
+        <Table
+          columns={["ID", "Plain statement", "Type", "Evidence", "Conditional", "Novelty", "Independent rediscovery", "Open gaps", "Errata", "Source"]}
+          rows={rows}
+        />
+      </Section>
+
+      <Section heading="What holds what up" id="deps" caption="Read each row as: the claim on the left is only as strong as the item in the middle.">
+        <Table
+          columns={["Claim", "Rests on", "Status of what it rests on"]}
+          rows={[
+            ["Every simulation number (all 18 float rows, AUD-KAPPA-TW, the 0.995 and 0.71 figures)", "Step-size convergence (AUD-TIMESTEP)", { text: "Open, never run", tone: "danger" }],
+            ["'The network freezes forever' (RES-FREEZE-01 applied, AUD-FROZEN-TOPO beyond the window)", "O1: the closed loop locks with a margin", { text: "Open; 12 finite runs only", tone: "danger" }],
+            ["RES-FREEZE-01 itself", "Lemma 1 (gate sandwich) + Thms 2–3 (paper); per-edge core in Lean (∃N)", { text: "Partly Lean; explicit N not formal", tone: "warning" }],
+            ["EMP-AIEF14-01 'predicting from the split is expected'", "AUD-FROZEN-TOPO (0/29,040 crossings)", "Finite-window numerics"],
+            ["AUD-RATELAW / AUD-KAPPA-TW", "Locked, saturated components + AUD-CYCLE-KERNEL + an explanation of the ~2e-8 gap", { text: "Kernel Lean-proved; gap open", tone: "warning" }],
+            ["CF06–CF10, U-MS-4–7, U-CPE (whole operator/fiber chain)", "CF05 winner pattern in ONE seed → CF11 alignment decay → CF12 persistence", { text: "Single seed, not re-checked; CF11/CF12 open", tone: "danger" }],
+            ["Slow-memory story (S09, U-MS-11)", "Spectrum of the full 966-dim state", { text: "Proposal only (AUD-SLOWPOLE)", tone: "warning" }],
+            ["Lean rows' 'CI green'", "lean.yml building all three projects", { text: "Only AIEFProofs built; fix 14c29fe unmerged", tone: "warning" }],
+            ["EMP-AIEF14-03 window study", "AUD-V4-HELDEVENT fix + recovery wording", { text: "v4.1 not run on real rows", tone: "warning" }],
+          ]}
+        />
+        <Callout lead="The most load-bearing gaps" tone="danger">
+          1) O1, closed-loop locking with a margin. Without it, the freezing theorem never switches on for the real system. 2) AUD-TIMESTEP. No result has been checked at a smaller step size. 3) The CF chain rests on one seed, with CF12 (persistence) open. Smaller items: the unexplained ~2e-8 rate-law gap and the 966-dimension slow-pole question.
+        </Callout>
+      </Section>
+
+      <Section heading="Next steps (current project only)" id="next" caption="Ranked by how much they unblock. Each has a pass/fail check. No backup problems.">
+        <NumberedList
+          items={[
+            "Step-size study (closes AUD-TIMESTEP, tests the 2e-8 gap). Re-run the 5 repo seeds plus 5 random-ω seeds at dt = 0.01, 0.005 and 0.0025, keeping τ = 0.5 fixed (delay steps 50/100/200). Check: same final strong-edge set at all three dt; Corr_physical and κ_k change by less than a stated tolerance; observed order p = log₂(|G(h)−G(h/2)| / |G(h/2)−G(h/4)|) ≈ 1 for the rate-law gap.",
+            "Locking-margin census (toward O1). Run the existing freezing certificate on many more runs: for example 100 uniform-ω draws × 4 seeds, with windows 4× longer. Check: the fraction of runs certified, the distribution of the smallest margin, and the number of violations (must stay 0). This also gives far more N > 0 cases than the current 249.",
+            "Lean completion. Merge the 14c29fe CI matrix so AIEFProofsKn and AIEFFreezeCore are actually built, then formalise Lemma 1 and Thm 3 with explicit N. Check: CI builds all three projects; `#print axioms` shows only propext, Classical.choice and Quot.sound; 0 sorry.",
+            "Get the CF chain off one seed. Re-check CF05 (7,2,7 in 32,001 states) and CF10 on the saved replay with an independent script. Then run the CF pipeline on more of the 40 seeds. Check: counts match; a list of which seeds have an exceptional K3.",
+            "Ledger hygiene in one owner-approved commit. Fix RES-FREEZE-01 study_id, the stale counts and date in CURRENT_STATUS, the ART-0748 hash, the AUD-TOPO-OMEGA threshold (0.4543 per E12), the E1 'does worse' wording, and the EMP-AIEF14-01 scope. Add a caveat for Cor 8.2 and register O1 and the 21 unregistered claims. Check: the validator passes, with an explicit --edited-since because the ce8cced default is broken.",
+            "Run v4.1 on the real held-event rows and count retention-vs-recovery events. Check: number of rows that change.",
+          ]}
+        />
+      </Section>
+
+      <Section heading="Inconsistencies found" id="incons" caption="Places where wording, status and evidence disagree. Nothing was edited.">
+        <BulletList
+          items={[
+            "CURRENT_STATUS.md still says '75 rows' and 'Last Verified 2026-10-23'. Each branch now has 76 rows and the union has 77.",
+            "RES-FREEZE-01 has study_id AI_AGENT_AUDITS_2026_10, although it is research output, not an audit round. It sits at claims.csv:70 on research/freezing, the same line as LEAN-KN-01 on research/lean-kn.",
+            "RES-FREEZE-01 says N is explicit, but the Lean core proves only that some N exists (∃N).",
+            "ART-0748 records hash 1391738e, but the file is 04c8ae17, while E11 relies on the README being hash-pinned. ART-0743..0751 describe every Lean file as 'ker(C_{2,7})'.",
+            "README.md:75 still says 'no literature review has been done', and its Lean section omits AIEFProofsKn and AIEFFreezeCore.",
+            "AUD-TOPO-OMEGA (claims.csv:46) uses R > μ/(η+μ) = 0.4286 as the survival rule. E12 (ERRATA:188–189) shows the settle-above-B_c threshold is 0.4543. The earlier 'AIEFS Research Sweep' Page also uses 0.4286 for freezing (not edited).",
+            "E1 (ERRATA:30) still says the 0.995 link 'does worse' on clustered ω; E8 (ERRATA:150–151) calls that an overstatement.",
+            "The EMP-AIEF14-01 note quotes '0/29,040 edges', which comes from the 440 audit runs, under a scope of '40 paired seeds'.",
+            "The manuscript abstract and Props 2.10, 3.1 and 7.1 still say 'projected', which AUD-GATE retired. Cor 8.2 (MS:1248) still says 'spectrally silent', retired by AUD-K3, with no erratum or caveat row (only 8.4 has one).",
+            "CF05 and CF10 are marked 'Supported', although they rest on one seed and no audit re-checked them.",
+            "The EMP-AIEF13-02 caveat is broader than the audit wording supports.",
+            "The lean.yml workflow builds only AIEFProofs, so CI shows green while AIEFProofsKn and AIEFFreezeCore are never built (false green).",
+            "The validator's default --edited-since ce8cced is broken. This predates the current work.",
+            "SSRH-ORIG-04 repeats r = 0.92 from chat text with no data.",
+            "AUD-NOVELTY ('first pass only') is partly stale, since later novelty work exists but is not registered.",
+          ]}
+        />
+      </Section>
+
+      <Section heading="Method and caveats" id="method">
+        <Properties
+          items={[
+            { label: "Sources", value: "git show of research/freezing @ cc31533 and research/lean-kn @ 2fc1110 (registry, errata, status, README, freezing REPORT and results, Lean READMEs, manuscript and theorem notes, audit salvage), plus box audit notes. Read-only: no clone, build, Lean compile, commit or push." },
+            { label: "Evidence rule", value: "Each row gets the strongest evidence for its CURRENT wording. Corrections are tracked in separate columns, so a corrected row that is still supported keeps its numeric level." },
+            { label: "Unregistered rows", value: "Manuscript propositions are grouped by section. Groups that duplicate a CF row are marked 'overlap'." },
+            { label: "Unknowns", value: "Whether CF05/CF10 still hold (never re-checked); how many v4 'recovery' events are really retention; whether v4.1 changes real rows. All are marked unknown and not guessed." },
+            { label: "Files", value: "/workspace/research/project_map/claims_map.csv (98 rows, all columns), totals.json, MAP_NOTES.md, build_map.py" },
+          ]}
+        />
+      </Section>
+    </Page>
+  );
+}
+
+
+</cursor_untrusted_data_1337>

@@ -1,0 +1,242 @@
+[
+ {
+  "n": 1,
+  "msg": "merge-prep (1/25): registry",
+  "files": [
+   "registry/README.md",
+   "registry/claims.csv",
+   "registry/lineage_reconciliation.csv",
+   "registry/reconciliation/build_claims_reconciliation.py"
+  ]
+ },
+ {
+  "n": 2,
+  "msg": "merge-prep (2/25): registry",
+  "files": [
+   "registry/relocation_map.csv",
+   "registry/studies.csv",
+   "registry/supersessions.csv"
+  ]
+ },
+ {
+  "n": 3,
+  "msg": "merge-prep (3/25): registry",
+  "files": [
+   "registry/artifacts.csv"
+  ]
+ },
+ {
+  "n": 4,
+  "msg": "merge-prep (4/25): root docs",
+  "files": [
+   "AIEF_1_4_superseded_claims.LEDGER_POINTER.md",
+   "CURRENT_STATUS.md",
+   "ERRATA_2026-10-28.md",
+   "MERGE_PREP_LOCAL_HISTORY.md"
+  ]
+ },
+ {
+  "n": 5,
+  "msg": "merge-prep (5/25): root docs",
+  "files": [
+   "MERGE_PREP_REPORT.md",
+   "OPERATING_MANUAL.md",
+   "PRIVACY_SCRUB_LIST.md",
+   "README.md"
+  ]
+ },
+ {
+  "n": 6,
+  "msg": "merge-prep (6/25): root docs",
+  "files": [
+   "PUSH_NOTES.md",
+   "REPRODUCING.md",
+   "requirements.txt"
+  ]
+ },
+ {
+  "n": 7,
+  "msg": "merge-prep (7/25): docs and history",
+  "files": [
+   "docs/REVIEWING.md",
+   "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md",
+   "history/timeline.md"
+  ]
+ },
+ {
+  "n": 8,
+  "msg": "merge-prep (8/25): audits/engineering",
+  "files": [
+   "audits/engineering/PATH_AND_LOCK_DEPENDENCY_AUDIT.md",
+   "audits/engineering/python_path_dependencies.csv",
+   "audits/engineering/validate_registry_against_tree.py",
+   "audits/engineering/verify_inventory.py"
+  ]
+ },
+ {
+  "n": 9,
+  "msg": "merge-prep (9/25): audits/scientific",
+  "files": [
+   "audits/scientific/SCIENTIFIC_CLASSIFICATION_AND_REJECTIONS_AUDIT.md",
+   "audits/scientific/revalidated_summaries/aief_1_3_disjoint_100seed_analysis_manifest.json",
+   "audits/scientific/revalidated_summaries/aief_1_3_disjoint_100seed_paired_binary_effects.csv",
+   "audits/scientific/revalidated_summaries/aief_1_3_disjoint_100seed_paired_cohort_heterogeneity.csv"
+  ]
+ },
+ {
+  "n": 10,
+  "msg": "merge-prep (10/25): audits/scientific",
+  "files": [
+   "audits/scientific/revalidated_summaries/aief_1_3_disjoint_100seed_paired_effects.csv",
+   "audits/scientific/revalidated_summaries/aief_1_3_disjoint_100seed_paired_report.txt",
+   "audits/scientific/revalidated_summaries/twindow_v4_analysis_manifest.json",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_branch_DID_summary_v4.csv"
+  ]
+ },
+ {
+  "n": 11,
+  "msg": "merge-prep (11/25): audits/scientific",
+  "files": [
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_cross_condition_topology_v4.csv",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_paired_regime_contrasts_v4.csv",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_recovery_auc_interaction_summary_v4.csv",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_recovery_auc_interactions_v4.csv"
+  ]
+ },
+ {
+  "n": 12,
+  "msg": "merge-prep (12/25): audits/scientific",
+  "files": [
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_recovery_auc_summary_v4.csv",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_recovery_event_interaction_summary_v4.csv",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_regime_summary_v4.csv",
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_sensitivity_report_v4.txt"
+  ]
+ },
+ {
+  "n": 13,
+  "msg": "merge-prep (13/25): audits/scientific",
+  "files": [
+   "audits/scientific/revalidated_summaries/twindow_v4_twindow_topology_summary_v4.csv"
+  ]
+ },
+ {
+  "n": 14,
+  "msg": "merge-prep (14/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/GITHUB_TREE_AND_ZIP_RECONCILIATION.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/PROVENANCE.json",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_closure_diagnostics.py.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_closure_diagnostics_updated.py.diff"
+  ]
+ },
+ {
+  "n": 15,
+  "msg": "merge-prep (15/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_paired_statistics.py.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_3_paired_statistics_updated.py.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_CONDITIONAL_PROPOSAL_EQUALIZATION_THEOREM.md.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md.diff"
+  ]
+ },
+ {
+  "n": 16,
+  "msg": "merge-prep (16/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_memory_ablation_updated.py.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AIEF_1_4_trajectory_recovery_equivalence.py.diff",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/diffs_vs_root/AI_AGENT_HANDOFF_PROMPT.md.diff"
+  ]
+ },
+ {
+  "n": 17,
+  "msg": "merge-prep (17/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/newer_zip_markdown/AIEF_1_4_CONDITIONAL_PROPOSAL_EQUALIZATION_THEOREM.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/newer_zip_markdown/AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/newer_zip_markdown/AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/newer_zip_markdown/AI_AGENT_HANDOFF_PROMPT.md"
+  ]
+ },
+ {
+  "n": 18,
+  "msg": "merge-prep (18/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_CONTROLLER_FIBER_CLAIM_REGISTRY.csv",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_CONTROLLER_FIBER_FREEZE_MANIFEST.json",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_analysis_lineage.csv",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_freeze_analysis_lineage.py"
+  ]
+ },
+ {
+  "n": 19,
+  "msg": "merge-prep (19/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_lineage_freeze_manifest.json",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_memory_ablation_plan.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_operator_cocycle_closure_note.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_stationarity_perturbation_analysis.py"
+  ]
+ },
+ {
+  "n": 20,
+  "msg": "merge-prep (20/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_MATCHED_PHASE_CODING_AGENT_PROMPT.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/BINARIES_NOT_UPLOADED.md",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/channel_invariance_report.txt",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/exceptional_tangent_report.txt"
+  ]
+ },
+ {
+  "n": 21,
+  "msg": "merge-prep (21/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/face_spectrum_report.txt",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/uploads/trajectory_recovery_report.txt",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_closure_diagnostics.py",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_closure_diagnostics_updated.py"
+  ]
+ },
+ {
+  "n": 22,
+  "msg": "merge-prep (22/25): audits/github_reconciliation",
+  "files": [
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_paired_statistics.py",
+   "audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_paired_statistics_updated.py",
+   "audits/github_reconciliation/runs_cohort_reconciliation.csv",
+   "audits/github_reconciliation/zip_vs_tree_comparison.csv"
+  ]
+ },
+ {
+  "n": 23,
+  "msg": "merge-prep (23/25): lean",
+  "files": [
+   "lean/AIEFProofs/AIEFProofs/Basic.lean",
+   "lean/AIEFProofs/AIEFProofs/Smoke.lean",
+   "lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt"
+  ]
+ },
+ {
+  "n": 24,
+  "msg": "merge-prep (24/25): CI (.github, tools/ci)",
+  "files": [
+   ".github/PULL_REQUEST_TEMPLATE.md",
+   ".github/workflows/repo-checks.yml",
+   "tools/ci/check_manifest.py",
+   "tools/ci/claim_statuses.txt"
+  ]
+ },
+ {
+  "n": 25,
+  "msg": "merge-prep (25/25): CI (.github, tools/ci)",
+  "files": [
+   "tools/ci/hygiene_allow.txt",
+   "tools/ci/hygiene_scan.py",
+   "tools/ci/lint_claims.py",
+   "tools/ci/tests/test_ci_tools.py"
+  ]
+ }
+]

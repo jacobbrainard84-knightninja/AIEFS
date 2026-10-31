@@ -1,0 +1,49 @@
+{
+  "artifacts.csv": {
+    "rows": 2898,
+    "flags": {
+      "MISSING_DELETED_ON_MAIN": 52,
+      "PRESENT_CHANGED_SHA": 7,
+      "PRESENT_SAME_SHA": 2701,
+      "ZIP_MEMBER_PRESENT": 138
+    }
+  },
+  "relocation_map.csv": {
+    "rows": 221,
+    "flags": {
+      "MISSING_DELETED_ON_MAIN": 4,
+      "PRESENT_COUNT_CHANGED": 4,
+      "PRESENT_SAME_COUNT": 213
+    }
+  },
+  "tracked_files_at_HEAD": 2973,
+  "tracked_files_not_in_artifacts_csv": 265,
+  "not_in_inventory_by_top_level": {
+    "AI Agent Audits": 148,
+    "audits": 57,
+    "tools": 17,
+    "registry": 8,
+    "lean": 5,
+    "Project Histories": 4,
+    ".github": 3,
+    "Project Origins": 3,
+    "AIEF_Experiments": 2,
+    "docs": 2,
+    "AIEF_1_4_superseded_claims.LEDGER_POINTER.md": 1,
+    "CURRENT_STATUS.md": 1,
+    "ERRATA_2026-10-28.md": 1,
+    "LICENSE": 1,
+    "LICENSE-docs": 1,
+    "LICENSING.md": 1,
+    "MERGE_PREP_LOCAL_HISTORY.md": 1,
+    "MERGE_PREP_REPORT.md": 1,
+    "NOTICE": 1,
+    "OPERATING_MANUAL.md": 1,
+    "PRIVACY_SCRUB_LIST.md": 1,
+    "PUSH_NOTES.md": 1,
+    "README.md": 1,
+    "REPRODUCING.md": 1,
+    "history": 1,
+    "requirements.txt": 1
+  }
+}

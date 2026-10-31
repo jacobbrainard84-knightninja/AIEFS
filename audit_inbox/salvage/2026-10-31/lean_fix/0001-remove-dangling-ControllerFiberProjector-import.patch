@@ -1,0 +1,10 @@
+diff --git a/lean/AIEFProofs/AIEFProofs.lean b/lean/AIEFProofs/AIEFProofs.lean
+index 93d168c..ccd7a62 100644
+--- a/lean/AIEFProofs/AIEFProofs.lean
++++ b/lean/AIEFProofs/AIEFProofs.lean
+@@ -1,5 +1,3 @@
+ import AIEFProofs.Basic
+ 
+ import AIEFProofs.ControllerFiber
+-
+-import AIEFProofs.ControllerFiberProjector

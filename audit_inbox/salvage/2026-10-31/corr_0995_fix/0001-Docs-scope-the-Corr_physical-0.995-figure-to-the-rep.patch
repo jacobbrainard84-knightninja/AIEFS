@@ -1,0 +1,40 @@
+From 51ffb1a1c22cbc6541fbd1420dc7607f944e2ebe Mon Sep 17 00:00:00 2001
+From: "Researcher 001 (local)" <researcher001@localhost.invalid>
+Date: Wed, 28 Oct 2026 15:43:19 +0000
+Subject: [PATCH] Docs: scope the Corr_physical ~0.995 figure to the repo's
+ hand-picked frequencies (audit correction)
+
+---
+ AIEF_HISTORIC_UNFOLDING.md | 2 ++
+ AI_AGENT_HANDOFF_PROMPT.md | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/AIEF_HISTORIC_UNFOLDING.md b/AIEF_HISTORIC_UNFOLDING.md
+index d15c22f..038b260 100644
+--- a/AIEF_HISTORIC_UNFOLDING.md
++++ b/AIEF_HISTORIC_UNFOLDING.md
+@@ -168,6 +168,8 @@ Effective_edges   ~14.6
+ Total edge weight ~3.64
+ ```
+ 
++Scope note (audit correction 2026-10-23): Corr_physical ~0.995 holds only for the repo's hand-picked frequencies (omega). With random frequencies it drops to about 0.71 (uniform) and 0.59-0.63 (clustered). It is not tautological, but it mostly measures persistence. See `AI Agent Audits/AIEFS_salvage.md` (section 3.1, row 2) and `AI Agent Audits/AIEFS_audit_response.md` (point 2). Do not cite 0.995 as a general result.
++
+ Threshold topology became completely frozen during the future evaluation window. Closure analysis later established that every baseline persistence value was exactly binary.
+ 
+ ### `shuffle_R`
+diff --git a/AI_AGENT_HANDOFF_PROMPT.md b/AI_AGENT_HANDOFF_PROMPT.md
+index f5c5954..f199c03 100644
+--- a/AI_AGENT_HANDOFF_PROMPT.md
++++ b/AI_AGENT_HANDOFF_PROMPT.md
+@@ -115,6 +115,8 @@ Effective_edges  ~14.6
+ Total edge weight ~3.64
+ ```
+ 
++Scope note (audit correction 2026-10-23): Corr_physical ~0.995 holds only for the repo's hand-picked frequencies (omega). With random frequencies it drops to about 0.71 (uniform) and 0.59-0.63 (clustered). It is not tautological, but it mostly measures persistence. See `AI Agent Audits/AIEFS_salvage.md` (section 3.1, row 2) and `AI Agent Audits/AIEFS_audit_response.md` (point 2). Do not cite 0.995 as a general result.
++
+ `shuffle_R`:
+ 
+ ```text
+-- 
+2.47.3
+

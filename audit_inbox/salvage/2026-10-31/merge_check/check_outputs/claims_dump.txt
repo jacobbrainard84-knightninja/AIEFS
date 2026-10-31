@@ -1,0 +1,455 @@
+### EMP-AIEF13-01 | AIEF_1_3_DISJOINT_100SEED | Frozen | Controlled experimental result
+  STMT: Destroying historical alignment structure via shuffle_R strongly degrades persistent topology relative to baseline in AIEF-1.3 (mean paired delta D_B = +0.305909, 95% bootstrap CI [0.298939, 0.313030], Cohen dz = 8.434 across N=100 disjoint paired seeds).
+  SUPP: runs/c3da1ac707bf;runs/73dca37cf93f;AIEF_1_3_paired_statistics_updated.py
+  CAV: Established on the 100-seed AIEF-1.3 parameter regime; cohort overlap verified equal to 0.
+  PRIOR: Frozen / Controlled experimental result | AUD: Supported (audit-qualified)
+  SRC: salvage §3 table row 3c (line 99) + §3.3; resp1 ledger #8 (line 21); resp2 #7 (line 21), #8 (line 22)
+  NOTE: Valid necessity test, but the outcome is forced by construction (shuffled mean R 0.371 < threshold 0.4286, so D_B=0). Design was fixed and recorded, not preregistered (resp2 #7). Numbers re-run 2026-10-28 by Researcher 001 with --cohort syntax: D_B +0.305909 [0.298939, 0.313030], dz 8.434 (matches). | LEG: 
+### EMP-AIEF13-02 | AIEF_1_3_DISJOINT_100SEED | Frozen | Controlled experimental result
+  STMT: Removing adaptive memory feedback (no_mu) reduces persistent topology (D_B = +0.271061, dz = 4.900), whereas removing constant transmission delay alone (no_delay) produces a small negative shift (D_B = -0.027424, dz = -0.756).
+  SUPP: runs/c3da1ac707bf;runs/73dca37cf93f;aief_1_3_closure_diagnostics/closure_report.txt
+  CAV: Demonstrates that adaptive coupling feedback rather than bare delay length drives AIEF-1.3 persistence.
+  PRIOR: Frozen / Controlled experimental result | AUD: Supported (audit-qualified)
+  SRC: salvage §3 table row 3a (line 97) + §3.3; resp1 §3 item 4 (line 43); resp2 #5 (line 19)
+  NOTE: no_mu is a valid necessity test with a closed-form explanation. Delay: 'not necessary, but not inert' (resp1 §3.4); the caveat 'adaptive coupling feedback rather than bare delay length drives persistence' is broader than the audit wording. Re-run 2026-10-28: no_mu +0.271061 dz 4.900; no_delay -0.027424 dz -0.756 (matches). | LEG: 
+### EMP-AIEF14-01 | AIEF_1_4_SPLIT_STATE_ABLATION | Frozen | Controlled experimental result
+  STMT: Adaptive edge matrix B is not a unique memory bottleneck: resetting B at the split time (reset_B) reconstructs mature network topology almost identically from delayed oscillator/EMA state across 40 paired seeds.
+  SUPP: runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv;AIEF_1_4_memory_ablation_updated.py
+  CAV: Supersedes retired single-carrier hypothesis S01 across all 40 split-state seeds.
+  PRIOR: Frozen / Controlled experimental result | AUD: Supported (audit-qualified, reworded)
+  SRC: resp2 #4 (line 18) and §3 wording; resp1 §3 item 5 (line 44); salvage §3 table row 5a (line 101); resp3 #4 (line 25)
+  NOTE: Use the audit wording: 'Phase, history and EMA together suffice to reconstruct the finite topology when B is reset (reset_B: Jaccard 1.000 vs continue). B is predictive and acts as a conditional continuous-weight scaffold. No unique retained memory register has been identified.' B_split AUC 1.0 is predictive, not causal: 0/29040 edges change threshold status after the split (resp3 #4). Scope: 40 paired seeds. | LEG: 
+### EMP-AIEF14-02 | AIEF_1_4_MATCHED_PHASE_ABLATION | Exploratory | Controlled experimental result
+  STMT: Under matched split-time phase configurations across 40 seeds, delayed phase/EMA history mediates post-ablation topological recovery independently of instantaneous phase mismatch.
+  SUPP: test_output/matched_phase_paired_contrasts.csv;test_output/matched_phase_report.txt;AIEF_1_4_matched_phase_memory_ablation.py
+  CAV: Authoritative 40-seed output lives in test_output/; root folder aief_1_4_matched_phase_memory_ablation/ is an aborted partial run.
+  PRIOR: Frozen / Controlled experimental result | AUD: Exploratory (per audit)
+  SRC: resp2 #3 (line 17); resp1 §6 Limits (line 101 ff.); evidence/results/matched_phase_check.json
+  NOTE: CONFLICT: arena labelled this Frozen / Controlled experimental result and says delayed phase/EMA history 'mediates' recovery. The audit says 'It stays exploratory'. Audit numbers (re-run 2026-10-28, matched_phase_check.py): Weighted_similarity_late +0.06415 [0.0405, 0.0886], 31/40 positive; P_mean_late is NEGATIVE (-0.0176 [-0.0267, -0.0086]). Inputs are test_output/ (manifest sha 2a57bc25...); aief_1_4_matched_phase_memory_ablation/ is a separate FAILED 1-seed partial run. 'Mediates' is causal language the audit does not support. | LEG: 
+### EMP-AIEF14-03 | AIEF_1_4_TWINDOW_SENSITIVITY | Frozen | Controlled experimental result
+  STMT: Across rho in {0.50, 0.75, 1.00, 1.50, 2.00} (200 conditions), separating fixed physical evaluation horizons from normalized EMA horizons resolves horizon-scaling confounding in T_window sensitivity.
+  SUPP: runs/b57562a8ee77;AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py
+  CAV: Analysis v4 provides non-confounded fixed-physical DID estimands while preserving exact backward compatibility with legacy v3 outputs.
+  PRIOR: Frozen / Controlled experimental result | AUD: needs owner/auditor decision
+  SRC: not adjudicated; related: resp1 §3 item 6 (line 45), salvage §3 row 5c (line 103), evidence/results/kappa_tw_summary.json; see AUD-KAPPA-TW
+  NOTE: The DID estimand / horizon-confounding statement was not tested by the audits. The audits only checked the kappa(T_w) rate law on the same runs (row AUD-KAPPA-TW). | LEG: 
+### IMPL-MODULAR-01 | PLATFORM_V1_V4 | Supported | Implementation identity
+  STMT: On an identical host/libm environment, aief_modular reproduces monolithic AIEF_1_4_Twindow_sensitivity.py across all 344 condition arrays with max_abs_diff = 0.000e+00; across distinct Linux glibc versions (2.36 vs Steam Deck 2.40), discrete topology arrays remain exact (0.0) while continuous 80k-step DDE trajectories differ by <= 4.405e-13.
+  SUPP: AIEF_Experiments/aief_modular_platform_v1_analysis_v4/;audits/engineering/PATH_AND_LOCK_DEPENDENCY_AUDIT.md
+  CAV: Critical for CI design: cross-machine NPZ validation against Steam Deck archives requires explicit libm drift tolerance (1e-11) on continuous arrays while enforcing exact 0.0 on same-host comparisons and binary topology arrays.
+  PRIOR: Supported / Implementation identity | AUD: needs owner/auditor decision
+  SRC: not adjudicated by the audits (resp2 §7 'Provenance gaps' notes test-count mismatch only)
+  NOTE: Researcher 001 re-ran tests_modular on 2026-10-28: 41 passed, 1 skipped (Python 3.13.5, numpy 2.5.1, scipy 1.18.1, pandas 3.1.0). That does not by itself re-test the 344-array max_abs_diff=0 identity. Caveat mentions a personal device by name: see PRIVACY_SCRUB_LIST.md. | LEG: 
+### LEAN-CF-01 | AIEF_1_4_LEAN_CONTROLLER_FIBER | Supported | Formalized theorem
+  STMT: For the 2x3 controller incidence matrix C_{2,7} with rows [1, 1, 0] and [1, 0, 1] over R, ker(C_{2,7}) = span{(1, -1, -1)} (machine-checked in Lean 4 without sorry or extra axioms).
+  SUPP: lean/AIEFProofs/AIEFProofs/ControllerFiber.lean;lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt
+  CAV: Formalizes strictly the linear-algebraic kernel identity; physical applicability requires separate replay verification that winner map (7,2,7) holds (CF05).
+  PRIOR: Supported / Formalized theorem | AUD: Supported (audit-verified; trivial linear algebra, scope-limited)
+  SRC: salvage §3 row 6 (line 104) + §3.6; resp1 §3 item 8 (line 47); resp3 §0 and §5 (lines 10, 121)
+  NOTE: Builds once the dangling import is fixed (fixed before round 4). The theorem is a 2x3 kernel identity; it says nothing about the dynamics. Separately, four Lean files still carry 'All rights reserved' headers, while main added Apache-2.0/CC BY 4.0 licence files on 2026-10-24 (commit 115e99e); that header conflict needs an owner decision. | LEG: 
+### CAVEAT-MS-8.4 | AIEF_1_4_CONTROLLER_FIBER | Exploratory | Conditional theorem
+  STMT: Draft Corollary 8.4 in AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md overstates ambient left-covector orthogonality: V^T D A_eps(x_G) - s_k V^T = -(s_k/(q^+ + eps)) (C_G diag(x_G) V)^T C_G vanishes at edge-uniform points x_G = x_common * 1, NOT on general kernel perturbations x_0 * 1 + h.
+  SUPP: AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md;audits/scientific/SCIENTIFIC_CLASSIFICATION_AND_REJECTIONS_AUDIT.md
+  CAV: Do not cite Corollary 8.4 as an unrestricted fiber identity; right invariance of V holds everywhere on the strict winner cone, whereas ambient left orthogonality requires x_G proportional to 1 or restriction to ker(C_G).
+  PRIOR: Exploratory / Conditional theorem | AUD: needs owner/auditor decision
+  SRC: not adjudicated by the audits; related salvage §3 row 5b (line 102)
+  NOTE: Arena's own correction; the audits did not re-derive Corollary 8.4. | LEG: 
+### CF01 | AIEF_1_4_CONTROLLER_FIBER | Supported | Conditional theorem
+  STMT: The capacity tangent-cone lineality is obtained by zeroing inactive-edge directions and exact active-row sums.
+  SUPP: polyhedral proof in theorem package
+  CAV: Hypotheses: positive support and exact active capacity set are specified | Caveat: This is distinct from finite-safeguard controller geometry.
+  PRIOR: Supported / Conditional theorem | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; resp1 ledger #11 (line 24) says terminology is used in its standard sense; salvage row 5b
+  NOTE: Audit-wide caveat (salvage row 5b): 'valid linear algebra, oversold; non-generic'. The exceptional K3 is 1 of 40 seeds. | LEG: 
+### CF02 | AIEF_1_4_CONTROLLER_FIBER | Supported | Implementation identity
+  STMT: A clipped row is strictly interior in the projected output at finite epsilon.
+  SUPP: algebraic proof from minimum.outer scaling
+  CAV: Hypotheses: epsilon>0, positive capacity, row scale clipped | Caveat: The statement concerns the output, not necessarily the input weight state.
+  PRIOR: Supported / Implementation identity | AUD: Supported (audit-consistent) — wording caveat
+  SRC: resp2 #1 (line 15) + §2.1; resp3 #5 (line 26) + §2.1; salvage row 4 (line 100)
+  NOTE: The audit independently found the clipped row interior (epsilon-level margin 6.7e-13). But 'projected output' uses projection language the audit retired: the gate is node-strength multiplicative normalisation, not a metric/KL/Bregman projection. | LEG: 
+### CF03 | AIEF_1_4_CONTROLLER_FIBER | Supported | Implementation identity
+  STMT: The admissibility map is exactly affine on multiplier-controller fibers, including active endpoint ties.
+  SUPP: factorization and controller-fiber proof
+  CAV: Hypotheses: proposal support and gate persist; strict winner inequalities and identity-edge margins persist | Caveat: A nonwinning endpoint may change clipping label without changing the selected multiplier.
+  PRIOR: Supported / Implementation identity | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage row 5b (line 102)
+  NOTE: Single exceptional trajectory (1/40). | LEG: 
+### CF04 | AIEF_1_4_CONTROLLER_FIBER | Supported | Conditional theorem
+  STMT: Kernel preservation is equivalent to a row-space intertwining factorization CD=Gamma C.
+  SUPP: factorization proof in theorem package
+  CAV: Hypotheses: L=ker(C) | Caveat: Full row rank is needed for uniqueness of Gamma, not existence.
+  PRIOR: Supported / Conditional theorem | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage row 5b (line 102)
+  NOTE: Pure linear algebra; the audits did not re-check it. | LEG: 
+### CF05 | AIEF_1_4_CONTROLLER_FIBER | Frozen | Finite numerical observation
+  STMT: The exceptional K3 effective winner map is (7,2,7) throughout 32,001 saved states.
+  SUPP: historical actual-admissibility branch analysis manifest
+  CAV: Hypotheses: saved actual-branch audit | Caveat: This does not establish infinite-time branch persistence.
+  PRIOR: Frozen / Finite numerical observation | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage §3.5 genericity (1/40); resp2 #2 (line 16)
+  NOTE: Single exceptional seed. resp2 #2 confirms a two-sided K3 fiber exists for the exceptional resolved K3 (rho=1, J={2,7}), but did not re-check the (7,2,7) winner map over 32,001 states. | LEG: 
+### CF06 | AIEF_1_4_CONTROLLER_FIBER | Supported | Conditional theorem
+  STMT: Conditional on the audited winner map, the exceptional controller kernel is span(1,-1,-1).
+  SUPP: explicit 2x3 incidence calculation
+  CAV: Hypotheses: controller rows J={2,7} | Caveat: This is a multiplier-controller fiber, not necessarily exact face lineality.
+  PRIOR: Supported / Conditional theorem | AUD: Supported (audit-consistent; conditional, single seed)
+  SRC: resp2 #2 (line 16) + §2.4; resp3 #3 (line 24) + §2.4; LEAN-CF-01
+  NOTE: Kernel span(1,-1,-1) is formalised in Lean; the audit's census finds a two-sided fiber only for the exceptional resolved K3. Other K3s have zero lineality and one-sided rays only (resp3 §2.4). | LEG: 
+### CF07 | AIEF_1_4_CONTROLLER_FIBER | Supported | Conditional theorem
+  STMT: The fixed right carrier v is invariant if and only if s2=s7.
+  SUPP: direct matrix multiplication
+  CAV: Hypotheses: fixed winner block and positive selected proposal support | Caveat: The replay realizes this only approximately at finite times.
+  PRIOR: Supported / Conditional theorem | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage row 5b
+  NOTE: Single exceptional trajectory. | LEG: 
+### CF08 | AIEF_1_4_CONTROLLER_FIBER | Supported | Conditional theorem
+  STMT: After right closure, u(r) is an exact normalized pointwise left covector.
+  SUPP: direct matrix multiplication
+  CAV: Hypotheses: s2=s7 and beta59>0 | Caveat: Pointwise left eigenvectors do not automatically form a fixed or moving cocycle dual.
+  PRIOR: Supported / Conditional theorem | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage row 5b
+  NOTE: Single exceptional trajectory. | LEG: 
+### CF09 | AIEF_1_4_PROPOSAL_EQUALIZATION | Supported | Conditional theorem
+  STMT: One-sided proposal equalization makes the selected K3 branch matrices converge to the fixed analytic family.
+  SUPP: exact scale, beta, and branch-cone identities
+  CAV: Hypotheses: rows 2 and 7 clipped; strict winner signs remain positive at finite steps; proposal differences tend to zero | Caveat: At the exact tie the full K3 controller kernel is zero; this is a one-sided matrix limit, not a unique classical derivative.
+  PRIOR: Supported / Conditional theorem | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage row 5b
+  NOTE: Conditional limit statement; not re-derived by the audits. | LEG: 
+### CF10 | AIEF_1_4_PROPOSAL_EQUALIZATION | Frozen | Finite numerical observation
+  STMT: The selected frozen-driver K3 block becomes very close to the fixed analytic family by the saved final time.
+  SUPP: historical per-analysis manifests
+  CAV: Hypotheses: saved nested-family and analytic-residual outputs | Caveat: Small final residuals do not prove asymptotic convergence.
+  PRIOR: Frozen / Finite numerical observation | AUD: needs owner/auditor decision
+  SRC: not individually adjudicated; salvage §3.5
+  NOTE: Single exceptional trajectory. | LEG: 
+### CF11 | AIEF_1_4_PROPOSAL_EQUALIZATION | Exploratory | Conjecture
+  STMT: Coupled phase/EMA feedback forces both K3 proposal differences to zero asymptotically.
+  SUPP: finite-horizon mechanism evidence only
+  CAV: Hypotheses: at minimum, persistent isolated support and fixed controller branch | Caveat: Neither asymptotic convergence nor continuation beyond the saved horizon is proved.
+  PRIOR: Exploratory / Conjecture | AUD: needs owner/auditor decision
+  SRC: not adjudicated
+  NOTE: Conjecture status itself is not contested; listed for completeness. | LEG: 
+### CF12 | AIEF_1_4_PROPOSAL_EQUALIZATION | Exploratory | Conjecture
+  STMT: The exceptional support, clipping, and winner branch persist for all future time.
+  SUPP: finite saved branch record only
+  CAV: Hypotheses: frozen split state under unchanged production dynamics | Caveat: A strong trajectory theorem must prove this rather than assume it.
+  PRIOR: Exploratory / Conjecture | AUD: needs owner/auditor decision
+  SRC: not adjudicated
+  NOTE: Conjecture status itself is not contested; listed for completeness. | LEG: 
+### S01 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] B is the unique or dominant memory carrier. -> Replacement: Memory is redundantly reconstructed; reset_B recovers mature topology nearly exactly.
+  SUPP: AIEF_1_4_superseded_claims.csv (AIEF-1.4 split-state memory ablation.)
+  CAV: Scope: 40 paired seeds
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE: CONFLICT: the replacement wording 'Memory is redundantly reconstructed' was itself struck by the audit (resp2 #4, line 18; resp1 §3 item 5). Use the EMP-AIEF14-01 audited wording instead. | LEG: AIEF_1_4_superseded_claims.csv id S01; AIEF_HISTORIC_UNFOLDING.md §XIX item 1; AIEF_1_4_FORWARD_PLAN.md §II item 1
+### S02 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] Admissibility is a rare repair or soft regularizer. -> Replacement: The hard map is active on essentially every mature update and is comparable to the proposed increment.
+  SUPP: AIEF_1_4_superseded_claims.csv (projection and active-boundary diagnostics)
+  CAV: Scope: implemented AIEF-1.3/1.4
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE: Retirement stands. Note: the replacement must not be read as 'projection' (gate is not a projection: resp3 #5, salvage row 4). | LEG: AIEF_1_4_superseded_claims.csv id S02; AIEF_HISTORIC_UNFOLDING.md §XIX item 2; AIEF_1_4_FORWARD_PLAN.md §II item 2
+### S03 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The mature full delayed system is at equilibrium. -> Replacement: The adaptive weight component is constraint-balanced; phase/history/EMA continue evolving.
+  SUPP: AIEF_1_4_superseded_claims.csv (stationarity and replay diagnostics)
+  CAV: Scope: mature baseline
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S03; AIEF_HISTORIC_UNFOLDING.md §XIX item 3; AIEF_1_4_FORWARD_PLAN.md §II item 3
+### S04 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The exceptional trajectory undergoes an implemented active-face switch at t=124.05. -> Replacement: The event is a tolerance-classifier change; the positive-edge winner map remains fixed.
+  SUPP: AIEF_1_4_superseded_claims.csv (actual finite-step branch audit)
+  CAV: Scope: exceptional seed
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S04; AIEF_HISTORIC_UNFOLDING.md §XIX item 4; AIEF_1_4_FORWARD_PLAN.md §II item 4
+### S05 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The finite-step exceptional K3 has an operational bare-gamma edge mode. -> Replacement: Node 2 is proposal-violating from the split and controls edge 29 under the actual finite map.
+  SUPP: AIEF_1_4_superseded_claims.csv (proposal/scale/winner audit)
+  CAV: Scope: dt=0.01 exceptional replay
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S05; AIEF_HISTORIC_UNFOLDING.md §XIX item 5; AIEF_1_4_FORWARD_PLAN.md §II item 5
+### S06 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The controller equilibrium diag(c)alpha=Kalpha is an all-node relation. -> Replacement: The equation belongs on active saturated rows; slack rows can carry nonzero controller load.
+  SUPP: AIEF_1_4_superseded_claims.csv (component/controller residual decomposition)
+  CAV: Scope: fixed split states and exceptional replay
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S06
+### S07 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] Complete K4/K5/K6 components are only a spectral hypothesis. -> Replacement: Complete support components are reconstructed directly in the frozen cohort.
+  SUPP: AIEF_1_4_superseded_claims.csv (component topology audit)
+  CAV: Scope: 40 split states
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S07
+### S08 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] A Euclidean scalar coordinate should predict both K3 tangent directions. -> Replacement: A fixed biorthogonal left coordinate is required by non-normality and repairs direction-0 rollout.
+  SUPP: AIEF_1_4_superseded_claims.csv (biorthogonal triangular closure)
+  CAV: Scope: exceptional late replay
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S08; AIEF_HISTORIC_UNFOLDING.md §XIX item 6; AIEF_1_4_FORWARD_PLAN.md §II item 6
+### S09 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The POD Rayleigh quotient is the exact memory propagation rate. -> Replacement: The relevant rate is measured from the actual propagated forcing ensemble/geometric branch channel.
+  SUPP: AIEF_1_4_superseded_claims.csv (direct propagation-gap control)
+  CAV: Scope: exceptional late replay
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S09; AIEF_HISTORIC_UNFOLDING.md §XIX item 7; AIEF_1_4_FORWARD_PLAN.md §II item 7
+### S10 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] A shared two-state model in coordinates (a,g) has been identified. -> Replacement: Late collinearity makes unconstrained coefficients unidentifiable; the parameter-free triangular reduction is supported.
+  SUPP: AIEF_1_4_superseded_claims.csv (two-state conditioning and pooled rollout)
+  CAV: Scope: exceptional late replay
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S10; AIEF_HISTORIC_UNFOLDING.md §XIX item 9; AIEF_1_4_FORWARD_PLAN.md §II item 8
+### S11 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The full directed complex EMA difference decays homogeneously at the EMA rate. -> Replacement: Complex differences persist; the radial magnitude observable decays while tangential separation remains.
+  SUPP: AIEF_1_4_superseded_claims.csv (causal EMA and radial-observable audits)
+  CAV: Scope: exceptional directed K3 channels
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S11; AIEF_HISTORIC_UNFOLDING.md §XIX item 8; AIEF_1_4_FORWARD_PLAN.md §II item 9
+### S12 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] Forward/reverse symmetrization creates the EMA-rate resonance mode. -> Replacement: Both directed magnitude channels carry the mode independently and reinforce under symmetrization.
+  SUPP: AIEF_1_4_superseded_claims.csv (radial-observable audit)
+  CAV: Scope: exceptional directed K3 channels
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE: 'Resonance mode' is a repeated-root (Jordan) EMA term, not physical resonance (salvage §4 line 199). | LEG: AIEF_1_4_superseded_claims.csv id S12; AIEF_1_4_FORWARD_PLAN.md §II item 10
+### S13 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The alignment law is cancellation free. -> Replacement: Tracking and tangential alignment terms are comparable and cancel with T1/T2 -> -1.
+  SUPP: AIEF_1_4_superseded_claims.csv (phase-source locking and resonant tracking)
+  CAV: Scope: exceptional directed K3 channels
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S13; AIEF_1_4_FORWARD_PLAN.md §II item 11
+### S14 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] lambda_B/alpha_EMA is an established loop gain. -> Replacement: It is a relative-retention factor; a loop gain requires cross-block return operators.
+  SUPP: AIEF_1_4_superseded_claims.csv (triangular reduction and system partition)
+  CAV: Scope: late reduced model
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S14; AIEF_1_4_FORWARD_PLAN.md §II item 12
+### S15 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] A rank-one weight tangent implies a one-dimensional full attractor or pointed torus. -> Replacement: The rank-one direction is a stable weight-sector response; full-state topology is unestablished.
+  SUPP: AIEF_1_4_superseded_claims.csv (rank/POD and augmented-state analysis)
+  CAV: Scope: tested weight tangent subspace
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE: Also consistent with the 966-dimensional quarantine result (resp3 #8, §2.5). | LEG: AIEF_1_4_superseded_claims.csv id S15; AIEF_HISTORIC_UNFOLDING.md §XIX item 10; AIEF_1_4_FORWARD_PLAN.md §II item 13
+### S16 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] The defect direction is only an empirical POD mode. -> Replacement: The dominant raw and projected defect matrices are derived from the implemented branch coefficients and match POD numerically.
+  SUPP: AIEF_1_4_superseded_claims.csv (analytic defect-mode audit)
+  CAV: Scope: exceptional fixed winner branch
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S16
+### S17 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] Source forcing is negligible because |Delta_t DeltaZ|/|E| is ~1e-5. -> Replacement: Relative to homogeneous EMA decrement, source forcing is ~5% late and remains measurable.
+  SUPP: AIEF_1_4_superseded_claims.csv (corrected tracking-forcing normalization)
+  CAV: Scope: exceptional directed K3 channels
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S17
+### S18 | AIEF_1_4_SYNTHESIS_DOCS | Superseded | Finite numerical observation
+  STMT: [RETIRED] Phase-source stabilization occurs because intrinsic/coupling/history terms vanish separately. -> Replacement: Large phase terms cancel increasingly precisely to produce small mean/separation increments.
+  SUPP: AIEF_1_4_superseded_claims.csv (phase-balance source dynamics)
+  CAV: Scope: exceptional directed K3 channels
+  PRIOR: Superseded / Finite numerical observation | AUD: Retired / Superseded (unchanged)
+  SRC: AIEF_1_4_superseded_claims.csv (hash-pinned, unedited); arena retirement, not contradicted by the audits
+  NOTE:  | LEG: AIEF_1_4_superseded_claims.csv id S18
+### REJ-SPEC-01 | AIEF_1_4_REJECTED_SPECTRAL_AND_K3 | Rejected | Finite numerical observation
+  STMT: [REJECTED] 8D POD slow-subspace operator compression faithfully captures autonomous post-split dynamics.
+  SUPP: aief_1_4_operator_compression.py;aief_1_4_slow_subspace_projection.py
+  CAV: Rejected due to 24,323.8% off-subspace leakage and var(slow)/var(full) = 7.5e35 blow-up under non-normal coupling.
+  PRIOR: Rejected / Finite numerical observation | AUD: Rejected (unchanged)
+  SRC: arena rejection; not contradicted by the audits
+  NOTE:  | LEG: 
+### REJ-SPEC-02 | AIEF_1_4_REJECTED_SPECTRAL_AND_K3 | Rejected | Finite numerical observation
+  STMT: [REJECTED] Finite-difference observable Jacobian at eps=1e-8 resolves exact tangent spectrum near active-edge ties.
+  SUPP: aief_1_4_observable_jacobian.py;aief_1_4_augmented_spectrum.py
+  CAV: Rejected because eps=1e-8 crosses strict winner margin 4.44e-14 and treats non-normal transient amplification as autonomous eigenvalues.
+  PRIOR: Rejected / Finite numerical observation | AUD: Rejected (unchanged)
+  SRC: arena rejection; not contradicted by the audits
+  NOTE: Cites aief_1_4_augmented_spectrum.py, whose 18-coordinate 'unique slow pole' verdict is quarantined (AUD-SLOWPOLE; resp3 #8). | LEG: 
+### REJ-LOCK-03 | AIEF_1_4_REJECTED_SPECTRAL_AND_K3 | Rejected | Finite numerical observation
+  STMT: [REJECTED] Mature oscillator frequencies satisfy bare zero-sum locking omega_i + G_i = 0.
+  SUPP: aief_1_4_coupling_lock_audit.py
+  CAV: Rejected due to missing collective mean-frequency rotating frame; true balance is cancellation of large terms (see S18).
+  PRIOR: Rejected / Finite numerical observation | AUD: Rejected (unchanged)
+  SRC: arena rejection; not contradicted by the audits
+  NOTE:  | LEG: 
+### REJ-K3-04 | AIEF_1_4_REJECTED_SPECTRAL_AND_K3 | Rejected | Finite numerical observation
+  STMT: [REJECTED] K3 motifs dominate mature networks with 856 K3 instances across 40 seeds.
+  SUPP: aief_1_4_k3_structure_scan.py
+  CAV: Rejected because scan counted embedded 3-cliques inside K4/K5/K6 components; true isolated K3 connected components number 26 across the 40 seeds.
+  PRIOR: Rejected / Finite numerical observation | AUD: Rejected (unchanged)
+  SRC: arena rejection; not contradicted by the audits
+  NOTE: Audit's own K3 census: resp2 #2 (line 16) and resp3 #1 (line 22). | LEG: 
+### REJ-COHORT-05 | AIEF_1_3_EARLY_20SEED_RERUNS | Rejected | Finite numerical observation
+  STMT: [REJECTED] Root paired_seed_analysis/ provides N=40 independent paired seeds for AIEF-1.3.
+  SUPP: paired_seed_analysis/paired_report.txt;AIEF_1_3_paired_statistics.py
+  CAV: Rejected pseudoreplication: pooled two bit-identical 20-seed runs (87dfe5798954 + 5a338105785a, overlap=20); superseded by N=100 disjoint cohorts.
+  PRIOR: Rejected / Finite numerical observation | AUD: Rejected (unchanged)
+  SRC: arena rejection; not contradicted by the audits
+  NOTE:  | LEG: 
+### AUD-CORR-0995 | AI_AGENT_AUDITS_2026_10 | Supported | Finite numerical observation
+  STMT: Corr_physical ~0.995 (AIEF-1.3 baseline) holds for the repository's hand-picked frequencies only; with random frequencies it is ~0.71 (uniform) and 0.59-0.63 (clustered). It is not a tautology but is dominated by persistence.
+  SUPP: AI Agent Audits/evidence/results/omega_random.json;AI Agent Audits/evidence/results/omega_multistab.json
+  CAV: Scope: chosen omega only.
+  PRIOR: (was quoted unqualified as ~0.995) | AUD: Supported (audit-qualified: chosen omega only)
+  SRC: salvage §3 row 2 (line 96) + §3.2 (line 125); resp1 ledger #2-#3 (lines 15-16) + §3 item 3 (line 42)
+  NOTE: The brief's phrase 'near-circular' is the round-1 wording (audit.md H2, line 32) that was later corrected to 'not a tautology'. Re-run 2026-10-28: baseline Corr_physical 0.995217. | LEG: 
+### AUD-TOPO-OMEGA | AI_AGENT_AUDITS_2026_10 | Supported | Finite numerical observation
+  STMT: The persistent topology is largely set by the chosen frequencies: the closed-form rule R_pred(dw) > mu/(eta+mu) is an informative predictor (not a superset) of it, exact only for repo-omega no_delay; for generic omega selection is multistable.
+  SUPP: AI Agent Audits/evidence/results/omega_random.json;AI Agent Audits/evidence/results/omega_multistab.json;AI Agent Audits/evidence/results/archived13_closedform.json
+  CAV: Scope: N=12, repo parameters.
+  PRIOR: (arena framed the topology as emergent from memory) | AUD: Supported (audit-qualified)
+  SRC: salvage §3 row 1 (line 95) + §3.1 (line 106) + §5 (i); resp1 ledger #1, #4 + §3 item 2 (line 41); audit.md H1
+  NOTE: Multistability on uniform random omega: mean pairwise Jaccard between seeds' final topologies 0.514; 1-4 distinct topologies per omega out of 4 seeds (salvage §3.1, line 121). | LEG: 
+### AUD-GATE | AI_AGENT_AUDITS_2026_10 | Supported | Conditional theorem
+  STMT: The capacity gate s_i = min(1, c/(q_i+eps)) is node-strength multiplicative normalisation. It is idempotent but it is not a metric, KL or Bregman projection onto the capacity set (no-go over the stated domain).
+  SUPP: AI Agent Audits/evidence/results/gate_idempotence.json;AI Agent Audits/AIEFS_audit_response_3.md §2.1
+  CAV: Domain stated in resp3 §2.1.
+  PRIOR: (arena/1.4 docs: 'projection', 'Bregman', 'entropy geometry') | AUD: Supported (audit-derived); projection framing Rejected
+  SRC: salvage §3 row 4 (line 100) + §3.4 (line 133); resp1 §3 item 7 (line 46); resp2 #1 (line 15) + §2.1; resp3 #5 (line 26) + §2.1 (line 35)
+  NOTE: Affects wording in CF02, S02, lineage rows 5-7, and HISTORIC_UNFOLDING terminology. | LEG: 
+### AUD-SCOPE-1.4 | AI_AGENT_AUDITS_2026_10 | Supported | Finite numerical observation
+  STMT: AIEF-1.4 has two scopes: the split-state memory ablation is a 40-seed cohort result; the operator / cocycle / Duhamel / biorthogonal / controller-fiber pipeline is a single-seed case study (one exceptional seed, 1 of 40).
+  SUPP: AI Agent Audits/AIEFS_salvage.md §3.5
+  CAV: Do not generalise single-seed results to the cohort.
+  PRIOR: (1.4 docs present the pipeline as the system's mechanism) | AUD: Supported (audit scope ruling)
+  SRC: salvage §3 row 5b (line 102) + §3.5 (line 139) + §5 plan item 8 (line 237); resp1 §6 Limits ('1.4 Duhamel pipeline not rerun on other seeds')
+  NOTE: Applies to lineage rows 14-32 and CF03-CF12. | LEG: 
+### AUD-SLOWPOLE | AI_AGENT_AUDITS_2026_10 | Superseded | Finite numerical observation
+  STMT: [QUARANTINED] 'The EMA pole alpha is the unique slow pole' (18-coordinate augmented spectrum). On the closed 966-dimensional state the verdict is NO: 10 rates lie in the gap (0.189328 x2, 0.252355 x5, 0.650378, 0.662045, 0.668921).
+  SUPP: aief_1_4_augmented_spectrum/augmented_spectrum_report.txt:28;AI Agent Audits/evidence/proposals/aief_1_4_full_state_spectrum.py
+  CAV: The audit labels its NO verdict a proposal (one replay, finite-difference, not a proof; resp3 line 105).
+  PRIOR: (arena: cited as a result; REJ-SPEC-02 rejected only the eps=1e-8 Jacobian) | AUD: Quarantined (do not cite)
+  SRC: resp3 #8 (line 29) + §2.5 (line 94) + §3 wording (line 112); evidence/proposals/augmented_spectrum_citations.md
+  NOTE: Dated note added at the report line; numbers not edited. Reusing scripts listed in MERGE_PREP_REPORT.md §5. | LEG: 
+### AUD-RATELAW | AI_AGENT_AUDITS_2026_10 | Supported | Conditional theorem
+  STMT: Exact one-step law lambda = (1 - gamma*dt) s_J for saturated locked components; the closed form kappa = k*eta/c - 1/T_w is conditional (R=1, row sum c). Finite eps moves lambda by ~1.6e-12. The '374 components' are 264 two-sided + 110 all-tied K3 one-sided rays.
+  SUPP: AI Agent Audits/evidence/results/rate_law_census_r4.json;AI Agent Audits/AIEFS_audit_response_3.md §2.2
+  CAV: 40 fixed seeds x 5 T_w.
+  PRIOR: (stated more strongly in 1.4 docs) | AUD: Supported (audit-derived, conditional)
+  SRC: resp3 #1-#2 (lines 22-23) + §2.2 (line 41) + §3; salvage row 5c (line 103); resp1 ledger #9-#10
+  NOTE: kappa is a spectral gap of a conditional operator whose value is fixed by parameters, not an emergent constant (resp1 #10). | LEG: 
+### AUD-KAPPA-TW | AI_AGENT_AUDITS_2026_10 | Supported | Conditional theorem
+  STMT: kappa(T_w) = 2*eta/c - 1/T_w (0.069182 at T_w=17.503) matches the discrete rate within 5.3e-6 over 292 slow components in 200 replays (160 bit-exact; max diff 2.5e-14); vs the continuous form within 4.5e-4.
+  SUPP: AI Agent Audits/evidence/results/kappa_tw_summary.json
+  CAV: Positive at all tested T_w; sign change below T_w ~7.9 is an untested prediction.
+  PRIOR: (1.4 lineage row 21: envelope 0.06913) | AUD: Supported (audit-verified, conditional)
+  SRC: evidence/results/kappa_tw_summary.json (max_abs_err vs discrete 5.26e-6; vs continuous 4.47e-4; twin-vs-frozen median 9.9e-6); resp1 §3 item 6 (line 45); resp2 #2 (line 16) + §2.3
+  NOTE: The kappa_tw_summary field 'fully saturated no slow channel = 114' is superseded by the cycle-kernel census (resp2 #2). | LEG: 
+### AUD-FROZEN-TOPO | AI_AGENT_AUDITS_2026_10 | Supported | Finite numerical observation
+  STMT: After the split, 0 of 29,040 edges change threshold status (P_future also tested), so B_split predicting the final topology is expected.
+  SUPP: AI Agent Audits/evidence/results/frozen_topology_check.json
+  CAV: 40 seeds.
+  PRIOR: (new) | AUD: Supported (audit-verified)
+  SRC: resp3 #4 (line 25)
+  NOTE: Explains B_split AUC 1.0 as predictive, not causal. | LEG: 
+### AUD-DELAY | AI_AGENT_AUDITS_2026_10 | Supported | Finite numerical observation
+  STMT: Delay is not necessary but not inert: in sampled ensembles the delayed condition gave more distinct four-seed final topologies (a sample-diversity statistic, not a basin count).
+  SUPP: AI Agent Audits/evidence/results/delay_paired_runs.json;AI Agent Audits/evidence/results/delay_heldout_analysis.json
+  CAV: No delay-specific topology signature on random omega.
+  PRIOR: (earlier wording 'delay increases multistability') | AUD: Supported (audit wording)
+  SRC: resp2 #5 (line 19); resp1 §3 item 4 (line 43)
+  NOTE: Replaces the struck 'increases multistability' wording. | LEG: 
+### AUD-K3 | AI_AGENT_AUDITS_2026_10 | Supported | Conditional theorem
+  STMT: Strict K3 components have zero lineality and one-sided controller-selection rays; they are not eigenmodes. A two-sided fiber exists only for the exceptional resolved K3.
+  SUPP: AI Agent Audits/evidence/results/kappa_cycle_kernel.json;AI Agent Audits/evidence/results/rate_law_census_r4.json
+  CAV: Equal edge weights assumed where stated.
+  PRIOR: (1.4 docs: spectral/eigenmode language for K3) | AUD: Supported (audit-derived)
+  SRC: resp3 #3 (line 24) + §2.4 (line 86); resp2 #2 (line 16) + §2.4 (line 60)
+  NOTE: Retires 'spectrally silent'/'no slow mode' phrasing. | LEG: 
+### AUD-TIES | AI_AGENT_AUDITS_2026_10 | Supported | Conditional theorem
+  STMT: Tie-pattern ratios 1/sqrt(2k(k-1)) and sqrt(2/(k+1)) are derived, not empirical.
+  SUPP: AI Agent Audits/AIEFS_audit_response_3.md §2.3
+  CAV: Equal edge weights.
+  PRIOR: (were reported as observed ratios) | AUD: Supported (audit-derived)
+  SRC: resp3 #3 (line 24) + §2.3 (line 65)
+  NOTE:  | LEG: 
+### AUD-REPRO13 | AI_AGENT_AUDITS_2026_10 | Supported | Implementation identity
+  STMT: AIEF-1.3 reproduction: 500/500 runs bit-exact on the 7 arrays and 4 headline scalars; 78/500 bit-exact on all 38 keys (the rest differ in derived scalars by <=4.9e-15 abs).
+  SUPP: AI Agent Audits/evidence/results/repro13.json
+  CAV: Same machine class.
+  PRIOR: (round-1 wording '500/500 bit-for-bit') | AUD: Supported (audit-corrected wording)
+  SRC: resp2 #8 (line 22); resp1 §3 item 1 (line 40)
+  NOTE:  | LEG: 
+### AUD-REPRO-B2A95 | AI_AGENT_AUDITS_2026_10 | Supported | Implementation identity
+  STMT: Run b2a95dfbfbe3 reproduces from the committed code: all 40 seeds, float fields within 1e-12.
+  SUPP: AI Agent Audits/evidence/reproductions/b2a95dfbfbe3_REPRODUCTION.md
+  CAV: One run hash.
+  PRIOR: (new) | AUD: Supported (audit-verified)
+  SRC: evidence/reproductions/b2a95dfbfbe3_REPRODUCTION.md (line 63) + compare_b2a95dfbfbe3.log
+  NOTE:  | LEG: 
+### AUD-NOVELTY | AI_AGENT_AUDITS_2026_10 | Incomplete | Conjecture
+  STMT: Novelty of the AIEF results is not established either way; the ingredients (delayed Kuramoto, Hebbian plasticity, normalisation) are prior art.
+  SUPP: AI Agent Audits/AIEFS_salvage.md §2
+  CAV: First-pass literature search only.
+  PRIOR: (project docs imply new mathematics) | AUD: Not established (audit)
+  SRC: resp1 ledger #12 (line 25) + §3 item 9 (line 48); salvage §2 (line 71)
+  NOTE: A proper literature review is an open owner decision. | LEG: 
+### AUD-LABEL | AI_AGENT_AUDITS_2026_10 | Supported | Implementation identity
+  STMT: Audit analyses are 'controlled exploratory analyses with a fixed recorded design'; nothing in the repo was preregistered.
+  SUPP: AI Agent Audits/AIEFS_audit_response_2.md
+  CAV: Labelling rule.
+  PRIOR: (round-2 'confirmatory') | AUD: Supported (audit wording)
+  SRC: resp2 #7 (line 21)
+  NOTE: Arena's evidence_scope 'Controlled experimental result' means a randomised multi-seed design, not preregistration. | LEG: 
+### SSRH-ORIG-01 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] Delay-coupled cross-feedback gives parametric amplification up to 10^8.
+  SUPP: Project Origins/SSRH stuff.pdf p.1:5, p.2:1, p.3:20 (self-contradiction p.7:15, p.8:20: Lyapunov >0 in 20-25% of runs); Project Origins/SSH history part 002461.pdf p.1:21, p.2:5, p.3:18, p.4:21 (AI self-critique p.42:36)
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 
+### SSRH-ORIG-02 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] QBO imprints in sunspot records correlate with Rieger periods at r = 0.92 [0.84, 0.97], dAIC = 12.4.
+  SUPP: Project Origins/SSRH stuff.pdf p.1:37, p.3:1, p.5:19, p.6:33; Project Origins/SSH history part 002461.pdf p.3:40, p.11:17, p.24:14
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 
+### SSRH-ORIG-03 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] 60Fe deposits show r = 0.85 Fourier correlation with tidal beats.
+  SUPP: Project Origins/SSRH stuff.pdf p.3:41, p.5:34; Project Origins/SSH history part 002461.pdf p.11:14, p.24:14
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 
+### SSRH-ORIG-04 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] Superionic ice phases correlate with piezoelectricity at r = 0.92.
+  SUPP: Project Origins/SSRH 001 stuff.pdf p.401:2, p.402:29, p.406:4, p.450:14 (same r value as SSRH-ORIG-02 for an unrelated quantity)
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 
+### SSRH-ORIG-05 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] QBO-sunspot r = 0.75 [0.62, 0.85]; dAIC = 8.2 favouring a tidal model.
+  SUPP: Project Origins/SSRH stuff.pdf p.5:7, p.5:10, p.6:25, p.6:30
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 
+### SSRH-ORIG-06 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] Faraday rotation measures (RM ~10-100 rad m^-2; 'RM variances ~20%') probe resonantly amplified fields.
+  SUPP: Project Origins/SSRH stuff.pdf p.1:13, p.5:10; Project Origins/SSH history part 002461.pdf p.3:31, p.11:17
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 
+### SSRH-ORIG-07 | HISTORICAL_PROJECT_ORIGINS | Unreviewed | Conjecture
+  STMT: [ORIGIN CLAIM] SINDy hypergraph inference reaches F1 ~ 0.88.
+  SUPP: Project Origins/SSH history part 002461.pdf p.11:17; the same document says F1 is on controlled synthetic data only (p.46:22)
+  CAV: Pre-AIEF origin material; physical claim, not part of the AIEF model.
+  PRIOR: (no row; study HISTORICAL_PROJECT_ORIGINS was Exploratory / Conjecture) | AUD: Unsupported (no data analysis in repo; not adjudicated by audits) — retirement needs owner/auditor decision
+  SRC: not adjudicated by any audit; only salvage §4 (line 199) notes the SSRH acronym conflates EMA 'resonance' with physical resonance; audit.md line 127 notes a flip-flopped SSRH verdict in a reviewer
+  NOTE: Numbers appear only in AI-chat text. Researcher 001 found no script, notebook or data file in the repo that computes them (git grep for sunspot/Rieger/Faraday/60Fe over *.py, *.ipynb, *.csv on 2026-10-28). Page:line = PDF page : line within page of pdftotext output. Do not cite. | LEG: 

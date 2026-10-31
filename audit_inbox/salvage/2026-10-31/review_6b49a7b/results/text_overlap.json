@@ -1,0 +1,20 @@
+{
+ "Project Origins/Origin Document.pdf": {
+  "Project Origins/SSRH 001 stuff.pdf": 0.013
+ },
+ "Project Origins/Origin Document 01.pdf": {
+  "Project Histories/Project Lead History 04.pdf": 0.16,
+  "Project Histories/Project Lead History 03.pdf": 0.015
+ },
+ "Project Origins/Origin Document 02.pdf": {
+  "Project Histories/Project Lead History 04.pdf": 0.033
+ },
+ "_between_new": {
+  "Project Origins/Origin Document.pdf vs Project Origins/Origin Document 01.pdf": 0.0,
+  "Project Origins/Origin Document.pdf vs Project Origins/Origin Document 02.pdf": 0.0,
+  "Project Origins/Origin Document 01.pdf vs Project Origins/Origin Document.pdf": 0.0,
+  "Project Origins/Origin Document 01.pdf vs Project Origins/Origin Document 02.pdf": 0.189,
+  "Project Origins/Origin Document 02.pdf vs Project Origins/Origin Document.pdf": 0.0,
+  "Project Origins/Origin Document 02.pdf vs Project Origins/Origin Document 01.pdf": 0.065
+ }
+}

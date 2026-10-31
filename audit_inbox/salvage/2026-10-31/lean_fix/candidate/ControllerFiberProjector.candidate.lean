@@ -1,0 +1,96 @@
+/-
+Copyright (c) 2026 AIEF Proofs. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: AIEF / SSRH
+-/
+import AIEFProofs.ControllerFiber
+
+/-!
+# Controller-fiber projectors (CANDIDATE ONLY, not a recovery of the missing file)
+
+No source, description, or theorem list for `AIEFProofs.ControllerFiberProjector` exists in
+the repository, its git history, or the project histories. This file is a new,
+owner-reviewable proposal built only from objects that do appear in the project documents:
+
+* fiber generator `v = (1,-1,-1)` (`ControllerFiber.vCtrl`, spanning `ker CCtrl`);
+* fixed left covector `u_* ∝ (1,0,-1)`
+  (controller-fiber theorem package: `u_* = (√3/2)(1,0,-1)`);
+* the Euclidean projector onto the fiber (collaborator note).
+
+Do not add it to the project root without the owner's decision.
+-/
+
+set_option autoImplicit false
+
+namespace AIEFProofs
+namespace ControllerFiberProjector
+
+open Matrix ControllerFiber
+
+/-- Unnormalized fixed left covector direction `(1, 0, -1)`; `u_* = (√3/2)·wCtrl`. -/
+def wCtrl : Fin 3 → ℚ
+  | 0 => 1
+  | 1 => 0
+  | 2 => -1
+
+/-- Euclidean orthogonal projector onto `span{vCtrl}`: `P = v vᵀ / (vᵀ v)`, `vᵀ v = 3`. -/
+def PEuc : Matrix (Fin 3) (Fin 3) ℚ := fun i j => vCtrl i * vCtrl j / 3
+
+/-- Oblique (biorthogonal) projector onto `span{vCtrl}` along `ker wCtrlᵀ`:
+`Q = v wᵀ / (wᵀ v)`, `wᵀ v = 2`. -/
+def QBi : Matrix (Fin 3) (Fin 3) ℚ := fun i j => vCtrl i * wCtrl j / 2
+
+theorem wCtrl_dot_vCtrl : wCtrl ⬝ᵥ vCtrl = 2 := by
+  simp [dotProduct, sum_fin3, wCtrl, vCtrl]; norm_num
+
+theorem PEuc_idem : PEuc * PEuc = PEuc := by
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [PEuc, Matrix.mul_apply, sum_fin3, vCtrl] <;> norm_num
+
+theorem PEuc_symm : PEucᵀ = PEuc := by
+  ext i j; simp [PEuc, mul_comm]
+
+theorem QBi_idem : QBi * QBi = QBi := by
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [QBi, Matrix.mul_apply, sum_fin3, vCtrl, wCtrl] <;> norm_num
+
+/-- Both projectors map into the controller fiber `ker CCtrl`. -/
+theorem CCtrl_mul_PEuc : CCtrl * PEuc = 0 := by
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [PEuc, Matrix.mul_apply, sum_fin3, vCtrl] <;> norm_num
+
+theorem CCtrl_mul_QBi : CCtrl * QBi = 0 := by
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [QBi, Matrix.mul_apply, sum_fin3, vCtrl, wCtrl] <;> norm_num
+
+/-- Both projectors fix the fiber generator. -/
+theorem PEuc_mulVec_vCtrl : PEuc *ᵥ vCtrl = vCtrl := by
+  funext i; fin_cases i <;> simp [PEuc, Matrix.mulVec, dotProduct, sum_fin3, vCtrl] <;> norm_num
+
+theorem QBi_mulVec_vCtrl : QBi *ᵥ vCtrl = vCtrl := by
+  funext i
+  fin_cases i <;>
+    simp [QBi, Matrix.mulVec, dotProduct, sum_fin3, vCtrl, wCtrl] <;> norm_num
+
+/-- Range characterization: `x` is in the controller fiber iff the Euclidean projector fixes it. -/
+theorem CCtrl_mulVec_eq_zero_iff_PEuc_fix (x : Fin 3 → ℚ) :
+    CCtrl *ᵥ x = 0 ↔ PEuc *ᵥ x = x := by
+  constructor
+  · intro hx
+    obtain ⟨a, rfl⟩ := (CCtrl_mulVec_eq_zero_iff_exists_smul x).mp hx
+    rw [Matrix.mulVec_smul, PEuc_mulVec_vCtrl]
+  · intro hx
+    rw [← hx, Matrix.mulVec_mulVec, CCtrl_mul_PEuc, Matrix.zero_mulVec]
+
+/-- Same characterization for the biorthogonal projector. -/
+theorem CCtrl_mulVec_eq_zero_iff_QBi_fix (x : Fin 3 → ℚ) :
+    CCtrl *ᵥ x = 0 ↔ QBi *ᵥ x = x := by
+  constructor
+  · intro hx
+    obtain ⟨a, rfl⟩ := (CCtrl_mulVec_eq_zero_iff_exists_smul x).mp hx
+    rw [Matrix.mulVec_smul, QBi_mulVec_vCtrl]
+  · intro hx
+    rw [← hx, Matrix.mulVec_mulVec, CCtrl_mul_QBi, Matrix.zero_mulVec]
+
+end ControllerFiberProjector
+end AIEFProofs

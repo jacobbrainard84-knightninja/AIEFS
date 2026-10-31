@@ -1,0 +1,17 @@
+check_lean.sh  project=AIEFProofs  utc=20261025T020249Z
+git HEAD: 0b5b1082561b7717a0ea465d76bb9ebefa26b770  dirty_files: 2
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474
+  AIEFProofs imports AIEFProofs.Basic
+  AIEFProofs imports AIEFProofs.ControllerFiber
+  AIEFProofs imports AIEFProofs.ControllerFiberProjector
+  AIEFProofs.ControllerFiberProjector imports AIEFProofs.ControllerFiber
+  ORPHAN AIEFProofs.Smoke (not reachable from AIEFProofs.lean, so `lake build` does not check it)
+WARN step 3: orphan files NOT checked by lake build: AIEFProofs.Smoke
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: 
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+PASS step 5: Build completed successfully (1236 jobs); warnings=0 (listed in 5_build_diagnostics.txt)
+PASS step 6: scanned 5 files, hits=0
+PASS step 7: AUDITED 58 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in /workspace/lean_fix/logs/verify_0b5b108_plus_0003)

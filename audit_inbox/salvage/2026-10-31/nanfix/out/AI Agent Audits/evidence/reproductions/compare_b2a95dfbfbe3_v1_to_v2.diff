@@ -1,0 +1,16 @@
+--- a/AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py
++++ b/AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3_v2.py
+@@ -76,7 +76,12 @@
+ out["csv_shape"] = [list(cz.shape), list(cr.shape)]
+ if list(cz.columns) == list(cr.columns) and cz.shape == cr.shape:
+     num = cz.select_dtypes("number").columns
+-    out["csv_worst_abs_diff"] = float((cz[num] - cr[num]).abs().max().max())
++    xz, xr = cz[num].to_numpy(dtype=float), cr[num].to_numpy(dtype=float)
++    nan_z, nan_r = np.isnan(xz), np.isnan(xr)
++    out["csv_nan_mask_mismatches"] = int((nan_z != nan_r).sum())   # v2: NaN masks must match, as in cmp_arrays
++    if out["csv_nan_mask_mismatches"]: problems.append(f"scalar summary CSV: NaN pattern differs in {out['csv_nan_mask_mismatches']} cells")
++    d = np.abs(xz - xr)[~(nan_z | nan_r)]
++    out["csv_worst_abs_diff"] = float(d.max()) if d.size else 0.0
+     out["csv_nonnumeric_equal"] = all((cz[c].astype(str) == cr[c].astype(str)).all() for c in cz.columns if c not in num)
+ else: problems.append("scalar summary CSV columns/shape differ")
+ 
