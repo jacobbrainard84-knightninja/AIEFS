@@ -3,6 +3,7 @@
 Tests marked GAP are expected failures: the checker accepts the false input today."""
 import csv
 import io
+import json
 import os
 import shutil
 import subprocess
@@ -14,8 +15,37 @@ from rtcommon import PY, REPO, TempDirMixin, farm, gap, materialize, run
 LINT = os.path.join(REPO, "tools/ci/lint_claims.py")
 SCAN = os.path.join(REPO, "tools/ci/hygiene_scan.py")
 
+# Runs lint_claims.main() with extra (synthetic) KNOWN_MISSING_ARTIFACTS entries added to the live
+# ones, so the allow-list tests do not depend on the live entry. No CLI flag weakens the real check.
+LINT_DRIVER = r"""
+import json, sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, sys.argv[1])
+import lint_claims as l
+l.KNOWN_MISSING_ARTIFACTS = {**l.KNOWN_MISSING_ARTIFACTS, **{(c, e): r for c, e, r in json.loads(sys.argv[2])}}
+sys.exit(l.main(sys.argv[3:]))
+"""
+
+
+def tree_state():
+    """`git status` of the real checkout (ignored files included, byte-code excluded)."""
+    out = subprocess.run(["git", "-C", REPO, "status", "--porcelain", "--ignored", "-z"],
+                         capture_output=True, check=True).stdout.decode("utf-8", "replace")
+    return sorted(x for x in out.split("\0") if x and "__pycache__" not in x)
+
 
 class ClaimsLint(TempDirMixin, unittest.TestCase):
+    # The mirror's directories are symlinks into the real checkout: fail if any test wrote there.
+    @classmethod
+    def setUpClass(cls):
+        cls._tree_before = tree_state()
+
+    @classmethod
+    def tearDownClass(cls):
+        after = tree_state()
+        if after != cls._tree_before:
+            raise AssertionError(f"red-team tests changed the real checkout: before={cls._tree_before} after={after}")
+
     def setUp(self):
         super().setUp()
         # Symlink mirror of the tree (cited artifacts must resolve); the three files the tests edit
@@ -37,6 +67,9 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
 
     def lint(self, *extra):
         return run([PY, LINT, "--repo", self.root, *extra])
+
+    def lint_known(self, known):
+        return run([PY, "-c", LINT_DRIVER, os.path.dirname(LINT), json.dumps(known), "--repo", self.root])
 
     def fake_row(self, **kw):
         row = dict(self.rows[0])
@@ -101,6 +134,82 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.write()
         rc, out = self.lint()
         self.assertEqual(rc, 0, out[-2000:])
+
+    # Round-2 follow-ups from Auditor Seat 002's audit of fix/lint-claims-artifacts.
+    def test_machine_checked_wording_needs_lean_file(self):
+        self.rows.append(self.fake_row(statement="Machine-checked in Lean 4 without sorry: R* = 0.40.",
+                                       evidence_scope="Conditional theorem"))
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof")
+
+    def test_lean4_verifies_wording_needs_lean_file(self):
+        self.rows.append(self.fake_row(statement="Lean 4 verifies that R* = 0.40.",
+                                       evidence_scope="Conditional theorem"))
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof")
+
+    def test_scope_outside_vocabulary(self):
+        self.rows.append(self.fake_row(evidence_scope="Machine-checked theorem"))
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: evidence_scope 'Machine-checked theorem' is not one of the 6 values")
+
+    def test_informal_scope_is_a_vocabulary_error_not_a_proof_claim(self):
+        self.rows.append(self.fake_row(evidence_scope="Informal argument"))
+        self.write()
+        rc, out = self.lint()
+        self.assertRejected(rc, out, "evidence_scope 'Informal argument' is not one of the 6 values")
+        self.assertNotIn("claims a formal/Lean proof", out)
+
+    def test_scope_table_missing(self):
+        p = os.path.join(self.root, "registry/README.md")     # real temp copy (setUp)
+        with open(p) as f:
+            txt = f.read()
+        with open(p, "w") as f:
+            f.write(txt.replace("`evidence_scope` (Epistemic Strength)", "Epistemic Strength"))
+        self.assertRejected(*self.lint(), "no '### Axis 2 ... `evidence_scope`' table found")
+
+    def test_missing_path_after_existing_folder(self):
+        self.rows.append(self.fake_row(supporting_artifacts="lean/AIEFProofs missing_file.lean"))
+        self.write()
+        self.assertRejected(*self.lint(), "cited artifact does not exist: 'lean/AIEFProofs missing_file.lean'")
+
+    def test_missing_path_after_existing_file(self):
+        self.rows.append(self.fake_row(supporting_artifacts="registry/claims.csv nonexistent/file.md"))
+        self.write()
+        self.assertRejected(*self.lint(), "cited artifact does not exist: 'registry/claims.csv nonexistent/file.md'")
+
+    def test_control_locator_and_parenthesised_prose_pass(self):
+        self.rows.append(self.fake_row(supporting_artifacts="registry/README.md \u00a72 (axis/scope notes);"
+                                                            "registry/claims.csv:2-5"))
+        self.write()
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out[-2000:])
+
+    @gap("lint_claims.py: a formal row citing an existing .lean file that does not contain the claimed theorem passes "
+         "(only the file's existence is checked; content is out of scope)")
+    def test_GAP_lean_file_content_not_checked(self):
+        self.rows.append(self.fake_row(
+            statement="Theorem settle_threshold: R* = 0.40 (machine-checked in Lean 4).",
+            evidence_scope="Formalized theorem", supporting_artifacts="lean/AIEFProofs/AIEFProofs/Basic.lean"))
+        self.write()
+        self.assertRejected(*self.lint())
+
+    def test_control_synthetic_known_missing_entry_passes(self):
+        self.rows.append(self.fake_row(supporting_artifacts="results/rt_ghost.log"))
+        self.write()
+        rc, out = self.lint_known([["RT-FAKE-01", "results/rt_ghost.log", "synthetic"]])
+        self.assertEqual(rc, 0, out[-2000:])
+        self.assertIn("'results/rt_ghost.log' is missing (known: synthetic)", out)
+
+    def test_known_missing_entry_that_now_exists(self):
+        self.rows.append(self.fake_row(supporting_artifacts="registry/README.md"))
+        self.write()
+        self.assertRejected(*self.lint_known([["RT-FAKE-01", "registry/README.md", "synthetic"]]),
+                            "RT-FAKE-01: 'registry/README.md' is listed in KNOWN_MISSING_ARTIFACTS but now exists")
+
+    def test_known_missing_entry_no_longer_cited(self):
+        self.assertRejected(*self.lint_known([["RT-FAKE-01", "results/rt_ghost.log", "synthetic"]]),
+                            "stale KNOWN_MISSING_ARTIFACTS entry: RT-FAKE-01 no longer cites 'results/rt_ghost.log'")
 
     @gap("lint_claims.py: registry/claims.csv deleted -> NOTICE and exit 0")
     def test_GAP_claims_file_missing(self):

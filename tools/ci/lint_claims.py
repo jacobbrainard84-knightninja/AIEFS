@@ -20,7 +20,8 @@ The vocabulary is NOT hard-coded here. It is read from registry/README.md. The e
 
 Every value in the checked columns (default: artifact_status and audited_status) must equal one
 of these strings exactly (case-sensitive). audited_qualifier and other free-text columns are not
-linted. evidence_scope is a separate axis, not a status, and is not linted here.
+linted. evidence_scope is a separate axis, not a status: it must equal one of the values in the
+'### Axis 2 ... `evidence_scope`' table of registry/README.md exactly (see the artifact rules below).
 
 If registry/README.md has no such block, the fallback file tools/ci/claim_statuses.txt is used
 (one status per line, '#' comment lines allowed). That file ships as a PLACEHOLDER with no values;
@@ -35,12 +36,18 @@ that were tested and failed, or were withdrawn). Such a label produces a warning
 Artifact rules (errors, added for red-team G3/G4, see tools/redteam/REDTEAM.md):
 - Every ';'-separated entry of supporting_artifacts that looks like a path (contains '/' or its first
   word has a file extension) must resolve to a file or folder in the tree. Trailing words, ':LINE'
-  and '§section' suffixes are allowed ("AI Agent Audits/x.md §2.1"). Plain prose entries ("direct
-  matrix multiplication") are not checked. Known gaps are listed, with a reason, in KNOWN_MISSING_ARTIFACTS.
-- A row that claims a formal / Lean proof (evidence_scope 'Formalized theorem' or any scope mentioning
-  formal/Lean/proof, or a statement such as "proved in Lean") must cite at least one existing .lean
-  file. A registry row is not enough: registry/artifacts.csv marks non-proof files (README.md, CI
-  YAML) under lean/ as 'Formalized theorem' too.
+  and '§section' suffixes are allowed ("AI Agent Audits/x.md §2.1", "x.pdf p.3:20"), but only if
+  the trailing words outside parentheses are not themselves path-like (no '/', no file extension):
+  "lean/AIEFProofs missing.lean" is an error even though lean/AIEFProofs exists. Plain prose entries ("direct matrix multiplication") are not checked.
+  Known gaps are listed, with a reason, in KNOWN_MISSING_ARTIFACTS; an entry there that is no longer
+  cited, or whose file now exists, is an error (stale allow-list).
+- evidence_scope must be exactly one of the values in the '### Axis 2' table of registry/README.md
+  (6 values today); if that table cannot be found, that is an error.
+- A row that claims a formal / Lean proof (evidence_scope exactly 'Formalized theorem', or a statement
+  such as "proved in Lean", "Machine-checked in Lean 4", "Lean 4 verifies") must cite at least one
+  existing .lean file. A registry row is not enough: registry/artifacts.csv marks non-proof files
+  (README.md, CI YAML) under lean/ as 'Formalized theorem' too. Limitation: only the existence of the
+  .lean file is checked, not that it contains the claimed theorem (red-team GAP, see REDTEAM.md).
 
 Exit status: 0 = OK (warnings allowed unless --strict), 1 = errors, 2 = usage error.
 """
@@ -64,9 +71,13 @@ KNOWN_MISSING_ARTIFACTS = {
 }
 _EXT = re.compile(r"^\S+\.[A-Za-z0-9]{1,8}$")
 _SUFFIX = re.compile(r"(:\d+(-\d+)?|\s*\u00a7.*)$")
-FORMAL_SCOPE = re.compile(r"formal|lean|proof|proved|proven", re.I)
-LEAN_PROOF_TEXT = re.compile(r"\b(proved|proven|proof|verified|formali[sz]ed)\b[^.;]{0,40}\bLean\b"
-                             r"|\bLean\b[^.;]{0,20}\b(proof|proved|proven|formali[sz]ation)\b", re.I)
+_PATHLIKE = re.compile(r"/|^[^\s/]+\.[A-Za-z][A-Za-z0-9]{0,7}$")   # trailing word that names a file/path
+FORMAL_SCOPE_VALUE = "Formalized theorem"
+SCOPE_HEADING = re.compile(r"^###\s.*`evidence_scope`")
+LEAN_PROOF_TEXT = re.compile(
+    r"\b(proved|proven|proof|verified|formali[sz]ed|machine[- ]checked|checked)\b[^.;]{0,40}\bLean\b"
+    r"|\bLean\b(\s*4)?[^.;]{0,20}\b(proof|proved|proven|formali[sz]ation|verif(y|ies|ied)|checks|checked)\b",
+    re.I)
 
 
 def resolve_artifact(repo, entry):
@@ -79,23 +90,53 @@ def resolve_artifact(repo, entry):
         full = os.path.abspath(os.path.join(repo, cand))
         if cand and not os.path.isabs(cand) and full.startswith(os.path.abspath(repo) + os.sep) \
                 and os.path.exists(full):
+            # The rest must be a locator or prose, not another (missing) path. Parenthesised prose
+            # ("(proposal/scale/winner audit)") is ignored.
+            rest = re.sub(r"\([^)]*\)?", " ", " ".join(words[k:]))
+            if any(_PATHLIKE.search(w.strip(",;:")) for w in rest.split()):
+                return None
             return cand
     return None
 
 
-def check_artifacts(repo, row, cid, rep, where, line):
+def parse_scope_vocab(text):
+    """Return the evidence_scope values from the '### Axis 2 ... `evidence_scope`' table, or []."""
+    lines = text.splitlines()
+    try:
+        i = next(k for k, ln in enumerate(lines) if SCOPE_HEADING.match(ln.strip()))
+    except StopIteration:
+        return []
+    vals = []
+    for ln in lines[i + 1:]:
+        s = ln.strip()
+        if s.startswith("#"):
+            break
+        m = re.match(r"^\|\s*`([^`]+)`\s*\|", s)
+        if m:
+            vals.append(m.group(1))
+    return vals
+
+
+def check_artifacts(repo, row, cid, rep, where, line, scopes, known_seen):
     cited = []
     for entry in [e.strip() for e in (row.get("supporting_artifacts") or "").split(";") if e.strip()]:
         got = resolve_artifact(repo, entry)
+        reason = KNOWN_MISSING_ARTIFACTS.get((cid, entry))
+        if reason is not None:
+            known_seen[(cid, entry)] = got is None
         if got is None:
-            reason = KNOWN_MISSING_ARTIFACTS.get((cid, entry))
             if reason:
                 rep.notice(f"{where}: {cid}: cited artifact '{entry}' is missing (known: {reason})")
             else:
                 rep.error(f"{where}: {cid}: cited artifact does not exist: '{entry}'", where, line)
         elif got:
             cited.append(got)
-    if FORMAL_SCOPE.search(row.get("evidence_scope") or "") or LEAN_PROOF_TEXT.search(row.get("statement") or ""):
+    scope = row.get("evidence_scope") or ""
+    if scopes is not None and scope not in scopes:
+        hint = " (has leading/trailing spaces)" if scope.strip() in scopes else ""
+        rep.error(f"{where}: {cid}: evidence_scope '{scope}' is not one of the {len(scopes)} values in "
+                  f"registry/README.md (Axis 2){hint}", where, line)
+    if scope == FORMAL_SCOPE_VALUE or LEAN_PROOF_TEXT.search(row.get("statement") or ""):
         if not any(c.endswith(".lean") and os.path.isfile(os.path.join(repo, c)) for c in cited):
             rep.error(f"{where}: {cid}: claims a formal/Lean proof (evidence_scope "
                       f"'{row.get('evidence_scope', '')}') but cites no existing .lean file", where, line)
@@ -190,6 +231,16 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
     else:
         rep.warn(f"vocabulary has no '{SPECULATIVE_LABEL}' status; untested origin ideas need it")
 
+    scopes, readme = None, os.path.join(repo, readme_rel)
+    if os.path.isfile(readme):
+        with open(readme, encoding="utf-8") as f:
+            scopes = parse_scope_vocab(f.read()) or None
+    if scopes is None:
+        rep.error(f"{readme_rel}: no '### Axis 2 ... `evidence_scope`' table found; evidence_scope cannot be checked",
+                  readme_rel)
+    else:
+        print(f"evidence_scope: {len(scopes)} values from {readme_rel}")
+    known_seen = {}
     with open(claims, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         header = reader.fieldnames or []
@@ -222,7 +273,7 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
                         hint = " (has leading/trailing spaces)" if val.strip() in allowed else ""
                         rep.error(f"{claims_rel}:{line}: {cid}: {col} '{val}' is not in the status vocabulary{hint}",
                                   claims_rel, line)
-            check_artifacts(repo, row, cid or "(empty claim_id)", rep, claims_rel, line)
+            check_artifacts(repo, row, cid or "(empty claim_id)", rep, claims_rel, line, scopes, known_seen)
             if cid.startswith(ORIGIN_PREFIX):
                 for col in CURRENT_STATUS_COLUMNS:
                     val = row.get(col) or ""
@@ -233,6 +284,13 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
                                  f"(Retired/Rejected/Quarantined are for tested-and-failed or withdrawn claims)",
                                  claims_rel, line)
         print(f"checked {n} claim rows; {bad} status violation(s)")
+    for key in sorted(KNOWN_MISSING_ARTIFACTS):
+        if key not in known_seen:
+            rep.error(f"stale KNOWN_MISSING_ARTIFACTS entry: {key[0]} no longer cites '{key[1]}'; "
+                      f"remove it from tools/ci/lint_claims.py")
+        elif not known_seen[key]:
+            rep.error(f"{key[0]}: '{key[1]}' is listed in KNOWN_MISSING_ARTIFACTS but now exists; "
+                      f"remove it from tools/ci/lint_claims.py")
 
 
 def main(argv=None):

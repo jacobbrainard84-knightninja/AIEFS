@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (76 tests: 65 PASS incl. 12 controls, 11 GAP)
+## Results
 
 Run on base `395ea53` (main).
 
@@ -74,7 +74,7 @@ Run on base `395ea53` (main).
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
 | **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| **GAP** verifier deleted | check_manifest.py (line 79) | **GAP**: prints NOTICE and exits 0 |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
@@ -91,6 +91,18 @@ Run on base `395ea53` (main).
 | false claim "R* = 0.40, proved in Lean" as Supported/Formal proof (was GAP G4) | lint_claims | PASS (`claims a formal/Lean proof ... but cites no existing .lean file`) |
 | "proved in Lean" statement with an experimental scope | lint_claims | PASS |
 | control: Formalized theorem row citing a real .lean file | lint_claims | PASS (accepted) |
+| "Machine-checked in Lean 4 without sorry" statement, Conditional theorem scope | lint_claims | PASS (`claims a formal/Lean proof`) |
+| "Lean 4 verifies ..." statement | lint_claims | PASS (`claims a formal/Lean proof`) |
+| evidence_scope "Machine-checked theorem" (outside the 6 values) | lint_claims | PASS (`is not one of the 6 values`) |
+| evidence_scope "Informal argument" (no substring match on "formal") | lint_claims | PASS (vocabulary error, no proof-claim error) |
+| evidence_scope table removed from registry/README.md | lint_claims | PASS (`no '### Axis 2 ... evidence_scope' table found`) |
+| `lean/AIEFProofs missing_file.lean` (missing path after an existing folder) | lint_claims | PASS (`cited artifact does not exist`) |
+| `registry/claims.csv nonexistent/file.md` | lint_claims | PASS (`cited artifact does not exist`) |
+| control: `§section`, `:LINE` and parenthesised prose after a real path | lint_claims | PASS (accepted) |
+| control: synthetic KNOWN_MISSING_ARTIFACTS entry, file missing | lint_claims | PASS (accepted, NOTICE) |
+| KNOWN_MISSING_ARTIFACTS entry whose file now exists | lint_claims | PASS (`but now exists`) |
+| KNOWN_MISSING_ARTIFACTS entry no longer cited | lint_claims | PASS (`stale KNOWN_MISSING_ARTIFACTS entry`) |
+| **GAP** Formalized theorem row citing an existing .lean file that lacks the claimed theorem | lint_claims | **GAP**: only the file's existence is checked (content is out of scope) |
 | **GAP** claims.csv missing | lint_claims | **GAP**: exit 0 |
 | **GAP** vocabulary heading removed | lint_claims (non-strict, as CI runs it) | **GAP**: checks skipped, exit 0 |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
@@ -179,3 +191,14 @@ broken.
   `KNOWN_MISSING_ARTIFACTS` (one entry today: AUD-REPRO-B2A95 cites
   `compare_b2a95dfbfbe3_v3.log`, which was never committed; Auditor Seat 002 finding M1).
   The claims-lint fixture now mirrors the tree with symlinks so cited artifacts resolve.
+
+- **Round 2 (Auditor Seat 002 follow-ups), same branch.** `evidence_scope` must equal one of the
+  values in the `### Axis 2 ... evidence_scope` table of `registry/README.md` (6 today; a missing
+  table is an error), and only `Formalized theorem` counts as a formal scope (no more substring
+  match, so "Informal ..." is not a proof claim). The proof wording also covers "Machine-checked in
+  Lean 4" and "Lean 4 verifies". After the longest existing path prefix, the remaining words outside
+  parentheses must not be path-like (no `/`, no file extension). KNOWN_MISSING_ARTIFACTS entries
+  that are no longer cited, or whose file now exists, are errors. The allow-list tests inject a
+  synthetic entry through a small driver, so they do not depend on the live entry. New GAP: the
+  `.lean` file's content is not checked. `ClaimsLint` fails in `tearDownClass` if any test changed
+  `git status` of the real checkout.
