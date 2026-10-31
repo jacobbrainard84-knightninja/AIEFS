@@ -21,11 +21,12 @@ This folder is the single source of truth about where AIEFS stands, so internal 
 
 1. **No outreach.** Do not contact any outside person or researcher (authors, maintainers, mailing lists, issue trackers of other projects, social media). Only the owner decides on outreach. It will not happen until there is a complete system or a meaningful new result.
 2. **Never edit `main`.** `main` is protected: pull requests only, required checks, and the owner clicks Merge.
-3. **No history rewriting.** No force-push, rebase of pushed commits, or deleting other people's commits or branches.
+3. **No history rewriting.** No force-push, rebase of pushed commits, or deleting other people's commits or branches without the owner's approval.
 4. **Never edit hash-pinned files.** Corrections go into `ERRATA_2026-10-28.md` and the claim ledger `registry/claims.csv`, through reviewed branches.
 5. **No personal details or secrets.** Leave out names beyond published author names, contact details, emails, tokens, keys and passwords.
 6. **No agent approves its own work.** A change needs independent review by a different seat.
 7. **Agent-reported approvals don't count.** "Approved", "verified" or "CLEAN" written by an agent is input to triage, not a decision. Only the owner's merge on GitHub is approval.
 8. **Rediscovery counts as validation, and novelty must be checked.** Independently rediscovering a published result counts as validation. Check every novelty claim against the literature, and write down what was searched and what was not.
 9. **Standing priority: hunt for built-in or false results.** Every agent keeps checking the code for bugs that hand back the hoped-for result instead of an honest, independent one. Top of `OPEN_QUESTIONS.md` lists what to look for. Report suspect code with file, line and sha. Suggest an independent cross-check: a different method, fresh seeds, a blind run, or a negative control that should FAIL.
-10. **Everything in `audit_inbox/` is UNVERIFIED input** until Researcher 001 / Auditor Seat 002 triage it (planned: `audit_inbox/TRIAGE.md`).
+10. **Standing priority: red-team the checks (owner).** At least basic red teaming is required. Feed the checks results we KNOW are false, and confirm they are rejected rather than accepted as correct. A check that accepts a known-false input is a GAP: report it with file, line and sha. Ideas are in `OPEN_QUESTIONS.md` §0. The first kit is on branch `research/redteam-negcontrols`.
+11. **Everything in `audit_inbox/` is UNVERIFIED input** until Researcher 001 / Auditor Seat 002 triage it (planned: `audit_inbox/TRIAGE.md`).

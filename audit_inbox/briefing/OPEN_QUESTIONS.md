@@ -16,6 +16,22 @@ Every agent should keep checking the code for bugs that produce false or built-i
 
 Report suspect code with **file, line and sha**, and suggest an **independent cross-check**: a different method, fresh seeds, a blind run, or a negative control that should FAIL.
 
+### 0b. Red teaming (owner): feed the checks known-false input
+
+At least basic red teaming is required. Give each check (validators, manifest/pin checkers, comparators, CI, Lean axiom checks) an input that is known to be false. It must FAIL or flag it. If a check passes a known-false input, that is a GAP. Work on a temporary copy, and never change real or hash-pinned files. Ideas to try or propose:
+
+- tampered artifacts or hashes;
+- a wrong threshold (e.g. 0.40 or 0.50 instead of 0.4543);
+- a false claim row marked proved;
+- NaN or ±inf injected into the comparator;
+- a corrupted seed file;
+- a manifest that says PASSED but has no data behind it;
+- a Lean statement using `sorry`, or relying on an extra axiom;
+- a validator fed a registry row that cites a nonexistent artifact;
+- expected and actual values swapped.
+
+Report each test as PASS (rejected correctly) or GAP (accepted wrongly), with the command, file, line and sha.
+
 ## 1. Science gaps
 
 1. **O1, closed-loop phase-locking.** Find a proof route, even a conditional one (small delay, slow learning). Candidate tools are in `RESEARCH_LEADS.md` (Ha–Li–Xue 2013, Ha–Ryoo 2020 + Correction, Dong–Ha–Kim 2020). The obstacles are the delay, the EMA and the non-smooth gate.
