@@ -10,7 +10,12 @@ asserts its own needle, so a crash or an unrelated problem cannot count as a PAS
 
 Zip-side tests (added after review r001 of 1250bbd: G-A to G-E) replace the "Project Histories" symlink with a real
 temp folder holding a REBUILT, reduced zip (the rerun folder plus the stub manifest, optionally tampered). A rebuilt zip
-can never match EXPECTED_ZIP_SHA256, so each of those tests asserts its own needle in addition to the sha problem."""
+can never match EXPECTED_ZIP_SHA256, so each of those tests asserts its own needle in addition to the sha problem.
+
+Review r001 of f0aadce: the float tests (tolerance, NaN/inf, text, 0 -> 1e-14) now tamper a FLOAT column. Before, they hit
+the uint64 `seed` column, so the tolerance tests passed only by accident on pandas 3.0.6 (float64 re-parse noise) and
+failed on pandas 3.1.0. Integer columns (seed_index, seed) have their own exact-compare tests (O1), plus tests for the
+remaining tracebacks (non-object manifests / environment / stub, corrupt zip seed member, missing source file)."""
 import csv
 import io
 import json
@@ -32,6 +37,7 @@ ZRUN = "runs/frozen_production_20260806/b2a95dfbfbe3/"
 ZSTUB = "runs/5a9f093a2fe0/manifest.json"
 ZID, RID = "b2a95dfbfbe3", "5a9f093a2fe0"
 ZCSV, ZDIAG = f"AIEF_1_4_{ZID}_scalar_summary.csv", f"AIEF_1_4_{ZID}_branch_diagnostics.npz"
+NOT_FLOAT = ("seed_index", "seed", "branch", "branch_family")   # integer and text columns of the scalar-summary CSV
 
 
 def load_npz(p):
@@ -88,9 +94,10 @@ class Comparator(TempDirMixin, unittest.TestCase):
             csv.writer(f, lineterminator="\n").writerows(rows)
 
     def first_finite_numeric_cell(self, rows):
+        """First finite, non-zero cell of a FLOAT column in row 1 (never seed_index / seed: see the module docstring)."""
         hdr = rows[0]
         for j, name in enumerate(hdr):
-            if name in ("branch", "branch_family"):
+            if name in NOT_FLOAT:
                 continue
             try:
                 v = float(rows[1][j])
@@ -139,20 +146,69 @@ class Comparator(TempDirMixin, unittest.TestCase):
         self.assertIn('"verdict": "REPRODUCED"', out)
         self.assertIn('"problems": []', out)
 
-    # --- tolerance -------------------------------------------------------------------
-    def test_csv_cell_off_by_1e_9(self):
+    # --- tolerance (on a float column: D_B_final, row 1, |v| ~ 0.29) ------------------------------
+    def _csv_shift(self, delta):
+        names = []
         def f(rows):
             j, v = self.first_finite_numeric_cell(rows)
-            rows[1][j] = repr(v + 1e-9)
+            new = repr(v + delta)
+            self.assertNotEqual(float(new), v)    # the perturbation really reaches the file
+            names.append(rows[0][j]); rows[1][j] = new
         self.edit_csv(f)
-        self.verdict_rejected("worst abs diff", "> TOL")
+        self.assertEqual(names, ["D_B_final"])
+        return names[0]
+
+    def test_csv_cell_off_by_1e_9(self):
+        self._csv_shift(1e-9)
+        out = self.verdict_rejected("worst abs diff", "> TOL")
+        self.assertNotIn("integer column", out)
 
     def test_csv_cell_off_by_just_over_tolerance(self):
+        self._csv_shift(1e-11)                    # TOL = 1e-12; float64 keeps this at |v| ~ 0.29
+        out = self.verdict_rejected("worst abs diff", "> TOL")
+        self.assertNotIn("integer column", out)
+
+    def test_csv_cell_off_within_tolerance_still_reproduces(self):
+        """Control for the two tests above: a shift well inside TOL and RTOL (abs 1e-13, rel ~3.5e-13) passes."""
+        self._csv_shift(1e-13)
+        rc, out = self.compare()
+        self.assertEqual(rc, 0, out[-2000:])
+        self.assertIn('"verdict": "REPRODUCED"', out)
+        self.assertIn('"problems": []', out)
+
+    # --- O1 (review r001 of f0aadce): integer columns are compared exactly ------------------------
+    def _csv_int_set(self, col, fn):
         def f(rows):
-            j, v = self.first_finite_numeric_cell(rows)
-            rows[1][j] = repr(v + 1e-11)          # TOL = 1e-12; float64 keeps this at |v| ~ 1
+            j = rows[0].index(col); rows[1][j] = fn(rows[1][j])
         self.edit_csv(f)
-        self.verdict_rejected("worst abs diff", "> TOL")
+
+    def test_O1_csv_seed_plus_1(self):
+        """f0aadce read the uint64 seed (~1.1e19) as float64 (1 ulp = 2048): seed+1 said REPRODUCED."""
+        self._csv_int_set("seed", lambda t: str(int(t) + 1))
+        out = self.verdict_rejected("scalar summary CSV: integer columns differ (exact): seed (1 cells)")
+        self.assertIn('"csv_integer_cells_differing": {\n  "seed": 1\n }', out)
+
+    def test_O1_csv_seed_plus_1000(self):
+        self._csv_int_set("seed", lambda t: str(int(t) + 1000))
+        self.verdict_rejected("scalar summary CSV: integer columns differ (exact): seed (1 cells)")
+
+    def test_O1_csv_seed_index_changed(self):
+        self._csv_int_set("seed_index", lambda t: str(int(t) + 1))
+        self.verdict_rejected("scalar summary CSV: integer columns differ (exact): seed_index (1 cells)")
+
+    def test_O1_csv_seed_written_as_float(self):
+        self._csv_int_set("seed", lambda t: repr(float(int(t))))
+        self.verdict_rejected("scalar summary CSV: integer column seed has 1 non-integer cell(s) in the official run")
+
+    def test_O1_zip_csv_seed_plus_1(self):
+        def edit(rel, data):
+            if rel != ZCSV:
+                return data
+            rows = list(csv.reader(io.StringIO(data.decode())))
+            j = rows[0].index("seed"); rows[1][j] = str(int(rows[1][j]) + 1)
+            b = io.StringIO(); csv.writer(b, lineterminator="\n").writerows(rows); return b.getvalue().encode()
+        self.rebuild_zip(edit)
+        self.verdict_rejected("scalar summary CSV: integer columns differ (exact): seed (1 cells)")
 
     # --- non-finite values -------------------------------------------------------------
     def _csv_set(self, text):
@@ -218,8 +274,7 @@ class Comparator(TempDirMixin, unittest.TestCase):
     def test_two_numeric_columns_swapped(self):
         def f(rows):
             hdr = rows[0]
-            num = [j for j, n in enumerate(hdr) if n not in ("branch", "branch_family")]
-            a, b = num[0], num[1]
+            a, b = hdr.index("D_B_final"), hdr.index("P_mean_immediate")   # two float columns that differ
             for r in rows[1:]:
                 r[a], r[b] = r[b], r[a]
         self.edit_csv(f)
@@ -288,7 +343,7 @@ class Comparator(TempDirMixin, unittest.TestCase):
         def f(rows):
             for r in rows[1:]:
                 for j, name in enumerate(rows[0]):
-                    if name not in ("branch", "branch_family") and r[j] in ("0", "0.0"):
+                    if name not in NOT_FLOAT and r[j] in ("0", "0.0"):
                         r[j] = "1e-14"; return
             raise AssertionError("no zero cell")
         self.edit_csv(f)
@@ -417,6 +472,58 @@ class Comparator(TempDirMixin, unittest.TestCase):
         self.rebuild_zip(edit)
         out = self.verdict_rejected("manifest: model missing in rerun manifest", "manifest: model missing in official manifest")
         self.assertIn('"model_equal": true', out)   # equality alone is vacuous here
+
+    # --- review r001 of f0aadce (item 3): remaining tracebacks are named problems ------------------
+    def _set_official_manifest_text(self, text):
+        with open(os.path.join(self.run_dir, "manifest.json"), "w") as f:
+            f.write(text)
+
+    def test_official_manifest_null(self):
+        self._set_official_manifest_text("null")
+        self.verdict_rejected("official manifest.json is not a JSON object (NoneType)")
+
+    def test_official_manifest_list(self):
+        self._set_official_manifest_text("[]")
+        self.verdict_rejected("official manifest.json is not a JSON object (list)")
+
+    def test_zip_manifest_null(self):
+        self.rebuild_zip(lambda rel, data: b"null" if rel == "manifest.json" else data)
+        self.verdict_rejected("rerun manifest.json is not a JSON object (NoneType)")
+
+    def test_zip_manifest_list(self):
+        self.rebuild_zip(lambda rel, data: b"[]" if rel == "manifest.json" else data)
+        self.verdict_rejected("rerun manifest.json is not a JSON object (list)")
+
+    def test_official_manifest_environment_null(self):
+        self.set_manifest(lambda m: m.__setitem__("environment", None))
+        self.verdict_rejected("manifest: official environment is not a JSON object (NoneType)")
+
+    def test_zip_stub_is_a_list(self):
+        self.rebuild_zip(lambda rel, data: b"[1]" if rel == ZSTUB else data)
+        self.verdict_rejected(f"zip stub {ZSTUB} is not a JSON object (list)")
+
+    def test_zip_seed_member_bad_crc(self):
+        """A zip member whose stored bytes are corrupted: zipfile raises BadZipFile (bad CRC) on read."""
+        f = self.seed_file()
+        self.rebuild_zip()
+        zp = os.path.join(self.w, "Project Histories", os.path.basename(ZIP))
+        with zipfile.ZipFile(zp) as z:
+            info = z.getinfo(ZRUN + f)
+        with open(zp, "r+b") as fh:
+            fh.seek(info.header_offset + 26)
+            nlen, xlen = (int.from_bytes(fh.read(2), "little") for _ in range(2))
+            pos = info.header_offset + 30 + nlen + xlen + info.compress_size // 2
+            fh.seek(pos); b = fh.read(1); fh.seek(pos); fh.write(bytes([b[0] ^ 0xFF]))
+        self.verdict_rejected(f"{f}: unreadable in rerun run (")
+
+    def test_official_source_file_missing(self):
+        os.unlink(os.path.join(self.w, "Older files"))   # the symlink, not the repo folder
+        self.verdict_rejected("source file Older files/AIEF_1_4_memory_ablation_updated.py missing or unreadable (FileNotFoundError)",
+                              "manifest: official source_sha256 is not sha256(")
+
+    def test_rerun_source_file_missing(self):
+        os.unlink(os.path.join(self.w, "AIEF_1_4_memory_ablation_updated.py"))
+        self.verdict_rejected("source file AIEF_1_4_memory_ablation_updated.py missing or unreadable (FileNotFoundError)")
 
     def test_selftest_still_passes(self):
         rc, out = run([PY, CMP, "--selftest"], cwd=self.w)

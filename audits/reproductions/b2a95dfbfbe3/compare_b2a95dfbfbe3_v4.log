@@ -1,4 +1,4 @@
-$ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py"   (from the repo root at 395ea53 + red-team suite, branch fix/comparator-v4-gates after 1250bbd + review r001 gates; numpy 2.5.4, pandas 3.0.6, python 3.13.5; 2026-10-31)
+$ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py"   (from the repo root at 395ea53 + red-team suite, branch fix/comparator-v4-gates after 1250bbd + review r001 gates + review r001 of f0aadce fixes; numpy 2.5.4, pandas 3.0.6, python 3.13.5; 2026-10-31)
 {
  "comparator": "v4",
  "zip_folder": "Project Histories",
@@ -65,6 +65,11 @@ $ python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py"   (from 
    46
   ]
  ],
+ "csv_integer_columns": [
+  "seed_index",
+  "seed"
+ ],
+ "csv_integer_cells_differing": {},
  "csv_nan_mask_mismatches": 0,
  "csv_posinf_mask_mismatches": 0,
  "csv_neginf_mask_mismatches": 0,

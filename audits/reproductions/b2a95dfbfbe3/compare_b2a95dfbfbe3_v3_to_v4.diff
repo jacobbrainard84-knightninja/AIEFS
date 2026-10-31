@@ -1,6 +1,6 @@
 --- a/audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py
 +++ b/audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py
-@@ -2,133 +2,286 @@
+@@ -2,133 +2,333 @@
  'workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip' (in the 'Project Histories' folder) at
  runs/frozen_production_20260806/b2a95dfbfbe3/, reproduce the official run runs/5a9f093a2fe0?
  
@@ -32,6 +32,13 @@
 +  - a missing, empty or unreadable file on EITHER side (official run dir, or the zip's manifest, CSV, branch
 +    diagnostics, seed files or stub manifest), and text in a numeric CSV cell, is a named problem and a
 +    NOT REPRODUCED verdict (exit 1), not a traceback (G-D). 1250bbd covered only the official side and seed files.
++Added after review r001 of f0aadce:
++  - integer CSV columns (every non-empty cell an integer literal, e.g. seed_index and the uint64 seed) are compared
++    EXACTLY as Python ints from the raw text (O1). As float64, a uint64 seed (~1.1e19, 1 ulp = 2048) could change by up
++    to ~1000 and still pass. A non-integer cell in such a column, or an empty cell on one side only, is a problem.
++    TOL/RTOL and the NaN/inf masks apply to the float columns only
++  - a manifest or stub that is valid JSON but not an object, a non-object "environment", a corrupt (e.g. bad-CRC) zip
++    seed member, and a missing or unreadable repo-side source file are named problems too, not tracebacks
 +Not gated, on purpose: zip_stub_model_matches_official. That compares a known-wrong stub inside the zip
 +(runs/5a9f093a2fe0/manifest.json in the zip; b2a95dfbfbe3_REPRODUCTION.md documents it as the wrong parameters),
 +not the rerun, and it is false on the genuine data. It stays an informational key; only the stub's presence and
@@ -147,6 +154,11 @@
 +    except KeyError:
 +        raise FileNotFoundError(ZRUN + rel) from None
 +
++def as_object(what, m):
++    """A parsed manifest must be a JSON object; anything else (null, [], 1) is a named problem and counts as {}."""
++    if isinstance(m, dict): return m
++    problems.append(f"{what} is not a JSON object ({type(m).__name__})"); return {}
++
 +def load_npz(side, f, getbytes):
 +    """np.load from bytes; a missing or unreadable file is a named problem (v3 crashed with a Traceback)."""
 +    try:
@@ -162,35 +174,51 @@
 +    mz = json.loads(zread("manifest.json"))
 +except Exception as e:
 +    mz = {}; problems.append(f"rerun manifest.json missing or unreadable ({type(e).__name__})")
++mz = as_object("rerun manifest.json", mz)
 +try:
 +    mr = json.loads((RRUN / "manifest.json").read_text())
 +except Exception as e:
 +    mr = {}; problems.append(f"official manifest.json missing or unreadable ({type(e).__name__})")
++mr = as_object("official manifest.json", mr)
 +for key in ("model", "protocol", "randomization", "schema"):
 +    out[f"{key}_equal"] = mz.get(key) == mr.get(key)
 +    if not out[f"{key}_equal"]: problems.append(f"manifest: {key} differs")
 +    for side, m in (("rerun", mz), ("official", mr)):   # G-E: absent on both sides must not count as equal
 +        if m and key not in m: problems.append(f"manifest: {key} missing in {side} manifest")
  out["manifest_keys_differing"] = sorted(k for k in set(mz) | set(mr) if mz.get(k) != mr.get(k))
+-out["env_rerun"] = {k: v for k, v in mz.get("environment", {}).items() if k != "platform"}
+-out["env_official"] = {k: v for k, v in mr.get("environment", {}).items() if k != "platform"}
 +unexpected = sorted(set(out["manifest_keys_differing"]) - EXPECTED_DIFFERING_KEYS)
 +if unexpected: problems.append(f"manifest: unexpected differing keys {unexpected}")
 +out["manifest_keys_one_side_only"] = sorted(set(mz) ^ set(mr))   # G-A: .get() above treats an added null key as equal
 +one_side = sorted(set(out["manifest_keys_one_side_only"]) - EXPECTED_DIFFERING_KEYS)
 +if mz and mr and one_side: problems.append(f"manifest: key(s) present in only one manifest {one_side}")
- out["env_rerun"] = {k: v for k, v in mz.get("environment", {}).items() if k != "platform"}
- out["env_official"] = {k: v for k, v in mr.get("environment", {}).items() if k != "platform"}
++for side, m in (("rerun", mz), ("official", mr)):
++    env = m.get("environment", {})
++    if not isinstance(env, dict):
++        problems.append(f"manifest: {side} environment is not a JSON object ({type(env).__name__})"); env = {}
++    out[f"env_{side}"] = {k: v for k, v in env.items() if k != "platform"}
  out["source_sha256_rerun"] = mz.get("source_sha256"); out["source_sha256_official"] = mr.get("source_sha256")
 +for side, m in (("rerun", mz), ("official", mr)):
 +    if m.get("config_hash") != {"rerun": ZID, "official": RID}[side]:
 +        problems.append(f"manifest: {side} config_hash {m.get('config_hash')!r} is not the run id {({'rerun': ZID, 'official': RID}[side])!r}")
  
 -# Source files: which tracked file each run used, and what differs between them.
+-hn, ho = sha(SRC_NEW.read_bytes()), sha(SRC_OLD.read_bytes())
 +# --- source files: which tracked file each run used, and what differs between them ------------------
- hn, ho = sha(SRC_NEW.read_bytes()), sha(SRC_OLD.read_bytes())
++src = {}
++for path in (SRC_NEW, SRC_OLD):
++    try: src[path] = path.read_bytes()
++    except Exception as e: problems.append(f"source file {path} missing or unreadable ({type(e).__name__})")
++hn, ho = (sha(src[p]) if p in src else None for p in (SRC_NEW, SRC_OLD))
  out["source_files"] = {str(SRC_NEW): hn, str(SRC_OLD): ho}
+-a, b = SRC_OLD.read_text().splitlines(), SRC_NEW.read_text().splitlines()
 +if out["source_sha256_rerun"] != hn: problems.append(f"manifest: rerun source_sha256 is not sha256({SRC_NEW})")
 +if out["source_sha256_official"] != ho: problems.append(f"manifest: official source_sha256 is not sha256({SRC_OLD})")
- a, b = SRC_OLD.read_text().splitlines(), SRC_NEW.read_text().splitlines()
++try:
++    a, b = (src[p].decode("utf-8").splitlines() if p in src else [] for p in (SRC_OLD, SRC_NEW))
++except UnicodeDecodeError as e:
++    a = b = []; problems.append(f"source files: not UTF-8 text ({type(e).__name__})")
  changed = [l for l in difflib.unified_diff(a, b, lineterm="", n=0) if l[:1] in "+-" and not l.startswith(("+++", "---"))]
  code = [l for l in changed if l[1:].strip() and not l[1:].strip().startswith("#")]
  out["source_diff_changed_lines"] = len(changed)
@@ -221,7 +249,8 @@
 -        worst = max(worst, d); nonzero += d > 0
 -out.update(seed_files_rerun=len(seeds), seed_files_official=len(list(RRUN.glob("seed_*.npz"))),
 +    if f in only_z: continue
-+    zbytes = zread(f)
++    try: zbytes = zread(f)
++    except Exception as e: problems.append(f"{f}: unreadable in rerun run ({type(e).__name__})"); continue
 +    try: rbytes = (RRUN / f).read_bytes()
 +    except Exception as e: problems.append(f"{f}: unreadable in official run ({type(e).__name__})"); continue
 +    byte_identical += zbytes == rbytes
@@ -261,19 +290,40 @@
 -    xz, xr = cz[num].to_numpy(dtype=float), cr[num].to_numpy(dtype=float)
 -    mm = mask_mismatches(xz, xr)   # v2: NaN masks must match; v3: +inf and -inf masks too, as in cmp_arrays
 +# --- scalar summary CSV --------------------------------------------------------------------------
++def read_csv(getbytes):
++    """(parsed frame, raw text frame): the raw frame keeps every cell as its exact text, for the integer columns (O1)."""
++    b = getbytes()
++    return pd.read_csv(io.BytesIO(b)), pd.read_csv(io.BytesIO(b), dtype=str, keep_default_na=False)
 +try:
-+    cz = pd.read_csv(io.BytesIO(zread(f"AIEF_1_4_{ZID}_scalar_summary.csv")))
++    cz, tz = read_csv(lambda: zread(f"AIEF_1_4_{ZID}_scalar_summary.csv"))
 +except Exception as e:
 +    cz = None; problems.append(f"scalar summary CSV: rerun file missing or unreadable ({type(e).__name__})")
 +try:
-+    cr = pd.read_csv(RRUN / f"AIEF_1_4_{RID}_scalar_summary.csv")
++    cr, tr = read_csv(lambda: (RRUN / f"AIEF_1_4_{RID}_scalar_summary.csv").read_bytes())
 +except Exception as e:
 +    cr = None; problems.append(f"scalar summary CSV: official file missing or unreadable ({type(e).__name__})")
-+if cz is not None and cr is not None and list(cz.columns) == list(cr.columns) and cz.shape == cr.shape:
++INT_RE = r"[+-]?[0-9]+"
++if cz is not None and cr is not None and list(cz.columns) == list(cr.columns) and cz.shape == cr.shape \
++        and list(tz.columns) == list(cz.columns) and tz.shape == cz.shape and tr.shape == cr.shape:
 +    out["csv_shape"] = [list(cz.shape), list(cr.shape)]
 +    nz_, nr_ = list(cz.select_dtypes("number").columns), list(cr.select_dtypes("number").columns)
 +    if nz_ != nr_: problems.append("scalar summary CSV: numeric column sets differ")
-+    num = [c for c in cz.columns if c in nz_ or c in nr_]
++    # O1: a column whose non-empty cells are all integer literals on either side is compared exactly as ints
++    isint = lambda t, c: bool((t[c] != "").any()) and bool(t[c][t[c] != ""].str.fullmatch(INT_RE).all())
++    ints = [c for c in cz.columns if isint(tz, c) or isint(tr, c)]
++    out["csv_integer_columns"] = ints; ndiff = {}
++    for c in ints:
++        for side, t in (("rerun", tz), ("official", tr)):
++            n = int(((t[c] != "") & ~t[c].str.fullmatch(INT_RE)).sum())
++            if n: problems.append(f"scalar summary CSV: integer column {c} has {n} non-integer cell(s) in the {side} run")
++        ez, er = tz[c] == "", tr[c] == ""
++        both = ~ez & ~er & tz[c].str.fullmatch(INT_RE) & tr[c].str.fullmatch(INT_RE)
++        n = int((ez != er).sum()) + sum(int(x) != int(y) for x, y in zip(tz[c][both], tr[c][both]))
++        if n: ndiff[c] = n
++    out["csv_integer_cells_differing"] = ndiff
++    if ndiff: problems.append("scalar summary CSV: integer columns differ (exact): "
++                              + ", ".join(f"{c} ({n} cells)" for c, n in ndiff.items()))
++    num = [c for c in cz.columns if (c in nz_ or c in nr_) and c not in ints]
 +    xs = []
 +    for side, df in (("rerun", cz), ("official", cr)):   # G-D: text in a numeric cell is a problem, not a ValueError
 +        x = df[num].apply(pd.to_numeric, errors="coerce")
@@ -317,7 +367,7 @@
 +    if (np.isfinite(xz) & np.isfinite(xr)).any() and out["csv_worst_abs_diff"] == 0:
 +        problems.append("SUSPICIOUS: scalar summary CSV numeric cells all exactly equal to the official run "
 +                        "(a genuine rerun differs at ~1e-16)")
-+    text = [c for c in cz.columns if c not in num]
++    text = [c for c in cz.columns if c not in num and c not in ints]
 +    bad = {c: int((cz[c].astype(str) != cr[c].astype(str)).sum()) for c in text}
 +    out["csv_nonnumeric_columns"] = text
 +    out["csv_nonnumeric_equal"] = not any(bad.values())
@@ -350,6 +400,7 @@
 +except Exception as e:
 +    stub = {}; out["zip_also_contains_stub_runs_5a9f093a2fe0_manifest"] = False
 +    problems.append(f"zip stub runs/5a9f093a2fe0/manifest.json missing or unreadable ({type(e).__name__})")
++stub = as_object("zip stub runs/5a9f093a2fe0/manifest.json", stub)
 +out["zip_stub_model_matches_official"] = stub.get("model") == mr.get("model")
 +
 +wa = max(worst, out.get("csv_worst_abs_diff", 1.0), bw); wr = max(worst_rel, out.get("csv_worst_rel_diff", 1.0), bw_rel)

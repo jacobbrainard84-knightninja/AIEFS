@@ -53,10 +53,11 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (100 tests: 89 PASS incl. 11 controls, 11 GAP)
+## Results (115 tests: 104 PASS incl. 12 controls, 11 GAP)
 
 Run on base `395ea53` (main), plus fix #1 (comparator v4, branch `fix/comparator-v4-gates`, including the
-review r001 additions: 16 comparator tests).
+review r001 additions: 16 comparator tests, and the review r001 of `f0aadce` additions: 15 more). The comparator and
+threshold files pass on pandas 3.0.6 and on pandas 3.1.0 (the `requirements.txt` pin).
 The original run (74 tests: 61 PASS, 13 GAP) predates fix #1.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
@@ -120,8 +121,9 @@ died with a traceback instead of giving a verdict.
 | Test | Result (v4) | v3 |
 |---|---|---|
 | control: untampered copy | PASS (REPRODUCED, `problems: []`) | same |
-| CSV cell +1e-9 | PASS (abs diff > TOL) | PASS |
-| CSV cell +1e-11 (just over TOL 1e-12) | PASS | PASS |
+| CSV float cell (`D_B_final`, row 1) +1e-9 | PASS (abs diff > TOL) | PASS |
+| CSV float cell +1e-11 (just over TOL 1e-12) | PASS (abs diff > TOL) | PASS |
+| control: CSV float cell +1e-13 (inside TOL and RTOL) | PASS (REPRODUCED, `problems: []`) | same |
 | CSV cell 0 -> 1e-14 | PASS (relative diff > RTOL) | **accepted** |
 | CSV NaN / +inf / -inf | PASS (3 tests) | PASS |
 | branch diagnostics +inf | PASS | PASS |
@@ -158,7 +160,20 @@ died with a traceback instead of giving a verdict.
 | official manifest gets `"notes": null` (G-A) | PASS ("present in only one manifest ['notes']") | **accepted** |
 | seed `config_hash` removed on both sides (G-C) | PASS ("config_hash label missing" in both runs) | **accepted** |
 | manifest `model` removed from both manifests (G-E) | PASS ("model missing in rerun/official manifest") | **accepted** |
+| *Review r001 of `f0aadce` (O1 and remaining tracebacks). "f0aadce" column: v4 before these fixes* | | *f0aadce* |
+| official CSV row 1 `seed` +1 / +1000, `seed_index` +1 (O1) | PASS ("integer columns differ (exact)"; 3 tests) | **accepted** |
+| official CSV `seed` written as a float string (O1) | PASS ("integer column seed has 1 non-integer cell(s)") | **accepted** |
+| zip CSV row 1 `seed` +1 (O1) | PASS ("integer columns differ (exact)") | **accepted** |
+| official / zip manifest is `null` or `[]` | PASS ("is not a JSON object"; 4 tests) | crash |
+| official manifest `"environment": null` | PASS ("environment is not a JSON object") | crash |
+| zip stub manifest is `[1]` | PASS ("zip stub … is not a JSON object") | crash |
+| zip seed member with corrupted bytes (bad CRC) | PASS ("unreadable in rerun run (BadZipFile)") | crash |
+| official / rerun source file missing | PASS ("source file … missing or unreadable"; 2 tests) | crash |
 | --selftest still passes | PASS ("selftest OK") | n/a |
+
+Before review r001 of `f0aadce`, the two tolerance tests (and the NaN/inf, text-cell, column-swap and 0 -> 1e-14 tests)
+tampered the uint64 `seed` column instead of a float column. The tolerance tests then passed only by accident on
+pandas 3.0.6 and failed on pandas 3.1.0. They now tamper float columns, and integer columns have their own tests.
 
 Not gated, on purpose: `zip_stub_model_matches_official`. It is false on the genuine data, because the zip's stub
 manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md` (line 50: N = 12, dt = 0.01, T_window = 1.0,
