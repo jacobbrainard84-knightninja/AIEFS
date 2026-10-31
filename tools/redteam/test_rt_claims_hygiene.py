@@ -10,25 +10,76 @@ quote swallowing an appended row), F2 (header name with trailing space), F6 (NUL
 audit of 588d5ee; F5 (indented vocabulary heading) is a GAP."""
 import csv
 import io
+import json
 import os
 import shutil
 import subprocess
 import unittest
 import zipfile
 
-from rtcommon import PY, REPO, TempDirMixin, gap, run
+from rtcommon import PY, REPO, TempDirMixin, farm, gap, materialize, run
 
 LINT = os.path.join(REPO, "tools/ci/lint_claims.py")
+
+
+def _known_missing_count():
+    """Number of live KNOWN_MISSING_ARTIFACTS entries. On the real copy each one is cited and missing (the lint
+    errors otherwise), so each adds exactly one NOTICE to every run that reaches its row."""
+    import sys
+    old = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, os.path.dirname(LINT))
+    try:
+        import lint_claims
+        return len(lint_claims.KNOWN_MISSING_ARTIFACTS)
+    finally:
+        sys.path.pop(0)
+        sys.dont_write_bytecode = old
+
+
+KNOWN_NOTICES = _known_missing_count()
 SCAN = os.path.join(REPO, "tools/ci/hygiene_scan.py")
+
+# Runs lint_claims.main() with extra (synthetic) KNOWN_MISSING_ARTIFACTS entries added to the live
+# ones, so the allow-list tests do not depend on the live entry. No CLI flag weakens the real check.
+LINT_DRIVER = r"""
+import json, sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, sys.argv[1])
+import lint_claims as l
+l.KNOWN_MISSING_ARTIFACTS = {**l.KNOWN_MISSING_ARTIFACTS, **{(c, e): r for c, e, r in json.loads(sys.argv[2])}}
+sys.exit(l.main(sys.argv[3:]))
+"""
+
+
+def tree_state():
+    """`git status` of the real checkout (ignored files included, byte-code excluded)."""
+    out = subprocess.run(["git", "-C", REPO, "status", "--porcelain", "--ignored", "-z"],
+                         capture_output=True, check=True).stdout.decode("utf-8", "replace")
+    return sorted(x for x in out.split("\0") if x and "__pycache__" not in x)
 
 
 class ClaimsLint(TempDirMixin, unittest.TestCase):
+    # The mirror's directories are symlinks into the real checkout: fail if any test wrote there.
+    @classmethod
+    def setUpClass(cls):
+        cls._tree_before = tree_state()
+
+    @classmethod
+    def tearDownClass(cls):
+        after = tree_state()
+        if after != cls._tree_before:
+            raise AssertionError(f"red-team tests changed the real checkout: before={cls._tree_before} after={after}")
+
     def setUp(self):
         super().setUp()
-        self.root = os.path.join(self.tmp, "repo")
+        # Symlink mirror of the tree (cited artifacts must resolve); the three files the tests edit
+        # are replaced by real temp copies, so the repo files are never written.
+        self.root = farm(os.path.join(self.tmp, "repo"))
         for rel in ("registry/README.md", "registry/claims.csv", "tools/ci/claim_statuses.txt"):
-            os.makedirs(os.path.dirname(os.path.join(self.root, rel)), exist_ok=True)
-            shutil.copy(os.path.join(REPO, rel), os.path.join(self.root, rel))
+            p = materialize(self.root, rel)
+            os.unlink(p)
+            shutil.copy(os.path.join(REPO, rel), p)
         with open(os.path.join(self.root, "registry/claims.csv"), newline="") as f:
             r = csv.DictReader(f)
             self.cols, self.rows = r.fieldnames, list(r)
@@ -42,20 +93,28 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
     def lint(self, *extra):
         return run([PY, LINT, "--repo", self.root, *extra])
 
+    def lint_known(self, known):
+        return run([PY, "-c", LINT_DRIVER, os.path.dirname(LINT), json.dumps(known), "--repo", self.root])
+
     def fake_row(self, **kw):
         row = dict(self.rows[0])
         row.update(claim_id="RT-FAKE-01", **kw)
         return row
 
-    def assertLintFails(self, rc, out, *lines, errors=1):
-        """Exit 1, no traceback, each given line present as a WHOLE output line, and the exact result line."""
+    def assertLintFails(self, rc, out, *lines, errors=1, notices=KNOWN_NOTICES):
+        """Exit 1, no traceback, each given line present as a WHOLE output line, and the exact result line.
+        notices: the live KNOWN_MISSING_ARTIFACTS NOTICEs, printed when the lint reaches their rows."""
         self.assertRejected(rc, out)
         self.assertEqual(rc, 1, out)
         self.assertNotIn("Traceback", out)
         got = out.splitlines()
         for ln in lines:
             self.assertIn(ln, got, out[-3000:])
-        self.assertEqual(got[-1], f"== result: {errors} error(s), 0 warning(s), 0 notice(s) -> FAIL", out[-3000:])
+        self.assertEqual(got[-1], f"== result: {errors} error(s), 0 warning(s), {notices} notice(s) -> FAIL", out[-3000:])
+
+    def assertLintFailsBeforeRows(self, rc, out, *lines, errors=1):
+        """assertLintFails for inputs rejected before any data row is linted (so no KNOWN_MISSING NOTICE)."""
+        self.assertLintFails(rc, out, *lines, errors=errors, notices=0)
 
     def edit_text(self, rel, fn, binary=False):
         p = os.path.join(self.root, rel)
@@ -67,7 +126,7 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
     def test_00_control_copy_passes(self):
         rc, out = self.lint()
         self.assertEqual(rc, 0, out[-2000:])
-        self.assertEqual(out.splitlines()[-1], "== result: 0 error(s), 0 warning(s), 0 notice(s) -> PASS")
+        self.assertEqual(out.splitlines()[-1], f"== result: 0 error(s), 0 warning(s), {KNOWN_NOTICES} notice(s) -> PASS")
 
     def test_status_outside_vocabulary(self):
         self.rows[0]["audited_status"] = "Proved"
@@ -101,32 +160,152 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.write()
         self.assertLintFails(*self.lint(), "ERROR   registry/claims.csv:2: empty claim_id")
 
-    @gap("lint_claims.py: a row citing an artifact that does not exist passes")
-    def test_GAP_row_citing_nonexistent_artifact(self):
+    # Formerly GAP G3 (fixed: check_artifacts / resolve_artifact).
+    def test_row_citing_nonexistent_artifact(self):
         self.rows.append(self.fake_row(supporting_artifacts="runs/000000000000;results/no_such_file.npz"))
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), "RT-FAKE-01: cited artifact does not exist: 'runs/000000000000'",
+                            "RT-FAKE-01: cited artifact does not exist: 'results/no_such_file.npz'")
 
-    @gap("lint_claims.py: a false claim marked Supported with a formal-proof scope passes")
-    def test_GAP_false_claim_marked_proved(self):
+    # Formerly GAP G4 (fixed: check_artifacts, formal-proof rule). README.md exists and is even registered as
+    # 'Formalized theorem' in registry/artifacts.csv, but it is not a Lean proof.
+    def test_false_claim_marked_proved(self):
         self.rows.append(self.fake_row(
             statement="The settle threshold is R* = 0.40, proved in Lean.",   # false: R* = 0.4543
             artifact_status="Supported", audited_status="Supported",
             evidence_scope="Formal proof", supporting_artifacts="lean/AIEFProofs/README.md"))
         self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof (evidence_scope 'Formal proof') "
+                                          "but cites no existing .lean file")
+
+    def test_proved_in_lean_statement_needs_lean_file(self):
+        self.rows.append(self.fake_row(statement="R* = 0.40, proved in Lean."))  # scope stays experimental
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof")
+
+    def test_control_formal_row_citing_real_lean_file_passes(self):
+        self.rows.append(self.fake_row(evidence_scope="Formalized theorem",
+                                       supporting_artifacts="lean/AIEFProofs/AIEFProofs/ControllerFiber.lean"))
+        self.write()
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out[-2000:])
+
+    # Round-2 follow-ups from Auditor Seat 002's audit of the G3/G4 fix.
+    def test_machine_checked_wording_needs_lean_file(self):
+        self.rows.append(self.fake_row(statement="Machine-checked in Lean 4 without sorry: R* = 0.40.",
+                                       evidence_scope="Conditional theorem"))
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof")
+
+    def test_lean4_verifies_wording_needs_lean_file(self):
+        self.rows.append(self.fake_row(statement="Lean 4 verifies that R* = 0.40.",
+                                       evidence_scope="Conditional theorem"))
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: claims a formal/Lean proof")
+
+    def test_scope_outside_vocabulary(self):
+        self.rows.append(self.fake_row(evidence_scope="Machine-checked theorem"))
+        self.write()
+        self.assertRejected(*self.lint(), "RT-FAKE-01: evidence_scope 'Machine-checked theorem' is not one of the 6 values")
+
+    def test_informal_scope_is_a_vocabulary_error_not_a_proof_claim(self):
+        self.rows.append(self.fake_row(evidence_scope="Informal argument"))
+        self.write()
+        rc, out = self.lint()
+        self.assertRejected(rc, out, "evidence_scope 'Informal argument' is not one of the 6 values")
+        self.assertNotIn("claims a formal/Lean proof", out)
+
+    def test_scope_table_missing(self):
+        p = os.path.join(self.root, "registry/README.md")     # real temp copy (setUp)
+        with open(p) as f:
+            txt = f.read()
+        with open(p, "w") as f:
+            f.write(txt.replace("`evidence_scope` (Epistemic Strength)", "Epistemic Strength"))
+        self.assertRejected(*self.lint(), "no '### Axis 2 ... `evidence_scope`' table found")
+
+    def test_missing_path_after_existing_folder(self):
+        self.rows.append(self.fake_row(supporting_artifacts="lean/AIEFProofs missing_file.lean"))
+        self.write()
+        self.assertRejected(*self.lint(), "cited artifact does not exist: 'lean/AIEFProofs missing_file.lean'")
+
+    def test_missing_path_after_existing_file(self):
+        self.rows.append(self.fake_row(supporting_artifacts="registry/claims.csv nonexistent/file.md"))
+        self.write()
+        self.assertRejected(*self.lint(), "cited artifact does not exist: 'registry/claims.csv nonexistent/file.md'")
+
+    def test_control_locator_and_parenthesised_prose_pass(self):
+        self.rows.append(self.fake_row(supporting_artifacts="registry/README.md \u00a72 (axis/scope notes);"
+                                                            "registry/claims.csv:2-5"))
+        self.write()
+        rc, out = self.lint()
+        self.assertEqual(rc, 0, out[-2000:])
+
+    @gap("lint_claims.py: a formal row citing an existing .lean file that does not contain the claimed theorem passes "
+         "(only the file's existence is checked; content is out of scope)")
+    def test_GAP_lean_file_content_not_checked(self):
+        self.rows.append(self.fake_row(
+            statement="Theorem settle_threshold: R* = 0.40 (machine-checked in Lean 4).",
+            evidence_scope="Formalized theorem", supporting_artifacts="lean/AIEFProofs/AIEFProofs/Basic.lean"))
+        self.write()
         self.assertRejected(*self.lint())
 
+    def test_control_synthetic_known_missing_entry_passes(self):
+        self.rows.append(self.fake_row(supporting_artifacts="results/rt_ghost.log"))
+        self.write()
+        rc, out = self.lint_known([["RT-FAKE-01", "results/rt_ghost.log", "synthetic"]])
+        self.assertEqual(rc, 0, out[-2000:])
+        self.assertIn("'results/rt_ghost.log' is missing (known: synthetic)", out)
+
+    def test_known_missing_entry_that_now_exists(self):
+        self.rows.append(self.fake_row(supporting_artifacts="registry/README.md"))
+        self.write()
+        self.assertRejected(*self.lint_known([["RT-FAKE-01", "registry/README.md", "synthetic"]]),
+                            "RT-FAKE-01: 'registry/README.md' is listed in KNOWN_MISSING_ARTIFACTS but now exists")
+
+    def test_known_missing_entry_no_longer_cited(self):
+        self.assertRejected(*self.lint_known([["RT-FAKE-01", "results/rt_ghost.log", "synthetic"]]),
+                            "stale KNOWN_MISSING_ARTIFACTS entry: RT-FAKE-01 no longer cites 'results/rt_ghost.log'")
+
+    # A deleted column must not switch the artifact / scope / formal-proof checks off (same class as G6b).
+    def drop_column(self, col):
+        self.cols = [c for c in self.cols if c != col]
+        self.write([{k: v for k, v in r.items() if k != col} for r in self.rows])
+        rc, out = self.lint()
+        self.assertNotIn("Traceback", out)
+        self.assertEqual([ln for ln in out.splitlines() if ln.startswith("ERROR")],
+                         [ln for ln in out.splitlines() if ln.startswith(f"ERROR   registry/claims.csv:1: required column '{col}'")],
+                         out[-2000:])   # exactly the one header ERROR, no follow-on errors
+        return rc, out
+
+    def test_evidence_scope_column_deleted(self):
+        rc, out = self.drop_column("evidence_scope")
+        self.assertRejected(rc, out, "ERROR   registry/claims.csv:1: required column 'evidence_scope' missing from the header; "
+                                     "evidence_scope values and formal-scope rows were NOT checked")
+        self.assertEqual(rc, 1, out[-2000:])
+
+    def test_supporting_artifacts_column_deleted(self):
+        rc, out = self.drop_column("supporting_artifacts")
+        self.assertRejected(rc, out, "ERROR   registry/claims.csv:1: required column 'supporting_artifacts' missing from "
+                                     "the header; cited artifacts and KNOWN_MISSING_ARTIFACTS entries were NOT checked")
+        self.assertEqual(rc, 1, out[-2000:])
+
+    def test_statement_column_deleted(self):
+        rc, out = self.drop_column("statement")
+        self.assertRejected(rc, out, "ERROR   registry/claims.csv:1: required column 'statement' missing from the header; "
+                                     "its Lean-proof wording was NOT checked")
+        self.assertEqual(rc, 1, out[-2000:])
+
     def test_claims_file_missing(self):
-        """Was GAP G5 (NOTICE and exit 0). Fixed on fix/lint-claims-fail-closed."""
+        """Was GAP G5 (NOTICE and exit 0). Fixed: lint() errors when claims.csv is absent."""
         os.unlink(os.path.join(self.root, "registry/claims.csv"))
-        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv not found in {self.root}; claims registry "
+        self.assertLintFailsBeforeRows(*self.lint(), f"ERROR   registry/claims.csv not found in {self.root}; claims registry "
                                            "missing, nothing was linted")
 
     VOCAB_MISSING = ("ERROR   no status vocabulary found (no '## Status vocabulary' fenced block in registry/README.md and "
                      "no values in tools/ci/claim_statuses.txt); status values were NOT checked")
 
     def test_vocabulary_missing_fails_without_strict(self):
-        """Was GAP G6 (warning, value checks skipped, exit 0 as CI runs it). Fixed on fix/lint-claims-fail-closed."""
+        """Was GAP G6 (warning, value checks skipped, exit 0 as CI runs it). Fixed: lint() errors when load_vocab finds no values."""
         self.edit_text("registry/README.md", lambda t: t.replace("## Status vocabulary", "## Status words"))
         self.rows[0]["audited_status"] = "Proved"          # would be an error with a vocabulary
         self.write()
@@ -134,7 +313,15 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.assertRejected(rc, out)
         self.assertEqual(rc, 1, out)
         self.assertIn(self.VOCAB_MISSING, out.splitlines())
-        self.assertEqual(out.splitlines()[-1], "== result: 1 error(s), 0 warning(s), 2 notice(s) -> FAIL")
+        self.assertEqual(out.splitlines()[-1], f"== result: 1 error(s), 0 warning(s), {2 + KNOWN_NOTICES} notice(s) -> FAIL")
+
+    def test_vocabulary_missing_is_caught_with_strict(self):
+        p = os.path.join(self.root, "registry/README.md")
+        with open(p) as f:
+            txt = f.read()
+        with open(p, "w") as f:
+            f.write(txt.replace("## Status vocabulary", "## Status words"))
+        self.assertRejected(*self.lint("--strict"))
 
     def test_strict_fails_a_warning_only_input(self):
         """--strict must change the verdict: an input whose only finding is a WARNING (an untested SSRH-ORIG origin
@@ -144,10 +331,10 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.write()
         rc, out = self.lint()
         self.assertEqual(rc, 0, out[-2000:])
-        self.assertEqual(out.splitlines()[-1], "== result: 0 error(s), 1 warning(s), 0 notice(s) -> PASS")
+        self.assertEqual(out.splitlines()[-1], f"== result: 0 error(s), 1 warning(s), {KNOWN_NOTICES} notice(s) -> PASS")
         rc, out = self.lint("--strict")
         self.assertRejected(rc, out, f"{self.rows[i]['claim_id']}: audited_status 'Retired / Superseded' uses Retired")
-        self.assertEqual(out.splitlines()[-1], "== result: 0 error(s), 1 warning(s), 0 notice(s) -> FAIL")
+        self.assertEqual(out.splitlines()[-1], f"== result: 0 error(s), 1 warning(s), {KNOWN_NOTICES} notice(s) -> FAIL")
 
     # --- Researcher 001 audit of 37b9026: G5b, G6b, G6c, G6d (were accepted, exit 0) ----------------
     def test_status_column_renamed(self):
@@ -179,7 +366,7 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
     def test_header_only_claims_csv(self):
         """G5b: a header with 0 data rows printed 'checked 0 claim rows' and passed."""
         self.write(rows=[])
-        self.assertLintFails(*self.lint(), "ERROR   registry/claims.csv: no data rows (header only); nothing was linted")
+        self.assertLintFailsBeforeRows(*self.lint(), "ERROR   registry/claims.csv: no data rows (header only); nothing was linted")
 
     def test_earlier_duplicate_vocabulary_block(self):
         """G6d: an EARLIER '## Status vocabulary' block adding 'Proved' silently won (first block was used)."""
@@ -196,7 +383,7 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
     # --- unreadable input: one-line ERROR, exit 1, no traceback (BOM was a misleading "no 'claim_id' column") ------
     def test_claims_csv_with_bom(self):
         self.edit_text("registry/claims.csv", lambda b: b"\xef\xbb\xbf" + b, binary=True)
-        self.assertLintFails(*self.lint(), "ERROR   registry/claims.csv: starts with a UTF-8 byte-order mark (BOM); "
+        self.assertLintFailsBeforeRows(*self.lint(), "ERROR   registry/claims.csv: starts with a UTF-8 byte-order mark (BOM); "
                                            "save it as UTF-8 without a BOM")
 
     def test_claims_csv_not_utf8(self):
@@ -204,7 +391,7 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         with open(os.path.join(self.root, "registry/claims.csv"), "rb") as f:
             data = f.read()
         off = data.index(b"\xe9"); line = data[:off].count(b"\n") + 1
-        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:{line}: not valid UTF-8 "
+        self.assertLintFailsBeforeRows(*self.lint(), f"ERROR   registry/claims.csv:{line}: not valid UTF-8 "
                                            f"(byte 0xe9 at offset {off})")
 
     @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root can read chmod 000 files")
@@ -215,7 +402,7 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
             rc, out = self.lint()
         finally:
             os.chmod(p, 0o644)
-        self.assertLintFails(rc, out, "ERROR   registry/claims.csv: cannot be read (PermissionError: Permission denied)")
+        self.assertLintFailsBeforeRows(rc, out, "ERROR   registry/claims.csv: cannot be read (PermissionError: Permission denied)")
 
     # --- Researcher 001 audit of 588d5ee: F1, F2, F5, F6, F7 ---------------------------------------
     def test_unterminated_quote_swallows_appended_row(self):
@@ -263,13 +450,13 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.edit_text("registry/claims.csv", lambda b: b.replace(b"\n", b"\x00\n", 1), binary=True)
         with open(os.path.join(self.root, "registry/claims.csv"), "rb") as f:
             off = f.read().index(b"\x00")
-        self.assertLintFails(*self.lint(), f"ERROR   registry/claims.csv:1: contains a NUL byte (offset {off}); not a text file")
+        self.assertLintFailsBeforeRows(*self.lint(), f"ERROR   registry/claims.csv:1: contains a NUL byte (offset {off}); not a text file")
 
     def test_empty_columns_option(self):
         """F7: --columns "" linted no column and passed."""
         self.rows[0]["audited_status"] = "Proved"
         self.write()
-        self.assertLintFails(*self.lint("--columns", ""),
+        self.assertLintFailsBeforeRows(*self.lint("--columns", ""),
                              "ERROR   --columns names no status column; status values were NOT checked")
 
     @gap("lint_claims.py: an indented '    ## Status vocabulary' (a Markdown code line, not a heading) is used as the vocabulary")

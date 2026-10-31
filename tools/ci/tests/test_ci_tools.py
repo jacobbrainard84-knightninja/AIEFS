@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
@@ -34,7 +35,23 @@ Retired / Superseded
 
 Prose after the block.
 """
-HEADER = "claim_id,statement,artifact_status,audited_status,audited_qualifier\n"
+# lint_claims' scope check needs this table in registry/README.md; readme=False fixtures get only this table.
+SCOPE_TABLE = """
+### Axis 2 — `evidence_scope`
+
+| Value | Definition |
+|---|---|
+| `Implementation identity` | x |
+| `Finite numerical observation` | x |
+| `Controlled experimental result` | x |
+| `Conditional theorem` | x |
+| `Formalized theorem` | x |
+| `Conjecture` | x |
+"""
+README += SCOPE_TABLE
+# evidence_scope and supporting_artifacts are required by lint_claims' artifact checks; repo() appends ROW_TAIL.
+HEADER = "claim_id,statement,artifact_status,audited_status,audited_qualifier,evidence_scope,supporting_artifacts\n"
+ROW_TAIL = ",Conditional theorem,registry/README.md\n"
 
 
 def run(fn, argv):
@@ -57,14 +74,20 @@ class LintClaimsTests(unittest.TestCase):
 
     def setUp(self):
         self.d = tempfile.TemporaryDirectory(); self.root = self.d.name
+        # Synthetic repos cite none of the live KNOWN_MISSING_ARTIFACTS entries; empty the list so the
+        # stale-entry check (which always runs) does not flag them. The real list is tested in tools/redteam.
+        p = mock.patch.object(lint_claims, "KNOWN_MISSING_ARTIFACTS", {}); p.start(); self.addCleanup(p.stop)
 
     def tearDown(self):
         self.d.cleanup()
 
-    def repo(self, rows, spec=SPEC, readme=True, header=HEADER):
-        if readme:
-            write(self.root, "registry/README.md", README.format(spec=spec))
-        write(self.root, "registry/claims.csv", header + "".join(rows))
+    def repo(self, rows, spec=SPEC, readme=True, header=None):
+        """readme=False writes a README with only SCOPE_TABLE (no status vocabulary, so the fallback is read).
+        Rows give the first 5 fields; ROW_TAIL fills evidence_scope and supporting_artifacts. With a custom
+        header, rows are written as given and must hold every field."""
+        write(self.root, "registry/README.md", README.format(spec=spec) if readme else SCOPE_TABLE)
+        body = "".join(rows) if header else "".join(r.rstrip("\n") + ROW_TAIL for r in rows)
+        write(self.root, "registry/claims.csv", (header or HEADER) + body)
 
     def lint(self, *extra):
         return run(lint_claims.main, ["--repo", self.root, *extra])
@@ -87,7 +110,7 @@ class LintClaimsTests(unittest.TestCase):
         self.repo([f'SSRH-ORIG-01,x,Incomplete,{SPEC},free text (not linted)\n'])
         rc, out = self.lint()
         self.assertEqual(rc, 0, out)
-        self.assertLines(out, "registry/claims.csv: 5 columns; linting artifact_status, audited_status",
+        self.assertLines(out, "registry/claims.csv: 7 columns; linting artifact_status, audited_status",
                          "checked 1 claim rows; 0 status violation(s)")
         self.assertResult(out, 0)
 
@@ -154,19 +177,20 @@ class LintClaimsTests(unittest.TestCase):
 
     # --- G5b / G6b / G6c / G6d and unreadable input: errors, never a silent pass ----------------
     def test_status_column_renamed_fails(self):
-        self.repo(['A-1,x,Supported,Proved,\n'], header=HEADER.replace("audited_status", "audited_status_v2"))
+        self.repo(['A-1,x,Supported,Proved,' + ROW_TAIL], header=HEADER.replace("audited_status", "audited_status_v2"))
         rc, out = self.lint()
         self.assertEqual(rc, 1, out)
         self.assertLines(out, "ERROR   registry/claims.csv:1: status column 'audited_status' missing from the header; "
                               "its values were NOT checked",
-                         "registry/claims.csv: 5 columns; linting artifact_status")
+                         "registry/claims.csv: 7 columns; linting artifact_status")
         self.assertResult(out, 1)
 
     def test_duplicate_header_column_fails(self):
-        self.repo(['A-1,x,Supported,Proved,,Supported\n'], header=HEADER.rstrip("\n") + ",audited_status\n")
+        self.repo(['A-1,x,Supported,Proved,' + ROW_TAIL.rstrip("\n") + ',Supported\n'],
+                  header=HEADER.rstrip("\n") + ",audited_status\n")
         rc, out = self.lint()
         self.assertEqual(rc, 1, out)
-        self.assertLines(out, "ERROR   registry/claims.csv:1: duplicate column 'audited_status' in the header (columns 4, 6)")
+        self.assertLines(out, "ERROR   registry/claims.csv:1: duplicate column 'audited_status' in the header (columns 4, 8)")
         self.assertResult(out, 1)
 
     def test_header_only_fails(self):
@@ -252,21 +276,23 @@ class LintClaimsTests(unittest.TestCase):
     def test_header_name_with_whitespace_fails(self):
         """F2: an extra 'audited_status ' column (trailing space) holding Proved was never checked, and was not
         caught as a duplicate (exact-name comparison only)."""
-        self.repo(['A-1,x,Supported,Supported,,Proved\n'], header=HEADER.rstrip("\n") + ",audited_status \n")
+        self.repo(['A-1,x,Supported,Supported,' + ROW_TAIL.rstrip("\n") + ',Proved\n'],
+                  header=HEADER.rstrip("\n") + ",audited_status \n")
         rc, out = self.lint()
         self.assertEqual(rc, 1, out)
-        self.assertLines(out, "ERROR   registry/claims.csv:1: column 6 name 'audited_status ' has leading/trailing whitespace",
-                         "ERROR   registry/claims.csv:1: duplicate column in the header (columns 4, 6: 'audited_status', "
+        self.assertLines(out, "ERROR   registry/claims.csv:1: column 8 name 'audited_status ' has leading/trailing whitespace",
+                         "ERROR   registry/claims.csv:1: duplicate column in the header (columns 4, 8: 'audited_status', "
                          "'audited_status ' differ only in case or surrounding whitespace)",
-                         "registry/claims.csv: 6 columns; linting artifact_status")
+                         "registry/claims.csv: 8 columns; linting artifact_status")
         self.assertResult(out, 2)
 
     def test_header_name_case_duplicate_fails(self):
         """F2: 'Audited_Status' next to 'audited_status' is a duplicate after casefold()."""
-        self.repo(['A-1,x,Supported,Supported,,Proved\n'], header=HEADER.rstrip("\n") + ",Audited_Status\n")
+        self.repo(['A-1,x,Supported,Supported,' + ROW_TAIL.rstrip("\n") + ',Proved\n'],
+                  header=HEADER.rstrip("\n") + ",Audited_Status\n")
         rc, out = self.lint()
         self.assertEqual(rc, 1, out)
-        self.assertLines(out, "ERROR   registry/claims.csv:1: duplicate column in the header (columns 4, 6: 'audited_status', "
+        self.assertLines(out, "ERROR   registry/claims.csv:1: duplicate column in the header (columns 4, 8: 'audited_status', "
                               "'Audited_Status' differ only in case or surrounding whitespace)")
         self.assertResult(out, 1)
 
@@ -290,10 +316,9 @@ class LintClaimsTests(unittest.TestCase):
                 self.assertResult(out, 1)
 
     def _fallback_repo(self, data):
-        """claims.csv with a bad value, no README (so the fallback is read), fallback bytes as given."""
+        """claims.csv with a bad value, a README with no status vocabulary (only SCOPE_TABLE, so the fallback is
+        read), fallback bytes as given."""
         self.repo(['A-1,x,Supported,Bogus,\n'], readme=False)
-        if os.path.exists(os.path.join(self.root, "registry/README.md")):
-            os.unlink(os.path.join(self.root, "registry/README.md"))
         write(self.root, "tools/ci/claim_statuses.txt", data, "wb")
         return os.path.join(self.root, "tools/ci/claim_statuses.txt")
 

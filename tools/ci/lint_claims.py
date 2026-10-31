@@ -20,7 +20,8 @@ The vocabulary is NOT hard-coded here. It is read from registry/README.md. The e
 
 Every value in the checked columns (default: artifact_status and audited_status) must equal one
 of these strings exactly (case-sensitive). audited_qualifier and other free-text columns are not
-linted. evidence_scope is a separate axis, not a status, and is not linted here.
+linted. evidence_scope is a separate axis, not a status: it must equal one of the values in the
+'### Axis 2 ... `evidence_scope`' table of registry/README.md exactly (see the artifact rules below).
 
 If registry/README.md has no such block, the fallback file tools/ci/claim_statuses.txt is used
 (one status per line, '#' comment lines allowed). That file ships as a PLACEHOLDER with no values;
@@ -34,6 +35,8 @@ Also ERRORs, never a silent pass (red-team G5b, G6b, G6c, G6d):
   - claims.csv has a header but no data rows (G5b);
   - a checked status column (default artifact_status, audited_status) is missing from the header,
     e.g. renamed: its values could not be checked (G6b; this was a NOTICE, and passed even with --strict);
+  - a column the artifact rules read (statement, evidence_scope, supporting_artifacts) is missing from
+    the header: those checks could not run (same message style as G6b, one ERROR per column);
   - the header repeats a column name: csv.DictReader keeps only the last copy, so an earlier copy
     would never be checked (G6c). Names are compared after strip() + casefold(), so 'audited_status '
     or 'Audited_Status' next to 'audited_status' is a duplicate too;
@@ -52,6 +55,24 @@ Extra rule (warning): rows whose claim_id starts with SSRH-ORIG- are untested or
 They must never be labelled Retired (Retired / Rejected / Quarantined are reserved for claims
 that were tested and failed, or were withdrawn). Such a label produces a warning.
 
+Artifact rules (errors, added for red-team G3/G4, see tools/redteam/REDTEAM.md):
+- Every ';'-separated entry of supporting_artifacts that looks like a path (contains '/' or its first
+  word has a file extension) must resolve to a file or folder in the tree. Trailing words, ':LINE'
+  and '§section' suffixes are allowed ("AI Agent Audits/x.md §2.1", "x.pdf p.3:20"), but only if
+  the trailing words outside parentheses are not themselves path-like (no '/', no file extension):
+  "lean/AIEFProofs missing.lean" is an error even though lean/AIEFProofs exists. Plain prose entries ("direct matrix multiplication") are not checked.
+  Known gaps are listed, with a reason, in KNOWN_MISSING_ARTIFACTS; an entry there that is no longer
+  cited, or whose file now exists, is an error (stale allow-list).
+- evidence_scope must be exactly one of the values in the '### Axis 2' table of registry/README.md
+  (6 values today); if that table cannot be found, that is an error.
+- The columns these checks read (statement, evidence_scope, supporting_artifacts) must be in the
+  claims.csv header (see the ERROR list above).
+- A row that claims a formal / Lean proof (evidence_scope exactly 'Formalized theorem', or a statement
+  such as "proved in Lean", "Machine-checked in Lean 4", "Lean 4 verifies") must cite at least one
+  existing .lean file. A registry row is not enough: registry/artifacts.csv marks non-proof files
+  (README.md, CI YAML) under lean/ as 'Formalized theorem' too. Limitation: only the existence of the
+  .lean file is checked, not that it contains the claimed theorem (red-team GAP, see REDTEAM.md).
+
 Exit status: 0 = OK (warnings allowed unless --strict), 1 = errors, 2 = usage error.
 """
 import argparse
@@ -66,6 +87,98 @@ ORIGIN_PREFIX = "SSRH-ORIG-"
 FAILED_ONLY_WORDS = ("Retired", "Rejected", "Quarantined")
 CURRENT_STATUS_COLUMNS = ("artifact_status", "audited_status")  # prior_status is history: not checked
 IN_GHA = os.environ.get("GITHUB_ACTIONS") == "true"
+
+# (claim_id, cited path) -> reason. Reviewed known-missing citations; anything else missing is an error.
+KNOWN_MISSING_ARTIFACTS = {
+    ("AUD-REPRO-B2A95", "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.log"):
+        "listed in that folder's SHA256SUMS but never committed (Auditor Seat 002 finding M1); "
+        "restore the log or reword the row",
+}
+_EXT = re.compile(r"^\S+\.[A-Za-z0-9]{1,8}$")
+_SUFFIX = re.compile(r"(:\d+(-\d+)?|\s*\u00a7.*)$")
+_PATHLIKE = re.compile(r"/|^[^\s/]+\.[A-Za-z][A-Za-z0-9]{0,7}$")   # trailing word that names a file/path
+FORMAL_SCOPE_VALUE = "Formalized theorem"
+# claims.csv columns the artifact / scope / formal-proof checks read -> what is not checked without them
+ARTIFACT_CHECK_COLUMNS = {
+    "statement": "its Lean-proof wording was",
+    "evidence_scope": "evidence_scope values and formal-scope rows were",
+    "supporting_artifacts": "cited artifacts and KNOWN_MISSING_ARTIFACTS entries were",
+}
+
+
+def missing_column(rep, claims_rel, kind, col, what):
+    """One ERROR line for a column a check needs (G6b style): a deleted or renamed column is never a silent pass."""
+    rep.error(f"{claims_rel}:1: {kind} column '{col}' missing from the header; {what} NOT checked", claims_rel, 1)
+SCOPE_HEADING = re.compile(r"^###\s.*`evidence_scope`")
+LEAN_PROOF_TEXT = re.compile(
+    r"\b(proved|proven|proof|verified|formali[sz]ed|machine[- ]checked|checked)\b[^.;]{0,40}\bLean\b"
+    r"|\bLean\b(\s*4)?[^.;]{0,20}\b(proof|proved|proven|formali[sz]ation|verif(y|ies|ied)|checks|checked)\b",
+    re.I)
+
+
+def resolve_artifact(repo, entry):
+    """Return the repo-relative path an entry cites if it exists, '' if it is prose, None if missing."""
+    if "/" not in entry and not _EXT.match(entry.split()[0]):
+        return ""
+    words = entry.split()
+    for k in range(len(words), 0, -1):
+        cand = _SUFFIX.sub("", " ".join(words[:k])).strip()
+        full = os.path.abspath(os.path.join(repo, cand))
+        if cand and not os.path.isabs(cand) and full.startswith(os.path.abspath(repo) + os.sep) \
+                and os.path.exists(full):
+            # The rest must be a locator or prose, not another (missing) path. Parenthesised prose
+            # ("(proposal/scale/winner audit)") is ignored.
+            rest = re.sub(r"\([^)]*\)?", " ", " ".join(words[k:]))
+            if any(_PATHLIKE.search(w.strip(",;:")) for w in rest.split()):
+                return None
+            return cand
+    return None
+
+
+def parse_scope_vocab(text):
+    """Return the evidence_scope values from the '### Axis 2 ... `evidence_scope`' table, or []."""
+    lines = text.splitlines()
+    try:
+        i = next(k for k, ln in enumerate(lines) if SCOPE_HEADING.match(ln.strip()))
+    except StopIteration:
+        return []
+    vals = []
+    for ln in lines[i + 1:]:
+        s = ln.strip()
+        if s.startswith("#"):
+            break
+        m = re.match(r"^\|\s*`([^`]+)`\s*\|", s)
+        if m:
+            vals.append(m.group(1))
+    return vals
+
+
+def check_artifacts(repo, row, cid, rep, where, line, scopes, known_seen):
+    cited = []
+    for entry in [e.strip() for e in (row.get("supporting_artifacts") or "").split(";") if e.strip()]:
+        got = resolve_artifact(repo, entry)
+        reason = KNOWN_MISSING_ARTIFACTS.get((cid, entry))
+        if reason is not None:
+            known_seen[(cid, entry)] = got is None
+        if got is None:
+            if reason:
+                rep.notice(f"{where}: {cid}: cited artifact '{entry}' is missing (known: {reason})")
+            else:
+                rep.error(f"{where}: {cid}: cited artifact does not exist: '{entry}'", where, line)
+        elif got:
+            cited.append(got)
+    scope = row.get("evidence_scope") or ""
+    if scopes is not None and "evidence_scope" in row and scope not in scopes:
+        hint = " (has leading/trailing spaces)" if scope.strip() in scopes else ""
+        rep.error(f"{where}: {cid}: evidence_scope '{scope}' is not one of the {len(scopes)} values in "
+                  f"registry/README.md (Axis 2){hint}", where, line)
+    if "supporting_artifacts" not in row:
+        return   # the missing column is already one header ERROR; do not repeat it per formal row
+    if scope == FORMAL_SCOPE_VALUE or LEAN_PROOF_TEXT.search(row.get("statement") or ""):
+        if not any(c.endswith(".lean") and os.path.isfile(os.path.join(repo, c)) for c in cited):
+            rep.error(f"{where}: {cid}: claims a formal/Lean proof (evidence_scope "
+                      f"'{row.get('evidence_scope', '')}') but cites no existing .lean file", where, line)
+
 
 
 class Report:
@@ -211,13 +324,13 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
     reader = csv.DictReader(io.StringIO(text, newline=""), strict=True)
     done = [0]   # physical lines consumed by complete records; the failing record starts on the next line
     try:
-        _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done)
+        _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done, repo, readme_rel)
     except csv.Error as e:
         line = done[0] + 1
         rep.error(f"{claims_rel}:{line}: not parseable as CSV ({e})", claims_rel, line)
 
 
-def _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done):
+def _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done, repo, readme_rel):
     header = reader.fieldnames or []
     done[0] = reader.line_num
     if "claim_id" not in header:
@@ -243,10 +356,28 @@ def _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done):
     checked = [c for c in columns if c in header and norm(c) not in dups]
     for c in columns:
         if c not in header:   # G6b: a renamed status column must not turn the lint into a silent pass
-            rep.error(f"{claims_rel}:1: status column '{c}' missing from the header; its values were NOT checked",
-                      claims_rel, 1)
+            missing_column(rep, claims_rel, "status", c, "its values were")
+    for c, what in ARTIFACT_CHECK_COLUMNS.items():
+        if c not in header:   # same for the columns the artifact / scope / formal-proof checks read
+            missing_column(rep, claims_rel, "required", c, what)
+    scopes = None
+    if "evidence_scope" in header:
+        readme = os.path.join(repo, readme_rel)
+        text, unreadable = "", False
+        if os.path.isfile(readme):
+            try:   # a BOM / NUL / UTF-8 problem in the README is already one ERROR from load_vocab
+                with open(readme, encoding="utf-8", errors="replace") as rf:
+                    text = rf.read()
+            except OSError:
+                unreadable = True   # already one 'cannot be read' ERROR from load_vocab
+        scopes = parse_scope_vocab(text) or None
+        if scopes is None and not unreadable:
+            rep.error(f"{readme_rel}: no '### Axis 2 ... `evidence_scope`' table found; evidence_scope cannot "
+                      f"be checked", readme_rel)
+        elif scopes:
+            print(f"evidence_scope: {len(scopes)} values from {readme_rel}")
     print(f"{claims_rel}: {len(header)} columns; linting {', '.join(checked) or '(none)'}")
-    seen, n, bad = {}, 0, 0
+    seen, n, bad, known_seen = {}, 0, 0, {}
     for row in reader:
         n += 1
         line = reader.line_num
@@ -268,6 +399,7 @@ def _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done):
                     hint = " (has leading/trailing spaces)" if val.strip() in allowed else ""
                     rep.error(f"{claims_rel}:{line}: {cid}: {col} '{val}' is not in the status vocabulary{hint}",
                               claims_rel, line)
+        check_artifacts(repo, row, cid or "(empty claim_id)", rep, claims_rel, line, scopes, known_seen)
         if cid.startswith(ORIGIN_PREFIX):
             for col in CURRENT_STATUS_COLUMNS:
                 val = row.get(col) or ""
@@ -280,6 +412,15 @@ def _lint_rows(reader, claims_rel, columns, vocab, allowed, rep, done):
     print(f"checked {n} claim rows; {bad} status violation(s)")
     if n == 0:   # G5b: a header-only registry must not pass
         rep.error(f"{claims_rel}: no data rows (header only); nothing was linted", claims_rel, 1)
+    if n == 0 or "supporting_artifacts" not in header:
+        return   # already one 'no data rows' / 'required column' ERROR; no follow-on stale-entry errors
+    for key in sorted(KNOWN_MISSING_ARTIFACTS):
+        if key not in known_seen:
+            rep.error(f"stale KNOWN_MISSING_ARTIFACTS entry: {key[0]} no longer cites '{key[1]}'; "
+                      f"remove it from tools/ci/lint_claims.py")
+        elif not known_seen[key]:
+            rep.error(f"{key[0]}: '{key[1]}' is listed in KNOWN_MISSING_ARTIFACTS but now exists; "
+                      f"remove it from tools/ci/lint_claims.py")
 
 
 def main(argv=None):
