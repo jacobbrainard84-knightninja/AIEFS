@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results (83 tests: 70 PASS incl. 12 controls, 13 GAP)
 
 Run on base `395ea53` (main).
 
@@ -75,6 +75,20 @@ Run on base `395ea53` (main).
 | **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
 | **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+
+### SHA256SUMS files: `test_rt_sha256sums.py`
+
+| Test | Checker | Result |
+|---|---|---|
+| control: untampered mirror (b2a95 v3.log allow-listed) | tools/ci/check_sha256sums.py | PASS (accepted) |
+| tools/sync script one byte changed | check_sha256sums | PASS (MISMATCH) |
+| Lean source edited (AIEF_LEAN_SOURCE_SHA256SUMS.txt) | check_sha256sums | PASS (MISMATCH) |
+| listed file deleted | check_sha256sums | PASS (MISSING) |
+| malformed SUMS line | check_sha256sums | PASS (malformed line) |
+| SUMS entry pointing outside the repo | check_sha256sums | PASS (path escapes) |
+| allow-listed v3.log reappears with wrong content | check_sha256sums | PASS (MISMATCH) |
+| allow-listed entry removed from its SUMS file | check_sha256sums | PASS (stale allow-list entry) |
+| no SHA256SUMS file at all | check_sha256sums | PASS (fail-closed) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
@@ -163,3 +177,14 @@ parser are extracted from `lean/AIEFProofs/check_lean.sh`.
 The two marker-scan GAPs are **closed by the axiom audit** (step 7), which
 works on the compiled environment. They only matter if step 7 is skipped or
 broken.
+
+## Fix notes
+
+- **New check, branch `ci/check-sha256sums`** (`tools/ci/check_sha256sums.py`, job `sha256sums`
+  in `.github/workflows/repo-checks.yml`). Verifies every `SHA256SUMS` / `*SHA256SUMS*.txt` file
+  (5 today, 49 entries). Fail-closed: the only accepted failure is the allow-listed missing
+  `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.log` (Auditor Seat 002 finding M1;
+  the SUMS file is not edited here; Auditor Seat 002's `fix/comparator-v4-gates` regenerates the
+  log and fixes the SUMS file), and that entry turns into an error if the file reappears or the
+  line is removed, so it must be dropped when that branch lands. `audits/reproductions/.gitignore`
+  re-includes `*.log` there (the root `.gitignore` is pinned as ART-0001 by `check_artifact_pins.py`).

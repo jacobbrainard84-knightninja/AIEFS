@@ -1,5 +1,5 @@
 # Location: .github/workflows/repo-checks.yml at the REPOSITORY ROOT.
-# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, artifact registry pins,
+# Repository checks for agent PRs (claims lint, hygiene scan, manifest hashes, SHA256SUMS files, artifact registry pins,
 # current-tree inventory, file modes, CI-tool self-tests, analysis tests: v4.1 held-event candidate and
 # the modular platform suite).
 # The Lean build + axiom allowlist (propext, Classical.choice, Quot.sound; Lean v4.33.1 from
@@ -95,6 +95,23 @@ jobs:
       # Runs "AI Agent Audits/evidence/verify_manifest.py --inputs" if it exists; notice + pass if not.
       - name: check_manifest.py
         run: python tools/ci/check_manifest.py
+
+  sha256sums:
+    name: SHA256SUMS files
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      # Verifies every SHA256SUMS / *SHA256SUMS*.txt file in the tree (paths relative to each file).
+      # Fail-closed: only the entries in ALLOWED_MISSING (each with a reason) may be missing; any other
+      # missing file, mismatch, malformed line, stale allow-list entry, or no SUMS file at all fails.
+      - name: check_sha256sums.py
+        run: python tools/ci/check_sha256sums.py
 
   artifact-pins:
     name: Artifact registry pins
