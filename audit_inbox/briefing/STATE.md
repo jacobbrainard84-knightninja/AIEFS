@@ -4,26 +4,36 @@ AIEFS is a hobby math project: an adaptive Kuramoto model (N = 12 oscillators) w
 
 Items marked **PENDING** have not landed on `main`. Do not cite them as results.
 
-## Branches (checked with `git ls-remote` on 2026-10-31)
+## Branches: snapshot, **not live**
 
-| What | Status |
-|---|---|
-| `main` | tip `395ea53` (merge of PR #2, 2026-10-31 09:38 EDT). It contains PR #1 `integration/round5` (merge `ddc9f46`) and `research/lean-kn` (errata E11). |
-| PR #2 `fix/hygiene-allow-data-external` (head `c59eabc`) | **Merged** into `main` as `395ea53`. It adds an allow-list for binaries under `data/external/` and runs the Lean matrix on every PR. Before the merge, Researcher 001 reviewed it as CLEAN WITH NOTES (PR #2 comment "Researcher 001 audit of PR #2 @ c59eabc", 2026-10-30 22:00 EDT). Auditor Seat 002 authored the PR. |
-| `research/freezing` / **PR #3** | tip `f444401` (PR #3 "Freezing theorem: 4-row claim split, Corollary 4 fix, novelty rescope", open). **Not merged.** The freezing work (RES-FREEZE-01, `lean/AIEFFreezeCore`, errata E12) lives only here. Auditor Seat 002 rated the delta @ `f444401` **CLEAN, 11/11 checks green** (an agent rating: input only, see README rule 7). It is awaiting the owner's merge. |
-| `fix/errata-old-files-drift` / **PR #5** (tip `3645770`) | **Not merged.** Auditor Seat 002's old-files-drift erratum (**E15**, pending). Researcher 001's review items N1–N4 were applied at `340e5b5`. A delta audit of `340e5b5` followed, and its wording fixes W1–W3 are at `3645770` (2026-10-31 12:38 EDT). The delta audit of `340e5b5` → `3645770` is pending. See README rule 10 and `OPEN_QUESTIONS.md` §0b. |
-| `research/redteam-negcontrols` / **PR #4** (head `a614451`) | **Not merged.** Red-team negative-control suite (`tools/redteam`, step 1 of the checker fixes). Auditor rating: **SOUND WITH NOTES** (an agent rating: input only, see README rule 7). It is awaiting the owner. |
-| `fix/comparator-v4-gates` (tip `f0aadce`) | **Not merged.** Auditor Seat 002's comparator v4 fix (regenerates `compare_b2a95dfbfbe3_v3.log`, fixes the b2a95 `SHA256SUMS`); takes errata **E14**. **Under audit by Researcher 001** @ `f0aadce`. |
-| `fix/lint-claims-fail-closed` (tip `588d5ee`) | **Not merged.** Auditor Seat 002's fix that makes `tools/ci/lint_claims.py` fail closed (G5b, G6b, G6c, G6d; BOM, non-UTF-8, unreadable and CSV-parse errors). It builds on PR #4's red-team suite. **Under audit by Researcher 001** @ `588d5ee`. Audit result (2026-10-31): **CLEAN WITH NOTES** (an agent rating: input only). Recommended follow-ups: a strict CSV parse and normalised duplicate-column detection. |
-| `audit-inbox` | This drop-box branch, cut from `a991b46`. Its tree is older than `main`. **Never merge it into `main`**, and in particular never merge `audit_inbox/salvage/` (see README rule 12). |
+**Retrieved with `git ls-remote` on 2026-10-31 at 12:57 EDT (16:57 UTC) by Researcher 001.** Branch tips move. Re-run `git ls-remote origin` before citing any sha below. Verdicts are agent ratings: input only, see README rule 7.
+
+| What | Tip at retrieval | Status |
+|---|---|---|
+| `main` | `395ea53` | Merge of PR #2, 2026-10-31 09:38 EDT. It contains PR #1 `integration/round5` (merge `ddc9f46`) and `research/lean-kn` (errata E11). |
+| PR #2 `fix/hygiene-allow-data-external` | `c59eabc` | **Merged** into `main` as `395ea53`. It adds an allow-list for binaries under `data/external/` and runs the Lean matrix on every PR. Researcher 001 reviewed it as CLEAN WITH NOTES. Auditor Seat 002 authored it. The branch has been deleted. |
+| `research/freezing` / **PR #3** | `f444401` | **Not merged.** The 4-row claim split, the Corollary 4 fix and the novelty rescope **are at `f444401`** (see the freezing section below). Auditor Seat 002 rated the delta **CLEAN, 11/11 checks green**. It is awaiting the owner. Per Researcher 026, update it from `main` before the merge. |
+| `research/redteam-negcontrols` / **PR #4** | `a614451` | **Not merged.** Red-team negative-control suite (`tools/redteam`). Rated **SOUND WITH NOTES**. It is awaiting the owner. |
+| `fix/comparator-v4-gates` (E14) | `f0aadce` | **Not merged.** Comparator v4. The Researcher 001 audit @ `f0aadce` says **FIXES REQUIRED**: the CSV seed column is compared as a float, and the tolerance tests are no-ops. |
+| `fix/errata-old-files-drift` / **PR #5** (E15) | `3645770` | **Not merged.** Researcher 001's delta audit of `340e5b5..3645770` says **CLEAN**. It conflicts with comparator v4 in 4 files (`ERRATA_2026-10-28.md`, `registry/artifacts_current.csv`, `tools/redteam/REDTEAM.md`, `tools/redteam/test_rt_comparator.py`), so it must land after PR #4 and E14. |
+| `fix/check-manifest-g1g2` | `14072c3` | **Not merged.** It combines and supersedes `fix/manifest-nonempty` and `fix/check-manifest-missing-verifier`. The Researcher 001 audit says **FIXES REQUIRED**: the verifier is run without `python -I`, so a planted `hashlib.py` beside it defeats the hash check. |
+| `fix/lint-claims-fail-closed` | `ad1470a` | **Not merged.** Makes `tools/ci/lint_claims.py` fail closed. It was audited CLEAN WITH NOTES @ `588d5ee`. The tip has since moved to `ad1470a`. |
+| `fix/lint-claims-artifacts` | `f495d1c` | **Not merged.** Claims artifact, evidence-scope and Lean-citation checks. It conflicts with fail-closed. |
+| `fix/lint-claims-combined` | (none at retrieval) | **Being built.** It is the combination of the two lint-claims branches. |
+| `ci/check-sha256sums` | `7c3bbba` | **Not merged.** SHA256SUMS checker. After E14, remove its missing-v3-log allowance. The ruleset does **not** yet require the "SHA256SUMS files" job. |
+| `arena/d4a487cc-aiefs` | `2af3859` | Arena's working branch: 180 commits behind `main`, 12 unique commits. **Never merge its tree.** Extract findings into the inbox instead. |
+| `audit-inbox` | (this branch) | Drop box, cut from `a991b46`. Its tree is older than `main`. **Never merge it into `main`**, especially `audit_inbox/salvage/` (see README rule 12). A synthetic merge fails `check_current_inventory` with 172 NOT_INVENTORIED errors. |
 
 **Deleted branches:** 5 merged branches were deleted from GitHub after a deep search confirmed all their content is in `main` (owner OK reported by Auditor Seat 002): `audit/nanfix-v2`, `ci/artifact-pins`, `ci/validator-and-lean-matrix`, `fix/hygiene-allow-data-external` and `integration/round5`. Their tips were ancestors of `main`, so their history stays reachable. Their absence was confirmed with `git ls-remote` on 2026-10-31. The check and the two review comments that exist only on PRs are in `audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md`.
 
-## Key numbers (relax-to-target law Ḃ = (η+μ)R − μ − γB, at the single parameter set used everywhere)
+## Key numbers (relax-to-target law Ḃ = (η+μ)R − μ − γB, at the baseline rate constants)
 
-- Settle-above-threshold condition: an edge settles above B_c = 0.12 iff R > (μ+γB_c)/(η+μ) ≈ **0.4543** (REPORT.md:213 on `research/freezing`; errata **E12** on `research/freezing`, which states it as ≈ 0.454; **PENDING** on `main`).
-- B* = 0 at R = μ/(η+μ) = **3/7 ≈ 0.4286** (REPORT.md:113). This is **not** the persistence threshold. Using 0.4286 as that threshold is a known inconsistency in older files.
-- All numerics use N = 12 and dt = 0.01 with one set of rate constants. Only τ, T_w and ω vary.
+- **Ungated threshold (scalar recurrence only).** Take the *ungated*, constant-R scalar recurrence B_{n+1} = max(0, B_n + dt((η+μ)R − μ − γB_n)). Its equilibrium lies strictly above B_c = 0.12 iff R > R_c = (μ+γB_c)/(η+μ) ≈ **0.454286** (`research/freezing/REPORT.md:114` @ `f444401`, "Ungated ON threshold"; errata **E12** on `research/freezing` gives ≈ 0.454; **PENDING** on `main`).
+  - In the full gated model this condition is **not sufficient** while the capacity gate stays active: the update is multiplied by λ_e = min(λ_i, λ_j) ∈ (0,1] (REPORT.md:108).
+  - The gated-OFF certificate (Thm 3, REPORT.md:193) is a separate condition.
+  - Do not quote 0.4543 as the full-system persistence threshold.
+- B* = 0 at R = μ/(η+μ) = **3/7 ≈ 0.4286** for the same ungated scalar recurrence (REPORT.md:113). This is **not** the persistence threshold. Using 0.4286 as that threshold is a known inconsistency in older files.
+- The main frozen production cohorts use N = 12, dt = 0.01 and the stated baseline rate constants; across them only τ, T_w and ω vary. Explicitly named ablations (for example `no_mu` or delay removal) and separately labelled exploratory or synthetic analyses (for example exogenous-R freezing checks, finite-difference amplitudes, exploratory gate analyses) are the exceptions.
 
 ## Freezing theorem (RES-FREEZE-01): CONDITIONAL
 
@@ -32,16 +42,17 @@ Items marked **PENDING** have not landed on `main`. Do not cite them as results.
   - The claim is false without some hypothesis on R.
 - **Open:** **O1, closed-loop phase-locking.** The theorem assumes it and nothing proves it.
 - **Lean:** `AIEFFreezeCore` covers only the per-edge OFF/ON core, with an existential N. The explicit N is a paper-level real-arithmetic bound that depends on R over [T,∞).
-- **PENDING (branch `research/freezing`, not yet pushed there):**
-  - split the claim into 4 rows: `LEAN-FREEZE-CORE`, `RES-FREEZE-GATED`, `RES-FREEZE-NUM`, `RES-FREEZE-NOVELTY`;
-  - the Corollary 4 fix: use the state-free bound ℓ_f^0 = (1 − ρ^{N1}) x* in place of the state-dependent ℓ_f. No row may cite Cor 4 until this lands.
-- **Novelty:** see `RESEARCH_LEADS.md`. A rescope has been proposed. Auditor Seat 002 agreed with changes, and the ledger row is **PENDING** on `research/freezing`.
+- **On `research/freezing` @ `f444401` (PR #3), not yet on `main`:**
+  - The claim is split into 4 rows: `LEAN-FREEZE-CORE`, `RES-FREEZE-GATED`, `RES-FREEZE-NUM` and `RES-FREEZE-NOVELTY` (`registry/claims.csv:71-74` on that branch).
+  - The Corollary 4 fix is there too: the proof uses the state-free bound ℓ_f^0 = (1 − ρ_f^{N1})·x*_f in place of the state-dependent ℓ_f (`research/freezing/REPORT.md:221-226`).
+  - These are pushed to the branch. They are **PENDING only in the sense that PR #3 is not merged**. Cite them as `research/freezing@f444401`, not as `main`.
+- **Novelty:** see `RESEARCH_LEADS.md`. The rescope is at `f444401` (`REPORT.md:16`, row `RES-FREEZE-NOVELTY`): a known variant of Cho–Dong–Ha 2023, with a narrow, plausibly new residual. The search is not exhaustive.
 
 ## Errata numbering (`ERRATA_2026-10-28.md`)
 
 - `main` has E1–E11 and E13. E13 is round 5's fix to the reproduction comparator: v2 checked NaN masks but not ±inf masks, and v3 checks both. The verdict is unchanged.
 - **E12 is reserved** for `research/freezing`.
-- New entries start at **E14**, which `fix/comparator-v4-gates` (comparator v4) takes. **E15 is now taken** by Auditor Seat 002's old-files-drift erratum (`fix/errata-old-files-drift`, pending). The science README-wording draft (`r026-science-draft`) takes the **next free number** when it lands, not E15. If E14 or E15 lands out of order, the later one to reach `main` renumbers its entry.
+- New entries start at **E14**, which `fix/comparator-v4-gates` (comparator v4) takes. **E15 is now taken** by Auditor Seat 002's old-files-drift erratum (`fix/errata-old-files-drift` / PR #5, not merged). The science README-wording draft (`r026-science-draft`) takes the **next free number** when it lands, not E15. If E14 or E15 lands out of order, the later one to reach `main` renumbers its entry.
 - Otherwise renumber nothing.
 
 ## Project map (box-side map, revision 2, 2026-10-29, built from `research/freezing` cc31533 + `research/lean-kn` 2fc1110; not in the repo)
