@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0007",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2209.13127",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Koopman Reduced Order Modeling with Confidence Bounds",
+    "authors": "Mohr, R.; Fonoberova, M.; Mezic, I.",
+    "year": "2022",
+    "venue": "arXiv",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2209.13127;DOI:10.48550/arXiv.2209.13127"
+  },
+  "verbatim_excerpt": "Submitted 27 Sep 2022; v3 27 Mar 2025; MSC 47B33, 15A18, 62F25, 62M20. 'The reduced order model is constructed using a finite number of Koopman eigenvalues and modes, while the rest of spectrum is treated as a noise process. This noise process is used to extract the confidence bounds.'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}

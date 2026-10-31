@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0001",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.2307/1942661",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Pseudoreplication and the Design of Ecological Field Experiments",
+    "authors": "Hurlbert, S. H.",
+    "year": "1984",
+    "venue": "Ecological Monographs",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.2307/1942661"
+  },
+  "verbatim_excerpt": "Ecological Monographs, Volume 54, Issue 2, pp. 187-211. 'Scrutiny of 176 experimental studies published between 1960 and the present revealed that pseudoreplication occurred in 27% of them, or 48% of all such studies that applied inferential statistics.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

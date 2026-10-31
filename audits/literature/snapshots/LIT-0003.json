@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0003",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1007/s11071-016-2974-z",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Nonlinear normal modes and spectral submanifolds: existence, uniqueness and use in model reduction",
+    "authors": "Haller, G.; Ponsioen, S.",
+    "year": "2016",
+    "venue": "Nonlinear Dynamics",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1007/s11071-016-2974-z"
+  },
+  "verbatim_excerpt": "Nonlinear Dynamics 86, 1493-1534. 'SSMs are the unique, smoothest, nonlinear continuations of spectral subspaces of the linearized, unforced limit of a mechanical system... the dynamics on these manifolds will serve as a mathematically exact reduced-order model.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

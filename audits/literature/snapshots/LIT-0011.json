@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0011",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://www.cambridge.org/core/journals/bulletin-of-the-london-mathematical-society/article/abs/algebraic-graph-theory-graduate-texts-in-mathematics-207-by-chris-godsil-and-gordon-royle-439-pp-3050-isbn-0387952209-springer-new-york-2001/5B03FB7D0291D46C135C22A8F338147B",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Algebraic Graph Theory",
+    "authors": "Godsil, C.; Royle, G.",
+    "year": "2001",
+    "venue": "Graduate Texts in Mathematics 207, Springer",
+    "venue_type": "book",
+    "identifiers": "ISBN:0-387-95220-9"
+  },
+  "verbatim_excerpt": "Springer, New York, 2001, 439 pp., ISBN 0-387-95220-9 (GTM 207); reviewed in Bull. London Math. Soc. 34(5), 2002, DOI:10.1112/S0024609302221372. Chapter 8 is 'Matrix Theory'; the rank/nullity material on oriented incidence matrices is the standard content: rank(D) = n - c for a graph with n vertices and c components.",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

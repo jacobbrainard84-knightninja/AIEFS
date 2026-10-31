@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0010",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://link.springer.com/book/10.1007/978-1-4612-4342-7",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Introduction to Functional Differential Equations",
+    "authors": "Hale, J. K.; Verduyn Lunel, S. M.",
+    "year": "1993",
+    "venue": "Applied Mathematical Sciences, vol. 99, Springer",
+    "venue_type": "book",
+    "identifiers": "ISBN:978-1-4612-8745-2"
+  },
+  "verbatim_excerpt": "Springer, Applied Mathematical Sciences 99, 1993. 'If x in C([t0-r, t0+L], IR^n) and t in [t0, t0+L], then x_t in C0 is defined by x_t(theta) = x(t+theta) for theta in [-r, 0]. Here x_t(.) represents the history of the...' (C0 = C([-r,0], IR^n)).",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

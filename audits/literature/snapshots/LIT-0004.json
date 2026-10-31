@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0004",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2605.22299",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Data-Driven Reduced Modeling of Delayed Dynamical Systems via Spectral Submanifolds",
+    "authors": "Abbasciano, G.; Buza, G.; Haller, G.",
+    "year": "2026",
+    "venue": "arXiv",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2605.22299;DOI:10.48550/arXiv.2605.22299"
+  },
+  "verbatim_excerpt": "Submitted 21 May 2026, math.DS; nlin.CD. 'We show how the recent extension of spectral submanifold (SSM) theory to delay differential equations (DDEs) enables data-driven model reduction of nonlinear delay systems... Our approach requires no information about the form of the underlying DDE, or about the number and magnitude of the delays it contains.'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}

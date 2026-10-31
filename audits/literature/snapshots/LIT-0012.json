@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0012",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1109/TC.2014.2345391",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Parallel Reproducible Summation",
+    "authors": "Demmel, J.; Nguyen, H. D.",
+    "year": "2015",
+    "venue": "IEEE Transactions on Computers",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1109/TC.2014.2345391"
+  },
+  "verbatim_excerpt": "IEEE Trans. Comput. 64(7):2060-2070, July 2015. '...reproducibly sum binary floating point numbers, independent of summation order... require only one read-only pass over the data, and one reduction in parallel, using a 6-word reproducible accumulator.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

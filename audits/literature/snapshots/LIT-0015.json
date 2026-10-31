@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0015",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1126/science.298.5594.824",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Network Motifs: Simple Building Blocks of Complex Networks",
+    "authors": "Milo, R.; Shen-Orr, S.; Itzkovitz, S.; Kashtan, N.; Chklovskii, D.; Alon, U.",
+    "year": "2002",
+    "venue": "Science",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1126/science.298.5594.824"
+  },
+  "verbatim_excerpt": "Science 298(5594):824-827, 25 Oct 2002. '...we defined \"network motifs,\" patterns of interconnections occurring in complex networks at numbers that are significantly higher than those in randomized networks.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

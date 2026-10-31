@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0009",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://openlibrary.org/books/OL3159548M/Optimization_and_nonsmooth_analysis",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Optimization and Nonsmooth Analysis",
+    "authors": "Clarke, F. H.",
+    "year": "1983",
+    "venue": "Wiley (reprinted SIAM, 1990)",
+    "venue_type": "book",
+    "identifiers": "ISBN:0-471-87504-X;ISBN:0-89871-256-4"
+  },
+  "verbatim_excerpt": "Wiley, New York, 1983; xii+308 pp.; reprinted Philadelphia: SIAM, 1990. Contents: 'Generalized gradients; Differential inclusions; The calculus of variations; Optimal control; Mathematical programming.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

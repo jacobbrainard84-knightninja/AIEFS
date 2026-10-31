@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0013",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1145/3389360",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Algorithms for Efficient Reproducible Floating Point Summation",
+    "authors": "Ahrens, W.; Demmel, J.; Nguyen, H. D.",
+    "year": "2020",
+    "venue": "ACM Transactions on Mathematical Software",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1145/3389360"
+  },
+  "verbatim_excerpt": "ACM TOMS. '...a subset of the IEEE Floating Point Standard 754-2008 and bitwise operations on the standard representations in memory... pre-rounding to obtain deterministic rounding errors...' Extends the 2015 parallel summation algorithm.",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

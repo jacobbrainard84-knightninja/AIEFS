@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0008",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1515/9780691213101",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Spectra and Pseudospectra: The Behavior of Nonnormal Matrices and Operators",
+    "authors": "Trefethen, L. N.; Embree, M.",
+    "year": "2005",
+    "venue": "Princeton University Press",
+    "venue_type": "book",
+    "identifiers": "ISBN:9780691119465;DOI:10.1515/9780691213101"
+  },
+  "verbatim_excerpt": "Princeton University Press, 2005, xvii+606 pp. 'In some applications the usual analysis based on eigenvalues fails.' Review excerpt: 'Figure 3 instantly reveals that G is highly nonnormal and warns that G may not behave in a way that can be described by the eigenvalues alone.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0006",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2507.16915",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Avoiding spectral pollution for transfer operators using residuals",
+    "authors": "Herwig, A.; Colbrook, M. J.; Junge, O.; Koltai, P.; Slipantschuk, J.",
+    "year": "2025",
+    "venue": "arXiv",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2507.16915;DOI:10.48550/arXiv.2507.16915"
+  },
+  "verbatim_excerpt": "Submitted 22 Jul 2025, math.DS. 'Finite-dimensional approximations of Koopman and transfer (Frobenius-Perron) operators are prone to spectral pollution, introducing spurious eigenvalues that can compromise spectral computations... we demonstrate that spectral features can arise even when the corresponding eigenfunctions lie outside the chosen space.'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}

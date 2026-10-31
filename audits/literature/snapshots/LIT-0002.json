@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0002",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.3368/jhr.50.2.317",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "A Practitioner's Guide to Cluster-Robust Inference",
+    "authors": "Cameron, A. C.; Miller, D. L.",
+    "year": "2015",
+    "venue": "Journal of Human Resources",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.3368/jhr.50.2.317"
+  },
+  "verbatim_excerpt": "The Journal of Human Resources, 50(2), 317-372. '...regression model errors independent across clusters but correlated within clusters, when the number of clusters is large and default standard errors can greatly overstate estimator precision.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

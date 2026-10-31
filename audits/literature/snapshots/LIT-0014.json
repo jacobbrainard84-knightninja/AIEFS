@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0014",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1145/103162.103163",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "What every computer scientist should know about floating-point arithmetic",
+    "authors": "Goldberg, D.",
+    "year": "1991",
+    "venue": "ACM Computing Surveys",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1145/103162.103163"
+  },
+  "verbatim_excerpt": "ACM Computing Surveys 23(1):5-48, March 1991. 'This paper presents a tutorial on those aspects of floating-point that have a direct impact on designers of computer systems. It begins with background on floating-point representation and rounding error, continues with a discussion of the IEEE floating-point standard...'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

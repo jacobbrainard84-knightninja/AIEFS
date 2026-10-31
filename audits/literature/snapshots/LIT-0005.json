@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0005",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1088/2632-2153/abf0f5",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Data-driven discovery of Koopman eigenfunctions for control",
+    "authors": "Kaiser, E.; Kutz, J. N.; Brunton, B. W.",
+    "year": "2021",
+    "venue": "Machine Learning: Science and Technology",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1088/2632-2153/abf0f5"
+  },
+  "verbatim_excerpt": "'Finite-dimensional approximations of the Koopman operator are typically obtained as its projection onto a specified basis or dictionary... a well-known issue arises when trying to identify the full operator in a finite set of basis functions, that sometimes the finite-dimensional approximation is not closed and spurious eigenfunctions may appear.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

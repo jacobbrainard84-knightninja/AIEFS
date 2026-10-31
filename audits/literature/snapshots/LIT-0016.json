@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0016",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2605.23520",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Network Attractors driven by Time-Delay Plasticity",
+    "authors": "Ruschel, S.; Hristov, E.; Meijer, H. G. E.; Coombes, S.; Nicks, R.",
+    "year": "2026",
+    "venue": "arXiv",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2605.23520;DOI:10.48550/arXiv.2605.23520"
+  },
+  "verbatim_excerpt": "Submitted 22 May 2026, nlin.AO; MSC 34K43, 37N25, 34C26, 34C15. 'We develop a framework for collective frequency selection and attractor formation by means of delay plasticity... adaptive axonal delays (AADs)... We demonstrate frequency selection and explosive network relaxation oscillations in systems of delay-coupled phase oscillators with AADs on brain connectivity data and fully coupled ring networks.'",
+  "excerpt_provenance": "arXiv abstract/landing page, read directly"
+}
