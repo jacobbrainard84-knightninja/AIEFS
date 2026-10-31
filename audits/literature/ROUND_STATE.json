@@ -2,27 +2,27 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 5,
-  "next_round": 6,
-  "total_sources": 38,
+  "last_round_completed": 6,
+  "next_round": 7,
+  "total_sources": 39,
   "sources_per_round": {
     "1": 16,
     "2": 12,
     "3": 5,
-    "4": 5
+    "4": 5,
+    "6": 1
   },
-  "open_leads": 0,
+  "open_leads": 4,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "6": {
-      "theme": "THE LITERATURE INBOX IS ESSENTIALLY COMPLETE - prefer finishing over adding",
-      "honest_assessment": "Five rounds have produced 38 sources, a clean lead queue, and 24 adjudicated claims. The marginal literature round now has low value; further source addition would not move any verdict. The highest-value remaining work is NOT in this inbox.",
+    "7": {
+      "theme": "VERIFY THE FOUR PRIOR-ART LEADS, THEN RE-BASELINE ONTO THE 76-CLAIM REGISTRY",
       "targets": [
-        "RECOMMENDED FIRST: hand the 10 proposed amendments (round 5 section 7) to the owner as a single reviewable patch. These are registry edits and need approval; the inbox must not apply them.",
-        "Optional, genuinely additive: forward-citation pass from LIT-0018 / LIT-0028 / LIT-0016 to test whether the 24/43 map is recall-limited. Requires a citation-graph source; if none is available, record it as a permanent limitation rather than faking coverage.",
-        "Optional: convert ADJUDICATION.csv into a human-readable table appended to the manuscript's claim index (a formatting task, not a research task).",
-        "DO NOT: add more sources to move the claim count. The 19 unadjudicated claims are structurally unadjudicable (12 retired, 6 textbook/conjectural, 1 with no external anchor).",
-        "Outside this inbox and still outstanding: GitHub review Parts 2-3 (user-gated), Milestone 2 Stages 4-7, and the F16 registry/engineering repairs."
+        "Promote or retire LEAD-0008..0011 by fetching each publisher record (Seliger-Young-Tsimring PRE 65:041906; Timms-English PRE 89:032906; Picallo-Riecke PRE 83:036206; Miller-MacKay Neural Computation 6:100). Do NOT promote them on the repository's citation alone.",
+        "Verify the Physics Reports 1031 journal record for LIT-0039 (currently arXiv-only).",
+        "Re-baseline the inbox onto integration/round5's 76-claim registry: add the 33 unseen claims, refresh the 2 stale statuses, add 'Incomplete' to the adjudication vocabulary, and re-run gate 8. Until then every coverage figure is provisional.",
+        "Highest-value new adjudication: AUD-NOVELTY, now that LIT-0039 + the repository's own prior-art list exist.",
+        "Decide whether SSRH-ORIG-01..07 (7 untested origin hypotheses) are in scope for a literature layer at all - they are origin claims, not repository results, and the primary sources are 31 MB of PDFs in Project Origins/."
       ]
     }
   },
@@ -38,7 +38,11 @@
     "ROUND 5: 19 claims remain unadjudicated by construction - 12 retired (need no defence), 6 CF claims that are textbook material or open conjectures, and EMP-AIEF14-03 with no defensible external anchor.",
     "REGISTRY SUPERSEDED (found 2026-10-31 by remote sweep): the adjudication baseline has 43 claims; integration/round5 has 76 (33 unseen: 24 AUD-*, 2 LEAN-*, 7 SSRH-ORIG-*). Coverage is 24/76 against the registry of record, not 24/43. Two adjudicated rows carry stale status.",
     "SELF-CORRECTION (2026-10-31): the round-5 basis for LEAN-CF-01/CF06 cited oriented-incidence rank = n - c (LIT-0011). ERRATA E6 and claim AUD-CYCLE-KERNEL establish the object is the UNSIGNED incidence kernel, dim = m - n; the K3 unsigned kernel is 0, not 2. The claim arithmetic stands; the theorem attribution does not.",
-    "F16 refined again: two of the five 'phantom' entrypoints are stale names whose script AND committed outputs exist (AIEF_1_4_intertwining_controller_analysis.py; AIEF_1_3_falsification_updated.py). The defect is bidirectional - two real scripts are registered nowhere. Three token groups remain genuinely absent on all 11 branches."
+    "F16 refined again: two of the five 'phantom' entrypoints are stale names whose script AND committed outputs exist (AIEF_1_4_intertwining_controller_analysis.py; AIEF_1_3_falsification_updated.py). The defect is bidirectional - two real scripts are registered nowhere. Three token groups remain genuinely absent on all 11 branches.",
+    "ROUND 6: the repository's own prior-art list (AIEFS_audit_response.md point 12) was missing from this inbox entirely. Five citations - Seliger-Young-Tsimring 2002, Timms-English 2014, Picallo-Riecke 2011, Berner 2023, Miller-MacKay 1994 - none of which appeared in rounds 1-5. Lesson recorded: read the repository's own audit record before searching outward.",
+    "ROUND 6: LIT-0039 was physically in the repo all along as Papers/2804.05652v1.pdf, under an impossible arXiv ID (2804 cannot exist; correct ID 2304.05652). No Markdown references it, so a Markdown grep could never have found it.",
+    "ROUND 6: the archive count was wrong again - main has SEVEN archives, not three. Three are main-only (added 6b49a7b) and were opened for the first time. Full history (198 commits, unshallowed) confirms zero commits ever touched any missing entrypoint filename and no AIEF_1_[012]_ path ever existed.",
+    "ROUND 6: FOUR open leads. The lead queue went 0 -> 4 deliberately; verifying them is the next real work."
   ],
   "claims_adjudicated": 24,
   "adjudication": {

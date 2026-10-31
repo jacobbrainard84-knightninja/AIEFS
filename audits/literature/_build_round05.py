@@ -77,8 +77,9 @@ ADJ = [
             "no_mu, no_gap) and defines their arms at :104 and :112. The registry instead names "
             "AIEF_1_3_persistence_mechanism_test_updated.py, which does not exist - a stale "
             "name, not lost capability. The interpretive half ('adaptive coupling rather than "
-            "bare delay drives persistence') is consistent with the adaptive-delay cluster, but "
-            "no member of that cluster is currently mapped to this claim."
+            "bare delay drives persistence') is consistent with the adaptive-delay cluster; "
+            "LIT-0039 supplies the review-level framing and LIT-0018/LIT-0016 the specific "
+            "mechanism. Neither was mapped to this claim before round 6."
         ),
         required_change=(
             "Add LIT-0018 and LIT-0016 to bears_on_ids as corroborating CONTEXT; annotate that "

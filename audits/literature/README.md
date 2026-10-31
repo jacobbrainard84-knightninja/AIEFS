@@ -131,7 +131,7 @@ cat audits/literature/ROUND_STATE.json              # next_round + roadmap
 #    sources_per_round, open_leads, roadmap for the following round).
 
 # 5. Gate.
-python audits/literature/verify_literature.py        # must PASS (7/7)
+python audits/literature/verify_literature.py        # must PASS (8/8)
 
 # 6. Commit. Never amend or renumber an existing row.
 ```

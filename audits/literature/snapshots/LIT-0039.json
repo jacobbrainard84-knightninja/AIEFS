@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0039",
+  "retrieved": "2026-10-31",
+  "retrieval_method": "fetch_page",
+  "canonical_url": "https://arxiv.org/abs/2304.05652",
+  "verification_level": "VERIFIED_FULL",
+  "bibliographic_record": {
+    "title": "Adaptive Dynamical Networks",
+    "authors": "Berner, R.; Gross, T.; Kuehn, C.; Kurths, J.; Yanchuk, S.",
+    "year": "2023",
+    "venue": "arXiv:2304.05652v1 [nlin.AO], submitted 12 April 2023; later published in Physics Reports 1031 (2023)",
+    "venue_type": "preprint",
+    "identifiers": "arXiv:2304.05652;DOI:10.48550/arXiv.2304.05652"
+  },
+  "verbatim_excerpt": "arXiv:2304.05652 (nlin.AO), submitted 12 Apr 2023, 120 pages. 'It is a fundamental challenge to understand how the function of a network is related to its structural organization. Adaptive dynamical networks represent a broad class of systems that can change their connectivity over time depending on their dynamical state. The most important feature of such systems is that their function depends on their structure and vice versa.'",
+  "excerpt_provenance": "arXiv abstract page, read directly"
+}
