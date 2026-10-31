@@ -53,7 +53,7 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (83 tests: 70 PASS incl. 12 controls, 13 GAP)
+## Results
 
 Run on base `395ea53` (main).
 
@@ -74,21 +74,29 @@ Run on base `395ea53` (main).
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
 | **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| **GAP** verifier deleted | check_manifest.py (line 79) | **GAP**: prints NOTICE and exits 0 |
 
 ### SHA256SUMS files: `test_rt_sha256sums.py`
 
 | Test | Checker | Result |
 |---|---|---|
-| control: untampered mirror (b2a95 v3.log allow-listed) | tools/ci/check_sha256sums.py | PASS (accepted) |
+| control: untampered mirror (lists AIEF_LEAN_PROJECT_LOCK_HASHES.txt) | tools/ci/check_sha256sums.py | PASS (accepted) |
+| control: synthetic allow-listed missing entry (test-injected, independent of the live list) | check_sha256sums | PASS (accepted, NOTICE) |
 | tools/sync script one byte changed | check_sha256sums | PASS (MISMATCH) |
 | Lean source edited (AIEF_LEAN_SOURCE_SHA256SUMS.txt) | check_sha256sums | PASS (MISMATCH) |
+| Lean lock file edited (AIEF_LEAN_PROJECT_LOCK_HASHES.txt) | check_sha256sums | PASS (MISMATCH) |
 | listed file deleted | check_sha256sums | PASS (MISSING) |
+| tracked SUMS file deleted | check_sha256sums | PASS (cannot read) |
 | malformed SUMS line | check_sha256sums | PASS (malformed line) |
-| SUMS entry pointing outside the repo | check_sha256sums | PASS (path escapes) |
-| allow-listed v3.log reappears with wrong content | check_sha256sums | PASS (MISMATCH) |
-| allow-listed entry removed from its SUMS file | check_sha256sums | PASS (stale allow-list entry) |
-| no SHA256SUMS file at all | check_sha256sums | PASS (fail-closed) |
+| SUMS entry `../` outside the repo | check_sha256sums | PASS (path escapes) |
+| in-repo symlink pointing outside the repo | check_sha256sums | PASS (escapes via a symlink) |
+| allow-listed file reappears with wrong content | check_sha256sums | PASS (MISMATCH) |
+| allow-listed file reappears with matching content | check_sha256sums | PASS (stale allow-list entry) |
+| allow-listed entry not in its SUMS file | check_sha256sums | PASS (stale allow-list entry) |
+| unclassified hash list (`*hashes*.txt` neither checked nor excluded) | check_sha256sums | PASS (error) |
+| stale exclusion entry | check_sha256sums | PASS (error) |
+| no SHA256SUMS file at all (fresh git repo) | check_sha256sums | PASS (fail-closed) |
+| not a git checkout | check_sha256sums | PASS (fail-closed) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
@@ -188,3 +196,16 @@ broken.
   log and fixes the SUMS file), and that entry turns into an error if the file reappears or the
   line is removed, so it must be dropped when that branch lands. `audits/reproductions/.gitignore`
   re-includes `*.log` there (the root `.gitignore` is pinned as ART-0001 by `check_artifact_pins.py`).
+
+- **Round 2 (Auditor Seat 002 follow-ups), branch `ci/check-sha256sums`.** Files are found with
+  `git ls-files` (tracked files only; the run fails if the path is not the top of a git checkout).
+  Checked: the `SHA256SUMS` name pattern plus `lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt`
+  (6 files, 51 entries). Excluded with a reason, printed as SKIP:
+  `AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt` (historical lean_r4 log; ERRATA E7) and
+  the two `twindow_*hashes*.txt` records (absolute `/home/deck` paths). Any other tracked
+  `*sha256*/*sums*/*hashes*` list that is neither checked nor excluded is an error, as is a stale
+  exclusion. Each listed path must stay inside the repo both lexically and after `realpath`, so an
+  in-repo symlink pointing outside is rejected. The red-team tests inject a synthetic allow-list
+  entry instead of relying on the live b2a95 entry, never write into the real checkout (every write
+  goes through materialize + unlink), and fail in `tearDownClass` if `git status` of the real
+  checkout changed. The inventory now includes the 3 rows that were missing.

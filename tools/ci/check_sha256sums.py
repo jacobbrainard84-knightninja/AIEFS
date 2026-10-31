@@ -1,21 +1,31 @@
 #!/usr/bin/env python3
-"""Verify every SHA256SUMS file in the repository (fail-closed).
+"""Verify every checksum list (SHA256SUMS file) tracked in the repository (fail-closed).
 
-Plain Python 3 standard library. Run from the repository root:
+Plain Python 3 standard library plus git. Run from the repository root:
 
-    python3 tools/ci/check_sha256sums.py              # whole tree
-    python3 tools/ci/check_sha256sums.py --repo PATH
+    python3 tools/ci/check_sha256sums.py              # this checkout
+    python3 tools/ci/check_sha256sums.py --repo PATH  # PATH must be the top of a git work tree
 
-A SHA256SUMS file is any file named SHA256SUMS or matching *SHA256SUMS*.txt (directories .git,
-.lake, __pycache__ and node_modules are skipped). Each line is "<64 hex>  <path>" (sha256sum
-format, "*path" binary marker and "./" prefix allowed; blank lines and "#" comments ignored);
-the path is relative to the directory of the SHA256SUMS file and must stay inside the repo.
+Discovery uses `git ls-files` (tracked files only; no tree walk, so untracked files and symlink
+loops cannot change the result). A tracked file is a checksum list if
+  * its name is SHA256SUMS or matches *SHA256SUMS*.txt, or
+  * it is listed in EXTRA_INCLUDE below (with a reason).
+Any other tracked file whose name looks like a hash list (contains "sha256", "sums" or "hashes",
+any case, with no extension or .txt/.sha256/.sums) must be listed in EXCLUDED with a reason;
+an unclassified one is an error, so a new hash list cannot be skipped silently. EXTRA_INCLUDE
+and EXCLUDED entries that are no longer tracked are errors too (stale).
+
+Each line of a list is "<64 hex>  <path>" (sha256sum format; "*path" binary marker and "./"
+prefix allowed; blank lines and "#" comments ignored). The path is relative to the directory
+of the list. It must not be absolute or contain "..", and after resolving symlinks
+(os.path.realpath) it must stay inside the repository: an in-repo symlink that points outside
+the repository is rejected.
 
 Every entry must exist and match. The only exceptions are the entries in ALLOWED_MISSING below,
 each with a reason; such an entry is accepted only while the file is MISSING. If an allow-listed
-file appears (matching or not) or the entry disappears, that is an error too, so the list cannot
-go stale silently. Finding no SHA256SUMS file at all, a malformed line, or an unreadable SUMS file
-is an error. All failures are reported, not just the first.
+file appears (matching or not) or the entry disappears from its list, that is an error too, so
+the allow-list cannot go stale silently. Finding no checksum list at all, a malformed line, an
+empty list or an unreadable list is an error. All failures are reported, not just the first.
 
 Exit status: 0 = all entries verified, 1 = any failure, 2 = usage error.
 """
@@ -23,13 +33,34 @@ import argparse
 import hashlib
 import os
 import re
+import subprocess
 import sys
 
-SKIP_DIRS = {".git", ".lake", "__pycache__", "node_modules"}
 NAME_RE = re.compile(r"^(SHA256SUMS|.*SHA256SUMS.*\.txt)$")
+CANDIDATE_RE = re.compile(r"(sha256|sums|hashes)[^/]*$", re.I)
+CANDIDATE_EXT = {"", ".txt", ".sha256", ".sums"}
 LINE_RE = re.compile(r"^([0-9a-fA-F]{64}) [ *](.+)$")
 
-# (SHA256SUMS path relative to repo, entry path as written) -> reason. Accepted only while MISSING.
+# Tracked checksum lists whose name does not match NAME_RE but which are verified anyway.
+EXTRA_INCLUDE = {
+    "lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt":
+        "pins lean-toolchain, lake-manifest.json and lakefile.toml of the Lean project "
+        "(sha256sum format, paths relative to lean/AIEFProofs)",
+}
+
+# Tracked files that look like hash lists but are NOT verified, each with the reason.
+EXCLUDED = {
+    "AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt":
+        "historical log of the lean_r4 audit run, not a live pin: its paths are relative to "
+        "lean/AIEFProofs, and Basic.lean/Smoke.lean were changed after that run on purpose "
+        "(ERRATA_2026-10-28.md E7), so it no longer matches by design",
+    "twindow_frozen_authority_hashes.txt":
+        "historical record from the original machine: absolute /home/deck/... paths outside this repo",
+    "twindow_source_hashes_before.txt":
+        "historical record from the original machine: absolute /home/deck/... paths outside this repo",
+}
+
+# (list path relative to repo, entry path as written) -> reason. Accepted only while MISSING.
 ALLOWED_MISSING = {
     ("audits/reproductions/b2a95dfbfbe3/SHA256SUMS", "compare_b2a95dfbfbe3_v3.log"):
         "v3 comparison log was never committed (Auditor Seat 002 finding M1). Branch "
@@ -37,15 +68,44 @@ ALLOWED_MISSING = {
         "remove this entry when that branch lands on main (the check then errors until you do).",
 }
 
+# Tests only (never set in CI): take the tracked-file list from this git checkout instead of
+# --repo, and also treat it as "inside the repository". The red-team suite uses it to run the
+# check on a symlink mirror of the repo (tools/redteam/test_rt_sha256sums.py).
+GIT_ROOT = None
 
-def find_sums(repo):
-    out = []
-    for d, dirs, files in os.walk(repo, followlinks=True):
-        dirs[:] = sorted(x for x in dirs if x not in SKIP_DIRS)
-        for f in sorted(files):
-            if NAME_RE.match(f):
-                out.append(os.path.relpath(os.path.join(d, f), repo).replace(os.sep, "/"))
-    return sorted(out)
+
+def tracked_files(git_root):
+    """Return the tracked paths of git_root, or raise RuntimeError."""
+    top = subprocess.run(["git", "-C", git_root, "rev-parse", "--show-toplevel"],
+                         capture_output=True, text=True)
+    if top.returncode != 0:
+        raise RuntimeError(f"{git_root} is not a git work tree: {top.stderr.strip()}")
+    if os.path.realpath(top.stdout.strip()) != os.path.realpath(git_root):
+        raise RuntimeError(f"{git_root} is not the top of its git work tree ({top.stdout.strip()})")
+    p = subprocess.run(["git", "-C", git_root, "ls-files", "-z"], capture_output=True)
+    if p.returncode != 0:
+        raise RuntimeError(f"git ls-files failed: {p.stderr.decode(errors='replace').strip()}")
+    return sorted(x for x in p.stdout.decode("utf-8", "surrogateescape").split("\0") if x)
+
+
+def classify(tracked):
+    """Return (lists to verify, errors)."""
+    tset = set(tracked)
+    sums, errors = [], []
+    for rel in tracked:
+        name = rel.rsplit("/", 1)[-1]
+        if NAME_RE.match(name) or rel in EXTRA_INCLUDE:
+            sums.append(rel)
+        elif rel in EXCLUDED:
+            continue
+        elif CANDIDATE_RE.search(name) and os.path.splitext(name)[1].lower() in CANDIDATE_EXT:
+            errors.append(f"{rel}: looks like a hash list but is not classified; add it to "
+                          f"EXTRA_INCLUDE (to verify it) or EXCLUDED (with a reason) in tools/ci/check_sha256sums.py")
+    for rel in sorted(set(EXTRA_INCLUDE) - tset):
+        errors.append(f"stale EXTRA_INCLUDE entry: {rel} is not tracked; remove it")
+    for rel in sorted(set(EXCLUDED) - tset):
+        errors.append(f"stale EXCLUDED entry: {rel} is not tracked; remove it")
+    return sums, errors
 
 
 def sha256(path):
@@ -56,9 +116,20 @@ def sha256(path):
     return h.hexdigest()
 
 
-def check(repo):
+def inside(path, roots):
+    real = os.path.realpath(path)
+    return any(real == r or real.startswith(r + os.sep) for r in roots)
+
+
+def check(repo, git_root=None):
+    git_root = git_root or repo
+    roots = {os.path.realpath(repo), os.path.realpath(git_root)}
     errors, notices, seen_allowed = [], [], set()
-    sums = find_sums(repo)
+    try:
+        tracked = tracked_files(git_root)
+    except RuntimeError as ex:
+        return [], 0, [str(ex)], []
+    sums, errors = classify(tracked)
     if not sums:
         errors.append("no SHA256SUMS file found in the repository (expected at least one)")
     n_ok = 0
@@ -81,8 +152,13 @@ def check(repo):
             n_entries += 1
             want, entry = m.group(1).lower(), m.group(2)
             target = os.path.normpath(os.path.join(sdir, entry))
-            if os.path.isabs(entry) or os.path.relpath(target, repo).startswith(".."):
+            if os.path.isabs(entry) or ".." in entry.replace("\\", "/").split("/") \
+                    or os.path.relpath(target, repo).startswith(".."):
                 errors.append(f"{srel}:{i}: path escapes the repository: {entry}")
+                continue
+            if not inside(target, roots):
+                errors.append(f"{srel}:{i}: path escapes the repository via a symlink: {entry} "
+                              f"-> {os.path.realpath(target)}")
                 continue
             key = (srel, entry)
             allowed = ALLOWED_MISSING.get(key)
@@ -118,10 +194,12 @@ def main(argv=None):
     if not os.path.isdir(repo):
         print(f"ERROR   --repo {a.repo} is not a directory"); return 2
     print(f"== check_sha256sums: {repo}")
-    sums, n_ok, errors, notices = check(repo)
+    sums, n_ok, errors, notices = check(repo, GIT_ROOT)
     gha = os.environ.get("GITHUB_ACTIONS") == "true"
     for s in sums:
         print(f"SUMS    {s}")
+    for rel, why in sorted(EXCLUDED.items()):
+        print(f"SKIP    {rel} (excluded: {why})")
     for n in notices:
         print(f"NOTICE  {n}")
         if gha:

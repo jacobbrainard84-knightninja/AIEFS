@@ -107,7 +107,9 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: "3.12"
-      # Verifies every SHA256SUMS / *SHA256SUMS*.txt file in the tree (paths relative to each file).
+      # Verifies every tracked SHA256SUMS / *SHA256SUMS*.txt file (git ls-files) plus
+      # AIEF_LEAN_PROJECT_LOCK_HASHES.txt; other hash lists must be excluded with a reason. Listed
+      # paths are relative to each file and must stay inside the repo (symlinks resolved).
       # Fail-closed: only the entries in ALLOWED_MISSING (each with a reason) may be missing; any other
       # missing file, mismatch, malformed line, stale allow-list entry, or no SUMS file at all fails.
       - name: check_sha256sums.py
