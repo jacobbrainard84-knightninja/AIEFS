@@ -176,6 +176,98 @@ class ManifestWrapper(TempDirMixin, unittest.TestCase):
         self.assertEqual(rc, 1, out)
         self.assertNotIn("Traceback", out)
 
+    # --- G2b (Researcher 001 audit of a428c32): stub verifiers used to PASS because only rc 0 was checked ----------
+    VER = f"{EVID}/verify_manifest.py"
+    MAN = f"{EVID}/audit_manifest.json"
+    NOT_RUN = f"ERROR   {EVID}/verify_manifest.py was NOT run, so the manifest hashes were NOT checked"
+    FAIL0 = "== result: 0 verifier(s) run, 1 failed -> FAIL"
+    FAIL1 = "== result: 1 verifier(s) run, 1 failed -> FAIL"
+
+    def wrap(self):
+        return run([PY, WRAP, "--repo", self.root])
+
+    def assertWrapperFails(self, rc, out, *lines):
+        self.assertRejected(rc, out)
+        self.assertEqual(rc, 1, out[-3000:])
+        self.assertNotIn("Traceback", out)
+        got = out.splitlines()
+        for ln in lines:
+            self.assertIn(ln, got, out[-3000:])
+
+    def real_pin(self):
+        return sha256(os.path.join(REPO, self.VER))
+
+    def stub(self, body):
+        p = os.path.join(self.root, self.VER)            # real copy (copy_real in setUp)
+        os.unlink(p)
+        with open(p, "w") as f:
+            f.write(body)
+        return p
+
+    def assertHashRejected(self, body):
+        p = self.stub(body)
+        self.assertWrapperFails(*self.wrap(),
+                                f"ERROR   {self.VER}: sha256 {sha256(p)} does not match {self.MAN} "
+                                f"files_sha256['evidence/verify_manifest.py'] {self.real_pin()}; refusing to run an unverified verifier",
+                                self.NOT_RUN, self.FAIL0)
+
+    def test_00_control_real_copy_passes(self):
+        rc, out = self.wrap()
+        self.assertEqual(rc, 0, out[-2000:])
+        self.assertEqual(out.splitlines()[-1], "== result: 1 verifier(s) run, 0 failed -> PASS")
+
+    def test_zero_byte_verifier_fails(self):
+        self.assertHashRejected("")
+
+    def test_comment_only_verifier_fails(self):
+        self.assertHashRejected("# verify_manifest.py: all checks passed\n")
+
+    def test_hash_mismatched_verifier_fails(self):
+        """The real verifier with its verdict forced to exit 0: one edit, so its pin no longer matches."""
+        with open(os.path.join(REPO, self.VER)) as f:
+            src = f.read()
+        self.assertIn("sys.exit(1 if bad else 0)", src)
+        self.assertHashRejected(src.replace("sys.exit(1 if bad else 0)", "sys.exit(0)"))
+
+    def test_symlinked_stub_outside_repo_fails(self):
+        stub = os.path.join(self.tmp, "stub_verify.py")   # outside self.root
+        with open(stub, "w") as f:
+            f.write("import sys\nsys.exit(0)\n")
+        p = os.path.join(self.root, self.VER)
+        os.unlink(p); os.symlink(stub, p)
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} resolves outside the repository (to "
+                                              f"{os.path.realpath(stub)}); refusing to run it", self.NOT_RUN, self.FAIL0)
+
+    def test_symlink_to_real_verifier_fails(self):
+        """Even a symlink to the genuine bytes (here: the real repo's verifier, outside the temp repo) is refused."""
+        p = os.path.join(self.root, self.VER)
+        os.unlink(p); os.symlink(os.path.join(REPO, self.VER), p)
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} resolves outside the repository (to "
+                                              f"{os.path.realpath(os.path.join(REPO, self.VER))}); refusing to run it",
+                                self.NOT_RUN, self.FAIL0)
+
+    def _repin(self, body):
+        """Stub the verifier AND rewrite its manifest pin to match (manifest itself is pinned in artifacts.csv)."""
+        p = self.stub(body)
+        mp = os.path.join(self.root, self.MAN)
+        with open(mp) as f:
+            m = json.load(f)
+        m["files_sha256"]["evidence/verify_manifest.py"] = {"bytes": os.path.getsize(p), "sha256": sha256(p)}
+        with open(mp, "w") as f:
+            json.dump(m, f, indent=1)
+        n = len(m["files_sha256"]); k = len(m["inputs_sha256"]); post = len(set(m.get("post_manifest_logs") or []))
+        return (f"checked {n} published files and {k} inputs" + (f"; {post} post-manifest logs listed but not hashed" if post else ""))
+
+    def test_repinned_verifier_exit0_without_success_line_fails(self):
+        want = self._repin("import sys\nsys.exit(0)\n")
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} exited 0 but did not print its success line '{want}' "
+                                              "followed by 'OK'; the manifest hashes are NOT confirmed", self.FAIL1)
+
+    def test_repinned_verifier_printing_failed_exit0_fails(self):
+        want = self._repin("print('FAILED: 3 problem(s)')\n")
+        self.assertWrapperFails(*self.wrap(), f"ERROR   {self.VER} exited 0 but did not print its success line '{want}' "
+                                              "followed by 'OK'; the manifest hashes are NOT confirmed", self.FAIL1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -76,7 +76,15 @@ Run on base `395ea53` (main).
 | PASSED manifest with empty inputs_sha256, inputs mode | check_manifest.py coverage rule | PASS ("inputs_sha256 is empty") |
 | control: manifest listing the verifier + one data file | check_manifest.py --no-inputs | PASS (accepted) |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| verifier deleted (was GAP G2; fixed on `fix/check-manifest-missing-verifier`) | check_manifest.py (line 79) | PASS (ERROR "manifest verifier missing", exit 1) |
+| verifier deleted (was GAP G2; fixed on `fix/check-manifest-missing-verifier`) | check_manifest.py (`if not os.path.lexists(...)` in `main`) | PASS (ERROR "manifest verifier missing", exit 1) |
+| control: real audit copy (verifier pinned, success line printed) | check_manifest.py | PASS (accepted) |
+| 0-byte verifier (G2b) | check_manifest.py `check_verifier_file` | PASS (ERROR "sha256 ... does not match ... files_sha256['evidence/verify_manifest.py']", not run, exit 1) |
+| comment-only verifier (G2b) | check_manifest.py `check_verifier_file` | PASS (same sha256 ERROR, not run) |
+| real verifier edited to always `sys.exit(0)` (hash mismatch, G2b) | check_manifest.py `check_verifier_file` | PASS (same sha256 ERROR, not run) |
+| verifier is a symlink to an outside exit-0 stub (G2b) | check_manifest.py `check_verifier_file` | PASS (ERROR "resolves outside the repository", not run) |
+| verifier is a symlink to the genuine verifier outside the repo (G2b) | check_manifest.py `check_verifier_file` | PASS (same ERROR: location, not just bytes, is checked) |
+| exit-0 stub with its manifest pin rewritten to match (G2b) | check_manifest.py `success_line` | PASS (ERROR "exited 0 but did not print its success line '...' followed by 'OK'") |
+| stub printing "FAILED", exit 0, pin rewritten (G2b) | check_manifest.py `success_line` | PASS (same success-line ERROR) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
@@ -126,7 +134,7 @@ Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
 | two numeric columns swapped | PASS |
 | manifest model eta changed | PASS |
 | --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `csv_nonnumeric_equal` is computed (line 113) but is not in `ok` (line 130) |
+| **GAP** branch labels swapped in CSV text column | **GAP**: `out["csv_nonnumeric_equal"]` is computed but is not part of the `ok = (...)` verdict expression (v3) |
 | **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
@@ -180,3 +188,16 @@ broken.
   `fix/check-manifest-g1g2`). A listed verifier that is missing is now an ERROR (exit 1), not a NOTICE
   and exit 0. The old `ran == 0` notice is dropped. The CI self-test stub verifier now also writes a
   minimal non-empty manifest, so the G1 coverage rule is satisfied.
+
+- **G2b, branch `fix/check-manifest-g1g2`** (`tools/ci/check_manifest.py`; Researcher 001 audit of
+  a428c32). Exit 0 from whatever file sits at the verifier path is no longer enough. Before running it,
+  `check_verifier_file` requires a regular file at the listed path (a symlink, a directory, or anything
+  resolving outside the repo is refused) whose sha256 equals its own `files_sha256` entry in
+  `audit_manifest.json`; that manifest is itself pinned in `registry/artifacts.csv` (check_artifact_pins).
+  After it runs, `success_line` computes the exact summary the real verifier prints for that manifest
+  (`checked N published files[ and K inputs][; P post-manifest logs listed but not hashed]`), which must
+  appear as a whole line, and the last non-empty line must be exactly `OK`. The real tree still passes
+  (145 files, 24 inputs). CI self-tests (`tools/ci/tests/test_check_manifest.py`) and the red-team
+  `ManifestWrapper` tests assert exact output lines and the exact `== result:` line, not substrings.
+  There was no G2b `@gap` test to flip; the new negative controls were added as normal tests, and each
+  fails against the pre-fix check_manifest.py (f8eb5e8).
