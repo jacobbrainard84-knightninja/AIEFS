@@ -128,7 +128,7 @@ jobs:
       # in check_modes.py, the paths under "Executable bits to restore" in PUSH_NOTES.md, and any
       # other tracked file with a #! line. Add --strict once the owner has restored the bits.
       - name: check_modes.py
-        run: python tools/ci/check_modes.py
+        run: python tools/ci/check_modes.py --strict
       # --strict fails on the known-list scripts until they are 100755 in the index. The connector
       # upload writes 100644, so switch to --strict only in (or after) the owner's git push that
       # restores the bits (see OWNER_STEAMDECK_COMMANDS in the review r026 notes / PUSH_NOTES.md item 2).
