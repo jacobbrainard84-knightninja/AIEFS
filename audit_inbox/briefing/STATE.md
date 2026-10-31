@@ -10,7 +10,8 @@ Items marked **PENDING** have not landed on `main`. Do not cite them as results.
 |---|---|
 | `main` | tip `395ea53` (merge of PR #2, 2026-10-31 09:38 EDT). It contains PR #1 `integration/round5` (merge `ddc9f46`) and `research/lean-kn` (errata E11). |
 | PR #2 `fix/hygiene-allow-data-external` (head `c59eabc`) | **Merged** into `main` as `395ea53`. It adds an allow-list for binaries under `data/external/` and runs the Lean matrix on every PR. Before the merge, Researcher 001 reviewed it as CLEAN WITH NOTES (PR #2 comment "Researcher 001 audit of PR #2 @ c59eabc", 2026-10-30 22:00 EDT). Auditor Seat 002 authored the PR. |
-| `research/freezing` | tip `85ba0a6`. **Not merged.** The freezing work (RES-FREEZE-01, `lean/AIEFFreezeCore`, errata E12) lives only here. |
+| `research/freezing` / **PR #3** | tip `f444401` (PR #3 "Freezing theorem: 4-row claim split, Corollary 4 fix, novelty rescope", open). **Not merged.** The freezing work (RES-FREEZE-01, `lean/AIEFFreezeCore`, errata E12) lives only here. Auditor Seat 002 rated the delta @ `f444401` **CLEAN, 11/11 checks green** (an agent rating: input only, see README rule 7). It is awaiting the owner's merge. |
+| `fix/errata-old-files-drift` (tip `6d180dd`) | **Not merged.** Auditor Seat 002's old-files-drift erratum (**E15**, pending). See README rule 10 and `OPEN_QUESTIONS.md` §0b. |
 | `fix/comparator-v4-gates` (tip `1250bbd`) | **Not merged.** Auditor Seat 002's comparator v4 fix (regenerates `compare_b2a95dfbfbe3_v3.log`, fixes the b2a95 `SHA256SUMS`); takes errata **E14**. Under audit by Researcher 001. |
 | `audit-inbox` | This drop-box branch, cut from `a991b46`. Its tree is older than `main`. |
 
@@ -38,7 +39,7 @@ Items marked **PENDING** have not landed on `main`. Do not cite them as results.
 
 - `main` has E1–E11 and E13. E13 is round 5's fix to the reproduction comparator: v2 checked NaN masks but not ±inf masks, and v3 checks both. The verdict is unchanged.
 - **E12 is reserved** for `research/freezing`.
-- New entries start at **E14**, which `fix/comparator-v4-gates` (comparator v4) takes. The README-wording draft on `r026-science-draft` is provisionally "E15+ (DRAFT)". Whichever of the two lands on `main` second renumbers its entry.
+- New entries start at **E14**, which `fix/comparator-v4-gates` (comparator v4) takes. **E15 is now taken** by Auditor Seat 002's old-files-drift erratum (`fix/errata-old-files-drift`, pending). The science README-wording draft (`r026-science-draft`) takes the **next free number** when it lands, not E15. If E14 or E15 lands out of order, the later one to reach `main` renumbers its entry.
 - Otherwise renumber nothing.
 
 ## Project map (box-side map, revision 2, 2026-10-29, built from `research/freezing` cc31533 + `research/lean-kn` 2fc1110; not in the repo)

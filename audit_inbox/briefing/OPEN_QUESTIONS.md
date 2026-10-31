@@ -32,6 +32,8 @@ At least basic red teaming is required. Give each check (validators, manifest/pi
 
 Report each test as PASS (rejected correctly) or GAP (accepted wrongly), with the command, file, line and sha.
 
+**Quietly loosened rules.** Any change to a pass/fail rule, verdict threshold, tolerance or metric must carry a written reason in the same commit, plus an erratum if the file is hash-pinned. A change without both is a finding. Diff old versions of files (the repo's `Older files/` folder, earlier commits) against the current ones and look for rules that were loosened. Example: in `aief_1_4_augmented_spectrum.py` (current, vs `Older files/aief_1_4_augmented_spectrum.py`), the verdict band went from ±10% to ±1% and SUPPORTED changed from `== 1` to `>= 1`, which turned PARTIAL into SUPPORTED. Auditor Seat 002 is writing this up as erratum **E15** on `fix/errata-old-files-drift`. The claim was already quarantined (E2, AUD-SLOWPOLE).
+
 ## 1. Science gaps
 
 1. **O1, closed-loop phase-locking.** Find a proof route, even a conditional one (small delay, slow learning). Candidate tools are in `RESEARCH_LEADS.md` (Ha–Li–Xue 2013, Ha–Ryoo 2020 + Correction, Dong–Ha–Kim 2020). The obstacles are the delay, the EMA and the non-smooth gate.
