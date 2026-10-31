@@ -24,9 +24,11 @@ linted. evidence_scope is a separate axis, not a status, and is not linted here.
 
 If registry/README.md has no such block, the fallback file tools/ci/claim_statuses.txt is used
 (one status per line, '#' comment lines allowed). That file ships as a PLACEHOLDER with no values;
-if neither source gives a vocabulary, the lint warns and skips the value checks.
+if neither source gives a vocabulary, that is an ERROR (exit 1, also without --strict): the value
+checks cannot run, and a renamed heading must not turn the lint into a silent pass (red-team G6).
 
-If registry/claims.csv does not exist, the lint prints a notice and exits 0 (not a failure).
+If registry/claims.csv does not exist, that is an ERROR (exit 1): there is nothing to lint, and a
+deleted registry must not pass (red-team G5).
 
 Extra rule (warning): rows whose claim_id starts with SSRH-ORIG- are untested origin hypotheses.
 They must never be labelled Retired (Retired / Rejected / Quarantined are reserved for claims
@@ -125,12 +127,13 @@ def load_vocab(readme_path, fallback_path, rep):
 def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
     claims = os.path.join(repo, claims_rel)
     if not os.path.isfile(claims):
-        rep.notice(f"{claims_rel} not found in {repo}; claims lint skipped (not a failure)")
+        rep.error(f"{claims_rel} not found in {repo}; claims registry missing, nothing was linted", claims_rel)
         return
     vocab = load_vocab(os.path.join(repo, readme_rel), os.path.join(repo, fallback_rel), rep)
     allowed = set(vocab)
     if not vocab:
-        rep.warn("no status vocabulary found (registry/README.md or fallback); value checks skipped")
+        rep.error(f"no status vocabulary found (no '{VOCAB_HEADING}' fenced block in {readme_rel} and no values "
+                  f"in {fallback_rel}); status values were NOT checked", readme_rel)
     elif SPECULATIVE_LABEL in allowed:
         print(f"vocabulary: '{SPECULATIVE_LABEL}' is allowed")
     else:

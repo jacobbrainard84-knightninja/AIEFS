@@ -95,15 +95,16 @@ class LintClaimsTests(unittest.TestCase):
         rc, out = run(lint_claims.main, ["--repo", self.root])
         self.assertEqual(rc, 1); self.assertIn("duplicate claim_id", out)
 
-    def test_missing_claims_is_notice(self):
+    def test_missing_claims_fails(self):
         rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 0); self.assertIn("NOTICE", out); self.assertIn("skipped", out)
+        self.assertEqual(rc, 1, out); self.assertIn("claims registry missing", out)
 
-    def test_placeholder_fallback_skips_with_warning(self):
+    def test_no_vocabulary_fails_without_strict(self):
         self.repo(['A-1,x,Anything,Anything,\n'], readme=False)
         write(self.root, "tools/ci/claim_statuses.txt", "# PLACEHOLDER\n# no values\n")
         rc, out = run(lint_claims.main, ["--repo", self.root])
-        self.assertEqual(rc, 0, out); self.assertIn("value checks skipped", out)
+        self.assertEqual(rc, 1, out); self.assertIn("no status vocabulary found", out)
+        self.assertIn("NOT checked", out)
 
     def test_filled_fallback_used(self):
         self.repo(['A-1,x,Supported,Bogus,\n'], readme=False)

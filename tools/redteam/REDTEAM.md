@@ -89,8 +89,8 @@ Run on base `395ea53` (main).
 | vocabulary missing, --strict | lint_claims | PASS |
 | **GAP** row cites nonexistent artifacts | lint_claims | **GAP**: artifact column never resolved |
 | **GAP** false claim "R* = 0.40, proved in Lean" as Supported/Formal proof | lint_claims | **GAP**: content is not checked against anything |
-| **GAP** claims.csv missing | lint_claims | **GAP**: exit 0 |
-| **GAP** vocabulary heading removed | lint_claims (non-strict, as CI runs it) | **GAP**: checks skipped, exit 0 |
+| claims.csv missing (was GAP G5; fixed on `fix/lint-claims-fail-closed`) | lint_claims | PASS (ERROR "claims registry missing", exit 1) |
+| vocabulary heading removed (was GAP G6; fixed on `fix/lint-claims-fail-closed`) | lint_claims (non-strict, as CI runs it) | PASS (ERROR "no status vocabulary found", exit 1) |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
 | .env file | hygiene_scan | PASS |
 | id_rsa file name | hygiene_scan | PASS |

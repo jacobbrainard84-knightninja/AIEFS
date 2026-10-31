@@ -47,27 +47,28 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
     def test_status_outside_vocabulary(self):
         self.rows[0]["audited_status"] = "Proved"
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), "audited_status 'Proved' is not in the status vocabulary")
 
     def test_status_with_trailing_space(self):
         self.rows[0]["artifact_status"] = self.rows[0]["artifact_status"] + " "
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), "is not in the status vocabulary (has leading/trailing spaces)")
 
     def test_status_wrong_case(self):
-        self.rows[0]["audited_status"] = self.rows[0]["audited_status"].upper()
+        bad = self.rows[0]["audited_status"].upper()
+        self.rows[0]["audited_status"] = bad
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), f"audited_status '{bad}' is not in the status vocabulary")
 
     def test_duplicate_claim_id(self):
         self.rows.append(dict(self.rows[0]))
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), f"duplicate claim_id {self.rows[0]['claim_id']}")
 
     def test_empty_claim_id(self):
         self.rows[0]["claim_id"] = ""
         self.write()
-        self.assertRejected(*self.lint())
+        self.assertRejected(*self.lint(), ": empty claim_id")
 
     @gap("lint_claims.py: a row citing an artifact that does not exist passes")
     def test_GAP_row_citing_nonexistent_artifact(self):
@@ -84,13 +85,15 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.write()
         self.assertRejected(*self.lint())
 
-    @gap("lint_claims.py: registry/claims.csv deleted -> NOTICE and exit 0")
-    def test_GAP_claims_file_missing(self):
+    def test_claims_file_missing(self):
+        """Was GAP G5 (NOTICE and exit 0). Fixed on fix/lint-claims-fail-closed."""
         os.unlink(os.path.join(self.root, "registry/claims.csv"))
-        self.assertRejected(*self.lint())
+        rc, out = self.lint()
+        self.assertRejected(rc, out, "claims registry missing", "-> FAIL")
+        self.assertEqual(rc, 1, out)
 
-    @gap("lint_claims.py: vocabulary block removed -> warning, value checks skipped, exit 0 (CI runs without --strict)")
-    def test_GAP_vocabulary_missing_skips_checks(self):
+    def test_vocabulary_missing_fails_without_strict(self):
+        """Was GAP G6 (warning, value checks skipped, exit 0 as CI runs it). Fixed on fix/lint-claims-fail-closed."""
         p = os.path.join(self.root, "registry/README.md")
         with open(p) as f:
             txt = f.read()
@@ -98,7 +101,9 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
             f.write(txt.replace("## Status vocabulary", "## Status words"))
         self.rows[0]["audited_status"] = "Proved"          # would be an error with a vocabulary
         self.write()
-        self.assertRejected(*self.lint())
+        rc, out = self.lint()
+        self.assertRejected(rc, out, "no status vocabulary found", "NOT checked", "-> FAIL")
+        self.assertEqual(rc, 1, out)
 
     def test_vocabulary_missing_is_caught_with_strict(self):
         p = os.path.join(self.root, "registry/README.md")
@@ -106,7 +111,7 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
             txt = f.read()
         with open(p, "w") as f:
             f.write(txt.replace("## Status vocabulary", "## Status words"))
-        self.assertRejected(*self.lint("--strict"))
+        self.assertRejected(*self.lint("--strict"), "no status vocabulary found")
 
 
 GIT_ENV = {"GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
