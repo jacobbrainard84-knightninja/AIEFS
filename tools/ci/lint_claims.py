@@ -42,7 +42,9 @@ Artifact rules (errors, added for red-team G3/G4, see tools/redteam/REDTEAM.md):
   Known gaps are listed, with a reason, in KNOWN_MISSING_ARTIFACTS; an entry there that is no longer
   cited, or whose file now exists, is an error (stale allow-list).
 - evidence_scope must be exactly one of the values in the '### Axis 2' table of registry/README.md
-  (6 values today); if that table cannot be found, that is an error.
+  (6 values today); if that table cannot be found, that is an error. These checks apply only when
+  claims.csv has the evidence_scope / supporting_artifacts columns (minimal fixtures without them
+  are status-linted only).
 - A row that claims a formal / Lean proof (evidence_scope exactly 'Formalized theorem', or a statement
   such as "proved in Lean", "Machine-checked in Lean 4", "Lean 4 verifies") must cite at least one
   existing .lean file. A registry row is not enough: registry/artifacts.csv marks non-proof files
@@ -132,7 +134,7 @@ def check_artifacts(repo, row, cid, rep, where, line, scopes, known_seen):
         elif got:
             cited.append(got)
     scope = row.get("evidence_scope") or ""
-    if scopes is not None and scope not in scopes:
+    if scopes is not None and "evidence_scope" in row and scope not in scopes:
         hint = " (has leading/trailing spaces)" if scope.strip() in scopes else ""
         rep.error(f"{where}: {cid}: evidence_scope '{scope}' is not one of the {len(scopes)} values in "
                   f"registry/README.md (Axis 2){hint}", where, line)
@@ -231,15 +233,6 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
     else:
         rep.warn(f"vocabulary has no '{SPECULATIVE_LABEL}' status; untested origin ideas need it")
 
-    scopes, readme = None, os.path.join(repo, readme_rel)
-    if os.path.isfile(readme):
-        with open(readme, encoding="utf-8") as f:
-            scopes = parse_scope_vocab(f.read()) or None
-    if scopes is None:
-        rep.error(f"{readme_rel}: no '### Axis 2 ... `evidence_scope`' table found; evidence_scope cannot be checked",
-                  readme_rel)
-    else:
-        print(f"evidence_scope: {len(scopes)} values from {readme_rel}")
     known_seen = {}
     with open(claims, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -247,6 +240,17 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
         if "claim_id" not in header:
             rep.error(f"{claims_rel}: no 'claim_id' column", claims_rel, 1)
             return
+        scopes = None
+        if "evidence_scope" in header:
+            readme = os.path.join(repo, readme_rel)
+            if os.path.isfile(readme):
+                with open(readme, encoding="utf-8") as rf:
+                    scopes = parse_scope_vocab(rf.read()) or None
+            if scopes is None:
+                rep.error(f"{readme_rel}: no '### Axis 2 ... `evidence_scope`' table found; evidence_scope cannot "
+                          f"be checked", readme_rel)
+            else:
+                print(f"evidence_scope: {len(scopes)} values from {readme_rel}")
         checked = [c for c in columns if c in header]
         for c in columns:
             if c not in header:
@@ -284,6 +288,8 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
                                  f"(Retired/Rejected/Quarantined are for tested-and-failed or withdrawn claims)",
                                  claims_rel, line)
         print(f"checked {n} claim rows; {bad} status violation(s)")
+    if "supporting_artifacts" not in header:
+        return
     for key in sorted(KNOWN_MISSING_ARTIFACTS):
         if key not in known_seen:
             rep.error(f"stale KNOWN_MISSING_ARTIFACTS entry: {key[0]} no longer cites '{key[1]}'; "
