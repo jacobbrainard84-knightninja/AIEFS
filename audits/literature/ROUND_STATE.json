@@ -2,8 +2,8 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 7,
-  "next_round": 8,
+  "last_round_completed": 8,
+  "next_round": 9,
   "total_sources": 43,
   "sources_per_round": {
     "1": 16,
@@ -16,13 +16,14 @@
   "open_leads": 0,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "8": {
-      "theme": "THE 24 AUD-* CLAIMS - the audit corpus has already done most of the literature work",
+    "9": {
+      "theme": "ONE NAMED GAP, ONE TESTABLE QUESTION, AND STOP ADDING",
       "targets": [
-        "Adjudicate the 24 AUD-* claims in the pinned baseline. AUD-NOVELTY is done. The rest cover the gate (AUD-GATE, AUD-RATELAW, AUD-KAPPA-TW, AUD-TIES, AUD-CYCLE-KERNEL), reproduction (AUD-REPRO13, AUD-REPRO-B2A95, AUD-MODULAR-ORACLE, AUD-VIMESTEP->AUD-TIMESTEP), scope/labelling (AUD-SCOPE-1.4, AUD-LABEL, AUD-HELDOUT-LABEL, AUD-RESP1-UNIFORM, AUD-CORR-0995-SCOPE), and 3 Incomplete open items (AUD-TIMESTEP, AUD-B-SCAFFOLD, AUD-NOVELTY-remainder).",
-        "Read the LIT-0041 and LIT-0042 abstracts to promote them from VERIFIED_METADATA to VERIFIED_FULL - both are load-bearing for the novelty claim.",
-        "Highest-value NEW question raised by round 7: is the AIEF capacity gate s_i = min(1, c/(q_i+eps)) multiplicative or subtractive in Miller-MacKay's (LIT-0043) sense? Neither, on inspection. That is a citable finding about the gate's form and it bears on AUD-GATE and AUD-RATELAW.",
-        "Do NOT adjudicate the 7 SSRH-ORIG-* claims without an owner decision - they are origin hypotheses, not repository results, and the primary sources are 31 MB of PDFs in Project Origins/."
+        "HIGHEST VALUE, AND IT IS NOT LITERATURE: test whether the AIEF capacity gate s_i = min(1, c/(q_i+eps)) behaves like Miller-MacKay multiplicative enforcement, subtractive enforcement, or neither (round 8 F45). That single experiment settles whether the k*eta/c rate law is explained by LIT-0043 or merely resembles its form. Rename AUD-GATE only after.",
+        "THE ONE NAMED LITERATURE GAP (round 8 F49): no source on exploratory-vs-confirmatory analysis / preregistration. One good source would let AUD-LABEL be adjudicated and would strengthen AUD-HELDOUT-LABEL. This is a better use of a search than anything else left.",
+        "Optional: read the LIT-0041 and LIT-0042 abstracts (still VERIFIED_METADATA) to complete the prior-art cluster at VERIFIED_FULL.",
+        "Do NOT adjudicate SSRH-ORIG-01..07 without an owner decision - they are origin hypotheses, not repository results; primary sources are 31 MB of PDFs in Project Origins/.",
+        "The remaining 30 unadjudicated claims are 12 retired S rows, 6 CF rows (textbook/conjectural), AUD-LABEL and AUD-V4-RECOVERY-WORDING (no defensible source), and 10 rows with no external frame. Diminishing returns; say so."
       ]
     }
   },
@@ -44,39 +45,44 @@
     "ROUND 6: the archive count was wrong again - main has SEVEN archives, not three. Three are main-only (added 6b49a7b) and were opened for the first time. Full history (198 commits, unshallowed) confirms zero commits ever touched any missing entrypoint filename and no AIEF_1_[012]_ path ever existed.",
     "ROUND 7: all four round-6 lead titles were WRONG and one (LEAD-0011) was invented outright. Verification corrected them. A citation found inside a document is a prompt to find the record, never a record.",
     "ROUND 7: the adjudication now runs against a pinned 76-claim baseline, not the local 43-claim registry. Coverage reads 25/76 because the denominator became honest.",
-    "ROUND 7 OPEN QUESTION: the AIEF capacity gate s_i = min(1, c/(q_i+eps)) is a min-endpoint cap, which is arguably NEITHER multiplicative nor subtractive in Miller-MacKay's (LIT-0043) sense. AIEFS_salvage.md claims multiplicative normalisation produces the k*eta/c rates; that mapping is unverified."
+    "ROUND 7 OPEN QUESTION: the AIEF capacity gate s_i = min(1, c/(q_i+eps)) is a min-endpoint cap, which is arguably NEITHER multiplicative nor subtractive in Miller-MacKay's (LIT-0043) sense. AIEFS_salvage.md claims multiplicative normalisation produces the k*eta/c rates; that mapping is unverified.",
+    "ROUND 8: 46/76 claims adjudicated. AUD-* is 22/24. No AUD claim is refuted.",
+    "ROUND 8 OPEN QUESTION (highest value in the layer): is the AIEF capacity gate multiplicative, subtractive, or neither in Miller-MacKay's (LIT-0043) sense? It is a per-node min-endpoint cap, so probably neither - which would mean AIEFS_salvage.md's claim that multiplicative normalisation 'produces the k*eta/c rates' is unsupported as stated, even though the rate law may be correct.",
+    "ROUND 8 NAMED COVERAGE GAP: the bibliography has no source on exploratory-vs-confirmatory analysis or preregistration. AUD-LABEL cannot be adjudicated without one.",
+    "ROUND 8: bears_on_ids is a living mapping, not part of the frozen record. _build_round08.py verifies all 43 snapshot hashes before and after and asserts no identity field changed."
   ],
-  "claims_adjudicated": 25,
+  "claims_adjudicated": 46,
   "adjudication": {
     "file": "ADJUDICATION.csv",
-    "claims_covered": 25,
+    "claims_covered": 46,
     "claims_total": 76,
     "verdicts": {
-      "SUPPORTED": 6,
-      "SUPPORTED_WITH_SCOPE": 6,
-      "CONTEXT_ONLY": 2,
+      "SUPPORTED": 11,
+      "SUPPORTED_WITH_SCOPE": 20,
+      "CONTEXT_ONLY": 3,
       "VALIDATED_RETIREMENT": 6,
-      "VALIDATED_REJECTION": 5,
+      "VALIDATED_REJECTION": 6,
       "BOUNDED": 0
     },
     "mapping_health": {
-      "COMPLETE": 22,
+      "COMPLETE": 43,
       "INCOMPLETE": 2,
       "WRONG": 1
     },
     "severity": {
-      "HIGH": 1,
-      "MEDIUM": 3,
-      "LOW": 4,
-      "NONE": 17
+      "HIGH": 4,
+      "MEDIUM": 8,
+      "LOW": 14,
+      "NONE": 20
     },
     "producing_code": {
-      "PRESENT": 10,
+      "PRESENT": 26,
       "RELOCATED": 3,
       "UNRESOLVED": 0,
-      "NOT_APPLICABLE": 12
+      "NOT_APPLICABLE": 17
     },
-    "baseline": "audits/literature/baseline/claims.csv"
+    "baseline": "audits/literature/baseline/claims.csv",
+    "aud_claims_covered": "22/24"
   },
   "registry_baseline": {
     "pinned_in": "audits/literature/baseline/",

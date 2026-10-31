@@ -25,6 +25,13 @@ ROOT = pathlib.Path(__file__).resolve().parent
 # forbidden by the inbox protocol, so a byte-exact copy is pinned in baseline/.
 REG = ROOT / "baseline" if (ROOT / "baseline" / "claims.csv").exists() else ROOT.parent.parent / "registry"
 
+# Round 8: the AUD-* adjudications live in their own module so this file stays
+# reviewable. Loaded by path because the builders run from the repository root.
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location("_adjudications_aud", ROOT / "_adjudications_aud.py")
+_aud = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_aud)
+
 COLS = [
     "claim_id", "study_id", "registry_status", "claim_class", "literature_role",
     "sources", "n_sources", "verdict", "mapping_health", "verdict_basis",
@@ -497,7 +504,7 @@ def main() -> None:
                 mapped.setdefault(t, []).append(s["source_id"])
 
     rows = []
-    for rec in ADJ:
+    for rec in ADJ + _aud.AUD_ADJ:
         cid = rec["claim_id"]
         assert cid in claims, f"unknown claim {cid}"
         assert rec["verdict"] in VERDICTS, (cid, rec["verdict"])
