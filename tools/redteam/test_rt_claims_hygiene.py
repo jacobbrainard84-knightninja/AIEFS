@@ -211,6 +211,35 @@ class ClaimsLint(TempDirMixin, unittest.TestCase):
         self.assertRejected(*self.lint_known([["RT-FAKE-01", "results/rt_ghost.log", "synthetic"]]),
                             "stale KNOWN_MISSING_ARTIFACTS entry: RT-FAKE-01 no longer cites 'results/rt_ghost.log'")
 
+    # A deleted column must not switch the artifact / scope / formal-proof checks off (same class as G6b).
+    def drop_column(self, col):
+        self.cols = [c for c in self.cols if c != col]
+        self.write([{k: v for k, v in r.items() if k != col} for r in self.rows])
+        rc, out = self.lint()
+        self.assertNotIn("Traceback", out)
+        self.assertEqual([ln for ln in out.splitlines() if ln.startswith("ERROR")],
+                         [ln for ln in out.splitlines() if ln.startswith(f"ERROR   registry/claims.csv:1: column '{col}'")],
+                         out[-2000:])   # exactly the one header ERROR, no follow-on errors
+        return rc, out
+
+    def test_evidence_scope_column_deleted(self):
+        rc, out = self.drop_column("evidence_scope")
+        self.assertRejected(rc, out, "ERROR   registry/claims.csv:1: column 'evidence_scope' missing from the header; "
+                                     "evidence_scope values and formal-scope rows were NOT checked")
+        self.assertEqual(rc, 1, out[-2000:])
+
+    def test_supporting_artifacts_column_deleted(self):
+        rc, out = self.drop_column("supporting_artifacts")
+        self.assertRejected(rc, out, "ERROR   registry/claims.csv:1: column 'supporting_artifacts' missing from the "
+                                     "header; cited artifacts and KNOWN_MISSING_ARTIFACTS entries were NOT checked")
+        self.assertEqual(rc, 1, out[-2000:])
+
+    def test_statement_column_deleted(self):
+        rc, out = self.drop_column("statement")
+        self.assertRejected(rc, out, "ERROR   registry/claims.csv:1: column 'statement' missing from the header; "
+                                     "its Lean-proof wording was NOT checked")
+        self.assertEqual(rc, 1, out[-2000:])
+
     @gap("lint_claims.py: registry/claims.csv deleted -> NOTICE and exit 0")
     def test_GAP_claims_file_missing(self):
         os.unlink(os.path.join(self.root, "registry/claims.csv"))

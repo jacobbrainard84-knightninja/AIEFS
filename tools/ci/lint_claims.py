@@ -42,9 +42,10 @@ Artifact rules (errors, added for red-team G3/G4, see tools/redteam/REDTEAM.md):
   Known gaps are listed, with a reason, in KNOWN_MISSING_ARTIFACTS; an entry there that is no longer
   cited, or whose file now exists, is an error (stale allow-list).
 - evidence_scope must be exactly one of the values in the '### Axis 2' table of registry/README.md
-  (6 values today); if that table cannot be found, that is an error. These checks apply only when
-  claims.csv has the evidence_scope / supporting_artifacts columns (minimal fixtures without them
-  are status-linted only).
+  (6 values today); if that table cannot be found, that is an error.
+- The columns these checks read (statement, evidence_scope, supporting_artifacts) must be in the
+  claims.csv header: a missing column is an ERROR (exit 1, also without --strict), so deleting or
+  renaming one cannot turn the checks into a silent pass.
 - A row that claims a formal / Lean proof (evidence_scope exactly 'Formalized theorem', or a statement
   such as "proved in Lean", "Machine-checked in Lean 4", "Lean 4 verifies") must cite at least one
   existing .lean file. A registry row is not enough: registry/artifacts.csv marks non-proof files
@@ -75,6 +76,12 @@ _EXT = re.compile(r"^\S+\.[A-Za-z0-9]{1,8}$")
 _SUFFIX = re.compile(r"(:\d+(-\d+)?|\s*\u00a7.*)$")
 _PATHLIKE = re.compile(r"/|^[^\s/]+\.[A-Za-z][A-Za-z0-9]{0,7}$")   # trailing word that names a file/path
 FORMAL_SCOPE_VALUE = "Formalized theorem"
+# claims.csv columns the artifact / scope / formal-proof checks read -> what is not checked without them
+ARTIFACT_CHECK_COLUMNS = {
+    "statement": "its Lean-proof wording was",
+    "evidence_scope": "evidence_scope values and formal-scope rows were",
+    "supporting_artifacts": "cited artifacts and KNOWN_MISSING_ARTIFACTS entries were",
+}
 SCOPE_HEADING = re.compile(r"^###\s.*`evidence_scope`")
 LEAN_PROOF_TEXT = re.compile(
     r"\b(proved|proven|proof|verified|formali[sz]ed|machine[- ]checked|checked)\b[^.;]{0,40}\bLean\b"
@@ -138,6 +145,8 @@ def check_artifacts(repo, row, cid, rep, where, line, scopes, known_seen):
         hint = " (has leading/trailing spaces)" if scope.strip() in scopes else ""
         rep.error(f"{where}: {cid}: evidence_scope '{scope}' is not one of the {len(scopes)} values in "
                   f"registry/README.md (Axis 2){hint}", where, line)
+    if "supporting_artifacts" not in row:
+        return   # the missing column is already one header ERROR; do not repeat it per formal row
     if scope == FORMAL_SCOPE_VALUE or LEAN_PROOF_TEXT.search(row.get("statement") or ""):
         if not any(c.endswith(".lean") and os.path.isfile(os.path.join(repo, c)) for c in cited):
             rep.error(f"{where}: {cid}: claims a formal/Lean proof (evidence_scope "
@@ -240,6 +249,9 @@ def lint(repo, claims_rel, readme_rel, fallback_rel, columns, rep):
         if "claim_id" not in header:
             rep.error(f"{claims_rel}: no 'claim_id' column", claims_rel, 1)
             return
+        for c, what in ARTIFACT_CHECK_COLUMNS.items():
+            if c not in header:   # a deleted/renamed column must not turn these checks into a silent pass
+                rep.error(f"{claims_rel}:1: column '{c}' missing from the header; {what} NOT checked", claims_rel, 1)
         scopes = None
         if "evidence_scope" in header:
             readme = os.path.join(repo, readme_rel)

@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
@@ -34,7 +35,23 @@ Retired / Superseded
 
 Prose after the block.
 """
-HEADER = "claim_id,statement,artifact_status,audited_status,audited_qualifier\n"
+# lint_claims' scope check needs this table in registry/README.md; readme=False fixtures get only this table.
+SCOPE_TABLE = """
+### Axis 2 — `evidence_scope`
+
+| Value | Definition |
+|---|---|
+| `Implementation identity` | x |
+| `Finite numerical observation` | x |
+| `Controlled experimental result` | x |
+| `Conditional theorem` | x |
+| `Formalized theorem` | x |
+| `Conjecture` | x |
+"""
+README += SCOPE_TABLE
+# evidence_scope and supporting_artifacts are required by lint_claims' artifact checks; repo() appends ROW_TAIL.
+HEADER = "claim_id,statement,artifact_status,audited_status,audited_qualifier,evidence_scope,supporting_artifacts\n"
+ROW_TAIL = ",Conditional theorem,registry/README.md\n"
 
 
 def run(fn, argv):
@@ -55,14 +72,16 @@ def write(root, rel, text, mode="w"):
 class LintClaimsTests(unittest.TestCase):
     def setUp(self):
         self.d = tempfile.TemporaryDirectory(); self.root = self.d.name
+        # Synthetic repos cite none of the live KNOWN_MISSING_ARTIFACTS entries; empty the list so the
+        # stale-entry check (which always runs) does not flag them. The real list is tested in tools/redteam.
+        p = mock.patch.object(lint_claims, "KNOWN_MISSING_ARTIFACTS", {}); p.start(); self.addCleanup(p.stop)
 
     def tearDown(self):
         self.d.cleanup()
 
     def repo(self, rows, spec=SPEC, readme=True):
-        if readme:
-            write(self.root, "registry/README.md", README.format(spec=spec))
-        write(self.root, "registry/claims.csv", HEADER + "".join(rows))
+        write(self.root, "registry/README.md", README.format(spec=spec) if readme else SCOPE_TABLE)
+        write(self.root, "registry/claims.csv", HEADER + "".join(r.rstrip("\n") + ROW_TAIL for r in rows))
 
     def test_parse_block(self):
         v = lint_claims.parse_readme_vocab(README.format(spec=SPEC))

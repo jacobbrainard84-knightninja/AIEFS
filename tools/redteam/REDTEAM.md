@@ -102,6 +102,9 @@ Run on base `395ea53` (main).
 | control: synthetic KNOWN_MISSING_ARTIFACTS entry, file missing | lint_claims | PASS (accepted, NOTICE) |
 | KNOWN_MISSING_ARTIFACTS entry whose file now exists | lint_claims | PASS (`but now exists`) |
 | KNOWN_MISSING_ARTIFACTS entry no longer cited | lint_claims | PASS (`stale KNOWN_MISSING_ARTIFACTS entry`) |
+| `evidence_scope` column deleted from claims.csv | lint_claims | PASS (one header ERROR, exit 1) |
+| `supporting_artifacts` column deleted | lint_claims | PASS (one header ERROR, exit 1) |
+| `statement` column deleted | lint_claims | PASS (one header ERROR, exit 1) |
 | **GAP** Formalized theorem row citing an existing .lean file that lacks the claimed theorem | lint_claims | **GAP**: only the file's existence is checked (content is out of scope) |
 | **GAP** claims.csv missing | lint_claims | **GAP**: exit 0 |
 | **GAP** vocabulary heading removed | lint_claims (non-strict, as CI runs it) | **GAP**: checks skipped, exit 0 |
@@ -202,3 +205,8 @@ broken.
   synthetic entry through a small driver, so they do not depend on the live entry. New GAP: the
   `.lean` file's content is not checked. `ClaimsLint` fails in `tearDownClass` if any test changed
   `git status` of the real checkout.
+  Deleting or renaming a column these checks read (`statement`, `evidence_scope`,
+  `supporting_artifacts`) is one `registry/claims.csv:1: column '...' missing from the header; ...
+  NOT checked` ERROR (exit 1, also without --strict), so it cannot switch the checks off (same class
+  as G6b). The CI self-test fixtures carry both columns and an Axis 2 table, and empty
+  KNOWN_MISSING_ARTIFACTS for their synthetic repos, so these checks always run there too.
