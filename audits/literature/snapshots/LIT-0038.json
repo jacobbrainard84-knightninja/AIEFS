@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0038",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Artifact Review and Badging - Current (Version 1.1)",
+    "authors": "Association for Computing Machinery",
+    "year": "2020",
+    "venue": "ACM Publications Policies",
+    "venue_type": "standard",
+    "identifiers": "URL:https://www.acm.org/publications/policies/artifact-review-and-badging-current"
+  },
+  "verbatim_excerpt": "Version 1.1, 24 August 2020. 'An experimental result is not fully established unless it can be independently reproduced. ... In each case, exact replication or reproduction of results is not required, or even expected. Instead, the results must be in agreement to within a tolerance deemed acceptable for experiments of the given type. In particular, differences in the results should not change the main claims made in the paper.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

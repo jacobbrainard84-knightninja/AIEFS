@@ -2,44 +2,35 @@
   "inbox_version": "1.0",
   "created": "2026-10-30",
   "maintainer": "Arena agent, branch arena/d4a487cc-aiefs",
-  "last_round_completed": 3,
-  "next_round": 4,
-  "total_sources": 33,
+  "last_round_completed": 4,
+  "next_round": 5,
+  "total_sources": 38,
   "sources_per_round": {
     "1": 16,
     "2": 12,
-    "3": 5
+    "3": 5,
+    "4": 5
   },
-  "open_leads": 1,
+  "open_leads": 0,
   "resume_instruction": "Read README.md, run verify_literature.py, then execute round next_round. Append to SOURCES.csv; never renumber. Write ROUND_0N_FINDINGS.md; update this file; re-run the verifier; commit.",
   "roadmap": {
-    "4": {
-      "theme": "Formalization, provenance repair, and reproducibility engineering",
-      "targets": [
-        "PROVENANCE (highest priority): 5 of 14 studies name canonical entrypoints that exist nowhere (round 3 F16). Decide demotion vs restoration for AIEF_1_0_TO_1_2_FOUNDATIONAL (registered Frozen with zero code), and add gate 6 (entrypoint referential integrity) to audits/engineering/verify_inventory.py.",
-        "Scope AIEF_1_4_TANGENT_AND_COCYCLE: the surviving artifact is a frozen-driver weight-sector cocycle with delta R = 0; Stage B (history/phase/EMA feedback) was never performed. The study title currently claims the full history cocycle.",
-        "Lean 4 / Mathlib: state the rank-incidence theorem in a form Mathlib can consume so LEAN-CF-01 generalizes beyond C_{2,7} (round 1 F4).",
-        "Open LIT-0030's abstract to replace its second-hand content description; open LEAD-0007 (Acta Numerica 2009 survey) to supersede LIT-0029.",
-        "Reproducibility standards for Stage 7 CI; justify the two-tier tolerance (0-ULP on discrete P_*, bounded on continuous DDE arrays) with LIT-0012/0013/0014."
-      ]
-    },
     "5": {
-      "theme": "Network topology, null models, and competing metrics",
+      "theme": "CHANGE WHAT THE ROUND DOES: adjudicate the 24 mapped claims, do not add more sources",
       "targets": [
-        "Motif null-model standards beyond Milo 2002: degree-preserving rewiring and significance thresholds, to restate or retire REJ-K3-04 (Round 1 F3).",
-        "Persistent homology / topological persistence as an alternative to thresholded-graph D_bar.",
-        "Network knockout and intervention methodology, to place the ablation design against the literature standard."
+        "PRIMARY DELIVERABLE: a claim-by-claim adjudication table (ADJUDICATION.csv + narrative) covering the 24 claims that have at least one source. For each: verdict (SUPPORTED / BOUNDED / CONTRADICTED / CONTEXT_ONLY), the specific source, the claim text as written, and a one-line required registry change if any. This is the deliverable the whole exercise was for; four rounds of sources have not yet produced one.",
+        "Do NOT pad. Search sweep only if a specific adjudication is blocked by a missing source. Decorative citations are the failure mode this inbox exists to prevent.",
+        "Revisit LEAN-CF-01 against LIT-0037: state concretely what a general rank-incidence formalization would look like and whether Mathlib already has the pieces (needs a search of Mathlib's matrix/incidence modules, not just papers).",
+        "Optional high-value: forward-citation pass from LIT-0018 / LIT-0028 to find the applied delay-plasticity literature that keyword search misses. Requires a citation-graph source; if unavailable, record as a permanent limitation rather than papering over it."
       ]
     }
   },
   "known_gaps": [
-    "All retrievals are metadata- or abstract-level. No paywalled full text was opened; no numbered theorem is attributed to a source that was not read.",
+    "All retrievals are metadata- or abstract-level except where noted VERIFIED_FULL. No paywalled full text was opened; no numbered theorem is attributed to a source that was not read.",
     "No forward-citation or citation-graph analysis. The field map is search-driven and therefore recall-limited.",
     "The repository cites no external literature anywhere in its working tree. This inbox is the project's first bibliography.",
-    "RESOLVED in round 3 (was round 2 F10): the cocycle composition law is automatic for a matrix product and was not worth testing; the substantive condition is branch preservation, which the evidence satisfies (0 winner-signature changes in 32,000 steps). The remaining defect is naming, not mathematics.",
-    "OPEN (round 3 F16): 5 of 14 studies cite entrypoints that exist nowhere on disk or in any archive, including the entire AIEF 1.0-1.2 codebase registered as Frozen. verify_inventory.py does not check entrypoint referential integrity.",
-    "LIT-0030 (Earl & Strogatz) content is characterised from citing works, not its own abstract.",
-    "Cameron, Gelbach & Miller (LIT-0026) content is second-hand via LIT-0002.",
-    "EMP-AIEF14-03 and the three unmapped studies (HISTORICAL_PROJECT_ORIGINS, AIEF_1_4_PIVOT_PILOT, AIEF_1_4_PROPOSAL_EQUALIZATION) remain without a defensible external anchor."
+    "CORRECTION OF RECORD (round 4 F24): LIT-0030 (Earl & Strogatz) requires uniform in-degree k and does NOT apply to the adaptive AIEF network class. Its round-3 use was too strong. REJ-LOCK-03 support rests on LIT-0018 and LIT-0028; LIT-0030 is context only. The LIT-0030 snapshot was deliberately not rewritten (protocol); F24 is authoritative for its scope.",
+    "OPEN and OUTSIDE THE INBOX (round 3 F16, handed off in round 4 F22): 5 of 14 studies cite entrypoints that exist nowhere on disk or in any archive, including the entire AIEF 1.0-1.2 codebase registered as Frozen. verify_inventory.py does not check entrypoint referential integrity. This is registry/engineering work, not literature work, and needs owner approval.",
+    "EMP-AIEF14-03 and the three unmapped studies remain without a defensible external anchor. Not forced.",
+    "The inbox has reached lead-cleanness (7 leads opened, 7 resolved, 0 open). Further source addition would not change any claim's status."
   ]
 }

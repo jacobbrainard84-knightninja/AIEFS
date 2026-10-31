@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0036",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1145/3372885.3373824",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "The Lean Mathematical Library",
+    "authors": "The mathlib Community",
+    "year": "2020",
+    "venue": "Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), ACM",
+    "venue_type": "conference",
+    "identifiers": "DOI:10.1145/3372885.3373824"
+  },
+  "verbatim_excerpt": "CPP 2020, ACM. 'This paper describes mathlib, a community-driven effort to build a unified library of mathematics formalized in the Lean proof assistant. Among proof assistant libraries, it is distinguished by its dependently typed foundations, focus on classical mathematics, extensive hierarchy of structures, use of large- and small-scale automation, and distributed organization.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

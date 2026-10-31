@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0034",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1007/978-3-030-79876-5_37",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "The Lean 4 Theorem Prover and Programming Language",
+    "authors": "de Moura, L.; Ullrich, S.",
+    "year": "2021",
+    "venue": "Automated Deduction - CADE 28 (CADE 2021), Lecture Notes in Computer Science vol. 12699, Springer, pp. 625-635",
+    "venue_type": "conference",
+    "identifiers": "DOI:10.1007/978-3-030-79876-5_37;ISBN:978-3-030-79876-5"
+  },
+  "verbatim_excerpt": "CADE 28, LNCS 12699, pp. 625-635, open access, first online 5 July 2021. 'Lean 4 is also an efficient functional programming language based on a novel programming paradigm called functional but in-place. Efficient code generation is crucial for Lean users because many write custom proof automation procedures in Lean itself.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

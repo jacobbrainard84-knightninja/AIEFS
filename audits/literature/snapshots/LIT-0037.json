@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0037",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1007/s10817-023-09668-0",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Engel's Theorem in Mathlib",
+    "authors": "Nash, O.",
+    "year": "2023",
+    "venue": "Journal of Automated Reasoning",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1007/s10817-023-09668-0"
+  },
+  "verbatim_excerpt": "Journal of Automated Reasoning 67, Article 18 (2023), open access, published 13 May 2023. 'Using nilpotency as the theme, we outline a computer formalisation of Engel's theorem and an application to root space theory. We emphasise that all arguments work with coefficients in any commutative ring. ... Mathlib's version of Engel's theorem unifies the various versions of this result appearing in the informal literature, while demanding weaker hypotheses and providing a stronger result.'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}

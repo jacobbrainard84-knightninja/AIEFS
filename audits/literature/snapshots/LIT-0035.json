@@ -1,0 +1,17 @@
+{
+  "source_id": "LIT-0035",
+  "retrieved": "2026-10-30",
+  "retrieval_method": "web_search",
+  "canonical_url": "https://doi.org/10.1017/S0962492906390010",
+  "verification_level": "VERIFIED_METADATA",
+  "bibliographic_record": {
+    "title": "Recent trends in the numerical solution of retarded functional differential equations",
+    "authors": "Bellen, A.; Maset, S.; Zennaro, M.; Guglielmi, N.",
+    "year": "2009",
+    "venue": "Acta Numerica",
+    "venue_type": "journal",
+    "identifiers": "DOI:10.1017/S0962492906390010"
+  },
+  "verbatim_excerpt": "Acta Numerica 18:1-110, May 2009. 'Retarded functional differential equations (RFDEs) form a wide class of evolution equations which share the property that, at any point, the rate of the solution depends on... values attained by the solution itself in the past. Thus the initial problem for RFDEs is an infinite-dimensional problem... numerically solving initial problems for RFDEs is a difficult task that cannot be founded on the mere adaptation of well-known methods for ordinary, partial or integro-differential equations... some critical situations have been recently investigated in connection to specific classes of equations, such as the accurate location of discontinuity points...'",
+  "excerpt_provenance": "search-index rendering of the publisher/canonical page"
+}
