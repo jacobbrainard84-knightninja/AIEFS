@@ -1,0 +1,31 @@
+--- a/AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py
++++ b/audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v2.py
+@@ -2,10 +2,12 @@
+ 'workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip' (in the 'Project Histories' folder) at
+ runs/frozen_production_20260806/b2a95dfbfbe3/, reproduce the official run runs/5a9f093a2fe0?
+ 
++v2 of the hash-pinned "AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py": adds the NaN-mask
++check to the scalar-summary CSV path (see compare_b2a95dfbfbe3_ERRATUM.md in this folder).
+ Run from the AIEFS repo root (needs numpy and pandas):
+-    python "AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py"
++    python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v2.py"
+ The zip is read in memory; nothing is extracted, so nothing in the repo can be overwritten.
+-Prints a JSON summary (the committed log is compare_b2a95dfbfbe3.log). Exit 0 if the runs agree to
++Prints a JSON summary (the committed log is compare_b2a95dfbfbe3_v2.log in this folder). Exit 0 if the runs agree to
+ TOL in every float field and exactly in every non-float field; exit 1 otherwise.
+ Platform strings are not printed (the official run's names the owner's device); only numpy and python versions."""
+ import hashlib, io, json, sys, zipfile, difflib, warnings
+@@ -76,7 +78,12 @@
+ out["csv_shape"] = [list(cz.shape), list(cr.shape)]
+ if list(cz.columns) == list(cr.columns) and cz.shape == cr.shape:
+     num = cz.select_dtypes("number").columns
+-    out["csv_worst_abs_diff"] = float((cz[num] - cr[num]).abs().max().max())
++    xz, xr = cz[num].to_numpy(dtype=float), cr[num].to_numpy(dtype=float)
++    nan_z, nan_r = np.isnan(xz), np.isnan(xr)
++    out["csv_nan_mask_mismatches"] = int((nan_z != nan_r).sum())   # v2: NaN masks must match, as in cmp_arrays
++    if out["csv_nan_mask_mismatches"]: problems.append(f"scalar summary CSV: NaN pattern differs in {out['csv_nan_mask_mismatches']} cells")
++    d = np.abs(xz - xr)[~(nan_z | nan_r)]
++    out["csv_worst_abs_diff"] = float(d.max()) if d.size else 0.0
+     out["csv_nonnumeric_equal"] = all((cz[c].astype(str) == cr[c].astype(str)).all() for c in cz.columns if c not in num)
+ else: problems.append("scalar summary CSV columns/shape differ")
+ 

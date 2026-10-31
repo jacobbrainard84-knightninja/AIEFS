@@ -53,7 +53,8 @@ What changed and why, in plain language:
 - [ ] `python3 tools/ci/hygiene_scan.py` →
 - [ ] `python3 tools/ci/check_manifest.py` (runs `AI Agent Audits/evidence/verify_manifest.py --inputs`) →
 - [ ] `python3 -m unittest discover -s tools/ci/tests` (only if `tools/ci/` changed) →
-- [ ] `python3 audits/engineering/validate_registry_against_tree.py` (if `registry/` changed) →
+- [ ] `python3 audits/engineering/validate_registry_against_tree.py` (if `registry/` changed; no options needed,
+      needs full history for `e47bad1`) →
 
 ## Lean axiom check
 

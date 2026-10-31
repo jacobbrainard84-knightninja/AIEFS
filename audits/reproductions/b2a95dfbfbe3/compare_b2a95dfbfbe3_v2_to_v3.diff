@@ -1,0 +1,96 @@
+--- a/audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v2.py
++++ b/audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py
+@@ -2,12 +2,15 @@
+ 'workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip' (in the 'Project Histories' folder) at
+ runs/frozen_production_20260806/b2a95dfbfbe3/, reproduce the official run runs/5a9f093a2fe0?
+ 
+-v2 of the hash-pinned "AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py": adds the NaN-mask
+-check to the scalar-summary CSV path (see compare_b2a95dfbfbe3_ERRATUM.md in this folder).
++v3 of the hash-pinned "AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py".
++v2 added the NaN-mask check to the scalar-summary CSV path (see compare_b2a95dfbfbe3_ERRATUM.md in this folder).
++v3 (2026-10-29, review r026) also checks the +inf and -inf masks, on both the NPZ path (cmp_arrays) and the CSV
++path, and takes max abs diffs only over cells that are finite in both runs. See compare_b2a95dfbfbe3_v2_to_v3.diff.
+ Run from the AIEFS repo root (needs numpy and pandas):
+-    python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v2.py"
++    python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py"
++    python "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py" --selftest   (synthetic mask checks only)
+ The zip is read in memory; nothing is extracted, so nothing in the repo can be overwritten.
+-Prints a JSON summary (the committed log is compare_b2a95dfbfbe3_v2.log in this folder). Exit 0 if the runs agree to
++Prints a JSON summary (the committed log is compare_b2a95dfbfbe3_v3.log in this folder). Exit 0 if the runs agree to
+ TOL in every float field and exactly in every non-float field; exit 1 otherwise.
+ Platform strings are not printed (the official run's names the owner's device); only numpy and python versions."""
+ import hashlib, io, json, sys, zipfile, difflib, warnings
+@@ -16,11 +19,38 @@
+ 
+ TOL = 1e-12
+ LABELS = {"config_hash"}   # run-identity labels: expected to differ (the source hash feeds the config hash)
+-warnings.simplefilter("ignore", RuntimeWarning)   # all-NaN fields: NaN patterns are compared separately
++warnings.simplefilter("ignore", RuntimeWarning)   # all-NaN fields: NaN/inf patterns are compared separately
+ ZIP = Path("Project Histories", "workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip")
+ ZRUN = "runs/frozen_production_20260806/b2a95dfbfbe3/"
+ RRUN = Path("runs/5a9f093a2fe0")
+ SRC_NEW, SRC_OLD = Path("AIEF_1_4_memory_ablation_updated.py"), Path("Older files/AIEF_1_4_memory_ablation_updated.py")
++MASKS = (("NaN", np.isnan), ("+inf", np.isposinf), ("-inf", np.isneginf))
++
++def mask_mismatches(x, y):
++    """{name: number of cells where exactly one side has that non-finite value}; complex: real and imag parts."""
++    parts = [(x.real, y.real), (x.imag, y.imag)] if x.dtype.kind == "c" else [(x, y)]
++    return {name: int(sum((f(a) != f(b)).sum() for a, b in parts)) for name, f in MASKS}
++
++def cmp_arrays(x, y):
++    if x.shape != y.shape: return "shape"
++    if x.dtype.kind in "fc":
++        bad = [name for name, n in mask_mismatches(x, y).items() if n]
++        if bad: return " and ".join(bad) + " pattern differs"
++        both = np.isfinite(x) & np.isfinite(y)
++        d = np.abs(x - y)[both] if x.size else np.zeros(0)
++        return float(d.max()) if d.size else 0.0
++    return 0.0 if np.array_equal(x, y) else "DIFF"
++
++if "--selftest" in sys.argv[1:]:
++    f = np.array
++    assert cmp_arrays(f([1.0, np.nan, np.inf, -np.inf]), f([1.0, np.nan, np.inf, -np.inf])) == 0.0
++    assert cmp_arrays(f([np.inf]), f([1.0])) == "+inf pattern differs"
++    assert cmp_arrays(f([-np.inf]), f([np.inf])) == "+inf and -inf pattern differs"
++    assert cmp_arrays(f([np.nan]), f([-np.inf])) == "NaN and -inf pattern differs"
++    assert cmp_arrays(f([complex(1.0, np.inf)]), f([1 + 1j])) == "+inf pattern differs"
++    assert abs(cmp_arrays(f([1.0, 2.0, np.inf]), f([1.0, 2.5, np.inf])) - 0.5) < 1e-15
++    assert mask_mismatches(f([[np.inf, 0.0]]), f([[0.0, np.inf]])) == {"NaN": 0, "+inf": 2, "-inf": 0}
++    print("selftest OK"); sys.exit(0)
+ if not ZIP.is_file() or not RRUN.is_dir(): sys.exit("run from the AIEFS repo root")
+ sha = lambda b: hashlib.sha256(b).hexdigest()
+ zb = ZIP.read_bytes(); z = zipfile.ZipFile(io.BytesIO(zb))
+@@ -48,14 +78,6 @@
+ out["source_diff_blank_or_comment_lines"] = len(changed) - len(code)
+ out["source_diff_code_lines"] = code   # expected: one tuple-unpacking rewrite of a 3-value return
+ 
+-def cmp_arrays(x, y):
+-    if x.shape != y.shape: return "shape"
+-    if x.dtype.kind in "fc":
+-        if not np.array_equal(np.isnan(x), np.isnan(y)): return "NaN pattern differs"
+-        d = np.abs(x - y)[~np.isnan(x)] if x.size else np.zeros(0)
+-        return float(d.max()) if d.size else 0.0
+-    return 0.0 if np.array_equal(x, y) else "DIFF"
+-
+ seeds = sorted(n[len(ZRUN):] for n in names if n[len(ZRUN):].startswith("seed_") and n.endswith(".npz"))
+ labels = {}; worst = 0.0; problems = []; nonzero = 0; byte_identical = 0; nfields = 0
+ for f in seeds:
+@@ -79,10 +101,14 @@
+ if list(cz.columns) == list(cr.columns) and cz.shape == cr.shape:
+     num = cz.select_dtypes("number").columns
+     xz, xr = cz[num].to_numpy(dtype=float), cr[num].to_numpy(dtype=float)
+-    nan_z, nan_r = np.isnan(xz), np.isnan(xr)
+-    out["csv_nan_mask_mismatches"] = int((nan_z != nan_r).sum())   # v2: NaN masks must match, as in cmp_arrays
+-    if out["csv_nan_mask_mismatches"]: problems.append(f"scalar summary CSV: NaN pattern differs in {out['csv_nan_mask_mismatches']} cells")
+-    d = np.abs(xz - xr)[~(nan_z | nan_r)]
++    mm = mask_mismatches(xz, xr)   # v2: NaN masks must match; v3: +inf and -inf masks too, as in cmp_arrays
++    out["csv_nan_mask_mismatches"] = mm["NaN"]
++    out["csv_posinf_mask_mismatches"] = mm["+inf"]; out["csv_neginf_mask_mismatches"] = mm["-inf"]
++    out["csv_nonfinite_cells_rerun"] = {name: int(f(xz).sum()) for name, f in MASKS}
++    out["csv_nonfinite_cells_official"] = {name: int(f(xr).sum()) for name, f in MASKS}
++    for name, n in mm.items():
++        if n: problems.append(f"scalar summary CSV: {name} pattern differs in {n} cells")
++    d = np.abs(xz - xr)[np.isfinite(xz) & np.isfinite(xr)]
+     out["csv_worst_abs_diff"] = float(d.max()) if d.size else 0.0
+     out["csv_nonnumeric_equal"] = all((cz[c].astype(str) == cr[c].astype(str)).all() for c in cz.columns if c not in num)
+ else: problems.append("scalar summary CSV columns/shape differ")
