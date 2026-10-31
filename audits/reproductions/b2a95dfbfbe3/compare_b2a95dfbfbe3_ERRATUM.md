@@ -80,3 +80,45 @@ identical to v2's. The sentence "neither has any inf" above is now checked by co
 v1 (pinned) and v2 are kept unchanged. `SHA256SUMS` in this folder pins every other file in it; check it with
 `cd audits/reproductions/b2a95dfbfbe3 && sha256sum -c SHA256SUMS`. Editing any file here means updating SHA256SUMS
 in the same commit.
+
+## Follow-up (v4, 2026-10-31): gate the fields v3 computed but ignored
+
+Raised by the red-team negative-control suite (`tools/redteam`, gaps G10 and G11; red-team fix #1, branch
+`fix/comparator-v4-gates`). v3 computed several fields but did not let them change the verdict. A rerun whose CSV
+`branch` labels were swapped (G10), or whose manifest `schema` was changed (G11), still came out REPRODUCED. A missing or
+corrupt official file crashed v3 with a traceback (exit 1, but no verdict). v1 (pinned), v2 and v3 are kept unchanged.
+
+`compare_b2a95dfbfbe3_v4.py` (see `compare_b2a95dfbfbe3_v3_to_v4.diff`) prints everything v3 prints (the v3 keys and
+values are identical on the genuine data) and adds these gates. Each failed gate adds a named entry to `problems`:
+
+- the scalar-summary CSV's non-numeric columns (`branch`, `branch_family`) must be equal cell for cell (G10);
+- manifest `model`, `protocol`, `randomization` and `schema` must be equal (G11), and only `config_hash`,
+  `environment` and `source_sha256` may differ (an added, removed or other changed key is a problem);
+- each run's `config_hash` must be its run id (`b2a95dfbfbe3` for the rerun, `5a9f093a2fe0` for the official run), and
+  each manifest's `source_sha256` must be the sha256 of the source file that run used;
+- the source diff must be exactly the documented one-line rewrite (`R_physical, _, _ =` to `R_physical, *_ =`);
+- the seed `config_hash` labels must be exactly (rerun id, official id) in every seed file;
+- the seed file names must match one to one; a missing or unreadable file (seed, CSV or branch diagnostics) is a named
+  problem and a NOT REPRODUCED verdict, not a crash;
+- floats: worst abs diff <= `TOL` = 1e-12 (as before) **and** worst relative diff <= `RTOL` = 1e-12. Relative diff is
+  `|x-y| / max(|x|,|y|)` over cells finite in both runs. It applies in addition to the absolute check, so it can only
+  tighten. It closes a v3 hole: a CSV cell that is exactly 0 in one run and 1e-14 in the other passed v3's absolute
+  check. Conversely, the CSV reaches |x| = 1.8e19, so at that scale the absolute check already demands bit-identical
+  values.
+
+Not gated, on purpose: `zip_stub_model_matches_official`. It compares a stub inside the zip
+(`runs/5a9f093a2fe0/manifest.json`) that `b2a95dfbfbe3_REPRODUCTION.md` documents as carrying the wrong parameters, not
+the rerun, and it is `false` on the genuine data. Gating it would fail the genuine reproduction for a known, documented
+reason, so it stays informational.
+
+Re-run (`compare_b2a95dfbfbe3_v4.log`, numpy 2.5.4, pandas 3.0.6, python 3.13.5, at `395ea53` plus the red-team suite):
+every gate passes. Differing manifest keys are exactly `config_hash`, `environment`, `source_sha256`, the labels are
+`[b2a95dfbfbe3, 5a9f093a2fe0]`, both `source_sha256` values match their files, and the CSV non-numeric columns are equal.
+Worst abs diff is 6.66e-16 (CSV), 6.66e-16 (seed) and 5.55e-16 (branch diagnostics). Worst relative diff is 1.15e-15,
+8.47e-16 and 6.79e-16. `problems: []`; **verdict REPRODUCED**, exit 0. **The original verdict stands.**
+
+`compare_b2a95dfbfbe3_v3.log` was regenerated on 2026-10-31. Its old SHA256SUMS line (`fcf370da…52b6`) pointed to a file
+that was never committed. The repo's `.gitignore` has `*.log`, so a plain `git add` skipped it, while `v2.log` had been
+force-added. `sha256sum -c SHA256SUMS` therefore failed on every clone. The regenerated log was made by running v3 unchanged
+at the commit stated in its header. Its JSON matches the numbers reported in the v3 section above. Both logs are now
+force-added (`git add -f`), and SHA256SUMS is updated in the same commit. Errata entry: `ERRATA_2026-10-28.md` E14.

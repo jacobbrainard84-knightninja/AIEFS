@@ -20,7 +20,7 @@ python3 -m unittest discover -s tools/redteam -v      # from repo root
 cd tools/redteam && python3 -m unittest discover -v
 ```
 
-About 70 s total (the comparator file is about 35 s; the Lean file is about 20 s
+About 100 s total (the comparator file is about 60 s; the Lean file is about 20 s
 and needs `lake` from elan on PATH or in `~/.elan/bin`. Without it the Lean
 axiom-audit tests are skipped). Needs numpy and pandas.
 
@@ -53,9 +53,10 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results (84 tests: 73 PASS incl. 11 controls, 11 GAP)
 
-Run on base `395ea53` (main).
+Run on base `395ea53` (main), plus fix #1 (comparator v4, branch `fix/comparator-v4-gates`).
+The original run (74 tests: 61 PASS, 13 GAP) predates fix #1.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
 
@@ -105,27 +106,46 @@ Run on base `395ea53` (main).
 
 ### Reproduction comparator: `test_rt_comparator.py`
 
-Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
-(hash-pinned, run unmodified) on a temp copy of `runs/5a9f093a2fe0`.
+Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py`
+(run unmodified; listed in that folder's `SHA256SUMS`) on a temp copy of `runs/5a9f093a2fe0`.
+Every rejection must be a real verdict: NOT REPRODUCED, exit 1, no traceback, and the specific
+reason in `problems`.
 
-| Test | Result |
-|---|---|
-| control: untampered copy | PASS (REPRODUCED) |
-| CSV cell +1e-9 | PASS (NOT REPRODUCED) |
-| CSV cell +1e-11 (just over TOL 1e-12) | PASS |
-| CSV NaN / +inf / -inf | PASS (3 tests) |
-| branch diagnostics +inf | PASS |
-| seed NaN | PASS |
-| seed value +1e-6 | PASS |
-| seed bytes truncated | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| seed deleted | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| extra fabricated seed file | PASS |
-| seed integer field changed | PASS |
-| two numeric columns swapped | PASS |
-| manifest model eta changed | PASS |
-| --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `csv_nonnumeric_equal` is computed (line 113) but is not in `ok` (line 130) |
-| **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
+Fix #1 (`fix/comparator-v4-gates`, 2026-10-31) closed the two comparator GAPs (G10, G11). Those tests
+are now normal tests. In the "v3" column, *accepted* means v3 said REPRODUCED and *crash* means v3
+died with a traceback instead of giving a verdict.
+
+| Test | Result (v4) | v3 |
+|---|---|---|
+| control: untampered copy | PASS (REPRODUCED, `problems: []`) | same |
+| CSV cell +1e-9 | PASS (abs diff > TOL) | PASS |
+| CSV cell +1e-11 (just over TOL 1e-12) | PASS | PASS |
+| CSV cell 0 -> 1e-14 | PASS (relative diff > RTOL) | **accepted** |
+| CSV NaN / +inf / -inf | PASS (3 tests) | PASS |
+| branch diagnostics +inf | PASS | PASS |
+| seed NaN | PASS | PASS |
+| seed value +1e-6 | PASS | PASS |
+| seed bytes truncated | PASS ("unreadable in official run") | crash |
+| seed deleted | PASS ("seed files missing in official run") | crash |
+| extra fabricated seed file | PASS | PASS |
+| seed integer field changed | PASS | PASS |
+| seed `config_hash` label rewritten | PASS | **accepted** |
+| two numeric columns swapped | PASS | PASS |
+| branch labels swapped in CSV text column (was G10) | PASS ("non-numeric columns differ: branch") | **accepted** |
+| `branch_family` relabelled | PASS | **accepted** |
+| manifest model eta changed | PASS | PASS |
+| manifest "schema" field changed (was G11) | PASS ("schema differs") | **accepted** |
+| manifest other key changed (`workflow_version`) | PASS ("unexpected differing keys") | **accepted** |
+| manifest extra key added | PASS | **accepted** |
+| official manifest `source_sha256` rewritten | PASS | **accepted** |
+| official manifest `config_hash` rewritten | PASS | **accepted** |
+| rerun source file gets an extra code line | PASS ("code line(s) differ") | **accepted** |
+| official scalar-summary CSV deleted | PASS | crash |
+| official branch diagnostics deleted | PASS | crash |
+| --selftest still passes | PASS ("selftest OK") | n/a |
+
+Not gated, on purpose: `zip_stub_model_matches_official`. It is false on the genuine data, because the zip's stub
+manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md`. See the v4 section of the folder's ERRATUM.
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
 
@@ -138,7 +158,7 @@ engine's B update, and confirms R* ≈ 0.4543.
 | control: true R* accepted | PASS |
 | fabricated R* = 0.40 rejected | PASS |
 | fabricated R* = 0.50 rejected | PASS |
-| comparator `cmp_arrays`: inf vs finite, both orders | PASS |
+| comparator `cmp_arrays` (still v3's helper): inf vs finite, both orders | PASS |
 | NaN vs finite, both orders | PASS |
 | over tolerance, both orders | PASS |
 | shape mismatch, both orders | PASS |
