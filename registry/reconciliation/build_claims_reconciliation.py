@@ -180,7 +180,8 @@ NEW = [
   "(arena: Superseded / cited as a result; REJ-SPEC-02 rejected only the eps=1e-8 Jacobian)",
   'Quarantined — invalid derivation; do not cite. Audit proposal on the 966-dim state (one replay, finite-difference, not a proof) gives NO: 10 gap rates.', "resp3 #8 (line 29) + §2.5 (line 94) + §3 wording (line 112); evidence/proposals/augmented_spectrum_citations.md",
   "artifact_status is 'Rejected' because the verify_inventory.py vocabulary has no 'Quarantined' value (the derivation is withdrawn, not replaced, so "
-  "'Superseded' was wrong). The report file keeps its pinned bytes; the caveat is ERRATA_2026-10-28.md E2. Numbers not edited."),
+  "'Superseded' was wrong). The report file keeps its pinned bytes; the caveat is ERRATA_2026-10-28.md E2. Numbers not edited. "
+  "ERRATA E15: the script's SUPPORTED rule was loosened after the Older files/ copies; the v2 rule gives REVISED on the committed spectrum."),
  ("AUD-RATELAW", A, "On complete, saturated, phase-locked components, for h in the unsigned-incidence controller kernel (row-sum-preserving edge kernel) K = ker A_J the exact one-step "
   "multiplier is lambda = (1 - gamma*dt) s_J, under conditions (a) gate on, (b) clamp x >= 0 inactive, (c) R does not respond within the step, "
   "(d) delta below the untied gaps (no controller change), (e) equal controlling scales s_i = s_J on J. Under the further ideal hypotheses R = 1 and "

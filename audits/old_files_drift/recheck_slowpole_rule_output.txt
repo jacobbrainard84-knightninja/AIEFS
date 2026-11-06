@@ -1,0 +1,16 @@
+command: python3 audits/old_files_drift/recheck_slowpole_rule.py   (from repository root)
+
+inputs: 14 CSV rows (of 18 eigenvalues), r_EMA=0.05713333333333142, mu_phase=0.689918, dt=0.01
+committed report verdict: SUPPORTED
+rates (slowest first): -1068.20407, -541.791983, -38.265367, -9.5765143, -3.65903724, 0.0551063833, 0.0571292281, 0.0571323868, 0.0571335384, 0.0571338094, 0.0571338094, 0.0571348188, 0.0571703136, 31.7135332
+unstable (rate < 0, |l| > 1): 5; stable but below the current near band (0 <= rate <= 0.99 r_EMA): [0.055106383]
+
+rule               gap interval n_in_gap                near band n_near  verdict
+v1         (0.057133, 0.689918)        5                        -      -  5 eigenvalue(s) found in the gap
+v2         (0.057133, 0.689918)        5     (0.051420, 0.062847)      8  REVISED (5 in gap)
+cur        (0.057705, 0.689918)        0     (0.056562, 0.057705)      7  SUPPORTED
+
+in v1/v2 gap: [0.057133538, 0.057133809, 0.057133809, 0.057134819, 0.057170314]
+current-rule CSV flags: in_gap=0, near_ema=7
+problems: []
+exit code: 0
