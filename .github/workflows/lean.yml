@@ -15,7 +15,7 @@
 # (tools/ci/lean_presence.sh). Every project whose directory is on the branch must have
 # required: true, so that deleting a whole project fails CI instead of skipping;
 # tools/ci/tests/test_lean_presence.py enforces this (AIEFProofsKn is required since research/lean-kn
-# was merged; flip AIEFFreezeCore to required: true in the same merge that brings research/freezing).
+# was merged; AIEFFreezeCore is required since main was merged into research/freezing).
 name: Lean proof check
 
 on:
@@ -46,7 +46,7 @@ jobs:
         include:
           - { project: AIEFProofs,     script: check_lean.sh,        axiom_root: AIEFProofs,     required: true }
           - { project: AIEFProofsKn,   script: check_lean_kn.sh,     axiom_root: AIEFProofsKn,   required: true  }
-          - { project: AIEFFreezeCore, script: check_lean_freeze.sh, axiom_root: AIEFFreezeCore, required: false }
+          - { project: AIEFFreezeCore, script: check_lean_freeze.sh, axiom_root: AIEFFreezeCore, required: true  }
     env:
       PROJECT_DIR: lean/${{ matrix.project }}
     steps:

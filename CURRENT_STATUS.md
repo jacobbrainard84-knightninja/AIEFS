@@ -122,6 +122,17 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   0.553/0.531 (defined in 37/39 of 60 runs) (AUD-CORR-0995-SCOPE). Response 1 overstates "past R adds over Δω-only" for
   uniform no_delay: it holds on log loss only (AUC 0.850 vs 0.883; AUD-RESP1-UNIFORM, errata E8).
   The ~0.995 lines in the pinned `AIEF_HISTORIC_UNFOLDING.md` / `AI_AGENT_HANDOFF_PROMPT.md` are scoped by AUD-CORR-0995-SCOPE (errata E9; the inline side branch is not merged).
+  The audit's H2 "near-circular" wording (pinned `AI Agent Audits/AIEFS_audit.md:32`) is superseded: known variant
+  (Chauhan et al. 2022, *Sci Rep*), mechanism-aligned, not circular (errata E12).
+- **Topology freezing is a conditional theorem (research branch `research/freezing`, 2026-10-29; not a repo audit round).**
+  If R stays in a certified band from some step T on (T ≥ 1, or row sums ≤ c at start), every edge's status is constant from T + N on (explicit N, real
+  arithmetic only, paper proof; per-edge ∃N core in Lean, `lean/AIEFFreezeCore`). Closed-loop phase-locking with a margin is
+  open. The 7-clique gated-OFF certificate needs an R spread ≲ 2e-4. No finite-window violation was observed among 1,412 issued
+  (run, T) certificates (nested, dependent windows from 12 runs; checked up to step 80000). Corollary 4 was revised on 2026-10-29
+  after an external review (Researcher 026); Auditor Seat 002 re-audited it on 2026-10-31 and found it correct
+  (`research/freezing/audit/AUDIT_R002_d9c03ef.md`, CLEAN WITH NOTES). Ledger rows (split from the former RES-FREEZE-01):
+  `LEAN-FREEZE-CORE` (Supported, Lean core, branch only), `RES-FREEZE-GATED` (Exploratory, paper proofs), `RES-FREEZE-NUM`
+  (Exploratory, finite numerics), `RES-FREEZE-NOVELTY` (Not established: known variant of Cho–Dong–Ha 2023, a consistency hit only; narrow residual plausibly new; search non-exhaustive); see `research/freezing/README.md`.
 - **Analysis v4 held events at exact-duration boundaries: blocker.** v4's end check can reject an event held exactly the required
   duration (floating-point rounding; 32 of 605 starts on v4's saved grid in a synthetic test). Only grid-multiple holds are affected,
   i.e. the fixed_physical_17p5 held rows; the T_window-nominal holds are not. Separately, v4's "recovery" events include retention.
