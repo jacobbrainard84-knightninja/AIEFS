@@ -34,6 +34,12 @@ Added after review r001 of f0aadce:
     TOL/RTOL and the NaN/inf masks apply to the float columns only
   - a manifest or stub that is valid JSON but not an object, a non-object "environment", a corrupt (e.g. bad-CRC) zip
     seed member, and a missing or unreadable repo-side source file are named problems too, not tracebacks
+Added after the audit of 018b513 (F1, 2026-11-07):
+  - seed-file (NPZ) integer fields (seed uint64, seed_index int64, prefix__selected_at_split uint8) are compared
+    exactly as Python ints, and an integer field is never compared with a float field (either direction). Before,
+    only the rerun's dtype chose the path, and numpy's mixed uint64/float64 equality rounds to float64: an official
+    seed rewritten as float64(seed + 1) (a different integer, +1018) still compared equal. Same value in a different
+    integer type (int64 vs uint64) still matches
 Not gated, on purpose: zip_stub_model_matches_official. That compares a known-wrong stub inside the zip
 (runs/5a9f093a2fe0/manifest.json in the zip; b2a95dfbfbe3_REPRODUCTION.md documents it as the wrong parameters),
 not the rerun, and it is false on the genuine data. It stays an informational key; only the stub's presence and
@@ -79,9 +85,20 @@ def diffs(x, y):
     return float(d.max()), float((d[nz] / s[nz]).max()) if nz.any() else 0.0
 
 def cmp_arrays(x, y):
-    """str problem, or (worst abs diff, worst rel diff)."""
+    """str problem, or (worst abs diff, worst rel diff). x is the rerun array, y the official one.
+    Integer fields (dtype kind i/u, e.g. the uint64 seed) are compared exactly as Python ints, so int64 vs uint64
+    of the same value matches. An integer field is never compared with a float one (either direction): mixed
+    uint64/float64 equality rounds to float64 and drops low bits (review of 018b513, F1). TOL/RTOL apply to
+    float/complex fields only."""
     if x.shape != y.shape: return "shape"
-    if x.dtype.kind in "fc":
+    kx, ky = x.dtype.kind, y.dtype.kind
+    if (kx in "iu") != (ky in "iu"):
+        return f"integer/non-integer dtype mismatch (rerun {x.dtype}, official {y.dtype})"
+    if kx in "iu":
+        return (0.0, 0.0) if np.array_equal(x.astype(object), y.astype(object)) else "DIFF"
+    if (kx in "fc") != (ky in "fc") or (kx not in "fc" and kx != ky):
+        return f"dtype kind mismatch (rerun {x.dtype}, official {y.dtype})"
+    if kx in "fc":
         bad = [name for name, n in mask_mismatches(x, y).items() if n]
         if bad: return " and ".join(bad) + " pattern differs"
         return diffs(x, y)
@@ -98,6 +115,18 @@ if "--selftest" in sys.argv[1:]:
     a, r = cmp_arrays(f([1e-20]), f([2e-20])); assert a <= TOL and r > RTOL   # abs-only would pass this; v4 does not
     assert cmp_arrays(f([1, 2]), f([2, 1])) == "DIFF" and cmp_arrays(f([1.0]), f([1.0, 2.0])) == "shape"
     assert mask_mismatches(f([[np.inf, 0.0]]), f([[0.0, np.inf]])) == {"NaN": 0, "+inf": 2, "-inf": 0}
+    # F1 (review of 018b513): an integer field vs a float one never compares equal, in either direction
+    s64 = np.array(10431384713483787270, dtype=np.uint64); sf = np.array(int(s64) + 1, dtype=np.float64)
+    assert int(sf) != int(s64) and np.array_equal(s64, sf)   # numpy's own mixed equality loses the change
+    assert cmp_arrays(s64, sf) == "integer/non-integer dtype mismatch (rerun uint64, official float64)"
+    assert cmp_arrays(sf, s64) == "integer/non-integer dtype mismatch (rerun float64, official uint64)"
+    assert cmp_arrays(s64, np.array(float(int(s64)))).startswith("integer/non-integer dtype mismatch")
+    assert cmp_arrays(s64, s64 + np.uint64(1)) == "DIFF"
+    # same value, different integer types: still equal; exact compare (no wrap-around)
+    assert cmp_arrays(np.array(3, dtype=np.int64), np.array(3, dtype=np.uint64)) == (0.0, 0.0)
+    assert cmp_arrays(f([0, 1, 255], dtype=np.uint8), f([0, 1, 255], dtype=np.int64)) == (0.0, 0.0)
+    assert cmp_arrays(np.array(-1, dtype=np.int64), np.array(2**64 - 1, dtype=np.uint64)) == "DIFF"
+    assert cmp_arrays(f(["a"]), f([1.0])) == "dtype kind mismatch (rerun <U1, official float64)"
     print("selftest OK"); sys.exit(0)
 if not ZIP.is_file() or not RRUN.is_dir(): print("run from the AIEFS repo root", file=sys.stderr); sys.exit(2)
 sha = lambda b: hashlib.sha256(b).hexdigest()

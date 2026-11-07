@@ -200,6 +200,10 @@ died with a traceback instead of giving a verdict.
 | zip stub manifest is `[1]` | PASS ("zip stub … is not a JSON object") | crash |
 | zip seed member with corrupted bytes (bad CRC) | PASS ("unreadable in rerun run (BadZipFile)") | crash |
 | official / rerun source file missing | PASS ("source file … missing or unreadable"; 2 tests) | crash |
+| *Audit of `018b513` (F1, NPZ integer vs float dtype). "018b513" column: v4 before this fix* | | *018b513* |
+| official seed file: `seed` uint64 -> float64(seed + 1), a different integer (+1018) | PASS ("integer/non-integer dtype mismatch (rerun uint64, official float64)", the only problem) | **accepted** |
+| zip seed file: `seed` -> float64(seed + 1) (opposite direction) | PASS ("... (rerun float64, official uint64)") | **accepted** apart from the zip pin |
+| control: `seed_index` int64 -> uint64 and `prefix__selected_at_split` uint8 -> int64, same values, every official seed file | PASS (REPRODUCED, `problems: []`) | same |
 | --selftest still passes | PASS ("selftest OK") | n/a |
 
 Before review r001 of `f0aadce`, the two tolerance tests (and the NaN/inf, text-cell, column-swap and 0 -> 1e-14 tests)
@@ -235,9 +239,8 @@ Lean/formal proof without citing an existing `.lean` file.)
 Added on branch `fix/errata-old-files-drift` (finding F4 of the old-files drift review). The
 `row["anchor_pass"]` expression is read with `ast` from the hash-pinned script
 `AIEF_1_4_matched_phase_memory_ablation.py` (line 1751). The script is not imported or run, and the
-expression is evaluated on hand-built anchor rows. The header count above does not include these
-5 tests (4 PASS including 2 controls, 1 GAP); it was left as is to avoid merge conflicts with
-parallel branches.
+expression is evaluated on hand-built anchor rows. There are 5 tests (4 PASS including 2 controls,
+1 GAP); the Results heading does not hard-code counts.
 
 | Test | Result |
 |---|---|

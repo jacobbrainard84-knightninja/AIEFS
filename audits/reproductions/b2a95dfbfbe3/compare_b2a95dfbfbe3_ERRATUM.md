@@ -202,3 +202,31 @@ two new keys are as above. `problems: []`, **verdict REPRODUCED**, exit 0, on pa
 `requirements.txt` pin). The only output difference between the two pandas versions is `csv_worst_rel_diff`
 (1.15e-15 on 3.0.6, 8.47e-16 on 3.1.0): pandas 3.0.6's default CSV float parser is not always correctly rounded, so
 its float64 values can be 1 ulp off. The committed log is from pandas 3.0.6. Red-team: see `tools/redteam/test_rt_comparator.py` and `tools/redteam/REDTEAM.md`.
+
+### Audit of `018b513` (2026-11-07, branch `fix/comparator-v4-from-main`)
+
+Auditor Seat 002's audit of `018b513` (FIXES REQUIRED) found:
+
+- **F1 (blocker).** The sentence above, "The seed `.npz` files were already compared exactly (`cmp_arrays` on integer
+  dtypes)", was true only when both sides kept an integer dtype. `cmp_arrays(x, y)` chose its path from the rerun
+  array `x` alone, and for an integer `x` it used `np.array_equal(x, y)`, which for a uint64 vs a float64 array
+  rounds to float64 and drops the low bits. An official seed file whose `seed` (uint64 10431384713483787270) was
+  replaced by `float64(seed + 1)`, which represents a **different** integer (10431384713483788288, +1018), was
+  REPRODUCED, exit 0, `problems: []`, on pandas 3.0.6 and 3.1.0. The CSV path (O1) was not affected.
+- **Fix.** Integer fields (dtype kind `i`/`u`: on the genuine data `seed` uint64, `seed_index` int64,
+  `prefix__selected_at_split` uint8) are compared exactly as Python ints, so the same value in another integer type
+  (int64 vs uint64) still matches. If one side is an integer field and the other is not, in either direction, that is
+  a named problem, `"<seed file>:<field>: integer/non-integer dtype mismatch (rerun <dtype>, official <dtype>)"`, and
+  NOT REPRODUCED, exit 1: the comparator never compares an integer field with a float one. Other non-float fields of
+  different kinds give `"dtype kind mismatch (...)"`. Float/complex fields keep `TOL`/`RTOL` and the NaN/inf masks.
+  `--selftest` covers both directions, a seed +1 at uint64, same-value int64/uint64 and uint8/int64 pairs, and
+  int64 -1 vs uint64 2**64-1.
+- **Red-team.** Three ordinary (not expected-failure) tests: the auditor's mutation on the official side (exactly one
+  problem, the dtype mismatch), the opposite direction in a rebuilt zip (rerun float64, official uint64), and a
+  control that re-types `seed_index` and `prefix__selected_at_split` in every official seed file and must still say
+  REPRODUCED. The two negative tests fail on `018b513`.
+
+Re-run on the genuine data: unchanged output (`compare_b2a95dfbfbe3_v4.log` is byte-identical apart from its header
+line, so it is not regenerated), `problems: []`, **verdict REPRODUCED**, exit 0, on pandas 3.0.6 and 3.1.0.
+`compare_b2a95dfbfbe3_v3_to_v4.diff` and this folder's `SHA256SUMS` lines for v4.py, the diff and this file are
+regenerated; the v1/v2/v3 lines are unchanged.

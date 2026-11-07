@@ -15,7 +15,10 @@ can never match EXPECTED_ZIP_SHA256, so each of those tests asserts its own need
 Review r001 of f0aadce: the float tests (tolerance, NaN/inf, text, 0 -> 1e-14) now tamper a FLOAT column. Before, they hit
 the uint64 `seed` column, so the tolerance tests passed only by accident on pandas 3.0.6 (float64 re-parse noise) and
 failed on pandas 3.1.0. Integer columns (seed_index, seed) have their own exact-compare tests (O1), plus tests for the
-remaining tracebacks (non-object manifests / environment / stub, corrupt zip seed member, missing source file)."""
+remaining tracebacks (non-object manifests / environment / stub, corrupt zip seed member, missing source file).
+
+Audit of 018b513 (F1): an NPZ seed rewritten as float64(seed + 1) on either side, and a same-value control with other
+integer dtypes (test_F1_*)."""
 import csv
 import io
 import json
@@ -269,6 +272,49 @@ class Comparator(TempDirMixin, unittest.TestCase):
     def test_seed_integer_field_changed(self):
         self.edit_npz(self.seed_file(), lambda d: d.__setitem__("seed", d["seed"] + 1))
         self.verdict_rejected(":seed: DIFF")
+
+    # --- F1 (audit of 018b513): NPZ integer fields vs float fields ------------------------------
+    def _seed_as_float64_plus_1(self, d, seen):
+        a = d["seed"]; orig = int(a)
+        t = np.array(orig + 1, dtype=np.float64)
+        self.assertEqual(a.dtype, np.uint64)
+        self.assertNotEqual(int(t), orig)                 # the represented integer really changed (+1018)
+        self.assertTrue(np.array_equal(a, t))             # ...yet numpy's mixed uint64/float64 equality says equal
+        d["seed"] = t; seen.append(orig)
+
+    def test_F1_official_npz_seed_float64_plus_1(self):
+        """Auditor mutation: official seed uint64 -> float64(seed + 1). 018b513 said REPRODUCED, exit 0, problems []."""
+        f = self.seed_file(); seen = []
+        self.edit_npz(f, lambda d: self._seed_as_float64_plus_1(d, seen))
+        self.assertEqual(len(seen), 1)
+        msg = f"{f}:seed: integer/non-integer dtype mismatch (rerun uint64, official float64)"
+        out = self.verdict_rejected(msg)
+        self.assertEqual(parse(out)["problems"], [msg])
+
+    def test_F1_zip_npz_seed_float64_plus_1(self):
+        """Opposite direction: the RERUN (zip) seed is float64(seed + 1), the official one stays uint64."""
+        f = self.seed_file(); seen = []
+        def edit(rel, data):
+            if rel != f: return data
+            d = load_npz(io.BytesIO(data)); self._seed_as_float64_plus_1(d, seen); return npz_bytes(d)
+        self.rebuild_zip(edit)
+        self.assertEqual(len(seen), 1)
+        self.verdict_rejected(f"{f}:seed: integer/non-integer dtype mismatch (rerun float64, official uint64)",
+                              "is not EXPECTED_ZIP_SHA256")
+
+    def test_F1_official_npz_integer_fields_other_int_type_still_reproduce(self):
+        """Control: same values in another integer type (seed_index int64 -> uint64, prefix__selected_at_split
+        uint8 -> int64) are not a change; the exact integer compare must still say REPRODUCED."""
+        for f in sorted(x for x in os.listdir(self.run_dir) if x.startswith("seed_")):
+            def g(d):
+                self.assertEqual((d["seed_index"].dtype, d["prefix__selected_at_split"].dtype), (np.int64, np.uint8))
+                d["seed_index"] = d["seed_index"].astype(np.uint64)
+                d["prefix__selected_at_split"] = d["prefix__selected_at_split"].astype(np.int64)
+            self.edit_npz(f, g)
+        rc, out = self.compare()
+        self.assertEqual(rc, 0, out[-2000:])
+        self.assertIn('"verdict": "REPRODUCED"', out)
+        self.assertIn('"problems": []', out)
 
     # --- swapped / relabelled data -------------------------------------------------------
     def test_two_numeric_columns_swapped(self):
