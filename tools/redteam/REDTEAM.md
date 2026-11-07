@@ -20,7 +20,7 @@ python3 -m unittest discover -s tools/redteam -v      # from repo root
 cd tools/redteam && python3 -m unittest discover -v
 ```
 
-About 70 s total (the comparator file is about 35 s; the Lean file is about 20 s
+About 100 s total (the comparator file is about 60 s; the Lean file is about 20 s
 and needs `lake` from elan on PATH or in `~/.elan/bin`. Without it the Lean
 axiom-audit tests are skipped). Needs numpy and pandas.
 
@@ -139,27 +139,80 @@ Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit
 
 ### Reproduction comparator: `test_rt_comparator.py`
 
-Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
-(hash-pinned, run unmodified) on a temp copy of `runs/5a9f093a2fe0`.
+Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py`
+(run unmodified; listed in that folder's `SHA256SUMS`) on a temp copy of `runs/5a9f093a2fe0`.
+Every rejection must be a real verdict: NOT REPRODUCED, exit 1, no traceback, and the specific
+reason in `problems`. Zip-side tests write a rebuilt, reduced zip into a real temp `Project Histories` folder. A
+rebuilt zip never matches the pinned zip sha256, so each such test also asserts its own reason.
 
-| Test | Result |
-|---|---|
-| control: untampered copy | PASS (REPRODUCED) |
-| CSV cell +1e-9 | PASS (NOT REPRODUCED) |
-| CSV cell +1e-11 (just over TOL 1e-12) | PASS |
-| CSV NaN / +inf / -inf | PASS (3 tests) |
-| branch diagnostics +inf | PASS |
-| seed NaN | PASS |
-| seed value +1e-6 | PASS |
-| seed bytes truncated | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| seed deleted | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| extra fabricated seed file | PASS |
-| seed integer field changed | PASS |
-| two numeric columns swapped | PASS |
-| manifest model eta changed | PASS |
-| --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `out["csv_nonnumeric_equal"]` is computed but is not part of the `ok = (...)` verdict expression (v3) |
-| **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
+Fix #1 (`fix/comparator-v4-gates`, 2026-10-31) closed the two comparator GAPs (G10, G11). Those tests
+are now normal tests. In the "v3" column, *accepted* means v3 said REPRODUCED and *crash* means v3
+died with a traceback instead of giving a verdict.
+
+| Test | Result (v4) | v3 |
+|---|---|---|
+| control: untampered copy | PASS (REPRODUCED, `problems: []`) | same |
+| CSV float cell (`D_B_final`, row 1) +1e-9 | PASS (abs diff > TOL) | PASS |
+| CSV float cell +1e-11 (just over TOL 1e-12) | PASS (abs diff > TOL) | PASS |
+| control: CSV float cell +1e-13 (inside TOL and RTOL) | PASS (REPRODUCED, `problems: []`) | same |
+| CSV cell 0 -> 1e-14 | PASS (relative diff > RTOL) | **accepted** |
+| CSV NaN / +inf / -inf | PASS (3 tests) | PASS |
+| branch diagnostics +inf | PASS | PASS |
+| seed NaN | PASS | PASS |
+| seed value +1e-6 | PASS | PASS |
+| seed bytes truncated | PASS ("unreadable in official run") | crash |
+| seed deleted | PASS ("seed files missing in official run") | crash |
+| extra fabricated seed file | PASS | PASS |
+| seed integer field changed | PASS | PASS |
+| seed `config_hash` label rewritten | PASS | **accepted** |
+| two numeric columns swapped | PASS | PASS |
+| branch labels swapped in CSV text column (was G10) | PASS ("non-numeric columns differ: branch") | **accepted** |
+| `branch_family` relabelled | PASS | **accepted** |
+| manifest model eta changed | PASS | PASS |
+| manifest "schema" field changed (was G11) | PASS ("schema differs") | **accepted** |
+| manifest other key changed (`workflow_version`) | PASS ("unexpected differing keys") | **accepted** |
+| manifest extra key added | PASS | **accepted** |
+| official manifest `source_sha256` rewritten | PASS | **accepted** |
+| official manifest `config_hash` rewritten | PASS | **accepted** |
+| rerun source file gets an extra code line | PASS ("code line(s) differ") | **accepted** |
+| official scalar-summary CSV deleted | PASS | crash |
+| official branch diagnostics deleted | PASS | crash |
+| *Review r001 of `1250bbd` (G-A to G-E). "1250bbd" column: v4 before these gates* | | *1250bbd* |
+| zip rebuilt with the same members (control for the zip pin) | PASS (only problem: "is not EXPECTED_ZIP_SHA256") | **accepted** |
+| zip seeds replaced by official seeds relabelled to the rerun id (G-B) | PASS (zip sha; "SUSPICIOUS: 40 seed file(s) identical") | **accepted** (diff 0) |
+| zip CSV replaced by the official CSV (G-B) | PASS ("SUSPICIOUS: scalar summary CSV") | **accepted** |
+| zip branch diagnostics replaced by official (G-B) | PASS ("SUSPICIOUS: branch diagnostics") | **accepted** |
+| zip manifest missing / empty (G-D) | PASS ("rerun manifest.json missing or unreadable"; 2 tests) | crash |
+| zip CSV missing / empty (G-D) | PASS ("rerun file missing or unreadable"; 2 tests) | crash |
+| zip branch diagnostics missing (G-D) | PASS ("missing in rerun run") | crash |
+| zip seed member empty | PASS ("unreadable in rerun run") | PASS |
+| zip stub manifest missing (G-D) | PASS ("zip stub … missing or unreadable") | crash |
+| text "abc" in a numeric CSV cell, official / zip side (G-D) | PASS ("non-numeric text in numeric cells"; 2 tests) | crash |
+| official manifest gets `"notes": null` (G-A) | PASS ("present in only one manifest ['notes']") | **accepted** |
+| seed `config_hash` removed on both sides (G-C) | PASS ("config_hash label missing" in both runs) | **accepted** |
+| manifest `model` removed from both manifests (G-E) | PASS ("model missing in rerun/official manifest") | **accepted** |
+| *Review r001 of `f0aadce` (O1 and remaining tracebacks). "f0aadce" column: v4 before these fixes* | | *f0aadce* |
+| official CSV row 1 `seed` +1 / +1000, `seed_index` +1 (O1) | PASS ("integer columns differ (exact)"; 3 tests) | **accepted** |
+| official CSV `seed` written as a float string (O1) | PASS ("integer column seed has 1 non-integer cell(s)") | **accepted** |
+| zip CSV row 1 `seed` +1 (O1) | PASS ("integer columns differ (exact)") | **accepted** |
+| official / zip manifest is `null` or `[]` | PASS ("is not a JSON object"; 4 tests) | crash |
+| official manifest `"environment": null` | PASS ("environment is not a JSON object") | crash |
+| zip stub manifest is `[1]` | PASS ("zip stub … is not a JSON object") | crash |
+| zip seed member with corrupted bytes (bad CRC) | PASS ("unreadable in rerun run (BadZipFile)") | crash |
+| official / rerun source file missing | PASS ("source file … missing or unreadable"; 2 tests) | crash |
+| *Audit of `018b513` (F1, NPZ integer vs float dtype). "018b513" column: v4 before this fix* | | *018b513* |
+| official seed file: `seed` uint64 -> float64(seed + 1), a different integer (+1018) | PASS ("integer/non-integer dtype mismatch (rerun uint64, official float64)", the only problem) | **accepted** |
+| zip seed file: `seed` -> float64(seed + 1) (opposite direction) | PASS ("... (rerun float64, official uint64)") | **accepted** apart from the zip pin |
+| control: `seed_index` int64 -> uint64 and `prefix__selected_at_split` uint8 -> int64, same values, every official seed file | PASS (REPRODUCED, `problems: []`) | same |
+| --selftest still passes | PASS ("selftest OK") | n/a |
+
+Before review r001 of `f0aadce`, the two tolerance tests (and the NaN/inf, text-cell, column-swap and 0 -> 1e-14 tests)
+tampered the uint64 `seed` column instead of a float column. The tolerance tests then passed only by accident on
+pandas 3.0.6 and failed on pandas 3.1.0. They now tamper float columns, and integer columns have their own tests.
+
+Not gated, on purpose: `zip_stub_model_matches_official`. It is false on the genuine data, because the zip's stub
+manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md` (line 50: N = 12, dt = 0.01, T_window = 1.0,
+eta = 0.1). Only its presence and readability are gated. See the v4 section of the folder's ERRATUM.
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
 
@@ -172,7 +225,7 @@ engine's B update, and confirms R* ≈ 0.4543.
 | control: true R* accepted | PASS |
 | fabricated R* = 0.40 rejected | PASS |
 | fabricated R* = 0.50 rejected | PASS |
-| comparator `cmp_arrays`: inf vs finite, both orders | PASS |
+| comparator `cmp_arrays` (still v3's helper): inf vs finite, both orders | PASS |
 | NaN vs finite, both orders | PASS |
 | over tolerance, both orders | PASS |
 | shape mismatch, both orders | PASS |
@@ -186,9 +239,8 @@ Lean/formal proof without citing an existing `.lean` file.)
 Added on branch `fix/errata-old-files-drift` (finding F4 of the old-files drift review). The
 `row["anchor_pass"]` expression is read with `ast` from the hash-pinned script
 `AIEF_1_4_matched_phase_memory_ablation.py` (line 1751). The script is not imported or run, and the
-expression is evaluated on hand-built anchor rows. The header count above does not include these
-5 tests (4 PASS including 2 controls, 1 GAP); it was left as is to avoid merge conflicts with
-parallel branches.
+expression is evaluated on hand-built anchor rows. There are 5 tests (4 PASS including 2 controls,
+1 GAP); the Results heading does not hard-code counts.
 
 | Test | Result |
 |---|---|
@@ -229,8 +281,9 @@ broken.
   must cite at least one existing `.lean` file. A registry row is not accepted as proof because
   `registry/artifacts.csv` marks `lean/AIEFProofs/README.md` and the CI YAML there as
   `Formalized theorem` too. Known missing citations are listed with a reason in
-  `KNOWN_MISSING_ARTIFACTS` (one entry today: AUD-REPRO-B2A95 cites
-  `compare_b2a95dfbfbe3_v3.log`, which was never committed; Auditor Seat 002 finding M1).
+  `KNOWN_MISSING_ARTIFACTS` (empty today: its one entry, AUD-REPRO-B2A95 citing
+  `compare_b2a95dfbfbe3_v3.log` (Auditor Seat 002 finding M1), was removed when ERRATA E14 restored that
+  log at its E13 `SHA256SUMS` hash).
   The claims-lint fixture now mirrors the tree with symlinks so cited artifacts resolve.
 
 - **Round 2 (Auditor Seat 002 follow-ups), fixed in the same functions.** `evidence_scope` must equal one of the

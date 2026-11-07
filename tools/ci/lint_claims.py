@@ -90,9 +90,8 @@ IN_GHA = os.environ.get("GITHUB_ACTIONS") == "true"
 
 # (claim_id, cited path) -> reason. Reviewed known-missing citations; anything else missing is an error.
 KNOWN_MISSING_ARTIFACTS = {
-    ("AUD-REPRO-B2A95", "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.log"):
-        "listed in that folder's SHA256SUMS but never committed (Auditor Seat 002 finding M1); "
-        "restore the log or reword the row",
+    # empty: the one former entry (AUD-REPRO-B2A95, compare_b2a95dfbfbe3_v3.log) was removed when the
+    # original log was restored at its E13 SHA256SUMS hash (ERRATA E14, fix/comparator-v4-from-main)
 }
 _EXT = re.compile(r"^\S+\.[A-Za-z0-9]{1,8}$")
 _SUFFIX = re.compile(r"(:\d+(-\d+)?|\s*\u00a7.*)$")
