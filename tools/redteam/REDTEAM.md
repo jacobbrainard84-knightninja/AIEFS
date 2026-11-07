@@ -278,8 +278,9 @@ broken.
   must cite at least one existing `.lean` file. A registry row is not accepted as proof because
   `registry/artifacts.csv` marks `lean/AIEFProofs/README.md` and the CI YAML there as
   `Formalized theorem` too. Known missing citations are listed with a reason in
-  `KNOWN_MISSING_ARTIFACTS` (one entry today: AUD-REPRO-B2A95 cites
-  `compare_b2a95dfbfbe3_v3.log`, which was never committed; Auditor Seat 002 finding M1).
+  `KNOWN_MISSING_ARTIFACTS` (empty today: its one entry, AUD-REPRO-B2A95 citing
+  `compare_b2a95dfbfbe3_v3.log` (Auditor Seat 002 finding M1), was removed when ERRATA E14 restored that
+  log at its E13 `SHA256SUMS` hash).
   The claims-lint fixture now mirrors the tree with symlinks so cited artifacts resolve.
 
 - **Round 2 (Auditor Seat 002 follow-ups), fixed in the same functions.** `evidence_scope` must equal one of the
