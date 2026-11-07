@@ -328,8 +328,9 @@ class ManifestWrapper(TempDirMixin, unittest.TestCase):
 
     def test_shadow_module_in_repo_root_cannot_hijack_real_verifier(self):
         """F1 guard for the new launch: the verifier now runs via `python -I -B -c`, whose cwd (the repo root)
-        would be on sys.path without -I. (PYTHONPATH is covered in-process by the CI self-test; here it would
-        hijack check_manifest.py itself, which is outside this check's threat model.)"""
+        would be on sys.path without -I. (PYTHONPATH is covered in-process by the CI self-test. A shadow beside or
+        on the PYTHONPATH of check_manifest.py itself is B1, closed by its `-I -B` self re-exec and covered by the CI
+        self-tests test_shadow_module_beside_wrapper_cannot_hijack_it / ..._on_pythonpath_cannot_hijack_wrapper.)"""
         for mod in self.MODS:
             with self.subTest(module=mod):
                 self.tearDown(); self.setUp()

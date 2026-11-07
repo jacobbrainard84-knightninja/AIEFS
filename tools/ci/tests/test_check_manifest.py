@@ -12,6 +12,7 @@ import json
 import os
 import sys
 import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -456,6 +457,75 @@ class CheckManifestTests(unittest.TestCase):
         self.assertEqual(rc, 1, out)
         self.assertLines(out, f"ERROR   AI Agent Audits/evidence is a symlink (a folder on the verifier's path); "
                               f"refusing to run {VERIFIER}", NOT_RUN, FAIL_NOT_RUN)
+
+
+    # --- Researcher 001 audit of 92c5d77, B1: the WRAPPER itself must not be shadowable -------------------------
+    # CI runs `python tools/ci/check_manifest.py` (no -I), so tools/ci/ was sys.path[0] for the wrapper and a
+    # committed tools/ci/hashlib.py (json/subprocess/argparse/re ...) ran inside it and could print a PASS result.
+    # These tests run a copy of the real wrapper as a script from <temp repo>/tools/ci/, exactly as CI does.
+    B1_MODS = ("hashlib", "json", "subprocess", "argparse", "re")
+    B1_FORGE = ("import os, sys\n"
+                "print('checked 2 published files and 1 inputs'); print('OK')\n"
+                "print('== result: 1 verifier(s) run, 0 failed -> PASS'); sys.stdout.flush(); os._exit(0)\n")
+
+    def run_wrapper_script(self, *extra, env_extra=None):
+        """Run <root>/tools/ci/check_manifest.py (a copy of the real wrapper) as a script, cwd = repo root."""
+        ci = os.path.join(self.root, "tools", "ci")
+        os.makedirs(ci, exist_ok=True)
+        shutil.copyfile(check_manifest.__file__, os.path.join(ci, "check_manifest.py"))
+        env = {k: v for k, v in os.environ.items() if not k.startswith("PYTHON") and k != "GITHUB_ACTIONS"}
+        env.update(env_extra or {})
+        p = subprocess.run([sys.executable, os.path.join("tools", "ci", "check_manifest.py"), *extra],
+                           cwd=self.root, env=env, capture_output=True, text=True, timeout=120)
+        return p.returncode, p.stdout + p.stderr
+
+    def test_wrapper_script_clean_tree_passes_both_modes(self):
+        """Control for the B1 tests: the real verifier on an untampered tree passes when the wrapper is run as a
+        script (so through the isolated re-exec), in inputs mode and with --no-inputs."""
+        self.verifier(self.REAL)
+        rc, out = self.run_wrapper_script()
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(out.splitlines()[-3:], ["checked 2 published files and 1 inputs", "OK", PASS])
+        rc, out = self.run_wrapper_script("--no-inputs")
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(out.splitlines()[-3:], ["checked 2 published files", "OK", PASS])
+
+    def test_shadow_module_beside_wrapper_cannot_hijack_it(self):
+        """B1: a stdlib-named module beside the wrapper (tools/ci/<mod>.py) that prints a forged PASS at import
+        time must not run: the wrapper re-executes itself with -I -B, so the real verifier reports the tampered
+        file and the run FAILs, in both modes."""
+        self.verifier(self.REAL)
+        self.tamper_report()
+        ci = os.path.join(self.root, "tools", "ci")
+        os.makedirs(ci, exist_ok=True)
+        for mod in self.B1_MODS:
+            for mode in ((), ("--no-inputs",)):
+                with self.subTest(module=mod, mode=mode):
+                    plant = os.path.join(ci, f"{mod}.py")
+                    with open(plant, "w") as f:
+                        f.write(self.B1_FORGE)
+                    try:
+                        rc, out = self.run_wrapper_script(*mode)
+                    finally:
+                        os.unlink(plant)
+                        shutil.rmtree(os.path.join(ci, "__pycache__"), ignore_errors=True)
+                    self.assertEqual(rc, 1, out)
+                    self.assertLines(out, "SHA256   REPORT.md", "FAILED: 1 problem(s)", f"ERROR   {VERIFIER} exited 1",
+                                     FAIL_RUN)
+                    self.assertNotIn(PASS, out.splitlines())
+
+    def test_shadow_module_on_pythonpath_cannot_hijack_wrapper(self):
+        """B1 / N1: a hashlib.py on PYTHONPATH is ignored by the wrapper itself (the re-exec uses -I)."""
+        self.verifier(self.REAL)
+        self.tamper_report()
+        shadow = tempfile.mkdtemp(prefix="cm_wrapper_shadow_")
+        self.addCleanup(shutil.rmtree, shadow, True)
+        with open(os.path.join(shadow, "hashlib.py"), "w") as f:
+            f.write(self.B1_FORGE)
+        rc, out = self.run_wrapper_script(env_extra={"PYTHONPATH": shadow})
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "SHA256   REPORT.md", f"ERROR   {VERIFIER} exited 1", FAIL_RUN)
+        self.assertNotIn(PASS, out.splitlines())
 
 
 if __name__ == "__main__":

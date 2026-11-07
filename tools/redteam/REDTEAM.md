@@ -95,6 +95,8 @@ and expected failures (GAPs). Tables describe the checkers in the same commit as
 | verifier chmod 000 (G2b F4) | check_manifest.py `check_verifier_file` | PASS (ERROR "cannot be read (PermissionError: ...)", not run, no traceback) |
 | duplicate files_sha256 key for the verifier, stub hash last (G2b) | check_manifest.py `load_manifest` | PASS (ERROR "duplicate key ... in a JSON object", not run) |
 | evidence/ folder is a symlink inside the repo (G2b F5) | check_manifest.py `check_verifier_file` | PASS (ERROR "is a symlink (a folder on the verifier's path)", not run) |
+| fake hashlib.py / json.py / subprocess.py / argparse.py / re.py beside the WRAPPER (`tools/ci/`), printing a forged PASS result, published file tampered (B1) | check_manifest.py self re-exec (`python -I -B`) | PASS (real verifier runs, reports the tampered file, "exited 1", FAIL; CI self-test `test_shadow_module_beside_wrapper_cannot_hijack_it`, both modes) |
+| fake hashlib.py on PYTHONPATH of the wrapper (B1 / N1) | check_manifest.py self re-exec (`-I`) | PASS (same FAIL; CI self-test `test_shadow_module_on_pythonpath_cannot_hijack_wrapper`) |
 | **GAP G2c** stub with its re-pinned hash in the manifest, printing the computed success line + OK, published file tampered | check_manifest.py | **GAP**: accepted; audit_manifest.json is not pinned outside itself |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
@@ -346,6 +348,20 @@ broken.
   - Each new CI self-test and red-team control fails against 14072c3, except the repo-root shadow
     control. That one guards the new `-c` launch, which puts cwd on sys.path unless `-I` is set, and it
     fails if `-I` is removed.
+
+- **B1, branch `fix/check-manifest-g1g2`** (Researcher 001 audit of 92c5d77; `tools/ci/check_manifest.py`).
+  The verifier was isolated, but the wrapper was not: CI runs `python tools/ci/check_manifest.py` without `-I`,
+  so `tools/ci/` (the script folder) was `sys.path[0]` for the wrapper itself. A committed
+  `tools/ci/hashlib.py` (or `json.py`, `subprocess.py`, `argparse.py`, `re.py`) that printed the PASS
+  result line and otherwise proxied the real module, plus a tampered `AIEFS_audit.md` and a regenerated
+  inventory, passed every CI check. The verifier, the manifest and check_manifest.py stayed untouched. PYTHONPATH
+  worked the same way. This was the F1 mechanism one level up, and it existed on main too. It is **not** an
+  accepted residual. Fix: before any shadowable import, check_manifest.py re-executes itself as
+  `python -I -B <its own path>` when run as a script and not already isolated (`sys` is built in and `os` is
+  loaded at interpreter start-up, so neither can be shadowed). Every invocation is then isolated, in CI and
+  locally, with no workflow edit. CI self-tests run a copy of the real wrapper as a script from a temp repo's
+  `tools/ci/` with each planted module (both modes) and with a PYTHONPATH shadow, and expect FAIL. A control
+  expects the clean tree to PASS in both modes. With the re-exec disabled, those tests fail (11 failures).
 
 - **G3 + G4, fixed** (`check_artifacts` / `resolve_artifact` in `tools/ci/lint_claims.py`). Every path-like
   `supporting_artifacts` entry must exist in the tree (trailing words, `:LINE` and `§section` are

@@ -49,7 +49,17 @@ verify_manifest.py outside the manifest, somewhere CI checks (e.g. expected-sha2
 rows in registry/artifacts.csv), and make the red-team suite a required CI check.
 
 Exit status: 0 = all verifiers present and passed, 1 = a verifier failed or is missing, 2 = usage error.
+
+Wrapper isolation (Researcher 001 audit of 92c5d77, B1): run as a script, this file first re-executes itself
+as `python -I -B`, before importing anything a sibling file could shadow. Without that, tools/ci/ (the script
+folder), the current folder and PYTHONPATH are on sys.path, so a committed tools/ci/hashlib.py (or json.py,
+subprocess.py, argparse.py, re.py ...) would run inside this wrapper and could print a PASS result over a
+tampered tree. sys is built in and os is already loaded at interpreter start-up, so neither can be shadowed.
 """
+import sys as _sys
+if __name__ == "__main__" and not _sys.flags.isolated:
+    import os as _os
+    _os.execv(_sys.executable, [_sys.executable, "-I", "-B", _os.path.abspath(__file__)] + _sys.argv[1:])
 import argparse
 import hashlib
 import json
