@@ -73,9 +73,31 @@ and expected failures (GAPs). Tables describe the checkers in the same commit as
 | unlisted PASSED.txt added | verify_manifest | PASS (UNLISTED) |
 | corrupted seed in hashed run (--inputs) | verify_manifest | PASS (INPUT) |
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
-| **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
+| PASSED manifest listing only the verifier, no data (was GAP G1) | check_manifest.py coverage rule | PASS ("manifest lists no data files beyond the verifier itself") |
+| PASSED manifest with empty inputs_sha256, inputs mode | check_manifest.py coverage rule | PASS ("inputs_sha256 is empty") |
+| control: manifest listing the verifier + one data file | check_manifest.py --no-inputs | PASS (accepted) |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 79: `if not os.path.isfile(...)` → `NOTICE ... not found; skipped`) | **GAP**: prints NOTICE and exits 0 (not fixed in this commit; Researcher 001 also reports G2b: a stub verifier passes) |
+| verifier deleted (was GAP G2; fixed on `fix/check-manifest-missing-verifier`) | check_manifest.py (`if not os.path.lexists(...)` in `main`) | PASS (ERROR "manifest verifier missing", exit 1) |
+| control: real audit copy (verifier pinned, success line printed) | check_manifest.py | PASS (accepted) |
+| 0-byte verifier (G2b) | check_manifest.py `check_verifier_file` | PASS (ERROR "sha256 ... does not match ... files_sha256['evidence/verify_manifest.py']", not run, exit 1) |
+| comment-only verifier (G2b) | check_manifest.py `check_verifier_file` | PASS (same sha256 ERROR, not run) |
+| real verifier edited to always `sys.exit(0)` (hash mismatch, G2b) | check_manifest.py `check_verifier_file` | PASS (same sha256 ERROR, not run) |
+| verifier is a symlink to an outside exit-0 stub (G2b) | check_manifest.py `check_verifier_file` | PASS (ERROR "resolves outside the repository", not run) |
+| verifier is a symlink to the genuine verifier outside the repo (G2b) | check_manifest.py `check_verifier_file` | PASS (same ERROR: location, not just bytes, is checked) |
+| exit-0 stub with its manifest pin rewritten to match (G2b) | check_manifest.py `success_line` | PASS (ERROR "exited 0 but did not print its success line '...' followed by 'OK'") |
+| stub printing "FAILED", exit 0, pin rewritten (G2b) | check_manifest.py `success_line` | PASS (same success-line ERROR) |
+| unlisted fake hashlib.py / json.py / glob.py / pathlib.py beside the real verifier, published file tampered (G2b F1) | check_manifest.py `check_verifier_file` | PASS (ERROR ".py file beside the verifier that ... does not list", not run) |
+| same fakes listed and hashed in the manifest (G2b F1) | check_manifest.py (`python -I -B`) | PASS (real verifier runs, reports SIZE, "exited 1") |
+| same fakes in the repo root, the verifier's cwd (G2b F1 guard for the `-c` launch; also passes on 14072c3) | check_manifest.py (`-I`) | PASS (real verifier runs, "exited 1") |
+| `__pycache__` folder beside the verifier (G2b F1) | check_manifest.py `check_verifier_file` | PASS (ERROR "bytecode cache folder beside the verifier", not run) |
+| re-pinned stub printing a SHA256 problem line, then the success line + OK (G2b F3) | check_manifest.py output check | PASS (ERROR "printed a problem line") |
+| re-pinned stub printing the success line twice (G2b F3) | check_manifest.py output check | PASS (ERROR "printed '...' 2 times (expected exactly once)") |
+| verifier chmod 000 (G2b F4) | check_manifest.py `check_verifier_file` | PASS (ERROR "cannot be read (PermissionError: ...)", not run, no traceback) |
+| duplicate files_sha256 key for the verifier, stub hash last (G2b) | check_manifest.py `load_manifest` | PASS (ERROR "duplicate key ... in a JSON object", not run) |
+| evidence/ folder is a symlink inside the repo (G2b F5) | check_manifest.py `check_verifier_file` | PASS (ERROR "is a symlink (a folder on the verifier's path)", not run) |
+| fake hashlib.py / json.py / subprocess.py / argparse.py / re.py beside the WRAPPER (`tools/ci/`), printing a forged PASS result, published file tampered (B1) | check_manifest.py self re-exec (`python -I -B`) | PASS (real verifier runs, reports the tampered file, "exited 1", FAIL; CI self-test `test_shadow_module_beside_wrapper_cannot_hijack_it`, both modes) |
+| fake hashlib.py on PYTHONPATH of the wrapper (B1 / N1) | check_manifest.py self re-exec (`-I`) | PASS (same FAIL; CI self-test `test_shadow_module_on_pythonpath_cannot_hijack_wrapper`) |
+| **GAP G2c** stub with its re-pinned hash in the manifest, printing the computed success line + OK, published file tampered | check_manifest.py | **GAP**: accepted; audit_manifest.json is not pinned outside itself |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
@@ -273,6 +295,73 @@ works on the compiled environment. They only matter if step 7 is skipped or
 broken.
 
 ## Fix notes
+
+- **G1, branch `fix/manifest-nonempty`** (`tools/ci/check_manifest.py`). The verifier
+  `AI Agent Audits/evidence/verify_manifest.py` is hash-pinned in its own `audit_manifest.json`,
+  so the rule lives in the CI wrapper: for each verifier it runs, it also reads the sibling
+  `audit_manifest.json` and fails if it is unreadable, if `files_sha256` lists nothing besides the
+  verifier and the manifest, if a listed file is missing, or (inputs mode) if `inputs_sha256` is
+  empty. The real audit manifest (145 files, 24 inputs) still passes; no other manifest in the repo
+  is checked by `verify_manifest.py`.
+
+- **G2, branch `fix/check-manifest-missing-verifier`** (`tools/ci/check_manifest.py`, combined here on
+  `fix/check-manifest-g1g2`). A listed verifier that is missing is now an ERROR (exit 1), not a NOTICE
+  and exit 0. The old `ran == 0` notice is dropped. The CI self-test stub verifier now also writes a
+  minimal non-empty manifest, so the G1 coverage rule is satisfied.
+
+- **G2b, branch `fix/check-manifest-g1g2`** (`tools/ci/check_manifest.py`; Researcher 001 audit of
+  a428c32). Exit 0 from whatever file sits at the verifier path is no longer enough. Before running it,
+  `check_verifier_file` requires a regular file at the listed path (a symlink, a directory, or anything
+  resolving outside the repo is refused) whose sha256 equals its own `files_sha256` entry in
+  `audit_manifest.json`. After it runs, `success_line` computes the exact summary the real verifier prints for that manifest
+  (`checked N published files[ and K inputs][; P post-manifest logs listed but not hashed]`), which must
+  appear as a whole line, and the last non-empty line must be exactly `OK`. The real tree still passes
+  (145 files, 24 inputs). CI self-tests (`tools/ci/tests/test_check_manifest.py`) and the red-team
+  `ManifestWrapper` tests assert exact output lines and the exact `== result:` line, not substrings.
+  There was no G2b `@gap` test to flip; the new negative controls were added as normal tests, and each
+  fails against the pre-fix check_manifest.py (f8eb5e8).
+
+- **G2b follow-up, branch `fix/check-manifest-g1g2`** (Researcher 001 audit of 14072c3).
+  - F1: the verifier ran as `python <path>`, so a hashlib.py / json.py / glob.py / pathlib.py beside it
+    shadowed the standard library and could print the success line + OK over a tampered tree. It now runs
+    as `python -I -B` (no script folder, cwd or PYTHON* variables on sys.path, no bytecode written), and
+    an unlisted `*.py` file or a `__pycache__` folder beside it is an ERROR before anything runs.
+  - F6: it runs from the exact bytes that were hashed (sent on stdin to a small `-c` bootstrap that
+    execs them with `__file__` set to the verifier's path, so `Path(__file__).resolve().parent` still
+    finds the manifest and the output is unchanged). Swapping the file after the hash has no effect.
+  - F5: a symlink in any folder between the repo root and the verifier is an ERROR.
+  - F4: an unreadable verifier is a named ERROR ("cannot be read"), not a traceback.
+  - Duplicate JSON keys in audit_manifest.json are an ERROR (json's last-wins let a second verifier
+    entry with a stub hash win).
+  - F3: the last two non-empty lines must be the success line then `OK`, each printed exactly once,
+    and no line on stdout or stderr may look like a problem report (MISSING / SIZE / SHA256 / UNLISTED /
+    INPUT / FAILED, or "problem(s)").
+  - F2 (correction): an earlier version of this note said audit_manifest.json is pinned in
+    `registry/artifacts.csv`. It is not: that file has no `AI Agent Audits/` rows, and nothing in CI pins
+    the manifest outside itself. So the residual, a stub whose new hash is written into the manifest and
+    which prints the computed success line + OK, is **not caught in CI**. The success line is computed
+    from the manifest, so it only stops lazy stubs. Only this red-team suite flags it (GAP G2c,
+    `test_GAP_repinned_stub_printing_success_line_passes`), and this suite does not run in CI.
+    **Owner item:** pin audit_manifest.json and verify_manifest.py outside the manifest, somewhere CI
+    checks (for example expected sha256 values in check_manifest.py or rows in registry/artifacts.csv),
+    and make this red-team suite a required CI check.
+  - Each new CI self-test and red-team control fails against 14072c3, except the repo-root shadow
+    control. That one guards the new `-c` launch, which puts cwd on sys.path unless `-I` is set, and it
+    fails if `-I` is removed.
+
+- **B1, branch `fix/check-manifest-g1g2`** (Researcher 001 audit of 92c5d77; `tools/ci/check_manifest.py`).
+  The verifier was isolated, but the wrapper was not: CI runs `python tools/ci/check_manifest.py` without `-I`,
+  so `tools/ci/` (the script folder) was `sys.path[0]` for the wrapper itself. A committed
+  `tools/ci/hashlib.py` (or `json.py`, `subprocess.py`, `argparse.py`, `re.py`) that printed the PASS
+  result line and otherwise proxied the real module, plus a tampered `AIEFS_audit.md` and a regenerated
+  inventory, passed every CI check. The verifier, the manifest and check_manifest.py stayed untouched. PYTHONPATH
+  worked the same way. This was the F1 mechanism one level up, and it existed on main too. It is **not** an
+  accepted residual. Fix: before any shadowable import, check_manifest.py re-executes itself as
+  `python -I -B <its own path>` when run as a script and not already isolated (`sys` is built in and `os` is
+  loaded at interpreter start-up, so neither can be shadowed). Every invocation is then isolated, in CI and
+  locally, with no workflow edit. CI self-tests run a copy of the real wrapper as a script from a temp repo's
+  `tools/ci/` with each planted module (both modes) and with a PYTHONPATH shadow, and expect FAIL. A control
+  expects the clean tree to PASS in both modes. With the re-exec disabled, those tests fail (11 failures).
 
 - **G3 + G4, fixed** (`check_artifacts` / `resolve_artifact` in `tools/ci/lint_claims.py`). Every path-like
   `supporting_artifacts` entry must exist in the tree (trailing words, `:LINE` and `§section` are
