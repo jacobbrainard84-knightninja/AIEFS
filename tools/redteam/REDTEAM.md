@@ -53,9 +53,10 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results
 
-Run on base `395ea53` (main).
+Counts are not hard-coded here; run the suite (`-v`) for the current number of tests, PASSes
+and expected failures (GAPs). Tables describe the checkers in the same commit as this file.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
 
@@ -74,9 +75,12 @@ Run on base `395ea53` (main).
 | hashed input script edited (FROZEN_ETA) | verify_manifest | PASS (INPUT) |
 | **GAP** PASSED manifest listing only the verifier, no data | verify_manifest | **GAP**: verifies OK; nothing requires the manifest to cover any data |
 | wrapper propagates verifier failure | tools/ci/check_manifest.py | PASS |
-| **GAP** verifier deleted | check_manifest.py (line 41) | **GAP**: prints NOTICE and exits 0 |
+| **GAP** verifier deleted | check_manifest.py (line 79: `if not os.path.isfile(...)` → `NOTICE ... not found; skipped`) | **GAP**: prints NOTICE and exits 0 (not fixed in this commit; Researcher 001 also reports G2b: a stub verifier passes) |
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
+
+Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit 1 and no traceback
+(the earlier "exact messages" wording overstated substring checks).
 
 | Test | Checker | Result |
 |---|---|---|
@@ -86,11 +90,41 @@ Run on base `395ea53` (main).
 | status wrong case | lint_claims | PASS |
 | duplicate claim_id | lint_claims | PASS |
 | empty claim_id | lint_claims | PASS |
+| --strict changes the verdict: warning-only input (SSRH-ORIG row labelled `Retired / Superseded`) | lint_claims | PASS (exit 0 / PASS without --strict, exit 1 / FAIL with it) |
 | vocabulary missing, --strict | lint_claims | PASS |
-| **GAP** row cites nonexistent artifacts | lint_claims | **GAP**: artifact column never resolved |
-| **GAP** false claim "R* = 0.40, proved in Lean" as Supported/Formal proof | lint_claims | **GAP**: content is not checked against anything |
-| **GAP** claims.csv missing | lint_claims | **GAP**: exit 0 |
-| **GAP** vocabulary heading removed | lint_claims (non-strict, as CI runs it) | **GAP**: checks skipped, exit 0 |
+| row cites nonexistent artifacts (was GAP G3) | lint_claims | PASS (`cited artifact does not exist`) |
+| false claim "R* = 0.40, proved in Lean" as Supported/Formal proof (was GAP G4) | lint_claims | PASS (`claims a formal/Lean proof ... but cites no existing .lean file`) |
+| "proved in Lean" statement with an experimental scope | lint_claims | PASS |
+| control: Formalized theorem row citing a real .lean file | lint_claims | PASS (accepted) |
+| "Machine-checked in Lean 4 without sorry" statement, Conditional theorem scope | lint_claims | PASS (`claims a formal/Lean proof`) |
+| "Lean 4 verifies ..." statement | lint_claims | PASS (`claims a formal/Lean proof`) |
+| evidence_scope "Machine-checked theorem" (outside the 6 values) | lint_claims | PASS (`is not one of the 6 values`) |
+| evidence_scope "Informal argument" (no substring match on "formal") | lint_claims | PASS (vocabulary error, no proof-claim error) |
+| evidence_scope table removed from registry/README.md | lint_claims | PASS (`no '### Axis 2 ... evidence_scope' table found`) |
+| `lean/AIEFProofs missing_file.lean` (missing path after an existing folder) | lint_claims | PASS (`cited artifact does not exist`) |
+| `registry/claims.csv nonexistent/file.md` | lint_claims | PASS (`cited artifact does not exist`) |
+| control: `§section`, `:LINE` and parenthesised prose after a real path | lint_claims | PASS (accepted) |
+| control: synthetic KNOWN_MISSING_ARTIFACTS entry, file missing | lint_claims | PASS (accepted, NOTICE) |
+| KNOWN_MISSING_ARTIFACTS entry whose file now exists | lint_claims | PASS (`but now exists`) |
+| KNOWN_MISSING_ARTIFACTS entry no longer cited | lint_claims | PASS (`stale KNOWN_MISSING_ARTIFACTS entry`) |
+| `evidence_scope` column deleted from claims.csv | lint_claims | PASS (one ERROR "required column 'evidence_scope' missing from the header", exit 1) |
+| `supporting_artifacts` column deleted | lint_claims | PASS (one ERROR "required column 'supporting_artifacts' missing from the header", exit 1) |
+| `statement` column deleted | lint_claims | PASS (one ERROR "required column 'statement' missing from the header", exit 1) |
+| **GAP** Formalized theorem row citing an existing .lean file that lacks the claimed theorem | lint_claims | **GAP**: only the file's existence is checked (content is out of scope) |
+| claims.csv missing (was GAP G5; fixed: `lint()` in tools/ci/lint_claims.py errors when the file is absent) | lint_claims | PASS (ERROR "claims registry missing", exit 1) |
+| vocabulary heading removed (was GAP G6; fixed: `lint()` errors when `load_vocab` finds no values) | lint_claims (non-strict, as CI runs it) | PASS (ERROR "no status vocabulary found", exit 1) |
+| status column renamed, value "Proved" (G6b, high; was NOTICE + PASS even with --strict) | lint_claims, with and without --strict | PASS (ERROR "status column 'audited_status' missing from the header", exit 1) |
+| duplicate `audited_status` column, "Proved" in the first copy (G6c; was shadowed) | lint_claims | PASS (ERROR "duplicate column 'audited_status' in the header", exit 1) |
+| header-only claims.csv (G5b; was "checked 0 claim rows", PASS) | lint_claims | PASS (ERROR "no data rows (header only)", exit 1) |
+| earlier duplicate `## Status vocabulary` block adding "Proved" (G6d; first block won) | lint_claims | PASS (ERROR "2 '## Status vocabulary' headings", exit 1) |
+| claims.csv starts with a UTF-8 BOM (was misleading "no 'claim_id' column") | lint_claims | PASS (ERROR "starts with a UTF-8 byte-order mark (BOM)", exit 1) |
+| claims.csv contains a non-UTF-8 byte (was a traceback) | lint_claims | PASS (ERROR "not valid UTF-8 (byte 0xe9 at offset N)", exit 1) |
+| claims.csv unreadable, chmod 000 (was a traceback; skipped as root) | lint_claims | PASS (ERROR "cannot be read (PermissionError: ...)", exit 1) |
+| unclosed quote opening the last field swallows an appended "Proved" row (F1; was PASS, also with --strict) | lint_claims, with and without --strict | PASS (ERROR "not parseable as CSV (unexpected end of data)", exit 1) |
+| extra `audited_status ` column (trailing space) holding "Proved" (F2; was not a duplicate, never checked) | lint_claims | PASS (ERROR "has leading/trailing whitespace" and "duplicate column ... differ only in case or surrounding whitespace", exit 1) |
+| NUL byte in claims.csv (F6; csv accepts NUL on Python >= 3.11, was PASS) | lint_claims | PASS (ERROR "contains a NUL byte (offset N)", exit 1) |
+| `--columns ""`, value "Proved" (F7; nothing was checked, PASS) | lint_claims | PASS (ERROR "--columns names no status column", exit 1) |
+| **GAP** only vocabulary heading indented 4 spaces (Markdown code, not a heading), block adds "Proved" (F5, low) | lint_claims | **GAP**: `ln.strip()` match still selects the block |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
 | .env file | hygiene_scan | PASS |
 | id_rsa file name | hygiene_scan | PASS |
@@ -124,7 +158,7 @@ Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
 | two numeric columns swapped | PASS |
 | manifest model eta changed | PASS |
 | --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `csv_nonnumeric_equal` is computed (line 113) but is not in `ok` (line 130) |
+| **GAP** branch labels swapped in CSV text column | **GAP**: `out["csv_nonnumeric_equal"]` is computed but is not part of the `ok = (...)` verdict expression (v3) |
 | **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
@@ -143,8 +177,9 @@ engine's B update, and confirms R* ≈ 0.4543.
 | over tolerance, both orders | PASS |
 | shape mismatch, both orders | PASS |
 
-(A false R* written into `registry/claims.csv` is *not* caught by any repo
-checker; that is the lint GAP above.)
+(A false R* written into `registry/claims.csv` is still not recomputed by any repo
+checker. The lint does reject it (`check_artifacts` in tools/ci/lint_claims.py) when the row claims a
+Lean/formal proof without citing an existing `.lean` file.)
 
 ### Matched-phase anchor flag: `test_rt_matched_phase_anchor.py`
 
@@ -184,3 +219,32 @@ parser are extracted from `lean/AIEFProofs/check_lean.sh`.
 The two marker-scan GAPs are **closed by the axiom audit** (step 7), which
 works on the compiled environment. They only matter if step 7 is skipped or
 broken.
+
+## Fix notes
+
+- **G3 + G4, fixed** (`check_artifacts` / `resolve_artifact` in `tools/ci/lint_claims.py`). Every path-like
+  `supporting_artifacts` entry must exist in the tree (trailing words, `:LINE` and `§section` are
+  allowed; prose entries are skipped). A row that claims a formal/Lean proof (`evidence_scope`
+  `Formalized theorem`, see Round 2, or a statement like "proved in Lean")
+  must cite at least one existing `.lean` file. A registry row is not accepted as proof because
+  `registry/artifacts.csv` marks `lean/AIEFProofs/README.md` and the CI YAML there as
+  `Formalized theorem` too. Known missing citations are listed with a reason in
+  `KNOWN_MISSING_ARTIFACTS` (one entry today: AUD-REPRO-B2A95 cites
+  `compare_b2a95dfbfbe3_v3.log`, which was never committed; Auditor Seat 002 finding M1).
+  The claims-lint fixture now mirrors the tree with symlinks so cited artifacts resolve.
+
+- **Round 2 (Auditor Seat 002 follow-ups), fixed in the same functions.** `evidence_scope` must equal one of the
+  values in the `### Axis 2 ... evidence_scope` table of `registry/README.md` (6 today; a missing
+  table is an error), and only `Formalized theorem` counts as a formal scope (no more substring
+  match, so "Informal ..." is not a proof claim). The proof wording also covers "Machine-checked in
+  Lean 4" and "Lean 4 verifies". After the longest existing path prefix, the remaining words outside
+  parentheses must not be path-like (no `/`, no file extension). KNOWN_MISSING_ARTIFACTS entries
+  that are no longer cited, or whose file now exists, are errors. The allow-list tests inject a
+  synthetic entry through a small driver, so they do not depend on the live entry. New GAP: the
+  `.lean` file's content is not checked. `ClaimsLint` fails in `tearDownClass` if any test changed
+  `git status` of the real checkout.
+  Deleting or renaming a column these checks read (`statement`, `evidence_scope`,
+  `supporting_artifacts`) is one `registry/claims.csv:1: required column '...' missing from the header;
+  ... NOT checked` ERROR (`missing_column()`, the same helper and wording as the G6b status-column error) (exit 1, also without --strict), so it cannot switch the checks off (same class
+  as G6b). The CI self-test fixtures carry both columns and an Axis 2 table, and empty
+  KNOWN_MISSING_ARTIFACTS for their synthetic repos, so these checks always run there too.
