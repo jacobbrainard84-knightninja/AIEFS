@@ -110,6 +110,56 @@ class CheckManifestTests(unittest.TestCase):
         self.assertEqual(rc, 2)
         self.assertEqual(out.splitlines(), [f"ERROR   --repo {os.path.join(self.root, 'nope')} is not a directory"])
 
+    # --- G1: coverage rule (a PASSED manifest must cover data). Each test runs a correctly pinned stub that
+    # prints the exact success line + OK for its manifest, so ONLY the coverage rule can make it fail. -------
+    def _coverage_fixture(self, files, inputs, success):
+        body = f"print({success!r})\nprint('OK')\n"
+        p = os.path.join(self.root, VERIFIER)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p, "w") as f:
+            f.write(body)
+        fs = dict(files)
+        fs[KEY] = {"bytes": len(body.encode()), "sha256": sha(body.encode())}
+        with open(os.path.join(self.root, MANIFEST), "w") as f:
+            json.dump({"files_sha256": fs, "inputs_sha256": inputs}, f)
+
+    def test_manifest_listing_only_the_verifier_fails(self):
+        self._coverage_fixture({}, {"x.py": "0"}, "checked 1 published files and 1 inputs")
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, "checked 1 published files and 1 inputs", "OK",
+                         f"ERROR   {MANIFEST}: manifest lists no data files beyond the verifier itself "
+                         "(1 entry in files_sha256); refusing to PASS an empty manifest", FAIL_RUN)
+
+    def test_manifest_listing_only_verifier_and_itself_fails(self):
+        self._coverage_fixture({"evidence/audit_manifest.json": {"bytes": 0, "sha256": "0" * 64}},
+                               {"x.py": "0"}, "checked 2 published files and 1 inputs")
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   {MANIFEST}: manifest lists no data files beyond the verifier itself "
+                              "(2 entries in files_sha256); refusing to PASS an empty manifest", FAIL_RUN)
+
+    def test_empty_inputs_in_inputs_mode_fails_but_no_inputs_passes(self):
+        os.makedirs(os.path.join(self.root, "AI Agent Audits"), exist_ok=True)
+        with open(os.path.join(self.root, "AI Agent Audits", "REPORT.md"), "w") as f:
+            f.write("report\n")
+        self._coverage_fixture({"REPORT.md": {"bytes": 7, "sha256": sha(b"report\n")}}, {},
+                               "checked 2 published files")
+        rc, out = self.check()
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   {MANIFEST}: inputs_sha256 is empty, so the --inputs check would verify nothing",
+                         FAIL_RUN)
+        rc, out = self.check("--no-inputs")                 # control: the same tree passes without --inputs
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(out.splitlines()[-3:], ["checked 2 published files", "OK", PASS])
+
+    def test_listed_file_missing_fails(self):
+        self._coverage_fixture({"REPORT.md": {"bytes": 7, "sha256": sha(b"report\n")}}, {"x.py": "0"},
+                               "checked 2 published files and 1 inputs")
+        rc, out = self.check()                              # REPORT.md was never written
+        self.assertEqual(rc, 1, out)
+        self.assertLines(out, f"ERROR   {MANIFEST}: listed file does not exist: REPORT.md", FAIL_RUN)
+
     # --- G2b: the verifier itself is authenticated before it is run, and its success line is required ----------
     def _hash_mismatch(self, body):
         self.verifier(body, pinned=GOOD)
