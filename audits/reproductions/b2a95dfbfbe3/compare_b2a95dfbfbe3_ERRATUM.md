@@ -80,3 +80,125 @@ identical to v2's. The sentence "neither has any inf" above is now checked by co
 v1 (pinned) and v2 are kept unchanged. `SHA256SUMS` in this folder pins every other file in it; check it with
 `cd audits/reproductions/b2a95dfbfbe3 && sha256sum -c SHA256SUMS`. Editing any file here means updating SHA256SUMS
 in the same commit.
+
+## Follow-up (v4, 2026-10-31): gate the fields v3 computed but ignored
+
+Raised by the red-team negative-control suite (`tools/redteam`, gaps G10 and G11; red-team fix #1, branch
+`fix/comparator-v4-gates`). v3 computed several fields but did not let them change the verdict. A rerun whose CSV
+`branch` labels were swapped (G10), or whose manifest `schema` was changed (G11), still came out REPRODUCED. A missing or
+corrupt official file crashed v3 with a traceback (exit 1, but no verdict). (So did a missing or corrupt file on the
+zip side; v4 at `1250bbd` still crashed on those. See "Review r001 additions" below.) v1 (pinned), v2 and v3 are kept unchanged.
+
+`compare_b2a95dfbfbe3_v4.py` (see `compare_b2a95dfbfbe3_v3_to_v4.diff`) prints everything v3 prints (the v3 keys and
+values are identical on the genuine data) and adds these gates. Each failed gate adds a named entry to `problems`:
+
+- the scalar-summary CSV's non-numeric columns (`branch`, `branch_family`) must be equal cell for cell (G10);
+- manifest `model`, `protocol`, `randomization` and `schema` must be equal (G11), and only `config_hash`,
+  `environment` and `source_sha256` may differ (an added, removed or other changed key is a problem);
+- each run's `config_hash` must be its run id (`b2a95dfbfbe3` for the rerun, `5a9f093a2fe0` for the official run), and
+  each manifest's `source_sha256` must be the sha256 of the source file that run used;
+- the source diff must be exactly the documented one-line rewrite (`R_physical, _, _ =` to `R_physical, *_ =`);
+- the seed `config_hash` labels must be exactly (rerun id, official id) in every seed file;
+- the seed file names must match one to one; a missing or unreadable seed file (either side), or a missing or unreadable
+  official manifest, CSV or branch diagnostics file, is a named problem and a NOT REPRODUCED verdict, not a crash.
+  *Correction:* as committed at `1250bbd` this did **not** hold for the zip side's manifest, CSV, branch diagnostics or
+  stub manifest, or for text in a numeric CSV cell (either side); those still raised a traceback. The earlier wording
+  ("a missing or unreadable file … is a named problem") overstated it. Fixed below (G-D), but *as committed at
+  `f0aadce`* five tracebacks were still left: a corrupt (bad-CRC) zip seed member, a manifest that is `null` or `[]`,
+  `"environment": null`, a stub that is a JSON list, and a missing repo-side source file. Those are fixed in the review
+  r001 of `f0aadce` section at the end;
+- floats: worst abs diff <= `TOL` = 1e-12 (as before) **and** worst relative diff <= `RTOL` = 1e-12. Relative diff is
+  `|x-y| / max(|x|,|y|)` over cells finite in both runs. It applies in addition to the absolute check, so it can only
+  tighten. It closes a v3 hole: a CSV cell that is exactly 0 in one run and 1e-14 in the other passed v3's absolute
+  check. Conversely, the CSV reaches |x| = 1.8e19, so at that scale the absolute check already demands bit-identical
+  values.
+
+Not gated, on purpose: `zip_stub_model_matches_official`. It compares a stub inside the zip
+(`runs/5a9f093a2fe0/manifest.json`) that `b2a95dfbfbe3_REPRODUCTION.md` documents as carrying the wrong parameters, not
+the rerun, and it is `false` on the genuine data. `b2a95dfbfbe3_REPRODUCTION.md` line 50 explains why: the stub's model
+block has N = 12, dt = 0.01, T_window = 1.0, eta = 0.1, which are not the official run's parameters. Gating it would
+fail the genuine reproduction for a known, documented reason, so it stays informational (the v4 docstring and E14 say
+the same). Since the review r001 additions, the stub must still be *present and readable*. That is a presence check only.
+The zip is now pinned by sha256, so a missing stub can only mean a different zip.
+
+Re-run (`compare_b2a95dfbfbe3_v4.log`, numpy 2.5.4, pandas 3.0.6, python 3.13.5, at `395ea53` plus the red-team suite):
+every gate passes. Differing manifest keys are exactly `config_hash`, `environment`, `source_sha256`, the labels are
+`[b2a95dfbfbe3, 5a9f093a2fe0]`, both `source_sha256` values match their files, and the CSV non-numeric columns are equal.
+Worst abs diff is 6.66e-16 (CSV), 6.66e-16 (seed) and 5.55e-16 (branch diagnostics). Worst relative diff is 1.15e-15,
+8.47e-16 and 6.79e-16. `problems: []`; **verdict REPRODUCED**, exit 0. **The original verdict stands.**
+
+`compare_b2a95dfbfbe3_v3.log`: its SHA256SUMS line (`fcf370da026920417264c90eb2ff00b7e46b5dae4eb912f66b76891abe3552b6`)
+pointed to a file that was never committed. The repo's `.gitignore` has `*.log`, so a plain `git add` skipped it, while
+`v2.log` had been force-added. `sha256sum -c SHA256SUMS` therefore failed on every clone. `1250bbd` regenerated the log
+and re-pinned it. That has been **reverted**: the original uncommitted file was found intact in an older local working
+copy of the audit branch. Its sha256 matches the original SHA256SUMS line exactly, and its JSON body is identical to the
+regenerated one. So the original file is now committed (force-added, `git add -f`), and the original SHA256SUMS line is
+restored unchanged. E13's pin therefore stands as first written. `v4.log` is force-added the same way. Errata entry:
+`ERRATA_2026-10-28.md` E14.
+
+### Review r001 additions (2026-10-31, same branch, on top of `1250bbd`)
+
+Researcher 001's audit of `1250bbd` (CLEAN WITH NOTES) found these gaps. All of them are now gated in place in v4, since
+v4 is unmerged:
+
+- **G-B (medium).** The zip itself was not pinned anywhere: `registry/artifacts.csv` has no row for it, and
+  `zip_sha256` was printed but never checked. So a zip whose rerun seeds were replaced by the *official* seeds,
+  relabelled to the rerun id, came out REPRODUCED with diff 0. v4 now requires `zip_sha256 ==
+  EXPECTED_ZIP_SHA256` = `281bf33be105cb6219af7aecb9f8ae547459856c1548fdf646f5caee9f8d17ad` (19,703,485 bytes). This is
+  the value in `b2a95dfbfbe3_REPRODUCTION.md` line 22, re-hashed from the file. v4 also flags an exact copy as
+  `SUSPICIOUS`, whatever the zip hash: a seed file in which no compared field differs at all, or a CSV or branch
+  diagnostics file whose numeric values are all exactly equal. A genuine rerun differs at about 1e-16. On the genuine
+  data, every one of the 40 seed files has 20 to 47 differing float fields (1,255 in total, of 15,160 fields), and the
+  CSV and branch diagnostics differ by up to 6.66e-16 and 5.55e-16. New output keys: `zip_sha256_expected` and
+  `seed_files_with_no_differing_field` (0 on the genuine data).
+- **G-D (low).** A missing, empty or unreadable zip-side manifest, CSV, branch diagnostics, seed or stub file, a zip that
+  is not a zip, and text in a numeric CSV cell (either side; this was a `ValueError` at `to_numpy`) now each give a
+  named problem, NOT REPRODUCED and exit 1, with no traceback. *Correction:* that was not the full list at `f0aadce`.
+  A zip seed member that is present but corrupt (bad CRC: `BadZipFile` at the seed read), a manifest that parses to
+  `null` or `[]`, `"environment": null`, a stub that parses to a list (all `AttributeError`), and a missing repo-side
+  source file (`FileNotFoundError`) still raised a traceback. Fixed in the next section. Numeric CSV columns are coerced with
+  `pd.to_numeric(errors="coerce")`, and a non-empty cell that does not parse is reported by column and count.
+- **G-A (low).** The manifests' key *sets* must match apart from `config_hash`, `environment` and `source_sha256`. A key
+  present in only one manifest fails even if its value is null, because the `.get()`-based check treated a missing key
+  and a null as equal. New output key: `manifest_keys_one_side_only` (`[]` on the genuine data).
+- **G-C / G-E (low).** Gated fields must be present. `model`, `protocol`, `randomization` and `schema` must be in both
+  manifests, and `config_hash` must be in every seed file on both sides. A field absent on both sides used to count as
+  equal; now it is a named problem.
+
+Re-run with these gates (`compare_b2a95dfbfbe3_v4.log`, regenerated): v3's keys and values and v4's earlier keys are
+unchanged. `problems: []`, **verdict REPRODUCED**, exit 0. Red-team tests: 16 new tests in `tools/redteam/test_rt_comparator.py`.
+
+### Review r001 of `f0aadce` (2026-10-31, same branch)
+
+Researcher 001's audit of `f0aadce` (FIXES REQUIRED, small) found:
+
+- **O1 (medium).** The CSV's numeric columns were all compared as float64, including the uint64 `seed` column
+  (~1.1e19, where 1 ulp = 2048). So an official CSV row whose `seed` was changed by +1 (and by up to about ±1000) still
+  said REPRODUCED, on pandas 3.0.6 and 3.1.0. v4 now also reads the CSV as raw text (`dtype=str`). A column whose
+  non-empty cells are all integer literals on either side (on the genuine data: `seed_index` and `seed`) is compared
+  **exactly**, as Python ints. A non-integer cell in such a column, or a cell empty on one side only, is a named
+  problem as well. `TOL`/`RTOL`, the NaN/inf masks and the `SUSPICIOUS` all-equal check now apply to the float columns
+  only. New output keys: `csv_integer_columns` (`["seed_index", "seed"]`) and `csv_integer_cells_differing` (`{}` on
+  the genuine data). The seed `.npz` files were already compared exactly (`cmp_arrays` on integer dtypes).
+- **Red-team tolerance tests (medium).** `test_csv_cell_off_by_1e_9` and `..._just_over_tolerance` perturbed the
+  uint64 `seed` column, so they did not test the tolerance. On pandas 3.0.6 they passed by accident (the float string
+  turned the column into float64, and the other 20-digit seeds re-parsed about 1 ulp off). On the pinned pandas 3.1.0
+  both failed. They now perturb `D_B_final` (a float column, |v| about 0.29). A new control shifts the same cell by
+  1e-13 (inside `TOL` and `RTOL`) and must still say REPRODUCED. The NaN/inf, text-cell, column-swap and 0 -> 1e-14
+  tests also use float columns now.
+- **Remaining tracebacks (low).** All five listed in the corrections above are now named problems with NOT REPRODUCED
+  and exit 1: `"<side> manifest.json is not a JSON object (...)"`, `"manifest: <side> environment is not a JSON object
+  (...)"`, `"zip stub ... is not a JSON object (...)"`, `"<seed file>: unreadable in rerun run (BadZipFile)"` and
+  `"source file <path> missing or unreadable (FileNotFoundError)"`.
+
+**Limits (no code change).** The zip pin (`EXPECTED_ZIP_SHA256`) is the only binding control on the rerun side. If the
+pin is changed, the `SUSPICIOUS` exact-copy check can be beaten by shifting each copied value by one ulp, and keys
+removed from *both* sides (manifests, seed fields, CSV columns) are not checked. The pin also lives in this same folder
+(in `compare_b2a95dfbfbe3_v4.py`), whose `SHA256SUMS` the same commit can update. So a reviewer has to check the pin
+value against `b2a95dfbfbe3_REPRODUCTION.md` line 22 and the zip itself, not only run `sha256sum -c`.
+
+Re-run with these gates (`compare_b2a95dfbfbe3_v4.log`, regenerated): earlier keys and values are unchanged, and the
+two new keys are as above. `problems: []`, **verdict REPRODUCED**, exit 0, on pandas 3.0.6 and on pandas 3.1.0 (the
+`requirements.txt` pin). The only output difference between the two pandas versions is `csv_worst_rel_diff`
+(1.15e-15 on 3.0.6, 8.47e-16 on 3.1.0): pandas 3.0.6's default CSV float parser is not always correctly rounded, so
+its float64 values can be 1 ulp off. The committed log is from pandas 3.0.6. Red-team: see `tools/redteam/test_rt_comparator.py` and `tools/redteam/REDTEAM.md`.

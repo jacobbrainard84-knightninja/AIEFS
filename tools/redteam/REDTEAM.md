@@ -20,7 +20,7 @@ python3 -m unittest discover -s tools/redteam -v      # from repo root
 cd tools/redteam && python3 -m unittest discover -v
 ```
 
-About 70 s total (the comparator file is about 35 s; the Lean file is about 20 s
+About 100 s total (the comparator file is about 60 s; the Lean file is about 20 s
 and needs `lake` from elan on PATH or in `~/.elan/bin`. Without it the Lean
 axiom-audit tests are skipped). Needs numpy and pandas.
 
@@ -53,9 +53,12 @@ Side note found while building this: a stray local
 `check_artifact_pins.py --no-git` fail, because that path is a KNOWN_MISSING
 row. The farm skips `__pycache__` for this reason.
 
-## Results (74 tests: 61 PASS incl. 11 controls, 13 GAP)
+## Results (115 tests: 104 PASS incl. 12 controls, 11 GAP)
 
-Run on base `395ea53` (main).
+Run on base `395ea53` (main), plus fix #1 (comparator v4, branch `fix/comparator-v4-gates`, including the
+review r001 additions: 16 comparator tests, and the review r001 of `f0aadce` additions: 15 more). The comparator and
+threshold files pass on pandas 3.0.6 and on pandas 3.1.0 (the `requirements.txt` pin).
+The original run (74 tests: 61 PASS, 13 GAP) predates fix #1.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
 
@@ -105,27 +108,76 @@ Run on base `395ea53` (main).
 
 ### Reproduction comparator: `test_rt_comparator.py`
 
-Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
-(hash-pinned, run unmodified) on a temp copy of `runs/5a9f093a2fe0`.
+Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py`
+(run unmodified; listed in that folder's `SHA256SUMS`) on a temp copy of `runs/5a9f093a2fe0`.
+Every rejection must be a real verdict: NOT REPRODUCED, exit 1, no traceback, and the specific
+reason in `problems`. Zip-side tests write a rebuilt, reduced zip into a real temp `Project Histories` folder. A
+rebuilt zip never matches the pinned zip sha256, so each such test also asserts its own reason.
 
-| Test | Result |
-|---|---|
-| control: untampered copy | PASS (REPRODUCED) |
-| CSV cell +1e-9 | PASS (NOT REPRODUCED) |
-| CSV cell +1e-11 (just over TOL 1e-12) | PASS |
-| CSV NaN / +inf / -inf | PASS (3 tests) |
-| branch diagnostics +inf | PASS |
-| seed NaN | PASS |
-| seed value +1e-6 | PASS |
-| seed bytes truncated | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| seed deleted | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| extra fabricated seed file | PASS |
-| seed integer field changed | PASS |
-| two numeric columns swapped | PASS |
-| manifest model eta changed | PASS |
-| --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `csv_nonnumeric_equal` is computed (line 113) but is not in `ok` (line 130) |
-| **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
+Fix #1 (`fix/comparator-v4-gates`, 2026-10-31) closed the two comparator GAPs (G10, G11). Those tests
+are now normal tests. In the "v3" column, *accepted* means v3 said REPRODUCED and *crash* means v3
+died with a traceback instead of giving a verdict.
+
+| Test | Result (v4) | v3 |
+|---|---|---|
+| control: untampered copy | PASS (REPRODUCED, `problems: []`) | same |
+| CSV float cell (`D_B_final`, row 1) +1e-9 | PASS (abs diff > TOL) | PASS |
+| CSV float cell +1e-11 (just over TOL 1e-12) | PASS (abs diff > TOL) | PASS |
+| control: CSV float cell +1e-13 (inside TOL and RTOL) | PASS (REPRODUCED, `problems: []`) | same |
+| CSV cell 0 -> 1e-14 | PASS (relative diff > RTOL) | **accepted** |
+| CSV NaN / +inf / -inf | PASS (3 tests) | PASS |
+| branch diagnostics +inf | PASS | PASS |
+| seed NaN | PASS | PASS |
+| seed value +1e-6 | PASS | PASS |
+| seed bytes truncated | PASS ("unreadable in official run") | crash |
+| seed deleted | PASS ("seed files missing in official run") | crash |
+| extra fabricated seed file | PASS | PASS |
+| seed integer field changed | PASS | PASS |
+| seed `config_hash` label rewritten | PASS | **accepted** |
+| two numeric columns swapped | PASS | PASS |
+| branch labels swapped in CSV text column (was G10) | PASS ("non-numeric columns differ: branch") | **accepted** |
+| `branch_family` relabelled | PASS | **accepted** |
+| manifest model eta changed | PASS | PASS |
+| manifest "schema" field changed (was G11) | PASS ("schema differs") | **accepted** |
+| manifest other key changed (`workflow_version`) | PASS ("unexpected differing keys") | **accepted** |
+| manifest extra key added | PASS | **accepted** |
+| official manifest `source_sha256` rewritten | PASS | **accepted** |
+| official manifest `config_hash` rewritten | PASS | **accepted** |
+| rerun source file gets an extra code line | PASS ("code line(s) differ") | **accepted** |
+| official scalar-summary CSV deleted | PASS | crash |
+| official branch diagnostics deleted | PASS | crash |
+| *Review r001 of `1250bbd` (G-A to G-E). "1250bbd" column: v4 before these gates* | | *1250bbd* |
+| zip rebuilt with the same members (control for the zip pin) | PASS (only problem: "is not EXPECTED_ZIP_SHA256") | **accepted** |
+| zip seeds replaced by official seeds relabelled to the rerun id (G-B) | PASS (zip sha; "SUSPICIOUS: 40 seed file(s) identical") | **accepted** (diff 0) |
+| zip CSV replaced by the official CSV (G-B) | PASS ("SUSPICIOUS: scalar summary CSV") | **accepted** |
+| zip branch diagnostics replaced by official (G-B) | PASS ("SUSPICIOUS: branch diagnostics") | **accepted** |
+| zip manifest missing / empty (G-D) | PASS ("rerun manifest.json missing or unreadable"; 2 tests) | crash |
+| zip CSV missing / empty (G-D) | PASS ("rerun file missing or unreadable"; 2 tests) | crash |
+| zip branch diagnostics missing (G-D) | PASS ("missing in rerun run") | crash |
+| zip seed member empty | PASS ("unreadable in rerun run") | PASS |
+| zip stub manifest missing (G-D) | PASS ("zip stub … missing or unreadable") | crash |
+| text "abc" in a numeric CSV cell, official / zip side (G-D) | PASS ("non-numeric text in numeric cells"; 2 tests) | crash |
+| official manifest gets `"notes": null` (G-A) | PASS ("present in only one manifest ['notes']") | **accepted** |
+| seed `config_hash` removed on both sides (G-C) | PASS ("config_hash label missing" in both runs) | **accepted** |
+| manifest `model` removed from both manifests (G-E) | PASS ("model missing in rerun/official manifest") | **accepted** |
+| *Review r001 of `f0aadce` (O1 and remaining tracebacks). "f0aadce" column: v4 before these fixes* | | *f0aadce* |
+| official CSV row 1 `seed` +1 / +1000, `seed_index` +1 (O1) | PASS ("integer columns differ (exact)"; 3 tests) | **accepted** |
+| official CSV `seed` written as a float string (O1) | PASS ("integer column seed has 1 non-integer cell(s)") | **accepted** |
+| zip CSV row 1 `seed` +1 (O1) | PASS ("integer columns differ (exact)") | **accepted** |
+| official / zip manifest is `null` or `[]` | PASS ("is not a JSON object"; 4 tests) | crash |
+| official manifest `"environment": null` | PASS ("environment is not a JSON object") | crash |
+| zip stub manifest is `[1]` | PASS ("zip stub … is not a JSON object") | crash |
+| zip seed member with corrupted bytes (bad CRC) | PASS ("unreadable in rerun run (BadZipFile)") | crash |
+| official / rerun source file missing | PASS ("source file … missing or unreadable"; 2 tests) | crash |
+| --selftest still passes | PASS ("selftest OK") | n/a |
+
+Before review r001 of `f0aadce`, the two tolerance tests (and the NaN/inf, text-cell, column-swap and 0 -> 1e-14 tests)
+tampered the uint64 `seed` column instead of a float column. The tolerance tests then passed only by accident on
+pandas 3.0.6 and failed on pandas 3.1.0. They now tamper float columns, and integer columns have their own tests.
+
+Not gated, on purpose: `zip_stub_model_matches_official`. It is false on the genuine data, because the zip's stub
+manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md` (line 50: N = 12, dt = 0.01, T_window = 1.0,
+eta = 0.1). Only its presence and readability are gated. See the v4 section of the folder's ERRATUM.
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
 
@@ -138,7 +190,7 @@ engine's B update, and confirms R* ≈ 0.4543.
 | control: true R* accepted | PASS |
 | fabricated R* = 0.40 rejected | PASS |
 | fabricated R* = 0.50 rejected | PASS |
-| comparator `cmp_arrays`: inf vs finite, both orders | PASS |
+| comparator `cmp_arrays` (still v3's helper): inf vs finite, both orders | PASS |
 | NaN vs finite, both orders | PASS |
 | over tolerance, both orders | PASS |
 | shape mismatch, both orders | PASS |
