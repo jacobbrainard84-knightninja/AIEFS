@@ -20,7 +20,7 @@ python3 -m unittest discover -s tools/redteam -v      # from repo root
 cd tools/redteam && python3 -m unittest discover -v
 ```
 
-About 70 s total (the comparator file is about 35 s; the Lean file is about 20 s
+About 100 s total (the comparator file is about 60 s; the Lean file is about 20 s
 and needs `lake` from elan on PATH or in `~/.elan/bin`. Without it the Lean
 axiom-audit tests are skipped). Needs numpy and pandas.
 
@@ -55,7 +55,8 @@ row. The farm skips `__pycache__` for this reason.
 
 ## Results
 
-Run on base `395ea53` (main).
+Counts are not hard-coded here; run the suite (`-v`) for the current number of tests, PASSes
+and expected failures (GAPs). Tables describe the checkers in the same commit as this file.
 
 ### Hash pins and manifests: `test_rt_hashes.py`
 
@@ -98,6 +99,9 @@ Run on base `395ea53` (main).
 
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
+Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit 1 and no traceback
+(the earlier "exact messages" wording overstated substring checks).
+
 | Test | Checker | Result |
 |---|---|---|
 | control: copy passes | lint_claims.py | PASS (accepted) |
@@ -106,11 +110,41 @@ Run on base `395ea53` (main).
 | status wrong case | lint_claims | PASS |
 | duplicate claim_id | lint_claims | PASS |
 | empty claim_id | lint_claims | PASS |
+| --strict changes the verdict: warning-only input (SSRH-ORIG row labelled `Retired / Superseded`) | lint_claims | PASS (exit 0 / PASS without --strict, exit 1 / FAIL with it) |
 | vocabulary missing, --strict | lint_claims | PASS |
-| **GAP** row cites nonexistent artifacts | lint_claims | **GAP**: artifact column never resolved |
-| **GAP** false claim "R* = 0.40, proved in Lean" as Supported/Formal proof | lint_claims | **GAP**: content is not checked against anything |
-| **GAP** claims.csv missing | lint_claims | **GAP**: exit 0 |
-| **GAP** vocabulary heading removed | lint_claims (non-strict, as CI runs it) | **GAP**: checks skipped, exit 0 |
+| row cites nonexistent artifacts (was GAP G3) | lint_claims | PASS (`cited artifact does not exist`) |
+| false claim "R* = 0.40, proved in Lean" as Supported/Formal proof (was GAP G4) | lint_claims | PASS (`claims a formal/Lean proof ... but cites no existing .lean file`) |
+| "proved in Lean" statement with an experimental scope | lint_claims | PASS |
+| control: Formalized theorem row citing a real .lean file | lint_claims | PASS (accepted) |
+| "Machine-checked in Lean 4 without sorry" statement, Conditional theorem scope | lint_claims | PASS (`claims a formal/Lean proof`) |
+| "Lean 4 verifies ..." statement | lint_claims | PASS (`claims a formal/Lean proof`) |
+| evidence_scope "Machine-checked theorem" (outside the 6 values) | lint_claims | PASS (`is not one of the 6 values`) |
+| evidence_scope "Informal argument" (no substring match on "formal") | lint_claims | PASS (vocabulary error, no proof-claim error) |
+| evidence_scope table removed from registry/README.md | lint_claims | PASS (`no '### Axis 2 ... evidence_scope' table found`) |
+| `lean/AIEFProofs missing_file.lean` (missing path after an existing folder) | lint_claims | PASS (`cited artifact does not exist`) |
+| `registry/claims.csv nonexistent/file.md` | lint_claims | PASS (`cited artifact does not exist`) |
+| control: `§section`, `:LINE` and parenthesised prose after a real path | lint_claims | PASS (accepted) |
+| control: synthetic KNOWN_MISSING_ARTIFACTS entry, file missing | lint_claims | PASS (accepted, NOTICE) |
+| KNOWN_MISSING_ARTIFACTS entry whose file now exists | lint_claims | PASS (`but now exists`) |
+| KNOWN_MISSING_ARTIFACTS entry no longer cited | lint_claims | PASS (`stale KNOWN_MISSING_ARTIFACTS entry`) |
+| `evidence_scope` column deleted from claims.csv | lint_claims | PASS (one ERROR "required column 'evidence_scope' missing from the header", exit 1) |
+| `supporting_artifacts` column deleted | lint_claims | PASS (one ERROR "required column 'supporting_artifacts' missing from the header", exit 1) |
+| `statement` column deleted | lint_claims | PASS (one ERROR "required column 'statement' missing from the header", exit 1) |
+| **GAP** Formalized theorem row citing an existing .lean file that lacks the claimed theorem | lint_claims | **GAP**: only the file's existence is checked (content is out of scope) |
+| claims.csv missing (was GAP G5; fixed: `lint()` in tools/ci/lint_claims.py errors when the file is absent) | lint_claims | PASS (ERROR "claims registry missing", exit 1) |
+| vocabulary heading removed (was GAP G6; fixed: `lint()` errors when `load_vocab` finds no values) | lint_claims (non-strict, as CI runs it) | PASS (ERROR "no status vocabulary found", exit 1) |
+| status column renamed, value "Proved" (G6b, high; was NOTICE + PASS even with --strict) | lint_claims, with and without --strict | PASS (ERROR "status column 'audited_status' missing from the header", exit 1) |
+| duplicate `audited_status` column, "Proved" in the first copy (G6c; was shadowed) | lint_claims | PASS (ERROR "duplicate column 'audited_status' in the header", exit 1) |
+| header-only claims.csv (G5b; was "checked 0 claim rows", PASS) | lint_claims | PASS (ERROR "no data rows (header only)", exit 1) |
+| earlier duplicate `## Status vocabulary` block adding "Proved" (G6d; first block won) | lint_claims | PASS (ERROR "2 '## Status vocabulary' headings", exit 1) |
+| claims.csv starts with a UTF-8 BOM (was misleading "no 'claim_id' column") | lint_claims | PASS (ERROR "starts with a UTF-8 byte-order mark (BOM)", exit 1) |
+| claims.csv contains a non-UTF-8 byte (was a traceback) | lint_claims | PASS (ERROR "not valid UTF-8 (byte 0xe9 at offset N)", exit 1) |
+| claims.csv unreadable, chmod 000 (was a traceback; skipped as root) | lint_claims | PASS (ERROR "cannot be read (PermissionError: ...)", exit 1) |
+| unclosed quote opening the last field swallows an appended "Proved" row (F1; was PASS, also with --strict) | lint_claims, with and without --strict | PASS (ERROR "not parseable as CSV (unexpected end of data)", exit 1) |
+| extra `audited_status ` column (trailing space) holding "Proved" (F2; was not a duplicate, never checked) | lint_claims | PASS (ERROR "has leading/trailing whitespace" and "duplicate column ... differ only in case or surrounding whitespace", exit 1) |
+| NUL byte in claims.csv (F6; csv accepts NUL on Python >= 3.11, was PASS) | lint_claims | PASS (ERROR "contains a NUL byte (offset N)", exit 1) |
+| `--columns ""`, value "Proved" (F7; nothing was checked, PASS) | lint_claims | PASS (ERROR "--columns names no status column", exit 1) |
+| **GAP** only vocabulary heading indented 4 spaces (Markdown code, not a heading), block adds "Proved" (F5, low) | lint_claims | **GAP**: `ln.strip()` match still selects the block |
 | control: clean change | hygiene_scan.py | PASS (accepted) |
 | .env file | hygiene_scan | PASS |
 | id_rsa file name | hygiene_scan | PASS |
@@ -125,27 +159,80 @@ Run on base `395ea53` (main).
 
 ### Reproduction comparator: `test_rt_comparator.py`
 
-Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.py`
-(hash-pinned, run unmodified) on a temp copy of `runs/5a9f093a2fe0`.
+Target: `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v4.py`
+(run unmodified; listed in that folder's `SHA256SUMS`) on a temp copy of `runs/5a9f093a2fe0`.
+Every rejection must be a real verdict: NOT REPRODUCED, exit 1, no traceback, and the specific
+reason in `problems`. Zip-side tests write a rebuilt, reduced zip into a real temp `Project Histories` folder. A
+rebuilt zip never matches the pinned zip sha256, so each such test also asserts its own reason.
 
-| Test | Result |
-|---|---|
-| control: untampered copy | PASS (REPRODUCED) |
-| CSV cell +1e-9 | PASS (NOT REPRODUCED) |
-| CSV cell +1e-11 (just over TOL 1e-12) | PASS |
-| CSV NaN / +inf / -inf | PASS (3 tests) |
-| branch diagnostics +inf | PASS |
-| seed NaN | PASS |
-| seed value +1e-6 | PASS |
-| seed bytes truncated | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| seed deleted | PASS (fail-closed crash, rc≠0, no REPRODUCED) |
-| extra fabricated seed file | PASS |
-| seed integer field changed | PASS |
-| two numeric columns swapped | PASS |
-| manifest model eta changed | PASS |
-| --selftest still passes | PASS |
-| **GAP** branch labels swapped in CSV text column | **GAP**: `out["csv_nonnumeric_equal"]` is computed but is not part of the `ok = (...)` verdict expression (v3) |
-| **GAP** manifest "schema" field changed | **GAP**: schema is not part of the verdict |
+Fix #1 (`fix/comparator-v4-gates`, 2026-10-31) closed the two comparator GAPs (G10, G11). Those tests
+are now normal tests. In the "v3" column, *accepted* means v3 said REPRODUCED and *crash* means v3
+died with a traceback instead of giving a verdict.
+
+| Test | Result (v4) | v3 |
+|---|---|---|
+| control: untampered copy | PASS (REPRODUCED, `problems: []`) | same |
+| CSV float cell (`D_B_final`, row 1) +1e-9 | PASS (abs diff > TOL) | PASS |
+| CSV float cell +1e-11 (just over TOL 1e-12) | PASS (abs diff > TOL) | PASS |
+| control: CSV float cell +1e-13 (inside TOL and RTOL) | PASS (REPRODUCED, `problems: []`) | same |
+| CSV cell 0 -> 1e-14 | PASS (relative diff > RTOL) | **accepted** |
+| CSV NaN / +inf / -inf | PASS (3 tests) | PASS |
+| branch diagnostics +inf | PASS | PASS |
+| seed NaN | PASS | PASS |
+| seed value +1e-6 | PASS | PASS |
+| seed bytes truncated | PASS ("unreadable in official run") | crash |
+| seed deleted | PASS ("seed files missing in official run") | crash |
+| extra fabricated seed file | PASS | PASS |
+| seed integer field changed | PASS | PASS |
+| seed `config_hash` label rewritten | PASS | **accepted** |
+| two numeric columns swapped | PASS | PASS |
+| branch labels swapped in CSV text column (was G10) | PASS ("non-numeric columns differ: branch") | **accepted** |
+| `branch_family` relabelled | PASS | **accepted** |
+| manifest model eta changed | PASS | PASS |
+| manifest "schema" field changed (was G11) | PASS ("schema differs") | **accepted** |
+| manifest other key changed (`workflow_version`) | PASS ("unexpected differing keys") | **accepted** |
+| manifest extra key added | PASS | **accepted** |
+| official manifest `source_sha256` rewritten | PASS | **accepted** |
+| official manifest `config_hash` rewritten | PASS | **accepted** |
+| rerun source file gets an extra code line | PASS ("code line(s) differ") | **accepted** |
+| official scalar-summary CSV deleted | PASS | crash |
+| official branch diagnostics deleted | PASS | crash |
+| *Review r001 of `1250bbd` (G-A to G-E). "1250bbd" column: v4 before these gates* | | *1250bbd* |
+| zip rebuilt with the same members (control for the zip pin) | PASS (only problem: "is not EXPECTED_ZIP_SHA256") | **accepted** |
+| zip seeds replaced by official seeds relabelled to the rerun id (G-B) | PASS (zip sha; "SUSPICIOUS: 40 seed file(s) identical") | **accepted** (diff 0) |
+| zip CSV replaced by the official CSV (G-B) | PASS ("SUSPICIOUS: scalar summary CSV") | **accepted** |
+| zip branch diagnostics replaced by official (G-B) | PASS ("SUSPICIOUS: branch diagnostics") | **accepted** |
+| zip manifest missing / empty (G-D) | PASS ("rerun manifest.json missing or unreadable"; 2 tests) | crash |
+| zip CSV missing / empty (G-D) | PASS ("rerun file missing or unreadable"; 2 tests) | crash |
+| zip branch diagnostics missing (G-D) | PASS ("missing in rerun run") | crash |
+| zip seed member empty | PASS ("unreadable in rerun run") | PASS |
+| zip stub manifest missing (G-D) | PASS ("zip stub … missing or unreadable") | crash |
+| text "abc" in a numeric CSV cell, official / zip side (G-D) | PASS ("non-numeric text in numeric cells"; 2 tests) | crash |
+| official manifest gets `"notes": null` (G-A) | PASS ("present in only one manifest ['notes']") | **accepted** |
+| seed `config_hash` removed on both sides (G-C) | PASS ("config_hash label missing" in both runs) | **accepted** |
+| manifest `model` removed from both manifests (G-E) | PASS ("model missing in rerun/official manifest") | **accepted** |
+| *Review r001 of `f0aadce` (O1 and remaining tracebacks). "f0aadce" column: v4 before these fixes* | | *f0aadce* |
+| official CSV row 1 `seed` +1 / +1000, `seed_index` +1 (O1) | PASS ("integer columns differ (exact)"; 3 tests) | **accepted** |
+| official CSV `seed` written as a float string (O1) | PASS ("integer column seed has 1 non-integer cell(s)") | **accepted** |
+| zip CSV row 1 `seed` +1 (O1) | PASS ("integer columns differ (exact)") | **accepted** |
+| official / zip manifest is `null` or `[]` | PASS ("is not a JSON object"; 4 tests) | crash |
+| official manifest `"environment": null` | PASS ("environment is not a JSON object") | crash |
+| zip stub manifest is `[1]` | PASS ("zip stub … is not a JSON object") | crash |
+| zip seed member with corrupted bytes (bad CRC) | PASS ("unreadable in rerun run (BadZipFile)") | crash |
+| official / rerun source file missing | PASS ("source file … missing or unreadable"; 2 tests) | crash |
+| *Audit of `018b513` (F1, NPZ integer vs float dtype). "018b513" column: v4 before this fix* | | *018b513* |
+| official seed file: `seed` uint64 -> float64(seed + 1), a different integer (+1018) | PASS ("integer/non-integer dtype mismatch (rerun uint64, official float64)", the only problem) | **accepted** |
+| zip seed file: `seed` -> float64(seed + 1) (opposite direction) | PASS ("... (rerun float64, official uint64)") | **accepted** apart from the zip pin |
+| control: `seed_index` int64 -> uint64 and `prefix__selected_at_split` uint8 -> int64, same values, every official seed file | PASS (REPRODUCED, `problems: []`) | same |
+| --selftest still passes | PASS ("selftest OK") | n/a |
+
+Before review r001 of `f0aadce`, the two tolerance tests (and the NaN/inf, text-cell, column-swap and 0 -> 1e-14 tests)
+tampered the uint64 `seed` column instead of a float column. The tolerance tests then passed only by accident on
+pandas 3.0.6 and failed on pandas 3.1.0. They now tamper float columns, and integer columns have their own tests.
+
+Not gated, on purpose: `zip_stub_model_matches_official`. It is false on the genuine data, because the zip's stub
+manifest is documented as wrong in `b2a95dfbfbe3_REPRODUCTION.md` (line 50: N = 12, dt = 0.01, T_window = 1.0,
+eta = 0.1). Only its presence and readability are gated. See the v4 section of the folder's ERRATUM.
 
 ### Settle threshold and swapped expected/actual: `test_rt_threshold_swap.py`
 
@@ -158,13 +245,34 @@ engine's B update, and confirms R* ≈ 0.4543.
 | control: true R* accepted | PASS |
 | fabricated R* = 0.40 rejected | PASS |
 | fabricated R* = 0.50 rejected | PASS |
-| comparator `cmp_arrays`: inf vs finite, both orders | PASS |
+| comparator `cmp_arrays` (still v3's helper): inf vs finite, both orders | PASS |
 | NaN vs finite, both orders | PASS |
 | over tolerance, both orders | PASS |
 | shape mismatch, both orders | PASS |
 
-(A false R* written into `registry/claims.csv` is *not* caught by any repo
-checker; that is the lint GAP above.)
+(A false R* written into `registry/claims.csv` is still not recomputed by any repo
+checker. The lint does reject it (`check_artifacts` in tools/ci/lint_claims.py) when the row claims a
+Lean/formal proof without citing an existing `.lean` file.)
+
+### Matched-phase anchor flag: `test_rt_matched_phase_anchor.py`
+
+Added on branch `fix/errata-old-files-drift` (finding F4 of the old-files drift review). The
+`row["anchor_pass"]` expression is read with `ast` from the hash-pinned script
+`AIEF_1_4_matched_phase_memory_ablation.py` (line 1751). The script is not imported or run, and the
+expression is evaluated on hand-built anchor rows. There are 5 tests (4 PASS including 2 controls,
+1 GAP); the Results heading does not hard-code counts.
+
+| Test | Result |
+|---|---|
+| control: 3 passing anchors accepted | PASS (accepted) |
+| control: `verify_anchors=False` with a failed anchor | PASS (anchor_pass=True; catches a dropped or inverted `not verify_anchors`) |
+| one of 3 anchors failed | PASS (anchor_pass=False) |
+| only 2 of 3 anchors present | PASS (anchor_pass=False) |
+| **GAP** seed with no anchor rows, `verify_anchors=True` | **GAP**: `... if seed_anchors else True` reports anchor_pass=True |
+
+This does not affect the committed run: `test_output/` has 40 seeds, all `success`, each with 3 passing
+anchors (120 rows in `frozen_anchor_validation.csv`). The flag would be wrong only for a seed that
+fails before its anchor validation. Such a seed's `status` column already says `failed: ...`.
 
 ### Lean: `test_rt_lean.py`
 
@@ -238,3 +346,31 @@ broken.
   - Each new CI self-test and red-team control fails against 14072c3, except the repo-root shadow
     control. That one guards the new `-c` launch, which puts cwd on sys.path unless `-I` is set, and it
     fails if `-I` is removed.
+
+- **G3 + G4, fixed** (`check_artifacts` / `resolve_artifact` in `tools/ci/lint_claims.py`). Every path-like
+  `supporting_artifacts` entry must exist in the tree (trailing words, `:LINE` and `§section` are
+  allowed; prose entries are skipped). A row that claims a formal/Lean proof (`evidence_scope`
+  `Formalized theorem`, see Round 2, or a statement like "proved in Lean")
+  must cite at least one existing `.lean` file. A registry row is not accepted as proof because
+  `registry/artifacts.csv` marks `lean/AIEFProofs/README.md` and the CI YAML there as
+  `Formalized theorem` too. Known missing citations are listed with a reason in
+  `KNOWN_MISSING_ARTIFACTS` (empty today: its one entry, AUD-REPRO-B2A95 citing
+  `compare_b2a95dfbfbe3_v3.log` (Auditor Seat 002 finding M1), was removed when ERRATA E14 restored that
+  log at its E13 `SHA256SUMS` hash).
+  The claims-lint fixture now mirrors the tree with symlinks so cited artifacts resolve.
+
+- **Round 2 (Auditor Seat 002 follow-ups), fixed in the same functions.** `evidence_scope` must equal one of the
+  values in the `### Axis 2 ... evidence_scope` table of `registry/README.md` (6 today; a missing
+  table is an error), and only `Formalized theorem` counts as a formal scope (no more substring
+  match, so "Informal ..." is not a proof claim). The proof wording also covers "Machine-checked in
+  Lean 4" and "Lean 4 verifies". After the longest existing path prefix, the remaining words outside
+  parentheses must not be path-like (no `/`, no file extension). KNOWN_MISSING_ARTIFACTS entries
+  that are no longer cited, or whose file now exists, are errors. The allow-list tests inject a
+  synthetic entry through a small driver, so they do not depend on the live entry. New GAP: the
+  `.lean` file's content is not checked. `ClaimsLint` fails in `tearDownClass` if any test changed
+  `git status` of the real checkout.
+  Deleting or renaming a column these checks read (`statement`, `evidence_scope`,
+  `supporting_artifacts`) is one `registry/claims.csv:1: required column '...' missing from the header;
+  ... NOT checked` ERROR (`missing_column()`, the same helper and wording as the G6b status-column error) (exit 1, also without --strict), so it cannot switch the checks off (same class
+  as G6b). The CI self-test fixtures carry both columns and an Axis 2 table, and empty
+  KNOWN_MISSING_ARTIFACTS for their synthetic repos, so these checks always run there too.
