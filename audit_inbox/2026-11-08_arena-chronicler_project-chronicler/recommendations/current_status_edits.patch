@@ -1,0 +1,90 @@
+--- a/CURRENT_STATUS.md
++++ b/CURRENT_STATUS.md
+@@ -1,6 +1,6 @@
+ # Current Scientific & Engineering Status (`CURRENT_STATUS.md`)
+ 
+-**Last Verified:** 2026-10-23 (`Milestone 1` complete; `verify_inventory.py` passing on all `2,898` inventoried objects)
++**Last Verified:** 2026-10-23 (`Milestone 1` complete; `verify_inventory.py` passing on all `2,898` inventoried objects) — **re-checked 2026-11-08** against `main` @ `eb3933c` for section 1 counts, ledger labels and section 2 evidence paths; scientific statements were not re-derived.
+ 
+ > **Reconciliation note (2026-10-28, local merge-prep into `main`, Researcher 001; pending auditor review).**
+ > - This page was written on 2026-10-23, before audit rounds 2–4 (`AI Agent Audits/`). The authoritative per-claim
+@@ -41,13 +41,14 @@
+ |---|---|---|---|---|
+ | **AIEF-1.3 Causal Ablations ($N=100$)** | `Frozen` (audit: *Supported, qualified*; `shuffle_R` outcome forced by construction; fixed design, not preregistered; EMP-AIEF13-01/02) | `Controlled experimental result` | `AIEF_1_3_paired_statistics_updated.py` + `runs/c3da1ac707bf` + `runs/73dca37cf93f` | **Do NOT use `paired_seed_analysis/` (`Rejected`)** or pass default CLI flags without explicit cohort paths (root defaults point to duplicate 20-seed runs). |
+ | **AIEF-1.4 Split-State Memory Ablation** | `Frozen` (audit: *Supported, reworded*: phase+history+EMA suffice; B predictive, not causal; EMP-AIEF14-01) | `Controlled experimental result` | `AIEF_1_4_memory_ablation_updated.py` + `runs/5a9f093a2fe0/` | Root `AIEF_1_4_memory_ablation_updated.py` (`34d37908...`) is SHA-256 locked by `manifest.json`; **do NOT overwrite** with whitespace-modified `.zip` copy. |
+-| **AIEF-1.4 Matched-Phase Ablation** | ~~`Frozen`~~ → **`Exploratory`** (2026-10-28, per audit resp2 #3/#7: controlled exploratory analysis with fixed recorded design; "mediates" wording withdrawn; P_mean_late is negative, −0.018 [−0.027, −0.009]; EMP-AIEF14-02) | `Finite numerical observation` in the ledger (the vocabulary has no exploratory-design value) | `AIEF_1_4_matched_phase_memory_ablation.py` + **`test_output/`** (`6.2 MB`, 40 seeds) | **Name inversion trap:** `test_output/` is the completed 40-seed study; `aief_1_4_matched_phase_memory_ablation/` (`2.9 KB`) is an aborted 3-file partial run (`Incomplete`). |
+-| **AIEF-1.4 $T_{\text{window}}$ Sensitivity (`200` cond.)** | Run outputs `Frozen`; claim EMP-AIEF14-03 **`Exploratory`** (controlled exploratory analysis with fixed recorded design; DID estimand not tested by the audits). κ_k(T_w) = kη/c − 1/T_w per component is audit-verified (AUD-KAPPA-TW) | `Finite numerical observation` (claim) | `runs/b57562a8ee77/` + `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py` | **Do NOT confuse with `Older files/b57562a8ee77/`** (`--baseline-only` pre-run) or `runs_pivot_study/ebfec9a5c419/` (`120`-cond. non-authoritative pilot). |
+-| **Full-State Tangent & History Cocycle** | `Supported` (single-seed case study) | `Finite numerical observation` | `aief_1_4_full_state_tangent_operator.py`, `aief_1_4_history_cocycle_test.py`, `aief_1_4_branch_tangent_comparison.py`, `aief_1_4_jacobian_step_convergence/` | **Keep strictly separate from `Rejected` compressed-operator scripts** (`aief_1_4_operator_compression.py` etc.). |
+-| **Multiplier-Controller Fiber & Intertwining** | `Supported` (single-seed case study; "projection" wording rejected — the gate is not a projection, AUD-GATE; strict K3 have one-sided rays, AUD-K3) | `Conditional theorem` / `Finite numerical observation` | `aief_1_4_intertwining_controller 02/` (`40/40`), `aief_1_4_feedback_rank_memory_reduction/`, `aief_1_4_k3_fiber_audit/` (`26` isolated $K_3$ components) | Unnumbered `aief_1_4_intertwining_controller/` is pre-fix (`38/40`, `Superseded`); `01` is a duplicate of `02`. |
++| **AIEF-1.4 Matched-Phase Ablation** | ~~`Frozen`~~ → **`Exploratory`** (2026-10-28, per audit resp2 #3/#7: controlled exploratory analysis with fixed recorded design; "mediates" wording withdrawn; P_mean_late is negative, −0.018 [−0.027, −0.009]; EMP-AIEF14-02) | `Finite numerical observation` in the ledger (`audited_status` `Exploratory`) | `AIEF_1_4_matched_phase_memory_ablation.py` + **`test_output/`** (`6.2 MB`, 40 seeds) | **Name inversion trap:** `test_output/` is the completed 40-seed study; `aief_1_4_matched_phase_memory_ablation/` (`2.9 KB`) is an aborted 3-file partial run (`Incomplete`). |
++| **AIEF-1.4 $T_{\text{window}}$ Sensitivity (`200` cond.)** | Run outputs `Frozen`; claim EMP-AIEF14-03 **`Exploratory`** (ledger `audited_status` `Controlled exploratory`; controlled exploratory analysis with fixed recorded design; DID estimand not tested by the audits). κ_k(T_w) = kη/c − 1/T_w per component is audit-verified (AUD-KAPPA-TW) | `Finite numerical observation` (claim) | `runs/b57562a8ee77/` + `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py` | **Do NOT confuse with `Older files/b57562a8ee77/`** (`--baseline-only` pre-run) or `runs_pivot_study/ebfec9a5c419/` (`120`-cond. non-authoritative pilot). |
++| **Full-State Tangent & History Cocycle** | `Supported` (single-seed case study) | `Finite numerical observation` | **Not present on `main` @ `eb3933c`** (checked 2026-11-08): `aief_1_4_full_state_tangent_operator.py`, `aief_1_4_history_cocycle_test.py`, `aief_1_4_branch_tangent_comparison.py`, `aief_1_4_jacobian_step_convergence/`; the ledger rows (`CF05`, `CF10`) carry only "historical … manifest" references, so this row's evidence is not reachable from the repository | **Keep strictly separate from `Rejected` compressed-operator scripts** (`aief_1_4_operator_compression.py` etc.). |
++| **Multiplier-Controller Fiber & Intertwining** | `Supported` (single-seed case study; "projection" wording rejected — the gate is not a projection, AUD-GATE; strict K3 have one-sided rays, AUD-K3) | `Conditional theorem` / `Finite numerical observation` | `aief_1_4_intertwining_controller 02/` (`40/40`), `aief_1_4_feedback_rank_memory_reduction/`, `aief_1_4_k3_fiber_audit/` (`26` isolated $K_3$ components; **not present on `main` @ `eb3933c`**) | Unnumbered `aief_1_4_intertwining_controller/` is pre-fix (`38/40`, `Superseded`); `01` is a duplicate of `02`. |
+ | **Lean 4 Controller Kernel Proof** | `Supported` (audit-verified; trivial linear algebra, LEAN-CF-01). Round-4 package: Lean `v4.33.1`, 6 modules, 115 declarations, standard axioms only (LEAN-R4) | `Formalized theorem` | `lean/AIEFProofs/` (`AIEFProofs.lean`, 6 modules, `check_lean.sh`; `0` `sorry`) | Proves algebraic identity $\ker C_{\{2,7\}} = \operatorname{span}\{(1,-1,-1)\}$ only; winner persistence along trajectories is empirical (`CF05`) / open (`CF12`). |
++| **Topology Freezing (`research/freezing`; merged 2026-11-06, PR #3 `2e55eb5`)** | `Supported` Lean core (`LEAN-FREEZE-CORE`: per-edge ∃N, real arithmetic, `lean/AIEFFreezeCore`), `Exploratory` conditional paper theorem (`RES-FREEZE-GATED`), `Exploratory` finite numerics (`RES-FREEZE-NUM`), novelty not established (`RES-FREEZE-NOVELTY`) | `Formalized theorem` + `Conditional theorem` | `research/freezing/REPORT.md`, `research/freezing/README.md`, `research/freezing/audit/AUDIT_R002_d9c03ef.md`, `lean/AIEFFreezeCore/` | Conditional: one seed, one winner branch, two directions, `dt=0.01`, safeguard `1e-12`, finite horizon. 1,412 issued (run, T) certificates with no finite-window violation (nested, dependent windows to step 80000). Do not state it unconditionally. |
+ | **Operator Theory Draft Manuscript** | `Exploratory` | `Conditional theorem` | `AIEF_1_4_OPERATOR_THEORY_MANUSCRIPT.md` | **Caveat `CAVEAT-MS-8.4`:** Corollary 8.4 ambient left orthogonality $V^\top D\mathcal{A}_\varepsilon(x_G) = s_k V^\top$ holds at $x_G = x_{\text{common}}\mathbf{1}$, **not** across general fiber perturbations $x_0\mathbf{1}+h$. |
+-| **Modular Platform `v1_analysis_v4`** | `Supported` implementation identity, not re-tested by the audit (IMPL-MODULAR-01; tests re-run 2026-10-28: default 40 passed, 2 skipped; 41 passed, 1 skipped with AIEF_RUN_SLOW_TESTS=1 and the repo root on PYTHONPATH) | `Implementation identity` | `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/` | Supersedes `workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/`. Same-host equivalence vs monolithic code is exact (`0.000e+00`). |
++| **Modular Platform `v1_analysis_v4`** | `Supported` implementation identity, not re-tested by the audit (IMPL-MODULAR-01; tests re-run 2026-10-28: default 40 passed, 2 skipped; 41 passed, 1 skipped with AIEF_RUN_SLOW_TESTS=1 and the repo root on PYTHONPATH; **current** counts, after the R026-S7 driver CLI test, are default 43 passed, 2 skipped, 2 xfailed (see §4 and `repo-checks.yml`; AUD-MODULAR-ORACLE)) | `Implementation identity` | `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/` | Supersedes `workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/`. Same-host equivalence vs monolithic code is exact (`0.000e+00`). |
+ | **Retired Spectral Compression & K3 Subgraph Scan** | `Rejected` | `Finite numerical observation` | `aief_1_4_operator_compression.py` (`24,323.8%` leakage), `aief_1_4_slow_subspace_projection.py` (`7.5e35`), `aief_1_4_observable_jacobian.py`, `aief_1_4_coupling_lock_audit.py`, `aief_1_4_k3_structure_scan.py` (`856` subgraphs) | Preserved byte-for-byte unmodified as negative methodological evidence; never cite as positive support. |
+ | **"EMA pole is the unique slow pole" (`aief_1_4_augmented_spectrum/`)** | `Quarantined` (2026-10-28; AUD-SLOWPOLE; ledger `artifact_status` `Rejected`, as the vocabulary has no `Quarantined`) | `Finite numerical observation` | `aief_1_4_augmented_spectrum/augmented_spectrum_report.txt` (file unchanged; caveat in `ERRATA_2026-10-28.md` E2) | Quarantined — invalid derivation; do not cite. Audit proposal on the 966-dim state (one replay, finite-difference, not a proof) gives NO: 10 gap rates. |
+ | **Pre-AIEF SSRH origin hypotheses (`Project Origins/`)** | **Speculative / untested origin hypothesis** (owner decision 2026-10-28; SSRH-ORIG-01..07; ledger `Incomplete`) | `Conjecture` | `Project Origins/` PDFs (AI-chat text only; no script or data in the repo) | Not cited as results until a testable form is stated and a test is run. Not retired: nothing was tested and failed. |
+@@ -78,11 +79,17 @@
+ - The SSRH origin numbers appear only in AI-chat text in `Project Origins/`. No script or data in the repo computes
+   them (see the reconciliation note on the `SSRH-ORIG-*` rows). They are valued as where the project came from and are not retired.
+ 
+-**Where we are (2026-10-28).**
+-- The local branch `merge-prep/arena-reconciled` reconciles the arena Milestone 1 work with `main` and the audits.
+-- It is **not pushed**. It waits for review by the owner, Auditor Seat 002 and outside reviewers.
+-- The claim ledger has 75 rows (7 post-push review rows added on local branch `work/post-push-1`, not pushed). Corrections to pinned files are in `ERRATA_2026-10-28.md`.
+-- Details, checks and open items are in `MERGE_PREP_REPORT.md`. Working rules are in `OPERATING_MANUAL.md`.
++**Where we are (2026-11-08).**
++- `main` is the live branch. The branch `merge-prep/arena-reconciled` described here on 2026-10-28 no longer
++  exists on the remote, and no pull request in `#1–#13` was opened from it: its reconciled content is on `main`
++  (the `registry/` tree is present), so it either landed directly or was subsumed.
++- Eleven pull requests have been merged into `main` (`#1–#5`, `#7–#12`); `#6` and `#13` were closed unmerged.
++  The most recent is `#12` (`eb3933c`, 2026-11-08).
++- The claim ledger has **80** rows; `registry/claims.csv` is authoritative. The 75-row figure above predates the
++  post-push review rows and the `RES-FREEZE-01` split into four rows. Corrections to pinned files are in
++  `ERRATA_2026-10-28.md` (E1–E18).
++- `MERGE_PREP_REPORT.md` describes the pre-merge branch; read its branch state as history, not as current.
++  Working rules are in `OPERATING_MANUAL.md`.
+ 
+ **Where we are: tested model results.** Each item cites its ledger row in `registry/claims.csv`. Cite only at that row's scope.
+ - **Model.** 12 delayed Kuramoto oscillators, an exponentially averaged coherence `R`, Hebbian edge weights `B`
+@@ -124,14 +131,14 @@
+   The ~0.995 lines in the pinned `AIEF_HISTORIC_UNFOLDING.md` / `AI_AGENT_HANDOFF_PROMPT.md` are scoped by AUD-CORR-0995-SCOPE (errata E9; the inline side branch is not merged).
+   The audit's H2 "near-circular" wording (pinned `AI Agent Audits/AIEFS_audit.md:32`) is superseded: known variant
+   (Chauhan et al. 2022, *Sci Rep*), mechanism-aligned, not circular (errata E12).
+-- **Topology freezing is a conditional theorem (research branch `research/freezing`, 2026-10-29; not a repo audit round).**
++- **Topology freezing is a conditional theorem (merged 2026-11-06, PR #3 `2e55eb5`; not a repo audit round).**
+   If R stays in a certified band from some step T on (T ≥ 1, or row sums ≤ c at start), every edge's status is constant from T + N on (explicit N, real
+   arithmetic only, paper proof; per-edge ∃N core in Lean, `lean/AIEFFreezeCore`). Closed-loop phase-locking with a margin is
+   open. The 7-clique gated-OFF certificate needs an R spread ≲ 2e-4. No finite-window violation was observed among 1,412 issued
+   (run, T) certificates (nested, dependent windows from 12 runs; checked up to step 80000). Corollary 4 was revised on 2026-10-29
+   after an external review (Researcher 026); Auditor Seat 002 re-audited it on 2026-10-31 and found it correct
+   (`research/freezing/audit/AUDIT_R002_d9c03ef.md`, CLEAN WITH NOTES). Ledger rows (split from the former RES-FREEZE-01):
+-  `LEAN-FREEZE-CORE` (Supported, Lean core, branch only), `RES-FREEZE-GATED` (Exploratory, paper proofs), `RES-FREEZE-NUM`
++  `LEAN-FREEZE-CORE` (Supported, Lean core), `RES-FREEZE-GATED` (Exploratory, paper proofs), `RES-FREEZE-NUM`
+   (Exploratory, finite numerics), `RES-FREEZE-NOVELTY` (Not established: known variant of Cho–Dong–Ha 2023, a consistency hit only; narrow residual plausibly new; search non-exhaustive); see `research/freezing/README.md`.
+ - **Analysis v4 held events at exact-duration boundaries: blocker.** v4's end check can reject an event held exactly the required
+   duration (floating-point rounding; 32 of 605 starts on v4's saved grid in a synthetic test). Only grid-multiple holds are affected,
+@@ -155,8 +162,8 @@
+   - The proofs are linear-algebra and incidence facts, not dynamics (LEAN-CF-01).
+ 
+ **Where we're going.**
+-1. Review of the set-up branch by the owner, GPT and Arena AI. After that, the owner decides whether to push and merge.
+-2. Automated PR checks from Auditor Seat 002 are now in this branch (`OPERATING_MANUAL.md` §7). They have not run on GitHub yet, because nothing is pushed.
++1. ~~Review of the set-up branch by the owner, GPT and Arena AI; owner decision whether to push and merge.~~ **Done:** the reconciled content is on `main` and later work lands by pull request (#1–#12). No work is queued on an unpushed local branch.
++2. Automated PR checks from Auditor Seat 002 are in `.github/workflows/` (`repo-checks.yml`, `lean.yml`) and run on pull requests to `main`. **Not checked from this document:** whether every job is a required status check in branch protection — verify before relying on a green run.
+ 3. Owner-only items:
+    - the history rewrite for PII;
+    - `verify_inventory.py` fixes;
+@@ -187,7 +194,7 @@
+ | Are the v4 held-event outputs affected by the end-check bug? | `AUD-V4-HELDEVENT` | Audit the v4.1 candidate, then compare its held rows with the saved v4 outputs. |
+ 
+ **Proposed formal-math steps (proposals, not results; from the Arena AI review):**
+-- (a) **Done on research branch `research/lean-kn` (2026-10-29; local, not audited).** `dim ker A_{K_n} = C(n,2) − n` is
++- (a) **Done on `research/lean-kn` (2026-10-29; merged; audited as `LEAN-KN-01`, `Supported`).** `dim ker A_{K_n} = C(n,2) − n` is
+   proved for all n ≥ 3 for the repository's `inc` (n = 3…6 were proved in `CompleteGraphIncidence.lean`), together with
+   full row rank, `m = C(n,2)`, the repository's `rinv` as a right inverse for every n ≥ 3, and `dim ker = 54` for n = 12.
+   New Lake project `lean/AIEFProofsKn/` (imports the pinned `lean/AIEFProofs` unchanged); its `check_lean_kn.sh` passes 7/7.
