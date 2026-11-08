@@ -1,0 +1,121 @@
+WARNING SHEBANG_NOT_EXEC AI Agent Audits/evidence/proposals/aief_1_4_full_state_spectrum.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AI Agent Audits/evidence/run_all.sh: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AI Agent Audits/evidence/scripts/lean_check.sh: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AI Agent Audits/evidence/scripts/terminology_grep.sh: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AI Agent Audits/licensing_inventory/scripts/inventory.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AI Agent Audits/licensing_inventory/scripts/make_report.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_3_closure_diagnostics.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_3_closure_diagnostics_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_3_falsification_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_3_paired_statistics.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_3_paired_statistics_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_Twindow_pivot_seed_contrasts.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_Twindow_sensitivity.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_Twindow_sensitivity_analysis_v3.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_active_boundary_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_actual_admissibility_branch_audit.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_augmented_duhamel_feedback_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_augmented_tangent_cocycle_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_biorthogonal_triangular_closure.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_channel_invariance_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_cocycle_controls_coupled_comparison.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_component_controller_audit.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_defect_causal_ema_trace.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_defect_recurrence_analytic_mode.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_duhamel_memory_alignment_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_entropy_geometry_diagnostics.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_exceptional_K3_transition_audit.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_exceptional_tangent_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_existing_clique_invariant_subspaces.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_face_spectrum_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_feedback_rank_memory_reduction.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_freeze_controller_fiber_theorem.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_frozen_driver_cocycle_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_intertwining_controller_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_local_update_comparison.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_matched_phase_memory_ablation.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_memory_ablation.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_memory_ablation_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_memory_ablation_updated_07.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_nested_operator_family_audit.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_parameter_free_triangular_closure.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_phase_balance_source_dynamics.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_phase_source_locking_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_propagation_gap_geometric_control.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_proposal_equalization_bridge_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_radial_observable_subsystem_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_resonant_tracking_angular_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_results_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_scalar_spectral_gap_reduction.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_stationarity_perturbation_analysis_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_survival_outlier_spectral.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_tangent_spectrum_switch_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_1_4_trajectory_recovery_equivalence.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_modular_driver_v1.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_augmented_duhamel_feedback_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_augmented_duhamel_feedback_analysis_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_augmented_tangent_cocycle_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_duhamel_memory_alignment_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_face_spectrum_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_feedback_rank_memory_reduction.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_freeze_controller_fiber_theorem.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_matched_phase_memory_ablation.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_matched_phase_memory_ablation_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_matched_phase_memory_ablation_07.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_memory_ablation_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_memory_ablation_updated_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_phase_source_locking_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/AIEF_1_4_resonant_tracking_angular_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_augmented_spectrum.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_augmented_spectrum_02.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_coupling_lock_audit.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_02.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_03.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_05.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_08.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_1.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_10.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_multiseed_geometry_11.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_slow_bundle_geometry_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_slow_subspace_projection.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_slow_subspace_projection_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_two_channel_alignment_v4.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_two_channel_alignment_v5.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC Older files/aief_1_4_two_channel_alignment_v5_01.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_augmented_spectrum.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_controller_boundary_margin.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_coupling_lock_audit.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_k3_structure_scan.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_multiseed_geometry.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_observable_jacobian.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_operator_compression.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_phase_source_decomposition.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_phase_source_decomposition_v2.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_slow_bundle_geometry.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_slow_eigenvector_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_slow_subspace_projection.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_transverse_phase_jacobian.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_two_channel_alignment_v4.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_1_4_two_channel_alignment_v5.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC aief_experiment_engine_v1.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_freeze_analysis_lineage.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_stationarity_perturbation_analysis.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_closure_diagnostics.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_closure_diagnostics_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_paired_statistics.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/zip_updated_AIEF_1_3_paired_statistics_updated.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC diagnose_import.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC gap_phase_scan_v9.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC run_twindow_pivot_study.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC tools/ci/tests/test_check_artifact_pins.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC tools/ci/tests/test_check_current_inventory.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC tools/ci/tests/test_check_modes.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC tools/ci/tests/test_ci_tools.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC tools/ci/tests/test_lean_presence.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC tools/ci/tests/test_validate_registry.py: mode 100644, has #! line
+WARNING SHEBANG_NOT_EXEC workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/AIEF_modular_driver_v1.py: mode 100644, has #! line
+check_modes: 19 known script(s) checked, 0 not executable; 119 other shebang file(s) not executable (--strict: known-list scripts are errors, others warn-only)
+== result: 0 error(s), 119 warning(s) (--strict: known-list scripts not 100755 count as errors) -> PASS

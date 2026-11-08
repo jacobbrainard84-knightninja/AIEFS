@@ -1,0 +1,118 @@
+..FFFFFFF.
+======================================================================
+FAIL: test_digest_proxy_hashlib_beside_checker_cannot_hide_mismatch (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_digest_proxy_hashlib_beside_checker_cannot_hide_mismatch)
+S-B1 witness: tools/ci/hashlib.py proxying the real module and substituting the listed digest for
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 146, in test_digest_proxy_hashlib_beside_checker_cannot_hide_mismatch
+    self.assertTamperCaught(*self.run_checker())
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 114, in assertTamperCaught
+    self.assertEqual(rc, 1, out)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1 : == check_sha256sums: /tmp/cs_iso_r_rd14h_
+SUMS    lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt
+SUMS    tools/sync/SHA256SUMS
+SKIP    AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt (excluded: historical log of the lean_r4 audit run, not a live pin: its paths are relative to lean/AIEFProofs, and Basic.lean/Smoke.lean were changed after that run on purpose (ERRATA_2026-10-28.md E7), so it no longer matches by design)
+SKIP    twindow_frozen_authority_hashes.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+SKIP    twindow_source_hashes_before.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+== result: 2 SHA256SUMS file(s), 2 entries verified, 0 allow-listed, 0 error(s) -> PASS
+
+
+======================================================================
+FAIL: test_forging_shadow_modules_beside_checker_cannot_hijack_it (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_forging_shadow_modules_beside_checker_cannot_hijack_it) (module='hashlib')
+S-B1: no stdlib-named module beside the checker (tools/ci/<mod>.py) runs inside it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 155, in test_forging_shadow_modules_beside_checker_cannot_hijack_it
+    self.assertTamperCaught(*self.run_checker())
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 114, in assertTamperCaught
+    self.assertEqual(rc, 1, out)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1 : == result: 2 SHA256SUMS file(s), 2 entries verified, 0 allow-listed, 0 error(s) -> PASS
+
+
+======================================================================
+FAIL: test_forging_shadow_modules_beside_checker_cannot_hijack_it (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_forging_shadow_modules_beside_checker_cannot_hijack_it) (module='argparse')
+S-B1: no stdlib-named module beside the checker (tools/ci/<mod>.py) runs inside it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 155, in test_forging_shadow_modules_beside_checker_cannot_hijack_it
+    self.assertTamperCaught(*self.run_checker())
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 114, in assertTamperCaught
+    self.assertEqual(rc, 1, out)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1 : == result: 2 SHA256SUMS file(s), 2 entries verified, 0 allow-listed, 0 error(s) -> PASS
+
+
+======================================================================
+FAIL: test_forging_shadow_modules_beside_checker_cannot_hijack_it (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_forging_shadow_modules_beside_checker_cannot_hijack_it) (module='re')
+S-B1: no stdlib-named module beside the checker (tools/ci/<mod>.py) runs inside it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 155, in test_forging_shadow_modules_beside_checker_cannot_hijack_it
+    self.assertTamperCaught(*self.run_checker())
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 114, in assertTamperCaught
+    self.assertEqual(rc, 1, out)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1 : == result: 2 SHA256SUMS file(s), 2 entries verified, 0 allow-listed, 0 error(s) -> PASS
+
+
+======================================================================
+FAIL: test_forging_shadow_modules_beside_checker_cannot_hijack_it (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_forging_shadow_modules_beside_checker_cannot_hijack_it) (module='subprocess')
+S-B1: no stdlib-named module beside the checker (tools/ci/<mod>.py) runs inside it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 155, in test_forging_shadow_modules_beside_checker_cannot_hijack_it
+    self.assertTamperCaught(*self.run_checker())
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 114, in assertTamperCaught
+    self.assertEqual(rc, 1, out)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1 : == result: 2 SHA256SUMS file(s), 2 entries verified, 0 allow-listed, 0 error(s) -> PASS
+
+
+======================================================================
+FAIL: test_reexec_precedes_every_other_import (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_reexec_precedes_every_other_import)
+Structure: the only statement before the isolated re-exec is `import sys as _sys` (built in).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 175, in test_reexec_precedes_every_other_import
+    self.assertEqual([(a.name, a.asname) for a in body[0].names], [("sys", "_sys")])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [('argparse', None)] != [('sys', '_sys')]
+
+First differing element 0:
+('argparse', None)
+('sys', '_sys')
+
+- [('argparse', None)]
++ [('sys', '_sys')]
+
+======================================================================
+FAIL: test_shadow_hashlib_on_pythonpath_cannot_hijack_it (tools.ci.tests.test_check_sha256sums.CheckSha256sumsIsolationTests.test_shadow_hashlib_on_pythonpath_cannot_hijack_it)
+S-B1 / N1: a hashlib.py on PYTHONPATH is ignored (the re-exec uses -I).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 166, in test_shadow_hashlib_on_pythonpath_cannot_hijack_it
+    self.assertTamperCaught(*self.run_checker(env_extra={"PYTHONPATH": shadow}))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/wt_sha256sums_sb1/tools/ci/tests/test_check_sha256sums.py", line 114, in assertTamperCaught
+    self.assertEqual(rc, 1, out)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1 : == check_sha256sums: /tmp/cs_iso_uen6s121
+SUMS    lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt
+SUMS    tools/sync/SHA256SUMS
+SKIP    AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt (excluded: historical log of the lean_r4 audit run, not a live pin: its paths are relative to lean/AIEFProofs, and Basic.lean/Smoke.lean were changed after that run on purpose (ERRATA_2026-10-28.md E7), so it no longer matches by design)
+SKIP    twindow_frozen_authority_hashes.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+SKIP    twindow_source_hashes_before.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+== result: 2 SHA256SUMS file(s), 2 entries verified, 0 allow-listed, 0 error(s) -> PASS
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.303s
+
+FAILED (failures=7)

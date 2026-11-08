@@ -1,0 +1,13 @@
+== check_sha256sums: /tmp/wt_sha256sums_sb1
+SUMS    AI Agent Audits/lean_recovery/SHA256SUMS
+SUMS    audits/reproductions/b2a95dfbfbe3/SHA256SUMS
+SUMS    lean/AIEFFreezeCore/AIEF_LEAN_FREEZE_SOURCE_SHA256SUMS.txt
+SUMS    lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt
+SUMS    lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt
+SUMS    lean/AIEFProofsKn/AIEF_LEAN_KN_SOURCE_SHA256SUMS.txt
+SUMS    tools/sync/SHA256SUMS
+SKIP    AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt (excluded: historical log of the lean_r4 audit run, not a live pin: its paths are relative to lean/AIEFProofs, and Basic.lean/Smoke.lean were changed after that run on purpose (ERRATA_2026-10-28.md E7), so it no longer matches by design)
+SKIP    twindow_frozen_authority_hashes.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+SKIP    twindow_source_hashes_before.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+ERROR   tools/sync/SHA256SUMS:1: MISMATCH download_new.sh: listed 6a811cd54c8d441453d83969f61797951d7f2d320f26e587d4c72d62084f639e, actual abeef034dc7892d541176226e4fc23676cab7d0237e774becc2634d7cf2c587d
+== result: 7 SHA256SUMS file(s), 60 entries verified, 0 allow-listed, 1 error(s) -> FAIL

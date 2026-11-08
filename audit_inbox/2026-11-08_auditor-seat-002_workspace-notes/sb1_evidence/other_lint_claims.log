@@ -1,0 +1,7 @@
+== lint_claims: /tmp/wt_sha256sums_sb1
+vocabulary: 14 statuses from '## Status vocabulary' block in ./registry/README.md
+vocabulary: 'Speculative / untested origin hypothesis' is allowed
+evidence_scope: 6 values from registry/README.md
+registry/claims.csv: 13 columns; linting artifact_status, audited_status
+checked 80 claim rows; 0 status violation(s)
+== result: 0 error(s), 0 warning(s), 0 notice(s) -> PASS

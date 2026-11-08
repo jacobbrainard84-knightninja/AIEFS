@@ -1,0 +1,8 @@
+== hygiene_scan: /tmp/wt_sha256sums_sb1
+allowed binary folders: 15 pattern(s) from /tmp/wt_sha256sums_sb1/tools/ci/hygiene_allow.txt
+scope: all tracked files: 3052 file(s)
+WARNING BIG_FILE aief_1_4_phase_cancellation_audit/phase_cancellation_trajectory.csv (56.0 MiB > 50 MiB)
+WARNING BIG_FILE aief_1_4_phase_source_decomposition/source_decomposition_trajectory.csv (63.5 MiB > 50 MiB)
+WARNING BIG_FILE aief_1_4_proposal_equalization_bridge/proposal_equalization_trajectory.csv (51.4 MiB > 50 MiB)
+note: 30 text file(s) over 10 MiB were size-checked only (raise --max-scan-mb to content-scan them)
+== result: 0 error(s), 3 warning(s) -> PASS

@@ -1,0 +1,12 @@
+== check_sha256sums: /tmp/wt_sha256sums_sb1
+SUMS    AI Agent Audits/lean_recovery/SHA256SUMS
+SUMS    audits/reproductions/b2a95dfbfbe3/SHA256SUMS
+SUMS    lean/AIEFFreezeCore/AIEF_LEAN_FREEZE_SOURCE_SHA256SUMS.txt
+SUMS    lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt
+SUMS    lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt
+SUMS    lean/AIEFProofsKn/AIEF_LEAN_KN_SOURCE_SHA256SUMS.txt
+SUMS    tools/sync/SHA256SUMS
+SKIP    AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt (excluded: historical log of the lean_r4 audit run, not a live pin: its paths are relative to lean/AIEFProofs, and Basic.lean/Smoke.lean were changed after that run on purpose (ERRATA_2026-10-28.md E7), so it no longer matches by design)
+SKIP    twindow_frozen_authority_hashes.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+SKIP    twindow_source_hashes_before.txt (excluded: historical record from the original machine: absolute /home/deck/... paths outside this repo)
+== result: 7 SHA256SUMS file(s), 61 entries verified, 0 allow-listed, 0 error(s) -> PASS

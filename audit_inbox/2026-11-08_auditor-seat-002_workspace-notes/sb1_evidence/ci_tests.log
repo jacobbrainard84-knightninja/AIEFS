@@ -1,0 +1,41 @@
+................................................................................................................................./tmp/wt_sha256sums_sb1/tools/ci/tests/test_lean_presence.py:42: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9wguao8d/gh_output' mode='r' encoding='UTF-8'>
+  output = open(self.out).read() if os.path.exists(self.out) else ""
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/tmp/wt_sha256sums_sb1/tools/ci/tests/test_lean_presence.py:49: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9wguao8d/gh_summary' mode='r' encoding='UTF-8'>
+  self.assertIn("SKIPPED", open(self.summary).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_lean_presence.py:42: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpwljx7svb/gh_output' mode='r' encoding='UTF-8'>
+  output = open(self.out).read() if os.path.exists(self.out) else ""
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/tmp/wt_sha256sums_sb1/tools/ci/tests/test_lean_presence.py:42: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpwljx7svb/gh_output' mode='r' encoding='UTF-8'>
+  output = open(self.out).read() if os.path.exists(self.out) else ""
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....../tmp/wt_sha256sums_sb1/tools/ci/tests/test_lean_presence.py:42: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9dui98ep/gh_output' mode='r' encoding='UTF-8'>
+  output = open(self.out).read() if os.path.exists(self.out) else ""
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..................../tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/wt_sha256sums_sb1/tools/ci/tests/test_validate_registry.py:47: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/wt_sha256sums_sb1/audits/engineering/validate_registry_against_tree.py'>
+  self.put(origin, SCRIPT_REL, open(SCRIPT, "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.
+----------------------------------------------------------------------
+Ran 163 tests in 2.972s
+
+OK

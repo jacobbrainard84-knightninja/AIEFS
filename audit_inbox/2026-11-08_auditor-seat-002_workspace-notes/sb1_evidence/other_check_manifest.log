@@ -1,0 +1,5 @@
+== check_manifest: /tmp/wt_sha256sums_sb1
+$ /usr/bin/python3 -I -B "AI Agent Audits/evidence/verify_manifest.py" --inputs   (isolated; runs the hashed bytes)
+checked 145 published files and 24 inputs; 2 post-manifest logs listed but not hashed
+OK
+== result: 1 verifier(s) run, 0 failed -> PASS

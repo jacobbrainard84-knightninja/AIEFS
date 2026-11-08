@@ -1,0 +1,4 @@
+== check_artifact_pins: /tmp/wt_sha256sums_sb1
+files: git-tracked only; allowlist: 7 known-changed, 52 known-missing row(s)
+checked 2898 row(s): 2839 match, 7 known-changed, 52 known-missing
+== result: 0 error(s), 0 notice(s) -> PASS
