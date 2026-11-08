@@ -28,7 +28,19 @@ the allow-list cannot go stale silently. Finding no checksum list at all, a malf
 empty list or an unreadable list is an error. All failures are reported, not just the first.
 
 Exit status: 0 = all entries verified, 1 = any failure, 2 = usage error.
+
+Checker isolation (Researcher 001 audit of 18e542c, S-B1; same class as check_manifest.py B1): run as a
+script, this file first re-executes itself as `python -I -B`, before importing anything a sibling file could
+shadow. Without that, tools/ci/ (the script folder), the current folder and PYTHONPATH are on sys.path, so a
+committed tools/ci/hashlib.py (or argparse.py, re.py, subprocess.py ...) would run inside this checker and
+could report the listed digest for a tampered file, or print a forged PASS. sys is built in and os is already
+loaded at interpreter start-up, so neither can be shadowed. Interpreter start-up hooks (sitecustomize /
+usercustomize outside the repo) run before any script code and remain the documented residual (N1).
 """
+import sys as _sys
+if __name__ == "__main__" and not _sys.flags.isolated:
+    import os as _os
+    _os.execv(_sys.executable, [_sys.executable, "-I", "-B", _os.path.abspath(__file__)] + _sys.argv[1:])
 import argparse
 import hashlib
 import os
