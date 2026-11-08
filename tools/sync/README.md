@@ -43,7 +43,8 @@ tools/sync/upload_new.sh                 # asks y/N, then commits and pushes
 tools/sync/upload_new.sh -m "message" --yes
 ```
 
-- It first runs `git fetch`, then integrates GitHub's changes with `git pull --rebase --autostash`. On a conflict it stops with instructions.
+- It first runs `git fetch`. If a new or changed file on GitHub would overwrite a local untracked or ignored file (e.g. a local `*.log`), it lists the files and stops before changing anything, like `download_new.sh`. `--yes` does not skip this check. Move or rename those files and rerun.
+- It then integrates GitHub's changes with `git pull --rebase --autostash`. On a conflict it stops with instructions.
 - It uploads only new or changed files that `.gitignore` allows. It never uses `git add -f`.
 - These are skipped, with the reason printed:
   - files over 95 MB (`--max-size-mb N` or `UPLOAD_MAX_MB=N` changes this)
@@ -52,7 +53,12 @@ tools/sync/upload_new.sh -m "message" --yes
   - nested git repositories
 - Files you deleted locally are only listed. They are deleted on GitHub only with `--include-deletions`.
 - It refuses to run when files are already staged, for example leftovers from an earlier `git add -f`. To unstage them (this does not change the files): `git restore --staged :/`.
-- It refuses to push local commits that contain oversized, secret-looking or force-added ignored files.
+- It refuses to push local commits that contain oversized, secret-looking or force-added ignored files. It checks every local commit that is not on GitHub, not just the latest one:
+  - the name of every file added or changed in any of those commits
+  - the size and contents (private key / API token patterns) of every file version GitHub does not already have, including files that a later commit deleted
+  - force-added ignored files, at the latest commit
+
+  For a branch that does not exist on GitHub yet, everything not already on another GitHub branch is checked (on an empty repository that is the whole history). To fix a refusal, undo those commits but keep the files (the error message shows the `git reset --mixed` command), then rerun.
 - The commit message is `Upload via upload_new.sh <UTC time> (N file(s))`, or your own text via `-m`.
 - It never force-pushes. If the push is rejected, just run it again.
 
