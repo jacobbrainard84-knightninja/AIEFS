@@ -61,12 +61,7 @@ EXCLUDED = {
 }
 
 # (list path relative to repo, entry path as written) -> reason. Accepted only while MISSING.
-ALLOWED_MISSING = {
-    ("audits/reproductions/b2a95dfbfbe3/SHA256SUMS", "compare_b2a95dfbfbe3_v3.log"):
-        "v3 comparison log was never committed (Auditor Seat 002 finding M1). Branch "
-        "fix/comparator-v4-gates (Auditor Seat 002) regenerates the log and fixes this SUMS file; "
-        "remove this entry when that branch lands on main (the check then errors until you do).",
-}
+ALLOWED_MISSING = {}
 
 # Tests only (never set in CI): take the tracked-file list from this git checkout instead of
 # --repo, and also treat it as "inside the repository". The red-team suite uses it to run the

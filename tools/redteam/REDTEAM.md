@@ -121,6 +121,10 @@ and expected failures (GAPs). Tables describe the checkers in the same commit as
 | no SHA256SUMS file at all (fresh git repo) | check_sha256sums | PASS (fail-closed) |
 | not a git checkout | check_sha256sums | PASS (fail-closed) |
 
+The main refresh restored the v3 comparison log (ERRATA E14). Its checksum now matches, so
+the obsolete live missing-file exception was removed. The allow-list behavior remains tested
+with synthetic entries. Current discovery verifies 7 checksum lists and 61 entries.
+
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
 Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit 1 and no traceback
