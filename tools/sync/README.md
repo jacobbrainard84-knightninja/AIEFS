@@ -43,22 +43,24 @@ tools/sync/upload_new.sh                 # asks y/N, then commits and pushes
 tools/sync/upload_new.sh -m "message" --yes
 ```
 
-- It first runs `git fetch`. If a new or changed file on GitHub would overwrite a local untracked or ignored file (e.g. a local `*.log`), it lists the files and stops before changing anything, like `download_new.sh`. `--yes` does not skip this check. Move or rename those files and rerun.
-- It then integrates GitHub's changes with `git pull --rebase --autostash`. On a conflict it stops with instructions.
+- It first runs `git fetch`. It checks incoming paths against local untracked or ignored files (e.g. a local `*.log`), including descendants of a tracked directory replaced by a file or symlink. On a collision it lists the files and stops before integration (fetch metadata has already changed). Normal directory-to-directory updates are allowed. `--yes` does not skip this check. Move or rename those files and rerun.
+- It then integrates GitHub's changes with `git pull --rebase --autostash`. On a conflict it stops with instructions. The collision check is inspect-only: an upstream change between the guard fetch and the pull's second fetch remains a race; this is not universal overwrite protection.
 - It uploads only new or changed files that `.gitignore` allows. It never uses `git add -f`.
 - These are skipped, with the reason printed:
   - files over 95 MB (`--max-size-mb N` or `UPLOAD_MAX_MB=N` changes this)
   - names that look private: `.env*`, `*.key`, `*.pem`, `id_rsa*`, `credentials*`, `*token*`, `*.kdbx`, …
-  - files whose contents look like a private key or API token
+  - text files whose contents match private-key or API-token patterns (a heuristic, not a universal secret scan; `git grep -I` skips binary/NUL-prefixed blobs)
   - nested git repositories
 - Files you deleted locally are only listed. They are deleted on GitHub only with `--include-deletions`.
 - It refuses to run when files are already staged, for example leftovers from an earlier `git add -f`. To unstage them (this does not change the files): `git restore --staged :/`.
 - It refuses to push local commits that contain oversized, secret-looking or force-added ignored files. It checks every local commit that is not on GitHub, not just the latest one:
-  - the name of every file added or changed in any of those commits
+  - the name of every file added or changed in any of those commits, including paths introduced only by a merge (diffs against each parent, deduplicated)
   - the size and contents (private key / API token patterns) of every file version GitHub does not already have, including files that a later commit deleted
   - force-added ignored files, at the latest commit
 
-  For a branch that does not exist on GitHub yet, everything not already on another GitHub branch is checked (on an empty repository that is the whole history). To fix a refusal, undo those commits but keep the files (the error message shows the `git reset --mixed` command), then rerun.
+  Unpublished path/object enumeration and committed-blob content checks fail closed if they cannot complete. Content checks use the same text heuristic and binary skip described above; commit messages/metadata and external submodule histories are not scanned.
+
+  For a branch that does not exist on GitHub yet, everything not already on another GitHub branch is checked (on an empty repository that is the whole history). To fix a refusal, undo those commits but keep the files with `git reset --mixed <safe-base>`, then rerun. Use `origin/<branch>` only if that ref exists and is the intended safe base; for a new branch select an existing reviewed base commit/ref instead.
 - The commit message is `Upload via upload_new.sh <UTC time> (N file(s))`, or your own text via `-m`.
 - It never force-pushes. If the push is rejected, just run it again.
 

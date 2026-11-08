@@ -270,6 +270,117 @@ check "names feat.txt as key/token content" has "'feat.txt' (contents look like 
 check "branch not created on remote" bash -c '! git --git-dir="$1" rev-parse -q --verify refs/heads/feature >/dev/null' _ "$ROOT/github.git"
 ( cd "$MINE" && git switch -q main && git branch -q -D feature )
 
+# U17-U19: audit blockers at 7daf35b. Each case uses a separate local bare remote.
+# Intentional rule change: directory replacement, merge-only blocked names, and failed
+# enumeration used to upload/overwrite (exit 0). They must now refuse without state loss.
+audit_pair() {
+  git init -q --bare "$ROOT/github.git"
+  git clone -q "$ROOT/github.git" "$MINE" 2>/dev/null
+  cd "$MINE"
+  printf '*.log\n' > .gitignore
+  mkdir folder; printf tracked > folder/tracked.txt
+  printf baseline > README
+  git add -A && git commit -q -m baseline && git push -q origin main
+  git clone -q "$ROOT/github.git" "$OTHER"
+}
+audit_regressions() {
+  local SAVE="$PWD" ROOT MINE OTHER H H0 mode REAL_GIT
+  REAL_GIT="$(command -v git)"
+  for mode in file symlink directory; do
+    T "U17 F1 tracked directory replaced by $mode preserves local descendants"
+    ROOT="$(mktemp -d /tmp/syncaudit.XXXXXX)"; MINE="$ROOT/mine"; OTHER="$ROOT/other"
+    audit_pair
+    printf 'LOCAL PRECIOUS' > folder/local.log
+    ( cd "$OTHER" && if [ "$mode" = directory ]; then
+        printf upstream > folder/new.txt
+      else
+        git rm -qr folder
+        if [ "$mode" = file ]; then printf upstream > folder; else ln -s README folder; fi
+      fi && git add -A && git commit -q -m "replace with $mode" && git push -q origin main )
+    H="$(git rev-parse HEAD)"; H0="$(remote_head)"
+    run u17dry "$UP" --dry-run
+    check "dry-run exit 0" [ "$RC" -eq 0 ]
+    check "dry-run preserves ignored descendant" [ "$(cat folder/local.log)" = 'LOCAL PRECIOUS' ]
+    if [ "$mode" != directory ]; then
+      check "dry-run names colliding descendant" has folder/local.log
+    fi
+    run u17 "$UP" --yes
+    if [ "$mode" = directory ]; then
+      check "directory update allowed" [ "$RC" -eq 0 ]
+      check "new child arrived" [ -f folder/new.txt ]
+    else
+      check "replacement refused" [ "$RC" -ne 0 ]
+      check "names colliding ignored descendant" has folder/local.log
+      check "HEAD unchanged" [ "$(git rev-parse HEAD)" = "$H" ]
+    fi
+    check "ignored descendant preserved" [ "$(cat folder/local.log 2>/dev/null)" = 'LOCAL PRECIOUS' ]
+    check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+    cd "$SAVE"; rm -rf "$ROOT"
+  done
+
+  T "U18 F2 blocked filename introduced only by merge then deleted is refused"
+  ROOT="$(mktemp -d /tmp/syncaudit.XXXXXX)"; MINE="$ROOT/mine"; OTHER="$ROOT/other"
+  audit_pair
+  git switch -qc side
+  printf side > side.txt; git add -A; git commit -q -m side
+  git switch -q main
+  printf main > main.txt; git add -A; git commit -q -m main
+  git merge -q --no-commit --no-ff side
+  printf 'dummy harmless text' > credentials.json
+  git add -A; git commit -q -m 'merge with extra path'
+  git rm -q credentials.json; printf changed > README; git commit -qam 'remove path'
+  H="$(git rev-parse HEAD)"; H0="$(remote_head)"
+  check "witness is two-parent merge" [ "$(git rev-list --parents -n 1 HEAD~1 | wc -w)" -eq 3 ]
+  check "blocked name exists on merge" git cat-file -e HEAD~1:credentials.json
+  check "blocked name absent at tip" bash -c '! git cat-file -e HEAD:credentials.json 2>/dev/null'
+  run u18 "$UP" --yes --max-size-mb 1
+  check "refused" [ "$RC" -ne 0 ]
+  check "credentials reason" has "'credentials.json' (credentials file)"
+  check "HEAD unchanged" [ "$(git rev-parse HEAD)" = "$H" ]
+  check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+  check "merge not published" bash -c '! git --git-dir="$1" cat-file -e "$2" 2>/dev/null' _ "$ROOT/github.git" "$H"
+  cd "$SAVE"; rm -rf "$ROOT"
+
+  # Check each producer separately; pipefail must catch rev-list even when cat-file succeeds.
+  # Blob failure is the existing positive fault control. Empty successful listing is allowed.
+  for mode in batch objects blob empty; do
+    T "U19 F2 object scan fault control: $mode"
+    ROOT="$(mktemp -d /tmp/syncaudit.XXXXXX)"; MINE="$ROOT/mine"; OTHER="$ROOT/other"
+    audit_pair
+    if [ "$mode" = empty ]; then
+      git switch -qc feature
+      printf harmless > fresh.txt
+    else
+      printf 'dummy = %s\n' "$FAKE_TOKEN" > notes.txt
+      git add notes.txt; git commit -q -m 'dummy notes'
+    fi
+    H="$(git rev-parse HEAD)"; H0="$(remote_head)"
+    mkdir "$ROOT/shim"
+    printf '#!/usr/bin/env bash\nREAL_GIT=%q\nMODE=%q\n' "$REAL_GIT" "$mode" > "$ROOT/shim/git"
+    cat >> "$ROOT/shim/git" <<'SHIM'
+if [ "$MODE" = batch ] && [ "${1:-}" = cat-file ] && [[ "${2:-}" == --batch-check=* ]]; then exit 7; fi
+if [ "$MODE" = objects ] && [ "${1:-}" = rev-list ] && [ "${2:-}" = --objects ]; then exit 7; fi
+if [ "$MODE" = blob ] && [ "${1:-}" = cat-file ] && [ "${2:-}" = blob ]; then exit 7; fi
+exec "$REAL_GIT" "$@"
+SHIM
+    chmod +x "$ROOT/shim/git"
+    run u19 env PATH="$ROOT/shim:$PATH" "$UP" --yes
+    if [ "$mode" = empty ]; then
+      check "empty unpublished-object list succeeds" [ "$RC" -eq 0 ]
+      check "feature published" git --git-dir="$ROOT/github.git" cat-file -e feature:fresh.txt
+    else
+      check "fault refused" [ "$RC" -ne 0 ]
+      if [ "$mode" = blob ]; then check "content failure explained" has 'could not check the contents'
+      else check "listing failure explained" has 'could not list/check unpublished objects'; fi
+      check "HEAD unchanged" [ "$(git rev-parse HEAD)" = "$H" ]
+      check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+      check "notes not published" bash -c '! git --git-dir="$1" cat-file -e main:notes.txt 2>/dev/null' _ "$ROOT/github.git"
+    fi
+    cd "$SAVE"; rm -rf "$ROOT"
+  done
+}
+audit_regressions
+
 # =====================================================================
 T "D1 download --dry-run shows incoming, changes nothing"
 other_commit bash -c 'mkdir -p "AI Agent Audits/round 4" && echo r4 > "AI Agent Audits/round 4/new report.md" && echo v2 > "AI Agent Audits/report one.md"'

@@ -91,6 +91,14 @@ if git rev-parse -q --verify "$RREF" >/dev/null; then
     while IFS= read -r -d '' st && IFS= read -r -d '' p; do
       [ "$st" = D ] && continue
       if local_untracked "$p"; then COLLIDE+=("$p"); continue; fi
+      # A tracked tree is not disposable: Git can delete its ignored children when
+      # replacing it with a blob (regular file OR symlink). Directory updates are safe.
+      if [ -d "$p" ] && [ ! -L "$p" ] && [ "$(git cat-file -t "$RREF:$p" 2>/dev/null)" = blob ]; then
+        while IFS= read -r -d '' child; do COLLIDE+=("$child"); done < <(
+          G ls-files -o --exclude-standard -z -- "$p"
+          G ls-files -o -i --exclude-standard -z -- "$p"
+        )
+      fi
       d="$p"
       while [ "${d%/*}" != "$d" ]; do
         d="${d%/*}"
@@ -207,13 +215,23 @@ if [ "${AHEAD:-0}" -gt 0 ] || ! git rev-parse -q --verify "$RREF" >/dev/null; th
   # from a fetched $REMOTE/* ref; for a brand-new branch on an empty remote that is the whole
   # history (no shortcut, no bound: correctness first).
   git rev-list --quiet HEAD --not --remotes="$REMOTE" || die "could not list the unpushed commits to check them; nothing was uploaded"
+  # Capture producers to completion before parsing; process substitutions hide failures.
+  SCAN_DIR="$(mktemp -d "${TMPDIR:-/tmp}/upload_new_scan.XXXXXX")" || die "could not create scan directory"
+  trap 'rm -rf -- "$SCAN_DIR"' EXIT
+  BLOB_DIR="$SCAN_DIR"
+  if ! git -c core.quotepath=off log -m -z --no-renames --diff-filter=AM --name-only --format= HEAD --not --remotes="$REMOTE" > "$SCAN_DIR/paths"; then
+    die "could not list unpublished paths; nothing was uploaded"
+  fi
+  if ! git rev-list --objects HEAD --not --remotes="$REMOTE" | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' > "$SCAN_DIR/objects"; then
+    die "could not list/check unpublished objects; nothing was uploaded"
+  fi
   declare -A SEEN=()
   for p in ${UNPUSHED[@]+"${UNPUSHED[@]}"}; do SEEN["$p"]=1; done
   while IFS= read -r -d '' p; do
     [ -n "$p" ] || continue
     [ -n "${SEEN[$p]:-}" ] && continue; SEEN["$p"]=1
     if why="$(is_secret_name "$p")"; then info "   an unpushed commit (not the tip) contains '$p' ($why)"; BAD=1; fi
-  done < <(git -c core.quotepath=off log -z --no-renames --diff-filter=AM --name-only --format= HEAD --not --remotes="$REMOTE")
+  done < "$SCAN_DIR/paths"
   where() { git log -1 --format=%h --find-object="$1" HEAD --not --remotes="$REMOTE" 2>/dev/null || true; }
   while read -r otype oid osz opath; do
     [ "$otype" = blob ] || continue
@@ -223,12 +241,14 @@ if [ "${AHEAD:-0}" -gt 0 ] || ! git rev-parse -q --verify "$RREF" >/dev/null; th
     if blob_has_secret_content "$oid"; then
       info "   unpushed commit $(where "$oid") contains '$opath' (contents look like a key/token)"; BAD=1
     elif [ $? -eq 2 ]; then rm -rf -- "$BLOB_DIR"; die "could not check the contents of '$opath' (blob $oid) for keys/tokens; nothing was uploaded"; fi
-  done < <(git rev-list --objects HEAD --not --remotes="$REMOTE" | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)')
+  done < "$SCAN_DIR/objects"
   if [ -n "$BLOB_DIR" ]; then rm -rf -- "$BLOB_DIR"; fi
   if [ "$BAD" = 1 ]; then
     die "local commits that are not on GitHub contain files that should not be uploaded (see above).
-  Undo those commits but keep every file on disk with:   git reset --mixed $REMOTE/$BRANCH
-  then rerun $PROG (it will skip those files)."
+  If $REMOTE/$BRANCH exists, undo those commits but keep every file on disk with:
+      git reset --mixed $REMOTE/$BRANCH
+  Otherwise choose an existing, reviewed safe base commit/ref and use git reset --mixed <safe-base>.
+  Then rerun $PROG (it will skip those files)."
   fi
 fi
 
