@@ -177,6 +177,210 @@ rm "$ROOT/github.git/hooks/pre-receive"
 run u11b "$UP" --yes
 check "rerun pushes it" remote_has race.txt
 
+# ---------------------------------------------------------------------
+# U12-U16: regression tests for findings F1 and F2 (independently reproduced on main 942f852).
+# PASS/FAIL RULE CHANGE (intentional): before the fix, the U12 run exited 0 after overwriting
+# the ignored local file, and the U13 / U14 / U16 runs exited 0 and pushed.  The uploader now
+# refuses all of them (nonzero exit, nothing pushed, local files unchanged); U15 is the positive
+# control that harmless uploads, including harmless intermediate commits, still go through.
+# FAKE_TOKEN is a made-up, token-SHAPED dummy (gh + p_ + 36 'X'); it is not a credential and is
+# assembled at run time so this file itself never contains the pattern.
+FAKE_TOKEN="gh""p_$(printf 'X%.0s' $(seq 36))"
+
+T "U12 F1: GitHub adds a file that exists locally as an IGNORED file: stop BEFORE integrating"
+# Reason: upload_new.sh used to run 'git pull' before any collision check, so a plain fast-forward
+# silently replaced the ignored local experiment.log (exit 0, "Nothing to upload", before any y/N).
+# It now applies download_new.sh's guard (see D7) first; --yes does not bypass it.
+other_commit bash -c 'echo "UPSTREAM CONTENT" > experiment.log && git add -f experiment.log'
+echo "IRREPLACEABLE LOCAL OBSERVATIONS" > "$MINE/experiment.log"
+H="$(git -C "$MINE" rev-parse HEAD)"; H0="$(remote_head)"
+run u12dry "$UP" --dry-run
+check "dry-run exit 0" [ "$RC" -eq 0 ]
+check "dry-run lists ignored collision" has "experiment.log"
+check "dry-run says a real run would stop" has "a real run would stop here"
+check "dry-run kept local ignored content" grep -qx "IRREPLACEABLE LOCAL OBSERVATIONS" "$MINE/experiment.log"
+run u12 "$UP" --yes
+check "exit nonzero" [ "$RC" -ne 0 ]
+check "explains overwrite" has "would be overwritten"
+check "names experiment.log" has "experiment.log"
+check "local ignored file keeps local content" grep -qx "IRREPLACEABLE LOCAL OBSERVATIONS" "$MINE/experiment.log"
+check "HEAD unchanged (nothing integrated)" [ "$(git -C "$MINE" rev-parse HEAD)" = "$H" ]
+check "no stash created" [ -z "$(git -C "$MINE" stash list)" ]
+check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+mv "$MINE/experiment.log" "$ROOT/experiment.log.mine"
+run u12b "$UP" --yes
+check "after moving aside it integrates (exit 0)" [ "$RC" -eq 0 ]
+check "upstream experiment.log arrived" grep -qx "UPSTREAM CONTENT" "$MINE/experiment.log"
+
+T "U12c F1 guard also covers a plain UNTRACKED local file (git itself would refuse later; now stopped up front)"
+other_commit bash -c 'echo "UPSTREAM" > collide_up.txt'
+echo "my local" > "$MINE/collide_up.txt"; H="$(git -C "$MINE" rev-parse HEAD)"
+run u12c "$UP" --yes
+check "exit nonzero" [ "$RC" -ne 0 ]
+check "guard message names collide_up.txt" bash -c 'printf "%s" "$1" | grep -q "would be overwritten" && printf "%s" "$1" | grep -q "collide_up.txt"' _ "$OUT"
+check "local untracked file keeps local content" grep -qx "my local" "$MINE/collide_up.txt"
+check "HEAD unchanged" [ "$(git -C "$MINE" rev-parse HEAD)" = "$H" ]
+mv "$MINE/collide_up.txt" "$ROOT/collide_up.txt.mine"
+run u12d "$UP" --yes
+check "after moving aside it integrates (exit 0)" [ "$RC" -eq 0 ]
+
+T "U13 F2a: unpushed commit with key/token-looking CONTENT is refused (not only working-tree files)"
+# Reason: the unpushed-commit check used to look only at names, tip size and ignore state, so a
+# committed notes.txt holding a token-shaped string was pushed (exit 0).  U1 shows the same text
+# in an uncommitted file is skipped; committed content now gets the same content check.
+( cd "$MINE" && printf 'token = %s\n' "$FAKE_TOKEN" > notes.txt && git add notes.txt && git commit -q -m "notes with fake token" )
+H0="$(remote_head)"
+run u13 "$UP" --yes
+check "exit nonzero" [ "$RC" -ne 0 ]
+check "names notes.txt as key/token content" has "'notes.txt' (contents look like a key/token)"
+check "suggests reset --mixed" has "git reset --mixed origin/main"
+check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+check "remote lacks notes.txt" bash -c '! git --git-dir="$1" cat-file -e main:notes.txt 2>/dev/null' _ "$ROOT/github.git"
+( cd "$MINE" && git reset -q --mixed origin/main && rm notes.txt )
+
+T "U14 F2b: oversized file added in one unpushed commit and deleted in the next is refused"
+# Reason: only the TIP tree was size-checked, so a 2 MiB blob committed and then 'git rm'-ed was
+# still pushed (exit 0, blob on the remote).  Every blob a push would send is now size-checked.
+( cd "$MINE" && head -c $(( 2 * 1024 * 1024 )) /dev/zero | tr '\0' 'b' > big.dat && git add big.dat && git commit -q -m "add big.dat" \
+  && git rm -q big.dat && echo "harmless edit" >> mine_new.txt && git commit -q -am "remove big.dat, edit mine_new.txt" )
+BIGOID="$(git -C "$MINE" rev-parse HEAD~1:big.dat)"; H0="$(remote_head)"
+check "big.dat not at the tip (witness setup)" bash -c '! git -C "$1" cat-file -e HEAD:big.dat 2>/dev/null' _ "$MINE"
+run u14 "$UP" --yes --max-size-mb 1
+check "exit nonzero" [ "$RC" -ne 0 ]
+check "names big.dat and the size" has "'big.dat' (2 MB > 1 MB)"
+check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+check "remote does not have the 2 MiB blob" bash -c '! git --git-dir="$1" cat-file -e "$2" 2>/dev/null' _ "$ROOT/github.git" "$BIGOID"
+( cd "$MINE" && git reset -q --mixed origin/main && git checkout -q -- mine_new.txt )
+
+T "U15 positive control: harmless new file plus harmless unpushed commits (add + delete) still upload"
+( cd "$MINE" && echo "scratch" > scratch.txt && git add scratch.txt && git commit -q -m "add scratch" \
+  && git rm -q scratch.txt && git commit -q -m "drop scratch" )
+echo "harmless new file" > "$MINE/harmless_new.txt"
+run u15 "$UP" --yes --max-size-mb 1
+check "exit 0" [ "$RC" -eq 0 ]
+check "remote has harmless_new.txt" remote_has harmless_new.txt
+check "remote at local HEAD" [ "$(remote_head)" = "$(git -C "$MINE" rev-parse HEAD)" ]
+
+T "U16 F2 on a brand-new branch (no origin/<branch> yet): history is still checked"
+( cd "$MINE" && git switch -q -c feature && printf 'k = %s\n' "$FAKE_TOKEN" > feat.txt && git add feat.txt && git commit -q -m "feat with fake token" \
+  && git rm -q feat.txt && git commit -q -m "drop it" )
+run u16 "$UP" --yes
+check "exit nonzero" [ "$RC" -ne 0 ]
+check "names feat.txt as key/token content" has "'feat.txt' (contents look like a key/token)"
+check "branch not created on remote" bash -c '! git --git-dir="$1" rev-parse -q --verify refs/heads/feature >/dev/null' _ "$ROOT/github.git"
+( cd "$MINE" && git switch -q main && git branch -q -D feature )
+
+# U17-U19: audit blockers at 7daf35b. Each case uses a separate local bare remote.
+# Intentional rule change: directory replacement, merge-only blocked names, and failed
+# enumeration used to upload/overwrite (exit 0). They must now refuse without state loss.
+audit_pair() {
+  git init -q --bare "$ROOT/github.git"
+  git clone -q "$ROOT/github.git" "$MINE" 2>/dev/null
+  cd "$MINE"
+  printf '*.log\n' > .gitignore
+  mkdir folder; printf tracked > folder/tracked.txt
+  printf baseline > README
+  git add -A && git commit -q -m baseline && git push -q origin main
+  git clone -q "$ROOT/github.git" "$OTHER"
+}
+audit_regressions() {
+  local SAVE="$PWD" ROOT MINE OTHER H H0 mode REAL_GIT
+  REAL_GIT="$(command -v git)"
+  for mode in file symlink directory; do
+    T "U17 F1 tracked directory replaced by $mode preserves local descendants"
+    ROOT="$(mktemp -d /tmp/syncaudit.XXXXXX)"; MINE="$ROOT/mine"; OTHER="$ROOT/other"
+    audit_pair
+    printf 'LOCAL PRECIOUS' > folder/local.log
+    ( cd "$OTHER" && if [ "$mode" = directory ]; then
+        printf upstream > folder/new.txt
+      else
+        git rm -qr folder
+        if [ "$mode" = file ]; then printf upstream > folder; else ln -s README folder; fi
+      fi && git add -A && git commit -q -m "replace with $mode" && git push -q origin main )
+    H="$(git rev-parse HEAD)"; H0="$(remote_head)"
+    run u17dry "$UP" --dry-run
+    check "dry-run exit 0" [ "$RC" -eq 0 ]
+    check "dry-run preserves ignored descendant" [ "$(cat folder/local.log)" = 'LOCAL PRECIOUS' ]
+    if [ "$mode" != directory ]; then
+      check "dry-run names colliding descendant" has folder/local.log
+    fi
+    run u17 "$UP" --yes
+    if [ "$mode" = directory ]; then
+      check "directory update allowed" [ "$RC" -eq 0 ]
+      check "new child arrived" [ -f folder/new.txt ]
+    else
+      check "replacement refused" [ "$RC" -ne 0 ]
+      check "names colliding ignored descendant" has folder/local.log
+      check "HEAD unchanged" [ "$(git rev-parse HEAD)" = "$H" ]
+    fi
+    check "ignored descendant preserved" [ "$(cat folder/local.log 2>/dev/null)" = 'LOCAL PRECIOUS' ]
+    check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+    cd "$SAVE"; rm -rf "$ROOT"
+  done
+
+  T "U18 F2 blocked filename introduced only by merge then deleted is refused"
+  ROOT="$(mktemp -d /tmp/syncaudit.XXXXXX)"; MINE="$ROOT/mine"; OTHER="$ROOT/other"
+  audit_pair
+  git switch -qc side
+  printf side > side.txt; git add -A; git commit -q -m side
+  git switch -q main
+  printf main > main.txt; git add -A; git commit -q -m main
+  git merge -q --no-commit --no-ff side
+  printf 'dummy harmless text' > credentials.json
+  git add -A; git commit -q -m 'merge with extra path'
+  git rm -q credentials.json; printf changed > README; git commit -qam 'remove path'
+  H="$(git rev-parse HEAD)"; H0="$(remote_head)"
+  check "witness is two-parent merge" [ "$(git rev-list --parents -n 1 HEAD~1 | wc -w)" -eq 3 ]
+  check "blocked name exists on merge" git cat-file -e HEAD~1:credentials.json
+  check "blocked name absent at tip" bash -c '! git cat-file -e HEAD:credentials.json 2>/dev/null'
+  run u18 "$UP" --yes --max-size-mb 1
+  check "refused" [ "$RC" -ne 0 ]
+  check "credentials reason" has "'credentials.json' (credentials file)"
+  check "HEAD unchanged" [ "$(git rev-parse HEAD)" = "$H" ]
+  check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+  check "merge not published" bash -c '! git --git-dir="$1" cat-file -e "$2" 2>/dev/null' _ "$ROOT/github.git" "$H"
+  cd "$SAVE"; rm -rf "$ROOT"
+
+  # Check each producer separately; pipefail must catch rev-list even when cat-file succeeds.
+  # Blob failure is the existing positive fault control. Empty successful listing is allowed.
+  for mode in batch objects blob empty; do
+    T "U19 F2 object scan fault control: $mode"
+    ROOT="$(mktemp -d /tmp/syncaudit.XXXXXX)"; MINE="$ROOT/mine"; OTHER="$ROOT/other"
+    audit_pair
+    if [ "$mode" = empty ]; then
+      git switch -qc feature
+      printf harmless > fresh.txt
+    else
+      printf 'dummy = %s\n' "$FAKE_TOKEN" > notes.txt
+      git add notes.txt; git commit -q -m 'dummy notes'
+    fi
+    H="$(git rev-parse HEAD)"; H0="$(remote_head)"
+    mkdir "$ROOT/shim"
+    printf '#!/usr/bin/env bash\nREAL_GIT=%q\nMODE=%q\n' "$REAL_GIT" "$mode" > "$ROOT/shim/git"
+    cat >> "$ROOT/shim/git" <<'SHIM'
+if [ "$MODE" = batch ] && [ "${1:-}" = cat-file ] && [[ "${2:-}" == --batch-check=* ]]; then exit 7; fi
+if [ "$MODE" = objects ] && [ "${1:-}" = rev-list ] && [ "${2:-}" = --objects ]; then exit 7; fi
+if [ "$MODE" = blob ] && [ "${1:-}" = cat-file ] && [ "${2:-}" = blob ]; then exit 7; fi
+exec "$REAL_GIT" "$@"
+SHIM
+    chmod +x "$ROOT/shim/git"
+    run u19 env PATH="$ROOT/shim:$PATH" "$UP" --yes
+    if [ "$mode" = empty ]; then
+      check "empty unpublished-object list succeeds" [ "$RC" -eq 0 ]
+      check "feature published" git --git-dir="$ROOT/github.git" cat-file -e feature:fresh.txt
+    else
+      check "fault refused" [ "$RC" -ne 0 ]
+      if [ "$mode" = blob ]; then check "content failure explained" has 'could not check the contents'
+      else check "listing failure explained" has 'could not list/check unpublished objects'; fi
+      check "HEAD unchanged" [ "$(git rev-parse HEAD)" = "$H" ]
+      check "remote unchanged" [ "$(remote_head)" = "$H0" ]
+      check "notes not published" bash -c '! git --git-dir="$1" cat-file -e main:notes.txt 2>/dev/null' _ "$ROOT/github.git"
+    fi
+    cd "$SAVE"; rm -rf "$ROOT"
+  done
+}
+audit_regressions
+
 # =====================================================================
 T "D1 download --dry-run shows incoming, changes nothing"
 other_commit bash -c 'mkdir -p "AI Agent Audits/round 4" && echo r4 > "AI Agent Audits/round 4/new report.md" && echo v2 > "AI Agent Audits/report one.md"'

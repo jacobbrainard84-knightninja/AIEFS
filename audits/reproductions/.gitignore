@@ -1,0 +1,4 @@
+# Reproduction logs are evidence and are tracked on purpose: re-include them despite the
+# root .gitignore "*.log" rule (root .gitignore is pinned as ART-0001 in check_artifact_pins.py,
+# so the exception lives here). Applies to audits/reproductions/**/*.log.
+!*.log
