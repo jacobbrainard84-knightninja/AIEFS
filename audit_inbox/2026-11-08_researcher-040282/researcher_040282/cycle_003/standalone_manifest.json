@@ -1,0 +1,18 @@
+{
+  "report": "2026-11-07_researcher040282_003_weight-update-bridge.md",
+  "critical_files": [
+    "FreezeCore.lean",
+    "GateFoundations.lean",
+    "GateProposalBridge.lean",
+    "check_cycle.py",
+    "compare_source.py"
+  ],
+  "critical_blocks_match_sources": true,
+  "runner_exit": 0,
+  "source_runner_exit": 0,
+  "controls": 17,
+  "all_control_outcomes_repeated": true,
+  "source_case_count": 24,
+  "all_source_comparisons_repeated": true,
+  "scope": "Local self-reproduction with public dependencies, not independent review, publication, or integration"
+}

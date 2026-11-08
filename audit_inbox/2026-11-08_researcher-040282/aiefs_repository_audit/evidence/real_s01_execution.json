@@ -1,0 +1,26 @@
+{
+  "evidence_class": "actual checked-in S01 data; actual repository modules; no dependency stand-ins",
+  "analysis_output_path": "evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5",
+  "input_validation": "passed",
+  "raw_trajectory_regeneration": false,
+  "n_seeds": 40,
+  "scalar_rows": 800,
+  "event_rows": 9600,
+  "held_rows_checked": 4800,
+  "held_grid_oracle_mismatches": [],
+  "event_rate_groups": 240,
+  "zero_event_groups": 28,
+  "all_event_groups": 194,
+  "zero_width_event_rate_intervals": 222,
+  "conditional_event_DID_groups": 144,
+  "conditional_event_DID_sample_counts": {
+    "0": 24,
+    "11": 2,
+    "12": 2,
+    "37": 2,
+    "39": 38,
+    "40": 76
+  },
+  "zero_reference_event_rows": 0,
+  "undefined_similarity_affected_event_rows": 0
+}

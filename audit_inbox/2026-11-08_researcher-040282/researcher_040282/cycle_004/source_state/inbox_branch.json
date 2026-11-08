@@ -1,0 +1,59 @@
+{
+  "name": "audit-inbox",
+  "commit": {
+    "sha": "5c1ffed0377c4769154e9342464ce7265cf1c599",
+    "node_id": "C_kwDOUCH-K9oAKDVjMWZmZWQwMzc3YzQ3NjkxNTRlOTM0MjQ2NGNlNzI2NWNmMWM1OTk",
+    "commit": {
+      "author": {
+        "name": "Auditor Seat 002",
+        "email": "auditor@invalid",
+        "date": "2026-11-06T10:42:30Z"
+      },
+      "committer": {
+        "name": "Auditor Seat 002",
+        "email": "auditor@invalid",
+        "date": "2026-11-06T10:42:30Z"
+      },
+      "message": "inbox: salvage remote delete/keep list after unique-content check (2026-11-06)\n\nAuditor Seat 002 verified all eight salvage/* tips against main and\naudit-inbox. Unique tip paths are either third-party Papers (already\nreachable from audit-inbox; intentionally off main) or zip_only blobs\nalready in the inbox object graph. Other salvage content is under\naudit_inbox/salvage/2026-10-31/. Owner approval still required to delete.",
+      "tree": {
+        "sha": "21f50c57192a82d8120cc83264d77c321bc48246",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/21f50c57192a82d8120cc83264d77c321bc48246"
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/5c1ffed0377c4769154e9342464ce7265cf1c599",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/5c1ffed0377c4769154e9342464ce7265cf1c599",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/5c1ffed0377c4769154e9342464ce7265cf1c599",
+    "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/5c1ffed0377c4769154e9342464ce7265cf1c599/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "f278d11cc930200734d51b808b9c2032df1eeec8",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/f278d11cc930200734d51b808b9c2032df1eeec8",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/f278d11cc930200734d51b808b9c2032df1eeec8"
+      }
+    ]
+  },
+  "_links": {
+    "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/branches/audit-inbox",
+    "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox"
+  },
+  "protected": false,
+  "protection": {
+    "enabled": false,
+    "required_status_checks": {
+      "enforcement_level": "off",
+      "contexts": [],
+      "checks": []
+    }
+  },
+  "protection_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/branches/audit-inbox/protection"
+}

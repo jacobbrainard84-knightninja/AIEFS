@@ -1,0 +1,8 @@
+{
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "asset": "https://github.com/leanprover/lean4/releases/download/v4.33.1/lean-4.33.1-linux.tar.zst",
+  "published_digest": "sha256:890afd185370f85666025b883914ab4f4b339136f8c96167b69cfb62aecaf235",
+  "checksum_verified": true,
+  "compiler_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "installation_scope": "disposable excluded cache; no global or repository change"
+}

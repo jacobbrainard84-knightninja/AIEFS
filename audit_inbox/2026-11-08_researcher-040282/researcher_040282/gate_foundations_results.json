@@ -1,0 +1,114 @@
+{
+  "agent": "Researcher 040282",
+  "scope": "exact-real gate foundation with exact-rational examples and synthetic source cross-checks",
+  "general_proofs": "written in companion note; not Lean-checked",
+  "exact_rational_properties": {
+    "cases": 300,
+    "active": 209,
+    "inactive": 91,
+    "cases_with_zero_capacity": 34,
+    "claims_checked": [
+      "nonnegativity",
+      "symmetry",
+      "zero diagonal",
+      "entrywise contraction",
+      "capacity bound",
+      "identity on feasible inputs",
+      "guarded idempotence",
+      "active row-sum sandwich"
+    ]
+  },
+  "counterexamples": {
+    "capacity": {
+      "exact": "19/30",
+      "float": 0.6333333333333333
+    },
+    "epsilon": {
+      "exact": "1/1000000000000",
+      "float": 1e-12
+    },
+    "unconditional_kernel": {
+      "at_capacity_first": {
+        "exact": "3610000000000/5700000000009",
+        "float": 0.6333333333323333
+      },
+      "second": {
+        "exact": "6859000000000000000000000/10830000000017100000000027",
+        "float": 0.6333333333323333
+      },
+      "first_minus_second": {
+        "exact": "10830000000000/6859000000021660000000034200000000027",
+        "float": 1.5789473684160664e-24
+      },
+      "idempotent": false
+    },
+    "guard_boundary": {
+      "guarded_value_at_capacity": {
+        "exact": "19/30",
+        "float": 0.6333333333333333
+      },
+      "one_sided_active_limit": {
+        "exact": "3610000000000/5700000000009",
+        "float": 0.6333333333323333
+      },
+      "nonzero_jump": {
+        "exact": "19/19000000000030",
+        "float": 9.999999999984211e-13
+      },
+      "sequence_n": 1000,
+      "sequence_input": {
+        "exact": "1900000000000003/3000000000000000",
+        "float": 0.6333333333333343
+      },
+      "sequence_output": {
+        "exact": "36100000000000057/57000000000090090",
+        "float": 0.6333333333323333
+      },
+      "sequence_error_from_active_limit": {
+        "exact": "57/36100000000114057000000090090",
+        "float": 1.5789473684160639e-27
+      },
+      "nonexpansivity_counterexample_ratio": {
+        "exact": "7600000000000/3800000000009",
+        "float": 1.9999999999952631
+      }
+    },
+    "strict_branch_nonlinearity": {
+      "u1": {
+        "exact": "1/3",
+        "float": 0.3333333333333333
+      },
+      "u2": {
+        "exact": "2/5",
+        "float": 0.4
+      },
+      "v": {
+        "exact": "2/5",
+        "float": 0.4
+      },
+      "midpoint_minus_mean_output": {
+        "exact": "7600000000019000000000000000000000/12144000000047580000000062100000000027",
+        "float": 0.000625823451909521
+      }
+    }
+  },
+  "fixed_row_fiber": {
+    "exact_fixed_row_fiber_identity": "passed",
+    "nonzero_perturbation": true
+  },
+  "source_crosscheck": {
+    "synthetic_isolated_one_step_cases": 96,
+    "active_cases": 88,
+    "inactive_cases": 8,
+    "model_rates_for_isolation": {
+      "eta": 0,
+      "mu": 0,
+      "gamma": 0
+    },
+    "engine_max_entry_abs_difference": 2.7755575615628914e-17,
+    "pure_helper_max_entry_abs_difference": 2.7755575615628914e-17,
+    "absolute_rounding_allowance": 5e-15,
+    "float64_equivalence_theorem": false,
+    "production_trajectories_regenerated": false
+  }
+}

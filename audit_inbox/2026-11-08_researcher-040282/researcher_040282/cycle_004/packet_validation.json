@@ -1,0 +1,21 @@
+{
+  "archive": "researcher040282-cycle004-complex-ema.zip",
+  "file_count": 79,
+  "zip_crc_passed": true,
+  "all_members_match_workspace": true,
+  "critical_inline_files_match_workspace": true,
+  "critical_file_count": 7,
+  "new_compiled_declarations": 28,
+  "recompiled_prior_local_declarations": 66,
+  "recompiled_upstream_declarations": 5,
+  "original_and_extracted_controls": 18,
+  "original_and_extracted_source_cases": 34,
+  "source_compute_R_calls_per_run": 253,
+  "source_sensitivity_controls_per_run": 6,
+  "expected_configuration_rejections_per_run": 1,
+  "claim_ledger_records": 108,
+  "report_bytes": 117376,
+  "archive_bytes": 179719,
+  "validation_record_is_outside_archive": true,
+  "review_boundary": "Local self-reproduction/artifact validation, not independent approval, publication or integration"
+}

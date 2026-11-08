@@ -1,0 +1,57 @@
+{
+  "bridge_selftest_stdout": "Synthetic proposal-equalization bridge checks: PASS",
+  "bridge_selftest_return_value": null,
+  "fixture": {
+    "x25": 0.41,
+    "x29": 0.31,
+    "x59": 0.27
+  },
+  "node_rows": {
+    "2": 0.72,
+    "7": 0.6799999999999999,
+    "11": 0.5800000000000001
+  },
+  "node_scales": {
+    "2": 0.879629629628408,
+    "7": 0.9313725490182383,
+    "11": 1.0
+  },
+  "actual_winners": [
+    2,
+    2,
+    7
+  ],
+  "assumed_winners": [
+    7,
+    2,
+    7
+  ],
+  "left_identity_real_operator_residual": -0.02121459694983044,
+  "actual_y": [
+    0.36064814814764723,
+    0.27268518518480644,
+    0.25147058823492435
+  ],
+  "assumed_y": [
+    0.3818627450974777,
+    0.27268518518480644,
+    0.25147058823492435
+  ],
+  "iid_bernoulli_boundary_example": {
+    "n": 40,
+    "p": 0.01,
+    "prob_all_zero": 0.6689717585696803,
+    "coverage_upper_bound": 0.3310282414303197,
+    "exact_95pct_two_sided_upper_at_zero": 0.08809730287880235
+  },
+  "actual_complex_arrays": {
+    "baseline": {
+      "complex_array_count": 40,
+      "nonfinite_complex_arrays": []
+    },
+    "S01": {
+      "complex_array_count": 200,
+      "nonfinite_complex_arrays": []
+    }
+  }
+}

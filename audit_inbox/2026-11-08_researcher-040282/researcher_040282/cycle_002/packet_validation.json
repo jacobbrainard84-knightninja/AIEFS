@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-07",
+  "report": "2026-11-07_researcher040282_002_guarded-capacity-lean.md",
+  "report_bytes": 45260,
+  "report_lines": 740,
+  "critical_inline_blocks_exact": true,
+  "compiled_theorem_records": 22,
+  "ledger_records": 32,
+  "controls_passed": 9,
+  "standalone_runner_exit": 0,
+  "zip": "researcher040282-cycle002-guarded-capacity.zip",
+  "zip_files": 32,
+  "zip_bytes": 64054,
+  "zip_crc_passed": true,
+  "all_archived_bytes_match_workspace": true,
+  "scope": "Local packaging/self-reproduction verification; no independent approval or remote submission"
+}

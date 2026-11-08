@@ -1,0 +1,53 @@
+.....................................ss...                               [100%]
+==================================== PASSES ====================================
+============================= slowest 10 durations =============================
+0.07s call     tests_modular/test_analysis_v4.py::test_joint_seed_bootstrap_summary_is_reproducible
+0.05s call     tests_modular/test_artifact_paths.py::test_initial_manifest_is_strict_json_serializable
+0.04s call     tests_modular/test_twindow_spec_expansion.py::test_full_s01_expansion_contract
+0.01s call     tests_modular/test_analysis_v4.py::test_analysis_bundle_is_promoted_atomically
+
+(6 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+PASSED tests_modular/test_analysis_v4.py::test_timestamp_correct_held_event_distinguishes_saved_sample_count
+PASSED tests_modular/test_analysis_v4.py::test_saved_grid_event_indices
+PASSED tests_modular/test_analysis_v4.py::test_joint_seed_bootstrap_summary_is_reproducible
+PASSED tests_modular/test_analysis_v4.py::test_conditional_summary_records_selected_seed_set
+PASSED tests_modular/test_analysis_v4.py::test_analysis_bundle_is_promoted_atomically
+PASSED tests_modular/test_analysis_v4.py::test_failed_bundle_never_replaces_a_completed_directory
+PASSED tests_modular/test_artifact_paths.py::test_execution_modes_have_distinct_leaf_paths
+PASSED tests_modular/test_artifact_paths.py::test_initial_manifest_is_strict_json_serializable
+PASSED tests_modular/test_atomic_writes.py::test_atomic_artifact_round_trips
+PASSED tests_modular/test_atomic_writes.py::test_strict_json_rejects_nonfinite_and_unsupported_values
+PASSED tests_modular/test_atomic_writes.py::test_csv_rejects_missing_extra_and_duplicate_schema
+PASSED tests_modular/test_authority_lock.py::test_authority_lock_verifies_artifacts_sources_and_runtime_engine
+PASSED tests_modular/test_authority_lock.py::test_authority_lock_detects_coordinated_input_drift
+PASSED tests_modular/test_authority_lock.py::test_project_authority_lock_contains_supplied_hashes
+PASSED tests_modular/test_builtin_registry.py::test_builtin_study_lists_without_loading_engine
+PASSED tests_modular/test_catalog.py::test_catalog_rebuild_and_explicit_replace
+PASSED tests_modular/test_catalog.py::test_catalog_marks_parseable_wrong_types_as_malformed
+PASSED tests_modular/test_condition_expansion.py::test_exact_frozen_seed_generation
+PASSED tests_modular/test_condition_expansion.py::test_seed_major_factor_level_order
+PASSED tests_modular/test_condition_expansion.py::test_rho_to_twindow_exact_mapping
+PASSED tests_modular/test_factors_hardening.py::test_expansion_is_completely_deterministic
+PASSED tests_modular/test_factors_hardening.py::test_model_hashes_share_by_level_and_differ_between_levels
+PASSED tests_modular/test_factors_hardening.py::test_reference_and_reconstruction_are_exact
+PASSED tests_modular/test_factors_hardening.py::test_modular_v1_rejects_multiple_axes
+PASSED tests_modular/test_factors_hardening.py::test_invalid_rho_and_regeneration_policies_fail
+PASSED tests_modular/test_factors_hardening.py::test_invalid_tstar_and_incompatible_model_are_typed
+PASSED tests_modular/test_factors_hardening.py::test_reference_and_condition_levels_are_defensively_validated
+PASSED tests_modular/test_registry.py::test_duplicate_id_is_fatal
+PASSED tests_modular/test_registry.py::test_duplicate_slug_is_fatal
+PASSED tests_modular/test_registry.py::test_listing_is_deterministic
+PASSED tests_modular/test_rng_namespace.py::test_future_shuffle_keeps_seventh_child
+PASSED tests_modular/test_rng_namespace.py::test_requires_rng_is_part_of_branch_contract
+PASSED tests_modular/test_runner_regeneration.py::test_every_condition_regenerates_prefix_from_initialization
+PASSED tests_modular/test_spec_canonicalization.py::test_canonical_serialization_is_deterministic
+PASSED tests_modular/test_spec_canonicalization.py::test_scientific_identity_does_not_depend_on_output_path
+PASSED tests_modular/test_spec_canonicalization.py::test_frozen_mapping_rejects_key_coercion_and_sets
+PASSED tests_modular/test_spec_canonicalization.py::test_spec_rejects_unsafe_path_components
+PASSED tests_modular/test_twindow_spec_expansion.py::test_full_s01_expansion_contract
+PASSED tests_modular/test_unsupported_policies.py::test_unknown_factor_resolver_fails
+PASSED tests_modular/test_unsupported_policies.py::test_resume_fails_before_execution
+SKIPPED [1] tests_modular/test_twindow_one_condition.py:13: set AIEF_RUN_SLOW_TESTS=1 for the 176k-step smoke
+SKIPPED [1] tests_modular/test_twindow_oracle_equivalence.py:20: set AIEF_MODULAR_RUN and provide runs/b57562a8ee77 for oracle equivalence
+40 passed, 2 skipped in 0.88s

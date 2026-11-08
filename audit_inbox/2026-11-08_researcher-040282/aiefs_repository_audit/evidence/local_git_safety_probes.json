@@ -1,0 +1,25 @@
+{
+  "ignored_file_collision": {
+    "exit_code": 0,
+    "original_content": "IRREPLACEABLE LOCAL OBSERVATIONS\n",
+    "content_after": "UPSTREAM CONTENT\n",
+    "stash_list_after": "",
+    "local_file_lost": true
+  },
+  "downloader_positive_control": {
+    "exit_code": 1,
+    "original_content_preserved": true
+  },
+  "committed_content": {
+    "synthetic_only": true,
+    "exit_code": 0,
+    "remote_advanced": true,
+    "remote_contains_synthetic_key_shape": true
+  },
+  "historical_oversize_blob": {
+    "exit_code": 0,
+    "configured_limit_bytes": 1048576,
+    "remote_historical_blob_bytes": 2097152,
+    "remote_advanced": true
+  }
+}

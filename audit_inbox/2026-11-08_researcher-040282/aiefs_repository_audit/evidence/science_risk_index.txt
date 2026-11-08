@@ -1,0 +1,114 @@
+AIEF_1_3_analysis.py:53:    beta = np.linalg.lstsq(X, y, rcond=None)[0]
+AIEF_1_3_analysis.py:214:            beta = np.linalg.lstsq(X, y, rcond=None)[0]
+AIEF_1_3_closure_diagnostics.py:103:            is_zero = np.isclose(values, 0.0, rtol=0.0, atol=BINARY_ATOL)
+AIEF_1_3_closure_diagnostics.py:104:            is_one = np.isclose(values, 1.0, rtol=0.0, atol=BINARY_ATOL)
+AIEF_1_3_closure_diagnostics_updated.py:149:    tolerant_zero = np.isclose(values, 0.0, rtol=0.0, atol=atol)
+AIEF_1_3_closure_diagnostics_updated.py:150:    tolerant_one = np.isclose(values, 1.0, rtol=0.0, atol=atol)
+AIEF_1_3_closure_diagnostics_updated.py:331:                and np.allclose(matrix, matrix.T, rtol=0.0, atol=matrix_atol)
+AIEF_1_3_closure_diagnostics_updated.py:335:                np.all(np.isclose(diagonal, 0.0, rtol=0.0, atol=matrix_atol))
+AIEF_1_3_closure_diagnostics_updated.py:440:                        and np.isclose(
+AIEF_1_3_closure_diagnostics_updated.py:541:                        np.mean(np.isclose(values, 0.0, rtol=0.0, atol=zero_atol))
+AIEF_1_3_closure_diagnostics_updated.py:546:                        np.mean(~np.isclose(values, 0.0, rtol=0.0, atol=zero_atol))
+AIEF_1_3_falsification_updated.py:165:    if not np.isclose(DELAY_STEPS * DT, TAU, rtol=0.0, atol=1e-12):
+AIEF_1_3_falsification_updated.py:167:    if not np.isclose(N_STEPS * DT, T_SIM, rtol=0.0, atol=1e-10):
+AIEF_1_3_falsification_updated.py:510:        if not np.allclose(matrix, matrix.T, rtol=0.0, atol=1e-10):
+AIEF_1_3_paired_statistics.py:309:    if np.allclose(differences, 0.0, rtol=0.0, atol=0.0):
+AIEF_1_3_paired_statistics_updated.py:364:    if np.allclose(differences, 0.0, rtol=0.0, atol=0.0):
+AIEF_1_4_Twindow_sensitivity_analysis_v3.py:480:    if not np.allclose(matrix, matrix.T, rtol=0.0, atol=1e-12):
+AIEF_1_4_Twindow_sensitivity_analysis_v3.py:483:    if not np.allclose(np.diag(matrix), 0.0, rtol=0.0, atol=1e-12):
+AIEF_1_4_active_boundary_analysis.py:312:            slope, intercept = np.polyfit(
+AIEF_1_4_active_boundary_analysis.py:388:            slope, _ = np.polyfit(
+AIEF_1_4_active_boundary_analysis.py:599:            slope, _ = np.polyfit(
+AIEF_1_4_biorthogonal_triangular_closure.py:164:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_defect_causal_ema_trace.py:96:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_entropy_geometry_diagnostics.py:112:    if not np.allclose(B, B.T, rtol=0.0, atol=1e-10):
+AIEF_1_4_exceptional_tangent_analysis.py:240:            np.allclose(state.B, expected_final, rtol=0.0, atol=1e-12)
+AIEF_1_4_exceptional_tangent_analysis.py:303:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_existing_clique_invariant_subspaces.py:408:                            and np.allclose(
+AIEF_1_4_existing_clique_invariant_subspaces.py:414:                            and np.allclose(
+AIEF_1_4_feedback_rank_memory_reduction.py:167:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_local_update_comparison.py:667:            slope, intercept = np.polyfit(
+AIEF_1_4_memory_ablation.py:243:    if not np.isclose(DELAY_STEPS * DT, TAU, rtol=0.0, atol=1e-12):
+AIEF_1_4_memory_ablation.py:245:    if not np.isclose(N_STEPS * DT, T_SIM, rtol=0.0, atol=1e-10):
+AIEF_1_4_memory_ablation_updated.py:274:    if not np.isclose(DELAY_STEPS * DT, TAU, rtol=0.0, atol=1e-12):
+AIEF_1_4_memory_ablation_updated.py:276:    if not np.isclose(N_STEPS * DT, T_SIM, rtol=0.0, atol=1e-10):
+AIEF_1_4_nested_operator_family_audit.py:151:    coefficients, *_ = np.linalg.lstsq(design, matrix.reshape(-1), rcond=None)
+AIEF_1_4_nested_operator_family_audit.py:178:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_parameter_free_triangular_closure.py:103:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_phase_balance_source_dynamics.py:84:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_phase_source_locking_analysis.py:94:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_propagation_gap_geometric_control.py:111:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_propagation_gap_geometric_control.py:156:    coefficients_scaled, *_ = np.linalg.lstsq(Xs, ys, rcond=1e-12)
+AIEF_1_4_propagation_gap_geometric_control.py:567:            coefficients_scaled, *_ = np.linalg.lstsq(Xs, ys, rcond=1e-12)
+AIEF_1_4_proposal_equalization_bridge_analysis.py:134:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_radial_observable_subsystem_analysis.py:130:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_radial_observable_subsystem_analysis.py:188:    coefficients_scaled, *_ = np.linalg.lstsq(Xs, ys, rcond=1e-12)
+AIEF_1_4_resonant_tracking_angular_analysis.py:79:    coefficients, *_ = np.linalg.lstsq(design, values, rcond=None)
+AIEF_1_4_resonant_tracking_angular_analysis.py:115:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_results_analysis.py:216:    if np.allclose(values, 0.0, rtol=0.0, atol=0.0):
+AIEF_1_4_scalar_spectral_gap_reduction.py:120:    slope, intercept = np.polyfit(x, y, 1)
+AIEF_1_4_stationarity_perturbation_analysis_updated.py:513:            np.allclose(state.B, expected_final, rtol=0.0, atol=1e-12)
+AIEF_1_4_trajectory_recovery_equivalence.py:258:    similarity = np.nan_to_num(similarity_raw, nan=0.0)
+AIEF_1_4_trajectory_recovery_equivalence.py:259:    continue_similarity_filled = np.nan_to_num(continue_similarity, nan=0.0)
+AIEF_1_4_trajectory_recovery_equivalence.py:415:                    np.nan_to_num(similarity, nan=0.0)
+aief_1_4_augmented_spectrum.py:345:        lines.append("  VERDICT: SUPPORTED.")
+aief_1_4_controller_boundary_margin.py:97:    slope, _ = np.polyfit(x, y, 1)
+aief_1_4_coupling_lock_audit.py:113:    slope, intercept = np.polyfit(x, y, 1)
+aief_1_4_multiseed_geometry.py:187:                if np.allclose(v.real, w.real, atol=tol) and \
+aief_1_4_multiseed_geometry.py:188:                   np.allclose(v.imag, -w.imag, atol=tol):
+aief_1_4_observable_jacobian.py:142:                if np.allclose(v.real, w.real, atol=tol) and \
+aief_1_4_observable_jacobian.py:143:                   np.allclose(v.imag, -w.imag, atol=tol):
+aief_1_4_operator_compression.py:139:                if np.allclose(v.real, w.real, atol=tol) and \
+aief_1_4_operator_compression.py:140:                   np.allclose(v.imag, -w.imag, atol=tol):
+aief_1_4_phase_source_decomposition.py:140:    slope, intercept = np.polyfit(x, y, 1)
+aief_1_4_phase_source_decomposition_v2.py:137:    slope, intercept = np.polyfit(x, y, 1)
+aief_1_4_slow_bundle_geometry.py:117:                if np.allclose(v.real, w.real, atol=tol) and \
+aief_1_4_slow_bundle_geometry.py:118:                   np.allclose(v.imag, -w.imag, atol=tol):
+aief_1_4_slow_subspace_projection.py:145:                if np.allclose(v.real, w.real, atol=tol) and \
+aief_1_4_slow_subspace_projection.py:146:                   np.allclose(v.imag, -w.imag, atol=tol):
+aief_1_4_two_channel_alignment_v4.py:153:    slope, intercept = np.polyfit(x, y, 1)
+aief_1_4_two_channel_alignment_v4.py:241:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v4.py:261:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v4.py:275:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v4.py:289:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v4.py:326:    assert radial_check["identity_passes"], "Radial recurrence identity failed"
+aief_1_4_two_channel_alignment_v4.py:337:    assert phase_sep_check["identity_passes"], "Phase separation increment identity failed"
+aief_1_4_two_channel_alignment_v4.py:569:        "passes": sym_test_L["identity_passes"]
+aief_1_4_two_channel_alignment_v4.py:578:        "passes": sym_test_R["identity_passes"]
+aief_1_4_two_channel_alignment_v4.py:670:                "passes": align_test["identity_passes"]
+aief_1_4_two_channel_alignment_v4.py:679:                "passes": radial_test["identity_passes"]
+aief_1_4_two_channel_alignment_v4.py:688:                "passes": phase_sep_test["identity_passes"]
+aief_1_4_two_channel_alignment_v4.py:697:                "passes": phase_mean_test["identity_passes"]
+aief_1_4_two_channel_alignment_v5.py:163:    slope, intercept = np.polyfit(x, y, 1)
+aief_1_4_two_channel_alignment_v5.py:256:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:276:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:290:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:304:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:325:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:340:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:355:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:373:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:387:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:401:        "identity_passes": bool(np.max(errors) < tol),
+aief_1_4_two_channel_alignment_v5.py:443:    assert radial_check["identity_passes"]
+aief_1_4_two_channel_alignment_v5.py:456:    assert phase_sep_check["identity_passes"]
+aief_1_4_two_channel_alignment_v5.py:466:    assert prop_check["identity_passes"]
+aief_1_4_two_channel_alignment_v5.py:476:    assert rec_check["identity_passes"]
+aief_1_4_two_channel_alignment_v5.py:483:    assert pw_check["identity_passes"]
+aief_1_4_two_channel_alignment_v5.py:902:            "passes": test["identity_passes"],
+aief_1_4_two_channel_alignment_v5.py:1092:                    "passes": test_result["identity_passes"],
+aief_experiment_engine_v1.py:233:        if not np.isclose(self.delay_steps * self.dt, self.tau, rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:305:        if not np.isclose(self.split_time + self.future_duration, self.T_sim, rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:312:        if not np.isclose(self.T_sim / model.dt, round(self.T_sim / model.dt), rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:314:        if not np.isclose(self.burn_end_time / model.dt, round(self.burn_end_time / model.dt), rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:316:        if not np.isclose(self.split_time / model.dt, round(self.split_time / model.dt), rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:318:        if not np.isclose(self.future_duration / model.dt, round(self.future_duration / model.dt), rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:392:    if not np.allclose(B, B.T, rtol=0.0, atol=eps):
+aief_experiment_engine_v1.py:394:    if not np.allclose(np.diag(B), 0, rtol=0.0, atol=eps):
+aief_experiment_engine_v1.py:670:        if not np.allclose(self.B, self.B.T, rtol=0.0, atol=FROZEN_ZERO_TOL):
+aief_experiment_engine_v1.py:674:        if not np.allclose(np.diag(self.B), 0, rtol=0.0, atol=FROZEN_ZERO_TOL):
+aief_experiment_engine_v1.py:2329:        if not np.isclose(frozen_val, config_val, rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:2336:    if not np.isclose(frozen_model.get("alpha", 0.0), config.alpha, rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:2603:                    elif np.isclose(engine_scalar, frozen_scalar, rtol=0.0, atol=0.0):
+aief_experiment_engine_v1.py:2651:                            elif np.isclose(engine_scalar, equiv_scalar, rtol=0.0, atol=0.0):
+probe_02.py:12:print(f"omega match: {np.allclose(model['omega'], prod.OMEGA)}")

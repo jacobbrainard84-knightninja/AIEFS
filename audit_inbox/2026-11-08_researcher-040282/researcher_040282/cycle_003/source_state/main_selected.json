@@ -1,0 +1,30 @@
+{
+  "branch": "main",
+  "commit": "ad58a46ae8da79c19b5484762363eb2e9f2f7923",
+  "fetched_and_verified": 22,
+  "paths": [
+    "CURRENT_STATUS.md",
+    "aief_experiment_engine_v1.py",
+    "lean/AIEFFreezeCore/AIEFFreezeCore.lean",
+    "lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean",
+    "lean/AIEFFreezeCore/lake-manifest.json",
+    "lean/AIEFFreezeCore/lean-toolchain",
+    "lean/AIEFProofs/AIEFProofs.lean",
+    "lean/AIEFProofs/AIEFProofs/Basic.lean",
+    "lean/AIEFProofs/AIEFProofs/CompleteGraphIncidence.lean",
+    "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean",
+    "lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean",
+    "lean/AIEFProofs/AIEFProofs/ControllerFiberQuotient.lean",
+    "lean/AIEFProofs/AIEFProofs/Smoke.lean",
+    "lean/AIEFProofs/lake-manifest.json",
+    "lean/AIEFProofs/lean-toolchain",
+    "lean/AIEFProofsKn/AIEFProofsKn.lean",
+    "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphKn.lean",
+    "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphRightInverse.lean",
+    "lean/AIEFProofsKn/AIEFProofsKn/IncMatrixRank.lean",
+    "lean/AIEFProofsKn/AIEFProofsKn/KernelDimFormula.lean",
+    "registry/claims.csv",
+    "research/freezing/REPORT.md"
+  ],
+  "scope": "selected read-only source/feedback refresh, not a complete active-branch audit"
+}

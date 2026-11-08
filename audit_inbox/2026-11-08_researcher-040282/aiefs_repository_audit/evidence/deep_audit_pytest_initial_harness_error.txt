@@ -1,0 +1,30 @@
+.xFFF.x.xx.x.x...                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_uncommitted_secret_shaped_content_is_blocked_as_control _________
+
+world = <test_deep_audit.GitWorld object at 0x7f23309b65d0>
+
+    def test_uncommitted_secret_shaped_content_is_blocked_as_control(world):
+        # Deliberately invalid, synthetic credential-shaped string; not a real key.
+        (world.mine/'calibration_notes.txt').write_text('ghp_' + 'A'*40 + '\n')
+        before=world.remote_head()
+        result=world.script('upload_new.sh','--yes')
+>       assert result.returncode == 0, result.stdout
+E       AssertionError: upload_new.sh: ERROR: git user.name / user.email not set (git config --global user.name 'Your Name'; git config --global user.email you@example.com)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['bash', '/home/user/aiefs_repository_audit/repository/tools/sync/upload_new.sh', '--yes'], retu...me / user.email not set (git config --global user.name 'Your Name'; git config --global user.email you@example.com)\n").returncode
+
+test_deep_audit.py:97: AssertionError
+_____________ test_committed_secret_shaped_content_is_also_blocked _____________
+[XPASS(strict)] unpublished committed blobs are not content-scanned
+_____________ test_oversized_blob_deleted_before_tip_is_not_pushed _____________
+[XPASS(strict)] only base-to-tip file differences are scanned, not all blobs sent in commit history
+=========================== short test summary info ============================
+XFAIL test_deep_audit.py::test_uploader_preserves_ignored_file_when_upstream_now_tracks_it - uploader pull can silently overwrite an ignored local experiment file
+XFAIL test_deep_audit.py::test_bridge_selftest_fixture_matches_the_implemented_gate - bridge self-test hardcodes a projected answer for an out-of-branch proposal
+XFAIL test_deep_audit.py::test_saved_grid_hold_exact_boundary_translation - addition/searchsorted can reject a true block spanning exactly 17.5 saved-grid units
+XFAIL test_deep_audit.py::test_rate_interval_does_not_assert_zero_population_uncertainty - empirical percentile bootstrap interval collapses at a zero-event sample boundary
+XFAIL test_deep_audit.py::test_oracle_rejects_duplicate_condition_records - set-based oracle coverage comparison erases duplicate condition rows
+XFAIL test_deep_audit.py::test_engine_complex_nan_comparator_rejects_changed_finite_component - engine complex NaN mask hides a changed finite real/imaginary component
+3 failed, 8 passed, 6 xfailed in 1.72s

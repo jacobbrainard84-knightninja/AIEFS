@@ -1,0 +1,15 @@
+== Fetching origin ...
+From /home/user/aiefs_repository_audit/isolated-git-probes-u2w97uef/ignored-download/origin
+   cb14e6d..51330e6  main       -> origin/main
+   local is 0 commit(s) ahead, 1 behind origin/main
+
+== Coming down from GitHub (1 commit(s)):
+    51330e6 2026-11-07 upstream adds ignored filename
+
+ 1 file changed, 1 insertion(+)
+   new files (1):
+    experiment.log
+!! exist locally as untracked/ignored files and would be overwritten (1):
+    experiment.log
+   Move or rename these local files (or commit them under another name), then rerun.
+download_new.sh: ERROR: stopped: local untracked/ignored files would be overwritten (listed above). Nothing changed.

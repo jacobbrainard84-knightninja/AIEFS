@@ -1,0 +1,13 @@
+{
+  "scope": "known-false negative control, NOT a regenerated modular candidate",
+  "mutation": "one duplicate condition-status record; real scalar CSV and NPZ unchanged",
+  "oracle_condition_rows": 200,
+  "candidate_condition_rows": 201,
+  "comparison": {
+    "status": "passed",
+    "scalar_rows": 800,
+    "npz_entries": 68800,
+    "condition_rows": 201,
+    "errors": []
+  }
+}

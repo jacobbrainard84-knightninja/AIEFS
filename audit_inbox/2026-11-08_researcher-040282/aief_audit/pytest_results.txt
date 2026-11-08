@@ -1,0 +1,18 @@
+...xx............x....x...xx.                                            [100%]
+============================= slowest 8 durations ==============================
+6.60s call     test_audit.py::test_complete_synthetic_pipeline_and_bundle
+6.56s call     test_audit.py::test_published_input_digest_matches_bytes_consumed
+2.35s call     test_audit.py::test_four_cell_complete_case_gate
+1.34s setup    test_audit.py::test_recovery_counts_and_raw_nan_not_modified
+0.66s setup    test_audit.py::test_fixture_validates_all_800_conditions
+0.26s call     test_audit.py::test_scalar_contrast_and_did_signs
+0.05s call     test_audit.py::test_held_nonboundary_durations_exhaustive
+0.04s setup    test_audit.py::test_postrename_fsync_failure_leaves_completed_bundle
+=========================== short test summary info ============================
+XFAIL test_audit.py::test_fixed_hold_translation_invariant_on_declared_grid - addition/searchsorted rejects some exact 17.5-unit runs
+XFAIL test_audit.py::test_hold_satisfying_literal_timestamp_contract - implementation can disagree even with literal timestamp subtraction
+XFAIL test_audit.py::test_zero_events_do_not_imply_zero_population_uncertainty - empirical bootstrap rate CI collapses at a sample boundary
+XFAIL test_audit.py::test_published_input_digest_matches_bytes_consumed - input bytes are trusted after validate_run; published digest can describe different data
+XFAIL test_audit.py::test_nominal_window_check_accepts_ordinary_numeric_roundtrip - ordinary pandas CSV round-trip can fail exact nominal-window equality
+XFAIL test_audit.py::test_staged_manifest_payload_is_checked_against_its_digest - read-back compares stored hash to in-memory payload, not serialized payload
+23 passed, 6 xfailed in 19.08s

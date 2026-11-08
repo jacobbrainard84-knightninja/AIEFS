@@ -1,0 +1,22 @@
+{
+  "report": "2026-09-04_researcher040282_004_complex-ema.md",
+  "critical_files": [
+    "CoherenceDriveBridge.lean",
+    "CoherenceEMA.lean",
+    "FreezeCore.lean",
+    "GateFoundations.lean",
+    "GateProposalBridge.lean",
+    "check_cycle.py",
+    "compare_source.py"
+  ],
+  "critical_blocks_match_sources": true,
+  "runner_exit": 0,
+  "source_runner_exit": 0,
+  "controls": 18,
+  "all_control_outcomes_repeated": true,
+  "source_case_count": 34,
+  "source_calls": 253,
+  "source_wrong_model_detections": 6,
+  "expected_configuration_rejections": 1,
+  "scope": "Local single-note self-reproduction with public dependencies, not independent review/publication/integration"
+}

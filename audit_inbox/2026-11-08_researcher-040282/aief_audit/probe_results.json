@@ -1,0 +1,190 @@
+{
+  "evidence_scope": "SYNTHETIC/deterministic function probes; no raw S01 run and no real aief_modular package",
+  "hold_grid_sweep": [
+    {
+      "duration": 8.75,
+      "true_block_span": 9.0,
+      "eligible_start_positions_tested": 622,
+      "false_negative_count": 0,
+      "first_examples": []
+    },
+    {
+      "duration": 13.125,
+      "true_block_span": 13.5,
+      "eligible_start_positions_tested": 613,
+      "false_negative_count": 0,
+      "first_examples": []
+    },
+    {
+      "duration": 17.5,
+      "true_block_span": 17.5,
+      "eligible_start_positions_tested": 605,
+      "false_negative_count": 32,
+      "first_examples": [
+        {
+          "start_index": 32,
+          "end_index": 67,
+          "start_time": 16.01,
+          "end_time": 33.51,
+          "addition_used_for_search": 33.510000000000005,
+          "timestamp_subtraction": 17.499999999999996,
+          "returned_index": null
+        },
+        {
+          "start_index": 33,
+          "end_index": 68,
+          "start_time": 16.51,
+          "end_time": 34.01,
+          "addition_used_for_search": 34.010000000000005,
+          "timestamp_subtraction": 17.499999999999996,
+          "returned_index": null
+        },
+        {
+          "start_index": 34,
+          "end_index": 69,
+          "start_time": 17.01,
+          "end_time": 34.51,
+          "addition_used_for_search": 34.510000000000005,
+          "timestamp_subtraction": 17.499999999999996,
+          "returned_index": null
+        }
+      ]
+    },
+    {
+      "duration": 26.25,
+      "true_block_span": 26.5,
+      "eligible_start_positions_tested": 587,
+      "false_negative_count": 0,
+      "first_examples": []
+    },
+    {
+      "duration": 35.0,
+      "true_block_span": 35.0,
+      "eligible_start_positions_tested": 570,
+      "false_negative_count": 26,
+      "first_examples": [
+        {
+          "start_index": 32,
+          "end_index": 102,
+          "start_time": 16.01,
+          "end_time": 51.01,
+          "addition_used_for_search": 51.010000000000005,
+          "timestamp_subtraction": 35.0,
+          "returned_index": null
+        },
+        {
+          "start_index": 33,
+          "end_index": 103,
+          "start_time": 16.51,
+          "end_time": 51.51,
+          "addition_used_for_search": 51.510000000000005,
+          "timestamp_subtraction": 35.0,
+          "returned_index": null
+        },
+        {
+          "start_index": 34,
+          "end_index": 104,
+          "start_time": 17.01,
+          "end_time": 52.01,
+          "addition_used_for_search": 52.010000000000005,
+          "timestamp_subtraction": 35.0,
+          "returned_index": null
+        }
+      ]
+    }
+  ],
+  "delayed_held_event": {
+    "expected_index": 32,
+    "expected_time": 16.01,
+    "actual_index": 100,
+    "actual_time": 50.01
+  },
+  "event_rate_intervals": [
+    {
+      "events": 0,
+      "n": 40,
+      "bootstrap_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "events": 40,
+      "n": 40,
+      "bootstrap_ci": [
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "exact_binomial_95pct_interval_0_of_40": [
+    0.0,
+    0.08809730287880235
+  ],
+  "coverage_counterexample": {
+    "hypothetical_population_event_probability": 0.01,
+    "probability_all_40_events_zero": 0.6689717585696803,
+    "maximum_coverage_given_zero_width_at_all_zero": 0.3310282414303197
+  },
+  "one_complete_case": {
+    "n": 1,
+    "mean": 7.0,
+    "bootstrap_ci": [
+      7.0,
+      7.0
+    ],
+    "bootstrap_draws_without_any_complete_case": 723,
+    "bootstrap_iterations": 2000,
+    "theoretical_zero_case_draw_probability": 0.36323243988788034
+  },
+  "nominal_window_csv_roundtrip": {
+    "test_T_star": 17.333,
+    "mismatches": [
+      {
+        "rho": 0.75,
+        "expected_float_repr": "12.999749999999999",
+        "parsed_float_repr": "12.99975"
+      },
+      {
+        "rho": 1.5,
+        "expected_float_repr": "25.999499999999998",
+        "parsed_float_repr": "25.9995"
+      }
+    ]
+  },
+  "all_below_threshold_but_nonzero_topologies": {
+    "cosine": 1.0,
+    "normalized_distance": 0.0,
+    "Jaccard_is_NaN": true
+  },
+  "physical_crossing_nonidentifiability": {
+    "saved_times": [
+      0.01,
+      0.51,
+      1.01
+    ],
+    "saved_values_both_paths": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "same_reported_adjacent_interval": [
+      0.51,
+      1.01
+    ],
+    "possible_step_level_first_crossings": [
+      0.11,
+      0.76
+    ],
+    "interpretation": "The interval does not identify the first physical crossing without path restrictions; the saved-grid detection time is exactly 1.01."
+  },
+  "hold_onset_observability": {
+    "duration": 17.5,
+    "last_fully_confirmable_saved_onset": 302.01,
+    "example_true_run_starts": 310.01,
+    "support_end": 319.51,
+    "code_records_event_observed": false,
+    "code_records_restricted_time": 319.51,
+    "interpretation": "Coherent as a finite-grid capped score, not as usual physical-onset censoring at support_end."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "status": "Compiled clean in full18-control and extracted-code reruns; local self-reproduction, no independent review",
+  "modules": {
+    "CoherenceEMA": [
+      "phaseInput_norm",
+      "physicalAlpha_pos",
+      "physicalAlpha_lt_one",
+      "emaStep_norm_le",
+      "emaStep_unitDisk",
+      "emaTrajectory_unitDisk",
+      "coherenceUpdate_unitDisk",
+      "reportedR_nonneg",
+      "reportedR_symmetric",
+      "reportedR_diag",
+      "reportedR_le_one",
+      "reportedR_lipschitz",
+      "ema_difference",
+      "ema_same_input_difference",
+      "trajectory_same_input_difference",
+      "trajectory_same_input_norm",
+      "constant_closed_form",
+      "constant_error_norm",
+      "constant_zero_norm",
+      "constant_converges",
+      "matrix_same_input_reported_bound",
+      "constant_zero_reported"
+    ],
+    "CoherenceDriveBridge": [
+      "reportedDrive_bounds",
+      "reportedDrive_symmetric",
+      "reportedDrive_diag",
+      "reportedDrive_positiveRow_bound",
+      "phaseUpdatedDrive_positiveRow_bound",
+      "phaseUpdated_gate_floor"
+    ]
+  },
+  "new_declarations": 28
+}

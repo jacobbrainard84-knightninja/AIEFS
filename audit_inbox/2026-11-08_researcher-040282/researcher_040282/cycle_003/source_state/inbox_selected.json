@@ -1,0 +1,16 @@
+{
+  "branch": "audit-inbox",
+  "commit": "5c1ffed0377c4769154e9342464ce7265cf1c599",
+  "fetched_and_verified": 8,
+  "paths": [
+    "audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md",
+    "audit_inbox/2026-10-31_researcher026_full-state-review.md",
+    "audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md",
+    "audit_inbox/README.md",
+    "audit_inbox/TRIAGE.md",
+    "audit_inbox/briefing/NORTH_STAR.md",
+    "audit_inbox/briefing/OPEN_QUESTIONS.md",
+    "audit_inbox/briefing/STATE.md"
+  ],
+  "scope": "selected read-only source/feedback refresh, not a complete active-branch audit"
+}

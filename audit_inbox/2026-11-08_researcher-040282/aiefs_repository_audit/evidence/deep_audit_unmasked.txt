@@ -1,0 +1,143 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_______ test_uploader_preserves_ignored_file_when_upstream_now_tracks_it _______
+
+world = <test_deep_audit.GitWorld object at 0x7ff50b77d160>
+
+    @pytest.mark.xfail(strict=True,reason='uploader pull can silently overwrite an ignored local experiment file')
+    def test_uploader_preserves_ignored_file_when_upstream_now_tracks_it(world):
+        world.upstream_ignored_collision()
+        result=world.script('upload_new.sh','--yes')
+        assert result.returncode == 0, result.stdout
+>       assert (world.mine/'experiment.log').read_text() == 'IRREPLACEABLE LOCAL OBSERVATIONS\n'
+E       AssertionError: assert 'UPSTREAM CONTENT\n' == 'IRREPLACEABL...BSERVATIONS\n'
+E         
+E         - IRREPLACEABLE LOCAL OBSERVATIONS
+E         + UPSTREAM CONTENT
+
+test_deep_audit.py:91: AssertionError
+_____________ test_committed_secret_shaped_content_is_also_blocked _____________
+
+world = <test_deep_audit.GitWorld object at 0x7ff50100a5d0>
+
+    @pytest.mark.xfail(strict=True,reason='unpublished committed blobs are not content-scanned')
+    def test_committed_secret_shaped_content_is_also_blocked(world):
+        (world.mine/'calibration_notes.txt').write_text('ghp_' + 'A'*40 + '\n')
+        world.git(world.mine,'add','calibration_notes.txt')
+        world.git(world.mine,'commit','-m','local commit with synthetic credential-shaped contents')
+        before=world.remote_head()
+        result=world.script('upload_new.sh','--yes')
+>       assert world.remote_head() == before, 'Uploader advanced local bare remote with credential-shaped committed content'
+E       AssertionError: Uploader advanced local bare remote with credential-shaped committed content
+E       assert 'bae59f134bf2...6ce343861443f' == 'ea83e9d6439a...7503fd06a1eeb'
+E         
+E         - ea83e9d6439abdbdbf6aa13f2847503fd06a1eeb
+E         + bae59f134bf2fa18bd654e9d7606ce343861443f
+
+test_deep_audit.py:111: AssertionError
+_____________ test_oversized_blob_deleted_before_tip_is_not_pushed _____________
+
+world = <test_deep_audit.GitWorld object at 0x7ff50100a490>
+
+    @pytest.mark.xfail(strict=True,reason='only base-to-tip file differences are scanned, not all blobs sent in commit history')
+    def test_oversized_blob_deleted_before_tip_is_not_pushed(world):
+        (world.mine/'large_scratch.bin').write_bytes(b'x'*(2*1024*1024))
+        world.git(world.mine,'add','large_scratch.bin')
+        world.git(world.mine,'commit','-m','large intermediate object')
+        world.git(world.mine,'rm','large_scratch.bin')
+        (world.mine/'README.md').write_text('small current tip\n')
+        world.git(world.mine,'add','README.md')
+        world.git(world.mine,'commit','-m','remove large object from tip')
+        before=world.remote_head()
+        result=world.script('upload_new.sh','--yes','--max-size-mb','1')
+>       assert world.remote_head() == before, 'Uploader sent a 2 MiB historical blob despite its 1 MiB upload limit'
+E       AssertionError: Uploader sent a 2 MiB historical blob despite its 1 MiB upload limit
+E       assert 'e8de35eb3241...92e15f69ac3f4' == 'ea83e9d6439a...7503fd06a1eeb'
+E         
+E         - ea83e9d6439abdbdbf6aa13f2847503fd06a1eeb
+E         + e8de35eb324157010036b2fc19992e15f69ac3f4
+
+test_deep_audit.py:125: AssertionError
+__________ test_bridge_selftest_fixture_matches_the_implemented_gate ___________
+
+    @pytest.mark.xfail(strict=True,reason='bridge self-test hardcodes a projected answer for an out-of-branch proposal')
+    def test_bridge_selftest_fixture_matches_the_implemented_gate():
+        branch=importlib.import_module('AIEF_1_4_actual_admissibility_branch_audit')
+        base=importlib.import_module('AIEF_1_4_stationarity_perturbation_analysis_updated')
+        bridge=importlib.import_module('AIEF_1_4_proposal_equalization_bridge_analysis')
+        bridge.synthetic_self_test() # Reports PASS with the following proposal.
+        A,edges=base.incidence_matrix(12)
+        capacity=.6333333333333333; epsilon=1e-12
+        x=np.zeros(66);x[[25,29,59]]=[.41,.31,.27]
+        y,info=branch.admissibility_from_nonnegative_proposal(x,np.full(12,capacity),A,edges,epsilon)
+        assumed_y25=info['scales'][7]*x[25]
+>       assert y[25] == pytest.approx(assumed_y25,rel=0,abs=1e-14)
+E       assert np.float64(0....4814814764723) == 0.3818627450974777 ± 1.0e-14
+E         
+E         comparison failed
+E         Obtained: 0.36064814814764723
+E         Expected: 0.3818627450974777 ± 1.0e-14
+
+test_deep_audit.py:154: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Synthetic proposal-equalization bridge checks: PASS
+_______________ test_saved_grid_hold_exact_boundary_translation ________________
+
+    @pytest.mark.xfail(strict=True,reason='addition/searchsorted can reject a true block spanning exactly 17.5 saved-grid units')
+    def test_saved_grid_hold_exact_boundary_translation():
+        c=np.zeros(640,bool);c[32:68]=True
+>       assert analysis._held_index(analysis.EXPECTED_SAMPLE_TIMES,c,17.5) == 32
+E       assert None == 32
+E        +  where None = <function _held_index at 0x7ff500f7dc60>(array([1.0000e-02, 5.1000e-01, 1.0100e+00, 1.5100e+00, 2.0100e+00,\n       2.5100e+00, 3.0100e+00, 3.5100e+00, 4.0100e+...02, 3.1551e+02, 3.1601e+02, 3.1651e+02, 3.1701e+02,\n       3.1751e+02, 3.1801e+02, 3.1851e+02, 3.1901e+02, 3.1951e+02]), array([False, False, False, False, False, False, False, False, False,\n       False, False, False, False, False, False,...False, False, False, False, False,\n       False, False, False, False, False, False, False, False, False,\n       False]), 17.5)
+E        +    where <function _held_index at 0x7ff500f7dc60> = analysis._held_index
+E        +    and   array([1.0000e-02, 5.1000e-01, 1.0100e+00, 1.5100e+00, 2.0100e+00,\n       2.5100e+00, 3.0100e+00, 3.5100e+00, 4.0100e+...02, 3.1551e+02, 3.1601e+02, 3.1651e+02, 3.1701e+02,\n       3.1751e+02, 3.1801e+02, 3.1851e+02, 3.1901e+02, 3.1951e+02]) = analysis.EXPECTED_SAMPLE_TIMES
+
+test_deep_audit.py:165: AssertionError
+________ test_rate_interval_does_not_assert_zero_population_uncertainty ________
+
+    @pytest.mark.xfail(strict=True,reason='empirical percentile bootstrap interval collapses at a zero-event sample boundary')
+    def test_rate_interval_does_not_assert_zero_population_uncertainty():
+        seeds=tuple(str(i) for i in range(40))
+        frame=pd.DataFrame({'seed':seeds,'group':'one','value':0.})
+        result=analysis.pointwise_summary(frame,group_columns=('group',),value_column='value',
+                                          seeds=seeds,draws=analysis.bootstrap_draws(seeds,2000,91)).iloc[0]
+>       assert result.pointwise_ci_upper > 0
+E       assert np.float64(0.0) > 0
+E        +  where np.float64(0.0) = group                                                                     one\nestimand                                ...7592eb28a94be01...\nincluded_seed_fraction                                                    1.0\nName: 0, dtype: object.pointwise_ci_upper
+
+test_deep_audit.py:174: AssertionError
+_______________ test_oracle_rejects_duplicate_condition_records ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-user/pytest-3/test_oracle_rejects_duplicate_0')
+
+    @pytest.mark.xfail(strict=True,reason='set-based oracle coverage comparison erases duplicate condition rows')
+    def test_oracle_rejects_duplicate_condition_records(tmp_path):
+        left=tmp_path/'left.csv';right=tmp_path/'right.csv'
+        left.write_text('seed,rho,status\n10,0.5,success\n10,0.5,success\n')
+        right.write_text('seed,rho,status\n10,0.5,success\n')
+        errors=[];_compare_condition_coverage(left,right,errors)
+>       assert errors
+E       assert []
+
+test_deep_audit.py:191: AssertionError
+_____ test_engine_complex_nan_comparator_rejects_changed_finite_component ______
+
+    @pytest.mark.xfail(strict=True,reason='engine complex NaN mask hides a changed finite real/imaginary component')
+    def test_engine_complex_nan_comparator_rejects_changed_finite_component():
+        a=np.array([complex(float('nan'),1.)]);b=np.array([complex(float('nan'),99.)])
+>       assert not engine.exact_array_equal_with_nan(a,b)
+E       assert not True
+E        +  where True = <function exact_array_equal_with_nan at 0x7ff500fe5800>(array([nan+1.j]), array([nan+99.j]))
+E        +    where <function exact_array_equal_with_nan at 0x7ff500fe5800> = engine.exact_array_equal_with_nan
+
+test_deep_audit.py:202: AssertionError
+=========================== short test summary info ============================
+FAILED test_deep_audit.py::test_uploader_preserves_ignored_file_when_upstream_now_tracks_it
+FAILED test_deep_audit.py::test_committed_secret_shaped_content_is_also_blocked
+FAILED test_deep_audit.py::test_oversized_blob_deleted_before_tip_is_not_pushed
+FAILED test_deep_audit.py::test_bridge_selftest_fixture_matches_the_implemented_gate
+FAILED test_deep_audit.py::test_saved_grid_hold_exact_boundary_translation - ...
+FAILED test_deep_audit.py::test_rate_interval_does_not_assert_zero_population_uncertainty
+FAILED test_deep_audit.py::test_oracle_rejects_duplicate_condition_records - ...
+FAILED test_deep_audit.py::test_engine_complex_nan_comparator_rejects_changed_finite_component
+8 failed, 9 deselected in 0.83s

@@ -1,0 +1,13 @@
+{
+  "report": "2026-11-07_researcher040282_002_guarded-capacity-lean.md",
+  "extraction": "Exactly the two allowlisted inline FILE blocks; no original source used for execution",
+  "critical_files": [
+    "GateFoundations.lean",
+    "check_cycle.py"
+  ],
+  "code_blocks_match_workspace": true,
+  "runner_exit": 0,
+  "control_count": 9,
+  "all_controls_passed": true,
+  "scope": "Local self-reproduction only; no independent-seat approval or integration"
+}

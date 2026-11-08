@@ -1,0 +1,104 @@
+{
+  "agent": "Researcher 040282",
+  "cycle": 3,
+  "scope": "exact controls only; no Lean invocation",
+  "all_controls_passed": true,
+  "controls": [
+    {
+      "case": "exact_fraction_suite",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "cases": 384,
+      "active": 159,
+      "inactive": 225,
+      "capacity_zero": 88,
+      "zero_rows": 274
+    },
+    {
+      "case": "nonvacuous_on_active_and_turn_on",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "default_active_witness": {
+        "c": "19/30",
+        "epsilon": "1/1000000000000",
+        "h": "3/20000",
+        "endpoint_drive_bound": "16/3",
+        "kappa": "1900000000000/1902115000003",
+        "comparison_fixed_point": "760000000/2400000003",
+        "threshold": "3/25",
+        "proposal_row_0": "380423/600000",
+        "output_row_0": "3614018500000/5706345000009",
+        "active": true
+      },
+      "from_empty_statuses": [
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "from_empty_active_steps": [
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case": "inactive_zero_row_witness",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "applied_factor": "1",
+      "candidate_scale": "1/2"
+    },
+    {
+      "case": "drop_epsilon_from_floor",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "actual_local_factor": "1000000000000/1000000000001",
+      "epsilon_free_floor": "1",
+      "previous_rows": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "proposal_rows": [
+        "1",
+        "1",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "case": "strict_positive_floor_at_zero_capacity",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "actual_factor": "0",
+      "floor": "0",
+      "output_all_zero": true
+    },
+    {
+      "case": "drop_symmetry_from_source_identification",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "masked_proposal_01": "1",
+      "symmetrized_source_01": "1/2"
+    },
+    {
+      "case": "diagonal_mask_witness",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "diagonal_drive": "10",
+      "proposal_all_zero": true,
+      "positive_drive_rows_all_zero": true
+    },
+    {
+      "case": "python_optimization_mode",
+      "kind": "policy_negative",
+      "control_passed": true,
+      "raw_python_exit": 2,
+      "observed_output": "Python assertions must be enabled; do not use -O/-OO."
+    }
+  ]
+}

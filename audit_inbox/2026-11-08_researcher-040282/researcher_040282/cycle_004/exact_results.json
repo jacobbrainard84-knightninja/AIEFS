@@ -1,0 +1,74 @@
+{
+  "agent": "Researcher 040282",
+  "cycle": 4,
+  "scope": "exact finite/policy controls only; no Lean invocation",
+  "control_count": 5,
+  "all_controls_passed": true,
+  "controls": [
+    {
+      "case": "exact_shared_input_paths",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "trajectories": 64,
+      "updates_each": 16,
+      "disk_checks": 2176,
+      "difference_checks": 1088
+    },
+    {
+      "case": "exact_fixed_input_paths",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "trajectories": 64,
+      "updates_each": 16,
+      "closed_form_checks": 1088
+    },
+    {
+      "case": "exact_reported_drive_matrices",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "matrices": 120,
+      "tight_row_bounds": 327,
+      "N_values": [
+        1,
+        2,
+        3,
+        6,
+        12
+      ],
+      "coarse_default_ON_comparison_point": "760000000/13200000003",
+      "threshold": "3/25",
+      "coarse_range_alone_not_ON_certificate": true
+    },
+    {
+      "case": "exact_adversarial_witnesses",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "witnesses": {
+        "drop_alpha_upper_norm_squared": "9",
+        "drop_alpha_lower_norm_squared": "9",
+        "drop_input_bound_norm_squared": "4",
+        "different_input_nonzero_next_difference": "1",
+        "mean_of_norms_vs_norm_of_mean": [
+          "1",
+          "0"
+        ],
+        "complex_diagonal_vs_reported_diagonal": [
+          "1/2",
+          "0"
+        ],
+        "alpha_one_retains_initial": "0 for every recurrence step",
+        "antiphase_unit_magnitude_vs_cosine": [
+          "1",
+          "-1"
+        ]
+      }
+    },
+    {
+      "case": "python_optimization_mode",
+      "kind": "policy_negative",
+      "control_passed": true,
+      "raw_python_exit": 2,
+      "observed_output": "Python assertions must be enabled; do not use -O/-OO."
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+# Finite-time support freezing in the discrete AIEF model
+
+**Date:** 2026-10-28 (America/Toronto).
+**Location:** `research/freezing/` in the AIEFS repo (copied on 2026-10-29 from a scratch directory, without the `preguard/` backups; script paths made repo-relative; see `README.md` here for the scope summary and how to re-run). The original work edited no repo file; the repo engine `aief_experiment_engine_v1.py` (repo root) is imported read-only, for the `--crosscheck` only, with `sys.dont_write_bytecode`.
+
+## 0. Headline
+
+* **True and PROVEN (paper proof, real arithmetic; not in Lean except the per-edge core, §6):** a *conditional* finite-time freezing theorem. Suppose that from some step T on (with T ≥ 1, or row sums ≤ c at start, which the engine init satisfies), the coherence R_e(n) of each edge stays in a band that satisfies one of three strict, explicitly computable certificate inequalities (OFF, ON, gated-OFF; Thms 2–3). Then every edge's status `B_e > B_c` is constant for all n ≥ T + N. N is explicit (on paper and in code; paper-level only, the Lean statements are existential ∃N) and holds for the **real-arithmetic** map only (float64: see §3.6). It is explicit in the margin, h = γ·dt, the cap c = (a−δ)/q, the row-sum drive bound S_i and B(T). The proof handles the min-endpoint capacity gate *uniformly*. It never needs to know when the gate switches on or off, including late flips (Lemma 1).
+* **False unconditionally** for the B-map viewed on its own. With R given externally (periodic), an edge flips forever (§3.4, numerical counterexample with 10 flips). So any freezing theorem must assume something about R. Equivalently, it must assume something about phase-locking or drift of the closed loop.
+* **Open:** whether the *closed-loop* dynamics (phases + delay + EMA + gated weights) always produce R satisfying the hypotheses, i.e. a locking/drift guarantee with margin. Also open: exact ties (gated equilibrium exactly at B_c) and multistability. We prove no closed-loop locking theorem. It remains a hypothesis.
+* **Numerics** (5 repo seeds plus no-delay, random-ω, near-identical-ω stress and B-reset variants):
+  * Every certificate issued was an upper bound on the last observed status change. There were **0 violations** over **1,412** certified (run, T) pairs, recomputed with the float margin guard (margins ≥ 1e-9, §3.6); the count is unchanged by the guard. Here "certified" means: all 66 edges certified at T, with the hypotheses (R bands) checked only over the **finite window [T, 80000)**, not over [T, ∞).
+  * The gated-OFF certificate (Thm 3) for a locked group of ≥ 7 is issued only when the R band on the group is very tight (k = 7: R spread ≲ 2e-4; §3, Thm 3).
+  * The certificate is non-trivial (N > 0) in the random-ω, stress and reset runs. In the reset runs it predicted step 48938 against an observed last change at 48308.
+* **Lean:** the scalar core and the per-edge OFF/ON statements, including max(0,·) clipping and an arbitrary gate factor λ ∈ [κ,1], are formalised. They compile with no `sorry` against Mathlib (Lean v4.33.1): `lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean` (repo path; separate Lake project, checked by `lean/AIEFFreezeCore/check_lean_freeze.sh`). Those Lean statements are existential (∃N); the explicit N is not in Lean. The gate row-sum lemma and the gated-OFF theorem are not yet formalised, but they look routine (§6).
+* **Novelty (rescoped 2026-10-31 after the Auditor Seat 002 novelty audit, `audit/AUDIT_R002_NOVELTY.md`; §5 addendum):** **known variant (partial overlap; consistency hit), with a narrow residual that is plausibly new; the search is not exhaustive.** The mechanism "phases lock ⇒ relax-to-target Hebbian couplings converge ⇒ (given a strict margin) the thresholded edge set is eventually constant" is a known variant of Cho–Dong–Ha, *J. Differential Equations* 360 (2023) 523–571 (doi 10.1016/j.jde.2023.03.047), which is continuous-time, with inertia, and *proves* the locking that we assume (O1). Ha–Noh–Park 2016 is related prior art only. The overlap is a consistency hit; it does not validate the gate, the delay, the EMA or N. The residual is Lemma 1 (a gate factor bracket that holds whether or not the gate is active) and the strict-margin OFF/ON/gated-OFF certificates of Thms 2–3, in particular the capacity-forced OFF state of a locked clique of ≥ 7. It does not rest on discrete time or on the explicit N. The mathematical core is elementary (comparison with a scalar affine contraction). Do not oversell it.
+
+## 1. The exact recurrence (code citations)
+
+### 1.1 Engine and constants
+
+Primary engine: `aief_experiment_engine_v1.py` (repo root; sha256 ca4593fd…, the file the line citations below refer to).
+
+Constants (`:63-80`):
+
+| Symbol | Value |
+|---|---|
+| N | 12 |
+| dt | 0.01 |
+| τ | 0.5 |
+| ω | [1.00, 1.02, 1.50, 2.00, 2.01, 1.01, 1.03, 1.51, 2.02, 2.00, 1.00, 1.04] |
+| a | 1 |
+| q | 1.5 |
+| δ | 0.05 |
+| η | 0.04 |
+| γ | 0.015 |
+| μ | 0.03 |
+| B_c | 0.12 |
+| B_init_scale | 5e-4 |
+| ε (`scale_epsilon`, `:148`) | 1e-12 |
+| D = τ/dt | 50 delay steps (`:172`, `:232-235`) |
+
+Derived quantities:
+
+* α = exp(−dt/T_w) (`:162-164`), with T_w = 25/mean(ω) = 17.5029.
+* Capacity c = (a−δ)/q = 0.63333 (`:167-169`).
+
+**Initialisation (`:696-711`):**
+
+* θ⁰ ~ U[0,2π).
+* B⁰ = sym(5e-4·U[0,1]), diagonal 0.
+* z⁰ = 0.
+* The history buffer holds D+1 copies of θ⁰.
+
+### 1.2 One step n → n+1 (`advance_state`, `:755-845`)
+
+1. **Coherence** (`compute_R`, `:721-752`):
+
+   z_ij ← α z_ij + (1−α) exp(i(θ_i^n − θ_j^{n−D} − (ω_i+ω_j)τ/2)),
+
+   R_ij = (|z_ij| + |z_ji|)/2, R_ii = 0.
+
+   So R is the modulus of a complex EMA. R ∈ [0,1], and R → 1 for any frequency-locked pair whatever its phase offset.
+
+2. **Pre-gate weights** (`:790-797`):
+
+   Ũ = sym(max(0, B + dt((η+μ)R − μ − γB))), diagonal 0.
+
+3. **Gate** (`:803-814`): s_i = Σ_j Ũ_ij. The gate is active iff min_i(a − q s_i) < δ, i.e. (in real arithmetic) some s_i > c.
+
+   * If active: λ_i = min(1, c/(s_i+ε)) and B⁺_ij = Ũ_ij · min(λ_i, λ_j) (min-endpoint scaling).
+   * Otherwise: B⁺ = Ũ.
+
+   A post-check raises if min(a − q·rowsum) < δ − 1e-9 (`:824-828`).
+
+4. **Phases** (`:830-839`), using the *new* B⁺:
+
+   θ ← mod(θ + dt(ω + Σ_j B⁺_ij sin(θ_j^{n−D} − θ_i)), 2π).
+
+   The history is then pushed (`:841-844`).
+
+5. **Status:** edge e = {i,j} is ON iff B_e > B_c.
+
+### 1.3 Other engines and the audit
+
+**AIEF-1.3 engine** (`AIEF_1_3_falsification_updated.py`): same law.
+
+* `compute_R` `:350-363`
+* symmetrisation `:421-422`
+* B update `:432-435`
+* gate `:440-448`
+* status accumulator `P_sum += B > B_C` `:472`
+
+**AIEF-1.4 memory-ablation engine** (`AIEF_1_4_memory_ablation_updated.py`): same law.
+
+* `compute_R` `:410-419`
+* B update `:443-445`
+* outer-min gate `:455`
+* θ update `:473`
+
+My re-implementation `freeze_check.py::simulate` (`:29-56`) is **exact on the default engine path**: max|B_mine − B_engine| = **0.0** over 3000 steps, 1 seed (`python3 freeze_check.py --crosscheck`); the independent audit extended this to 0.0 over 80,000 steps for 3 seeds. The variants used in §4 (no delay, random ω with α from T_w = 25/mean ω, the B reset, exogenous R) are **not** engine modes; they are modifications of the re-implementation.
+
+### 1.4 Edge-wise reformulation
+
+Let h = γ·dt = 1.5e-4 and define the drive
+
+u_e(n) := ((η+μ)R_e(n) − μ)/γ ∈ [−2, η/γ = 2.667].
+
+Then **B_e⁺ = λ_e(n) · max(0, (1−h)B_e + h u_e(n))**, with λ_e = min(λ_i, λ_j) ∈ (0,1] and λ ≡ 1 when the gate is inactive.
+
+Useful values:
+
+* B* = 0 at R = μ/(η+μ) = 3/7.
+* Ungated ON threshold: R_c = (μ + γB_c)/(η+μ) = 0.454286.
+
+## 2. Fixed points and invariant sets
+
+**Invariant sets.** The following hold unconditionally:
+
+* B ≥ 0 and symmetric.
+* Post-gate row sums are ≤ c (Lemma 1), so 0 ≤ B_e ≤ c.
+* An edge with B_e = 0 and u_e ≤ 0 stays at exactly 0.
+
+**Constant R (frozen drive).**
+
+* *Ungated:* B_e → u_e⁺ = max(0, u_e).
+* *Gated:* a node with drive sum S_i = Σ_j u_ij⁺ > c is scaled. For a locked k-clique (R ≡ 1, u = η/γ), the symmetric gated fixed point solves x = λ((1−h)x + h u), with λ = c/((k−1)((1−h)x + h u)) when active. So x = c/(k−1) − O(ε).
+
+| Locked clique | Neighbours | Gated fixed point c/(k−1) | Status |
+|---|---|---|---|
+| k = 3 | 2 | 0.317 | ON |
+| k = 6 (the repo ω cluster) | 5 | 0.12667 | ON, margin only 0.0067 |
+| k = 7 | 6 | 0.10556 | **OFF** |
+| k = 12 | 11 | 0.05758 | OFF |
+
+So the gate can switch *off* every edge of a fully locked large clique, a "too many friends" effect. Thm 3 addresses this case, but its certificate is only issued when the R band on the clique is very tight (k = 7: R spread ≲ 2e-4); see the remark after Thm 3. In the limit (c/(k−1) < B_c) all k ≥ 7 are OFF.
+
+* *General gated equilibria* (mixed cliques) give a proportional share x_e ≈ min(u_e, c·u_e/S_i) (a multiplicative-normalisation share; compare Miller–MacKay 1994, §5).
+
+**Finite time is not automatic.** All of these are only *asymptotic* limits. Freezing in finite time needs a strict margin between the limit and B_c. Exact ties (limit = B_c) can give infinitely many crossings in principle. They are non-generic and excluded below.
+
+## 3. Theorems
+
+Notation:
+
+* Each edge e = {i,j} has the scalar sequence x_n = B_e(n).
+* For a window [T,∞) let U⁺_e = max(0, sup_{n≥T} u_e(n)), u^min_e = inf_{n≥T} u_e(n), and S_i⁺ = sup_{n≥T} Σ_j u_ij(n)⁺.
+* All statements are in real arithmetic; see §3.6 for floating point.
+* **Start hypothesis (H0): T ≥ 1, or row sums ≤ c at start** (Σ_j B_ij(0) ≤ c for every i). The engine init satisfies it (row sums ≤ 11·5e-4). Lemma 1, Thm 2 (ON) and Thm 3 use it; Thm 2 (OFF) needs only λ ≤ 1. See the remark after Lemma 1.
+
+### Lemma 1 (gate sandwich): PROVEN (paper proof; not in Lean), unconditional for n ≥ 1; at n = 0 it needs row sums ≤ c at start (H0)
+
+For every n ≥ 1 (and also for n = 0 if row sums ≤ c at start, as with the engine init) and every node i:
+
+(a) Σ_j B⁺_ij ≤ c, hence B_e ≤ c.
+
+(b) s_i^{n+1} ≤ (1−h)c + h S_i(n), where S_i(n) = Σ_j u_ij(n)⁺.
+
+(c) min(1, c/((1−h)c + hS_i(n) + ε)) ≤ λ_i ≤ min(1, c/s_i). This also holds when the gate is inactive, with λ_i = 1.
+
+Hence the edge factor satisfies 1/g_e ≤ λ_e ≤ min(1, c/s_i, c/s_j), where g_e := max(1, max_{k∈e}((1−h)c + hS_k⁺ + ε)/c).
+
+*Proof.*
+
+(a) If the gate is active: Σ_j Ũ_ij min(λ_i,λ_j) ≤ λ_i s_i = min(1, c/(s_i+ε)) s_i ≤ c. If it is inactive: a − q s_i ≥ δ for all i, i.e. s_i ≤ c, and B⁺ = Ũ. At n = 0 this is the start hypothesis (H0); the engine init gives row sums ≤ 11·5e-4 < c.
+
+(b) max(0, (1−h)B + hu) ≤ (1−h)B + h u⁺ because B ≥ 0. Sum over j and use (a) at the previous step.
+
+(c) The lower bound follows from λ_i = min(1, c/(s_i+ε)) and (b). The upper bound is immediate; in the inactive case s_i ≤ c, so min(1, c/s_i) = 1 = λ_i. ∎
+
+The point of Lemma 1 is that it brackets the gate factor by drive quantities alone, at every step. The proofs below therefore never track *when* the gate is active, and late gate flips are harmless.
+
+*Remark (start hypothesis, H0).* For an arbitrary B(0) ∈ [0,c]^E the row sums can exceed c at n = 0, and then Lemma 1(c) can fail at that one step: an independent check (Auditor Seat 002, `audit/AUDIT_R002_d9c03ef.md`, note N-a) has row sums 3.48 at n = 0, giving λ_0 ≈ 0.18 < 1/g ≈ 0.993. From n = 1 on the row sums are ≤ c by (a). So Thms 2 (ON) and 3, which apply Lemma 1 at every step n ≥ T, assume **T ≥ 1, or row sums ≤ c at start**. Cor 4 is unaffected (T is taken large).
+
+### Theorem 2 (OFF and ON certificates): PROVEN (paper proof; the per-edge ∃N form is in Lean, the explicit N is paper-level only), conditional on R on [T,∞); T ≥ 1, or row sums ≤ c at start (H0; needed for ON)
+
+**(OFF; gate-independent.)** If U⁺_e < B_c, then B_e(n) ≤ B_c for all n ≥ T + N_off, where
+
+N_off = 0 if x_T ≤ B_c, else ⌈ ln((x_T − U⁺)/(B_c − U⁺)) / (−ln(1−h)) ⌉.
+
+If moreover u_e ≤ −m < 0 on [T,∞), then B_e reaches **exactly 0** by step T + ⌈ln((1−h)c/(hm)) / (−ln(1−h))⌉ + 1 at the latest (x_{T+k} ≤ (1−h)^k c, and the clip fires as soon as (1−h)x ≤ hm). It stays at exactly 0, so the edge is exactly decoupled.
+
+*Proof.* x⁺ ≤ 1 · max(0, (1−h)x + h u) ≤ (1−h)x + hU⁺, using x, U⁺ ≥ 0 and λ ≤ 1. Induction gives x_{T+k} − U⁺ ≤ (1−h)^k (x_T − U⁺). Solve (1−h)^k (x_T − U⁺) ≤ B_c − U⁺. For the exact-zero claim: x_{T+k} ≤ (1−h)^k c by the same induction with u ≤ 0, and the clip fires once (1−h)x ≤ hm. ∎
+
+**(ON.)** Suppose u^min_e > 0. Let ρ_e = (1−h)/g_e and x*_e = h u^min_e/(g_e − 1 + h). If x*_e > B_c, then B_e(n) > B_c for all n ≥ T + N_on, where
+
+N_on = 0 if r := (x* − x_T)/(x* − B_c) < 1, else ⌊ln r / ln(1/ρ)⌋ + 1.
+
+*Proof.* By Lemma 1(c), x⁺ ≥ (1/g)((1−h)x + h u^min). The comparison sequence y_{k+1} = ρ y_k + h u^min/g has fixed point x*. Induction gives x_{T+k} ≥ x* − ρ^k (x* − x_T). If x_T ≤ x*, this lower bound is non-decreasing in k; solve it ≥ B_c for k. If x_T > x*, then r < 1 and N_on = 0, since x* − ρ^k(x* − x_T) ≥ x* > B_c for every k. ∎
+
+Interpretation: x* ≈ min(u, c·u/(S⁺ + ε/h)), the worst-case proportional share of the cap.
+
+### Theorem 3 (gated-OFF certificate for large locked cliques): PROVEN (paper proof; not in Lean), conditional on R on [T,∞); T ≥ 1, or row sums ≤ c at start (H0)
+
+Fix N1 ≥ 0. For each edge f with u^min_f > 0, set ℓ_f := max(0, x*_f − ρ_f^{N1}(x*_f − x_T,f)⁺), and ℓ_f := 0 otherwise.
+
+* By the proof of Thm 2 (ON), B_f(n) ≥ ℓ_f for n ≥ T + N1.
+* Let σ_i := Σ_j max(0, (1−h)ℓ_ij + h u^min_ij) and κ_e := min(1, c/σ_i, c/σ_j).
+* Let f_u := κ h U⁺/(1 − κ(1−h)).
+
+If κ(1−h) < 1 and f_u < B_c, then B_e(n) ≤ B_c for all n ≥ T + N1 + ⌈ ln((c − f_u)/(B_c − f_u)) / ln(1/(κ(1−h))) ⌉.
+
+*Proof.* For n ≥ T + N1 we have s_i ≥ σ_i, because Ũ is monotone in B and in u. Lemma 1(c) then gives λ_e ≤ κ_e. Hence x⁺ ≤ κ((1−h)x + hU⁺), a contraction with factor κ(1−h) and fixed point f_u. Start from the a-priori bound x ≤ c (Lemma 1(a)) and iterate. ∎
+
+The code (`freeze_check.py::certificate`, `:58-99`) searches N1 ∈ {0, 1e3, 2e3, 4e3, …, 6.4e4} and takes the minimum. It can certify locked k = 7 and k = 12 cliques, but **only under a very tight R band** on the clique, because κ uses the *lower* drive while f_u uses the *upper* drive and the two nearly cancel. For k = 7 the required R spread is **≲ 2e-4**, not ~1e-3: with i.i.d. R ∈ [1−w, 1] on a 7-clique (`clique7_check.py`, T = 20000, 60000 steps) the certificate is issued for w ≤ 2e-4 (N ≈ 950–1370) and **not** for w ≥ 3e-4 (tested 3e-4, 5e-4, 1e-3), even though the group stays OFF (B ≈ c/6 = 0.10556, margin ≈ 0.0144). The audit's analytic limit at R ≈ 1 is U/u_min − 1 ≲ 4.6e-4, i.e. an R spread of ≈ 2.6e-4. So "groups of ≥ 7 are covered" holds for the limit (c/(k−1) < B_c) but for the certificate only when the band is that tight. k = 12 is the only tested gated case from the closed loop (stress run). Outside the tight band the certificate stays silent (conservative; no false certificate was observed).
+
+### Corollary 4 (limit form): PROVEN (paper proof; not in Lean; revised after external review; re-audited 2026-10-31)
+
+*Revision 2026-10-29.* The earlier proof said that the inequalities are "continuous in the limits" and then applied Thm 3 directly. That step fails: in Thm 3, ℓ_f depends on x_T,f = B_f(T), which need not converge as T → ∞, so there is no limit to be continuous in. Researcher 026 (Arena AI) found this gap in an external review; they also gave an equivalent alternative fix, stated after the proof. **Auditor Seat 002 re-audited this revised statement and proof on 2026-10-31 (audit of research/freezing @ d9c03ef, copy in `audit/AUDIT_R002_d9c03ef.md`): CORRECT**, with an independent re-derivation and a numerical sanity check (86/86 cases as expected, including negative controls). The earlier audit in `audit/AUDIT_R002.md` predates the revision; its "Cor 4 is correct" verdict refers to the old proof.
+
+*Limit data.* For each edge e and node i let Ū_e := max(0, limsup_n u_e(n)), u̲_e := liminf_n u_e(n) and S̄_i := limsup_n S_i(n), with S_i(n) = Σ_j u_ij(n)⁺. All are finite because u_e ∈ [−2, η/γ]. Write x̄*_e for x*_e = h u/(g_e − 1 + h) evaluated at u = u̲_e and at g_e computed from S̄ (only for u̲_e > 0). The tail data U⁺_e(T), u^min_e(T), S_i⁺(T) are the §3 quantities on the window [T, ∞). As T → ∞ they converge monotonically: U⁺(T) ↓ Ū, S⁺(T) ↓ S̄, u^min(T) ↑ u̲.
+
+*Statement.* Suppose every edge e satisfies one of the following strictly at the limit data:
+
+* (OFF) Ū_e < B_c;
+* (ON) u̲_e > 0 and x̄*_e > B_c;
+* (gated-OFF) f̄_u,e < B_c, where f̄_u,e is the f_u of Thm 3 computed from the limit data with ℓ_f := x̄*_f for every edge f with u̲_f > 0 and ℓ_f := 0 otherwise.
+
+Then there is a finite T* such that every edge's status B_e > B_c is constant for all n ≥ T*.
+
+*Which ℓ.* The corollary does **not** use Thm 3's state-dependent ℓ_f = max(0, x*_f − ρ_f^{N1}(x*_f − x_T,f)⁺). Its proof uses the state-free bound **ℓ_f^0 = (1 − ρ_f^{N1})·x*_f** (step 1 below), which does not depend on B_f(T). The hypothesis ℓ_f := x̄*_f above is the N1 → ∞ limit of ℓ_f^0 at the limit data; step 5 fixes one finite N1. The order of choices is: N1 first (from the strict limit inequalities), then T (from the convergence of the tail data). The finite-T code certificate (`freeze_check.py`) keeps the state-dependent ℓ_f of Thm 3, which is a different (and for a given T usually sharper) condition. Since T is taken large, the start hypothesis (H0) holds automatically.
+
+*Proof.*
+
+1. *A lower bound that does not depend on B(T).* Fix T and an edge f with u^min_f(T) > 0, and let ρ_f, x*_f be computed from the tail data at T. B ≥ 0 at every step (from the max(0,·) and λ > 0), so x_T,f ≥ 0 and (x*_f − x_T,f)⁺ ≤ x*_f. The ON comparison in the proof of Thm 2 holds from any x_T ≥ 0 and gives, for every k ≥ N1,
+   B_f(T+k) ≥ x*_f − ρ_f^k (x*_f − x_T,f)⁺ ≥ x*_f − ρ_f^{N1} x*_f = ℓ_f^0 := (1 − ρ_f^{N1})·x*_f.
+   This is independent of x_T and of T except through the tail data. Set ℓ_f^0 := 0 if u^min_f(T) ≤ 0. The comparison applies Lemma 1(c) with the lower drive u^min_f and the row-sum bound S⁺ at **every** step n ≥ T, so the lower-drive band u_f(n) ≥ u^min_f(T) (and S_k(n) ≤ S_k⁺(T) at the endpoints k of f) must hold on the whole window [T, ∞), from T on, not only from T + N1 on.
+2. *Thm 3 with ℓ^0.* The proof of Thm 3 uses ℓ_f only as a lower bound on B_f(n) for n ≥ T + N1 (to get s_i ≥ σ_i and hence λ_e ≤ κ_e). ℓ_f^0 is such a bound, so Thm 3 holds verbatim with ℓ_f^0 in place of ℓ_f. Since ℓ_f^0 ≤ ℓ_f this certificate is weaker, but it depends only on the tail data and N1.
+3. *Monotonicity: larger U⁺ or S⁺ and smaller u^min only weaken the bounds.*
+   * OFF: the margin B_c − U⁺ decreases in U⁺.
+   * ON: g_e is non-decreasing in S⁺, so x*_e = h u/(g_e − 1 + h) is non-increasing in S⁺ and increasing in u^min.
+   * ℓ^0: ρ_f = (1−h)/g_f also decreases as S⁺ grows, which on its own would *raise* (1 − ρ_f^{N1}). But ℓ_f^0 = (1 − ρ_f^{N1})x*_f = (h u^min_f/g_f)·Σ_{k=0}^{N1−1} ρ_f^k (it is the N1-th iterate of the ON comparison sequence started at 0), and both h u/g and ρ are non-increasing in g. So ℓ_f^0 is non-increasing in S⁺, non-decreasing in u^min and in N1, and ℓ_f^0 ↑ x*_f as N1 → ∞ because ρ_f < 1.
+   * gated-OFF: σ_i = Σ_j max(0, (1−h)ℓ_ij + h u^min_ij) is non-decreasing in ℓ and u^min; κ_e = min(1, c/σ_i, c/σ_j) is non-increasing in σ; f_u = κhU⁺/(1 − κ(1−h)) is non-decreasing in κ and in U⁺ (the denominator is ≥ h > 0, and κ(1−h) < 1 holds automatically since κ ≤ 1).
+4. *Continuity.* With ℓ^0 written via max(u^min, 0) (it tends to 0 as u^min ↓ 0), each certificate quantity (U⁺, x*, and f_u built from ℓ^0 and a fixed N1) is a continuous function of finitely many data values: g − 1 + h ≥ h > 0, and κ = 1 whenever σ ≤ c, so κ is continuous also near σ = 0.
+5. *Choice of N1.* At the limit data, ℓ_f^0 → x̄*_f as N1 → ∞ (ρ̄_f < 1, ρ̄_f^{N1} → 0), so by continuity f_u → f̄_u,e < B_c. Fix one N1 with f_u < B_c at the limit data for every gated-OFF edge (finitely many edges; a larger N1 only helps, by step 3).
+6. *Choice of T.* By strictness and continuity there is θ > 0 such that every edge's chosen certificate still holds strictly at the perturbed data Ū + θ, u̲ − θ, S̄ + θ (with this N1, and u̲_e − θ > 0 for the ON edges). By the monotone convergence of the tail data there is a T with U⁺(T) ≤ Ū + θ, u^min(T) ≥ u̲ − θ and S⁺(T) ≤ S̄ + θ for all edges and nodes. By step 3, each certificate evaluated at the tail data of this T is at least as strong as at the perturbed data, so it holds.
+7. Apply Thm 2 (OFF, ON) and Thm 3 (with ℓ^0 and this N1) on the window [T, ∞), where the bands hold by the definition of the tail data. Every edge's status is constant from T* = T + max_e N_e on; each N_e is finite (N_off and N_on depend on B(T), which is a fixed number once T is fixed). ∎
+
+*Equivalent alternative (Researcher 026).* The ON bound on the tails gives liminf_n B_f(n) ≥ x*_f(T) for every T, hence liminf B_f ≥ x̄*_f. Pick 0 < ℓ_f < x̄*_f (close enough that f_u < B_c still holds, by continuity) and T_f with B_f(n) ≥ ℓ_f for n ≥ T_f, and run the Thm 3 argument from max(T, T_f) on. The ℓ^0 route above gives the same result and, in addition, an N1 computed from tail data only.
+
+*Remarks.* (a) S̄_i ≤ Σ_j Ū_ij, so by step 3 the corollary also holds (more conservatively) with S̄_i replaced by Σ_j Ū_ij, i.e. stated purely in terms of limsup R and liminf R. (b) The limit data are still a hypothesis about the infinite future (O1, O4); edges whose limit data satisfy none of the three inequalities strictly are not covered (O2). (c) The code (`freeze_check.py::certificate`) implements Thm 3 with the B(T)-dependent ℓ_f, which remains valid for a fixed window; the revision changes no code and no number.
+
+Special cases:
+
+* (i) Every edge's R converges, and no limit lies in the "undecided" band.
+* (ii) Frequency-locked clusters (R → 1) with drifting inter-cluster pairs whose limsup R < R_c, which is what is observed. In the repo runs the inter-cluster limsup over the tail is 0.148–0.209, against R_c = 0.4543.
+  * Heuristic, not proven: a pair drifting at constant relative frequency Δω has |z| ≈ (1−α)/|1 − α e^{iΔω dt}| ≈ 1/(T_w|Δω|) ≈ 0.11 for Δω = 0.5.
+
+### 3.4 An unconditional theorem is FALSE (for the weight map)
+
+The B-map (with gate) is driven by an exogenous R that alternates between 1 for 20000 steps and 0 for 20000 steps on a triangle. Over 200000 steps edge 0–1 changes status **10 times** (Bmax = 0.3167, B returns to 0). Source: `freeze_check.py:156-163`, logged as `exogenous_periodic_R_counterexample` in `run_log.txt`.
+
+So no theorem of the form "the gated weight dynamics freezes for every input" holds. Freezing must come from the closed loop.
+
+Whether the *closed loop* can produce such persistent recurrent R oscillation (e.g. a cluster that repeatedly locks and unlocks) was **not** shown either way.
+
+### 3.5 What is open (CONJECTURE / OPEN)
+
+* **(O1) Closed-loop locking with margin.** For the repo ω and all initial θ (or almost all), the clusters {ω ≈ 1.0–1.04}, {1.50, 1.51} and {2.00–2.02} phase-lock, R_e → 1 inside clusters, and limsup R_e < R_c across clusters. This is not proven.
+  * Classical results do not apply directly: Dörfler–Bullo / Chopra–Spong locking bounds (static weights, no delay); Earl–Strogatz 2003 (delay; identical oscillators; linear stability only); Ha–Noh–Park 2016 / 2018 (adaptive couplings, no delay, no gate, different law).
+  * A plausible route is a perturbative argument: the gate floors the intra-cluster weight at ≈ c/(k−1) ≥ 0.1056 once it is ON, and the cluster frequency spreads are ≤ 0.04. But the delay τ = 0.5 and the pre-lock transient (when B ≈ 0) make a global statement hard.
+  * Status: **conjecture**, supported by the audit (3300 + 3960 edges, 0 status differences between split and final) and the runs here.
+* **(O2) Ties and the undecided band.** Edges whose limit data fall between the ON and OFF certificate thresholds (e.g. a gated share within O(ε, h·spread) of B_c) are not covered. Generically they should not occur, but this is unproven for the closed loop.
+* **(O3) Multistability.** Different initial conditions give different frozen supports: 19, 22 or 25 ON edges for the 5 repo seeds. The theorem says nothing about *which* support appears.
+* **(O4) A sharper, a-priori N.** Our N is computed from R on [T,∞), which is a *hypothesis*, not something observable at time T. An a-priori freeze time needs an a-priori locking time, which is (O1).
+
+### 3.6 Caveats (floating point and implementation)
+
+* The theorems are in real arithmetic. The implementation tests the gate as `min(a − q s) < δ`, which is not bit-identical to `s > c`. The audit found the float test agrees with the exact rational test s > (a−δ)/q on every float within ±40 ulp of c and on all engine steps, so this choice is harmless; Lemma 1 survives with c replaced by c(1 + O(1e-16)), and the engine's post-check tolerance is 1e-9.
+* **Rounding in the B update itself does matter at tiny margins.** Each step adds ~1 ulp(B) ≈ 1e-17 of rounding; divided by h this shifts the float fixed point by ~1e-13 relative to the real-arithmetic one. Audit test (reproduced by `guard_check.py`, `guard_check.json`): a single edge driven to c, then R held so that U⁺ = B_c − 1e-13. The unguarded certificate issues OFF with N = 195,086 (T = 20,000, predicted freeze by 215,086), but the float64 map's last status change is at 215,578, and the float B settles at B_c − 5.4e-14, not at U⁺. That is a violation of the explicit N on float64; the real-arithmetic theorem is unaffected. **Hence the explicit N holds for the real-arithmetic map only.**
+* **Fix: margin guard.** `freeze_check.py::certificate` now issues a certificate only if its margin (B_c − U⁺ for OFF, x* − B_c for ON, B_c − f_u for gated-OFF) is ≥ `MARGIN_GUARD` = 1e-9 (`guard=0.0` restores the old behaviour). With the guard, the margin 1e-13 and 1e-10 OFF cases and the margin-0 ON case are not certified (no violation); margins 1e-3 and 1e-6 are certified exactly as before, with N tight (last change = predicted step). The repo runs' margins (≥ 6.7e-3) are far above the guard, and all 1,412 certified (run, T) pairs are unchanged. The guard is an engineering bound (≈ 1e4 × the observed float shift), not a proven float error bound.
+* ε = 1e-12 is included in g_e. Its effect on x* is O(ε/h) ≈ 7e-9.
+* The ON margin in the repo runs is small: x* ≈ 0.126667 against B_c = 0.12, i.e. 0.0067 ≈ 5.6% of B_c, coming from the 6-cluster share c/5. A cluster of 7 would flip the limit outcome to OFF; Thm 3 certifies that only if the cluster's R spread is ≲ 2e-4.
+* The status in the audit's `frozen_topology_check` compares only split vs final status (`frozen_topology_check.py:23-29`). The runs here check *every* step after T + N.
+
+## 4. Numerical check (step 4)
+
+**Script:** `freeze_check.py` (self-contained; exact on the default engine path, cross-checked against the engine; certificate with margin guard 1e-9, §3.6).
+
+**Seeds:** 10431384713483787270, 10856823803646276806, 11242426753702356865, 12123519807951751650, 1230287949579537403 (from `runs/5a9f093a2fe0` file names).
+
+**Run:** 80000 steps. At every T on a 500-step grid, compute the certificates from R on [T, 80000) and B(T). Predicted freeze = T + max_e N_e if *all* 66 edges are certified. A (run, T) pair is called **certified** when all 66 edges are certified with the hypotheses checked over the finite window [T, 80000) only. Check that no edge changes status in (T + N, 80000]. Total: **1,412 certified (run, T) pairs** (140+139+140+141+131+140+123+146+123+3×63), **0 violations**, recomputed after adding the margin guard (identical to the pre-guard run; the `preguard/` backups stayed in the scratch directory and are not in the repo).
+
+**Outputs:** `results.json`, `run_log.txt` (guarded re-run, without `--crosscheck` so the repo engine was not imported again; the 2026-10-29 in-repo re-run with `--crosscheck` gave max|B_mine − B_engine| = 0.0 over 3000 steps and byte-identical `results.json`, see `inrepo_rerun_log.txt`); margins at T = 48000 in `margins.json` (from `margins.py`).
+
+| Run | First certified T | Predicted freeze | Observed last change | ON edges | Certified T's | Violations |
+|---|---|---|---|---|---|---|
+| repo ω, delay, seed 1 | 9500 | 9500 | 8695 | 19 | 140 | 0 |
+| repo ω, delay, seed 2 | 10000 | 10000 | 9166 | 22 | 139 | 0 |
+| repo ω, delay, seed 3 | 9500 | 9500 | 7976 | 19 | 140 | 0 |
+| repo ω, delay, seed 4 | 9000 | 9000 | 7601 | 19 | 141 | 0 |
+| repo ω, delay, seed 5 | 14000 | 14000 | 13654 | 25 | 131 | 0 |
+| repo ω, no delay, seed 1 | 9500 | 9500 | 8457 | 22 | 140 | 0 |
+| random ω U[1,2] #0, seed 1 (21 goff edges) | 18000 | 19428 | 7944 | 6 | 123 (all N>0) | 0 |
+| random ω U[1,2] #1, seed 2 | 6500 | 6500 | 6348 | 18 | 146 | 0 |
+| stress ω = 1 + 0.001k (12-clique, all 66 goff) | 18000 | 19178 | 5662 | 0 | 123 (all N>0) | 0 |
+| reset B := 0 at step 48000 (EMA kept), seeds 1–3 | 48000 | 48938 | 48308 | 19/22/19 | 63 each | 0 |
+
+* The gate is active in every run: max(1 − λ) ≈ 0.003 in the repo runs and 0.0068 in the stress run.
+* Margins at T = 48000 (repo seeds):
+  * min ON lower bound x* = 0.1266667, against final ON-edge B = 0.1266667 (= c/5, so the bound is essentially tight).
+  * All OFF edges have U⁺ = 0, with max R 0.148–0.209.
+  * min ON R ≈ 1 − 1e-10; max S⁺ = 13.33 (= 5 · η/γ).
+* **Counterexamples:** none for the theorem. The only "counterexample" is the intended one (§3.4): exogenous R, where the hypotheses fail.
+* **Honest limits:**
+  * Hypotheses are only checked on the finite window [T, 80000).
+  * When all edges are certified at the first certified T, N = 0. That T is only slightly after the observed last change, so in the repo runs the bottleneck is *when R enters its final band*. The reset runs and the gated-OFF runs exercise N > 0. In the reset runs the bound held with slack of about 3× (938 predicted vs 308 observed steps after the reset). In the gated-OFF runs the last change had already happened before the first certified T (7944 and 5662 against T = 18000), so they only test that nothing flips after T + N.
+
+## 5. Novelty search log (step 5), 2026-10-28
+
+**arXiv API** (`https://export.arxiv.org/api/query`; the `http://` endpoint returned HTTP 500). The full log is in `arxiv_search_log.json`, produced by `arxiv_search.py` and `arxiv_search2.py`.
+
+Queries (hits in brackets):
+
+* `all:"adaptive Kuramoto" AND all:"finite time"` [0]
+* `abs:adaptive AND abs:Kuramoto AND abs:topology AND abs:frozen` [0]
+* `abs:"Hebbian" AND abs:"Kuramoto" AND abs:"normalization"` [0]
+* `abs:"Hebbian" AND abs:"oscillators" AND abs:"budget"` [0]
+* `abs:"adaptive couplings" AND abs:"Kuramoto" AND abs:"synchronization"` [14]: e.g. 2006.00890 *Stability of cluster formations in adaptive Kuramoto networks*; 2209.10514 *Complex dynamics in adaptive phase oscillator networks*; 1008.0333 *Adaptive Oscillator Networks with Conserved Overall Coupling* (title only checked); 2512.20410 *Metastability induced by non-reciprocal adaptive couplings*.
+* `abs:"adaptive network" AND abs:"eventually constant"` [0]
+* `abs:"Hebbian" AND abs:"hard bounds" AND abs:"finite time"` [0]
+* `abs:"synaptic normalization" AND abs:"Hebbian" AND abs:"convergence"` [0]
+* `abs:"Kuramoto" AND abs:"time delay" AND abs:"adaptive coupling"` [0]
+* `abs:"ultimate positivity" AND abs:"linear recurrence"` [10]: Ouaknine–Worrell line (1309.1914, 1307.2779, 2305.04870 *Robust Positivity*, 2211.02365 *Robustness for Skolem/Positivity*).
+* `abs:"eventual sign" AND abs:"recurrence" AND abs:"perturbation"` [0]
+* `abs:"threshold" AND abs:"adaptive network" AND abs:"topology" AND abs:"converge" AND abs:"finite"` [1]: 0811.0980 (SOC in discrete networks; unrelated mechanism).
+* `abs:Kuramoto AND abs:"adaptive" AND abs:delay AND abs:plasticity` [0]
+* `abs:"phase oscillators" AND abs:"conserved" AND abs:coupling AND abs:adaptive` [1]: 1706.08070
+* `abs:Hebbian AND abs:Kuramoto AND abs:"phase-locking"` [2]: 2603.08731, 2410.19156
+* `abs:"adaptive coupling" AND abs:Kuramoto AND abs:"phase-locked" AND abs:"sufficient"` [1]: 1008.0333
+* `abs:"multiplicative normalization" AND abs:Hebbian` [0]
+* `abs:"homeostatic" AND abs:"Kuramoto"` [4] (connectome; unrelated)
+* `abs:"network topology" AND abs:"finite time" AND abs:"adaptive" AND abs:synchronization` [1] (unrelated)
+* `abs:"coevolution" AND abs:"phase oscillators" AND abs:"pruning"` [0]
+* `abs:"Kuramoto" AND abs:"adaptive" AND abs:"capacity"` [1] (unrelated)
+* `abs:"discrete-time" AND abs:"adaptive" AND abs:"Kuramoto" AND abs:"Hebbian"` [0]
+* `abs:"linear recurrence" AND abs:"bounded" AND abs:"eventually" AND abs:"sign"` [1]: 2609.23839 *Eventual Nonnegativity of a Matrix Is in P*
+* `abs:"STDP" AND abs:"hard bounds" AND abs:"bimodal"` [0]
+
+**Web search** (same date):
+
+1. "Ha Noh Park synchronization Kuramoto adaptive couplings Hebbian SIAM 2016": Ha, Noh, Park, *SIADS* 15 (2016) 162-194 (adaptive couplings, preserved incoming-coupling sum, sufficient synchronization frameworks). Also Ha et al., *SIADS* 2018 (doi 10.1137/17M1124048; conservation law, fast learning) and *The stability of fixed points for a Kuramoto model with Hebbian interactions*, Chaos (2017), doi 10.1063/1.4983524. **These give asymptotic synchronization, not finite-time support freezing, and have no delay and no min-endpoint gate.**
+2. "Miller MacKay 1994 role of constraints in Hebbian learning": Neural Comput. 6:100–126. Multiplicative constraint → graded weights (principal eigenvector). Subtractive + hard bounds → weights saturate at the bounds. **The closest conceptual antecedent:** our gate is a multiplicative row-sum constraint, and our ON fixed point is the "proportional share". Their results are asymptotic and are not threshold-support freezing statements.
+3. "finite time network topology becomes constant adaptive network threshold weights": the hits are *finite-time topology identification* (observer design: Wang et al. 2025, PMC12087917; KTH paper) and the Berner–Gross–Kuehn–Kurths–Yanchuk review *Adaptive dynamical networks* (arXiv 2304.05652, Phys. Rep. 2023). Different problem.
+4. "Kuramoto adaptive coupling time delay plasticity": Timms & English, PRE 89, 032906 (2014) (delay + Hebbian; numerical and analytic patterns); Aoki & Aoyagi, PRL 102, 034101 (2009) (co-evolution; two-cluster, coherent and chaotic states). Neither gives finite-time freezing.
+5. "edge snapping adaptive network weights converge to binary": DeLellis, di Bernardo, Garofalo, Porfiri, IEEE TCAS-I 57 (2010) (double-well edge dynamics → binary topology *asymptotically*; local stability). Also the *Chaos* 33, 013123 (2023) limited-resources edge snapping (caps the number of active edges). **Closest "topology freezes" result. It is asymptotic and local, not finite-time with an explicit bound.**
+6. "Earl Strogatz 2003 delayed coupling stability criterion": PRE 67, 036204 (identical oscillators, uniform delay, linear stability).
+
+**Assessment.**
+
+* The sign-pattern question is trivial here. After the comparison step each edge is a *first-order* scalar affine contraction with bounded forcing, and its eventual sign relative to B_c is decided by the strict margin. The deep Skolem/Positivity literature concerns higher-order recurrences and exact (non-robust) instances, and is not needed. Its *robust* variants (2305.04870, 2211.02365) are the conceptual analogue of our "strict margin" hypothesis.
+* No source found states finite-time freezing of a thresholded support, with an explicit bound, for an adaptive oscillator network under a capacity/normalisation gate.
+* Novelty is plausible but narrow. The contribution is the gate-robust sandwich (Lemma 1), the two-stage gated-OFF argument (Thm 3) and the explicit N, not new mathematics.
+* The search is not exhaustive: there was no full-text search, no Google Scholar, and nothing on neuromorphic/“synaptic pruning finite time” beyond the queries above.
+* *Superseded in part by the 2026-10-31 addendum below:* the second and third bullets are narrowed there ("explicit N" is not a carrier of novelty; the mechanism is a known variant).
+
+### 5.1 Addendum 2026-10-31: novelty audit (Auditor Seat 002, `audit/AUDIT_R002_NOVELTY.md`)
+
+The 2026-10-28 search found Ha–Noh–Park 2016, Ha et al. SIADS 2018 and the 2017 *Chaos* paper, but it **missed Cho–Dong–Ha 2023**. A people/literature scan on 2026-10-31 found it, and the audit verified it (verdict: agree with changes). New entries for the search log (metadata checked against Crossref on 2026-10-31):
+
+* **Cho, Dong, Ha**, "Interplay of inertia and adaptive couplings in the emergent dynamics of Kuramoto ensemble", *J. Differential Equations* 360 (2023) 523–571, doi [10.1016/j.jde.2023.03.047](https://doi.org/10.1016/j.jde.2023.03.047). **Prior art.** Second-order (inertial) continuous-time Kuramoto with κ̇_ij = μΓ(θ_j−θ_i) − γκ_ij, Γ = cos (Hebbian) or |sin| (anti-Hebbian). It gives frameworks for complete phase synchronization *and* convergence of the coupling strengths. Checked via the abstract and the zbMATH review; full text not read.
+* **Ha, Noh, Park**, *SIAM J. Appl. Dyn. Syst.* 15(1) (2016) 162–194, doi [10.1137/15M101484X](https://doi.org/10.1137/15M101484X). **Related only.** Adaptive laws, some preserving the sum of incoming couplings, with synchronization frameworks. A coupling-convergence or edge-set result is **not** verified (abstract only), so it is not listed as pre-empting freezing.
+* Not read, to add to a later search: Cho–Dong–Ha, *Commun. Math. Sci.* 22 (2024) 2041–2057 (doi 10.4310/CMS.240918042900); Wang–Dong, *J. Differential Equations* 441 (2025) 113475 (doi 10.1016/j.jde.2025.113475); Cho–Ha–Kang, *J. Nonlinear Sci.* 35 (2025) paper 9 (fading memory; possibly relevant to the EMA).
+* Discrete time alone is not new. Discrete and Euler Kuramoto synchronization with fixed couplings is established, e.g. Ha–Kim–Kim–Zhang, *J. Math. Phys.* 60 (2019) 051508, and Dong–Ha–Kim, *SIADS* 19 (2020) 304–328 (with delay, including the Euler scheme). No discrete-time *adaptive-coupling* freezing result was found (arXiv, Crossref and web on 2026-10-31; no full-text search, no Scholar).
+
+**Revised assessment.**
+
+* **Overlap (known variant).** "Phases lock ⇒ relax-to-target couplings settle" is an elementary affine-contraction step. Cho–Dong–Ha publish it, together with a locking theorem, for an inertial continuous-time model. Given a strict margin, an eventually constant thresholded support follows from their coupling convergence (qualitatively, ∃T). **This is a consistency hit only.** It agrees with our conditional result but does not validate any AIEFS-specific element: the gate, the delay, the EMA or N. Note also that Cho–Dong–Ha *prove* locking for their model, whereas here locking is the open hypothesis O1.
+* **Residual (plausibly new, narrow, elementary).** For the discrete-time clipped AIEF map with the min-endpoint multiplicative gate:
+  * Lemma 1, the bracket 1/g_e ≤ λ_e ≤ min(1, c/s_i, c/s_j), which holds whether or not the gate is active;
+  * the strict-margin OFF/ON/gated-OFF certificates of Thms 2–3, in particular Thm 3, where the capacity gate forces a *fully locked* clique of ≥ 7 below threshold (no precedent found);
+  * all of this conditional on coherence bands on [T, ∞).
+
+  It does **not** rest on discrete time (see above) or on the explicit N. N is a textbook iteration count, paper-level, holds in real arithmetic only, is computed from tail R data (O4), and appears in Lean only as ∃N.
+* **Model mismatch.** Our R is the modulus of a complex EMA, so it is invariant to phase offset: an anti-phase locked pair has R → 1 and a *positive* drive, whereas under cos(Δθ) it gets a negative drive. So the published limit formulas of the form K∞ = α cos(Δθ∞) (Niyogi–English 2009; Bronski et al. 2017; Cho–Dong–Ha's Hebbian case) do not carry over literally.
+* Ledger: `RES-FREEZE-NOVELTY`. Label (audited_qualifier): *Known variant (partial overlap; consistency hit) — narrow residual plausibly new, search non-exhaustive*. Scope: literature assessment (non-exhaustive). This does not change the mathematical status of the other three rows.
+
+## 6. Lean / Mathlib formalizability (step 6)
+
+The existing repo Lean (`lean/AIEFProofs`: Basic, CompleteGraphIncidence, ControllerFiber, ControllerFiberProjector, ControllerFiberQuotient, Smoke) **does not formalise the gate**. `ControllerFiberProjector.lean:27` says it is "not the implemented AIEF admissibility / capacity projection", and README `:90-108` lists the gate, EMA and persistence as not formalised.
+
+**Done here:** `lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean` (repo path; a separate Lake project that depends on Mathlib only, same toolchain and Mathlib pin as `lean/AIEFProofs`). It compiles with no `sorry` and 0 warnings, and its declarations use only the standard axioms (propext, Classical.choice, Quot.sound). To check it, run `lean/AIEFFreezeCore/check_lean_freeze.sh` (or the wrapper `research/freezing/lean/check.sh`). It contains:
+
+* `upper_geom`: x_{n+1} ≤ ρx_n + β, ρ ∈ [0,1) ⇒ x_n − β/(1−ρ) ≤ ρ^n (x_0 − β/(1−ρ)).
+* `eventually_off` / `eventually_on`: strict margin ⇒ ∃N, ∀n ≥ N, x_n < B_c (resp. > B_c).
+* `edge_eventually_off`: B_{n+1} = λ_n · max 0 ((1−h)B_n + h u_n), λ_n ∈ [0,1], u_n ≤ U < B_c ⇒ eventually B_n < B_c. This is gate-independent.
+* `edge_eventually_on`: the same recurrence with κ ≤ λ_n and L ≤ u_n, κhL/(1−κ(1−h)) > B_c ⇒ eventually B_n > B_c.
+
+Not yet formalised (estimated effort in brackets):
+
+* Lemma 1 for `Fin 12` matrices (row sums under `min`-endpoint scaling, ~100–200 lines; Finset sums).
+* Thm 3 composition (routine once Lemma 1 exists).
+* The explicit-N versions (replace `exists_pow_lt_of_lt_one` by `Real.log` bounds; straightforward).
+* Anything about phases, delay or the EMA (O1). This is not formalisable until it is proven on paper.
+
+A suggested top-level statement is: ∀ trajectory of the exact real-arithmetic step map, if ∃T such that the tail bands of R satisfy the certificate predicate, then ∃N, ∀n ≥ T+N, status(n) = status(T+N).
+
+## 7. Plain-language summary
+
+The edge weights in AIEF behave like leaky buckets: each step they leak a fraction h = 0.00015 and are refilled according to how coherent the two oscillators are. A shared capacity rule (the gate) shrinks a node's buckets whenever its total gets too large.
+
+We proved the following:
+
+* **Persistently incoherent pair:** if, from some time on, a pair stays clearly incoherent, its weight drains below the threshold within a computable number of steps and stays there.
+* **Persistently coherent pair:** if it stays clearly coherent and its guaranteed share of the node's capacity is above the threshold, it rises above the threshold and stays there.
+* **Locked group too large:** if too many oscillators lock together (7 or more here), the capacity rule pushes all their weights *below* the threshold in the long run. Our finite-time certificate for this case only applies when the group's coherence is extremely steady (for 7 oscillators, fluctuations of about 2e-4 or less); otherwise the group still stays below the threshold in simulation, but we do not certify it.
+
+These arguments work no matter when the capacity rule switches on or off. So "the network topology stops changing after a finite time" is a theorem, *provided* the oscillators settle into a stable pattern of locking and drifting with a clear margin.
+
+What we cannot prove is that the oscillators always do settle like that. Feeding the weight rule an artificial, ever-changing coherence signal makes edges flip forever, so this is a real assumption, not a technicality.
+
+In every simulation we ran (1,412 certified checks over the simulated window), the predicted freeze time was never violated. The explicit freeze time is a statement about exact arithmetic; for margins below about 1e-9 computer rounding can break it, so the checker refuses to certify such cases. The 6-oscillator group in the default setup sits only about 5% above the threshold, so that result is robust but not by a wide margin.
+
+## 8. File index
+
+* `freeze_check.py`: simulator, certificates (Thm 2/3), checks, exogenous counterexample; `--crosscheck` against the repo engine.
+* `results.json`, `run_log.txt`: numerical results (re-run with the margin guard; the pre-guard copies were kept in the scratch directory and are not in the repo).
+* `guard_check.py`, `guard_check.json`, `guard_check_log.txt`: float-margin OFF/ON test, unguarded vs guarded (audit fix R2).
+* `clique7_check.py`, `clique7_check.json`, `clique7_check_log.txt`: 7-clique R-spread test of the Thm 3 certificate (audit fix R1).
+* `margins.py`, `margins.json`: margins at T = 48000.
+* `arxiv_search.py`, `arxiv_search2.py`, `arxiv_search_log.json`: arXiv query log.
+* `lean/check.sh`: wrapper that runs `lean/AIEFFreezeCore/check_lean_freeze.sh`; the Lean formalisation of the scalar and per-edge core is `lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean` (repo paths).
+* `inrepo_rerun_log.txt`: 2026-10-29 in-repo re-run (engine cross-check and byte-identical outputs).
+
+## 9. Audit fixes applied (2026-10-28, from the read-only audit of this work, §2; a copy of that audit is now in `audit/AUDIT_R002.md`)
+
+* **R1 (gated-OFF band):** the Thm 3 certificate for a locked group of ≥ 7 needs an R spread ≲ 2e-4 (k = 7), not ~1e-3; at 3e-4 it is not issued although the group stays OFF. Reproduced in `clique7_check.py`. Qualified in §0, §2, the Thm 3 remark, §3.6 and §7: "≥ 7 covered" holds in the limit, and for the certificate only under that tight band.
+* **R2 (float rounding):** added `MARGIN_GUARD = 1e-9` to `freeze_check.py::certificate` (OFF, ON and gated-OFF margins). Stated that the explicit N holds for the real-arithmetic map only, with the 1e-13 counterexample (predicted 215,086, last flip 215,578) in §3.6. `guard_check.py`: with the guard, 0 violations (the 1e-13, 1e-10 and margin-0 cases are no longer certified). The main run was re-run with the guard: 1,412 certified pairs, 0 violations, identical results.
+* **R3 (counts/wording):** "~1,450" → **1,412** certified (run, T) pairs; "certified" is defined in §0 and §4 as checked over the finite window [T, 80000); reset row corrected to B := 0 (not B_init).
+* **Non-blocking:** re-implementation described as "exact on the default engine path" (variants are not engine modes; audit cross-check of 80k steps × 3 seeds cited); proof labels changed to "PROVEN (paper proof)" with the Lean coverage stated; explicit N marked as paper-level only (Lean has ∃N); gate-test caveat updated with the audit's tie scan.
+* Not changed: the theorems, proofs, Lean files, novelty assessment and other content.
+* **Novelty audit (2026-10-31, Auditor Seat 002; copy in `audit/AUDIT_R002_NOVELTY.md`; verdict: agree with changes):** novelty rescoped in §0, §5.1, README and `RES-FREEZE-NOVELTY`. Changes: Cho–Dong–Ha 2023 added as prior art; Ha–Noh–Park 2016 marked related only; the overlap counted as a consistency hit only; the residual restated as Lemma 1 + Thms 2–3 (not discrete time or explicit N), conditional on the R bands; the phase-offset-invariance mismatch noted. The theorems and proofs are unchanged.
+* **Ext-026 (2026-10-29, external review by Researcher 026, Arena AI; Corollary 4):** the old proof applied Thm 3 "by continuity in the limits", but Thm 3's ℓ_f depends on B_f(T), which need not converge. Fixed by using ℓ_f^0 = (1 − ρ_f^{N1})·x*_f (valid since B ≥ 0, independent of B(T)), checking monotonicity in (U⁺, u^min, S⁺) and choosing N1, then T (§3, Cor 4). Status now "revised after external review"; Auditor Seat 002 re-audited the revision on 2026-10-31 and found it CORRECT (`audit/AUDIT_R002_d9c03ef.md`). No code, number or Lean file changed. The ledger row RES-FREEZE-01 was split into LEAN-FREEZE-CORE, RES-FREEZE-GATED, RES-FREEZE-NUM and RES-FREEZE-NOVELTY in the same change.
+* **Audit of d9c03ef (2026-10-31, Auditor Seat 002; copy in `audit/AUDIT_R002_d9c03ef.md`; verdict CLEAN WITH NOTES, no blockers):** Cor 4 (revised) CORRECT; ledger rows, Lean build, pins and numerics PASS. Non-blocking notes addressed: (1) start hypothesis "T ≥ 1, or row sums ≤ c at start" (H0) added to Lemma 1, Thms 2–3, §0, README and the RES-FREEZE-GATED row; (2) the Thm 2 (ON) monotonicity wording now states x_T ≤ x* (and the x_T > x* case); (3) the stale stress-run comment at `freeze_check.py:151` fixed (comment only; the run is fully certified, §4); (4) line refs to `freeze_check.py` corrected (+3, after the MARGIN_GUARD block); (5) RES-FREEZE-NOVELTY note cites AUD-NOVELTY as the vocabulary precedent; (6) the "not yet re-audited" wording replaced by a citation to this audit. The b2a95dfbfbe3 SHA256SUMS failure it records is pre-existing on main and unrelated to this branch.
+

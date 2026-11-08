@@ -1,0 +1,11 @@
+.x.xx.x.xx.x.x...                                                        [100%]
+=========================== short test summary info ============================
+XFAIL test_deep_audit.py::test_uploader_preserves_ignored_file_when_upstream_now_tracks_it - uploader pull can silently overwrite an ignored local experiment file
+XFAIL test_deep_audit.py::test_committed_secret_shaped_content_is_also_blocked - unpublished committed blobs are not content-scanned
+XFAIL test_deep_audit.py::test_oversized_blob_deleted_before_tip_is_not_pushed - only base-to-tip file differences are scanned, not all blobs sent in commit history
+XFAIL test_deep_audit.py::test_bridge_selftest_fixture_matches_the_implemented_gate - bridge self-test hardcodes a projected answer for an out-of-branch proposal
+XFAIL test_deep_audit.py::test_saved_grid_hold_exact_boundary_translation - addition/searchsorted can reject a true block spanning exactly 17.5 saved-grid units
+XFAIL test_deep_audit.py::test_rate_interval_does_not_assert_zero_population_uncertainty - empirical percentile bootstrap interval collapses at a zero-event sample boundary
+XFAIL test_deep_audit.py::test_oracle_rejects_duplicate_condition_records - set-based oracle coverage comparison erases duplicate condition rows
+XFAIL test_deep_audit.py::test_engine_complex_nan_comparator_rejects_changed_finite_component - engine complex NaN mask hides a changed finite real/imaginary component
+9 passed, 8 xfailed in 1.34s

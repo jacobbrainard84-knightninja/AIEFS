@@ -1,0 +1,833 @@
+{
+  "agent": "Researcher 040282",
+  "cycle": 2,
+  "compiler_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "source_sha256": "e36cb2dfa9770ff23e39af902aa3d1b02725ed6de3fb9e3e2d7f6806c161795c",
+  "all_controls_passed": true,
+  "control_count": 9,
+  "controls": [
+    {
+      "case": "positive",
+      "kind": "positive",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "elapsed_seconds": 15.852664104999917,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": true,
+      "problems": [],
+      "theorem_count": 22,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "allowed_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "case": "false_unconditional_idempotence",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "elapsed_seconds": 15.740041634000022,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "theorem_count": 22,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "allowed_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "case": "false_unrestricted_epsilon",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "elapsed_seconds": 14.624922499000036,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "theorem_count": 22,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "allowed_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "case": "sorry_payload",
+      "kind": "sorry_payload",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "elapsed_seconds": 14.72340168200003,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_warning",
+        "forbidden_source_token:sorry",
+        "unapproved_axioms:falseWithHole:sorryAx"
+      ],
+      "theorem_count": 23,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "falseWithHole": [
+          "propext",
+          "sorryAx",
+          "Quot.sound"
+        ]
+      },
+      "allowed_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "case": "extra_axiom_payload",
+      "kind": "extra_axiom_payload",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "elapsed_seconds": 15.305910091999976,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "forbidden_source_token:axiom",
+        "unapproved_axioms:falseWithAxiom:injectedEquality"
+      ],
+      "theorem_count": 23,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "falseWithAxiom": [
+          "injectedEquality",
+          "propext",
+          "Quot.sound"
+        ]
+      },
+      "allowed_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "case": "missing_footprint",
+      "kind": "missing_footprint",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "elapsed_seconds": 15.099832366999976,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "theorem_axiom_print_coverage"
+      ],
+      "theorem_count": 22,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "allowed_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "case": "nonzero_active_gate_witness",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "input_row_zero": "1",
+      "output_row_zero": "1900000000000/3000000000003",
+      "capacity": "19/30",
+      "output_nonzero": true
+    },
+    {
+      "case": "replace_endpoint_min_with_max",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "wrong_output_row_zero": "1",
+      "capacity": "19/30"
+    },
+    {
+      "case": "drop_entrywise_nonnegativity",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "input_row_sums": [
+        "1/2",
+        "1/2",
+        "1/2",
+        "199/2",
+        "100"
+      ],
+      "output_row_zero": "297550000000003/298500000000003",
+      "capacity": "19/30"
+    }
+  ],
+  "scope": "local research proof/harness, not independent-seat review or repository integration"
+}

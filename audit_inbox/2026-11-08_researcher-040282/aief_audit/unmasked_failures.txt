@@ -1,0 +1,49 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________ test_fixed_hold_translation_invariant_on_declared_grid ____________
+test_audit.py:89: in test_fixed_hold_translation_invariant_on_declared_grid
+    assert m._held_index(t, c, 17.5) == start, (start, t[start], t[start+35])
+E   AssertionError: (32, np.float64(16.01), np.float64(33.51))
+E   assert None == 32
+E    +  where None = <function _held_index at 0x7f1a22c914e0>(array([1.0000e-02, 5.1000e-01, 1.0100e+00, 1.5100e+00, 2.0100e+00,\n       2.5100e+00, 3.0100e+00, 3.5100e+00, 4.0100e+...02, 3.1551e+02, 3.1601e+02, 3.1651e+02, 3.1701e+02,\n       3.1751e+02, 3.1801e+02, 3.1851e+02, 3.1901e+02, 3.1951e+02]), array([False, False, False, False, False, False, False, False, False,\n       False, False, False, False, False, False,...False, False, False, False, False,\n       False, False, False, False, False, False, False, False, False,\n       False]), 17.5)
+E    +    where <function _held_index at 0x7f1a22c914e0> = <module 'pasted_aief_analysis_audit' from '/home/user/aief_audit/analysis_under_audit.py'>._held_index
+_______________ test_hold_satisfying_literal_timestamp_contract ________________
+test_audit.py:98: in test_hold_satisfying_literal_timestamp_contract
+    assert m._held_index(t, c, 35.0) == 32
+E   AssertionError: assert None == 32
+E    +  where None = <function _held_index at 0x7f1a22dcc5e0>(array([1.0000e-02, 5.1000e-01, 1.0100e+00, 1.5100e+00, 2.0100e+00,\n       2.5100e+00, 3.0100e+00, 3.5100e+00, 4.0100e+...02, 3.1551e+02, 3.1601e+02, 3.1651e+02, 3.1701e+02,\n       3.1751e+02, 3.1801e+02, 3.1851e+02, 3.1901e+02, 3.1951e+02]), array([False, False, False, False, False, False, False, False, False,\n       False, False, False, False, False, False,...False, False, False, False, False,\n       False, False, False, False, False, False, False, False, False,\n       False]), 35.0)
+E    +    where <function _held_index at 0x7f1a22dcc5e0> = <module 'pasted_aief_analysis_audit' from '/home/user/aief_audit/analysis_under_audit.py'>._held_index
+__________ test_zero_events_do_not_imply_zero_population_uncertainty ___________
+test_audit.py:251: in test_zero_events_do_not_imply_zero_population_uncertainty
+    assert row.pointwise_ci_upper > 0
+E   assert np.float64(0.0) > 0
+E    +  where np.float64(0.0) = group                                                                     one\nestimand                                ...7592eb28a94be01...\nincluded_seed_fraction                                                    1.0\nName: 0, dtype: object.pointwise_ci_upper
+______________ test_published_input_digest_matches_bytes_consumed ______________
+test_audit.py:351: in test_published_input_digest_matches_bytes_consumed
+    assert manifest['input_run']['input_hashes']['branch_npz'] == captured['consumed_digest']
+E   AssertionError: assert '6ba93b470bd7...003ae95e503aa' == '94a0f9e45dc0...ed4d97ae034f0'
+E     
+E     - 94a0f9e45dc0545a22c11f86bbe1e8b4d38ea8cb0fcf0e0465bed4d97ae034f0
+E     + 6ba93b470bd7540db67eb90ae73b53ebb6a7895a999d1d257d4003ae95e503aa
+_________ test_nominal_window_check_accepts_ordinary_numeric_roundtrip _________
+test_audit.py:414: in test_nominal_window_check_accepts_ordinary_numeric_roundtrip
+    run = m.validate_run(inputs)
+          ^^^^^^^^^^^^^^^^^^^^^^
+analysis_under_audit.py:337: in validate_run
+    raise ArtifactIntegrityError(f"rho={rho} has inconsistent nominal T_window")
+E   audit_support.ArtifactIntegrityError: rho=0.75 has inconsistent nominal T_window
+__________ test_staged_manifest_payload_is_checked_against_its_digest __________
+test_audit.py:432: in test_staged_manifest_payload_is_checked_against_its_digest
+    assert manifest['analysis_identity_sha256'] == m.canonical_sha256(manifest['analysis_identity_payload'])
+E   AssertionError: assert '8abfb689eff3...2852a2224ca94' == 'd21c0aadcc33...4a9ffd15a998b'
+E     
+E     - d21c0aadcc3349151870a97737b378870a5101eced19105328f4a9ffd15a998b
+E     + 8abfb689eff3d01c396c7c19eb33aacf7d758f1779ee0a927b92852a2224ca94
+=========================== short test summary info ============================
+FAILED test_audit.py::test_fixed_hold_translation_invariant_on_declared_grid
+FAILED test_audit.py::test_hold_satisfying_literal_timestamp_contract - Asser...
+FAILED test_audit.py::test_zero_events_do_not_imply_zero_population_uncertainty
+FAILED test_audit.py::test_published_input_digest_matches_bytes_consumed - As...
+FAILED test_audit.py::test_nominal_window_check_accepts_ordinary_numeric_roundtrip
+FAILED test_audit.py::test_staged_manifest_payload_is_checked_against_its_digest
+6 failed, 23 deselected in 8.03s

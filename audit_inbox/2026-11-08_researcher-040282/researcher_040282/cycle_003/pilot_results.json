@@ -1,0 +1,26 @@
+[
+  {
+    "module": "GateFoundations",
+    "exit": 0,
+    "seconds": 5.948408356999948,
+    "printed_footprints": 22,
+    "warnings": false,
+    "extra_axioms": []
+  },
+  {
+    "module": "FreezeCore",
+    "exit": 0,
+    "seconds": 15.031914942000071,
+    "printed_footprints": 5,
+    "warnings": false,
+    "extra_axioms": []
+  },
+  {
+    "module": "GateProposalBridge",
+    "exit": 0,
+    "seconds": 17.954660978999982,
+    "printed_footprints": 44,
+    "warnings": true,
+    "extra_axioms": []
+  }
+]

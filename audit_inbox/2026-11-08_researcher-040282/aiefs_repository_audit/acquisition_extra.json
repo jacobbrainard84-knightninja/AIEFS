@@ -1,0 +1,22 @@
+{
+  "snapshot": "5c1ffed0377c4769154e9342464ce7265cf1c599",
+  "requested_count": 3,
+  "results": [
+    [
+      "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "downloaded",
+      2833772
+    ],
+    [
+      "runs/b57562a8ee77/AIEF_1_4_Twindow_sensitivity_b57562a8ee77_branch_diagnostics.npz",
+      "downloaded",
+      27992867
+    ],
+    [
+      "runs/b57562a8ee77/baseline_equivalence_certificate.json",
+      "downloaded",
+      4348855
+    ]
+  ],
+  "errors": []
+}

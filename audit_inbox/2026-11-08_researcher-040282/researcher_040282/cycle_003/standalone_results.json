@@ -1,0 +1,2401 @@
+{
+  "agent": "Researcher 040282",
+  "cycle": 3,
+  "compiler_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "source_files": {
+    "GateFoundations.lean": "e36cb2dfa9770ff23e39af902aa3d1b02725ed6de3fb9e3e2d7f6806c161795c",
+    "FreezeCore.lean": "2467904c70aa33ca63beb776bd3462764aad540ac2c16eba4c9b723c0fb83376",
+    "GateProposalBridge.lean": "4769253f44a6cf735444b906d56e82abc90a38ac0877beab413d4803509c039a"
+  },
+  "harness_sha256": "4f1d3cedd8cd7a15e5578f55c588375f607b7726b40db0b9a5233ffe17d101a3",
+  "dependency_builds": [
+    {
+      "module": "GateFoundations",
+      "raw_lean_exit": 0,
+      "seconds": 6.539620802999934,
+      "verified": true,
+      "problems": [],
+      "declaration_count": 22,
+      "axiom_footprints": {
+        "Researcher040282.rowSum_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.nodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_le_input": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_lower": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.kernel_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_fixes_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scale_eq_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_difference_of_rowSum_eq": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_guard_fixes_boundary": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_kernel_not_idempotent": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_gate_not_nonexpansive": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.rat_negative_epsilon_breaks_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "FreezeCore",
+      "raw_lean_exit": 0,
+      "seconds": 15.904835151000043,
+      "verified": true,
+      "problems": [],
+      "declaration_count": 5,
+      "axiom_footprints": {
+        "AIEFFreeze.upper_geom": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "AIEFFreeze.eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "AIEFFreeze.eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "AIEFFreeze.edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "AIEFFreeze.edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    }
+  ],
+  "controls": [
+    {
+      "case": "positive",
+      "kind": "positive",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "seconds": 25.028738129999965,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": true,
+      "problems": [],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "false_previous_row_bound",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "seconds": 24.647242433999963,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "false_without_h_lower",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "seconds": 25.179630047000046,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "false_without_h_upper",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "seconds": 24.841707413999984,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "false_zero_row_ratio",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "seconds": 24.700477043999854,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "false_candidate_equals_applied",
+      "kind": "false_math",
+      "control_passed": true,
+      "raw_lean_exit": 1,
+      "seconds": 24.720120905000158,
+      "mathematical_error_observed": true,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_nonzero"
+      ],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "sorry_payload",
+      "kind": "sorry_payload",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "seconds": 24.094188409000026,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "compiler_warning",
+        "forbidden_source_token:sorry",
+        "unapproved_axioms:falseWithBridgeHole:sorryAx"
+      ],
+      "declaration_count": 45,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "falseWithBridgeHole": [
+          "propext",
+          "sorryAx",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "extra_axiom_payload",
+      "kind": "extra_axiom_payload",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "seconds": 24.06177071800016,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "forbidden_source_token:axiom",
+        "unapproved_axioms:falseWithBridgeAxiom:injectedBridgeEquality"
+      ],
+      "declaration_count": 45,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_factor_lower_of_drive_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "falseWithBridgeAxiom": [
+          "injectedBridgeEquality",
+          "propext",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "missing_footprint",
+      "kind": "missing_footprint",
+      "control_passed": true,
+      "raw_lean_exit": 0,
+      "seconds": 16.206358579999915,
+      "mathematical_error_observed": false,
+      "dependency_error_observed": false,
+      "verified": false,
+      "problems": [
+        "theorem_axiom_print_coverage"
+      ],
+      "declaration_count": 44,
+      "axiom_footprints": {
+        "Researcher040282.normalized_affine_identity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gap_capacity_iff": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDrive_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.positiveDriveRow_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_apply_of_ne": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_eq_symmetrized": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_entry_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.proposal_row_upper_of_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_eq_min_appliedNodeScale": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_comm": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.gate_eq_mul_appliedFactor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_mul_row_le_capacity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_le_capacity_div_row": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_ratio_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.scaleFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedNodeScale_lower_of_row_upper": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.appliedFactor_lower_of_row_uppers": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.driveEnvelope_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_pos": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.edgeFloor_le_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_feasible": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_symmetric": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_zero_diag": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.weightStep_scalar_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_nonneg": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_feasible_from_first": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.trajectory_good_of_start": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_on_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Researcher040282.adaptive_edge_eventually_off_from": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "case": "exact_fraction_suite",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "cases": 384,
+      "active": 159,
+      "inactive": 225,
+      "capacity_zero": 88,
+      "zero_rows": 274
+    },
+    {
+      "case": "nonvacuous_on_active_and_turn_on",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "default_active_witness": {
+        "c": "19/30",
+        "epsilon": "1/1000000000000",
+        "h": "3/20000",
+        "endpoint_drive_bound": "16/3",
+        "kappa": "1900000000000/1902115000003",
+        "comparison_fixed_point": "760000000/2400000003",
+        "threshold": "3/25",
+        "proposal_row_0": "380423/600000",
+        "output_row_0": "3614018500000/5706345000009",
+        "active": true
+      },
+      "from_empty_statuses": [
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "from_empty_active_steps": [
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case": "inactive_zero_row_witness",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "applied_factor": "1",
+      "candidate_scale": "1/2"
+    },
+    {
+      "case": "drop_epsilon_from_floor",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "actual_local_factor": "1000000000000/1000000000001",
+      "epsilon_free_floor": "1",
+      "previous_rows": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "proposal_rows": [
+        "1",
+        "1",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "case": "strict_positive_floor_at_zero_capacity",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "actual_factor": "0",
+      "floor": "0",
+      "output_all_zero": true
+    },
+    {
+      "case": "drop_symmetry_from_source_identification",
+      "kind": "exact_counterexample",
+      "control_passed": true,
+      "masked_proposal_01": "1",
+      "symmetrized_source_01": "1/2"
+    },
+    {
+      "case": "diagonal_mask_witness",
+      "kind": "positive_exact",
+      "control_passed": true,
+      "diagonal_drive": "10",
+      "proposal_all_zero": true,
+      "positive_drive_rows_all_zero": true
+    },
+    {
+      "case": "python_optimization_mode",
+      "kind": "policy_negative",
+      "control_passed": true,
+      "raw_python_exit": 2,
+      "observed_output": "Python assertions must be enabled; do not use -O/-OO."
+    }
+  ],
+  "control_count": 17,
+  "all_controls_passed": true,
+  "elapsed_seconds": 140.555464756,
+  "scope": "local closed-file proof/exact harness; no independent-seat approval, engine linkage, or integration"
+}
