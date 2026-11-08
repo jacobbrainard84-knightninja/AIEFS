@@ -1,0 +1,451 @@
+{
+  "schema": 1,
+  "cycle": 8,
+  "created_at": "2026-11-08T22:35:49Z",
+  "last_tick": "2026-11-08T22:59:15Z",
+  "last_ref": "origin/main",
+  "last_snapshot": "2026-11-08T22:59:15Z",
+  "items": [
+    {
+      "id": "79b5bd217b",
+      "rule": "DOC-MISSING",
+      "severity": "high",
+      "title": "Maintained document is missing: PROJECT_CHRONICLER_AGENT.md",
+      "doc": "PROJECT_CHRONICLER_AGENT.md",
+      "detail": "PROJECT_CHRONICLER_AGENT.md is registered in docs_manifest.json but absent at HEAD.",
+      "evidence": [
+        "ref HEAD"
+      ],
+      "action": "Restore it, or remove it from docs_manifest.json with a written reason.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:36:04Z",
+      "cycle_seen": 1,
+      "cycle_closed": 3,
+      "note": "",
+      "resolved_at": "2026-11-08T22:36:36Z"
+    },
+    {
+      "id": "e4bae6270c",
+      "rule": "DOC-PATH-MISSING",
+      "severity": "high",
+      "title": "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md points at 1 path(s) that do not exist",
+      "doc": "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md",
+      "detail": "Missing references: analysis",
+      "evidence": [
+        "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md:564: `analysis`"
+      ],
+      "action": "Point the reference at the real path (renamed/moved), or state plainly that the artifact is absent. Do not leave a dead pointer in an instruction document.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:36:04Z",
+      "cycle_seen": 1,
+      "cycle_closed": 3,
+      "note": "",
+      "resolved_at": "2026-11-08T22:36:36Z"
+    },
+    {
+      "id": "27a291e8ed",
+      "rule": "DOC-PATH-MISSING",
+      "severity": "high",
+      "title": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md points at 1 path(s) that do not exist",
+      "doc": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md",
+      "detail": "Missing references: .github/workflows/ci.yml",
+      "evidence": [
+        "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:70: `.github/workflows/ci.yml`"
+      ],
+      "action": "Point the reference at the real path (renamed/moved), or state plainly that the artifact is absent. Do not leave a dead pointer in an instruction document.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:36:04Z",
+      "cycle_seen": 1,
+      "cycle_closed": 3,
+      "note": "",
+      "resolved_at": "2026-11-08T22:36:36Z"
+    },
+    {
+      "id": "a408d0cc18",
+      "rule": "DOC-PATH-MISSING",
+      "severity": "high",
+      "title": "CURRENT_STATUS.md points at 2 path(s) that do not exist",
+      "doc": "CURRENT_STATUS.md",
+      "detail": "Missing references: aief_1_4_jacobian_step_convergence, aief_1_4_k3_fiber_audit",
+      "evidence": [
+        "CURRENT_STATUS.md:46: `aief_1_4_jacobian_step_convergence`",
+        "CURRENT_STATUS.md:47: `aief_1_4_k3_fiber_audit`"
+      ],
+      "action": "Point the reference at the real path (renamed/moved), or state plainly that the artifact is absent. Do not leave a dead pointer in an instruction document.",
+      "status": "deferred",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 1,
+      "cycle_closed": null,
+      "note": "",
+      "defer_reason": "Same patch covers this item (hunks 4 and 5 mark the five absent paths; the two remaining directories are the only unresolved references). Blocked on the same landing route.",
+      "defer_until": null,
+      "finding_key": "aief_1_4_jacobian_step_convergence,aief_1_4_k3_fiber_audit"
+    },
+    {
+      "id": "14d13939a8",
+      "rule": "DOC-STALE-VS-SOURCE",
+      "severity": "high",
+      "title": "CURRENT_STATUS.md is older than the sources it describes",
+      "doc": "CURRENT_STATUS.md",
+      "detail": "CURRENT_STATUS.md declares 2026-10-23 (line 3), but registry/claims.csv changed on 2026-11-08 (17 days later).",
+      "evidence": [
+        "CURRENT_STATUS.md:3: declares 2026-10-23",
+        "registry/claims.csv last changed 2026-11-08 @ eb3933c"
+      ],
+      "action": "Re-verify the statements in CURRENT_STATUS.md against registry/claims.csv at eb3933c, then update the text and the date stamp in the same edit.",
+      "status": "deferred",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 1,
+      "cycle_closed": null,
+      "note": "",
+      "defer_reason": "Verified 2026-11-08 against main@eb3933c; deliverable is an applicable patch (recommendations/current_status_edits.patch, 13 hunks, git apply --check clean). Blocked: CURRENT_STATUS.md is not in this branch's tree, so the edit must be landed by the owner on a branch cut from main. Unpark when the patch is applied or rejected.",
+      "defer_until": null,
+      "finding_key": ""
+    },
+    {
+      "id": "b7a420a504",
+      "rule": "DOC-BRANCH-DRIFT",
+      "severity": "medium",
+      "title": "audit_inbox/briefing/STATE.md quotes stale branch tips",
+      "doc": "audit_inbox/briefing/STATE.md",
+      "detail": "3 branch tip(s) moved since this snapshot: main: doc 395ea53 vs live eb3933c; fix/check-manifest-g1g2: doc 14072c3 vs live 13a01d1; ci/check-sha256sums: doc 7c3bbba vs live aababfe",
+      "evidence": [
+        "audit_inbox/briefing/STATE.md:13: `main` | `395ea53` (live eb3933c)",
+        "audit_inbox/briefing/STATE.md:19: `fix/check-manifest-g1g2` | `14072c3` (live 13a01d1)",
+        "audit_inbox/briefing/STATE.md:23: `ci/check-sha256sums` | `7c3bbba` (live aababfe)"
+      ],
+      "action": "Refresh the tips from `git ls-remote origin` and restate the retrieval time. Branch tables are snapshots, never live state.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:36:50Z",
+      "cycle_seen": 1,
+      "cycle_closed": 6,
+      "note": "",
+      "resolved_at": "2026-11-08T22:47:02Z"
+    },
+    {
+      "id": "8b5beac313",
+      "rule": "DOC-BARE-REF",
+      "severity": "low",
+      "title": "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md names 1 bare filename(s) with no matching file",
+      "doc": "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md",
+      "detail": "Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: FAILED_manifest.json",
+      "evidence": [
+        "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md:743: `FAILED_manifest.json`"
+      ],
+      "action": "For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.",
+      "status": "open",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 1,
+      "cycle_closed": null,
+      "note": "",
+      "finding_key": "FAILED_manifest.json"
+    },
+    {
+      "id": "67d2ec8eee",
+      "rule": "DOC-BARE-REF",
+      "severity": "low",
+      "title": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md names 2 bare filename(s) with no matching file",
+      "doc": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md",
+      "detail": "Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: provenance.json, run_reproduce.sh",
+      "evidence": [
+        "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:13: `provenance.json`",
+        "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:68: `run_reproduce.sh`",
+        "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:68: `provenance.json`"
+      ],
+      "action": "For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:36:04Z",
+      "cycle_seen": 1,
+      "cycle_closed": 3,
+      "note": "",
+      "resolved_at": "2026-11-08T22:36:36Z"
+    },
+    {
+      "id": "f6d2f07553",
+      "rule": "DOC-BARE-REF",
+      "severity": "low",
+      "title": "CURRENT_STATUS.md names 3 bare filename(s) with no matching file",
+      "doc": "CURRENT_STATUS.md",
+      "detail": "Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: aief_1_4_branch_tangent_comparison.py, aief_1_4_full_state_tangent_operator.py, aief_1_4_history_cocycle_test.py",
+      "evidence": [
+        "CURRENT_STATUS.md:46: `aief_1_4_full_state_tangent_operator.py`",
+        "CURRENT_STATUS.md:46: `aief_1_4_history_cocycle_test.py`",
+        "CURRENT_STATUS.md:46: `aief_1_4_branch_tangent_comparison.py`"
+      ],
+      "action": "For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.",
+      "status": "open",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 1,
+      "cycle_closed": null,
+      "note": "",
+      "finding_key": "aief_1_4_branch_tangent_comparison.py,aief_1_4_full_state_tangent_operator.py,aief_1_4_history_cocycle_test.py"
+    },
+    {
+      "id": "b3fcec81d8",
+      "rule": "DOC-BARE-REF",
+      "severity": "low",
+      "title": "audit_inbox/briefing/STATE.md names 1 bare filename(s) with no matching file",
+      "doc": "audit_inbox/briefing/STATE.md",
+      "detail": "Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: hashlib.py",
+      "evidence": [
+        "audit_inbox/briefing/STATE.md:19: `hashlib.py`"
+      ],
+      "action": "For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.",
+      "status": "open",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 1,
+      "cycle_closed": null,
+      "note": "",
+      "finding_key": "hashlib.py"
+    },
+    {
+      "id": "01c03561b4",
+      "rule": "DOC-HASH-PINNED",
+      "severity": "info",
+      "title": "AI_AGENT_HANDOFF_PROMPT.md is hash-pinned: correct it via errata, not by editing",
+      "doc": "AI_AGENT_HANDOFF_PROMPT.md",
+      "detail": "AI_AGENT_HANDOFF_PROMPT.md appears in AI Agent Audits/evidence/audit_manifest.json. Editing it breaks the audit pins.",
+      "evidence": [
+        "AI Agent Audits/evidence/audit_manifest.json pins AI_AGENT_HANDOFF_PROMPT.md"
+      ],
+      "action": "Leave the file byte-identical. Put the correction in the errata file and, if a claim moves, in the claim ledger. Only the owner can authorise a re-pin.",
+      "status": "open",
+      "first_seen": "2026-11-08T22:35:49Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 1,
+      "cycle_closed": null,
+      "note": "",
+      "finding_key": "pinned"
+    },
+    {
+      "id": "f108dc8e62",
+      "rule": "DOC-PATH-MISSING",
+      "severity": "high",
+      "title": "PROJECT_CHRONICLER_AGENT.md points at 3 path(s) that do not exist",
+      "doc": "PROJECT_CHRONICLER_AGENT.md",
+      "detail": "Missing references: chronicler/loop, chronicler/loop/NEXT.md, loop/NEXT.md",
+      "evidence": [
+        "PROJECT_CHRONICLER_AGENT.md:86: `chronicler/loop/NEXT.md`",
+        "PROJECT_CHRONICLER_AGENT.md:119: `chronicler/loop`",
+        "PROJECT_CHRONICLER_AGENT.md:337: `loop/NEXT.md`"
+      ],
+      "action": "Point the reference at the real path (renamed/moved), or state plainly that the artifact is absent. Do not leave a dead pointer in an instruction document.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:36:36Z",
+      "last_seen": "2026-11-08T22:36:45Z",
+      "cycle_seen": 3,
+      "cycle_closed": 5,
+      "note": "",
+      "resolved_at": "2026-11-08T22:36:50Z"
+    },
+    {
+      "id": "c4da8bf059",
+      "rule": "DOC-BARE-REF",
+      "severity": "low",
+      "title": "PROJECT_CHRONICLER_AGENT.md names 1 bare filename(s) with no matching file",
+      "doc": "PROJECT_CHRONICLER_AGENT.md",
+      "detail": "Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: NEXT.md",
+      "evidence": [
+        "PROJECT_CHRONICLER_AGENT.md:325: `NEXT.md`"
+      ],
+      "action": "For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.",
+      "status": "resolved",
+      "first_seen": "2026-11-08T22:36:36Z",
+      "last_seen": "2026-11-08T22:36:45Z",
+      "cycle_seen": 3,
+      "cycle_closed": 5,
+      "note": "",
+      "resolved_at": "2026-11-08T22:36:50Z"
+    },
+    {
+      "id": "c872e0e9f4",
+      "rule": "DOC-BARE-REF",
+      "severity": "low",
+      "title": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md names 1 bare filename(s) with no matching file",
+      "doc": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md",
+      "detail": "Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: provenance.json",
+      "evidence": [
+        "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:13: `provenance.json`"
+      ],
+      "action": "For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.",
+      "status": "open",
+      "first_seen": "2026-11-08T22:36:36Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 3,
+      "cycle_closed": null,
+      "note": "",
+      "finding_key": "provenance.json"
+    },
+    {
+      "id": "9f3419be08",
+      "rule": "DOC-BRANCH-DRIFT",
+      "severity": "medium",
+      "title": "audit_inbox/briefing/STATE.md quotes stale branch tips",
+      "doc": "audit_inbox/briefing/STATE.md",
+      "detail": "4 branch tip(s) moved since this snapshot: main: doc 395ea53 vs live eb3933c; fix/comparator-v4-gates: doc f0aadce vs live 902abe8; fix/check-manifest-g1g2: doc 14072c3 vs live 13a01d1; ci/check-sha256sums: doc 7c3bbba vs live aababfe. Also listed but absent from origin (merged and deleted, or never pushed): fix/errata-old-files-drift, fix/hygiene-allow-data-external, fix/lint-claims-artifacts, fix/lint-claims-fail-closed, research/freezing, research/redteam-negcontrols",
+      "evidence": [
+        "audit_inbox/briefing/STATE.md:13: `main` | `395ea53` (live eb3933c)",
+        "audit_inbox/briefing/STATE.md:17: `fix/comparator-v4-gates` | `f0aadce` (live 902abe8)",
+        "audit_inbox/briefing/STATE.md:19: `fix/check-manifest-g1g2` | `14072c3` (live 13a01d1)",
+        "audit_inbox/briefing/STATE.md:23: `ci/check-sha256sums` | `7c3bbba` (live aababfe)"
+      ],
+      "action": "Refresh the tips from `git ls-remote origin` and restate the retrieval time. Branch tables are snapshots, never live state.",
+      "status": "in_progress",
+      "first_seen": "2026-11-08T22:47:02Z",
+      "last_seen": "2026-11-08T22:59:15Z",
+      "cycle_seen": 6,
+      "cycle_closed": null,
+      "note": "",
+      "finding_key": "ci/check-sha256sums: doc 7c3bbba vs live aababfe,fix/check-manifest-g1g2: doc 14072c3 vs live 13a01d1,fix/comparator-v4-gates: doc f0aadce vs live 902abe8,main: doc 395ea53 vs live eb3933c"
+    }
+  ],
+  "history": [
+    {
+      "cycle": 1,
+      "at": "2026-11-08T22:35:49Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 11,
+      "by_severity": {
+        "high": 5,
+        "medium": 1,
+        "low": 4,
+        "info": 1
+      },
+      "new": 11,
+      "resolved": 0,
+      "reopened": 0,
+      "chosen": "27a291e8ed"
+    },
+    {
+      "cycle": 2,
+      "at": "2026-11-08T22:36:04Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 11,
+      "by_severity": {
+        "high": 5,
+        "medium": 1,
+        "low": 4,
+        "info": 1
+      },
+      "new": 0,
+      "resolved": 0,
+      "reopened": 0,
+      "chosen": "79b5bd217b"
+    },
+    {
+      "cycle": 3,
+      "at": "2026-11-08T22:36:36Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 10,
+      "by_severity": {
+        "high": 3,
+        "medium": 1,
+        "low": 5,
+        "info": 1
+      },
+      "new": 3,
+      "resolved": 4,
+      "reopened": 0,
+      "chosen": "f108dc8e62"
+    },
+    {
+      "cycle": 4,
+      "at": "2026-11-08T22:36:45Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 10,
+      "by_severity": {
+        "high": 3,
+        "medium": 1,
+        "low": 5,
+        "info": 1
+      },
+      "new": 0,
+      "resolved": 0,
+      "reopened": 0,
+      "chosen": "f108dc8e62"
+    },
+    {
+      "cycle": 5,
+      "at": "2026-11-08T22:36:50Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 8,
+      "by_severity": {
+        "high": 2,
+        "medium": 1,
+        "low": 4,
+        "info": 1
+      },
+      "new": 0,
+      "resolved": 2,
+      "reopened": 0,
+      "chosen": "14d13939a8"
+    },
+    {
+      "cycle": 6,
+      "at": "2026-11-08T22:47:02Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 8,
+      "by_severity": {
+        "high": 2,
+        "medium": 1,
+        "low": 4,
+        "info": 1
+      },
+      "new": 1,
+      "resolved": 1,
+      "reopened": 0,
+      "chosen": "14d13939a8"
+    },
+    {
+      "cycle": 7,
+      "at": "2026-11-08T22:58:52Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 8,
+      "by_severity": {
+        "high": 2,
+        "medium": 1,
+        "low": 4,
+        "info": 1
+      },
+      "new": 1,
+      "resolved": 0,
+      "reopened": 0,
+      "chosen": "71d45eb27c"
+    },
+    {
+      "cycle": 8,
+      "at": "2026-11-08T22:59:15Z",
+      "ref": "origin/main",
+      "ref_sha": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+      "findings": 8,
+      "by_severity": {
+        "high": 2,
+        "medium": 1,
+        "low": 4,
+        "info": 1
+      },
+      "new": 0,
+      "resolved": 0,
+      "reopened": 0,
+      "chosen": "9f3419be08"
+    }
+  ],
+  "agent": "chronicler"
+}

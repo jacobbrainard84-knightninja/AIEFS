@@ -1,0 +1,109 @@
+# Commands run for this deposit
+# Session: 2026-11-08, 22:35–23:05 UTC
+# Working branch: arena/eae4f5a6-aiefs  (session branch; audit-inbox cannot be pushed to from here)
+# Repo root assumed throughout. Read-only except for writes inside this deposit folder.
+
+## 1. Inventory and reads (no writes)
+
+git remote -v                                                   # origin = .../AIEFS.git
+git branch -a ; git log --oneline -N                             # shallow clone: 5 reachable commits
+git ls-remote --heads origin | sort -k2                          # 14 branches; recorded in branch_and_pr_state.md
+git ls-tree -r --name-only origin/main | wc -l                   # 3052 tracked files
+git cat-file -p origin/main:OPERATING_MANUAL.md                  # governance
+git cat-file -p origin/main:registry/README.md                   # status vocabulary + axes
+git cat-file -p origin/main:docs/REVIEWING.md
+git cat-file -p origin/main:docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md
+git cat-file -p origin/main:.github/PULL_REQUEST_TEMPLATE.md
+git cat-file -p origin/main:.github/workflows/repo-checks.yml
+git cat-file -p origin/main:.github/workflows/lean.yml
+git cat-file -p origin/main:PRIVACY_SCRUB_LIST.md                # head only
+git cat-file -p origin/main:MERGE_PREP_REPORT.md                 # head only
+cat audit_inbox/README.md ; cat audit_inbox/TRIAGE.md            # head + tables
+cat audit_inbox/briefing/README.md
+cat audit_inbox/briefing/STATE.md
+cat audit_inbox/briefing/NORTH_STAR.md
+cat audit_inbox/briefing/OPEN_QUESTIONS.md
+sed -n '1,60p' audit_inbox/briefing/RESEARCH_LEADS.md
+cat audit_inbox/briefing/INTAKE_GUARD_PROPOSAL.md
+sed -n '1,60p' audit_inbox/salvage/README.md
+
+## 2. Contract checks (no writes)
+
+# CI-parsed status vocabulary vs the ledger — 14 values, 80 rows, 0 unknown
+python3 -m chronicler check -v
+
+# CSV row counts (csv module, not line counts) — claims 80, studies 15, artifacts 2898
+python3 - <<'PY'
+import csv, io, subprocess
+for path in ("registry/claims.csv", "registry/studies.csv", "registry/artifacts.csv"):
+    text = subprocess.run(["git","cat-file","-p",f"origin/main:{path}"], capture_output=True, text=True).stdout
+    print(path, len(list(csv.DictReader(io.StringIO(text)))))
+PY
+
+# Errata headings present at eb3933c — E1 … E18
+git cat-file -p origin/main:ERRATA_2026-10-28.md | grep -oE '^## E[0-9]+' | sort -u -V
+
+# Freeze claim rows on main — 4
+git cat-file -p origin/main:registry/claims.csv | grep -E 'LEAN-FREEZE-CORE|RES-FREEZE-(GATED|NUM|NOVELTY)'
+
+# Lean projects on main — AIEFFreezeCore is present
+git ls-tree --name-only origin/main lean/
+
+# Lean CI matrix — three projects, all required: true
+git cat-file -p origin/main:.github/workflows/lean.yml | sed -n '45,50p'
+
+## 3. Pull-request state (GitHub API, read-only)
+
+gh pr list --state all --limit 40 --json number,title,state,headRefName,baseRefName,mergedAt,mergeCommit
+# -> 13 PRs: #1,#2,#3,#4,#5,#7,#8,#9,#10,#11,#12 MERGED; #6 and #13 CLOSED without merge
+
+## 4. Toolkit runs (write only inside chronicler/loop and this deposit)
+
+python3 -m chronicler collect                  # exit 0 — 3052 files, pins 29/29, refs resolved
+python3 -m chronicler check                    # exit 1 — 8 findings at --fail-on high
+python3 -m chronicler check -v                 # exit 1 — same, with evidence lines
+python3 -m chronicler status                   # exit 0 — document table + queue
+python3 -m chronicler tick                     # exit 0 — cycle 5; writes loop/NEXT.md + journal
+python3 -m unittest discover -s chronicler/tests -v          # exit 0 — 31 passed
+
+python3 audit_inbox/2026-11-08_arena-chronicler_project-chronicler/scripts/make_evidence.py
+python3 audit_inbox/2026-11-08_arena-chronicler_project-chronicler/scripts/make_branch_state.py
+python3 -m unittest discover -s audit_inbox/2026-11-08_arena-chronicler_project-chronicler/scripts/chronicler/tests -v
+
+## 5. Deliberately NOT run
+
+# - The simulation suites (AIEF-1.3/1.4 cohorts, Analysis v4, matched-phase ablation)
+# - The Lean build and axiom audit
+# - tools/ci/* checks (lint_claims, hygiene_scan, check_manifest, check_artifact_pins,
+#   check_current_inventory, check_modes) — CI's job, and this is a docs pass
+# - Anything under audit_inbox/salvage/ (rule 13: never execute in place)
+# - Any write to main, to the briefing, to registry/claims.csv, to ERRATA_*, or to a hash-pinned file
+
+## 6. `CURRENT_STATUS.md` verification and patch generation (2026-11-08, cycle 6-8)
+
+Read-only against `origin/main` @ `eb3933c`; nothing below changed the repository.
+
+```bash
+git cat-file -p origin/main:CURRENT_STATUS.md            # 201 lines, read end to end
+git cat-file -p origin/main:registry/artifacts.csv       # header + 2,898 data rows
+git cat-file -p origin/main:registry/claims.csv          # header + 80 data rows
+git ls-tree -r --name-only origin/main | wc -l           # 3,052 tracked files
+gh pr list --state merged --json number,headRefName,mergedAt,mergeCommit
+gh pr view 6 --json headRefName,state ; gh pr view 13 --json headRefName,state
+git cat-file -p origin/main:.github/workflows/repo-checks.yml | grep -n "43 passed"
+python3 -m chronicler check                              # 8 findings, high 2
+python3 -m chronicler queue                              # live ordering
+python3 scripts/make_current_status_patch.py             # 13 hunks, +23/-16
+git apply --check -p1 recommendations/current_status_edits.patch   # clean, in a scratch copy
+python3 -m unittest discover -s scripts/chronicler/tests -v         # 34 tests, OK
+```
+
+### Not run, and why
+
+- `verify_inventory.py` — it stops at check [1/5] on the merged tree (documented in `CURRENT_STATUS.md` itself).
+  The inventory numbers were checked directly against `registry/artifacts.csv` instead.
+- The three Lean builds — minutes each, and the claim being audited was a documentation one. The
+  workflow comments and `lean.yml` were read instead.
+- The v4 modular test suite — it needs the platform's `pytest.ini` and a 6 MB fixture tree; `repo-checks.yml:195`
+  records the expected counts, which is what the document needed.
+- No network fetch of the audit PDFs or papers: out of scope for a doc-vs-ledger check.

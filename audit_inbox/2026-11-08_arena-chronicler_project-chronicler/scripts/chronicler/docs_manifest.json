@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "ref": "origin/main",
+  "stale_after_days": 14,
+  "status_sources": [
+    "registry/claims.csv",
+    "ERRATA_2026-10-28.md",
+    "registry/artifacts_current.csv"
+  ],
+  "pin_sources": [
+    {
+      "path": "AI Agent Audits/evidence/audit_manifest.json",
+      "scope": "audited_inputs",
+      "verify_at_key": "audited_commit"
+    },
+    {
+      "path": "twindow_frozen_authority_hashes.txt",
+      "scope": "frozen"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt",
+      "scope": "frozen",
+      "relative_to": "lean/AIEFProofs"
+    }
+  ],
+  "docs": [
+    {
+      "path": "README.md",
+      "class": "introduction",
+      "role": "Front door. First file a human or new agent reads; must describe the project as it actually is.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 30,
+      "required_sections": [
+        "Start here",
+        "What the audits support"
+      ],
+      "watch": [
+        "registry/claims.csv",
+        "CURRENT_STATUS.md",
+        "ERRATA_2026-10-28.md"
+      ]
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "class": "status",
+      "role": "The single status file (bea / are / going). Per-study status and the two-axis inventory counts.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 10,
+      "check_counts": true,
+      "required_sections": [
+        "Two-Axis Inventory Summary",
+        "Status categories"
+      ],
+      "watch": [
+        "registry/claims.csv",
+        "ERRATA_2026-10-28.md",
+        "registry/artifacts_current.csv"
+      ]
+    },
+    {
+      "path": "OPERATING_MANUAL.md",
+      "class": "instruction",
+      "role": "Read at the start of every session. Roles, workflow, approval levels, privacy, automated checks.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 45,
+      "required_sections": [
+        "Roles",
+        "Workflow",
+        "Approval levels",
+        "Automated checks"
+      ],
+      "watch": [
+        "registry/README.md",
+        "registry/claims.csv"
+      ]
+    },
+    {
+      "path": "AI_AGENT_HANDOFF_PROMPT.md",
+      "class": "instruction",
+      "role": "Copy/paste briefing for a new scientific collaborator: the model, the cohorts, the caveats.",
+      "owner": "owner",
+      "editable": false,
+      "max_age_days": 45,
+      "required_sections": [
+        "Core AIEF model",
+        "How to begin your response"
+      ],
+      "watch": [
+        "registry/claims.csv",
+        "AIEF_1_4_FORWARD_PLAN.md"
+      ]
+    },
+    {
+      "path": "AIEF_CODING_AGENT_PROMPT.md",
+      "class": "instruction",
+      "role": "Copy/paste prompt for the implementation-only coding agent. Lists the mandatory files to consult.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 45,
+      "required_sections": [
+        "Core role",
+        "Mandatory files to consult"
+      ],
+      "watch": [
+        "AIEF_1_4_FORWARD_PLAN.md",
+        "AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md"
+      ]
+    },
+    {
+      "path": "AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md",
+      "class": "instruction",
+      "role": "Copy/paste prompt for the modular-platform driver agent.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 60,
+      "watch": [
+        "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/README_modular.md"
+      ]
+    },
+    {
+      "path": "docs/REVIEWING.md",
+      "class": "instruction",
+      "role": "Short guide for outside reviewers on running the checks and verifying claims.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 45,
+      "watch": [
+        "tools/ci/lint_claims.py",
+        "registry/claims.csv"
+      ]
+    },
+    {
+      "path": "docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md",
+      "class": "instruction",
+      "role": "Architecture note on how the repo enforces claim discipline.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 90,
+      "watch": [
+        "registry/README.md"
+      ]
+    },
+    {
+      "path": "registry/README.md",
+      "class": "instruction",
+      "role": "Claim label rules: two axes, three status categories, the exact allowed values.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 45,
+      "required_sections": [
+        "Status vocabulary"
+      ],
+      "watch": [
+        "registry/claims.csv"
+      ]
+    },
+    {
+      "path": "AIEF_1_4_FORWARD_PLAN.md",
+      "class": "plan",
+      "role": "Where the 1.4 programme is going next.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 30,
+      "watch": [
+        "AIEF_1_4_OPERATOR_COCYCLE_THOUGHT_TREE.md",
+        "registry/claims.csv"
+      ]
+    },
+    {
+      "path": "AIEF_HISTORIC_UNFOLDING.md",
+      "class": "history",
+      "role": "Long-form project history. Should stay true, but changes slowly.",
+      "owner": "owner",
+      "editable": true,
+      "max_age_days": 365,
+      "watch": [
+        "ERRATA_2026-10-28.md"
+      ]
+    },
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "class": "errata",
+      "role": "Dated corrections to hash-pinned files. Append-only: never rewrite an entry.",
+      "owner": "owner",
+      "editable": true,
+      "watch": [
+        "registry/claims.csv"
+      ]
+    },
+    {
+      "path": "audit_inbox/briefing/STATE.md",
+      "class": "status",
+      "role": "Navigation snapshot of where the project stands. Explicitly NOT authority: one rank below the registry.",
+      "owner": "researcher-001",
+      "editable": true,
+      "max_age_days": 14,
+      "watch": [
+        "registry/claims.csv",
+        "ERRATA_2026-10-28.md"
+      ],
+      "refs": [
+        "origin/audit-inbox",
+        "audit-inbox",
+        "HEAD"
+      ],
+      "required": false
+    },
+    {
+      "path": "audit_inbox/briefing/README.md",
+      "class": "instruction",
+      "role": "Read-first briefing and standing rules for every review agent.",
+      "owner": "researcher-001",
+      "editable": true,
+      "max_age_days": 30,
+      "required_sections": [
+        "Authority order",
+        "Standing rules for all agents"
+      ],
+      "watch": [
+        "audit_inbox/TRIAGE.md"
+      ],
+      "refs": [
+        "origin/audit-inbox",
+        "audit-inbox",
+        "HEAD"
+      ],
+      "required": false
+    },
+    {
+      "path": "PROJECT_CHRONICLER_AGENT.md",
+      "class": "instruction",
+      "role": "This agent's own charter. If it drifts from the code, the agent stops making sense.",
+      "owner": "owner",
+      "ref": "HEAD",
+      "editable": true,
+      "max_age_days": 90,
+      "required_sections": [
+        "The continue contract",
+        "Document registry"
+      ],
+      "watch": [
+        "chronicler/docs_manifest.json",
+        "chronicler/checks.py"
+      ]
+    }
+  ],
+  "errata_path": "ERRATA_2026-10-28.md"
+}

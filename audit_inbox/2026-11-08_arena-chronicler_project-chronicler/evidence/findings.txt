@@ -1,0 +1,61 @@
+# chronicler check -v
+ref: origin/main @ eb3933c
+generated: 2026-11-08T22:59:17Z
+history reliable: False (shallow=True, commits=9)
+
+[HIGH    ] DOC-PATH-MISSING           CURRENT_STATUS.md:46
+           CURRENT_STATUS.md points at 2 path(s) that do not exist
+           Missing references: aief_1_4_jacobian_step_convergence, aief_1_4_k3_fiber_audit
+           - CURRENT_STATUS.md:46: `aief_1_4_jacobian_step_convergence`
+           - CURRENT_STATUS.md:47: `aief_1_4_k3_fiber_audit`
+           action: Point the reference at the real path (renamed/moved), or state plainly that the artifact is absent. Do not leave a dead pointer in an instruction document.
+
+[HIGH    ] DOC-STALE-VS-SOURCE        CURRENT_STATUS.md:3
+           CURRENT_STATUS.md is older than the sources it describes
+           CURRENT_STATUS.md declares 2026-10-23 (line 3), but registry/claims.csv changed on 2026-11-08 (17 days later).
+           - CURRENT_STATUS.md:3: declares 2026-10-23
+           - registry/claims.csv last changed 2026-11-08 @ eb3933c
+           action: Re-verify the statements in CURRENT_STATUS.md against registry/claims.csv at eb3933c, then update the text and the date stamp in the same edit.
+
+[MEDIUM  ] DOC-BRANCH-DRIFT           audit_inbox/briefing/STATE.md
+           audit_inbox/briefing/STATE.md quotes stale branch tips
+           4 branch tip(s) moved since this snapshot: main: doc 395ea53 vs live eb3933c; fix/comparator-v4-gates: doc f0aadce vs live 902abe8; fix/check-manifest-g1g2: doc 14072c3 vs live 13a01d1; ci/check-sha256sums: doc 7c3bbba vs live aababfe
+           - audit_inbox/briefing/STATE.md:13: `main` | `395ea53` (live eb3933c)
+           - audit_inbox/briefing/STATE.md:17: `fix/comparator-v4-gates` | `f0aadce` (live 902abe8)
+           - audit_inbox/briefing/STATE.md:19: `fix/check-manifest-g1g2` | `14072c3` (live 13a01d1)
+           - audit_inbox/briefing/STATE.md:23: `ci/check-sha256sums` | `7c3bbba` (live aababfe)
+           action: Refresh the tips from `git ls-remote origin` and restate the retrieval time. Branch tables are snapshots, never live state.
+
+[LOW     ] DOC-BARE-REF               AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md:743
+           AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md names 1 bare filename(s) with no matching file
+           Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: FAILED_manifest.json
+           - AIEF_MODULAR_DRIVER_CODING_AGENT_PROMPT.md:743: `FAILED_manifest.json`
+           action: For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.
+
+[LOW     ] DOC-BARE-REF               docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:13
+           docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md names 1 bare filename(s) with no matching file
+           Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: provenance.json
+           - docs/architecture/EPISTEMIC_GOVERNANCE_AND_LAYOUT.md:13: `provenance.json`
+           action: For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.
+
+[LOW     ] DOC-BARE-REF               CURRENT_STATUS.md:46
+           CURRENT_STATUS.md names 3 bare filename(s) with no matching file
+           Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: aief_1_4_branch_tangent_comparison.py, aief_1_4_full_state_tangent_operator.py, aief_1_4_history_cocycle_test.py
+           - CURRENT_STATUS.md:46: `aief_1_4_full_state_tangent_operator.py`
+           - CURRENT_STATUS.md:46: `aief_1_4_history_cocycle_test.py`
+           - CURRENT_STATUS.md:46: `aief_1_4_branch_tangent_comparison.py`
+           action: For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.
+
+[LOW     ] DOC-BARE-REF               audit_inbox/briefing/STATE.md:19
+           audit_inbox/briefing/STATE.md names 1 bare filename(s) with no matching file
+           Bare filenames are often run outputs rather than repo files, so this is only a prompt to check: hashlib.py
+           - audit_inbox/briefing/STATE.md:19: `hashlib.py`
+           action: For each name, decide whether it should exist in the repo. If it is a generated output, say so inline; if it was moved, give the path.
+
+[INFO    ] DOC-HASH-PINNED            AI_AGENT_HANDOFF_PROMPT.md
+           AI_AGENT_HANDOFF_PROMPT.md is hash-pinned: correct it via errata, not by editing
+           AI_AGENT_HANDOFF_PROMPT.md appears in AI Agent Audits/evidence/audit_manifest.json. Editing it breaks the audit pins.
+           - AI Agent Audits/evidence/audit_manifest.json pins AI_AGENT_HANDOFF_PROMPT.md
+           action: Leave the file byte-identical. Put the correction in the errata file and, if a claim moves, in the claim ledger. Only the owner can authorise a re-pin.
+
+summary: high 2 · medium 1 · low 4 · info 1

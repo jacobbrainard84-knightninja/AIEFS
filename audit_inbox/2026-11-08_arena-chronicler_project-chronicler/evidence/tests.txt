@@ -1,0 +1,43 @@
+# Test run — 2026-11-08 (cycle 6-8 verification pass)
+
+$ python3 -m unittest discover -s audit_inbox/2026-11-08_arena-chronicler_project-chronicler/scripts/chronicler/tests -v
+
+test_commit_citation_is_found (test_chronicler.TestCitationExtraction.test_commit_citation_is_found) ... ok
+test_english_words_are_not_commits (test_chronicler.TestCitationExtraction.test_english_words_are_not_commits) ... ok
+test_run_ids_are_not_commits (test_chronicler.TestCitationExtraction.test_run_ids_are_not_commits) ... ok
+test_accepts_repo_paths (test_chronicler.TestClassifyToken.test_accepts_repo_paths) ... ok
+test_rejects_non_paths (test_chronicler.TestClassifyToken.test_rejects_non_paths) ... ok
+test_bold_headings_count_as_sections (test_chronicler.TestDateExtraction.test_bold_headings_count_as_sections) ... ok
+test_finds_stamps (test_chronicler.TestDateExtraction.test_finds_stamps) ... ok
+test_no_date (test_chronicler.TestDateExtraction.test_no_date) ... ok
+test_collect_and_check_on_a_real_repo (test_chronicler.TestEndToEnd.test_collect_and_check_on_a_real_repo) ... ok
+test_tick_writes_next_and_state (test_chronicler.TestEndToEnd.test_tick_writes_next_and_state) ... ok
+test_ids_are_stable (test_chronicler.TestIdentifiers.test_ids_are_stable) ... ok
+test_close_is_recorded_and_persisted (test_chronicler.TestLoop.test_close_is_recorded_and_persisted) ... ok
+test_deferred_without_a_date_is_parked (test_chronicler.TestLoop.test_deferred_without_a_date_is_parked) ... ok
+test_empty_queue_picks_a_sweep (test_chronicler.TestLoop.test_empty_queue_picks_a_sweep) ... ok
+test_next_markdown_contains_the_work_order (test_chronicler.TestLoop.test_next_markdown_contains_the_work_order) ... ok
+test_priority_prefers_severe_and_instruction_docs (test_chronicler.TestLoop.test_priority_prefers_severe_and_instruction_docs) ... ok
+test_reconcile_add_resolve_reopen (test_chronicler.TestLoop.test_reconcile_add_resolve_reopen) ... ok
+test_shrinking_finding_keeps_the_deferred_item (test_chronicler.TestLoop.test_shrinking_finding_keeps_the_deferred_item) ... ok
+test_absence_sentence_is_not_a_dead_pointer (test_chronicler.TestRules.test_absence_sentence_is_not_a_dead_pointer) ... ok
+test_absent_optional_doc_is_not_a_finding (test_chronicler.TestRules.test_absent_optional_doc_is_not_a_finding) ... ok
+test_aged_document (test_chronicler.TestRules.test_aged_document) ... ok
+test_audited_input_drift_split_by_errata (test_chronicler.TestRules.test_audited_input_drift_split_by_errata) ... ok
+test_authority_overlap_requires_self_claim (test_chronicler.TestRules.test_authority_overlap_requires_self_claim) ... ok
+test_branch_drift_needs_live_remote (test_chronicler.TestRules.test_branch_drift_needs_live_remote) ... ok
+test_doc_relative_path_resolves (test_chronicler.TestRules.test_doc_relative_path_resolves) ... ok
+test_dotdot_relative_path_resolves (test_chronicler.TestRules.test_dotdot_relative_path_resolves) ... ok
+test_frozen_pin_mismatch_is_critical (test_chronicler.TestRules.test_frozen_pin_mismatch_is_critical) ... ok
+test_instruction_doc_does_not_get_source_rule (test_chronicler.TestRules.test_instruction_doc_does_not_get_source_rule) ... ok
+test_missing_relative_path_is_high (test_chronicler.TestRules.test_missing_relative_path_is_high) ... ok
+test_shallow_clone_suppresses_sha_rule (test_chronicler.TestRules.test_shallow_clone_suppresses_sha_rule) ... ok
+test_status_doc_older_than_source (test_chronicler.TestRules.test_status_doc_older_than_source) ... ok
+test_vocabulary_block_parser (test_chronicler.TestRules.test_vocabulary_block_parser) ... ok
+test_vocabulary_consistent_is_silent (test_chronicler.TestRules.test_vocabulary_consistent_is_silent) ... ok
+test_vocabulary_unknown_status_is_high (test_chronicler.TestRules.test_vocabulary_unknown_status_is_high) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.178s
+
+OK
