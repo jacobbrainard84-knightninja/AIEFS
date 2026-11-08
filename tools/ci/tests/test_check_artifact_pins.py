@@ -308,6 +308,50 @@ class ArtifactPinTests(unittest.TestCase):
         self.assertEqual(len(cap.KNOWN_MISSING), 52)
         self.assertFalse(set(cap.KNOWN_CHANGED) & set(cap.KNOWN_MISSING))
 
+    def run_default_missing(self, removed):
+        """main() with the default missing allowlist: KNOWN_MISSING emptied, REMOVED_AFTER_SNAPSHOT
+        replaced by `removed`."""
+        self.write_csv()
+        buf = io.StringIO()
+        with mock.patch.object(cap, "KNOWN_MISSING", {}), \
+                mock.patch.object(cap, "REMOVED_AFTER_SNAPSHOT", removed), \
+                mock.patch.object(cap, "IN_GHA", False), contextlib.redirect_stdout(buf):
+            rc = cap.main(["--repo", self.root, "--no-git"], known_changed={},
+                          expected_sha=None, expected_rows=None)
+        return rc, buf.getvalue()
+
+    def test_removed_after_snapshot_absent_passes(self):
+        pinned = sha(b"gone\n")
+        self.row("ART-9", "gone.py", pinned)
+        rc, out = self.run_default_missing({"ART-9": ("gone.py", pinned, "test")})
+        self.assertEqual(rc, 0, out); self.assertIn("1 known-missing", out)
+        self.assertIn("FLAG_DISAGREES ART-9", out)
+
+    def test_removed_after_snapshot_back_with_other_bytes_fails(self):
+        pinned = sha(b"gone\n")
+        self.put("gone.py", b"different\n"); self.row("ART-9", "gone.py", pinned)
+        rc, out = self.run_default_missing({"ART-9": ("gone.py", pinned, "test")})
+        self.assertEqual(rc, 1, out); self.assertIn("PIN_MISMATCH ART-9", out)
+
+    def test_removed_after_snapshot_sha_must_match_csv_pin(self):
+        self.row("ART-9", "gone.py", sha(b"gone\n"))
+        rc, out = self.run_default_missing({"ART-9": ("gone.py", sha(b"other\n"), "test")})
+        self.assertEqual(rc, 1, out)
+        self.assertIn("ALLOWLIST_DRIFT ART-9 REMOVED_AFTER_SNAPSHOT lists sha256", out)
+
+    def test_removed_after_snapshot_path_must_match_csv(self):
+        pinned = sha(b"gone\n")
+        self.row("ART-9", "gone.py", pinned)
+        rc, out = self.run_default_missing({"ART-9": ("elsewhere.py", pinned, "test")})
+        self.assertEqual(rc, 1, out); self.assertIn("ALLOWLIST_DRIFT ART-9 KNOWN_MISSING lists path", out)
+
+    def test_real_removed_after_snapshot_shape(self):
+        # Only test_01.py (R026-S10), with its CSV pin; disjoint from the 9d46d9b allowlists.
+        self.assertEqual(cap.REMOVED_AFTER_SNAPSHOT, {"ART-2717": (
+            "test_01.py", "ef954b7287bac6c6b3e588964d823927ff7d388373ff035c0d5bf50ca9d90723",
+            cap.REMOVED_AFTER_SNAPSHOT["ART-2717"][2])})
+        self.assertFalse(set(cap.REMOVED_AFTER_SNAPSHOT) & (set(cap.KNOWN_MISSING) | set(cap.KNOWN_CHANGED)))
+
 
 if __name__ == "__main__":
     unittest.main()

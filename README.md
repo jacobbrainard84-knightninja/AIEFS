@@ -86,7 +86,8 @@ independent audits.
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 # audit evidence integrity (hash manifest):
 .venv/bin/python "AI Agent Audits/evidence/verify_manifest.py"
-# modular platform tests (expected: 41 passed, 1 skipped; ~15 s; without AIEF_RUN_SLOW_TESTS=1: 40 passed, 2 skipped):
+# modular platform tests (expected: 44 passed, 1 skipped, 2 xfailed; ~15 s; without AIEF_RUN_SLOW_TESTS=1: 43 passed, 2 skipped, 2 xfailed;
+# the 2 xfails are the R026-S7 driver CLI defect, see ERRATA_2026-10-28.md):
 PYTHONDONTWRITEBYTECODE=1 AIEF_RUN_SLOW_TESTS=1 PYTHONPATH="$PWD:$PWD/AIEF_Experiments/aief_modular_platform_v1_analysis_v4" \
   .venv/bin/pytest -q AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests_modular
 ```

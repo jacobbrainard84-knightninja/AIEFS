@@ -30,7 +30,7 @@ All about the repository's own `inc`, `IsCompleteEdgeList` and `rinv` (namespace
 | `inc_mulVecLin_surjective` | `n ≥ 3 →` `(inc src dst).mulVecLin` is surjective (full row rank `n`) over ℚ |
 | `card_eq_choose_two` | `m = n.choose 2` |
 | `finrank_ker_inc`, `finrank_ker_inc_eq_choose` | `n ≥ 3 →` `dim ker (inc src dst) = m − n = C(n,2) − n` |
-| `finrank_ker_inc_eq_half` (+ `two_mul_choose_two_sub`, `choose_two_sub_eq`; module `KernelDimFormula`, added 2026-10-29 by the AIEFS merge-prep agent, not by Researcher 001, pending their audit) | `n ≥ 3 →` `dim ker (inc src dst) = n * (n − 3) / 2` in ℕ (exact: `2 * (C(n,2) − n) = n * (n − 3)`) |
+| `finrank_ker_inc_eq_half` (+ `two_mul_choose_two_sub`, `choose_two_sub_eq`; module `KernelDimFormula`, added 2026-10-29 by the AIEFS merge-prep agent, not by Researcher 001; audited by Researcher 001 at 893e0b6, verdict SOUND, in [PR #1](https://github.com/jacobbrainard84-knightninja/AIEFS/pull/1#issuecomment-6536420905), 2026-10-30 20:22 EDT) | `n ≥ 3 →` `dim ker (inc src dst) = n * (n − 3) / 2` in ℕ (exact: `2 * (C(n,2) − n) = n * (n − 3)`) |
 | `inc_mul_rinv` | `n ≥ 3 →` `inc src dst * rinv src dst = 1` |
 | `finrank_ker_K12_eq_54` | the lexicographic 12-node, 66-edge list: `dim ker = 54` |
 | `finrank_ker_K3_general` … `finrank_ker_K6_general` | the repository's n = 3…6 values recovered from the general theorem |
