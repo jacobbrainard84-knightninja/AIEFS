@@ -99,6 +99,35 @@ and expected failures (GAPs). Tables describe the checkers in the same commit as
 | fake hashlib.py on PYTHONPATH of the wrapper (B1 / N1) | check_manifest.py self re-exec (`-I`) | PASS (same FAIL; CI self-test `test_shadow_module_on_pythonpath_cannot_hijack_wrapper`) |
 | **GAP G2c** stub with its re-pinned hash in the manifest, printing the computed success line + OK, published file tampered | check_manifest.py | **GAP**: accepted; audit_manifest.json is not pinned outside itself |
 
+### SHA256SUMS files: `test_rt_sha256sums.py`
+
+| Test | Checker | Result |
+|---|---|---|
+| control: untampered mirror (lists AIEF_LEAN_PROJECT_LOCK_HASHES.txt) | tools/ci/check_sha256sums.py | PASS (accepted) |
+| control: synthetic allow-listed missing entry (test-injected, independent of the live list) | check_sha256sums | PASS (accepted, NOTICE) |
+| tools/sync script one byte changed | check_sha256sums | PASS (MISMATCH) |
+| Lean source edited (AIEF_LEAN_SOURCE_SHA256SUMS.txt) | check_sha256sums | PASS (MISMATCH) |
+| Lean lock file edited (AIEF_LEAN_PROJECT_LOCK_HASHES.txt) | check_sha256sums | PASS (MISMATCH) |
+| listed file deleted | check_sha256sums | PASS (MISSING) |
+| tracked SUMS file deleted | check_sha256sums | PASS (cannot read) |
+| malformed SUMS line | check_sha256sums | PASS (malformed line) |
+| SUMS entry `../` outside the repo | check_sha256sums | PASS (path escapes) |
+| in-repo symlink pointing outside the repo | check_sha256sums | PASS (escapes via a symlink) |
+| allow-listed file reappears with wrong content | check_sha256sums | PASS (MISMATCH) |
+| allow-listed file reappears with matching content | check_sha256sums | PASS (stale allow-list entry) |
+| allow-listed entry not in its SUMS file | check_sha256sums | PASS (stale allow-list entry) |
+| unclassified hash list (`*hashes*.txt` neither checked nor excluded) | check_sha256sums | PASS (error) |
+| stale exclusion entry | check_sha256sums | PASS (error) |
+| no SHA256SUMS file at all (fresh git repo) | check_sha256sums | PASS (fail-closed) |
+| not a git checkout | check_sha256sums | PASS (fail-closed) |
+| fake hashlib.py beside the CHECKER (`tools/ci/`) proxying the real module and reporting the listed digest for a tampered listed file (S-B1) | check_sha256sums.py self re-exec (`python -I -B`) | PASS (MISMATCH, FAIL; CI self-test `test_digest_proxy_hashlib_beside_checker_cannot_hide_mismatch`) |
+| fake hashlib.py / argparse.py / re.py / subprocess.py beside the checker printing a forged PASS result, listed file tampered (S-B1) | check_sha256sums.py self re-exec (`-I -B`) | PASS (MISMATCH, FAIL; CI self-test `test_forging_shadow_modules_beside_checker_cannot_hijack_it`) |
+| fake hashlib.py on PYTHONPATH of the checker (S-B1 / N1) | check_sha256sums.py self re-exec (`-I`) | PASS (same FAIL; CI self-test `test_shadow_hashlib_on_pythonpath_cannot_hijack_it`) |
+
+The main refresh restored the v3 comparison log (ERRATA E14). Its checksum now matches, so
+the obsolete live missing-file exception was removed. The allow-list behavior remains tested
+with synthetic entries. Current discovery verifies 7 checksum lists and 61 entries.
+
 ### Claims lint and hygiene: `test_rt_claims_hygiene.py`
 
 Lint tests assert the exact ERROR line(s), the exact `== result: ...` line, exit 1 and no traceback
@@ -390,3 +419,42 @@ broken.
   ... NOT checked` ERROR (`missing_column()`, the same helper and wording as the G6b status-column error) (exit 1, also without --strict), so it cannot switch the checks off (same class
   as G6b). The CI self-test fixtures carry both columns and an Axis 2 table, and empty
   KNOWN_MISSING_ARTIFACTS for their synthetic repos, so these checks always run there too.
+
+- **New check, branch `ci/check-sha256sums`** (`tools/ci/check_sha256sums.py`, job `sha256sums`
+  in `.github/workflows/repo-checks.yml`). Verifies every `SHA256SUMS` / `*SHA256SUMS*.txt` file
+  (historical: 5 lists, 49 entries when first written; 7 lists, 61 entries since the main refresh, see
+  the SHA256SUMS table above). Fail-closed. At first the only accepted failure was an allow-listed missing
+  `audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_v3.log` (Auditor Seat 002 finding M1); that
+  exception was retired in the main refresh (18e542c) after ERRATA E14 restored the log at its listed
+  hash, so `ALLOWED_MISSING` is empty today. The allow-list mechanism (an entry becomes an error if the
+  file reappears or the line is removed) stays, tested with synthetic entries. `audits/reproductions/.gitignore`
+  re-includes `*.log` there (the root `.gitignore` is pinned as ART-0001 by `check_artifact_pins.py`).
+
+- **Round 2 (Auditor Seat 002 follow-ups), branch `ci/check-sha256sums`.** Files are found with
+  `git ls-files` (tracked files only; the run fails if the path is not the top of a git checkout).
+  Checked: the `SHA256SUMS` name pattern plus `lean/AIEFProofs/AIEF_LEAN_PROJECT_LOCK_HASHES.txt`
+  (historical: 6 files, 51 entries at that round; 7 lists, 61 entries today). Excluded with a reason, printed as SKIP:
+  `AI Agent Audits/evidence/logs/lean_r4/source_sha256.txt` (historical lean_r4 log; ERRATA E7) and
+  the two `twindow_*hashes*.txt` records (absolute `/home/deck` paths). Any other tracked
+  `*sha256*/*sums*/*hashes*` list that is neither checked nor excluded is an error, as is a stale
+  exclusion. Each listed path must stay inside the repo both lexically and after `realpath`, so an
+  in-repo symlink pointing outside is rejected. The red-team tests inject a synthetic allow-list
+  entry instead of relying on the live b2a95 entry, never write into the real checkout (every write
+  goes through materialize + unlink), and fail in `tearDownClass` if `git status` of the real
+  checkout changed. The inventory now includes the 3 rows that were missing.
+
+- **S-B1, branch `ci/check-sha256sums`** (Researcher 001 audit of 18e542c; `tools/ci/check_sha256sums.py`).
+  Same class as B1 above, not the accepted start-up-hook residual N1. CI runs
+  `python tools/ci/check_sha256sums.py` without `-I`, and the checker imported `hashlib` / `argparse` / `re` /
+  `subprocess` before any isolation, so `tools/ci/` was `sys.path[0]`. A committed `tools/ci/hashlib.py` that
+  proxied the real module and returned the listed digest for a tampered `tools/sync/download_new.sh` made the
+  real tree print `7 SHA256SUMS file(s), 61 entries verified, 0 allow-listed, 0 error(s) -> PASS`, exit 0
+  (reproduced independently by Auditor Seat 002 on Python 3.12.16 and 3.13.5; the same plant FAILs with
+  MISMATCH under `python -I -B`). A sibling module that just prints the PASS line and exits 0 worked too.
+  Fix: the same self re-exec as check_manifest.py, placed before every other import: run as a script and not
+  already isolated, the checker re-executes itself as `python -I -B <its own path>`. CI self-tests
+  (`tools/ci/tests/test_check_sha256sums.py`) run a copy of the real checker as a script from a synthetic
+  git repo's `tools/ci/` with a tampered listed file and expect MISMATCH + FAIL for the digest-proxy hashlib,
+  for forging hashlib/argparse/re/subprocess plants and for a PYTHONPATH hashlib; controls expect the clean
+  tree to PASS both as a plain script and under `-I -B`, and the tampered tree to FAIL with no plant. With the
+  re-exec disabled, the shadow tests fail (6 failures; 7 with the block removed, counting the structural test).
