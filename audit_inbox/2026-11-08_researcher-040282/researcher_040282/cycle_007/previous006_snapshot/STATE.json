@@ -1,0 +1,217 @@
+{
+  "agent": "Researcher 040282",
+  "owner_instruction": "Self-direct bounded, red-teamed AIEFS research; create dated audit-inbox handoffs for owner upload. Continue does not authorize remote submission or unattended work.",
+  "workflow": "WORKFLOW.md",
+  "queue": "RESEARCH_QUEUE.md",
+  "claim_ledger": "CLAIM_LEDGER.csv",
+  "last_updated_date": "2026-09-04",
+  "timezone": "Atlantic/Reykjavik",
+  "date_provenance": {
+    "session_supplied_preparation_date": "2026-09-04",
+    "prior_owner_correspondence_handoff_label": "2026-11-08",
+    "historical004_execution_date_reconstructed": false,
+    "administrative_notice_written_after_original006_executions": true,
+    "scientific_protocol_or_seed_changed_by_notice": false,
+    "note": "Preparation label and historical owner/seat handoff labels are separate; no chronology inferred from compiler builds, runtime clocks or durations. Original delivered reports/snapshots unchanged.",
+    "notice": "cycle_006/ADMINISTRATIVE_PROVENANCE.md"
+  },
+  "current_cycle": 6,
+  "current_status": "COMPLETED_LOCAL_QUALIFIED_CONTRACT_REVIEW",
+  "current_directory": "cycle_006",
+  "ledger_rows": 111,
+  "current_question": "Review current v4.1 candidate held-event semantics, estimands and interval limitations without rediscovering frozen-v4 or already-corrected wording.",
+  "current_answer": "All preregistered robust finite checks pass normally/-O and extracted-note reruns;8/8 semantic mutants detected,12 public modules unchanged. Actual synthetic19200event/1600AUC/11520DID selected fields conform.605 gray boundary cases excluded. Flags may overlap, times are retrospective onset, full-cohort capped scores have finite-support/risk-set meaning, and bootstrap bounds are not population-certified. Qualified conformance, not freeze or real-data approval.",
+  "latest_completed_report": "2026-09-04_researcher040282_006_v41-contract-review.md",
+  "short004_addendum": "2026-11-08_researcher040282_004_addendum.md",
+  "optional_supporting_bundle": "researcher040282-cycle006-v41-contract-review.zip",
+  "artifact_validation_record": "cycle_006/packet_validation.json",
+  "source_refresh": {
+    "branch_for_current_code": "main",
+    "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "selected_files_verified": 28,
+    "verified_import_modules_exercised": 12,
+    "metadata": "cycle_006/source_state/main_selected.json",
+    "inbox_navigation_commit": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+    "inbox_selected_files": 37,
+    "inbox_metadata": "cycle_006/source_state/inbox_selected.json",
+    "new_targeted005_feedback_found_in_selected_navigation": false,
+    "prior_compilation_review_received": true,
+    "scope": "Selected public read-only source/intake review and static12-module import closure; not exhaustive repository/provenance acceptance."
+  },
+  "tool_environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3"
+    },
+    "package_or_compiler_installation_this_cycle": false,
+    "fresh_lean_run_this_cycle": false,
+    "lean_cache_restored_this_cycle": false,
+    "historical_lean_toolchain_record": "cycle_005/completed_004_snapshot/STATE_before_feedback.json"
+  },
+  "adversarial_evidence": {
+    "all_preregistered_robust_checks_passed": true,
+    "semantic_mutants_detected": 8,
+    "gray_cases_not_counted_as_conformance": 605,
+    "normal_and_optimized_six_scientific_groups_match": true,
+    "normal_elapsed_seconds": 18.289061058000016,
+    "optimized_elapsed_seconds": 17.981578323000008,
+    "normal_result": "cycle_006/checks/cycle_results.json",
+    "optimized_result": "cycle_006/optimized_checks/cycle_results.json"
+  },
+  "source_comparison": {
+    "evidence_label": "EXECUTABLE_REGRESSION_CHECK",
+    "scope": "Actual compute helpers on synthetic scaffolds only; shared density/similarity masks/targets and selected-field checks, not full schema/channel independence or actual engine trajectories.",
+    "event_rows": 19200,
+    "auc_rows": 1600,
+    "did_rows": 11520,
+    "modules_verified_unchanged": 12,
+    "numeric_absolute_allowance": 5e-13,
+    "auc_absolute_allowance": 5e-12,
+    "relative_allowance": 0,
+    "bootstrap_seed": 2026090406,
+    "bootstrap_draws": 512,
+    "index_label_timestamp_agreement": "EXACT"
+  },
+  "standalone_reproduction": {
+    "actually_executed": true,
+    "returncodes": [
+      0,
+      0
+    ],
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "critical_files": [
+      "ESTIMAND_CONTRACT.json",
+      "audit_v41.py",
+      "extract_from_report.py",
+      "fetch_public_dependencies.py",
+      "load_upstream.py",
+      "reference_contract.py",
+      "source_modules.json"
+    ],
+    "critical_file_count": 7,
+    "all_extracted_files_match_supplied_sources": true,
+    "fresh_public_modules_fetched_and_verified": 12,
+    "all_six_scientific_result_groups_match_all_four_runs": true,
+    "normal_elapsed_seconds": 18.338563283999974,
+    "optimized_elapsed_seconds": 18.478244070000073,
+    "original_normal_elapsed_seconds": 18.289061058000016,
+    "original_optimized_elapsed_seconds": 17.981578323000008,
+    "commands": [
+      "python -B standalone/extracted/audit_v41.py --source standalone/upstream --output standalone/checks",
+      "python -O -B standalone/extracted/audit_v41.py --source standalone/upstream --output standalone/optimized_checks"
+    ],
+    "results": [
+      "cycle_006/standalone/checks/cycle_results.json",
+      "cycle_006/standalone/optimized_checks/cycle_results.json"
+    ],
+    "log": "cycle_006/standalone/reproduction.log",
+    "scope": "Submitter-local exact-note reproduction with public dependencies, not independent review, real trajectories, universal floating correctness, full pipeline acceptance or project freeze",
+    "record": "cycle_006/standalone_reproduction.json",
+    "report": "2026-09-04_researcher040282_006_v41-contract-review.md"
+  },
+  "review_scope": {
+    "review_acquired_from_inbox": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+    "intake_note": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "researcher001_triage": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+    "evidence_kind": "Publicly acquired colleague reports of their own execution; not our reexecution of their witnesses",
+    "reviewer_main_basis": "942f8526daee5ac547f2e422101fa95c61eeef41",
+    "independent_compilation_reported": {
+      "002": 22,
+      "003": 44,
+      "004_EMA": 22,
+      "004_drive": 6
+    },
+    "compiled_total": 94,
+    "reported_warnings": 0,
+    "reported_errors": 0,
+    "reported_footprint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope_exclusions": [
+      "library-grade statement-fidelity approval",
+      "integration decision",
+      "our check_cycle.py controls",
+      "our ZIP checkers",
+      "full S01 reanalysis",
+      "our4800 saved held-event comparisons",
+      "real-array finiteness census",
+      "new005 repair-candidate review"
+    ],
+    "additional_review_confirmation": "Coarse baseline ON bound fails to reach threshold; not evidence of OFF",
+    "uploader_disposition": "Owner reports PR10 uploader and PR11 checksum checker merged; supplied main head matches acquired head. No new uploader work; no behavioral certification of those merges here.",
+    "current_python_CI": ".github/workflows/repo-checks.yml exists on the tested source; withdraw the stale no-Python-CI generalization as a current-main claim",
+    "owner_receipt": "Actual audit-inbox intake and triage found; uploaded root ledger independently counted78 rows, versus108 at completed004",
+    "contact_or_remote_write_by_this_agent": false,
+    "reviewer_private_log_paths": "Mentioned by reviewer; not fetched or represented as included local evidence",
+    "prior005_main_tested": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+    "this_is_prior_002_003_004_compilation_review_only": true,
+    "current006_harness_or_inference_independently_reviewed": false,
+    "current006_review_basis": "eb3933c196ee19e80e1621ae80d89ca72e6d9485"
+  },
+  "independent_review_received": true,
+  "current_cycle_independent_review_received": false,
+  "owner_upload_confirmed": true,
+  "latest_packet_owner_upload_confirmed": false,
+  "publication_status": "Prior receipt/94-declaration compilation footprint report only.006 prepared locally for owner upload; no independent006 review, registry promotion, freeze or main integration.",
+  "privacy": {
+    "report": "cycle_006/privacy_results.json",
+    "new_acquisition_metadata_minimal_at_creation": true,
+    "branch_metadata_records_expected": 10,
+    "two_intentionally_synthetic_public_git_fixture_addresses_expected": true,
+    "no_personal_commit_contacts_or_signed_payloads_in_branch_metadata": true,
+    "not_a_general_secret_or_arbitrary_code_security_certification": true
+  },
+  "evidence_navigation": {
+    "index": "EVIDENCE_INDEX.json",
+    "historical_log_map": "HISTORICAL_ARCHIVE_LOG_MAP.csv",
+    "all_ledger_references_unpacked": true,
+    "old_archives_not_nested_or_changed": true
+  },
+  "previous_cycle": 5,
+  "previous_cycle_evidence": {
+    "completed005_state": "cycle_006/previous005_snapshot/STATE.json",
+    "completed005_ledger109": "cycle_006/previous005_snapshot/CLAIM_LEDGER.csv",
+    "completed004_ledger108": "cycle_005/completed_004_snapshot/CLAIM_LEDGER_COMPLETED_004.csv",
+    "final005_candidate_methods_normal_and_optimized": 22,
+    "not_rerun_this_cycle": true
+  },
+  "completed_this_cycle": [
+    "fresh-main/intake read-only review; E17/prior A-F2/F3 acknowledged",
+    "preregistered independent forward-run/Fraction oracle and bounded tests",
+    "actual normal/optimized runs and8 intended semantic mutant detections",
+    "actual19200event/1600AUC/11520DID synthetic selected-field comparisons",
+    "explicit flags/onset/risk-set/cap/bootstrap contract and counterexamples",
+    "seven inline files extracted,12 public modules freshly fetched, normal/-O reruns matched",
+    "prior109 ledger rows preserved; two scoped006 records; no formal promotion",
+    "new metadata minimized at acquisition; packet closure is separate and requires its actual receipt before delivery"
+  ],
+  "not_proved_or_promoted": [
+    "Universal float64 or machine-checked Python execution equivalence",
+    "Fresh saved bridge replay, full S01 reanalysis,4800-case check or finiteness census",
+    "Independent controls or approval of the new005 repair",
+    "Library-grade statement fidelity/main integration of94 prior Lean declarations",
+    "Complete delay-buffer/phase-step semantics, sharp derived future drive bands",
+    "Gated-OFF/finite aggregation, explicit freeze times, selected-controller rate law",
+    "Coupled locking or unconditional convergence",
+    "project freeze or artifact/claim registry promotion",
+    "real S01 output changes or zero-impact claims",
+    "population-valid boundary confidence intervals",
+    "full validate_run/run_analysis/provenance/atomic bundle audit",
+    "all floating schedules or translation invariance at tolerance boundaries",
+    "metric-channel swaps or distinct target-channel behavior: synthetic masks/targets are deliberately shared",
+    "physical trajectory feasibility, step-level crossings, full dynamics or Lean theorem"
+  ],
+  "in_progress": null,
+  "research_processes_running": [],
+  "next_cycle": 7,
+  "next_directory": "cycle_007",
+  "next_selected_work": "Fresh-check one open engine complex-NaN comparison repair; failing-before/passing-after on current main. If already fixed, use the separate oracle uniqueness repair, not a combined branch.",
+  "immediate_next_action": "On next Continue: inspect current source and feedback before committing a small007 repair. No new uploader work or default full S01 rerun.",
+  "remote_changes_by_this_agent": false,
+  "contacted_other_bots": false,
+  "automatic_work_between_turns": false,
+  "handoff_status": "LOCAL_PACKET_CLOSURE_VERIFIED;NOT_UPLOADED"
+}

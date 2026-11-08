@@ -1,0 +1,149 @@
+{
+  "branch": "main",
+  "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "fetched_and_verified": 28,
+  "files": [
+    {
+      "path": ".github/workflows/repo-checks.yml",
+      "blob": "f8c96af3de08be9acb0c627a673bb998dab99dd0",
+      "bytes": 9175
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py",
+      "blob": "df78b01607e6792afe9afc09fcc9b0cb83585ec6",
+      "bytes": 70127
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "blob": "2693906361d9b8a958dcca3809a1e48f3ba3d37b",
+      "bytes": 429
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/artifacts.py",
+      "blob": "1755fd1c91c78306efe185614a5ec25ccb2812f0",
+      "bytes": 12582
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/authority.py",
+      "blob": "23f50b547e5035cd8638ccf00525e18ffeab188f",
+      "bytes": 9065
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/branches.py",
+      "blob": "28e364284afbf799ee2d474bb5791a6efab3f56c",
+      "bytes": 3477
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/collectors.py",
+      "blob": "06ea96da686224bdbbf0790792e83a58f73b2abe",
+      "bytes": 9992
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/factors.py",
+      "blob": "a9c16999baf18b0ada513bc29b62ccb0da0c7ebf",
+      "bytes": 12545
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/registry.py",
+      "blob": "2b50e409c851bf02b87ecdd3b1fe56fec2c66169",
+      "bytes": 3180
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/runner.py",
+      "blob": "9e3eb431444f3f32b3b3e616014332939bf0ea59",
+      "bytes": 32813
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "blob": "6ce7361d85e14946a0b854bb9078bcb58f75e9dc",
+      "bytes": 19734
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/studies/__init__.py",
+      "blob": "2b1fcdde0aa007b747e60cf0bdd234ab8e186840",
+      "bytes": 58
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py",
+      "blob": "9afffc1c0e3d1f8e0ad726e33d3b059e9337a1da",
+      "bytes": 11178
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests/test_v4_1_held_event.py",
+      "blob": "4dc1aa1df6de39398a9e98f2fbf7c853957d9987",
+      "bytes": 8286
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "blob": "c51401924a2179ce87eaf107b01515e2d3f4e37f",
+      "bytes": 23963
+    },
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "blob": "d37558fa77a3724e608754069c45224c593372bc",
+      "bytes": 42752
+    },
+    {
+      "path": "README.md",
+      "blob": "78d59085f77e911f314fc054af066c5d4d9592df",
+      "bytes": 8170
+    },
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "registry/claims.csv",
+      "blob": "d8af0b5e4c04dd1c55c88f26cca433f97db58146",
+      "bytes": 83106
+    },
+    {
+      "path": "tools/redteam/REDTEAM.md",
+      "blob": "3c56a8f4b41741fe96b7c6377d8ca0929747faef",
+      "bytes": 38452
+    },
+    {
+      "path": "tools/redteam/rtcommon.py",
+      "blob": "9a4bd9881403bdfcdacbd1040b8fcc1a286a0ddb",
+      "bytes": 4369
+    },
+    {
+      "path": "tools/redteam/test_rt_claims_hygiene.py",
+      "blob": "7c46a4c38f82aa38cd168b288e511a383a795b2b",
+      "bytes": 30409
+    },
+    {
+      "path": "tools/redteam/test_rt_comparator.py",
+      "blob": "2483b8ddc74f368d753a447e10dc26a003e78ad2",
+      "bytes": 29161
+    },
+    {
+      "path": "tools/redteam/test_rt_hashes.py",
+      "blob": "cf3b5f37f96a2891ba1679cf72dc92b32da08294",
+      "bytes": 21056
+    },
+    {
+      "path": "tools/redteam/test_rt_lean.py",
+      "blob": "7e909865e4a1b753c29ff812da36e9fe32689bef",
+      "bytes": 6617
+    },
+    {
+      "path": "tools/redteam/test_rt_matched_phase_anchor.py",
+      "blob": "e25638cea98e3e2543f8bc86302087bdb9b5c6d4",
+      "bytes": 3377
+    },
+    {
+      "path": "tools/redteam/test_rt_sha256sums.py",
+      "blob": "f12174ca812fd10016fae36ff8f5a23718c5b414",
+      "bytes": 8161
+    },
+    {
+      "path": "tools/redteam/test_rt_threshold_swap.py",
+      "blob": "e0e0f1581a6d39c06bb0f5d54524108dc586c296",
+      "bytes": 4327
+    }
+  ],
+  "scope": "Selected current-source/review refresh; not an exhaustive assignment or wrapper audit",
+  "dependency_note": "Initial17 selected main files plus verified local Python import closure; original refresh log retained"
+}

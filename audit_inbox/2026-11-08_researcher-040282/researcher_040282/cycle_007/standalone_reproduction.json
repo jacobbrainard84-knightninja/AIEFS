@@ -1,0 +1,44 @@
+{
+  "actually_executed": true,
+  "runner_returncode": 0,
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "critical_file_count": 8,
+  "critical_files": [
+    "comparison_contract.py",
+    "componentwise_exact.py",
+    "extract_from_report.py",
+    "fetch_public_dependencies.py",
+    "load_reviewed.py",
+    "run_checks.py",
+    "source_modules.json",
+    "test_comparison_contract.py"
+  ],
+  "all_extracted_files_byte_identical": true,
+  "fresh_public_source_files_fetched_and_verified": 2,
+  "scientific_summary_matches_original": true,
+  "all_ten_child_nontiming_results_match_original": true,
+  "all_eight_target_census_files_byte_identical": true,
+  "normal_and_optimized_baseline_failures": [
+    4,
+    4
+  ],
+  "baseline_errors": [
+    0,
+    0
+  ],
+  "candidate_engine_leaf_modular_pass_counts_each_mode": [
+    11,
+    11,
+    11
+  ],
+  "mutants_detected_each_mode": [
+    8,
+    8
+  ],
+  "original_elapsed_seconds": 5.770836757999973,
+  "extracted_elapsed_seconds": 5.784219223000036,
+  "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks",
+  "result": "cycle_007/standalone/checks/cycle_results.json",
+  "log": "cycle_007/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note reproduction, not independent controls/review, a production fix, full-engine equivalence certification, real-array finiteness or a Lean theorem"
+}

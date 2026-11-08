@@ -1,0 +1,21 @@
+{
+  "target": "legacy",
+  "tests_run": 3,
+  "failures": [
+    {
+      "test": "__main__.CommonRegressionContract.test_cannot_pass_when_real_operator_is_unavailable",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/user/researcher_040282/cycle_005/standalone/extracted/test_proposal_equalization_branch_selftest_r040282.py\", line 56, in test_cannot_pass_when_real_operator_is_unavailable\n    with self.assertRaisesRegex(RuntimeError, 'sentinel real-operator failure'):\n         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: RuntimeError not raised\n"
+    },
+    {
+      "test": "__main__.CommonRegressionContract.test_cannot_pass_with_corrupted_actual_output",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/user/researcher_040282/cycle_005/standalone/extracted/test_proposal_equalization_branch_selftest_r040282.py\", line 64, in test_cannot_pass_with_corrupted_actual_output\n    with self.assertRaises(candidate.VerificationError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: VerificationError not raised\n"
+    },
+    {
+      "test": "__main__.CommonRegressionContract.test_queries_real_operator_before_claiming_pass",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/user/researcher_040282/cycle_005/standalone/extracted/test_proposal_equalization_branch_selftest_r040282.py\", line 49, in test_queries_real_operator_before_claiming_pass\n    self.assertGreater(len(calls), 0, 'self-test must query the actual operator')\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 not greater than 0 : self-test must query the actual operator\n"
+    }
+  ],
+  "errors": [],
+  "skipped": 0,
+  "success": false
+}

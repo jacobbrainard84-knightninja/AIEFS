@@ -1,0 +1,183 @@
+{
+  "branch": "audit-inbox",
+  "commit": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+  "fetched_and_verified": 35,
+  "files": [
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+      "blob": "35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+      "bytes": 18284
+    },
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+      "blob": "41f194cee485a4531e2ff41047b8da7b3527a5da",
+      "bytes": 21778
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aief_audit/AUDIT-REPORT.md",
+      "blob": "a8d85b2bbd66feb0d3e66fbb69520b6cbc219e93",
+      "bytes": 21589
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aief_audit/README.md",
+      "blob": "5a6291ad46c7ad80a0281b90a9a17dae6f9014dc",
+      "bytes": 2418
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/AUDIT-REPORT.md",
+      "blob": "2f7aecfaae0ce3ea24c96b4f4b155bc5f119811a",
+      "bytes": 22448
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/README.md",
+      "blob": "70f47552e640aee2a5856aa1778104e14fe3f9cc",
+      "bytes": 7696
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_branch_DID_summary_v4.csv",
+      "blob": "911b4bde9a5653251763986352ee2d7c60d9578e",
+      "bytes": 23590
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_cross_condition_topology_v4.csv",
+      "blob": "6a35c83f32026310583e4458238fd1af16d86044",
+      "bytes": 11026
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_paired_regime_contrasts_v4.csv",
+      "blob": "dbad21e52988b345bc67db1c7f6a84fe0af2a1d6",
+      "bytes": 104240
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_recovery_auc_interaction_summary_v4.csv",
+      "blob": "23a8f60cb1ae186b0207a72266703634e2579017",
+      "bytes": 5896
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_recovery_auc_interactions_v4.csv",
+      "blob": "2199b18f87305bbad1bafebcd6c2e5a9ccd6e8fc",
+      "bytes": 139377
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_recovery_auc_summary_v4.csv",
+      "blob": "fa5832e0a58b9f5311e6658ea932fba9b6632610",
+      "bytes": 18434
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_regime_summary_v4.csv",
+      "blob": "8cb98cdcfb87347242e7234e6332f510c0cae673",
+      "bytes": 7491
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/aiefs_repository_audit/evidence/real_s01_analysis/v4/analysis_v4_20261107T072500Z_6e865df5/twindow_topology_summary_v4.csv",
+      "blob": "8ab2141742a6bfad7fdbf4a4a9fa30238ec0fe2f",
+      "bytes": 3453
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-09-04_researcher040282_004_complex-ema.md",
+      "blob": "0923ad02f742d21dfef9f7c46830740a14313623",
+      "bytes": 117376
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-11-07_researcher040282_002_guarded-capacity-lean.md",
+      "blob": "d7a332ef6927adc5f0f694ba980f4bcbce31ed6b",
+      "bytes": 45260
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-11-07_researcher040282_003_weight-update-bridge.md",
+      "blob": "177d40c72a2328fc4d8f2d6b0599755dc241d95d",
+      "bytes": 97482
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-11-07_researcher040282_gate-foundations.md",
+      "blob": "6ab00979c7b01ca2626f7d57c816998c98ab655a",
+      "bytes": 13381
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/CLAIM_LEDGER.csv",
+      "blob": "24bc3fd2b213800bdadf9ed4224647b836f186f4",
+      "bytes": 56159
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/README.md",
+      "blob": "b6885e199b4989513d07873274c9d59543a22d2f",
+      "bytes": 6472
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/RESEARCH_QUEUE.md",
+      "blob": "b01befc3100b2f83665c53de31a26641836f1e52",
+      "bytes": 6061
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/WORKFLOW.md",
+      "blob": "73c3c12e731ef627253c2a30517b21d9dee88d9f",
+      "bytes": 8509
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_002/PLAN.md",
+      "blob": "a9435a78e18d54342e5af5818da389c68b3a9840",
+      "bytes": 2229
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_002/REPORT_BODY.md",
+      "blob": "2c56db7dd81a36e62a2f6d7836144ade45d572ba",
+      "bytes": 19971
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_003/PLAN.md",
+      "blob": "6a769a03578e986d240170ab4b2b98c983cd1e89",
+      "bytes": 6276
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_003/REPORT_BODY.md",
+      "blob": "dd22b18d4aa3bc4e65d0e710b01ebabdb240d5c0",
+      "bytes": 24179
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_003/SOURCE_COMPARISON_PLAN.md",
+      "blob": "8707f49740be6626630a9acf7737945268242a0e",
+      "bytes": 2181
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_004/PLAN.md",
+      "blob": "e7d5fce10ed32f12098436d54efa8eb138d29840",
+      "bytes": 6548
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_004/REPORT_BODY.md",
+      "blob": "31e632f07b0c1ee3eaf5dffd9782d51b77401212",
+      "bytes": 24274
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_004/SOURCE_COMPARISON_PLAN.md",
+      "blob": "3776c14269bf78dc6e399ce76ddfb322b12255cc",
+      "bytes": 5060
+    },
+    {
+      "path": "audit_inbox/README.md",
+      "blob": "efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+      "bytes": 1982
+    },
+    {
+      "path": "audit_inbox/TRIAGE.md",
+      "blob": "c12b4a9a57e76400b6498084f044df30fc57e583",
+      "bytes": 21230
+    },
+    {
+      "path": "audit_inbox/briefing/NORTH_STAR.md",
+      "blob": "d71bec2d41f07c4ee0782004b55b13b29184a3a9",
+      "bytes": 9923
+    },
+    {
+      "path": "audit_inbox/briefing/OPEN_QUESTIONS.md",
+      "blob": "6c72ebbd786865bcae7bdc57a70f02470d347c81",
+      "bytes": 9486
+    },
+    {
+      "path": "audit_inbox/briefing/STATE.md",
+      "blob": "d391480d4ac94ec5e912cee9b611ac08a4b66c4a",
+      "bytes": 8717
+    }
+  ],
+  "scope": "Selected current-source/intake refresh, not exhaustive branch assignment/review audit"
+}

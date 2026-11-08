@@ -1,0 +1,4182 @@
+[
+  {
+    "case": "complex64_alphabet_0_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_0_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_1_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_2_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_3_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_4_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_5_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_6_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_12_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_18_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_24_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex64_alphabet_30_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex64",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_0_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_1_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_2_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_3_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_4_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_5_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_6_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_12_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_18_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_24_30",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_0",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_1",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_2",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan-1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_3",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+0j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_4",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+1j)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_5",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(nan+infj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_6",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-inf+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_12",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(-1+nanj)]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_18",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[nanj]"
+    }
+  },
+  {
+    "case": "complex128_alphabet_30_24",
+    "expected": false,
+    "observed": true,
+    "left": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(inf+nanj)]"
+    },
+    "right": {
+      "shape": [
+        1
+      ],
+      "dtype": "complex128",
+      "values_repr": "[(1+nanj)]"
+    }
+  }
+]

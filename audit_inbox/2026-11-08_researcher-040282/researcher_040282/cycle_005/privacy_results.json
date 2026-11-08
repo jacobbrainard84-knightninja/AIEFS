@@ -1,0 +1,65 @@
+{
+  "policy": "minimal acquisition identifiers only; no removed values or unredacted backups retained",
+  "scientific_sources_changed": false,
+  "remote_files_changed": false,
+  "files": [
+    {
+      "path": "coordination/source_state/audit_inbox_branch_2026-11-07.json",
+      "removed_contact_matches": 0,
+      "contact_and_signed_payload_fields_dropped": true,
+      "scope": "additional legacy inbox metadata: structural cleanup even without pattern matches"
+    },
+    {
+      "path": "coordination/source_state/main_branch_2026-11-07.json",
+      "removed_contact_matches": 4
+    },
+    {
+      "path": "cycle_003/source_state/inbox_branch.json",
+      "removed_contact_matches": 0,
+      "contact_and_signed_payload_fields_dropped": true,
+      "scope": "additional legacy inbox metadata: structural cleanup even without pattern matches"
+    },
+    {
+      "path": "cycle_003/source_state/main_branch.json",
+      "removed_contact_matches": 4
+    },
+    {
+      "path": "cycle_004/source_state/inbox_branch.json",
+      "removed_contact_matches": 0,
+      "contact_and_signed_payload_fields_dropped": true,
+      "scope": "additional legacy inbox metadata: structural cleanup even without pattern matches"
+    },
+    {
+      "path": "cycle_004/source_state/main_branch.json",
+      "removed_contact_matches": 4
+    }
+  ],
+  "archives": [
+    {
+      "path": "researcher040282-cycle005-review-response.zip",
+      "changed_members": [
+        {
+          "member": "researcher_040282/coordination/source_state/audit_inbox_branch_2026-11-07.json",
+          "removed_contact_matches": 0,
+          "contact_and_signed_payload_fields_dropped": true
+        },
+        {
+          "member": "researcher_040282/cycle_003/source_state/inbox_branch.json",
+          "removed_contact_matches": 0,
+          "contact_and_signed_payload_fields_dropped": true
+        },
+        {
+          "member": "researcher_040282/cycle_004/source_state/inbox_branch.json",
+          "removed_contact_matches": 0,
+          "contact_and_signed_payload_fields_dropped": true
+        }
+      ],
+      "crc_ok": true
+    }
+  ],
+  "reported_contact_bearing_files_minimized": 3,
+  "additional_legacy_inbox_metadata_minimized": 3,
+  "branch_metadata_contact_matches_remaining": 0,
+  "branch_metadata_nonminimal_records_remaining": 0,
+  "pattern_scan_limit": "A pattern-only scan is insufficient: author/contact/signed payload fields are structurally dropped too"
+}

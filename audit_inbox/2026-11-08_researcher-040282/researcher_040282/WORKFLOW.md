@@ -43,6 +43,9 @@ or a repaired verification gap that advances a known dependency.
    Inspect only relevant files rather than downloading the whole generated-data
    tree. If refreshing fails, state the evidence boundary. Preserve each cycle's
    source basis rather than overwriting earlier evidence with a moving tip.
+   Store minimal branch/commit identifiers only: never retain personal contact
+   fields, raw author/committer records, or signed commit payloads in acquisition
+   metadata. Scan outgoing packets and unpack/index ledger-cited logs.
 3. Check for already completed work or active team priorities before duplicating
    it. Dated briefing text is navigation, not evidence that a task is still open.
 4. Select one concrete, high-leverage question. Prefer a prerequisite that helps
@@ -115,30 +118,77 @@ owner decision or authorization is necessary.
 - **PAPER_ARGUMENT:** explicit mathematical argument, not machine-checked.
 - **EXACT_FINITE_CHECK:** exact arithmetic on specified instances only.
 - **NUMERICAL_CHECK:** stated floating-point experiment only.
+- **EXECUTABLE_REGRESSION_CHECK:** bounded software behavior/control evidence,
+  with numerical tolerances separated; not a universal theorem or proof of all
+  possible executions.
 - **LEAN_COMPILED:** the reported theorem compiled under the recorded toolchain;
   specify whether axiom/forbidden-marker checks also passed.
-- **INDEPENDENTLY_REVIEWED:** only when another seat's actual review is available.
+- **INDEPENDENTLY_REVIEWED:** only for the explicitly reviewed scope when another
+  seat's actual review is available. Compilation/footprint confirmation alone
+  does not promote the entire statement, controls or numerical experiment.
 - **BLOCKED / COUNTEREXAMPLE / WITHDRAWN:** preserve the reason and scope.
 
 Publication and review are separate fields. None of the labels authorizes a
 registry promotion or substitutes for the owner's merge decision.
 
-## Latest completed local cycle
+## Latest completed local cycle —007
 
-**003 — Proposal/applied-factor bridge, 2026-11-07.** 44 new compiled declarations
-(including helpers), with 22 prior local and five existing upstream declarations
-reused and freshly checked. Correct clipped/masked/symmetrized proposal modeling,
-row envelopes, both-branch applied factors, zero-row/capacity handling, H0,
-matrix-to-edge recurrence, and conditional per-edge OFF/ON tail composition.
-All 17 controls reached their intended outcomes; 384 exact Fraction property
-cases passed. Separately, 24 controlled-drive actual-engine weight steps passed
-with nonzero frozen rates; this does not test physical compute_R/EMA evolution.
-All five critical files were then extracted from the single Markdown and actually
-rerun: the same 17 controls and 24 finite source comparisons passed again.
-Self-reproduction is not independent review. Owner upload/integration remain
-unconfirmed, and no remote write or bot contact occurred.
+Known B-F6 complex-NaN comparison: authority-safe new-helper proposal, not an
+in-place engine repair or production certificate. Tested main
+eb3933c196ee19e80e1621ae80d89ca72e6d9485; selected inbox
+e72bdd2b2c29d815740c321df0ad8703de378e37; six selected notes unchanged.
+Original engine4 intended failures/0 errors among11 contracts normally/-O.
+New leaf, one-function full-engine memory candidate and AST-extracted existing
+modular helper each11 pass and0 mismatches in2592-pair reduced alphabet; original
+220false accepts,0false rejects.8 intended mutants detected in each mode.
 
-Deliverable: `2026-11-07_researcher040282_003_weight-update-bridge.md`.
-Next selected component: actual complex EMA/reported-coherence invariants, after
-checking new feedback and source coverage. Coupled locking, future drive-band
-derivation, gated-OFF composition, and full network freezing are not established.
+ART-0702 engine is Frozen/authority-locked and stays untouched. The test candidate
+preserves98 other top-level AST nodes and uses a synthetic, non-authority filename.
+No live monkeypatch, lock bypass, registry edit or installation. Only predicate
+called after full engine import; no run_baseline_equivalence/simulation/real-data
+or finiteness census. Existing whole-element max-difference diagnostics are not
+certified. Shape/dtype/exact-value guards and input preservation are explicit;
+no tolerance, dtype-policy expansion, bit-identity claim or new Lean result.
+
+Eight critical inline files extracted;two public source files freshly fetched;
+full normal/-O target and mutant runner actually repeated with matching scientific
+and nontiming results. B-F6 was already reproduced by R001; adoption of the existing
+modular split is not novelty or independent review of this new helper/harness.
+Current112 rows preserve prior111 and94 formal labels; earlier state snapshots,
+reports/archives/logs/scientific code remain unchanged.12 acquisition branch
+records minimal; only two explicitly synthetic public fixture addresses from
+historical source distinguished. All ledger evidence unpacked/indexed.
+
+Owner/seat chooses an authorized new verification companion/successor and applicable
+erratum/authority handling after independent review. Owner uploads the new dated
+standalone note/optional evidence packet, not a PR/main/inbox merge by this agent.
+Session preparation label2026-09-04; prior owner/repository labels2026-11-08 remain
+separate from unknown execution chronology. No new007 review/upload confirmation.
+Next008 fresh-checks public-oracle row uniqueness on a separate proposal if still
+open. No merged uploader rework, default S01 campaign or unattended process.
+
+Prior006 remains qualified source/synthetic conformance, not project freeze or
+population-inference approval: explicit overlap/onset/risk-set/cap/bootstrap scope,
+605 gray cases excluded, shared metric fixtures and selected metadata limits.
+Prior005 final22-method/65-case bridge companion stays unreviewed; ART-0050 not
+changed/replayed. Prior94 compilation/footprint report does not approve controls,
+statistics, source fidelity or either new proposal.
+
+## Prior formal evidence, preserved
+
+004:22 EMA/readout +6 drive/gate declarations,66 prior local+5 upstream reused;
+18 local controls,34 valid actual compute_R cases/253 calls and a separate invalid-
+alpha rejection. Original and extracted runs both completed successfully. These
+are historical004 outcomes, not fresh007 compilations. The source-shaped
+exact-real component results do not establish full delay/phase semantics,
+Python/float64 linkage, derived future drive bands or coupled locking. Gated-OFF,
+finite aggregation and sharp local ON-band work remain queued.
+
+Final005 red-team note: a mutating constant-answer double exposed a flaw in the
+first local candidate (oracle used a post-call mutable input). The failing single
+control is retained. The final companion snapshots the request/builds its oracle
+before the call and rejects mutation; final suite22 methods passed again. This
+is not a claim of input mutation by the actual upstream helper. Three additional
+legacy inbox metadata records were structurally minimized despite no pattern
+matches; at completed005 all8 then-acquired branch records omitted contact/
+signature payloads. Current006 adds two minimal-at-creation records.

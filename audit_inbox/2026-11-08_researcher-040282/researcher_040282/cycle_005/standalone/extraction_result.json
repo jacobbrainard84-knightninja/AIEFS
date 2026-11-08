@@ -1,0 +1,12 @@
+{
+  "critical_files": [
+    "AIEF_1_4_proposal_equalization_branch_selftest_r040282.py",
+    "extract_from_report.py",
+    "fetch_public_dependencies.py",
+    "run_checks.py",
+    "source_modules.json",
+    "test_proposal_equalization_branch_selftest_r040282.py"
+  ],
+  "count": 6,
+  "all_match_supplied_sources": true
+}

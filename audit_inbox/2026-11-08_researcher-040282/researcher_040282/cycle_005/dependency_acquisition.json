@@ -1,0 +1,51 @@
+{
+  "commit": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "selected_files_total": 26,
+  "verified_local_import_modules": 10,
+  "import_graph": {
+    "AIEF_1_4_actual_admissibility_branch_audit.py": [
+      "AIEF_1_4_component_controller_audit.py",
+      "AIEF_1_4_exceptional_K3_transition_audit.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_stationarity_perturbation_analysis_updated.py": [],
+    "AIEF_1_4_exceptional_K3_transition_audit.py": [
+      "AIEF_1_4_component_controller_audit.py",
+      "AIEF_1_4_face_spectrum_analysis.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_face_spectrum_analysis.py": [
+      "AIEF_1_4_exceptional_tangent_analysis.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "AIEF_1_4_tangent_spectrum_switch_analysis.py"
+    ],
+    "AIEF_1_4_tangent_spectrum_switch_analysis.py": [
+      "AIEF_1_4_exceptional_tangent_analysis.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_exceptional_tangent_analysis.py": [
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_component_controller_audit.py": [
+      "AIEF_1_4_face_spectrum_analysis.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_proposal_equalization_bridge_analysis.py": [
+      "AIEF_1_4_augmented_tangent_cocycle_analysis.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_augmented_tangent_cocycle_analysis.py": [
+      "AIEF_1_4_actual_admissibility_branch_audit.py",
+      "AIEF_1_4_component_controller_audit.py",
+      "AIEF_1_4_frozen_driver_cocycle_analysis.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ],
+    "AIEF_1_4_frozen_driver_cocycle_analysis.py": [
+      "AIEF_1_4_actual_admissibility_branch_audit.py",
+      "AIEF_1_4_component_controller_audit.py",
+      "AIEF_1_4_exceptional_K3_transition_audit.py",
+      "AIEF_1_4_stationarity_perturbation_analysis_updated.py"
+    ]
+  },
+  "scope": "Static local import closure; third-party installed packages separately recorded; downloaded code not imported by acquisition helper"
+}

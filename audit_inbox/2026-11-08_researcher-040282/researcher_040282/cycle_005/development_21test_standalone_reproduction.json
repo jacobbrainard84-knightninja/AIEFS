@@ -1,0 +1,29 @@
+{
+  "actually_executed": true,
+  "runner_exit": 0,
+  "report": "2026-11-08_researcher040282_005_review-response.md",
+  "critical_files": [
+    "AIEF_1_4_proposal_equalization_branch_selftest_r040282.py",
+    "extract_from_report.py",
+    "fetch_public_dependencies.py",
+    "run_checks.py",
+    "source_modules.json",
+    "test_proposal_equalization_branch_selftest_r040282.py"
+  ],
+  "critical_file_count": 6,
+  "all_extracted_files_match_supplied_sources": true,
+  "fresh_public_modules_fetched_and_verified": 10,
+  "tested_main": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "legacy_expected_failures": 3,
+  "legacy_errors": 0,
+  "candidate_methods_passed": 21,
+  "candidate_methods_passed_optimized": 21,
+  "positive_perturbation_cases": 64,
+  "default_plus_perturbations": 65,
+  "results_match_original_numerically": true,
+  "elapsed_runner_seconds": 9.747308070999907,
+  "result_file": "cycle_005/development_21test_standalone/checks/cycle_results.json",
+  "log": "cycle_005/development_21test_standalone/reproduction.log",
+  "fetch_log": "cycle_005/development_21test_standalone/public_fetch.log",
+  "scope": "Historical successful21-method development extraction; superseded by final input-mutation-hardened candidate, not the final005 run"
+}

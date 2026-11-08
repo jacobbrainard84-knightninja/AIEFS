@@ -1,0 +1,726 @@
+[
+  {
+    "mode": "baseline",
+    "optimized_python": false,
+    "tests_run": 11,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [
+      "test_missing_imag",
+      "test_missing_real",
+      "test_nan_positions",
+      "test_reduced_alphabet"
+    ],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 220,
+      "false_accepts": 220,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "baseline",
+      "simulation_or_validation_entrypoints_called": false,
+      "original_function_lines": [
+        1755,
+        1768
+      ]
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.20474377899995488,
+    "observed_returncode": 1
+  },
+  {
+    "mode": "baseline",
+    "optimized_python": true,
+    "tests_run": 11,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [
+      "test_missing_imag",
+      "test_missing_real",
+      "test_nan_positions",
+      "test_reduced_alphabet"
+    ],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 220,
+      "false_accepts": 220,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "baseline",
+      "simulation_or_validation_entrypoints_called": false,
+      "original_function_lines": [
+        1755,
+        1768
+      ]
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.2073701210000536,
+    "observed_returncode": 1
+  },
+  {
+    "mode": "candidate-engine",
+    "optimized_python": false,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "candidate-engine",
+      "simulation_or_validation_entrypoints_called": false,
+      "original_function_lines": [
+        1755,
+        1768
+      ],
+      "only_one_function_ast_replaced": true,
+      "noncomparison_top_level_nodes_preserved": 98,
+      "authority_certified": false
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.2644043049999709,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "candidate-engine",
+    "optimized_python": true,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "candidate-engine",
+      "simulation_or_validation_entrypoints_called": false,
+      "original_function_lines": [
+        1755,
+        1768
+      ],
+      "only_one_function_ast_replaced": true,
+      "noncomparison_top_level_nodes_preserved": 98,
+      "authority_certified": false
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.27500736199999665,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "candidate-leaf",
+    "optimized_python": false,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "candidate-leaf",
+      "simulation_or_validation_entrypoints_called": false,
+      "no_patch_on_import": true
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.16179475699993873,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "candidate-leaf",
+    "optimized_python": true,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "candidate-leaf",
+      "simulation_or_validation_entrypoints_called": false,
+      "no_patch_on_import": true
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.16061631399998078,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "modular-extracted",
+    "optimized_python": false,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "modular-extracted",
+      "simulation_or_validation_entrypoints_called": false,
+      "full_modular_package_imported": false,
+      "extracted_helper_lines": [
+        263,
+        279
+      ]
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.16276703900007305,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "modular-extracted",
+    "optimized_python": true,
+    "tests_run": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "reduced_alphabet": {
+      "ordered_pairs": 2592,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "fixture_group_counts": {
+      "missing_real": 2,
+      "missing_imag": 2,
+      "nan_positions": 2,
+      "reduced_alphabet": 2592,
+      "complex_exactness": 12,
+      "real_exactness": 15,
+      "guards": 14,
+      "empty_scalar": 24,
+      "views": 8,
+      "fallback": 12,
+      "preservation": 4
+    },
+    "source_boundary": {
+      "mode": "modular-extracted",
+      "simulation_or_validation_entrypoints_called": false,
+      "full_modular_package_imported": false,
+      "extracted_helper_lines": [
+        263,
+        279
+      ]
+    },
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.16074059599998236,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "mutants",
+    "mutants_detected": 8,
+    "setup_errors_credited_as_detections": 0,
+    "records": [
+      {
+        "mutant": "whole_complex_missingness",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(nan+1j)]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(nan+99j)]"
+          }
+        }
+      },
+      {
+        "mutant": "real_only",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(1+1j)]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(1+2j)]"
+          }
+        }
+      },
+      {
+        "mutant": "imaginary_only",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(1+1j)]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(2+1j)]"
+          }
+        }
+      },
+      {
+        "mutant": "approximate_equality",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[1.0]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[1.0000000000000002]"
+          }
+        }
+      },
+      {
+        "mutant": "ignore_dtype",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "int32",
+            "values_repr": "[1]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "int64",
+            "values_repr": "[1]"
+          }
+        }
+      },
+      {
+        "mutant": "ignore_shape",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              2,
+              3
+            ],
+            "dtype": "int64",
+            "values_repr": "[[0, 1, 2], [3, 4, 5]]"
+          },
+          "right": {
+            "shape": [
+              6
+            ],
+            "dtype": "int64",
+            "values_repr": "[0, 1, 2, 3, 4, 5]"
+          }
+        }
+      },
+      {
+        "mutant": "never_match_nan",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": true,
+        "observed": false,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[nan]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[nan]"
+          }
+        }
+      },
+      {
+        "mutant": "mutate_requested_input",
+        "detected": true,
+        "reason": "input_preservation",
+        "expected": "unchanged",
+        "observed": "mutated",
+        "precall_input": {
+          "left": {
+            "shape": [
+              2
+            ],
+            "dtype": "float64",
+            "values_repr": "[1.0, 2.0]"
+          },
+          "right": {
+            "shape": [
+              2
+            ],
+            "dtype": "float64",
+            "values_repr": "[3.0, 4.0]"
+          }
+        }
+      }
+    ],
+    "optimized_python": false,
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.17055337500005407,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "mutants",
+    "mutants_detected": 8,
+    "setup_errors_credited_as_detections": 0,
+    "records": [
+      {
+        "mutant": "whole_complex_missingness",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(nan+1j)]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(nan+99j)]"
+          }
+        }
+      },
+      {
+        "mutant": "real_only",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(1+1j)]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(1+2j)]"
+          }
+        }
+      },
+      {
+        "mutant": "imaginary_only",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(1+1j)]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "complex128",
+            "values_repr": "[(2+1j)]"
+          }
+        }
+      },
+      {
+        "mutant": "approximate_equality",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[1.0]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[1.0000000000000002]"
+          }
+        }
+      },
+      {
+        "mutant": "ignore_dtype",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "int32",
+            "values_repr": "[1]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "int64",
+            "values_repr": "[1]"
+          }
+        }
+      },
+      {
+        "mutant": "ignore_shape",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": false,
+        "observed": true,
+        "precall_input": {
+          "left": {
+            "shape": [
+              2,
+              3
+            ],
+            "dtype": "int64",
+            "values_repr": "[[0, 1, 2], [3, 4, 5]]"
+          },
+          "right": {
+            "shape": [
+              6
+            ],
+            "dtype": "int64",
+            "values_repr": "[0, 1, 2, 3, 4, 5]"
+          }
+        }
+      },
+      {
+        "mutant": "never_match_nan",
+        "detected": true,
+        "reason": "truth_value",
+        "expected": true,
+        "observed": false,
+        "precall_input": {
+          "left": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[nan]"
+          },
+          "right": {
+            "shape": [
+              1
+            ],
+            "dtype": "float64",
+            "values_repr": "[nan]"
+          }
+        }
+      },
+      {
+        "mutant": "mutate_requested_input",
+        "detected": true,
+        "reason": "input_preservation",
+        "expected": "unchanged",
+        "observed": "mutated",
+        "precall_input": {
+          "left": {
+            "shape": [
+              2
+            ],
+            "dtype": "float64",
+            "values_repr": "[1.0, 2.0]"
+          },
+          "right": {
+            "shape": [
+              2
+            ],
+            "dtype": "float64",
+            "values_repr": "[3.0, 4.0]"
+          }
+        }
+      }
+    ],
+    "optimized_python": true,
+    "verified_source_files_unchanged": 2,
+    "elapsed_seconds": 0.16867693100005,
+    "observed_returncode": 0
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "group": "none_finite",
+    "finite_n": 0,
+    "mean": null,
+    "lower": null,
+    "upper": null,
+    "valid_bootstrap_replicates_calculated_independently": 0,
+    "empty_bootstrap_replicates_calculated_independently": 512,
+    "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+  },
+  {
+    "group": "one",
+    "finite_n": 40,
+    "mean": 1.0,
+    "lower": 1.0,
+    "upper": 1.0,
+    "valid_bootstrap_replicates_calculated_independently": 512,
+    "empty_bootstrap_replicates_calculated_independently": 0,
+    "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+  },
+  {
+    "group": "one_finite",
+    "finite_n": 1,
+    "mean": 7.0,
+    "lower": 7.0,
+    "upper": 7.0,
+    "valid_bootstrap_replicates_calculated_independently": 337,
+    "empty_bootstrap_replicates_calculated_independently": 175,
+    "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+  },
+  {
+    "group": "zero",
+    "finite_n": 40,
+    "mean": 0.0,
+    "lower": 0.0,
+    "upper": 0.0,
+    "valid_bootstrap_replicates_calculated_independently": 512,
+    "empty_bootstrap_replicates_calculated_independently": 0,
+    "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+  }
+]

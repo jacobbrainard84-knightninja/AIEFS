@@ -1,0 +1,4 @@
+event_type,estimand,mean,std,n,pointwise_ci_lower,pointwise_ci_upper,interval_type,included_seed_set_sha256,included_seed_fraction
+held,event_observed,0.75,0.4385290096535146,40,0.6,0.875,joint-seed-resampling_pointwise_percentile_95pct,766ed569aefb676c1766a7161c438c28ba3afb914b712254eec5dd1a213b3dd2,1.0
+held_recovery,event_observed,0.5,0.5063696835418333,40,0.35,0.65,joint-seed-resampling_pointwise_percentile_95pct,766ed569aefb676c1766a7161c438c28ba3afb914b712254eec5dd1a213b3dd2,1.0
+held_retention,event_observed,0.6,0.49613893835683387,40,0.425,0.75,joint-seed-resampling_pointwise_percentile_95pct,766ed569aefb676c1766a7161c438c28ba3afb914b712254eec5dd1a213b3dd2,1.0

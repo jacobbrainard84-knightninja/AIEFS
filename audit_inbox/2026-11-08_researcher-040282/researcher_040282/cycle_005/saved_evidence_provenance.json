@@ -1,0 +1,52 @@
+{
+  "tested_main": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "inspection_only_no_production_replay_rerun": true,
+  "saved_manifest": "source_state/main/aief_1_4_proposal_equalization_bridge/analysis_manifest.json",
+  "recorded_command": [
+    "AIEF_1_4_proposal_equalization_bridge_analysis.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--seed",
+    "4619122171158768524",
+    "--output-dir",
+    "aief_1_4_proposal_equalization_bridge"
+  ],
+  "recorded_command_contains_self_test": false,
+  "only_direct_synthetic_self_test_call_lines_in_bridge": [
+    361
+  ],
+  "dispatch": "lines358\u2013362: if args.self_test, run synthetic_self_test and return; normal replay begins after that branch",
+  "saved_manifest_branch_checks": {
+    "controllers_clipped_all": true,
+    "gate_on_all": true,
+    "maximum_isolation_error": 0.0,
+    "minimum_winner_margin": 4.440892098500626e-14,
+    "selected_positive_all": true,
+    "winner_map_expected_all": true
+  },
+  "prior_own_S01_replay_script_copy": "historical_provenance/replay_one_condition.py",
+  "prior_own_S01_replay_imports": [
+    "AIEF_1_4_Twindow_sensitivity",
+    "__future__",
+    "aief_experiment_engine_v1",
+    "aief_modular.collectors",
+    "aief_modular.factors",
+    "aief_modular.registry",
+    "aief_modular.runner",
+    "aief_modular.validation",
+    "csv",
+    "json",
+    "numpy",
+    "os",
+    "pathlib",
+    "platform",
+    "sys",
+    "time"
+  ],
+  "prior_own_S01_script_imports_bridge": false,
+  "prior_own_audit_probes": "test_deep_audit.py/additional_probes.py invoked old synthetic_self_test to expose its false PASS, not to endorse the fixture",
+  "bounded_conclusion": "Inspected saved normal-replay command/path does not invoke the synthetic self-test. This defect alone does not invalidate the conditional algebra or recorded real-data replay. Not a fresh replay, exhaustive dependency/provenance audit, or certification of every historical wrapper.",
+  "near_tie_limit": "Saved minimum margin4.440892098500626e-14 is much smaller than new positive synthetic margins; no robustness claim for saved near-tie cases."
+}

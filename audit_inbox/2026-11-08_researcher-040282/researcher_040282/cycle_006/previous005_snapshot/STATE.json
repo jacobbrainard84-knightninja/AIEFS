@@ -1,0 +1,319 @@
+{
+  "agent": "Researcher 040282",
+  "owner_instruction": "Self-direct bounded, red-teamed AIEFS research; create dated audit-inbox handoffs for owner upload. Continue does not authorize remote submission or unattended work.",
+  "workflow": "WORKFLOW.md",
+  "queue": "RESEARCH_QUEUE.md",
+  "claim_ledger": "CLAIM_LEDGER.csv",
+  "last_updated_date": "2026-09-04",
+  "timezone": "Atlantic/Reykjavik",
+  "date_provenance": {
+    "session_supplied_preparation_date": "2026-09-04",
+    "owner_correspondence_handoff_label": "2026-11-08",
+    "historical004_execution_date_reconstructed": false,
+    "note": "September4 chronological production stamp withdrawn for004; use owner label for handoff indexing only. No inference from compiler build dates/durations; sources/seeds unchanged."
+  },
+  "current_cycle": 5,
+  "current_status": "COMPLETED_LOCAL_CANDIDATE_UNREVIEWED",
+  "current_directory": "cycle_005",
+  "ledger_rows": 109,
+  "current_question": "Resolve received004 packaging/privacy/review-scope feedback, then repair known wrong-branch synthetic bridge assurance through one new-file/erratum proposal.",
+  "current_answer": "Three legacy wiring contracts fail with0 errors; proposed companion21 methods pass normally/-O,65 finite operator/oracle checks at fixed tolerance. Six inline files extracted and full runner repeated using10 freshly fetched public modules. Pinned ART-0050, model and old scientific content unchanged. No new Lean/production replay/engine-oracle patch/v4.1 conclusion.",
+  "latest_completed_report": "2026-11-08_researcher040282_005_review-response.md",
+  "short004_addendum": "2026-11-08_researcher040282_004_addendum.md",
+  "optional_supporting_bundle": "researcher040282-cycle005-review-response.zip",
+  "artifact_validation_record": "cycle_005/packet_validation.json",
+  "source_refresh": {
+    "branch_for_current_code": "main",
+    "commit": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+    "selected_files_verified": 26,
+    "verified_import_modules_exercised": 10,
+    "metadata": "cycle_005/source_state/main_selected.json",
+    "inbox_navigation_commit": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+    "inbox_selected_files": 35,
+    "inbox_metadata": "cycle_005/source_state/inbox_selected.json",
+    "review_received": true,
+    "scope": "Selected public read-only acquisition; initial12 main selections plus6 bridge and8 import-dependency files. Not an exhaustive assignment/provenance audit."
+  },
+  "tool_environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "scipy": "1.17.1"
+    },
+    "lean_cache_available_at_start": false,
+    "lean_cache_restored_this_cycle": false,
+    "fresh_lean_run_this_cycle": false,
+    "historical_lean_toolchain_record": "cycle_005/completed_004_snapshot/STATE_before_feedback.json",
+    "note": "No package/compiler installation in005. Check disposable cache before future restoration; historical logs are not new builds."
+  },
+  "adversarial_evidence": {
+    "runs": [
+      {
+        "name": "red_legacy",
+        "returncode": 1,
+        "tests_run": 3,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0,
+        "success": false,
+        "elapsed_seconds": 0.8773096020001958
+      },
+      {
+        "name": "green_candidate",
+        "returncode": 0,
+        "tests_run": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "success": true,
+        "elapsed_seconds": 5.358512532000077
+      },
+      {
+        "name": "green_candidate_optimized",
+        "returncode": 0,
+        "tests_run": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "success": true,
+        "elapsed_seconds": 6.831027550000044
+      }
+    ],
+    "all_preregistered_acceptance_conditions_met": true,
+    "limits": {
+      "no_new_lean_compilation": true,
+      "finite_synthetic_checks_not_universal_float64_proof": true,
+      "legacy_other_selftest_blocks_not_replaced_by_companion": true,
+      "saved_production_bridge_replay_not_rerun": true,
+      "no_engine_or_oracle_patch_or_v41_result_claimed": true,
+      "not_independent_review_library_approval_or_coupled_locking": true
+    },
+    "results": "cycle_005/checks/cycle_results.json",
+    "own_candidate_input_mutation_falsifier": {
+      "pre_fix_single_control_failed": true,
+      "pre_fix_errors": 0,
+      "fixed_by_pre_call_snapshot_and_oracle": true,
+      "record": "cycle_005/input_mutation_red.json",
+      "not_an_upstream_mutation_claim": true
+    }
+  },
+  "source_comparison": {
+    "evidence_label": "EXECUTABLE_REGRESSION_CHECK",
+    "scope": "Pure edge-coordinate audit helper, not production-engine advance_state; finite isolated12-node synthetic inputs only",
+    "valid_cases": 65,
+    "perturbation_cases": 64,
+    "seed": 2026090405,
+    "absolute_tolerance": 1e-14,
+    "relative_tolerance": 0.0,
+    "max_abs_left_residual": 5.551115123125783e-17,
+    "max_abs_right_residual": 7.806255641895632e-17,
+    "max_oracle_errors": {
+      "y": 5.551115123125783e-17,
+      "q": 0.0,
+      "scales": 1.1102230246251565e-16,
+      "edge_scales": 1.1102230246251565e-16
+    }
+  },
+  "standalone_reproduction": {
+    "actually_executed": true,
+    "runner_exit": 0,
+    "report": "2026-11-08_researcher040282_005_review-response.md",
+    "critical_files": [
+      "AIEF_1_4_proposal_equalization_branch_selftest_r040282.py",
+      "extract_from_report.py",
+      "fetch_public_dependencies.py",
+      "run_checks.py",
+      "source_modules.json",
+      "test_proposal_equalization_branch_selftest_r040282.py"
+    ],
+    "critical_file_count": 6,
+    "all_extracted_files_match_supplied_sources": true,
+    "fresh_public_modules_fetched_and_verified": 10,
+    "tested_main": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+    "legacy_expected_failures": 3,
+    "legacy_errors": 0,
+    "candidate_methods_passed": 22,
+    "candidate_methods_passed_optimized": 22,
+    "positive_perturbation_cases": 64,
+    "default_plus_perturbations": 65,
+    "results_match_original_numerically": true,
+    "elapsed_runner_seconds": 9.68835204700008,
+    "result_file": "cycle_005/standalone/checks/cycle_results.json",
+    "log": "cycle_005/standalone/reproduction.log",
+    "fetch_log": "cycle_005/standalone/public_fetch.log",
+    "scope": "Submitter-local one-note self-reproduction with public dependencies; not independent controls/review, production replay, or proof"
+  },
+  "review_scope": {
+    "current_main_tested": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+    "review_acquired_from_inbox": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+    "intake_note": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "researcher001_triage": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+    "evidence_kind": "Publicly acquired colleague reports of their own execution; not our reexecution of their witnesses",
+    "reviewer_main_basis": "942f8526daee5ac547f2e422101fa95c61eeef41",
+    "independent_compilation_reported": {
+      "002": 22,
+      "003": 44,
+      "004_EMA": 22,
+      "004_drive": 6
+    },
+    "compiled_total": 94,
+    "reported_warnings": 0,
+    "reported_errors": 0,
+    "reported_footprint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope_exclusions": [
+      "library-grade statement-fidelity approval",
+      "integration decision",
+      "our check_cycle.py controls",
+      "our ZIP checkers",
+      "full S01 reanalysis",
+      "our4800 saved held-event comparisons",
+      "real-array finiteness census",
+      "new005 repair-candidate review"
+    ],
+    "additional_review_confirmation": "Coarse baseline ON bound fails to reach threshold; not evidence of OFF",
+    "uploader_disposition": "Owner reports PR10 uploader and PR11 checksum checker merged; supplied main head matches acquired head. No new uploader work; no behavioral certification of those merges here.",
+    "current_python_CI": ".github/workflows/repo-checks.yml exists on the tested source; withdraw the stale no-Python-CI generalization as a current-main claim",
+    "owner_receipt": "Actual audit-inbox intake and triage found; uploaded root ledger independently counted78 rows, versus108 at completed004",
+    "contact_or_remote_write_by_this_agent": false,
+    "reviewer_private_log_paths": "Mentioned by reviewer; not fetched or represented as included local evidence"
+  },
+  "independent_review_received": true,
+  "current_cycle_independent_review_received": false,
+  "owner_upload_confirmed": true,
+  "latest_packet_owner_upload_confirmed": false,
+  "publication_status": "Prior audit-inbox receipt confirmed;94-declaration compilation/footprint review only. New005 packet prepared locally, not uploaded. No library-grade approval or main integration.",
+  "privacy": {
+    "report": "cycle_005/privacy_results.json",
+    "three_reported_acquisition_jsons_minimized": true,
+    "three_additional_legacy_inbox_records_minimized": true,
+    "removed_contact_values_printed_or_backed_up": false,
+    "signed_commit_payloads_omitted": true,
+    "new_packet_scan": "cycle_005/packet_validation.json",
+    "remote_metadata_changed": false
+  },
+  "evidence_navigation": {
+    "index": "EVIDENCE_INDEX.json",
+    "historical_log_map": "HISTORICAL_ARCHIVE_LOG_MAP.csv",
+    "ledger_paths_unpacked": true,
+    "unlabelled_archive_only_logs": false
+  },
+  "previous_cycle": 4,
+  "previous_cycle_evidence": {
+    "status": "COMPLETED",
+    "ledger_rows": 108,
+    "snapshot": "cycle_005/completed_004_snapshot/COMPLETED_004_STATE.json",
+    "ledger": "cycle_005/completed_004_snapshot/CLAIM_LEDGER_COMPLETED_004.csv",
+    "original_full_state_before_feedback": "cycle_005/completed_004_snapshot/STATE_before_feedback.json",
+    "report": "2026-09-04_researcher040282_004_complex-ema.md",
+    "formal_evidence": {
+      "new_sources": {
+        "cycle_004/CoherenceEMA.lean": 22,
+        "cycle_004/CoherenceDriveBridge.lean": 6
+      },
+      "runner_exit": 0,
+      "accepted_problems": [],
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "recompiled_dependencies": {
+        "GateFoundations": 22,
+        "FreezeCore": 5,
+        "GateProposalBridge": 44
+      },
+      "results": "cycle_004/cycle_results.json",
+      "scope": "Exact-real EMA/readout and drive/gate component composition, with prescribed phases/inputs; no full delay-state or Python/float64 linkage or coupled locking",
+      "new_declaration_count": 28,
+      "printed_new_axiom_footprints": 28,
+      "positive_warnings_or_errors": 0,
+      "credit_boundary": "28 new declarations including helpers; 66 prior local and five upstream scalar declarations reused unchanged, all freshly compiled"
+    },
+    "adversarial_evidence": {
+      "control_count": 18,
+      "positive_controls": 5,
+      "negative_controls": 13,
+      "all_intended_outcomes_observed": true,
+      "runner_exit": 0,
+      "false_math_count": 8,
+      "all_false_math_goals_contain_False": true
+    },
+    "source_comparison": {
+      "evidence_label": "NUMERICAL_CHECK",
+      "case_count": 34,
+      "compute_R_calls": 253,
+      "all_passed": true,
+      "maximum_C_error": 0.0,
+      "maximum_R_error": 2.220446049250313e-16,
+      "absolute_tolerance": 2e-14,
+      "relative_tolerance": 0,
+      "wrong_models_detected": 6,
+      "expected_configuration_rejection": 1,
+      "results": "cycle_004/source_comparison_results.json",
+      "scope": "Actual compute_R without replacement, clamped controlled phase/history states. 34 comparisons plus separate alpha=0 config rejection, not 35 valid comparisons. Not coupled evolution."
+    },
+    "standalone_reproduction": {
+      "report": "2026-09-04_researcher040282_004_complex-ema.md",
+      "critical_files": [
+        "CoherenceDriveBridge.lean",
+        "CoherenceEMA.lean",
+        "FreezeCore.lean",
+        "GateFoundations.lean",
+        "GateProposalBridge.lean",
+        "check_cycle.py",
+        "compare_source.py"
+      ],
+      "critical_blocks_match_sources": true,
+      "runner_exit": 0,
+      "source_runner_exit": 0,
+      "controls": 18,
+      "all_control_outcomes_repeated": true,
+      "source_case_count": 34,
+      "source_calls": 253,
+      "source_wrong_model_detections": 6,
+      "expected_configuration_rejections": 1,
+      "scope": "Local single-note self-reproduction with public dependencies, not independent review/publication/integration",
+      "actually_executed": true,
+      "manifest": "cycle_004/standalone_manifest.json",
+      "results": "cycle_004/standalone_results.json",
+      "source_results": "cycle_004/standalone_source_results.json",
+      "log": "cycle_004/standalone_reproduction.log",
+      "source_log": "cycle_004/standalone_source.log"
+    },
+    "note": "All of these are historical004 outcomes; no new Lean compilation in005. Review metadata now acknowledges received narrow external compilation report."
+  },
+  "completed_this_cycle": [
+    "Acquired relevant current-main and actual inbox review notes read-only",
+    "Sanitized three reported main records plus three additional legacy inbox records, including signed payload removal, without printing or backing up contacts",
+    "Corrected004 date/state/108-row and external-review scope via a short addendum",
+    "Prepared new-file K3 self-test/erratum candidate, preserving pinned artifact and model",
+    "Observed shared legacy-red3/candidate-green21 contracts and full optimized21-method run",
+    "Compared65 finite actual-helper outputs/metadata and identities to independent Fraction map",
+    "Extracted6 inline critical files, freshly fetched10 public modules and repeated all outcomes",
+    "Synchronized current109-row and completed004108-row ledger/state views",
+    "Unpacked/indexed cited proof/source logs for owner handoff"
+  ],
+  "not_proved_or_promoted": [
+    "Universal float64 or machine-checked Python execution equivalence",
+    "Fresh saved bridge replay, full S01 reanalysis,4800-case check or finiteness census",
+    "Independent controls or approval of the new005 repair",
+    "Library-grade statement fidelity/main integration of94 prior Lean declarations",
+    "Complete delay-buffer/phase-step semantics, sharp derived future drive bands",
+    "Gated-OFF/finite aggregation, explicit freeze times, selected-controller rate law",
+    "Coupled locking or unconditional convergence"
+  ],
+  "in_progress": null,
+  "research_processes_running": [],
+  "next_cycle": 6,
+  "next_directory": "cycle_006",
+  "next_selected_work": "Review existing v4.1 held-event semantics/estimands and boundary interval wording after fresh main/feedback refresh. Do not rediscover frozen v4 or rework merged uploader/checksum fixes.",
+  "immediate_next_action": "On Continue: read latest state/report/feedback, refresh relevant current main/inbox read-only, check already-landed work, preregister v4.1 event/estimand oracle and boundary controls. If resolved, pick a separate still-open engine/oracle repair. Do not start unattended work.",
+  "remote_changes_by_this_agent": false,
+  "contacted_other_bots": false,
+  "automatic_work_between_turns": false
+}

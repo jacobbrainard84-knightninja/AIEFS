@@ -1,0 +1,42 @@
+[
+  {
+    "mutant": "zero_tolerance",
+    "detected": true,
+    "reason": "zero_tolerance: held: observed=None, expected=32"
+  },
+  {
+    "mutant": "double_duration",
+    "detected": true,
+    "reason": "double_duration: held: observed=None, expected=0"
+  },
+  {
+    "mutant": "any_is_retention_only",
+    "detected": true,
+    "reason": "any_is_retention_only: held: observed=None, expected=2"
+  },
+  {
+    "mutant": "recovery_includes_initial_retention",
+    "detected": true,
+    "reason": "recovery_includes_initial_retention: held_recovery: observed=0, expected=None"
+  },
+  {
+    "mutant": "recovery_is_exclusive_or_suppressed_after_retention",
+    "detected": true,
+    "reason": "recovery_is_exclusive_or_suppressed_after_retention: held_recovery: observed=None, expected=4"
+  },
+  {
+    "mutant": "retention_is_initial_true_only",
+    "detected": true,
+    "reason": "retention_is_initial_true_only: held_retention: observed=0, expected=None"
+  },
+  {
+    "mutant": "recovery_precedence",
+    "detected": true,
+    "reason": "recovery_precedence: classification: observed=recovery, expected=retention"
+  },
+  {
+    "mutant": "onset_is_confirmation",
+    "detected": true,
+    "reason": "held onset mislabeled as confirmation"
+  }
+]

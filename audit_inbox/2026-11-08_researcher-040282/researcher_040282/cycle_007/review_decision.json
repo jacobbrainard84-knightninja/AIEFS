@@ -1,0 +1,31 @@
+{
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "disposition": "REPAIR_PROPOSAL_FINITE_CONTRACTS_PASS;NOT_INSTALLED_OR_AUTHORITY_APPROVED",
+  "known_issue": "B-F6 already independently reproduced by R001; modular helper already uses this mechanism. No novelty claim.",
+  "target": "aief_experiment_engine_v1.py:1755-1768",
+  "frozen_authority_route": "ART-0702 frozen engine unchanged; new helper only; owner/seat selects new verification companion or authorized successor/erratum route",
+  "source_code_execution_scope": "Original full engine module imported; candidate full engine AST changes one predicate only; existing modular helper AST-extracted, no full modular import",
+  "test_only_replacement_boundary": {
+    "function_nodes_replaced": 1,
+    "other_top_level_nodes_preserved": 98,
+    "candidate_file_identity": "synthetic memory-only; not the original authority path"
+  },
+  "normal_optimized_science_agree": true,
+  "source_frozen_bytes_unchanged": true,
+  "oracle": "pre-call scalar Python component loop with math.isnan and exact equality, not candidate output",
+  "not_approved": [
+    "any edit of frozen source, lock/registry update or production installation",
+    "full run_baseline_equivalence, simulations or frozen-run certificate",
+    "actual saved-array finiteness, data corruption or production false-certificate claim",
+    "all NumPy/platform/dtype correctness or arbitrary-code security",
+    "existing max-difference diagnostic masks",
+    "new007 independent-seat approval or any coupled-dynamics/Lean result"
+  ],
+  "next_review_actions": [
+    "independently review source/oracle/mutants, including component locations, Inf, one ULP, dtype/shape and input preservation",
+    "select authorized new-file companion/successor and applicable erratum handling; never silently override frozen authority",
+    "separately decide component-resolved diagnostics and actual pipeline acceptance before citable certification"
+  ],
+  "current_cycle_external_review_received": false,
+  "remote_write_contact_or_upload": false
+}

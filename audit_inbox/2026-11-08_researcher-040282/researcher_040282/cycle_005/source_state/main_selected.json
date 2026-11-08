@@ -1,0 +1,139 @@
+{
+  "branch": "main",
+  "commit": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "fetched_and_verified": 26,
+  "files": [
+    {
+      "path": ".github/workflows/repo-checks.yml",
+      "blob": "200f4658e3dd58faa1dcf6edaa4af75b09905695",
+      "bytes": 9073
+    },
+    {
+      "path": "AIEF_1_4_CONDITIONAL_PROPOSAL_EQUALIZATION_THEOREM.md",
+      "blob": "ccc6d00a0726643c26eb5a565151dcb9241f1eeb",
+      "bytes": 12403
+    },
+    {
+      "path": "AIEF_1_4_PROPOSAL_EQUALIZATION_BRIDGE_INTERPRETATION.md",
+      "blob": "774f1b60db495cecc6ff6dd545797bc4f6000616",
+      "bytes": 8349
+    },
+    {
+      "path": "AIEF_1_4_actual_admissibility_branch_audit.py",
+      "blob": "62f31947cb5cd3504a726ce16a10b565f32337c8",
+      "bytes": 56007
+    },
+    {
+      "path": "AIEF_1_4_augmented_tangent_cocycle_analysis.py",
+      "blob": "41411831e2ec7060b8423fcb21e0526adb3b3d57",
+      "bytes": 47428
+    },
+    {
+      "path": "AIEF_1_4_component_controller_audit.py",
+      "blob": "d4641019968622e86cc0165c2c09c395dc9d6932",
+      "bytes": 47911
+    },
+    {
+      "path": "AIEF_1_4_exceptional_K3_transition_audit.py",
+      "blob": "170e1d3d8b30c4f1c6d99cb3a487af4f222d4ed2",
+      "bytes": 44280
+    },
+    {
+      "path": "AIEF_1_4_exceptional_tangent_analysis.py",
+      "blob": "7d6be75cc47d1fae023fc73f5b38049cfb8e76ff",
+      "bytes": 29136
+    },
+    {
+      "path": "AIEF_1_4_face_spectrum_analysis.py",
+      "blob": "58ac3f8f48eec2b54fcafd4710bc44d4ce36bb4c",
+      "bytes": 51530
+    },
+    {
+      "path": "AIEF_1_4_frozen_driver_cocycle_analysis.py",
+      "blob": "91b14cccbe2290efc9d755599be964494aa08567",
+      "bytes": 43681
+    },
+    {
+      "path": "AIEF_1_4_proposal_equalization_bridge_analysis.py",
+      "blob": "2fcfff5ad2f594bc4fdc07e394f6bdd34deff07f",
+      "bytes": 26879
+    },
+    {
+      "path": "AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "blob": "c8609e5cd5f2dc91de32c35403eec83882235ed2",
+      "bytes": 42626
+    },
+    {
+      "path": "AIEF_1_4_tangent_spectrum_switch_analysis.py",
+      "blob": "bdbb11457bf3b18717a3068fa8b0405ef2da1586",
+      "bytes": 31163
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py",
+      "blob": "2e0bc707f64dfad47fac54028bf0945808c2f744",
+      "bytes": 69629
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/oracle.py",
+      "blob": "d2c59fe2ded5c842fcfd56dd8819f50cc55dc434",
+      "bytes": 5683
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests_modular/test_twindow_oracle_equivalence.py",
+      "blob": "befa41e25fae952a830909ba6d1313b88af56945",
+      "bytes": 813
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "blob": "b3f00979b834c92ce01773e40e0fc27366e47ca3",
+      "bytes": 23918
+    },
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "blob": "f466808fc69b5f6964d5060d83a997330965ca96",
+      "bytes": 38856
+    },
+    {
+      "path": "aief_1_4_proposal_equalization_bridge/analysis_manifest.json",
+      "blob": "3f2d3e9227b7ad3c3604b28ba0095fb9c73df1df",
+      "bytes": 2650
+    },
+    {
+      "path": "aief_1_4_proposal_equalization_bridge/proposal_equalization_report.txt",
+      "blob": "693e396255a584df10816fdbfddb0cf6fdee3b31",
+      "bytes": 4569
+    },
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "blob": "0d116e83a0d2f6b3f6be0e21d8a730c0aec3b689",
+      "bytes": 119493
+    },
+    {
+      "path": "audits/reproductions/b2a95dfbfbe3/compare_b2a95dfbfbe3_ERRATUM.md",
+      "blob": "1d011e0a25ff6f7cd6269e1c082d9797e8603715",
+      "bytes": 19495
+    },
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "registry/claims.csv",
+      "blob": "d8af0b5e4c04dd1c55c88f26cca433f97db58146",
+      "bytes": 83106
+    },
+    {
+      "path": "workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/aief_modular/oracle.py",
+      "blob": "d2c59fe2ded5c842fcfd56dd8819f50cc55dc434",
+      "bytes": 5683
+    },
+    {
+      "path": "workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/tests_modular/test_twindow_oracle_equivalence.py",
+      "blob": "befa41e25fae952a830909ba6d1313b88af56945",
+      "bytes": 813
+    }
+  ],
+  "scope": "Selected current-source/intake refresh, not exhaustive branch assignment/review audit",
+  "dependency_acquisition_note": "Initial refresh log selected12; six bridge files then recursively verified local Python imports added. Counts here describe final acquired set."
+}

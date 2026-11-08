@@ -1,0 +1,332 @@
+{
+  "exhaustive_small": {
+    "Boolean_patterns_per_origin": 512,
+    "origins": 2,
+    "durations": 3,
+    "robust_cases": 3072,
+    "mismatches": 0,
+    "gray_not_counted": 0
+  },
+  "saved_grid": {
+    "translated_robust_cases": 2350,
+    "nominal_selected_robust_cases": 60,
+    "other_robust_cases": 12,
+    "invalid_duration_rejections": 12,
+    "maximum_nominal_timestamp_difference": 2.842170943040401e-14,
+    "details": [
+      {
+        "duration": 17.5,
+        "all_valid_starts": 605,
+        "exact_block_and_one_step_short_cases": 1210
+      },
+      {
+        "duration": 35.0,
+        "all_valid_starts": 570,
+        "exact_block_and_one_step_short_cases": 1140
+      },
+      {
+        "rho": 0.5,
+        "duration": 8.751458576429407,
+        "minimum_half_grid_steps": 18,
+        "selected_starts": [
+          0,
+          1,
+          32,
+          100,
+          310,
+          621
+        ],
+        "last_eligible_onset": 310.51
+      },
+      {
+        "rho": 0.75,
+        "duration": 13.12718786464411,
+        "minimum_half_grid_steps": 27,
+        "selected_starts": [
+          0,
+          1,
+          32,
+          100,
+          306,
+          612
+        ],
+        "last_eligible_onset": 306.01
+      },
+      {
+        "rho": 1.0,
+        "duration": 17.502917152858814,
+        "minimum_half_grid_steps": 36,
+        "selected_starts": [
+          0,
+          1,
+          32,
+          100,
+          301,
+          603
+        ],
+        "last_eligible_onset": 301.51
+      },
+      {
+        "rho": 1.5,
+        "duration": 26.25437572928822,
+        "minimum_half_grid_steps": 53,
+        "selected_starts": [
+          0,
+          1,
+          32,
+          100,
+          293,
+          586
+        ],
+        "last_eligible_onset": 293.01
+      },
+      {
+        "rho": 2.0,
+        "duration": 35.00583430571763,
+        "minimum_half_grid_steps": 71,
+        "selected_starts": [
+          0,
+          1,
+          32,
+          100,
+          284,
+          568
+        ],
+        "last_eligible_onset": 284.01
+      }
+    ]
+  },
+  "policy_boundaries": {
+    "policy_tau": 4.999999999999716e-07,
+    "gray_boundary_band": 1e-10,
+    "groups": [
+      {
+        "factor": -2.0,
+        "duration": 17.499999,
+        "robust_cases": 605,
+        "gray_cases_not_counted_as_conformance": 0,
+        "accepted_blocks": 605
+      },
+      {
+        "factor": -0.5,
+        "duration": 17.49999975,
+        "robust_cases": 605,
+        "gray_cases_not_counted_as_conformance": 0,
+        "accepted_blocks": 605
+      },
+      {
+        "factor": 0.0,
+        "duration": 17.5,
+        "robust_cases": 605,
+        "gray_cases_not_counted_as_conformance": 0,
+        "accepted_blocks": 605
+      },
+      {
+        "factor": 0.5,
+        "duration": 17.50000025,
+        "robust_cases": 605,
+        "gray_cases_not_counted_as_conformance": 0,
+        "accepted_blocks": 605
+      },
+      {
+        "factor": 1.0,
+        "duration": 17.5000005,
+        "robust_cases": 0,
+        "gray_cases_not_counted_as_conformance": 605,
+        "accepted_blocks": 553
+      },
+      {
+        "factor": 2.0,
+        "duration": 17.500001,
+        "robust_cases": 605,
+        "gray_cases_not_counted_as_conformance": 0,
+        "accepted_blocks": 0
+      }
+    ],
+    "tiny_duration_stress": {
+      "duration": 1e-07,
+      "single_sample_held": 639,
+      "interpretation": "tolerant policy, not literal positive-duration support"
+    },
+    "gray_cases_are_not_conformance_passes": true
+  },
+  "mutations": [
+    {
+      "mutant": "zero_tolerance",
+      "detected": true,
+      "reason": "zero_tolerance: held: observed=None, expected=32"
+    },
+    {
+      "mutant": "double_duration",
+      "detected": true,
+      "reason": "double_duration: held: observed=None, expected=0"
+    },
+    {
+      "mutant": "any_is_retention_only",
+      "detected": true,
+      "reason": "any_is_retention_only: held: observed=None, expected=2"
+    },
+    {
+      "mutant": "recovery_includes_initial_retention",
+      "detected": true,
+      "reason": "recovery_includes_initial_retention: held_recovery: observed=0, expected=None"
+    },
+    {
+      "mutant": "recovery_is_exclusive_or_suppressed_after_retention",
+      "detected": true,
+      "reason": "recovery_is_exclusive_or_suppressed_after_retention: held_recovery: observed=None, expected=4"
+    },
+    {
+      "mutant": "retention_is_initial_true_only",
+      "detected": true,
+      "reason": "retention_is_initial_true_only: held_retention: observed=0, expected=None"
+    },
+    {
+      "mutant": "recovery_precedence",
+      "detected": true,
+      "reason": "recovery_precedence: classification: observed=recovery, expected=retention"
+    },
+    {
+      "mutant": "onset_is_confirmation",
+      "detected": true,
+      "reason": "held onset mislabeled as confirmation"
+    }
+  ],
+  "synthetic_pipeline": {
+    "event_rows_checked": 19200,
+    "AUC_rows_checked": 1600,
+    "DID_rows_checked": 11520,
+    "complete_case_DID_rows": 4752,
+    "nonzero_full_cohort_DID_rows": 2496,
+    "nonzero_complete_raw_DID_rows": 1200,
+    "maximum_AUC_difference": 2.842170943040401e-14,
+    "cohort": {
+      "archetype_counts": {
+        "always": 10,
+        "later": 6,
+        "both": 14,
+        "never": 10
+      },
+      "event_rates": {
+        "held": 0.75,
+        "held_recovery": 0.5,
+        "held_retention": 0.6
+      },
+      "overlap_rate": 0.35,
+      "exclusive_classification_counts": {
+        "retention": 24,
+        "none": 10,
+        "recovery": 6
+      },
+      "recovery_fraction_among_ever_dropped": 0.6666666666666666,
+      "recovery_fraction_among_initially_below": 0.375,
+      "reported_recovery_fraction_all_seeds": 0.5,
+      "post_treatment_selection_warning": "Alternative conditional denominators are descriptive, not an automatic causal repair"
+    },
+    "time_roles": [
+      {
+        "archetype": "always",
+        "retention": 0,
+        "recovery_onset_index": null,
+        "first_false_index": null,
+        "source_event_time": null,
+        "confirmation_time": null,
+        "time_after_first_false": null,
+        "restricted_recovery_score": 319.51
+      },
+      {
+        "archetype": "later",
+        "retention": null,
+        "recovery_onset_index": 40,
+        "first_false_index": 0,
+        "source_event_time": 20.01,
+        "confirmation_time": 37.51,
+        "time_after_first_false": 20.0,
+        "restricted_recovery_score": 20.01
+      },
+      {
+        "archetype": "both",
+        "retention": 0,
+        "recovery_onset_index": 120,
+        "first_false_index": 80,
+        "source_event_time": 60.01,
+        "confirmation_time": 77.51,
+        "time_after_first_false": 20.0,
+        "restricted_recovery_score": 60.01
+      },
+      {
+        "archetype": "never",
+        "retention": null,
+        "recovery_onset_index": null,
+        "first_false_index": 0,
+        "source_event_time": null,
+        "confirmation_time": null,
+        "time_after_first_false": null,
+        "restricted_recovery_score": 319.51
+      }
+    ],
+    "scope": "Actual compute_recovery/interactions/selected pointwise summaries on synthetic scaffold; not validate_run/run_analysis or physical trajectory feasibility"
+  },
+  "bootstrap": {
+    "iterations": 512,
+    "seed": 2026090406,
+    "groups": [
+      {
+        "group": "none_finite",
+        "finite_n": 0,
+        "mean": null,
+        "lower": null,
+        "upper": null,
+        "valid_bootstrap_replicates_calculated_independently": 0,
+        "empty_bootstrap_replicates_calculated_independently": 512,
+        "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+      },
+      {
+        "group": "one",
+        "finite_n": 40,
+        "mean": 1.0,
+        "lower": 1.0,
+        "upper": 1.0,
+        "valid_bootstrap_replicates_calculated_independently": 512,
+        "empty_bootstrap_replicates_calculated_independently": 0,
+        "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+      },
+      {
+        "group": "one_finite",
+        "finite_n": 1,
+        "mean": 7.0,
+        "lower": 7.0,
+        "upper": 7.0,
+        "valid_bootstrap_replicates_calculated_independently": 337,
+        "empty_bootstrap_replicates_calculated_independently": 175,
+        "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+      },
+      {
+        "group": "zero",
+        "finite_n": 40,
+        "mean": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_bootstrap_replicates_calculated_independently": 512,
+        "empty_bootstrap_replicates_calculated_independently": 0,
+        "source_interval_type": "joint-seed-resampling_pointwise_percentile_95pct"
+      }
+    ],
+    "same_joint_draws_across_groups": true,
+    "inference_limit": "Empirical fixed-cohort resampling diagnostic, not boundary-valid population CI; sparse finite groups also have unreported empty draws",
+    "iid_Bernoulli_example_p_point01_n40_probability_all_zero": 0.6689717585696805
+  },
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "upstream_modules_unchanged": 12,
+  "all_preregistered_robust_checks_passed": true,
+  "optimized_python": true,
+  "candidate_cli_default_refuses_real_pipeline": true,
+  "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3"
+  },
+  "no_real_trajectories_or_new_lean": true,
+  "elapsed_seconds": 17.981578323000008,
+  "review_disposition": "QUALIFIED_SOURCE_AND_SYNTHETIC_CONFORMANCE;NOT_PROJECT_FREEZE_OR_POPULATION_INFERENCE_APPROVAL"
+}

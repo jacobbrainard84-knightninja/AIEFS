@@ -1,0 +1,28 @@
+{
+  "current_ledger_rows": 111,
+  "completed004_rows": 108,
+  "completed005_rows": 109,
+  "prior109_rows_preserved": true,
+  "formal_labels_unchanged": 94,
+  "original_and_extracted_normal_optimized_runs_observed_successful": true,
+  "all_six_scientific_result_groups_agree": true,
+  "critical_inline_files_equal_actual_extracted_sources": 7,
+  "verified_source_acquisition_files_unchanged": {
+    "main": 28,
+    "inbox": 37
+  },
+  "upstream_dependency_modules_unchanged_each_run": 12,
+  "preregistered_science_preserved_admin_notice_post_execution": true,
+  "protected004_critical_files": 8,
+  "delivered005_evidence_files_preserved": 187,
+  "all_ten_branch_records_minimal": true,
+  "unclassified_outgoing_email_pattern_matches": 0,
+  "intentionally_synthetic_fixture_addresses_distinguished": 2,
+  "ledger_reference_count": 76,
+  "unpacked_log_count": 150,
+  "all_ledger_references_unpacked": true,
+  "scope": "Local owned-packet consistency and scoped privacy hygiene; not scientific reexecution, independent approval, arbitrary-code security, real S01 or project freeze",
+  "zip_crc_verified": true,
+  "all_members_match_selected_workspace_files": true,
+  "receipt_included_and_final_archive_reverified": true
+}

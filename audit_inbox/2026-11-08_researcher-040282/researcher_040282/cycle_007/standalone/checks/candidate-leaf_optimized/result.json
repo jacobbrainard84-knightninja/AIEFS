@@ -1,0 +1,36 @@
+{
+  "mode": "candidate-leaf",
+  "optimized_python": true,
+  "tests_run": 11,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "failure_methods": [],
+  "error_methods": [],
+  "reduced_alphabet": {
+    "ordered_pairs": 2592,
+    "mismatches": 0,
+    "false_accepts": 0,
+    "false_rejects": 0
+  },
+  "fixture_group_counts": {
+    "missing_real": 2,
+    "missing_imag": 2,
+    "nan_positions": 2,
+    "reduced_alphabet": 2592,
+    "complex_exactness": 12,
+    "real_exactness": 15,
+    "guards": 14,
+    "empty_scalar": 24,
+    "views": 8,
+    "fallback": 12,
+    "preservation": 4
+  },
+  "source_boundary": {
+    "mode": "candidate-leaf",
+    "simulation_or_validation_entrypoints_called": false,
+    "no_patch_on_import": true
+  },
+  "verified_source_files_unchanged": 2,
+  "elapsed_seconds": 0.1575647319999689
+}

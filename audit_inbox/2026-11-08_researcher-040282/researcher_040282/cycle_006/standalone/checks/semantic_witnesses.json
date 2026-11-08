@@ -1,0 +1,72 @@
+{
+  "cohort": {
+    "archetype_counts": {
+      "always": 10,
+      "later": 6,
+      "both": 14,
+      "never": 10
+    },
+    "event_rates": {
+      "held": 0.75,
+      "held_recovery": 0.5,
+      "held_retention": 0.6
+    },
+    "overlap_rate": 0.35,
+    "exclusive_classification_counts": {
+      "retention": 24,
+      "none": 10,
+      "recovery": 6
+    },
+    "recovery_fraction_among_ever_dropped": 0.6666666666666666,
+    "recovery_fraction_among_initially_below": 0.375,
+    "reported_recovery_fraction_all_seeds": 0.5,
+    "post_treatment_selection_warning": "Alternative conditional denominators are descriptive, not an automatic causal repair"
+  },
+  "time_roles": [
+    {
+      "archetype": "always",
+      "retention": 0,
+      "recovery_onset_index": null,
+      "first_false_index": null,
+      "source_event_time": null,
+      "confirmation_time": null,
+      "time_after_first_false": null,
+      "restricted_recovery_score": 319.51
+    },
+    {
+      "archetype": "later",
+      "retention": null,
+      "recovery_onset_index": 40,
+      "first_false_index": 0,
+      "source_event_time": 20.01,
+      "confirmation_time": 37.51,
+      "time_after_first_false": 20.0,
+      "restricted_recovery_score": 20.01
+    },
+    {
+      "archetype": "both",
+      "retention": 0,
+      "recovery_onset_index": 120,
+      "first_false_index": 80,
+      "source_event_time": 60.01,
+      "confirmation_time": 77.51,
+      "time_after_first_false": 20.0,
+      "restricted_recovery_score": 60.01
+    },
+    {
+      "archetype": "never",
+      "retention": null,
+      "recovery_onset_index": null,
+      "first_false_index": 0,
+      "source_event_time": null,
+      "confirmation_time": null,
+      "time_after_first_false": null,
+      "restricted_recovery_score": 319.51
+    }
+  ],
+  "late_tail": {
+    "start": 310.01,
+    "fully_confirmed_event": false,
+    "restricted_time": 319.51
+  }
+}

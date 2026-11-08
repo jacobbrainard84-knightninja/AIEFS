@@ -1,0 +1,118 @@
+{
+  "tested_source_commit": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "verified_unchanged_upstream_modules": 10,
+  "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.1"
+  },
+  "regression_runs": [
+    {
+      "name": "red_legacy",
+      "returncode": 1,
+      "tests_run": 3,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0,
+      "success": false,
+      "elapsed_seconds": 0.5211915639999916
+    },
+    {
+      "name": "green_candidate",
+      "returncode": 0,
+      "tests_run": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true,
+      "elapsed_seconds": 3.4977770870000313
+    },
+    {
+      "name": "green_candidate_optimized",
+      "returncode": 0,
+      "tests_run": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true,
+      "elapsed_seconds": 5.339890157999889
+    }
+  ],
+  "all_preregistered_acceptance_conditions_met": true,
+  "legacy_witness": {
+    "fixture": [
+      0.41,
+      0.31,
+      0.27
+    ],
+    "actual_winners": [
+      2,
+      2,
+      7
+    ],
+    "assumed_legacy_winners": [
+      7,
+      2,
+      7
+    ],
+    "left_identity_residual_real_operator": -0.02121459694983044,
+    "legacy_stdout": "Synthetic proposal-equalization bridge checks: PASS",
+    "legacy_actual_operator_calls": 0,
+    "candidate_default_actual_operator_calls": 1
+  },
+  "candidate_default_positive": {
+    "fixture": [
+      0.41,
+      0.27,
+      0.31
+    ],
+    "actual_winners": [
+      7,
+      2,
+      7
+    ],
+    "gate_on": true,
+    "selected_projected_output": [
+      0.36064814814764723,
+      0.25147058823492435,
+      0.27268518518480644
+    ],
+    "capacity": 0.6333333333333333,
+    "epsilon": 1e-12,
+    "minimum_winner_margin": 0.05174291938983033,
+    "left_residual": 1.3877787807814457e-17,
+    "right_residual": -4.85722573273506e-17,
+    "max_oracle_errors": {
+      "y": 5.551115123125783e-17,
+      "q": 0.0,
+      "scales": 1.1102230246251565e-16,
+      "edge_scales": 1.1102230246251565e-16
+    },
+    "absolute_tolerance": 1e-14,
+    "relative_tolerance": 0.0
+  },
+  "perturbation_seed": 2026090405,
+  "positive_perturbation_cases": 64,
+  "default_plus_perturbation_cases": 65,
+  "max_abs_left_residual": 5.551115123125783e-17,
+  "max_abs_right_residual": 7.806255641895632e-17,
+  "max_oracle_errors": {
+    "y": 5.551115123125783e-17,
+    "q": 0.0,
+    "scales": 1.1102230246251565e-16,
+    "edge_scales": 1.1102230246251565e-16
+  },
+  "absolute_tolerance": 1e-14,
+  "relative_tolerance": 0.0,
+  "minimum_valid_winner_margin": 0.029937150824232206,
+  "elapsed_seconds": 9.747308070999907,
+  "limits": {
+    "no_new_lean_compilation": true,
+    "finite_synthetic_checks_not_universal_float64_proof": true,
+    "legacy_other_selftest_blocks_not_replaced_by_companion": true,
+    "saved_production_bridge_replay_not_rerun": true,
+    "no_engine_or_oracle_patch_or_v41_result_claimed": true,
+    "not_independent_review_library_approval_or_coupled_locking": true
+  }
+}

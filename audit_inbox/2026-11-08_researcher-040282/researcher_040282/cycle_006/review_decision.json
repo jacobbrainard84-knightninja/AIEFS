@@ -1,0 +1,41 @@
+{
+  "reviewed_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "disposition": "QUALIFIED_SOURCE_AND_SYNTHETIC_CONFORMANCE",
+  "positive_scope": [
+    "held/retention/recovery/classification and first/sustained helpers on stated finite cases",
+    "actual synthetic compute_recovery event rows, AUC and event DID values",
+    "specified full-cohort pointwise rates and boundary bootstrap mechanisms",
+    "opt-in guard and unchanged12 public modules"
+  ],
+  "not_approved": [
+    "project freeze or artifact/claim registry promotion",
+    "real S01 output changes or zero-impact claims",
+    "population-valid boundary confidence intervals",
+    "full validate_run/run_analysis/provenance/atomic bundle audit",
+    "all floating schedules or translation invariance at tolerance boundaries",
+    "metric-channel swaps or distinct target-channel behavior: synthetic masks/targets are deliberately shared",
+    "physical trajectory feasibility, step-level crossings, full dynamics or Lean theorem"
+  ],
+  "known_work_acknowledged": [
+    "frozen-v4 exact-boundary miss already known; frozen-v4 module not executed for this audit",
+    "E17 saved-grid/tolerance wording corrections already present on main",
+    "A-F2/A-F3 bootstrap/onset-observability limitations previously reported; current review makes candidate contract precise, not new novelty claims"
+  ],
+  "scope_of_gray_cases": {
+    "policy_boundary_gray": 605,
+    "accepted_in_this_environment": 553,
+    "rejected_in_this_environment": 52,
+    "counted_as_conformance_passes": 0,
+    "boundary_band": 1e-10
+  },
+  "next_owner_seat_choices": [
+    "agree that event_time means retrospective qualifying-run onset, not confirmation or time since first drop",
+    "acknowledge overlapping event flags versus exclusive classification and fixed40 denominator",
+    "choose whether finite-support capped scores are the intended comparisons; changing the cap/denominator is an estimand change",
+    "require explicit empirical/bootstrap diagnostic limitations or separately chosen population inference before citing confidence claims",
+    "independently review this harness/counterexamples and any real-data execution before freeze"
+  ],
+  "normal_and_optimized_scientific_results_agree": true,
+  "no_source_patch_or_remote_submission": true,
+  "peer_review_of_this_harness_received": false
+}

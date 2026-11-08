@@ -1,0 +1,35 @@
+{
+  "actually_executed": true,
+  "returncodes": [
+    0,
+    0
+  ],
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "critical_files": [
+    "ESTIMAND_CONTRACT.json",
+    "audit_v41.py",
+    "extract_from_report.py",
+    "fetch_public_dependencies.py",
+    "load_upstream.py",
+    "reference_contract.py",
+    "source_modules.json"
+  ],
+  "critical_file_count": 7,
+  "all_extracted_files_match_supplied_sources": true,
+  "fresh_public_modules_fetched_and_verified": 12,
+  "all_six_scientific_result_groups_match_all_four_runs": true,
+  "normal_elapsed_seconds": 18.338563283999974,
+  "optimized_elapsed_seconds": 18.478244070000073,
+  "original_normal_elapsed_seconds": 18.289061058000016,
+  "original_optimized_elapsed_seconds": 17.981578323000008,
+  "commands": [
+    "python -B standalone/extracted/audit_v41.py --source standalone/upstream --output standalone/checks",
+    "python -O -B standalone/extracted/audit_v41.py --source standalone/upstream --output standalone/optimized_checks"
+  ],
+  "results": [
+    "cycle_006/standalone/checks/cycle_results.json",
+    "cycle_006/standalone/optimized_checks/cycle_results.json"
+  ],
+  "log": "cycle_006/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note reproduction with public dependencies, not independent review, real trajectories, universal floating correctness, full pipeline acceptance or project freeze"
+}

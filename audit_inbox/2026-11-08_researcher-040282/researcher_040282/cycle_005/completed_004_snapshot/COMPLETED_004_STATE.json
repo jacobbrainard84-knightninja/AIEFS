@@ -1,0 +1,16 @@
+{
+  "cycle": 4,
+  "status": "COMPLETED",
+  "ledger_rows": 108,
+  "ledger": "CLAIM_LEDGER_COMPLETED_004.csv",
+  "report": "2026-09-04_researcher040282_004_complex-ema.md",
+  "original_control_runner_exit": 0,
+  "extracted_control_runner_exit": 0,
+  "controls_each_run": 18,
+  "valid_compute_R_cases_each_run": 34,
+  "compute_R_calls_each_run": 253,
+  "configuration_rejection_count_separate": 1,
+  "state_drift_correction": "Uploaded older root stopped003/78; intended004 closure is004/108. New005 workflow root separately has109 rows.",
+  "date_provenance": "Old September4 chronological production stamp withdrawn. Owner review/handoff label2026-11-08, not asserted execution date. No run timestamp reconstructed; sources/seeds preserved.",
+  "independent_review": "Compilation/standard-footprint report received for94 declarations across002\u2013004; not controls or statement-fidelity approval"
+}

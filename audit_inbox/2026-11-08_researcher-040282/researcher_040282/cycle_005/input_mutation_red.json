@@ -1,0 +1,8 @@
+{
+  "pre_fix_returncode": 1,
+  "single_control_failures": 1,
+  "errors": 0,
+  "reason": "VerificationError not raised: first candidate accepted a replacement of the requested fixture by mutation",
+  "scope": "Own candidate flaw; no claim of mutation by the actual upstream pure helper",
+  "log": "input_mutation_red.log"
+}

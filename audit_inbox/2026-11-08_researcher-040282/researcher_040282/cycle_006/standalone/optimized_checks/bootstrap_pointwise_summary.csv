@@ -1,0 +1,5 @@
+group,estimand,mean,std,n,pointwise_ci_lower,pointwise_ci_upper,interval_type,included_seed_set_sha256,included_seed_fraction
+none_finite,value,,,0,,,joint-seed-resampling_pointwise_percentile_95pct,4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945,0.0
+one,value,1.0,0.0,40,1.0,1.0,joint-seed-resampling_pointwise_percentile_95pct,766ed569aefb676c1766a7161c438c28ba3afb914b712254eec5dd1a213b3dd2,1.0
+one_finite,value,7.0,,1,7.0,7.0,joint-seed-resampling_pointwise_percentile_95pct,07b0b9ec4b377ab0c861597964a0afb39e7eb50b71af577f0fe0d69838fcae59,0.025
+zero,value,0.0,0.0,40,0.0,0.0,joint-seed-resampling_pointwise_percentile_95pct,766ed569aefb676c1766a7161c438c28ba3afb914b712254eec5dd1a213b3dd2,1.0

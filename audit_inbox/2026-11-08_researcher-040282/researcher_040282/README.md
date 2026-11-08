@@ -1,128 +1,101 @@
-# Researcher 040282 — self-directed AIEFS research
+# Researcher040282 — self-directed AIEFS research
 
-Say **Continue** to start the next bounded cycle. I will read saved state and
-feedback, select the next useful dependency, preregister its domain/falsifiers,
-perform meaningful research and adversarial checks, compile Lean when appropriate,
-and deliver a standalone Markdown audit for owner upload. No new technical
-assignment is necessary.
+Supporting Researcher001 and AuditorSeat002 with source-faithful research,
+independent specifications, red-team controls and appropriately scoped Lean work.
+Prepared is not uploaded; submitter-local tests are not independent approval.
 
-This is user-triggered work, not claimed background activity between turns.
-I do not contact other agents, push/submit files, edit frozen/team-owned
-sources, or promote registry claims without separate authorization.
+## Latest completed local cycle —007
 
-## Persistent workflow
+**Authority-safe complex-NaN comparison proposal; tested, not installed or
+source-authority approved.**
 
-- `WORKFLOW.md` — procedure, evidence labels, scope and publication boundaries.
-- `STATE.json` — actual last outcome and immediate resumption action.
-- `RESEARCH_QUEUE.md` — chosen next dependency and revisable later candidates.
-- `CLAIM_LEDGER.csv` — individually scoped statements and evidence/status.
+Primary standalone note:
+[007 complex-NaN comparator](2026-09-04_researcher040282_007_complex-nan-comparator.md).
+Optional evidence: `researcher040282-cycle007-complex-nan-comparator.zip`.
+Owner handoff: `cycle_007/HANDOFF.md`.
+Tested main: `eb3933c196ee19e80e1621ae80d89ca72e6d9485`.
 
-Compiler success, exact finite checks, floating-point source checks, independent
-review, source execution linkage, integration, and publication stay separate.
-Self-red-teaming is not Auditor Seat 002 approval.
+Known B-F6 still affects the original engine predicate: a NaN in one complex
+component can hide a different finite value in the other. The modular helper
+already compares components separately.007 adopts that pattern as a NEW helper,
+not a novel algorithm or a production-data finding.
 
-## Latest local contribution — Cycle 003
+- Actual engine:4 intended failing contracts/0 errors among11, normally and `-O`.
+- New leaf, full-engine comparison-only memory candidate and AST-extracted modular
+  helper:11/11 pass each, normally and `-O`.
+- Reduced alphabet:2592 ordered pairs each; original220 false accepts,0 false
+  rejects; three conforming targets0 mismatches. Not220 affected saved records.
+-8/8 intended wrong-model/input-mutation controls detected in both modes.
+- Eight critical files extracted byte-for-byte,2 public Python sources freshly
+  fetched and full runner actually repeated with matching non-timing results.
 
-**Upload this single file:**
+**Frozen engine ART-0702 remains unchanged.** Only one function AST node changes
+in the clearly labelled memory-only test candidate;98 others are preserved.
+No full equivalence validation, simulation, real data, finiteness census, new
+Lean build, lock/registry edit or production installation. Existing whole-element
+max-difference diagnostics are outside this predicate-only proposal. Owner/seat
+must select an authorized new companion/successor/erratum route.
 
-`2026-11-07_researcher040282_003_weight-update-bridge.md`
+## State, dates, evidence and review
 
-Its critical Lean/checker code is entirely inline. Optional supporting archive:
-`researcher040282-cycle003-weight-update-bridge.zip`.
+- `STATE.json`:007 local proposal complete; next008 separately fresh-checks public
+  oracle row uniqueness. No unattended process or automatic upload.
+- `CLAIM_LEDGER.csv`:112 unique rows, preserving prior111 and94 formal labels.
+  Completed004108 /005109 /006111 are separate protected states.
+- `EVIDENCE_INDEX.json`: every current claim citation available unpacked.
+- `HISTORICAL_ARCHIVE_LOG_MAP.csv`: old archive logs → unchanged unpacked paths.
+- `cycle_007/packet_validation.json`: owned-packet closure/inline/reproduction
+  consistency; not scientific reexecution or independent approval.
+- Session preparation label2026-09-04, Atlantic/Reykjavik. Prior owner/repository
+  labels2026-11-08 are retained, not inferred execution chronology. Historical
+  006 administrative notice remains `cycle_006/ADMINISTRATIVE_PROVENANCE.md`.
 
-The new compiled module has **44 declarations**, including helper lemmas:
+Current selected inbox tip e72bdd2b2c29d815740c321df0ad8703de378e37; six selected
+notes unchanged. No005/006/007 named follow-up found in bounded navigation; not
+an exhaustive private-feedback search or latest-packet receipt confirmation.
 
-- clipped zero-diagonal proposal row envelopes;
-- applied factors on both global guard branches, with epsilon retained;
-- division-free capacity bounds and ratio bounds only at positive rows;
-- positivity/row invariance from the first step and the H0 exception at time zero;
-- exact matrix-update-to-edge recurrence;
-- conditional existential per-edge OFF/ON statements and tail-start variants,
-  composed with the existing upstream scalar comparison core.
+R001 previously reproduced B-F6's mechanism. They have NOT reviewed this new
+helper/harness. Their reported94 prior Lean compilations/standard footprints
+(22/44/22+6,zero warnings/errors) do not approve statement fidelity, our controls,
+full S01 or a real-array finiteness census. New007 remains unreviewed/unuploaded.
 
-The package freshly recompiles **22 prior local declarations and five upstream
-ones**. Those are reused dependencies, not new results/authorship credit. All
-accepted printed axiom footprints are restricted to `propext`, `Classical.choice`,
-and `Quot.sound`, with no warnings/errors and complete coverage.
-
-Observed controls: **17 intended outcomes**, five positive and twelve negative;
-384 exact Fraction property cases. Separate actual-engine adaptive weight-step
-comparisons: **24 passed**, 4 active/20 inactive, maximum absolute error
-`2.7755575615628914e-17` against fixed absolute `5e-15`, relative zero.
-Those source comparisons replace compute_R by a controlled driver and test only
-weights, not physical coherence/EMA/delay evolution. All five critical files were
-also actually extracted from the single Markdown into a fresh directory: all
-17 controls and 24 source comparisons passed again. This is local self-
-reproduction, not independent-seat review.
-
-**Not established:** actual future coherence bands, full Python/float64 linkage,
-closed-loop phase-locking, gated-OFF composition, complete network freezing,
-explicit freeze times, delayed/EMA dynamics correctness, or stability.
-The conditional ON/OFF conclusions do not supply their own infinite-tail bands.
-
-**Status:** local self-red-team; independent review, owner upload, publication,
-and integration are unconfirmed. No remote source change or bot contact occurred.
+All12 branch-acquisition records are structurally minimal; no personal commit
+contacts/signed payloads retained. Historical source fixture's two intentionally
+synthetic Git addresses remain explicitly distinguished from real metadata.
+Historical delivered reports, archives and scientific evidence are unchanged.
 
 ## Reproduction
 
-The audit gives extraction and complete public dependency commands. With the
-recorded trusted Lean/Mathlib available, from `cycle_003/`:
+The007 note contains all8 critical files, independent scalar-component oracle,
+essential outputs, plan and extraction instructions. Available NumPy required;
+no package/compiler installation. Source fetcher retrieves2 reviewed public
+files only, executes none and requests no raw author API records. Loader performs
+full engine import but only the predicate is invoked; modular helper is only
+AST-extracted. This is owned-code reproduction, not arbitrary-code security.
+Actual extracted run: `cycle_007/standalone_reproduction.json` and
+`cycle_007/standalone/reproduction.log`.
 
-```bash
-export R040282_MATHLIB=/absolute/path/to/pinned-mathlib4
-export R040282_LEAN_BIN=/absolute/path/to/compiler/bin/lean
-# Optional: export R040282_CACHE=/owned/scratch/directory
-PYTHONOPTIMIZE=0 PYTHONDONTWRITEBYTECODE=1 python check_cycle.py > cycle_checks.log 2>&1
-```
+## Prior contributions, preserved
 
-The compiler path needs a sibling `lake`. The proof harness uses Python's standard
-library, checks the recorded toolchain/Mathlib, freshly compiles its two local
-proof dependencies, and compiles each bridge/control in a fresh directory. Run
-with assertions enabled. Dependency/import failures are blockers, not successful
-mathematical rejections. This is a bounded supplied-file checker, not secure
-intake of arbitrary Lean code or a replacement for the receiving seat's CI.
+-001 guarded-map paper/exact groundwork;00222 guarded-map Lean declarations;
+  00344 new proposal/gate/conditional OFF/ON declarations.
+-00422 complex-EMA+6 derived-drive declarations; source-shaped unit-disk,
+  shared/fixed-input facts, not coupled locking. Completed108-row snapshot under
+  `cycle_005/completed_004_snapshot/`.
+-005 feedback/addendum/privacy/log-navigation repair and a new-file branch-
+  faithful bridge self-test proposal. Final22 methods normally/-O,65 finite
+  oracle cases; actual extracted rerun. Pinned ART-0050 unchanged/unreplayed.
+  Delivered `2026-11-08_researcher040282_005_review-response.md` and short004 addendum.
+-006 qualified held-event source/synthetic conformance, not project freeze or
+  population inference.3072 exhaustive small,2350 translated-grid,60 nominal,
+  12 other robust cases;605 gray excluded;8 mutants; selected19200event/1600AUC/
+  11520DID fields checked and note reproduced. Overlap/onset/risk-set/cap/bootstrap
+  limits explicit. Report: `2026-09-04_researcher040282_006_v41-contract-review.md`.
 
-Exact controls without Lean:
+## Next bounded cycle —008, not started
 
-```bash
-PYTHONOPTIMIZE=0 PYTHONDONTWRITEBYTECODE=1 python check_cycle.py --exact-only
-```
-
-Optional source comparison, with NumPy/pandas and a reviewed engine source:
-
-```bash
-export R040282_AIEFS_ENGINE=/absolute/path/to/reviewed/aief_experiment_engine_v1.py
-PYTHONOPTIMIZE=0 PYTHONDONTWRITEBYTECODE=1 python compare_source.py
-```
-
-`build_packet.py` assembles the audit from actual source/results.
-`one_file_reproduce.py` extracts its critical blocks and actually reruns the
-proof/exact checker and controlled-source checker with the public dependencies.
-`build_packet.py --package` creates the optional bundle once final records exist.
-The copied `FreezeCore.lean` is an upstream reproduction fixture, not something
-to duplicate as new authoritative definitions during integration.
-
-Lean/compiler and Mathlib binaries/cache are disposable and excluded from saved
-snapshots. Their loss was observed at this cycle's start. Sources, setup helpers,
-metadata and logs persist; inspect availability before reinstalling, and preserve
-prior-cycle evidence rather than overwriting it.
-
-## Next selected work
-
-Complex EMA unit-disk preservation, reported-coherence symmetry/diagonal/range,
-and resulting drive bounds, followed by exact fixed-input recurrence. This is a
-new actual-source component, not a claim that fixed input proves coupled locking.
-Feedback and already-landed work are checked before proceeding.
-
-## Earlier packets, preserved separately
-
-- **001:** `2026-11-07_researcher040282_gate-foundations.md` and
-  `researcher040282-gate-foundations.zip`. Paper/exact groundwork and 96 isolated
-  eta=mu=gamma=0 engine/helper comparisons; not compiled at delivery.
-- **002:** `2026-11-07_researcher040282_002_guarded-capacity-lean.md` and
-  `researcher040282-cycle002-guarded-capacity.zip`. 22 compiled finite-map
-  declarations, nine controls, actual one-file reproduction. Does not silently
-  upgrade every earlier continuity, branch-linearity, or rate-law observation.
-
-Historical ledger references remain references to those separate packets; the
-latest support ZIP is not intended to republish every earlier audit/data file.
+Fresh-check current main/feedback, then one separate public-oracle semantic-key
+uniqueness repair if still open. Require failing-before/passing-after synthetic
+controls; no real S01 201-vs200 claim. If fixed, avoid duplication and choose a
+load-bearing scientific prerequisite. No merged uploader rework. Queue and
+standing boundaries: `RESEARCH_QUEUE.md`, `WORKFLOW.md`.

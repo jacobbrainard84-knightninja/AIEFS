@@ -1,0 +1,26 @@
+{
+  "current_ledger_rows": 109,
+  "completed004_ledger_rows": 108,
+  "original108_statements_and_evidence_labels_preserved": true,
+  "compiled_labels_unchanged": 94,
+  "critical_inline_files_match_actual_extracted_run": 6,
+  "historical004_critical_sources_and_report_preserved": 8,
+  "standalone_runner_observed_exit": 0,
+  "standalone_counts": [
+    3,
+    22,
+    22
+  ],
+  "reported_three_metadata_files_structurally_minimized": true,
+  "all_eight_branch_metadata_records_minimal": true,
+  "outgoing_email_pattern_matches": 0,
+  "all_ledger_references_unpacked": true,
+  "archive_only_ledger_references": 0,
+  "ledger_reference_count": 50,
+  "unpacked_log_count": 141,
+  "no_remote_actions_or_current_candidate_review_claim": true,
+  "zip_crc_verified": true,
+  "all_members_match_selected_workspace_files": true,
+  "receipt_included_then_final_archive_reverified": true,
+  "scope": "Local owned-packet consistency/privacy hygiene; not fresh Lean compilation, arbitrary-code security, or independent approval"
+}

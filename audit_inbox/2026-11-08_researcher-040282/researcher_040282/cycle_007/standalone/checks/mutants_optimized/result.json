@@ -1,0 +1,195 @@
+{
+  "mode": "mutants",
+  "mutants_detected": 8,
+  "setup_errors_credited_as_detections": 0,
+  "records": [
+    {
+      "mutant": "whole_complex_missingness",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": false,
+      "observed": true,
+      "precall_input": {
+        "left": {
+          "shape": [
+            1
+          ],
+          "dtype": "complex128",
+          "values_repr": "[(nan+1j)]"
+        },
+        "right": {
+          "shape": [
+            1
+          ],
+          "dtype": "complex128",
+          "values_repr": "[(nan+99j)]"
+        }
+      }
+    },
+    {
+      "mutant": "real_only",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": false,
+      "observed": true,
+      "precall_input": {
+        "left": {
+          "shape": [
+            1
+          ],
+          "dtype": "complex128",
+          "values_repr": "[(1+1j)]"
+        },
+        "right": {
+          "shape": [
+            1
+          ],
+          "dtype": "complex128",
+          "values_repr": "[(1+2j)]"
+        }
+      }
+    },
+    {
+      "mutant": "imaginary_only",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": false,
+      "observed": true,
+      "precall_input": {
+        "left": {
+          "shape": [
+            1
+          ],
+          "dtype": "complex128",
+          "values_repr": "[(1+1j)]"
+        },
+        "right": {
+          "shape": [
+            1
+          ],
+          "dtype": "complex128",
+          "values_repr": "[(2+1j)]"
+        }
+      }
+    },
+    {
+      "mutant": "approximate_equality",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": false,
+      "observed": true,
+      "precall_input": {
+        "left": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "values_repr": "[1.0]"
+        },
+        "right": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "values_repr": "[1.0000000000000002]"
+        }
+      }
+    },
+    {
+      "mutant": "ignore_dtype",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": false,
+      "observed": true,
+      "precall_input": {
+        "left": {
+          "shape": [
+            1
+          ],
+          "dtype": "int32",
+          "values_repr": "[1]"
+        },
+        "right": {
+          "shape": [
+            1
+          ],
+          "dtype": "int64",
+          "values_repr": "[1]"
+        }
+      }
+    },
+    {
+      "mutant": "ignore_shape",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": false,
+      "observed": true,
+      "precall_input": {
+        "left": {
+          "shape": [
+            2,
+            3
+          ],
+          "dtype": "int64",
+          "values_repr": "[[0, 1, 2], [3, 4, 5]]"
+        },
+        "right": {
+          "shape": [
+            6
+          ],
+          "dtype": "int64",
+          "values_repr": "[0, 1, 2, 3, 4, 5]"
+        }
+      }
+    },
+    {
+      "mutant": "never_match_nan",
+      "detected": true,
+      "reason": "truth_value",
+      "expected": true,
+      "observed": false,
+      "precall_input": {
+        "left": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "values_repr": "[nan]"
+        },
+        "right": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "values_repr": "[nan]"
+        }
+      }
+    },
+    {
+      "mutant": "mutate_requested_input",
+      "detected": true,
+      "reason": "input_preservation",
+      "expected": "unchanged",
+      "observed": "mutated",
+      "precall_input": {
+        "left": {
+          "shape": [
+            2
+          ],
+          "dtype": "float64",
+          "values_repr": "[1.0, 2.0]"
+        },
+        "right": {
+          "shape": [
+            2
+          ],
+          "dtype": "float64",
+          "values_repr": "[3.0, 4.0]"
+        }
+      }
+    }
+  ],
+  "optimized_python": true,
+  "verified_source_files_unchanged": 2,
+  "elapsed_seconds": 0.1807528840000714
+}

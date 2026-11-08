@@ -1,0 +1,38 @@
+{
+  "current_main_tested": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "review_acquired_from_inbox": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+  "intake_note": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+  "researcher001_triage": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+  "evidence_kind": "Publicly acquired colleague reports of their own execution; not our reexecution of their witnesses",
+  "reviewer_main_basis": "942f8526daee5ac547f2e422101fa95c61eeef41",
+  "independent_compilation_reported": {
+    "002": 22,
+    "003": 44,
+    "004_EMA": 22,
+    "004_drive": 6
+  },
+  "compiled_total": 94,
+  "reported_warnings": 0,
+  "reported_errors": 0,
+  "reported_footprint": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "scope_exclusions": [
+    "library-grade statement-fidelity approval",
+    "integration decision",
+    "our check_cycle.py controls",
+    "our ZIP checkers",
+    "full S01 reanalysis",
+    "our4800 saved held-event comparisons",
+    "real-array finiteness census",
+    "new005 repair-candidate review"
+  ],
+  "additional_review_confirmation": "Coarse baseline ON bound fails to reach threshold; not evidence of OFF",
+  "uploader_disposition": "Owner reports PR10 uploader and PR11 checksum checker merged; supplied main head matches acquired head. No new uploader work; no behavioral certification of those merges here.",
+  "current_python_CI": ".github/workflows/repo-checks.yml exists on the tested source; withdraw the stale no-Python-CI generalization as a current-main claim",
+  "owner_receipt": "Actual audit-inbox intake and triage found; uploaded root ledger independently counted78 rows, versus108 at completed004",
+  "contact_or_remote_write_by_this_agent": false,
+  "reviewer_private_log_paths": "Mentioned by reviewer; not fetched or represented as included local evidence"
+}

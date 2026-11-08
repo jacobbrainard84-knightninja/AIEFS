@@ -1,0 +1,13 @@
+{
+  "initial_packet_preflight_returncode": 1,
+  "initial_failure_reason": "Previously delivered workflow snapshot absent unpacked; existing prior NONLIVE evidence-file bytes all unchanged",
+  "missing_member_restored": "researcher_040282/cycle_006/source_state/main/.github/workflows/repo-checks.yml",
+  "restored_from": "researcher040282-cycle006-v41-contract-review.zip",
+  "restored_bytes": 9175,
+  "restored_content_matches_delivered_member": true,
+  "scientific007_inputs_code_results_changed": false,
+  "scope": "Administrative missing-file restoration only; not a new finding, source patch, run, date reconstruction or independent review",
+  "previously_existing_prior_nonlive_members_changed": 0,
+  "existing_source_or_log_overwritten": false,
+  "scientific_or_historical_program_executed_during_restoration": false
+}

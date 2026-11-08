@@ -1,0 +1,241 @@
+{
+  "agent": "Researcher 040282",
+  "owner_instruction": "Self-direct meaningful, red-teamed research; create standalone audit files for owner upload. Continue resumes the next bounded cycle without a new technical assignment.",
+  "workflow": "WORKFLOW.md",
+  "queue": "RESEARCH_QUEUE.md",
+  "claim_ledger": "CLAIM_LEDGER.csv",
+  "last_updated_date": "2026-09-04",
+  "timezone": "Atlantic/Reykjavik",
+  "current_cycle": 4,
+  "current_status": "completed",
+  "current_directory": "cycle_004",
+  "current_question": "Formalize the actual complex EMA and reported-coherence component, its normalized-drive bounds, and precise shared/fixed-input memory laws.",
+  "current_answer": "28 new exact-real complex EMA/readout and drive/gate declarations compile cleanly with complete standard-only axiom coverage. All 18 controls and 34 actual-compute_R comparisons (253 calls), six wrong-model detections and a separate expected configuration rejection pass, including actual extraction/rerun of all seven critical Markdown files. No full delay-state/Python linkage or coupled locking theorem.",
+  "latest_completed_report": "2026-09-04_researcher040282_004_complex-ema.md",
+  "optional_supporting_bundle": "researcher040282-cycle004-complex-ema.zip",
+  "source_refresh": {
+    "date": "2026-09-04",
+    "branch_for_current_code": "main",
+    "commit": "ad58a46ae8da79c19b5484762363eb2e9f2f7923",
+    "selected_files_verified": 27,
+    "lean_files_searched": 19,
+    "active_project_lean_files_searched": 14,
+    "metadata": "cycle_004/source_state/main_selected.json",
+    "inbox_navigation_commit": "5c1ffed0377c4769154e9342464ce7265cf1c599",
+    "inbox_selected_files": 8,
+    "inbox_metadata": "cycle_004/source_state/inbox_selected.json",
+    "review_received": false,
+    "scope": "Selected read-only source/navigation refresh, including 14 active Lean files and five historical Lean fixtures; not a complete branch/assignment audit"
+  },
+  "tool_environment": {
+    "lean_setup_observed_exit": 0,
+    "mathlib_setup_observed_exit": 0,
+    "lean_version": "4.33.1",
+    "lean_compiler_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+    "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "disposable_cache": "/home/user/.cache/researcher040282",
+    "cache_persistence_guaranteed": false,
+    "setup_helpers": [
+      "cycle_004/prepare_lean.py",
+      "cycle_004/prepare_mathlib.sh"
+    ],
+    "note": "Official compiler binary and selected public Mathlib cache used; not a full Mathlib rebuild. Check availability before any reinstall. Proof sources, scripts and logs persist outside the cache.",
+    "cache_restored_this_cycle": true,
+    "cache_available_at_start": false
+  },
+  "in_progress": null,
+  "research_processes_running": [],
+  "next_cycle": 5,
+  "next_directory": "cycle_005",
+  "next_selected_work": "Conditional gated-OFF matrix-map certificate and finite-edge aggregation, after source/feedback refresh; full delayed phase/history transition remains queued.",
+  "immediate_next_action": "On the next Continue: read this STATE/latest audit and any owner/seat feedback; refresh relevant main/intake sources read-only and check for already-landed work. Reconstruct and preregister the precise gated-OFF premises and finite-edge threshold convention before tests. Check disposable tool-cache availability before restoration.",
+  "not_proved_or_promoted": [
+    "Machine-checked Python/float64 execution linkage",
+    "Complete delayed phase/history state transition",
+    "Actual long-time drive bands, coupled phase locking, or coupled stability",
+    "Gated-OFF composition, explicit freeze times, or complete finite-network aggregation",
+    "Selected-controller AUD-RATELAW",
+    "Novelty, independent approval, owner upload/publication or integration"
+  ],
+  "independent_review_received": false,
+  "owner_upload_confirmed": false,
+  "publication_status": "Locally prepared and self-reproduced; independent-seat review, owner upload, publication and integration unconfirmed",
+  "remote_changes_by_this_agent": false,
+  "contacted_other_bots": false,
+  "automatic_work_between_turns": false,
+  "previous_cycle": 3,
+  "previous_cycle_evidence": {
+    "formal_evidence": {
+      "source": "cycle_003/GateProposalBridge.lean",
+      "new_declaration_count": 44,
+      "fresh_positive_lean_exit": 0,
+      "verified_by_local_policy": true,
+      "positive_problems": [],
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "recompiled_dependencies": {
+        "GateFoundations": 22,
+        "FreezeCore": 5
+      },
+      "credit_boundary": "44 new bridge declarations; 22 prior local declarations reused unchanged; 5 upstream scalar-core declarations reused with proof body unchanged",
+      "results": "cycle_003/cycle_results.json",
+      "printed_new_axiom_footprints": 44,
+      "positive_log": "cycle_003/checks/positive.log",
+      "positive_warnings_or_errors": 0,
+      "scope": "Finite exact-real guarded adaptive weight component and conditional existential per-edge OFF/ON composition, with explicit future drive bands and H0; not Python/float64 linkage or coupled locking."
+    },
+    "adversarial_evidence": {
+      "control_count": 17,
+      "all_intended_outcomes_observed": true,
+      "runner_exit": 0,
+      "positive_controls": 5,
+      "negative_controls": 12,
+      "exact_fraction_suite": {
+        "case": "exact_fraction_suite",
+        "kind": "positive_exact",
+        "control_passed": true,
+        "cases": 384,
+        "active": 159,
+        "inactive": 225,
+        "capacity_zero": 88,
+        "zero_rows": 274
+      },
+      "limitations": "Closed-file research checker, not secure general Lean intake or independent-seat approval"
+    },
+    "source_comparison": {
+      "evidence_label": "NUMERICAL_CHECK",
+      "case_count": 24,
+      "active": 4,
+      "inactive": 20,
+      "all_passed": true,
+      "maximum_absolute_error": 2.7755575615628914e-17,
+      "absolute_tolerance": 5e-15,
+      "relative_tolerance": 0,
+      "scope": "finite controlled-R actual-engine weight steps; compute_R overridden only in process; not coupled dynamics or a float64 theorem",
+      "results": "cycle_003/source_comparison_results.json"
+    },
+    "standalone_reproduction": {
+      "report": "2026-11-07_researcher040282_003_weight-update-bridge.md",
+      "critical_files": [
+        "FreezeCore.lean",
+        "GateFoundations.lean",
+        "GateProposalBridge.lean",
+        "check_cycle.py",
+        "compare_source.py"
+      ],
+      "critical_blocks_match_sources": true,
+      "runner_exit": 0,
+      "source_runner_exit": 0,
+      "controls": 17,
+      "all_control_outcomes_repeated": true,
+      "source_case_count": 24,
+      "all_source_comparisons_repeated": true,
+      "scope": "Local self-reproduction with public dependencies, not independent review, publication, or integration",
+      "actually_executed": true,
+      "manifest": "cycle_003/standalone_manifest.json",
+      "results": "cycle_003/standalone_results.json",
+      "source_results": "cycle_003/standalone_source_results.json",
+      "log": "cycle_003/standalone_reproduction.log",
+      "source_log": "cycle_003/standalone_source.log"
+    },
+    "completed_this_cycle": [
+      "Read-only selected current-source/inbox refresh; no review received",
+      "Restored and actually exercised the trusted public compiler/Mathlib dependencies",
+      "Compiled 44 new declarations and freshly audited 22 prior/5 upstream declarations with credit kept separate",
+      "Observed all 17 intended adversarial/positive outcomes and 384 exact Fraction property cases",
+      "Compared 24 actual-engine nonzero-rate weight steps to an independent exact oracle with controlled in-process R",
+      "Actually extracted all five critical inline files and reran all 17 controls plus all 24 finite source comparisons",
+      "Prepared the complete critical code and essential proof/control evidence in one numbered standalone audit",
+      "Updated local ledger to 78 scoped records and selected the next missing EMA/coherence component"
+    ]
+  },
+  "artifact_validation_record": "cycle_004/packet_validation.json",
+  "formal_evidence": {
+    "new_sources": {
+      "cycle_004/CoherenceEMA.lean": 22,
+      "cycle_004/CoherenceDriveBridge.lean": 6
+    },
+    "runner_exit": 0,
+    "accepted_problems": [],
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "recompiled_dependencies": {
+      "GateFoundations": 22,
+      "FreezeCore": 5,
+      "GateProposalBridge": 44
+    },
+    "results": "cycle_004/cycle_results.json",
+    "scope": "Exact-real EMA/readout and drive/gate component composition, with prescribed phases/inputs; no full delay-state or Python/float64 linkage or coupled locking",
+    "new_declaration_count": 28,
+    "printed_new_axiom_footprints": 28,
+    "positive_warnings_or_errors": 0,
+    "credit_boundary": "28 new declarations including helpers; 66 prior local and five upstream scalar declarations reused unchanged, all freshly compiled"
+  },
+  "adversarial_evidence": {
+    "control_count": 18,
+    "positive_controls": 5,
+    "negative_controls": 13,
+    "all_intended_outcomes_observed": true,
+    "runner_exit": 0,
+    "false_math_count": 8,
+    "all_false_math_goals_contain_False": true
+  },
+  "source_comparison": {
+    "evidence_label": "NUMERICAL_CHECK",
+    "case_count": 34,
+    "compute_R_calls": 253,
+    "all_passed": true,
+    "maximum_C_error": 0.0,
+    "maximum_R_error": 2.220446049250313e-16,
+    "absolute_tolerance": 2e-14,
+    "relative_tolerance": 0,
+    "wrong_models_detected": 6,
+    "expected_configuration_rejection": 1,
+    "results": "cycle_004/source_comparison_results.json",
+    "scope": "Actual compute_R without replacement, clamped controlled phase/history states. 34 comparisons plus separate alpha=0 config rejection, not 35 valid comparisons. Not coupled evolution."
+  },
+  "standalone_reproduction": {
+    "report": "2026-09-04_researcher040282_004_complex-ema.md",
+    "critical_files": [
+      "CoherenceDriveBridge.lean",
+      "CoherenceEMA.lean",
+      "FreezeCore.lean",
+      "GateFoundations.lean",
+      "GateProposalBridge.lean",
+      "check_cycle.py",
+      "compare_source.py"
+    ],
+    "critical_blocks_match_sources": true,
+    "runner_exit": 0,
+    "source_runner_exit": 0,
+    "controls": 18,
+    "all_control_outcomes_repeated": true,
+    "source_case_count": 34,
+    "source_calls": 253,
+    "source_wrong_model_detections": 6,
+    "expected_configuration_rejections": 1,
+    "scope": "Local single-note self-reproduction with public dependencies, not independent review/publication/integration",
+    "actually_executed": true,
+    "manifest": "cycle_004/standalone_manifest.json",
+    "results": "cycle_004/standalone_results.json",
+    "source_results": "cycle_004/standalone_source_results.json",
+    "log": "cycle_004/standalone_reproduction.log",
+    "source_log": "cycle_004/standalone_source.log"
+  },
+  "completed_this_cycle": [
+    "Selected read-only current-source/intake refresh: 27 main/eight inbox files,19 Lean files searched, no selected feedback received",
+    "Restored and actually used public Lean/Mathlib dependencies, including complex analytic/normed-field support",
+    "Compiled 22 new EMA/readout and six drive/gate declarations; freshly audited 71 reused declarations with credit separate",
+    "Observed all 18 intended proof/exact/trust outcomes, including eight mathematical False rejections and explicit Python optimization blocking",
+    "Executed 34 actual-compute_R controlled-state cases (253 calls), six wrong translations and one separate expected alpha=0 configuration rejection",
+    "Recorded the original tiny-window validity assumption correction without changing allowance or counting rejection as a numerical pass",
+    "Extracted all seven critical inline files into a fresh directory and actually repeated all proof/source outcomes successfully",
+    "Prepared one self-contained numbered Markdown with critical code and evidence inline; ledger now 108 unique scoped records; next dependency selected"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PROPOSED_REVIEW_AID_NOT_REGISTERED_OR_FROZEN",
+  "reviewed_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "observation_grid": {
+    "nominal_first_time": 0.01,
+    "nominal_spacing": 0.5,
+    "samples": 640,
+    "last_saved_time": 319.51,
+    "not_observed": ["unsaved step-level excursions", "t=0", "t=320"]
+  },
+  "hold_policy": {
+    "scope": "contiguous true SAVED observations, not continuous path certification",
+    "tolerance": "1e-6 times minimum positive saved-grid spacing",
+    "strict_duration_and_tolerant_duration_are_different": true,
+    "review_gray_band": "1e-10 around the exact rational tolerance boundary; gray cases not conformance passes"
+  },
+  "events": {
+    "held": "first saved onset of any fully observed qualifying true run",
+    "held_retention": "initial true run qualifies; not a claim of retention forever",
+    "held_recovery": "first qualifying true run after the first False saved observation, including False at index0",
+    "held_classification": "exclusive trajectory label; retention takes precedence over recovery",
+    "event_flags_can_overlap": true,
+    "identity": "P(held)=P(held_retention)+P(held_recovery)-P(both)",
+    "classified_recovery": "held_recovery AND NOT held_retention"
+  },
+  "time_roles": {
+    "event_time_for_held_rows": "retrospective run-onset timestamp relative to the branch origin",
+    "not_event_time": ["online confirmation timestamp", "elapsed time since first drop", "first physical crossing time"],
+    "confirmation": "first later saved sample satisfying the hold-span policy; requires future observations",
+    "adjacent_interval_fields": "sampling metadata only; not an identified first-physical-crossing interval without assumptions",
+    "first_saved_retention": "index0 means true at first saved time0.01; behavior before that is not reconstructed"
+  },
+  "population_and_cap": {
+    "reported_event_rate_denominator": "all40 supplied seeds, including never-dropped seeds",
+    "alternative_ever_dropped_denominator": "descriptive alternative only; post-treatment selection is not a default causal repair",
+    "nonobserved_restricted_time": 319.51,
+    "meaning": "finite-support capped confirmation-qualified-onset score",
+    "not_meaning": "ordinary physical-onset censoring at319.51",
+    "last_eligible_onset": "last saved onset whose duration can finish by the support end; depends on duration/rho",
+    "comparison_warning": "an always-retained reference can have NO recovery event and receive the cap; a lower recovery score is not automatically better overall resilience"
+  },
+  "inference": {
+    "interval_scope": "pointwise empirical joint-seed resampling diagnostic",
+    "boundary_intervals_not_population_confidence_certificates": true,
+    "conditional_time_summary": "finite observed event times only",
+    "conditional_raw_DID": "same seed has all four cell events; not merely each branch has some events",
+    "requested_diagnostics": ["finite_n", "bootstrap_valid_replicates", "bootstrap_empty_replicates", "empirical_zero_variance", "insufficient_n_or_no_event_flag"],
+    "no_new_metric_or_interval_replacement_authorized": true
+  },
+  "limits": [
+    "no real S01 trajectory reanalysis",
+    "no run_analysis artifact/provenance or atomic-output acceptance audit",
+    "no universal float64 conformance theorem",
+    "no Lean compilation or coupled dynamics result",
+    "outside source/synthetic review is not project freeze or registry approval"
+  ]
+}

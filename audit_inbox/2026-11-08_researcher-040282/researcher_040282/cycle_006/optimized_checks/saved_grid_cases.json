@@ -1,0 +1,82 @@
+[
+  {
+    "duration": 17.5,
+    "all_valid_starts": 605,
+    "exact_block_and_one_step_short_cases": 1210
+  },
+  {
+    "duration": 35.0,
+    "all_valid_starts": 570,
+    "exact_block_and_one_step_short_cases": 1140
+  },
+  {
+    "rho": 0.5,
+    "duration": 8.751458576429407,
+    "minimum_half_grid_steps": 18,
+    "selected_starts": [
+      0,
+      1,
+      32,
+      100,
+      310,
+      621
+    ],
+    "last_eligible_onset": 310.51
+  },
+  {
+    "rho": 0.75,
+    "duration": 13.12718786464411,
+    "minimum_half_grid_steps": 27,
+    "selected_starts": [
+      0,
+      1,
+      32,
+      100,
+      306,
+      612
+    ],
+    "last_eligible_onset": 306.01
+  },
+  {
+    "rho": 1.0,
+    "duration": 17.502917152858814,
+    "minimum_half_grid_steps": 36,
+    "selected_starts": [
+      0,
+      1,
+      32,
+      100,
+      301,
+      603
+    ],
+    "last_eligible_onset": 301.51
+  },
+  {
+    "rho": 1.5,
+    "duration": 26.25437572928822,
+    "minimum_half_grid_steps": 53,
+    "selected_starts": [
+      0,
+      1,
+      32,
+      100,
+      293,
+      586
+    ],
+    "last_eligible_onset": 293.01
+  },
+  {
+    "rho": 2.0,
+    "duration": 35.00583430571763,
+    "minimum_half_grid_steps": 71,
+    "selected_starts": [
+      0,
+      1,
+      32,
+      100,
+      284,
+      568
+    ],
+    "last_eligible_onset": 284.01
+  }
+]

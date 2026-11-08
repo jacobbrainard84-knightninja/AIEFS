@@ -1,0 +1,43 @@
+{
+  "current_ledger_rows": 112,
+  "completed004_rows": 108,
+  "completed005_rows": 109,
+  "completed006_rows": 111,
+  "prior111_rows_preserved": true,
+  "formal_labels_unchanged": 94,
+  "actual_original_and_extracted_full_runner_success": true,
+  "actual_original_expected_failures_each_mode": 4,
+  "original_errors_each_mode": 0,
+  "conforming_target_passes_each_mode": [
+    11,
+    11,
+    11
+  ],
+  "reduced_alphabet_pairs_each_target": 2592,
+  "original_false_accepts": 220,
+  "candidate_mismatches": 0,
+  "mutants_detected_each_mode": 8,
+  "ten_child_nontiming_results_match_reproduction": true,
+  "critical_inline_files_equal_executed_extracted_sources": 8,
+  "verified_acquisition_files_unchanged": {
+    "main": 10,
+    "inbox": 6
+  },
+  "fresh_public_files_verified_unchanged": 2,
+  "authority_locked_engine_unmodified_not_installed_or_certified": true,
+  "test_candidate_only_one_function_ast_changed_other98_preserved": true,
+  "prior_packet_nonlive_evidence_files_preserved": 640,
+  "completed006_state_ledger_snapshots_match_delivery": true,
+  "one_missing_historical_workflow_restored_exactly_without_science_rerun": true,
+  "protected004_critical_files": 8,
+  "all_twelve_branch_records_minimal": true,
+  "unclassified_email_pattern_matches": 0,
+  "historical_intentionally_synthetic_fixture_addresses_distinguished": 2,
+  "all_ledger_evidence_unpacked": true,
+  "ledger_reference_count": 84,
+  "unpacked_log_count": 176,
+  "scope": "Owned-packet consistency/privacy closure, not science rerun, independent approval, arbitrary-code security, actual data census or authority certification",
+  "zip_crc_verified": true,
+  "all_members_match_selected_workspace_files": true,
+  "receipt_included_and_final_archive_reverified": true
+}

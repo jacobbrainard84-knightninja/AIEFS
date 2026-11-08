@@ -1,0 +1,56 @@
+{
+  "repo": "jacobbrainard84-knightninja/AIEFS",
+  "commit": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+  "modules": [
+    {
+      "path": "AIEF_1_4_actual_admissibility_branch_audit.py",
+      "blob": "62f31947cb5cd3504a726ce16a10b565f32337c8",
+      "bytes": 56007
+    },
+    {
+      "path": "AIEF_1_4_augmented_tangent_cocycle_analysis.py",
+      "blob": "41411831e2ec7060b8423fcb21e0526adb3b3d57",
+      "bytes": 47428
+    },
+    {
+      "path": "AIEF_1_4_component_controller_audit.py",
+      "blob": "d4641019968622e86cc0165c2c09c395dc9d6932",
+      "bytes": 47911
+    },
+    {
+      "path": "AIEF_1_4_exceptional_K3_transition_audit.py",
+      "blob": "170e1d3d8b30c4f1c6d99cb3a487af4f222d4ed2",
+      "bytes": 44280
+    },
+    {
+      "path": "AIEF_1_4_exceptional_tangent_analysis.py",
+      "blob": "7d6be75cc47d1fae023fc73f5b38049cfb8e76ff",
+      "bytes": 29136
+    },
+    {
+      "path": "AIEF_1_4_face_spectrum_analysis.py",
+      "blob": "58ac3f8f48eec2b54fcafd4710bc44d4ce36bb4c",
+      "bytes": 51530
+    },
+    {
+      "path": "AIEF_1_4_frozen_driver_cocycle_analysis.py",
+      "blob": "91b14cccbe2290efc9d755599be964494aa08567",
+      "bytes": 43681
+    },
+    {
+      "path": "AIEF_1_4_proposal_equalization_bridge_analysis.py",
+      "blob": "2fcfff5ad2f594bc4fdc07e394f6bdd34deff07f",
+      "bytes": 26879
+    },
+    {
+      "path": "AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "blob": "c8609e5cd5f2dc91de32c35403eec83882235ed2",
+      "bytes": 42626
+    },
+    {
+      "path": "AIEF_1_4_tangent_spectrum_switch_analysis.py",
+      "blob": "bdbb11457bf3b18717a3068fa8b0405ef2da1586",
+      "bytes": 31163
+    }
+  ]
+}

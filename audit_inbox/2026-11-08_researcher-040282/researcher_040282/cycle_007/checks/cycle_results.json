@@ -1,0 +1,42 @@
+{
+  "science": {
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "target_contract_tests": 11,
+    "baseline_tests": {
+      "failures": 4,
+      "errors": 0,
+      "same_under_optimization": true
+    },
+    "candidate_engine_tests": {
+      "pass": 11,
+      "same_under_optimization": true
+    },
+    "candidate_leaf_tests": {
+      "pass": 11,
+      "same_under_optimization": true
+    },
+    "modular_ast_extracted_tests": {
+      "pass": 11,
+      "same_under_optimization": true
+    },
+    "reduced_alphabet_ordered_pairs_each_target": 2592,
+    "baseline_false_accepts": 220,
+    "baseline_false_rejects": 0,
+    "candidate_engine_leaf_modular_mismatches": [
+      0,
+      0,
+      0
+    ],
+    "mutants_detected_normal": 8,
+    "mutants_detected_optimized": 8,
+    "verified_public_source_files_unchanged": 2,
+    "no_frozen_source_edit_or_authority_certificate": true,
+    "no_real_data_or_simulation_or_new_lean": true,
+    "all_preregistered_acceptance_conditions_met": true
+  },
+  "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+  "numpy": "2.3.5",
+  "elapsed_seconds": 5.770836757999973,
+  "source_execution_scope": "Full engine import only; replacement of ONE comparison AST node for memory-only candidate; existing modular helper only AST-extracted. No engine dynamics/certification call.",
+  "proposal_status": "LOCAL_NEW_FILE_PROPOSAL;NOT_INSTALLED_OR_AUTHORITY_APPROVED;NO_INDEPENDENT_REVIEW"
+}
