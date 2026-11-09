@@ -5,7 +5,8 @@ STATUS: CANDIDATE / UNAUDITED. DO NOT RUN ON REAL TRAJECTORIES.
 This file is a proposed successor to Analysis v4
 (AIEF_1_4_Twindow_sensitivity_analysis_v4.py, hash-pinned and left
 byte-identical). It has only been exercised on synthetic data in
-tests/test_v4_1_held_event.py. Its outputs must not be cited, registered, or
+tests/test_v4_1_held_event.py (its input trust anchor is tested against the
+committed S01 run in tests/test_v4_1_trust_anchor.py). Its outputs must not be cited, registered, or
 compared with v4 bundles until it has been independently audited and
 frozen. main() refuses to run without --allow-unaudited-candidate.
 
@@ -42,6 +43,16 @@ Changes from Analysis v4 (and nothing else)
 * Version labels, output file names (``_v4_1``) and the bundle directory
   (``v4_1``) differ so v4 bundles are never overwritten. Hard-coded row-count
   checks were updated for the two extra event types.
+* Input trust anchor (GPT6-P1 fix, 2026-11-09). ``validate_run`` first calls
+  ``verify_trusted_inputs`` with ``TRUSTED_S01_POLICY``, a reviewed in-code
+  policy. It hashes the raw manifest bytes against the ART-2217 pin before
+  parsing, requires the manifest's output_hashes, study identity and ordered
+  40 paired seeds to equal the policy, rejects symlinked inputs, and checks all
+  five S01 output files against the policy digests. Before this, a caller
+  could edit data and re-pin a manifest, swap in a stub certificate, or supply
+  a different seed cohort and pass validation. All earlier checks are kept.
+  This authenticates S01 identity only; it is not an audit of v4.1 and does
+  not lift the unaudited-candidate status or the CLI opt-in.
 
 Original v4 description follows.
 
@@ -84,6 +95,7 @@ import secrets
 import sys
 import time
 import traceback
+import types
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
@@ -292,7 +304,143 @@ def _require_hash(manifest: Mapping[str, Any], label: str, path: Path) -> None:
         )
 
 
-def validate_run(inputs: RunInputs) -> ValidatedRun:
+# ---------------------------------------------------------------------------
+# Trust anchor (GPT6-P1 fix)
+#
+# validate_run used to hash each child file against the digests written in the
+# *supplied* manifest. An edited cohort with a re-pinned manifest, a stub
+# certificate, or a different 40-seed list was accepted. The policy below is held
+# in reviewed code, not read from the run directory. The raw manifest bytes are
+# hashed against it BEFORE the manifest is parsed, and every output digest and the
+# paired-seed list are bound to it. A new run, cohort or study needs a new
+# reviewed policy entry; nothing is trusted implicitly. Sources for each value:
+# runs/b57562a8ee77/manifest.json (ART-2217) and registry/artifacts_current.csv
+# rows ART-1995, ART-1996, ART-2015, ART-2016, ART-2217, ART-2218.
+# ---------------------------------------------------------------------------
+
+TRUSTED_S01_POLICY: Mapping[str, Any] = types.MappingProxyType({
+    "run_dir_name": "b57562a8ee77",
+    "study_name": "AIEF_1_4_Twindow_sensitivity",
+    "config_hash": "b57562a8ee77",
+    "manifest_sha256": "7d1b86ab39eed397e2d281faf729ee5c3ac515efc00b2789c2e0013dce0d1e78",
+    "output_hashes": types.MappingProxyType({
+        "baseline_certificate": "08314de365196fa369bfa2b0363352cf04bdfb1a957f3ed86847f5d17b9d620f",
+        "baseline_seed_results": "47b1627a20be52ee4cf3ad69feeae3fe8d8e008687912c83c2237dfa8e5363ff",
+        "branch_npz": "55a419c790d0a46bad2a52488d9de018a539ad3daa3759eee849cebf4df468c2",
+        "condition_status_csv": "1f6985026c292c15b5fa8cacacbe92600916ab8d43bdbc8df4f9f0a76baa98e8",
+        "scalar_csv": "e9aa74e68b758b21e64b5757607af3c4bf98e88f616757319cb9e4e6d3a8e378",
+    }),
+    "paired_seeds": (
+        "11242426753702356865", "4619122171158768524", "16329425431442249417",
+        "10431384713483787270", "18127452951968972828", "12851640484293199234",
+        "4219039243791140697", "9082055256280075172", "1918007468868772336",
+        "17883847597205629106", "16627818730624180313", "15403081841477312463",
+        "4040285944958847150", "17521310920850592782", "2461295749352584108",
+        "9036321132460399255", "14040336450255043598", "1888415619847841128",
+        "172180395821707403", "17715532056777442089", "3704716633526084363",
+        "6942591650975756121", "305986450614148690", "16952466944611321358",
+        "12123519807951751650", "15853699719446171583", "9189988769602851417",
+        "5213047409853278064", "4932511216876650745", "6108867655028980287",
+        "6023008189364820510", "1230287949579537403", "283404770198602602",
+        "3582616062465030267", "3258463328937640595", "3952397966055989215",
+        "17279552413280415429", "5415544643585892346", "10856823803646276806",
+        "14924267685654216746",
+    ),
+})
+
+_HEX64 = frozenset("0123456789abcdef")
+
+
+def _is_sha256(value: Any) -> bool:
+    return isinstance(value, str) and len(value) == 64 and set(value) <= _HEX64
+
+
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def verify_trusted_inputs(inputs: RunInputs, policy: Mapping[str, Any] | None) -> None:
+    """Fail closed unless the run is byte-identical to a reviewed trusted policy.
+
+    Order matters: the policy is checked first, then the raw manifest bytes are
+    hashed and compared BEFORE json parsing, then identity, then every child file.
+    """
+    if policy is None:
+        raise ArtifactIntegrityError("No trusted input policy supplied; refusing to validate")
+    try:
+        manifest_pin = policy["manifest_sha256"]
+        output_pins = dict(policy["output_hashes"])
+        trusted_seeds = tuple(policy["paired_seeds"])
+        run_dir_name = policy["run_dir_name"]
+        study_name = policy["study_name"]
+        config_hash = policy["config_hash"]
+    except (KeyError, TypeError) as exc:
+        raise ArtifactIntegrityError(f"Trusted input policy is incomplete: {exc!r}") from None
+    required_labels = {
+        "scalar_csv", "branch_npz", "condition_status_csv",
+        "baseline_certificate", "baseline_seed_results",
+    }
+    if (
+        not _is_sha256(manifest_pin)
+        or set(output_pins) != required_labels
+        or not all(_is_sha256(v) for v in output_pins.values())
+        or len(trusted_seeds) != EXPECTED_N_SEEDS
+        or len(set(trusted_seeds)) != EXPECTED_N_SEEDS
+        or not all(isinstance(seed, str) for seed in trusted_seeds)
+    ):
+        raise ArtifactIntegrityError("Trusted input policy is malformed")
+
+    if Path(inputs.run_dir).name != run_dir_name:
+        raise ArtifactIntegrityError(
+            f"Run directory {Path(inputs.run_dir).name!r} is not the trusted run {run_dir_name!r}"
+        )
+    seed_results = Path(inputs.run_dir) / "baseline_equivalence_by_seed.json"
+    children = (
+        ("scalar_csv", inputs.scalar_csv),
+        ("branch_npz", inputs.branch_npz),
+        ("condition_status_csv", inputs.condition_status),
+        ("baseline_certificate", inputs.baseline_certificate),
+        ("baseline_seed_results", seed_results),
+    )
+    for path in (inputs.manifest, *(child for _, child in children)):
+        path = Path(path)
+        if path.is_symlink() or not path.is_file():
+            raise ArtifactIntegrityError(f"Trusted input is missing or not a regular file: {path.name}")
+
+    raw = Path(inputs.manifest).read_bytes()
+    observed_manifest = _sha256_bytes(raw)
+    if observed_manifest != manifest_pin:
+        raise ArtifactIntegrityError(
+            "Manifest bytes do not match the trusted pin: "
+            f"expected={manifest_pin}, observed={observed_manifest}"
+        )
+    manifest = json.loads(raw.decode("utf-8"))
+    if not isinstance(manifest, dict):
+        raise ArtifactIntegrityError("Trusted manifest root must be an object")
+    if manifest.get("study_name") != study_name or manifest.get("config_hash") != config_hash:
+        raise ArtifactIntegrityError("Trusted manifest identity does not match the policy")
+    if dict(manifest.get("output_hashes", {})) != output_pins:
+        raise ArtifactIntegrityError("Trusted manifest output_hashes differ from the policy")
+    manifest_seeds = tuple(
+        str(seed) for seed in manifest.get("randomization", {}).get("paired_seeds", ())
+    )
+    if manifest_seeds != trusted_seeds:
+        raise ArtifactIntegrityError("Trusted manifest paired seeds differ from the policy")
+
+    for label, path in children:
+        observed = file_sha256(Path(path))
+        if observed != output_pins[label]:
+            raise ArtifactIntegrityError(
+                f"Input {label} does not match the trusted pin: "
+                f"expected={output_pins[label]}, observed={observed}"
+            )
+
+
+def validate_run(
+    inputs: RunInputs, policy: Mapping[str, Any] | None = TRUSTED_S01_POLICY
+) -> ValidatedRun:
+    # Trust anchor first: nothing below may read or parse an input until it passes.
+    verify_trusted_inputs(inputs, policy)
     for path in (
         inputs.manifest,
         inputs.condition_status,
