@@ -2,7 +2,7 @@
 
 Lean work package P1: branch-conditional identities of the engine-v1 capacity gate along controller-kernel
 directions, which the rate-law audit (`AUD-RATELAW`; ERRATA E5, and E22 on
-`research/rate-law-delta-sweep` (pending merge)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
+`main` (landed via PR #18)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
 proves one-step real-arithmetic algebra used by the audit's estimator; it does not explain the rate law. Spec, code mapping and scope:
 [`research/lean_gate/SPEC_P1_gate_identities.md`](../../research/lean_gate/SPEC_P1_gate_identities.md).
 A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched. Same toolchain
