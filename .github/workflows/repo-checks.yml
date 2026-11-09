@@ -182,12 +182,13 @@ jobs:
       - name: Install pinned requirements
         run: python -m pip install -r requirements.txt
       # The platform's pytest.ini (hash-pinned, ART-0083) sets testpaths = tests_modular, so the v4.1
-      # test file is named explicitly here instead of editing pytest.ini. Expected: 13 passed (cbf2ae7 test file).
-      - name: v4.1 held-event tests (synthetic data only)
+      # test files are named explicitly here instead of editing pytest.ini. Expected: 34 passed (13 held-event from cbf2ae7,
+      # 21 trust-anchor from tests/test_v4_1_trust_anchor.py, which reads the committed S01 run in place; ERRATA E24).
+      - name: v4.1 held-event (synthetic) and trust-anchor (committed S01) tests
         working-directory: AIEF_Experiments/aief_modular_platform_v1_analysis_v4
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python -m pytest -q -p no:cacheprovider tests/test_v4_1_held_event.py
+        run: python -m pytest -q -p no:cacheprovider tests/test_v4_1_held_event.py tests/test_v4_1_trust_anchor.py
       # Current-tree counterpart of verify_inventory.py (which stays the e47bad1 gate and fails at [1/5]
       # on later trees): snapshot pins, current inventory, vocabularies, Lean lock hashes, authority lock.
       - name: verify_inventory_current.py
