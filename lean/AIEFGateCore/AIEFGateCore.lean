@@ -7,3 +7,4 @@ import AIEFGateCore.Pinned.ControllerFiber
 import AIEFGateCore.Pinned.ControllerFiberProjector
 import AIEFGateCore.Pinned.ControllerFiberQuotient
 import AIEFGateCore.Pinned.CompleteGraphIncidence
+import AIEFGateCore.Bridge
