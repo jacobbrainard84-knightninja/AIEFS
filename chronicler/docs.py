@@ -177,6 +177,10 @@ def extract_paths(text: str) -> list[dict]:
                 "token": token, "line": index, "kind": kind,
                 "text": util.truncate(line, 200),
                 "context": util.truncate(previous + " " + line, 400),
+                # The eight words before the name, taken from the untruncated line: a long table row
+                # would otherwise lose the cue ("write", "planted", "such as") that tells a file
+                # apart from an output or a hypothetical.
+                "prefix": line[max(0, match.start() - 90):match.start()],
             })
     return found
 
