@@ -18,7 +18,7 @@ with the K3 rays `vRay` (`CompleteGraphIncidence.lean`), all over `ℚ`. `AIEFGa
 that package (its check script forbids Lake path dependencies), so the four pinned modules are
 compiled here **verbatim** under `AIEFGateCore/Pinned/` (namespace `AIEFGate.*` instead of
 `AIEFProofs.*`, and the internal `import` lines renamed; nothing else changed). The script
-`research/lean_gate/check_pinned_restatement.py` checks that each restated file equals its pinned
+`tools/ci/check_pinned_restatement.py` checks that each restated file equals its pinned
 source with exactly those line substitutions, and that the pinned source matches its pinned hash in
 `lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt`.
 

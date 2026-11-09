@@ -582,6 +582,10 @@ dependency, i.e. loosening that rule, so it was not done. Instead:
   text; without this check a later edit to `Pinned/` would silently turn the bridge into a statement about some
   other matrix. Negative control run locally: changing `| 2 => -1` to `| 2 => 1` in the restated `vCtrl` (and
   regenerating the gate sums) makes `check_lean_gate.sh` fail at step 2 with exit 2.
+* **Scope of the binding (limit):** the check is textual and covers the files in `Pinned/` only. It does not stop
+  another `AIEFGateCore` file from adding attributes, instances or `simp` lemmas about the restated names. That cannot
+  change what the stated bridge theorems say (their statements and the restated definitions are fixed text), but it
+  can change how later proofs are found; such additions are not part of the pinned object.
 
 Bridge theorems (`AIEFGateCore/Bridge.lean`, namespace `AIEFGate.Bridge`; `toR` casts a `ℚ` vector to `ℝ`):
 
