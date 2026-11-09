@@ -1,6 +1,6 @@
 # Research leads (literature only)
 
-Status: **proposed, checked by Auditor Seat 002, verdict AGREE WITH CHANGES (2026-10-31).** The corrections below are applied. The ledger row is **PENDING** on `research/freezing`.
+Status: **proposed, checked by Auditor Seat 002, verdict AGREE WITH CHANGES (2026-10-31).** The corrections below are applied. The ledger row **RES-FREEZE-NOVELTY** is on `main` (PR #3); novelty status remains Not established / non-exhaustive search.
 
 Sources (box-side, not in the repo):
 - a literature scan by Researcher 001 (2026-10-31);
@@ -34,7 +34,7 @@ Leads only. Do not cite any of these as validating AIEFS unless the specific mat
 
 The AIEFS R is the modulus of a complex EMA, so it is **phase-offset invariant**: an anti-phase locked pair has R → 1. Published limit formulas of the form K∞ = α cos(Δθ∞) (Niyogi–English, Bronski et al.) therefore **do not carry over literally**.
 
-## RES-FREEZE-01 novelty: proposed rescope (PENDING ledger row RES-FREEZE-NOVELTY)
+## RES-FREEZE-01 novelty: rescoped ledger row RES-FREEZE-NOVELTY (on `main`)
 
 - **Proposed label:** `Known variant (partial overlap; consistency hit) — narrow residual plausibly new, search non-exhaustive`.
 - **Overlap (known):** "phase-locking ⇒ relax-to-target Hebbian couplings converge", and so, given a strict margin, an eventually constant thresholded edge set. Cho–Dong–Ha 2023 publish this for an inertial continuous-time model and *prove* the locking that AIEFS assumes (O1).

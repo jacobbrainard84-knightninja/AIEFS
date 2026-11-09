@@ -42,7 +42,7 @@ What separates an interesting proving ground from a useful library comes down to
 - how **tightly the hypotheses** are stated;
 - whether verification stays **as careful as the numerical audits**.
 
-## Where we are now (checked 2026-10-31 against `origin/main` 395ea53 and `origin/research/freezing` f444401)
+## Where we are now (checked 2026-11-09 against `origin/main` `ba171d0`)
 
 The premise that "the Lean part is only a 2×3 kernel identity" is **out of date**.
 
@@ -51,6 +51,7 @@ The premise that "the Lean part is only a 2×3 kernel identity" is **out of date
   - Orthogonal projectors `PPar` / `PPerp`, with symmetry, idempotence, complementarity and range = kernel (`ControllerFiberProjector.lean`).
   - The fiber quotient TFAE (`ControllerFiberQuotient.lean`).
   - Explicit complete-graph incidence matrices for K3–K6, with right inverses and kernel dimensions. The K3 rows are tied to `CCtrl` (`CompleteGraphIncidence.lean`).
+  - **Pin note:** `ControllerFiber.lean` ART-0745 snapshot→current hash drift is **header-only** (copyright + SPDX); not a pin break; current bytes match `AIEF_LEAN_SOURCE_SHA256SUMS.txt` and `KNOWN_CHANGED` (see `STATE.md`).
 - **On `main` (`lean/AIEFProofsKn`):**
   - **Coefficient field matters.**
     - For K_n, n ≥ 3, the headline theorems are stated **over ℚ**. The unsigned edge-incidence map is surjective, and `finrank_ker_inc_eq_half` / `finrank_ker_edgeIncMatrix_top` give dim ker = |E| − |V| = n(n−3)/2 (`IncMatrixRank.lean:201-230`, `KernelDimFormula.lean:60-62`).
@@ -59,11 +60,16 @@ The premise that "the Lean part is only a 2×3 kernel identity" is **out of date
     - Do not quote these results without the field hypothesis.
   - For complete graphs, `finrank_ker_inc_eq_half`: dim ker = n(n−3)/2 for all n ≥ 3. It is checked against K12 (54).
   - Right inverses via the J-matrix, and characteristic-2 / K2 counterexamples showing that the hypotheses are needed.
-- **PENDING, PR #3 (`research/freezing` @ f444401, awaiting the owner's merge):**
-  - `lean/AIEFFreezeCore`, the scalar core of the conditional freezing theorem: `upper_geom`, `eventually_off` / `eventually_on`, and per-edge `edge_eventually_off` / `edge_eventually_on` for B_{n+1} = λ_n·max(0, (1−h)B_n + h u_n).
+  - **Docs debt:** `lean/AIEFProofsKn/README.md` still says this project is not in CI; that is false on `ba171d0` (required row).
+- **On `main` (`lean/AIEFFreezeCore`, landed via PR #3 merge `2e55eb5`):**
+  - The scalar core of the conditional freezing theorem: `upper_geom`, `eventually_off` / `eventually_on`, and per-edge `edge_eventually_off` / `edge_eventually_on` for B_{n+1} = λ_n·max(0, (1−h)B_n + h u_n).
   - The conclusions are existential (∃N). The gate λ_n and drive u_n are abstract sequences under band hypotheses.
   - It does not cover phases, delay, the EMA, Lemma 1, Theorem 3 or Corollary 4.
-- **CI:** `main`'s `lean.yml` runs AIEFProofs and AIEFProofsKn as required jobs, with forbidden-marker and axiom-audit steps. AIEFFreezeCore is listed but not on `main` yet.
+- **On `main` (`lean/AIEFGateCore`, PRs #19 / #21):**
+  - Lean P1/P2 gate identities used by the AUD-RATELAW estimator path (one-step real arithmetic, R fixed). Does **not** explain the E22 residual; AUD-RATELAW stays UNEXPLAINED.
+  - See `lean/AIEFGateCore/README.md` and `research/lean_gate/SPEC_P1_gate_identities.md`.
+- **IN PROGRESS (not on `main`):** Lean P3 on local `research/lean-gate-p3` (bridge to pinned `ControllerFiber` `CCtrl`/`vCtrl`, branch persistence, engine-shaped negations, semantic M1–M3). Not pushed / not audited.
+- **CI:** `main`'s `.github/workflows/lean.yml` runs **AIEFProofs**, **AIEFProofsKn**, **AIEFFreezeCore**, and **AIEFGateCore** as `required: true` jobs, with forbidden-marker and axiom-audit steps.
 
 ## Living checklist
 
@@ -73,12 +79,12 @@ Status values: **not started** / **partial** / **done**. A status refers to `mai
 |---|---|---|---|
 | 1 | Delayed Kuramoto evolution | not started | No phase dynamics in Lean. The `kuramoto-lean` Euler/contraction results are a possible template. |
 | 2 | Coherence / EMA update | not started | |
-| 3 | Hebbian weight dynamics | partial (PENDING, PR #3) | Only the per-edge scalar recurrence, with abstract gate and drive (`AIEFFreezeCore`). It is not coupled to R. |
-| 4 | Capacity gate | not started | Abstracted as λ_n ∈ [0,1]. Lemma 1 (row-sum sandwich) is not formalized. |
-| 5 | Conditional rate-law relations | not started | The thresholds (0.454286, 3/7) are paper-level only, and they hold for the **ungated** scalar recurrence only (see STATE.md). |
-| 6 | Fiber / kernel properties | partial | The linear-algebra layer is done (controller fiber, projectors, K_n kernel dimension). Its link to the dynamics is not formalized. |
-| 7 | Convergence / stability (restricted) | partial (PENDING, PR #3) | Eventual OFF/ON per edge (∃N). There is no phase-locking (O1), no convergence of B and no explicit N. |
-| — | Infrastructure: no `sorry`, standard axioms, CI per project | done for AIEFProofs and AIEFProofsKn | AIEFFreezeCore is a required row only on `research/freezing`. |
+| 3 | Hebbian weight dynamics | partial | On `main`: per-edge scalar recurrence with abstract gate and drive (`AIEFFreezeCore`). It is not coupled to R. |
+| 4 | Capacity gate | partial | On `main`: Lean P1/P2 one-step identities in `AIEFGateCore` (engine-shaped forms, K3 rays, matrix form). Lemma 1 (row-sum sandwich) is not formalized. P3 (bridge / persistence / semantic M1–M3) is IN PROGRESS off main. |
+| 5 | Conditional rate-law relations | partial | Algebraic one-step identities for the estimator are in `AIEFGateCore`. Thresholds (0.454286, 3/7) remain paper-level for the **ungated** scalar recurrence (see STATE.md). AUD-RATELAW residual stays **UNEXPLAINED** after E22. |
+| 6 | Fiber / kernel properties | partial | Linear-algebra layer done (controller fiber, projectors, K_n kernel dimension). Dynamics link and P3 bridge to pinned `CCtrl`/`vCtrl` not yet on main. |
+| 7 | Convergence / stability (restricted) | partial | On `main`: eventual OFF/ON per edge (∃N) in `AIEFFreezeCore`. No phase-locking (O1), no convergence of B, no explicit N. |
+| — | Infrastructure: no `sorry`, standard axioms, CI per project | done for AIEFProofs, AIEFProofsKn, AIEFFreezeCore, AIEFGateCore | All four are `required: true` on `main` @ `ba171d0`. |
 
 ### Theorem-level dependency chain (suggested by Researcher 026; adopted as the build order)
 

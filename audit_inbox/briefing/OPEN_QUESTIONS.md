@@ -37,13 +37,13 @@ Report each test as PASS (rejected correctly) or GAP (accepted wrongly), with th
 ## 1. Science gaps
 
 1. **O1, closed-loop phase-locking.** Find a proof route, even a conditional one (small delay, slow learning). Candidate tools are in `RESEARCH_LEADS.md` (Ha–Li–Xue 2013, Ha–Ryoo 2020 + Correction, Dong–Ha–Kim 2020). The obstacles are the delay, the EMA and the non-smooth gate.
-2. **Step-size study.** Run dt/2 and dt/4 sweeps (the production cohorts use dt = 0.01) to see whether the ~2e-8 rate-law residual scales like discretisation error.
+2. **Step-size study / AUD-RATELAW residual.** ERRATA **E22** (PR #18) ran the predeclared step-size sweep on the single gap component; under that rule the label stays **UNEXPLAINED**. A broader dt/2 and dt/4 production-cohort study (AUD-TIMESTEP) and any **v2 predeclared rerun** remain open. Do not start a parallel undocumented sweep.
 3. **CF12 / AIEF-1.4 pipeline:** replicate on multiple seeds. Today it is a single exceptional seed (1 of 40).
 4. **RES-FREEZE novelty rescope.** Check the proposed label and residual in `RESEARCH_LEADS.md` against the literature, especially Cho–Dong–Ha 2023, CMS 2024 and Wang–Dong 2025. Report missed prior art.
 
 ## 2. Lean
 
-5. **Axiom footprint.** Check that `#print axioms` (only propext, Classical.choice, Quot.sound) is enforced in CI for every project. That includes `AIEFFreezeCore` once `research/freezing` lands: it is listed as `required: false` in `main`'s `lean.yml` and is not on `main` yet.
+5. **Axiom footprint.** Check that `#print axioms` (only propext, Classical.choice, Quot.sound) is enforced in CI for every project. On `main` @ `ba171d0`, `lean.yml` already requires **AIEFProofs**, **AIEFProofsKn**, **AIEFFreezeCore**, and **AIEFGateCore**. Re-confirm after each new Lean project lands.
 
 ## 3. Researcher 626 items (from their earlier review; to be re-checked on current `main`)
 
@@ -60,12 +60,13 @@ Per the reviewer, items 12–13 should come **before** the step-size study (item
 
 12. **Modular platform and v4.1 closure.**
     - **Modular oracle certification.** No durable full-oracle certificate exists. `freezeable=true` is not `oracle_certified`, so do not call the platform "certified" (TRIAGE R026-S7).
-    - **Modular CLI path problem.** The documented commands fail from the documented directory. On main `395ea53`, `python AIEF_modular_driver_v1.py describe AIEF_1_4_S01` (and `dry-run`), run from `AIEF_Experiments/aief_modular_platform_v1_analysis_v4/`, fails with `SPECIFICATION ERROR: … 'aief_experiment_engine_v1' is not available`, because it needs the repo root on `PYTHONPATH`. Fix the packaging, or the documented path (`README_modular.md:11-12`).
-    - **v4.1 audit and a real S01 run.** v4.1 has passed only its synthetic tests (13/13). Nothing in `runs/b57562a8ee77/` is v4.1 output. It needs an independent audit, then one real S01 run. Keep v3 and v4.1 as distinct analyses. Do not treat v4.1 as a replacement for the v3/v4 outputs.
-    - **v4.1 metadata tolerance mismatch.** `AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py:591` implements 1e-6 × the smallest positive saved-grid step, but the metadata/report strings (`:210`, `:1307`) say `1e-6*dt`.
-    - The remaining interval/bootstrap/input-binding wording ("interval-censored" vs detection on the saved grid) has not been re-checked.
-13. **`registry/studies.csv` entrypoint integrity.** On main `395ea53`, 11 `canonical_entrypoints` tokens in 5 study rows do not resolve. The rows are `AIEF_1_0_TO_1_2_FOUNDATIONAL`, `AIEF_1_3_DISJOINT_100SEED`, `AIEF_1_4_MATCHED_PHASE_ABLATION`, `AIEF_1_4_TANGENT_AND_COCYCLE` and `AIEF_1_4_CONTROLLER_FIBER`. `CURRENT_STATUS.md:46` cites three absent scripts as authoritative. No CI check covers this. Proposed checker: every token resolves, or is marked `historical_missing` / `planned` / `alias_of:<path>`. The suggested aliases are unchecked leads.
-14. **Formalise the finite gate identities before the delayed asymptotics.** See the dependency chain in `NORTH_STAR.md`.
+    - **Modular CLI path problem.** Documented in ERRATA **E16** (still open as a packaging/docs fix). Bare `describe` / `dry-run` from the modular directory need the repo root on `PYTHONPATH` (`README_modular.md`).
+    - **v4.1 trust anchor (done on main):** ERRATA **E24** / **E25** (PRs #20 / #22) bind `validate_run` to committed S01 pins and read inputs once. `fix/v41-followup-notes` @ `19dbba3` (E26 candidate) is under audit. v4.1 remains an **unaudited candidate**.
+    - **v4.1 scientific audit and a real S01 *analysis* output** are still open. Nothing in `runs/b57562a8ee77/` is v4.1 analysis output. Keep v3 and v4.1 as distinct analyses.
+    - **v4.1 metadata tolerance mismatch.** Implementation uses 1e-6 × the smallest positive saved-grid step, but metadata/report strings say `1e-6*dt` (re-check line numbers on current tip).
+    - Interval/bootstrap/input-binding wording still needs a dedicated re-read.
+13. **`registry/studies.csv` entrypoint integrity.** Still open on `main` @ `ba171d0`: **11** unresolved `canonical_entrypoints` tokens in the same five study rows (`AIEF_1_0_TO_1_2_FOUNDATIONAL`, `AIEF_1_3_DISJOINT_100SEED`, `AIEF_1_4_MATCHED_PHASE_ABLATION`, `AIEF_1_4_TANGENT_AND_COCYCLE`, `AIEF_1_4_CONTROLLER_FIBER`). `CURRENT_STATUS.md:46` still cites absent scripts. No CI check covers this. Pair with the CURRENT_STATUS docs PR (chronicler patch apply-checks clean on `ba171d0`).
+14. **Formalise the finite gate identities before the delayed asymptotics.** Lean P1/P2 are on `main` (`AIEFGateCore`). P3 (ControllerFiber bridge, persistence, semantic M1–M3) is IN PROGRESS off main. Keep the dependency chain in `NORTH_STAR.md`: delay/Halanay-type results still come last.
 15. **`tools/ci/check_modes.py` memory scaling.** `shebang_objects` (`:102-120`) pipes every tracked regular blob through `git cat-file --batch` and holds the whole output in memory, just to read the first two bytes of each. On main the peak RSS measured was about 2.4 GiB, and the reviewer reports exit 137 in a constrained environment. Fix it by streaming, or by reading only a two-byte prefix of each candidate.
 16. **AUD-RATELAW vs Arena round 10. OPEN, for independent adjudication; not settled.**
     - **Arena's claim.** Arena's `audits/literature/ROUND_10_FINDINGS.md` (branch `arena/d4a487cc-aiefs` @ `2af3859`) shows that the gate is not one global multiplicative rescaling: it applies edge-dependent factors min(s_i, s_j). Arena reads this as weakening AUD-RATELAW (`registry/claims.csv:50` on main).
