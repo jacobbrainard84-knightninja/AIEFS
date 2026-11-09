@@ -477,18 +477,39 @@ chosen inputs, not a 12-node engine state reached by a trajectory. `R = 1` is a 
 from phases. This is non-vacuity of the theorem for engine-shaped parameters, nothing more. The value is also pinned by
 `tests/test_lean_gate_p2.py` against the independent exact-rational transcription.
 
+Limit of `engine_nonvacuous` (Auditor Seat 002, note N3): it has `x_e ≠ 0` on every edge, so `Rel x h` is all edges
+there and it does not exercise the per-edge weakening of §7.1. That is covered by:
+* `engine_rel_strictly_weaker` (same `pE`, `ε = 10⁻¹²`): K3, `B = (0, 8/3, 8/3)`, coherence `R = (3/7, 1, 1)` (so
+  `drive = (0, 1/25, 1/25)` and `x = (0, 8/3, 8/3)`), `h = RedTeam.hw = (0, 1, −1)`, `t = 1/10`,
+  `ctrl = ctrlX = (0, 2, 2)`. Edge 0 has `x_0 = h_0 = 0`; the P1 all-edge `InCtrlKer G3 ctrl hw` is false for every
+  controller assignment (`(A hw)_0 = 1`, `(A hw)_1 = −1`), so the P1 theorems cannot be applied; every hypothesis of
+  `stepB_add_smul_of_branch_engine_on` holds, the gate fires at both states, and its conclusion follows. This is the
+  `ε > 0`, engine-parameter analogue of `RedTeam.rel_strictly_weaker`. Same scope as above (exact reals, chosen K3
+  inputs, `R = 3/7` on the empty edge is chosen so that its drive is exactly 0); pinned by
+  `tests/test_lean_gate_p2.py::test_engine_rel_strictly_weaker_value`. Its false variant is mutant M10 (§7.3).
+
 ### 7.3 M5 negation and a semantic mutation check (residual 3)
 
 * `RedTeam.false_multiplier_no_gamma` (M5) and `RedTeam.false_main_no_gamma` (M4): the multiplier formula / main
   theorem with `(1 − γdt)` dropped are false on `p0`, `B0`, `vRay 2`, `t = 1/10`, `ctrlPlus 2`, where every hypothesis
   holds (estimator `1/2` vs `5/9`; edge 0 `1/20` vs `1/18`).
-* `lean_mutation_check.py` now has 9 mutants (M1–M5 as before; M6/M7 edge set `x_e ≠ 0` / `h_e ≠ 0` in
-  `stepB_add_smul_of_branch_on`; M8 `stepM_eq_stepB` without symmetry; M9 `engine_nonvacuous` without `(1 − γdt)`).
-  A mutant is REJECTED only if (a) the mutated file fails to elaborate with the kept proof **and** (b) the mutated
-  statement, extracted from the mutated source and closed over its section variables, is refuted by a proved negation
-  theorem (`example : ¬ ∀ …, mutant := fun H => negation (H instance)` elaborates against the built project), **and**
-  (c) the same refutation of the unmutated statement fails (control). Result: 9/9 rejected; (a) is a real proof
-  failure for M4–M9 and name-reference-only for M1–M3, which are nevertheless refuted semantically by (b).
+* `lean_mutation_check.py` has 10 mutants (M1–M5 as before; M6/M7 edge set `x_e ≠ 0` / `h_e ≠ 0` in
+  `stepB_add_smul_of_branch_on`; M8 `stepM_eq_stepB` without symmetry; M9 `engine_nonvacuous` without `(1 − γdt)`;
+  M10 `engine_rel_strictly_weaker` claiming the all-edge kernel condition holds). A mutant is REJECTED only if all of:
+  * (a) build rejection: the mutated file fails to elaborate with the kept proof. For M4–M10 this is a real proof
+    failure (type mismatch / unsolved goals); for **M1–M3 it is name-reference only** ("Unknown identifier"), which
+    is weak evidence on its own: for M1–M3 the rejection is carried by (b);
+  * (b) semantic refutation: the mutated statement, extracted from the mutated source and closed over its section
+    variables, is refuted by a proved negation theorem: `theorem aief_refutation : ¬ ∀ …, mutant :=
+    fun H => negation (H instance)` elaborates against the built project with no error, the output contains neither
+    `declaration uses` nor `sorry`, and `#print axioms aief_refutation` lists only propext / Classical.choice /
+    Quot.sound. Negative controls of this validator (Auditor Seat 002, note N1): a `sorry` refutation and a
+    refutation through a freshly declared `axiom aief_cheat : False` are both rejected, and the run fails otherwise;
+  * (c) term-specificity: the same refutation term applied to the unmutated statement fails to elaborate. This only
+    shows that the refutation term depends on the mutation (any type mismatch satisfies it); it is **not** a
+    semantic control and adds no evidence beyond (b) (note N2). That the unmutated statements are true is shown by
+    the positive control: the unmutated files elaborate with their proofs (and by the full build).
+  Result: 10/10 rejected; both validator negative controls rejected.
 
 ### 7.4 Matrix form = edge-vector form (residual 4; previously "argued, not proved")
 
@@ -518,6 +539,6 @@ style linters active (verified by a temporary over-long line and an unused simp 
 * A bridge to the pinned `lean/AIEFProofs` `CCtrl`/`vCtrl` (still re-declared, not imported).
 * An engine-shaped counterexample for `hon` cannot exist (P1, `gateOn_iff_of_branch`); the `hon` negation remains on
   the non-engine `pLow`. The P2 red-team negations (`false_rel_*`, M4/M5) use `p0` (`ε = 0`), not engine parameters;
-  only the positive witness of §7.2 is engine-shaped.
+  only the positive witnesses of §7.2 (`engine_nonvacuous`, `engine_rel_strictly_weaker`) are engine-shaped.
 * `R` symmetry / `B` symmetry invariance of the engine are hypotheses of §7.4, not theorems.
 * **AUD-RATELAW stays UNEXPLAINED.** P2 does not change any label, ERRATA entry or registry claim.
