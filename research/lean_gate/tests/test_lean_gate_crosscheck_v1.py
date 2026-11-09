@@ -84,7 +84,7 @@ def test_committed_json_is_reproduced(report):
 
 
 def test_gate_branch_multiplier_matches_E22_exact_value(report):
-    # ERRATA E22 (branch research/rate-law-delta-sweep) exact rational branch multiplier.
+    # ERRATA E22 (on main via PR #18) exact rational branch multiplier.
     assert report["components"]["GATE"]["lam_branch"] == 0.9987382469602354
 
 

@@ -19,7 +19,7 @@ What is checked (replay seed 4619122171158768524, rho 1.0, t = 250, exactly kapp
   E  Engine agreement. The Lean branch multiplier lam_branch = (1-γdt) Σ branchScale_e h_e² / Σ h_e² is compared with
      the engine's one-sided finite-difference multiplier <(step_B(B + d H) - step_B(B))/d, h>/<h,h> at an on-branch
      step with small rounding (ENGINE_DELTA), tolerance ENGINE_TOL (= resolved bound 2.1e-10 of ERRATA E5 and of
-     E22 on research/rate-law-delta-sweep (pending merge)).
+     E22 on main (landed via PR #18)).
      For the gate component also: K3_gate_component_multiplier's closed form a(min(s0,s1)+s0+s1)/3 equals lam_branch
      exactly, and lam_branch - lam_state = -a|s0-s1|/6 exactly (K3_gate_branch_sub_state).
   N  Negative controls (each must be DETECTED where enforced, else the run fails; N1 on both components, N2-N4 on

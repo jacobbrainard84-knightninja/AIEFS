@@ -9,10 +9,10 @@ Nothing hash-pinned is edited. `registry/claims.csv`, `registry/artifacts.csv` a
 ## 1. What the audit relies on
 
 The rate-law audit (`AI Agent Audits/evidence/scripts/kappa_cycle_kernel.py`, ERRATA E5, and ERRATA
-E22 on `research/rate-law-delta-sweep` (pending merge)) measures a one-step multiplier `lam = <(B'(B + δh) - B'(B))/δ, h> / <h, h>` along a
+E22 on `main` (landed via PR #18)) measures a one-step multiplier `lam = <(B'(B + δh) - B'(B))/δ, h> / <h, h>` along a
 direction `h` in the controller kernel `K = ker A_J`, and compares it with the *state formula* `(1 - γdt) mean(s_J)`.
 Its validity rests on an unproved piece of algebra: on a fixed branch, the gate map is affine along `h`, so `lam` does
-not depend on `δ`. E22 on `research/rate-law-delta-sweep` (pending merge) also reports an "exact branch formula" `(1 - γdt) Σ h_e² s_ctrl(e)` (exact rational evaluation)
+not depend on `δ`. E22 on `main` (landed via PR #18) also reports an "exact branch formula" `(1 - γdt) Σ h_e² s_ctrl(e)` (exact rational evaluation)
 that differs from the state formula by 4.04e-13 on the gap component. P1 proves both facts for the real-arithmetic
 model, plus the one-sided K3 statements that `lean/AIEFProofs/README.md` lists as not formalised.
 
@@ -70,7 +70,7 @@ hold verbatim for the exact-rational transcription of the float config.
    `branchScale e = s_ctrl(e)` at the base proposal if the gate fires, else 1. One-step map is affine along `h`.
 2. `multiplier_eq_branch_formula`: for `t ≠ 0` the audit estimator equals `(1 − γdt) Σ branchScale_e h_e² / Σ h_e²`,
    independent of `t` (the "constant multiplier along a kernel direction"). This is the exact branch formula of
-   E22 on `research/rate-law-delta-sweep` (pending merge).
+   E22 on `main` (landed via PR #18).
 3. `stepB_sub_eq_smul_of_uniform`: if `branchScale ≡ s` on `supp h` (all controller scales equal), `h` is an exact
    eigenvector with eigenvalue `(1 − γdt) s` (the state formula).
 4. `eventually_clip_gate`: strict clip and a firing gate test at the base persist for all small `|t|` (B1, B2 are
@@ -78,7 +78,7 @@ hold verbatim for the exact-rational transcription of the float config.
 5. `K3_gate_component_multiplier` + `K3_gate_branch_sub_state`: for the AUD-RATELAW gap component
    (nodes `[2,7,11] ↦ 0,1,2`, `J = {0,1}`, node 2 not a controller at either state) along `vRay 2 = (1,−1,−1)`
    (= the pinned `vCtrl`), the multiplier is `(1 − γdt)(min s₀ s₁ + s₀ + s₁)/3`, and
-   `branch − state = −(1 − γdt)|s₀ − s₁|/6` exactly. This attributes the 4.04e-13 of E22 on `research/rate-law-delta-sweep` (pending merge) to the tied pair's spread.
+   `branch − state = −(1 − γdt)|s₀ − s₁|/6` exactly. This attributes the 4.04e-13 of E22 on `main` (landed via PR #18) to the tied pair's spread.
 6. All-tied K3 (`s₀ = s₁ = s₂ = s`), one-sided:
    * `K3_tied_plus_exact`: for `t ≥ 0` (plus clip/gate/positivity) `stepB (B + t vRay c) − stepB B = t(1 − γdt)s · vRay c`;
    * `K3_tied_plus_hasDerivWithinAt`: the right derivative along `+vRay c` is `(1 − γdt) s · vRay c`;
@@ -92,7 +92,7 @@ hold verbatim for the exact-rational transcription of the float config.
 ## 4. Deliberate abstractions (what the Lean model is NOT)
 
 * **Reals, not float64.** All statements are exact real identities. The engine's float error is outside the model;
-  E22 on `research/rate-law-delta-sweep` (pending merge) shows it is the representation error of `fl(B + δH)`. The cross-check bounds model-vs-engine differences by
+  E22 on `main` (landed via PR #18) shows it is the representation error of `fl(B + δH)`. The cross-check bounds model-vs-engine differences by
   evaluating the Lean definitions in exact rationals on the engine's own float inputs (≤ 5.6e-17 absolute here).
 * **Edge vectors, not the 12×12 matrix.** Symmetrisation and the zero diagonal are not modelled; one coordinate per
   unordered pair. Equivalence with the matrix form for symmetric zero-diagonal inputs is **argued, not proved**
@@ -105,7 +105,7 @@ hold verbatim for the exact-rational transcription of the float config.
   In the cross-check the exact controllers on the edges of the K5 control direction are `{0,1,6}`, whereas TIE_TOL treats all five K5 nodes as tied controllers; the identity is unaffected.
 * **Lean division `x/0 = 0`.** Irrelevant to the engine (`ε = 1e-12 > 0`); the cross-check transcription copies it.
 * **Not formalised:** the closed-form clique multiplier `λ_k = (1 − γdt)c/(c + dt(kη − γc) + ε)` and the
-  finite-time departure of the state formula from it (the 3.26e-10 part in E22 on `research/rate-law-delta-sweep` (pending merge)); any TIE_TOL / δ_c selection rule;
+  finite-time departure of the state formula from it (the 3.26e-10 part in E22 on `main` (landed via PR #18)); any TIE_TOL / δ_c selection rule;
   the link between `AIEFGate.G3`/`vRay` and the pinned `AIEFProofs` `src3`/`dst3`/`vRay` (same convention, not
   imported, to keep this project free of path dependencies like `AIEFFreezeCore`).
 
