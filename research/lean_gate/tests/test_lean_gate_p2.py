@@ -108,3 +108,19 @@ def test_false_matrix_no_symm_values():
     M = matrix_step(PT, [[Fr(0)] * 2] * 2, [[Fr(0), Fr(1)], [Fr(0), Fr(0)]])
     assert M[0][1] == Fr(9, 20)
     assert on_k3(lg.lean_step(PT, ZERO, k3vec([1, 0, 0])))[0] == Fr(9, 10)
+
+
+def test_engine_rel_strictly_weaker_value():
+    # EngineWitness.engine_rel_strictly_weaker: R = (3/7, 1, 1) -> drive (0, 1/25, 1/25); B = (0, 8/3, 8/3);
+    # h = hw = (0, 1, -1); t = 1/10; ctrl = (0, 2, 2). Edge 0 has x_0 = h_0 = 0; response (0, k, -k), k = t a s_2.
+    eta, mu = Fr(4, 100), Fr(3, 100)
+    drive = k3vec([(eta + mu) * Fr(3, 7) - mu, (eta + mu) - mu, (eta + mu) - mu])
+    B, h = k3vec([0, Fr(8, 3), Fr(8, 3)]), k3vec([0, 1, -1])
+    x = lg.prop(PE, drive, B)
+    assert on_k3(x) == [0, Fr(8, 3), Fr(8, 3)] and on_k3(h)[0] == 0
+    Ah = lg.incAct(h)
+    assert Ah[0] == 1 and Ah[1] == -1 and Ah[2] == 0          # all-edge kernel fails on edge (0,1)
+    d = [a - b for a, b in zip(lg.lean_step(PE, drive, add(B, Fr(1, 10), h)), lg.lean_step(PE, drive, B))]
+    s2 = (1 - Fr(5, 100)) / Fr(3, 2) / (Fr(16, 3) + Fr(1, 10**12))
+    k = Fr(1, 10) * (1 - Fr(15, 1000) * Fr(1, 100)) * s2
+    assert on_k3(d) == [0, k, -k]
