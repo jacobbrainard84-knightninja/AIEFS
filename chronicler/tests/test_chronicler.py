@@ -168,6 +168,67 @@ class TestRules(unittest.TestCase):
         }])])
         self.assertEqual(checks.rule_citations(snap), [])
 
+    # -- audit review 2026-11-09: shallow clones and bare-name mentions ------
+
+    def test_shallow_clone_withholds_the_file_date(self):
+        snap = _snapshot(
+            ref_commit={"sha": "c" * 40, "date": "2026-11-08T00:00:00Z", "subject": "tip"},
+            history={"shallow": True, "commits": 1, "reliable": False},
+            documents=[_doc(
+                path="CURRENT_STATUS.md", doc_class="status",
+                declared_date="2026-10-23", age_days=16.0,
+                watch_newest={"path": "registry/claims.csv", "date": None, "sha": None,
+                              "date_withheld": "shallow-clone"},
+            )],
+        )
+        found = [f for f in checks.rule_staleness(snap) if f.rule == "DOC-STALE-VS-SOURCE"]
+        self.assertEqual(len(found), 1)
+        self.assertIn("shallow", found[0].detail)
+        self.assertNotIn("2026-11-08", found[0].detail)
+        self.assertTrue(any("date withheld" in e for e in found[0].evidence))
+
+    def test_dated_file_change_still_reads_normally(self):
+        snap = _snapshot(documents=[_doc(
+            path="CURRENT_STATUS.md", doc_class="status",
+            declared_date="2026-10-23", age_days=16.0,
+            watch_newest={"path": "registry/claims.csv", "date": "2026-11-06T00:00:00Z", "sha": "d" * 40},
+        )])
+        found = [f for f in checks.rule_staleness(snap) if f.rule == "DOC-STALE-VS-SOURCE"]
+        self.assertEqual(len(found), 1)
+        self.assertIn("2026-11-06", found[0].detail)
+        self.assertNotIn("shallow", found[0].detail)
+
+    def test_output_filename_is_not_a_promise(self):
+        line = "write `FAILED_manifest.json` or a final manifest with structured failure state;"
+        snap = _snapshot(documents=[_doc(cited_paths=[
+            {"token": "FAILED_manifest.json", "line": 743, "kind": "bare", "text": line, "context": line},
+        ])])
+        self.assertEqual(checks.rule_citations(snap), [])
+
+    def test_planted_filename_is_not_a_promise(self):
+        line = "- the verifier is run without `python -I`, so a planted `hashlib.py` beside it defeats the check."
+        snap = _snapshot(documents=[_doc(cited_paths=[
+            {"token": "hashlib.py", "line": 19, "kind": "bare", "text": line, "context": line},
+        ])])
+        self.assertEqual(checks.rule_citations(snap), [])
+
+    def test_prescribed_artifact_is_not_a_promise(self):
+        line = ("preserve the scripts unchanged alongside a neighbouring `README.md` explaining the flaw "
+                "and a machine-readable `provenance.json`")
+        snap = _snapshot(documents=[_doc(cited_paths=[
+            {"token": "provenance.json", "line": 14, "kind": "bare", "text": line, "context": line},
+        ])])
+        self.assertEqual(checks.rule_citations(snap), [])
+
+    def test_asserted_bare_filename_is_still_flagged(self):
+        line = "The record lives in `provenance.json` for each run."
+        snap = _snapshot(documents=[_doc(cited_paths=[
+            {"token": "provenance.json", "line": 13, "kind": "bare", "text": line, "context": line},
+        ])])
+        found = checks.rule_citations(snap)
+        self.assertTrue(any(f.rule == "DOC-BARE-REF" for f in found))
+
+
     def test_doc_relative_path_resolves(self):
         snap = _snapshot(documents=[_doc(cited_paths=[{"token": "deep/file.md", "line": 2, "kind": "relative"}])])
         self.assertEqual(checks.rule_citations(snap), [])

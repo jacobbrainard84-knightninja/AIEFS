@@ -44,6 +44,18 @@ ABSENCE_CONTEXT = re.compile(
     re.I,
 )
 
+#: A bare filename only promises that a file exists when the sentence points at it as a thing
+#: that is there ("see X", "X contains"). Names that follow "write", "planted", "such as" or
+#: "or a" are outputs, examples or hypotheticals: `FAILED_manifest.json` is a file the agent is
+#: told to produce, and a planted `hashlib.py` is the attack in an audit note, not a repo path.
+#: Audit review 2026-11-09 confirmed both as false positives.
+MENTION_CUE = re.compile(
+    r"\b(write|writes|writing|wrote|create|creates|creating|produce|produces|producing|emit|emits|"
+    r"output|outputs|planted|plant|shadow|such as|e\.g\.|for example|for instance|or a|or an|"
+    r"hypothetical|attacker|defeats?|named)\b[^`]{0,60}$",
+    re.I,
+)
+
 AUTHORITY_CLAIM = re.compile(r"single\s+(status\s+file|source\s+of\s+truth)", re.I)
 NEGATION = re.compile(r"\b(not|never|isn't|is not)\b", re.I)
 
@@ -223,6 +235,37 @@ def rule_staleness(snapshot: dict) -> list[Finding]:
 
         track_sources = doc_class == "status"
 
+        # A shallow clone cannot date a file: the finding stands, the date does not travel with it.
+        if track_sources and declared_dt and (watch_newest or {}).get("date_withheld"):
+            tip = snapshot.get("ref_commit") or {}
+            tip_dt = util.parse_git_date(tip.get("date") or "")
+            if tip_dt and tip_dt > declared_dt:
+                depth = (snapshot.get("history") or {}).get("commits")
+                out.append(Finding(
+                    rule="DOC-STALE-VS-SOURCE",
+                    severity="high",
+                    title=f"{doc['path']} is older than the sources it describes",
+                    doc=doc["path"],
+                    detail=(
+                        f"{doc['path']} declares {declared} (line {doc.get('declared_date_line')}), but "
+                        f"{watch_newest['path']} has changed since that stamp. No 'last changed' date is "
+                        f"published here: this clone is shallow ({depth} commit(s)), so `git log` returns "
+                        f"the clone boundary rather than the file's last change."
+                    ),
+                    action=(
+                        f"Re-verify {doc['path']} against {watch_newest['path']} at "
+                        f"{(tip.get('sha') or '')[:7]}, then update the text and the date stamp in the same "
+                        f"edit. Date the file change with a full clone; do not take it from this one."
+                    ),
+                    evidence=[
+                        f"{doc['path']}:{doc.get('declared_date_line')}: declares {declared}",
+                        f"{watch_newest['path']}: changed after {declared} (date withheld: shallow clone)",
+                        f"ref tip {(tip.get('sha') or '')[:7]} dated {(tip.get('date') or '')[:10]}",
+                    ],
+                    line=doc.get("declared_date_line"),
+                ))
+                continue
+
         if track_sources and declared_dt and newest_dt and newest_dt > declared_dt:
             late = round((newest_dt - declared_dt).total_seconds() / 86400.0, 1)
             out.append(Finding(
@@ -280,6 +323,24 @@ def rule_staleness(snapshot: dict) -> list[Finding]:
     return out
 
 
+#: "a machine-readable `provenance.json`" prescribes an artifact; nobody writes "a" before the
+#: name of a specific file they are pointing at. Same for "alongside a neighbouring `README.md`".
+GENERIC_REF = re.compile(r"\b(?:a|an)\s+(?:[a-z][a-z\-]*\s+){0,3}$", re.I)
+
+
+def _non_assertive(text: str, token: str, prefix: str | None = None) -> bool:
+    """True when the words just before a bare filename mark it as an output or a hypothetical."""
+    if prefix:
+        window = prefix.rstrip("`")
+        return bool(MENTION_CUE.search(window) or GENERIC_REF.search(window))
+    index = text.find(token)
+    if index < 0:
+        return False
+    # The token sits inside backticks, so the window ends with the opening one.
+    window = text[max(0, index - 70):index].rstrip("`")
+    return bool(MENTION_CUE.search(window) or GENERIC_REF.search(window))
+
+
 def rule_citations(snapshot: dict) -> list[Finding]:
     out: list[Finding] = []
     universe = set(snapshot.get("universe", []))
@@ -330,6 +391,8 @@ def rule_citations(snapshot: dict) -> list[Finding]:
                 continue  # cites a deletion/absence, so the dead path is the point
             kind = ref.get("kind", "relative")
             if kind == "bare":
+                if _non_assertive(_text, ref["token"], ref.get("prefix")):
+                    continue  # an output, an example or a hypothetical, not a promise of a file
                 if not _basename_resolves(ref["token"], universe):
                     bare_missing.append(ref)
                 continue

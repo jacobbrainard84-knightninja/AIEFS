@@ -309,6 +309,7 @@ def describe_document(
     resolved_refs: dict[str, str],
     files_by_ref: dict[str, dict[str, dict]],
     now,
+    history_reliable: bool = True,
 ) -> dict:
     path = doc["path"]
     candidates = [resolved_refs[c] for c in doc_ref_candidates(doc, default_ref) if c in resolved_refs]
@@ -364,9 +365,20 @@ def describe_document(
         when = util.parse_git_date(info.get("date") or "")
         if when and (newest is None or when > newest[1]):
             newest = (watched, when, info.get("sha"))
-    record["watch_newest"] = (
-        {"path": newest[0], "date": util.iso(newest[1]), "sha": newest[2]} if newest else None
-    )
+    if newest is None:
+        record["watch_newest"] = None
+    elif history_reliable:
+        record["watch_newest"] = {"path": newest[0], "date": util.iso(newest[1]), "sha": newest[2]}
+    else:
+        # On a shallow clone `git log -1 -- <path>` stops at the clone boundary, so the date it
+        # returns belongs to the tip commit, not to the file. Publishing it as "this file changed
+        # on <date>" is the very error the tool exists to catch (audit review 2026-11-09, note 1).
+        record["watch_newest"] = {
+            "path": newest[0],
+            "date": None,
+            "sha": None,
+            "date_withheld": "shallow-clone",
+        }
     return record
 
 
@@ -466,6 +478,7 @@ def collect(
     pin_sources = manifest.get("pin_sources", DEFAULT_PIN_SOURCES)
     pins = verify_pins(collect_pins(ref, primary_files, pin_sources), ref)
 
+    history = history_depth()
     documents = [
         describe_document(
             doc,
@@ -473,6 +486,7 @@ def collect(
             resolved_refs=resolved_refs,
             files_by_ref=files_by_ref,
             now=now,
+            history_reliable=bool(history.get("reliable")),
         )
         for doc in manifest.get("docs", [])
     ]
@@ -503,7 +517,7 @@ def collect(
         "refs": sorted(files_by_ref),
         "ref_commit": ref_commit_info(ref),
         "local_head": local_head(),
-        "history": history_depth(),
+        "history": history,
         "remote": remote_heads(remote, allow_network=allow_network),
         "counts": {
             "tracked_files": len(primary_files),
