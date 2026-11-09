@@ -1,0 +1,27 @@
+AIEFS PART 6 — GENUINE S01 ARTIFACT RETRIEVAL / PARTIAL BYTE VERIFICATION
+Date: 2026-11-09 (Europe/Tirane)
+Repository: jacobbrainard84-knightninja/AIEFS
+Reviewed main: eb3933c196ee19e80e1621ae80d89ca72e6d9485
+Audit-inbox tip before deposit: 4fbd00b6e5f975b49bd74885e8c381af9abaf9f7
+
+SOURCE IDENTITIES
+- v4.1 source: AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4_1.py; Git blob df78b01607e6792afe9afc09fcc9b0cb83585ec6. validate_run(): lines 295-421; required paths 295-303; child hashes 326-329; certificate status/seed count 331-334.
+- Inventory: registry/artifacts_current.csv; Git blob 31be448f5343ce434587e5af3d7a397cd3af961. Rows 2252 ART-1995 NPZ; 2253 ART-1996 scalar CSV; 2272 ART-2015 seed-results JSON; 2273 ART-2016 certificate; 2474 ART-2217 manifest; 2475 ART-2218 status CSV.
+- Manifest: runs/b57562a8ee77/manifest.json; Git blob 7ae179db4eda4f6eef8a503567adf8324d94e336; output hashes lines 119-124; paired seeds line 158.
+
+RECOMPUTED SHA-256 FROM RETRIEVED TEXT BYTES
+- manifest.json: 11,457 bytes; 7d1b86ab39eed397e2d281faf729ee5c3ac515efc00b2789c2e0013dce0d1e78 — MATCH ART-2217.
+- scalar_summary.csv: 603,831 bytes; e9aa74e68b758b21e64b5757607af3c4bf98e88f616757319cb9e4e6d3a8e378 — MATCH ART-1996. Parsed 800 rows; 40 seeds; five rho levels; continue/reset_ema/reset_B/future_shuffle = 200 rows each.
+- twindow_condition_status.csv: 10,272 bytes; 1f6985026c292c15b5fa5cacacbe92600916ab8d43bdbc8df4f9f0a76baa98e8 — MATCH ART-2218. Parsed 200 rows; 40 seeds; five rho levels; success=200.
+
+UNAVAILABLE LARGE / BINARY INPUTS
+- Branch NPZ: 27,992,867 bytes; expected SHA-256 55a419c790d0a46bad2a52488d9de018a539ad3daa3759eee849cebf4df468c2; Git blob 415ab25f390066259c536ba53ad5d088a70deef6. fetch_file UTF-8 and base64 bodies were empty; fetch_blob failed UTF-8 decoding at a binary byte; GitHub text fetch rejected binary.
+- Baseline seed-results JSON: 4,215,297 bytes; expected SHA-256 47b1627a20be52ee4cf3ad69feeae3fe8d8e008687912c83c2237dfa8e5363ff; Git blob b250f9bdbb9e849996b8bc2a47896ededf0335a1. Empty body, including line-range requests.
+- Baseline certificate JSON: 4,348,855 bytes; expected SHA-256 08314de365196fa369bfa2b0363352cf04bdfb1a957f3ed86847f5d17b9d620f; Git blob e939a64eac899c7b15dc788845ee5d61e9aa3752. Empty body, including line-range requests.
+- Direct curl to raw.githubusercontent.com failed DNS. Main Repo checks run 42515853741 completed; artifact list was empty.
+
+EXECUTION SCOPE
+- Preflight helper passed py_compile.
+- Empty-directory negative control exited 1 and reported all six required inputs missing.
+- Helper NOT run against genuine S01; original validate_run(), run_analysis(), CLI, bundle writing and oracle certification NOT run.
+- No synthetic artifact substituted. Retrieval difficulty does not establish absent/corrupt Git objects or a scientific false-PASS.
