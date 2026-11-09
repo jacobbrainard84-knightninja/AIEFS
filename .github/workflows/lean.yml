@@ -7,6 +7,7 @@
 #   lean/AIEFProofs      check_lean.sh         base project (hash-pinned; must exist)
 #   lean/AIEFProofsKn    check_lean_kn.sh      research/lean-kn  (dim ker = C(n,2) - n, all n >= 3)
 #   lean/AIEFFreezeCore  check_lean_freeze.sh  research/freezing (FreezeCore lemmas)
+#   lean/AIEFGateCore    check_lean_gate.sh    research/lean-gate-identities (Lean P1 gate identities)
 # Each project gets its own axiom-audit root (= its lean_lib / module root; axiom-audit audits
 # declarations from modules under that root) and its own log artifact lean-check-logs-<project>.
 # A project with required: false is SKIPPED with a warning only when its directory is absent, so
@@ -47,6 +48,7 @@ jobs:
           - { project: AIEFProofs,     script: check_lean.sh,        axiom_root: AIEFProofs,     required: true }
           - { project: AIEFProofsKn,   script: check_lean_kn.sh,     axiom_root: AIEFProofsKn,   required: true  }
           - { project: AIEFFreezeCore, script: check_lean_freeze.sh, axiom_root: AIEFFreezeCore, required: true  }
+          - { project: AIEFGateCore,   script: check_lean_gate.sh,   axiom_root: AIEFGateCore,   required: true  }
     env:
       PROJECT_DIR: lean/${{ matrix.project }}
     steps:
