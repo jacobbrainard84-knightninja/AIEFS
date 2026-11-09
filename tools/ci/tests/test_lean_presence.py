@@ -261,8 +261,9 @@ class WorkflowGuardTests(unittest.TestCase):
         self.assertTrue(self.mutated("axiom_root: AIEFProofs,     required: true",
                                      "axiom_root: AIEFProofs,     required: false"))
 
-    def test_matrix_has_the_three_projects(self):
-        self.assertEqual([p for p, _ in matrix_rows(self.wf)], ["AIEFProofs", "AIEFProofsKn", "AIEFFreezeCore"])
+    def test_matrix_has_the_four_projects(self):
+        self.assertEqual([p for p, _ in matrix_rows(self.wf)],
+                         ["AIEFProofs", "AIEFProofsKn", "AIEFFreezeCore", "AIEFGateCore"])
 
     def test_detects_present_project_made_optional(self):
         # A research project whose directory exists (here: a temp repo with lean/AIEFProofsKn) must be

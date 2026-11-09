@@ -41,6 +41,7 @@ KNOWN_EXECUTABLES = (
     # Paths not tracked yet (the freezing branch) are reported as NOTICE, not errors.
     "lean/AIEFProofsKn/check_lean_kn.sh",
     "lean/AIEFFreezeCore/check_lean_freeze.sh",
+    "lean/AIEFGateCore/check_lean_gate.sh",
     "research/freezing/lean/check.sh",
     "tools/ci/check_artifact_pins.py",
     "tools/ci/check_current_inventory.py",
