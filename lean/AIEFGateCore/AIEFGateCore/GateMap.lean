@@ -4,7 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: AIEF / SSRH
 -/
 -- SPDX-License-Identifier: Apache-2.0
-import Mathlib
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Shift
+import Mathlib.Topology.Algebra.Order.Field
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.FunProp
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Push
+import Mathlib.Tactic.Linter
 
 /-!
 # Branch-conditional affinity of the one-step capacity-gate map
