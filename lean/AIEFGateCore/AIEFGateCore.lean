@@ -3,3 +3,7 @@ import AIEFGateCore.K3
 import AIEFGateCore.RedTeam
 import AIEFGateCore.EngineWitness
 import AIEFGateCore.MatrixForm
+import AIEFGateCore.Pinned.ControllerFiber
+import AIEFGateCore.Pinned.ControllerFiberProjector
+import AIEFGateCore.Pinned.ControllerFiberQuotient
+import AIEFGateCore.Pinned.CompleteGraphIncidence
