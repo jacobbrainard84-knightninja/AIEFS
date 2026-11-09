@@ -143,6 +143,101 @@ theorem engine_false_no_gamma :
   simp [vRay] at h0
   nlinarith
 
+
+/-! ## (P2) Engine-shaped witness for the per-edge weakening (`ε > 0`)
+
+`engine_nonvacuous` has `x_e ≠ 0` on every edge, so it does not exercise the weakening of
+`stepB_add_smul_of_branch_on`. Here edge `(0,1)` is empty (`B = 0`, coherence `R = 3/7`, so
+`drive = (η+μ)·3/7 − μ = 0` and `x_0 = 0`), the direction `RedTeam.hw = (0, 1, −1)` vanishes on it,
+and the other two edges are as in `engine_nonvacuous` (`R = 1`, `B = 8/3`). This is the `ε > 0`,
+engine-parameter analogue of `RedTeam.rel_strictly_weaker`. Same scope as above (exact reals, chosen
+K3 inputs, not an engine trajectory). -/
+
+/-- Per-edge drive `(η+μ) R_e − μ` with `R = (3/7, 1, 1)`. -/
+def driveW : Fin 3 → ℝ :=
+  ![(4 / 100 + 3 / 100) * (3 / 7) - 3 / 100, (4 / 100 + 3 / 100) * 1 - 3 / 100,
+    (4 / 100 + 3 / 100) * 1 - 3 / 100]
+
+/-- Base state `B = (0, 8/3, 8/3)`. -/
+def BW : Fin 3 → ℝ := ![0, 8 / 3, 8 / 3]
+
+theorem ctrlX_mem : ∀ e, ctrlX e = G3.src e ∨ ctrlX e = G3.dst e := by
+  intro e; fin_cases e <;> simp [ctrlX]
+
+theorem prop_BW : prop pE driveW BW = ![0, 8 / 3, 8 / 3] := by
+  funext e; fin_cases e <;> simp [prop, pre, pE, driveW, BW] <;> norm_num
+
+theorem prop_BW_plus :
+    prop pE driveW (BW + (1 / 10 : ℝ) • hw) =
+      ![0, 8 / 3 + 19997 / 200000, 8 / 3 - 19997 / 200000] := by
+  funext e; fin_cases e <;> simp [prop, pre, pE, driveW, BW, hw] <;> norm_num
+
+/-- Node 2 has the smallest scale whenever its row sum is the largest (`cap ≥ 0`). -/
+theorem sc_two_le (y : Fin 3 → ℝ) (h0 : incAct G3 y 0 ≤ incAct G3 y 2)
+    (h1 : incAct G3 y 1 ≤ incAct G3 y 2) (p0' : 0 < incAct G3 y 0 + pE.ε)
+    (p1' : 0 < incAct G3 y 1 + pE.ε) (k : Fin 3) : sc pE G3 y 2 ≤ sc pE G3 y k := by
+  have hcap : 0 ≤ pE.cap := by simp [pE]; norm_num
+  fin_cases k
+  · exact scale_anti pE h0 p0' hcap
+  · exact scale_anti pE h1 p1' hcap
+  · exact le_rfl
+
+/-- **(P2) Engine-shaped witness that the per-edge hypotheses are strictly weaker (`ε = 10⁻¹²`).**
+At the frozen production parameters (exact reals), K3, `B = (0, 8/3, 8/3)`, `R = (3/7, 1, 1)`,
+`h = hw = (0, 1, −1)`, `t = 1/10`, `ctrl = ctrlX = (0, 2, 2)`: edge 0 has `x_0 = h_0 = 0`; the P1
+all-edge kernel hypothesis `InCtrlKer G3 ctrl hw` fails for every controller assignment; every
+hypothesis of `stepB_add_smul_of_branch_engine_on` holds (gate firing at both states), and its
+conclusion follows. -/
+theorem engine_rel_strictly_weaker :
+    EngineGate pE ∧ 0 < pE.ε ∧ prop pE driveW BW 0 = 0 ∧ hw 0 = 0 ∧
+    (∀ ctrl : Fin 3 → Fin 3, (∀ e, ctrl e = G3.src e ∨ ctrl e = G3.dst e) →
+      ¬ InCtrlKer G3 ctrl hw) ∧
+    (∀ e, hw e ≠ 0 → 0 ≤ pre pE driveW BW e ∧ 0 ≤ pre pE driveW (BW + (1 / 10 : ℝ) • hw) e) ∧
+    GateOn pE G3 (prop pE driveW BW) ∧ GateOn pE G3 (prop pE driveW (BW + (1 / 10 : ℝ) • hw)) ∧
+    InCtrlKerOn G3 (Rel (prop pE driveW BW) hw) ctrlX hw ∧
+    IsCtrlOn pE G3 (Rel (prop pE driveW BW) hw) (prop pE driveW BW) ctrlX ∧
+    IsCtrlOn pE G3 (Rel (prop pE driveW BW) hw) (prop pE driveW (BW + (1 / 10 : ℝ) • hw)) ctrlX ∧
+    stepB pE G3 driveW (BW + (1 / 10 : ℝ) • hw) =
+      fun e => stepB pE G3 driveW BW e +
+        (1 / 10) * (1 - pE.γ * pE.dt) * branchScale pE G3 driveW BW ctrlX e * hw e := by
+  have hclip : ∀ e, hw e ≠ 0 → 0 ≤ pre pE driveW BW e ∧
+      0 ≤ pre pE driveW (BW + (1 / 10 : ℝ) • hw) e := by
+    intro e _
+    fin_cases e <;> simp [pre, pE, driveW, BW, hw] <;> norm_num
+  have on0 : GateOn pE G3 (prop pE driveW BW) := ⟨2, by rw [prop_BW]; simp [pE]; norm_num⟩
+  have on1 : GateOn pE G3 (prop pE driveW (BW + (1 / 10 : ℝ) • hw)) :=
+    ⟨2, by rw [prop_BW_plus]; simp [pE]; norm_num⟩
+  have hrel : ∀ e, Rel (prop pE driveW BW) hw e ↔ e ≠ 0 := by
+    intro e; rw [prop_BW]; fin_cases e <;> simp [Rel, hw]
+  have hctrl : ∀ e : Fin 3, e ≠ 0 → ctrlX e = 2 := by
+    intro e he; fin_cases e
+    · exact absurd rfl he
+    all_goals rfl
+  have hend : ∀ e : Fin 3, e ≠ 0 → (2 = G3.src e ∨ 2 = G3.dst e) := by
+    intro e he; fin_cases e
+    · exact absurd rfl he
+    all_goals simp
+  have hker : InCtrlKerOn G3 (Rel (prop pE driveW BW) hw) ctrlX hw := by
+    intro e he; rw [hrel] at he; rw [hctrl e he]; simp [hw]
+  have hm0 := sc_two_le (prop pE driveW BW)
+    (by rw [prop_BW]; simp; norm_num) (by rw [prop_BW]; simp; norm_num)
+    (by rw [prop_BW]; simp [pE]; norm_num) (by rw [prop_BW]; simp [pE]; norm_num)
+  have hm1 := sc_two_le (prop pE driveW (BW + (1 / 10 : ℝ) • hw))
+    (by rw [prop_BW_plus]; simp; norm_num) (by rw [prop_BW_plus]; simp; norm_num)
+    (by rw [prop_BW_plus]; simp [pE]; norm_num) (by rw [prop_BW_plus]; simp [pE]; norm_num)
+  have hc0 : IsCtrlOn pE G3 (Rel (prop pE driveW BW) hw) (prop pE driveW BW) ctrlX := by
+    intro e he; rw [hrel] at he; rw [hctrl e he]; exact ⟨hend e he, hm0 _, hm0 _⟩
+  have hc1 : IsCtrlOn pE G3 (Rel (prop pE driveW BW) hw)
+      (prop pE driveW (BW + (1 / 10 : ℝ) • hw)) ctrlX := by
+    intro e he; rw [hrel] at he; rw [hctrl e he]; exact ⟨hend e he, hm1 _, hm1 _⟩
+  refine ⟨engineGate_pE, by simp [pE], by rw [prop_BW]; simp, by simp [hw], ?_, hclip, on0, on1,
+    hker, hc0, hc1,
+    stepB_add_smul_of_branch_engine_on pE G3 engineGate_pE driveW BW hw (1 / 10) ctrlX hclip hker
+      hc0 hc1⟩
+  intro ctrl hmem hk
+  have h0 := hk 0
+  rcases hmem 0 with h | h <;> rw [h] at h0 <;> simp [hw] at h0
+
 end
 
 end EngineWitness
