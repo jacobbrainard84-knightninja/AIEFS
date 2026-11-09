@@ -53,6 +53,18 @@ Changes from Analysis v4 (and nothing else)
   a different seed cohort and pass validation. All earlier checks are kept.
   This authenticates S01 identity only; it is not an audit of v4.1 and does
   not lift the unaudited-candidate status or the CLI opt-in.
+* Read-once inputs (follow-up, ERRATA E25). Each input file is read from disk
+  exactly once, inside ``verify_trusted_inputs``; the hashes, every later parse
+  (manifest, certificate, scalar and status CSVs) and the analysis NPZ loads
+  all use those same in-memory bytes. Swapping a file on disk after the guard
+  therefore has no effect on the analysis, and ``input_hashes`` is the digest
+  of the bytes actually used. Limits: this is about file-system races, not
+  in-process code. Any code running in the same Python process (a caller
+  passing ``policy=``, monkeypatching, mutating the policy proxy) can bypass
+  the guard; nothing here claims tamper resistance against it. The run
+  directory name check is a sanity check, not a security property: the bytes
+  are what is pinned, and a symlinked or ``x/../`` path with genuine bytes is
+  accepted.
 
 Original v4 description follows.
 
@@ -87,16 +99,18 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import io
 import json
 import math
 import os
 import platform
 import secrets
+import stat
 import sys
 import time
 import traceback
 import types
-from dataclasses import dataclass
+from dataclasses import dataclass, field as dataclass_field
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -162,6 +176,11 @@ class ValidatedRun:
     b_c: float
     t_star: float
     input_hashes: dict[str, str]
+    # The verified NPZ bytes. validate_run always sets this, and the analysis
+    # loads the NPZ from it, never from inputs.branch_npz, so the arrays used are
+    # the bytes whose digest is recorded in input_hashes["branch_npz"]. It is None
+    # only for hand-built synthetic runs in unit tests, which then read the path.
+    branch_npz_bytes: bytes | None = dataclass_field(default=None, repr=False, compare=False)
 
 
 # ---------------------------------------------------------------------------
@@ -283,8 +302,10 @@ def discover_inputs(run_dir: str | Path) -> RunInputs:
     )
 
 
-def _load_scalar(path: Path) -> pd.DataFrame:
-    frame = pd.read_csv(path, dtype={"seed": str, "branch": str})
+def _load_scalar(source: Path | bytes) -> pd.DataFrame:
+    if isinstance(source, (bytes, bytearray)):
+        source = io.BytesIO(source)
+    frame = pd.read_csv(source, dtype={"seed": str, "branch": str})
     if "rho" in frame:
         frame["rho"] = pd.to_numeric(frame["rho"], errors="raise")
     for column in frame.columns:
@@ -293,11 +314,11 @@ def _load_scalar(path: Path) -> pd.DataFrame:
     return frame
 
 
-def _require_hash(manifest: Mapping[str, Any], label: str, path: Path) -> None:
+def _require_hash(manifest: Mapping[str, Any], label: str, data: bytes) -> None:
     expected = manifest.get("output_hashes", {}).get(label)
     if not isinstance(expected, str):
         raise ArtifactIntegrityError(f"Manifest lacks output hash {label!r}")
-    observed = file_sha256(path)
+    observed = _sha256_bytes(data)
     if observed != expected:
         raise ArtifactIntegrityError(
             f"Input hash mismatch for {label}: expected={expected}, observed={observed}"
@@ -316,6 +337,19 @@ def _require_hash(manifest: Mapping[str, Any], label: str, path: Path) -> None:
 # reviewed policy entry; nothing is trusted implicitly. Sources for each value:
 # runs/b57562a8ee77/manifest.json (ART-2217) and registry/artifacts_current.csv
 # rows ART-1995, ART-1996, ART-2015, ART-2016, ART-2217, ART-2218.
+#
+# What this does NOT protect against (ERRATA E25):
+# * In-process code. A caller can pass its own ``policy=``, overwrite
+#   ``validate_run.__kwdefaults__``, monkeypatch ``verify_trusted_inputs``, or
+#   reach the dict behind the MappingProxyType (e.g. via gc.get_referents).
+#   The proxy and the keyword-only argument only prevent accidents. Python
+#   offers no boundary against code in the same process.
+# * The run directory name. It is a sanity check that catches pointing the
+#   tool at the wrong run by mistake. The security comes from the pinned bytes;
+#   a symlinked directory or a ``x/../`` path with genuine bytes is accepted,
+#   and that is harmless.
+# File-system races are handled by reading each input once (see
+# verify_trusted_inputs) and using only those bytes afterwards.
 # ---------------------------------------------------------------------------
 
 TRUSTED_S01_POLICY: Mapping[str, Any] = types.MappingProxyType({
@@ -359,11 +393,48 @@ def _sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def verify_trusted_inputs(inputs: RunInputs, policy: Mapping[str, Any] | None) -> None:
+def _read_regular_file(path: Path) -> bytes:
+    """Read a whole regular file once, refusing a symlink as the final component.
+
+    O_NOFOLLOW plus fstat on the open descriptor means the type check and the
+    read are on the same file. This is hygiene; the bytes are what is pinned.
+    """
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0)
+    try:
+        descriptor = os.open(str(path), flags)
+    except OSError as exc:
+        raise ArtifactIntegrityError(
+            f"Trusted input is missing or not a regular file: {Path(path).name}"
+        ) from exc
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ArtifactIntegrityError(
+                f"Trusted input is missing or not a regular file: {Path(path).name}"
+            )
+        chunks = []
+        while True:
+            chunk = os.read(descriptor, 1 << 20)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        return b"".join(chunks)
+    finally:
+        os.close(descriptor)
+
+
+def verify_trusted_inputs(
+    inputs: RunInputs, *, policy: Mapping[str, Any] | None
+) -> dict[str, bytes]:
     """Fail closed unless the run is byte-identical to a reviewed trusted policy.
 
     Order matters: the policy is checked first, then the raw manifest bytes are
     hashed and compared BEFORE json parsing, then identity, then every child file.
+
+    Each file is read exactly once. The verified bytes are returned, keyed
+    ``manifest`` plus the policy output labels, and callers must parse and
+    analyse only these bytes, never re-open the paths. That closes the
+    check-then-read gap for file-system swaps. It does not protect against
+    in-process code (see the block comment above TRUSTED_S01_POLICY).
     """
     if policy is None:
         raise ArtifactIntegrityError("No trusted input policy supplied; refusing to validate")
@@ -390,9 +461,13 @@ def verify_trusted_inputs(inputs: RunInputs, policy: Mapping[str, Any] | None) -
     ):
         raise ArtifactIntegrityError("Trusted input policy is malformed")
 
+    # Sanity check only (not a security property): catches pointing the tool at
+    # the wrong run by mistake. Symlinks and x/../ paths with the right final name
+    # pass, which is harmless because every byte below is pinned.
     if Path(inputs.run_dir).name != run_dir_name:
         raise ArtifactIntegrityError(
-            f"Run directory {Path(inputs.run_dir).name!r} is not the trusted run {run_dir_name!r}"
+            f"Run directory name sanity check failed: {Path(inputs.run_dir).name!r} "
+            f"is not the trusted run {run_dir_name!r}"
         )
     seed_results = Path(inputs.run_dir) / "baseline_equivalence_by_seed.json"
     children = (
@@ -407,7 +482,7 @@ def verify_trusted_inputs(inputs: RunInputs, policy: Mapping[str, Any] | None) -
         if path.is_symlink() or not path.is_file():
             raise ArtifactIntegrityError(f"Trusted input is missing or not a regular file: {path.name}")
 
-    raw = Path(inputs.manifest).read_bytes()
+    raw = _read_regular_file(Path(inputs.manifest))
     observed_manifest = _sha256_bytes(raw)
     if observed_manifest != manifest_pin:
         raise ArtifactIntegrityError(
@@ -427,32 +502,30 @@ def verify_trusted_inputs(inputs: RunInputs, policy: Mapping[str, Any] | None) -
     if manifest_seeds != trusted_seeds:
         raise ArtifactIntegrityError("Trusted manifest paired seeds differ from the policy")
 
+    verified: dict[str, bytes] = {"manifest": raw}
     for label, path in children:
-        observed = file_sha256(Path(path))
+        data = _read_regular_file(Path(path))
+        observed = _sha256_bytes(data)
         if observed != output_pins[label]:
             raise ArtifactIntegrityError(
                 f"Input {label} does not match the trusted pin: "
                 f"expected={output_pins[label]}, observed={observed}"
             )
+        verified[label] = data
+    return verified
 
 
 def validate_run(
-    inputs: RunInputs, policy: Mapping[str, Any] | None = TRUSTED_S01_POLICY
+    inputs: RunInputs, *, policy: Mapping[str, Any] | None = TRUSTED_S01_POLICY
 ) -> ValidatedRun:
     # Trust anchor first: nothing below may read or parse an input until it passes.
-    verify_trusted_inputs(inputs, policy)
-    for path in (
-        inputs.manifest,
-        inputs.condition_status,
-        inputs.baseline_certificate,
-        inputs.scalar_csv,
-        inputs.branch_npz,
-    ):
-        if not path.is_file():
-            raise ArtifactIntegrityError(f"Required input missing: {path}")
+    # ``policy`` is keyword-only so it cannot be passed by accident; it is not a
+    # security boundary against in-process callers (ERRATA E25).
+    # Everything below uses the verified in-memory bytes; no input path is
+    # re-opened, here or later in the analysis.
+    data = verify_trusted_inputs(inputs, policy=policy)
 
-    with open(inputs.manifest, "r", encoding="utf-8") as handle:
-        manifest = json.load(handle)
+    manifest = json.loads(data["manifest"].decode("utf-8"))
     if not isinstance(manifest, dict):
         raise ArtifactIntegrityError("Simulation manifest root must be an object")
     if manifest.get("freezeable") is not True:
@@ -463,20 +536,16 @@ def validate_run(
     if manifest.get("baseline_equivalence", {}).get("status") != "passed":
         raise ArtifactIntegrityError("Simulation baseline equivalence is not passed")
 
-    for label, path in (
-        ("scalar_csv", inputs.scalar_csv),
-        ("branch_npz", inputs.branch_npz),
-        ("condition_status_csv", inputs.condition_status),
-        ("baseline_certificate", inputs.baseline_certificate),
-    ):
-        _require_hash(manifest, label, path)
+    for label in ("scalar_csv", "branch_npz", "condition_status_csv", "baseline_certificate"):
+        _require_hash(manifest, label, data[label])
 
-    with open(inputs.baseline_certificate, "r", encoding="utf-8") as handle:
-        certificate = json.load(handle)
+    certificate = json.loads(data["baseline_certificate"].decode("utf-8"))
+    if not isinstance(certificate, dict):
+        raise ArtifactIntegrityError("Baseline certificate root must be an object")
     if certificate.get("status") != "passed" or certificate.get("n_seeds") != 40:
         raise ArtifactIntegrityError("Baseline certificate is not a passing 40-seed certificate")
 
-    frame = _load_scalar(inputs.scalar_csv)
+    frame = _load_scalar(data["scalar_csv"])
     required_columns = {
         "seed",
         "seed_index",
@@ -535,7 +604,7 @@ def validate_run(
         if len(observed) != 1 or float(observed[0]) != rho * t_star:
             raise ArtifactIntegrityError(f"rho={rho} has inconsistent nominal T_window")
 
-    status = pd.read_csv(inputs.condition_status, dtype={"seed": str})
+    status = pd.read_csv(io.BytesIO(data["condition_status_csv"]), dtype={"seed": str})
     if len(status) != 200 or status.duplicated(["seed", "rho"]).any():
         raise ArtifactIntegrityError("Condition-status table does not have 200 unique conditions")
     if set(status["status"]) != {"success"}:
@@ -549,12 +618,13 @@ def validate_run(
     if not np.isfinite(b_c) or b_c < 0.0:
         raise ArtifactIntegrityError("Manifest model.B_c is invalid")
 
+    # Digests of the bytes actually parsed and analysed (not a re-read of disk).
     input_hashes = {
-        "scalar_csv": file_sha256(inputs.scalar_csv),
-        "branch_npz": file_sha256(inputs.branch_npz),
-        "simulation_manifest": file_sha256(inputs.manifest),
-        "condition_status": file_sha256(inputs.condition_status),
-        "baseline_certificate": file_sha256(inputs.baseline_certificate),
+        "scalar_csv": _sha256_bytes(data["scalar_csv"]),
+        "branch_npz": _sha256_bytes(data["branch_npz"]),
+        "simulation_manifest": _sha256_bytes(data["manifest"]),
+        "condition_status": _sha256_bytes(data["condition_status_csv"]),
+        "baseline_certificate": _sha256_bytes(data["baseline_certificate"]),
     }
     return ValidatedRun(
         inputs=inputs,
@@ -566,6 +636,7 @@ def validate_run(
         b_c=b_c,
         t_star=t_star,
         input_hashes=input_hashes,
+        branch_npz_bytes=data["branch_npz"],
     )
 
 
@@ -664,11 +735,14 @@ def _npz_key(branch: str, seed: str, rho: float, field: str) -> str:
     return f"{branch}_seed_{seed}_rho_{rho}_{field}"
 
 
-def load_npz_keys(path: Path, keys: Iterable[str]) -> dict[str, np.ndarray]:
+def load_npz_keys(source: Path | bytes, keys: Iterable[str]) -> dict[str, np.ndarray]:
+    """Load keys from an NPZ given as verified bytes (production) or a path (synthetic tests)."""
     requested = tuple(dict.fromkeys(keys))
     result: dict[str, np.ndarray] = {}
+    if isinstance(source, (bytes, bytearray)):
+        source = io.BytesIO(source)
     try:
-        with np.load(path, allow_pickle=False) as archive:
+        with np.load(source, allow_pickle=False) as archive:
             missing = [key for key in requested if key not in archive]
             if missing:
                 raise ArtifactIntegrityError(
@@ -683,13 +757,21 @@ def load_npz_keys(path: Path, keys: Iterable[str]) -> dict[str, np.ndarray]:
     return result
 
 
+def _run_npz_keys(run: ValidatedRun, keys: Iterable[str]) -> dict[str, np.ndarray]:
+    # Use the verified in-memory bytes so the arrays are exactly the bytes whose
+    # digest is in run.input_hashes. The path is only for hand-built test runs.
+    if run.branch_npz_bytes is not None:
+        return load_npz_keys(run.branch_npz_bytes, keys)
+    return load_npz_keys(run.inputs.branch_npz, keys)
+
+
 def cross_t_topology(run: ValidatedRun) -> pd.DataFrame:
     keys = [
         _npz_key("continue", seed, rho, "B_final")
         for seed in run.seeds
         for rho in run.rho_values
     ]
-    arrays = load_npz_keys(run.inputs.branch_npz, keys)
+    arrays = _run_npz_keys(run, keys)
     rows = []
     for seed in run.seeds:
         baseline = np.asarray(arrays[_npz_key("continue", seed, 1.0, "B_final")], float)
@@ -898,7 +980,7 @@ def compute_recovery(run: ValidatedRun) -> tuple[pd.DataFrame, pd.DataFrame]:
         for branch in run.branches
         for field in fields
     ]
-    arrays = load_npz_keys(run.inputs.branch_npz, keys)
+    arrays = _run_npz_keys(run, keys)
     scalar = run.scalar.set_index(["seed", "rho", "branch"], verify_integrity=True)
     event_rows: list[dict[str, Any]] = []
     auc_rows: list[dict[str, Any]] = []
