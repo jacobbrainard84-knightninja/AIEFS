@@ -288,6 +288,39 @@ def test_caller_supplied_policy_is_trusted_by_design(run_copy: Path):
     assert len(_validate(run_copy, weak).seeds) == 40
 
 
+@pytest.mark.parametrize("root", ["[]", '"x"', "42", "null"])
+def test_non_object_certificate_root_is_rejected(run_copy: Path, root: str):
+    """ERRATA E26: a non-object certificate root is an integrity error, not AttributeError.
+
+    Under the default policy the manifest pin rejects such a file first, so a
+    caller-supplied policy (trusted by design, E25) is needed to reach the check.
+    """
+    cert = run_copy / "baseline_equivalence_certificate.json"
+    cert.write_text(root)
+    _repin(run_copy, "baseline_certificate", cert)
+    manifest = json.loads((run_copy / "manifest.json").read_text())
+    weak = {
+        **dict(POLICY),
+        "manifest_sha256": _sha(run_copy / "manifest.json"),
+        "output_hashes": dict(manifest["output_hashes"]),
+    }
+    with pytest.raises(v41.ArtifactIntegrityError, match="root must be an object"):
+        _validate(run_copy, weak)
+
+
+def test_missing_npz_bytes_raise_instead_of_reopening_the_path():
+    """ERRATA E26: no silent fallback to the NPZ path when the verified bytes are absent."""
+    import dataclasses
+
+    run = _validate(RUN)
+    bare = dataclasses.replace(run, branch_npz_bytes=None)
+    key = v41._npz_key("continue", run.seeds[0], run.rho_values[0], "B_final")
+    with pytest.raises(v41.ArtifactIntegrityError, match="branch_npz_bytes is missing"):
+        v41._run_npz_keys(bare, [key])
+    with pytest.raises(v41.ArtifactIntegrityError, match="branch_npz_bytes is missing"):
+        v41.cross_t_topology(bare)
+
+
 def test_policy_is_keyword_only():
     """Keyword-only, so a policy cannot be passed positionally by accident."""
     inputs = v41.discover_inputs(RUN)
