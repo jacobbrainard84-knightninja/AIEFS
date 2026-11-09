@@ -263,6 +263,116 @@ theorem eventually_clip_gate (drive B h : E → ℝ) (hpre : ∀ e, 0 < pre p dr
   rw [prop_add_smul_of_clip p drive B h t (fun e _ => ⟨(hpre e).le, (ht e).le⟩), incAct_add_smul]
   convert hg using 2
 
+/-! ## Engine-shaped gate: the gate-decision hypothesis is redundant
+
+In the engine `capacity = (a - delta) / q` with `q > 0`, so the gate test `a - q·q_i < delta` is
+`q_i > capacity`. With `cap > 0`, `ε > 0` and nonnegative proposals, the node that fires the gate
+has the smallest scale on its edges; if it moved, the controller hypotheses would fail at one of
+the states.
+
+Scope: `EngineGate` is the real-arithmetic idealisation of the engine config
+(`dt = 1/100`, `γ = 3/200`, `cap = 19/30`, `ε = 10⁻¹²`, `a = 1`, `q = 3/2`, `delta = 1/20`;
+see `engineGate_ideal`). The float engine stores `capacity = 0.6333…` rounded, for which
+`cap·q - (a - delta) ≈ -4.2e-17 ≠ 0` exactly, so these theorems do not apply verbatim to the
+exact-rational transcription of float engine values. -/
+
+/-- Engine-shaped gate parameters. -/
+structure EngineGate (p : Params) : Prop where
+  link : p.cap * p.gapQ = p.gapA - p.gapDelta
+  gapQ_pos : 0 < p.gapQ
+  cap_pos : 0 < p.cap
+  eps_pos : 0 < p.ε
+
+/-- The idealised engine configuration is engine-shaped (non-vacuity of `EngineGate`). -/
+theorem engineGate_ideal :
+    EngineGate ⟨1 / 100, 3 / 200, 19 / 30, 1 / 10 ^ 12, 1, 3 / 2, 1 / 20⟩ := by
+  constructor <;> norm_num
+
+theorem gateOn_iff_exists_gt (hp : EngineGate p) (x : E → ℝ) :
+    GateOn p G x ↔ ∃ i, p.cap < incAct G x i := by
+  unfold GateOn
+  refine exists_congr fun i => ?_
+  constructor
+  · intro h; nlinarith [hp.link, hp.gapQ_pos]
+  · intro h; nlinarith [hp.link, hp.gapQ_pos]
+
+theorem incAct_nonneg (x : E → ℝ) (hx : ∀ e, 0 ≤ x e) (i : V) : 0 ≤ incAct G x i := by
+  unfold incAct incCoeff
+  refine Finset.sum_nonneg fun e _ => mul_nonneg ?_ (hx e)
+  split_ifs <;> norm_num
+
+theorem gateOn_of_branch_aux (hp : EngineGate p) (x h : E → ℝ) (u : ℝ) (ctrl : E → V)
+    (hx : ∀ e, 0 ≤ x e) (hker : InCtrlKer G ctrl h) (hc0 : IsCtrl p G x ctrl)
+    (hon : GateOn p G x) : GateOn p G (x + u • h) := by
+  rw [gateOn_iff_exists_gt p G hp] at hon ⊢
+  obtain ⟨k, hk⟩ := hon
+  by_cases hAk : incAct G h k = 0
+  · exact ⟨k, by rw [incAct_add_smul, hAk, mul_zero, add_zero]; exact hk⟩
+  · obtain ⟨e, -, he⟩ := Finset.exists_ne_zero_of_sum_ne_zero hAk
+    have hke : G.src e = k ∨ G.dst e = k := by
+      by_contra hne
+      push Not at hne
+      apply he
+      simp [incCoeff, hne.1, hne.2]
+    set j := ctrl e
+    have hj0 : incAct G h j = 0 := hker e
+    have hsk : sc p G x j ≤ sc p G x k := by
+      obtain ⟨-, h1, h2⟩ := hc0 e
+      rcases hke with h | h
+      · rw [← h]; exact h1
+      · rw [← h]; exact h2
+    have hqk : 0 < incAct G x k + p.ε := by linarith [incAct_nonneg G x hx k, hp.eps_pos]
+    have hqj : 0 < incAct G x j + p.ε := by linarith [incAct_nonneg G x hx j, hp.eps_pos]
+    have hlt : p.cap / (incAct G x k + p.ε) < 1 := by
+      rw [div_lt_one hqk]; linarith [hp.eps_pos]
+    have hsk' : sc p G x k = p.cap / (incAct G x k + p.ε) := by
+      simp only [sc, scale]; exact min_eq_right hlt.le
+    have hsj' : p.cap / (incAct G x j + p.ε) ≤ p.cap / (incAct G x k + p.ε) := by
+      have hlt' : sc p G x j < 1 := lt_of_le_of_lt hsk (hsk' ▸ hlt)
+      simp only [sc, scale] at hlt'
+      have hm : min 1 (p.cap / (incAct G x j + p.ε)) = p.cap / (incAct G x j + p.ε) := by
+        rcases min_lt_iff.mp hlt' with h | h
+        · exact absurd h (lt_irrefl 1)
+        · exact min_eq_right h.le
+      have := hsk
+      rw [hsk'] at this
+      simp only [sc, scale] at this
+      rwa [hm] at this
+    have hqle : incAct G x k + p.ε ≤ incAct G x j + p.ε :=
+      (div_le_div_iff_of_pos_left hp.cap_pos hqj hqk).mp hsj'
+    exact ⟨j, by rw [incAct_add_smul, hj0, mul_zero, add_zero]; linarith⟩
+
+/-- **The gate-decision hypothesis is implied** for engine-shaped parameters: if `h ∈ ker A_J` and
+`ctrl` is a controller assignment at both (nonnegative) proposals, the gate fires at one iff at the
+other. -/
+theorem gateOn_iff_of_branch (hp : EngineGate p) (x h : E → ℝ) (u : ℝ) (ctrl : E → V)
+    (hx : ∀ e, 0 ≤ x e) (hx' : ∀ e, 0 ≤ (x + u • h) e) (hker : InCtrlKer G ctrl h)
+    (hc0 : IsCtrl p G x ctrl) (hc1 : IsCtrl p G (x + u • h) ctrl) :
+    GateOn p G x ↔ GateOn p G (x + u • h) := by
+  refine ⟨gateOn_of_branch_aux p G hp x h u ctrl hx hker hc0, fun hon => ?_⟩
+  have := gateOn_of_branch_aux p G hp (x + u • h) h (-u) ctrl hx' hker hc1 hon
+  have hxx : x + u • h + (-u) • h = x := by
+    funext e; simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
+  rwa [hxx] at this
+
+/-- **Main theorem without `hon`, engine-shaped gate.** -/
+theorem stepB_add_smul_of_branch_engine (hp : EngineGate p) (drive B h : E → ℝ) (t : ℝ)
+    (ctrl : E → V)
+    (hclip : ∀ e, h e ≠ 0 → 0 ≤ pre p drive B e ∧ 0 ≤ pre p drive (B + t • h) e)
+    (hker : InCtrlKer G ctrl h)
+    (hc0 : IsCtrl p G (prop p drive B) ctrl)
+    (hc1 : IsCtrl p G (prop p drive (B + t • h)) ctrl) :
+    stepB p G drive (B + t • h) =
+      fun e => stepB p G drive B e +
+        t * (1 - p.γ * p.dt) * branchScale p G drive B ctrl e * h e := by
+  have hx := prop_add_smul_of_clip p drive B h t hclip
+  have hnn : ∀ (B' : E → ℝ) e, 0 ≤ prop p drive B' e := fun _ _ => le_max_right _ _
+  have hon : GateOn p G (prop p drive B) ↔ GateOn p G (prop p drive (B + t • h)) := by
+    rw [hx]
+    rw [hx] at hc1
+    exact gateOn_iff_of_branch p G hp _ h _ ctrl (hnn B) (hx ▸ hnn (B + t • h)) hker hc0 hc1
+  exact stepB_add_smul_of_branch p G drive B h t ctrl hclip hon hker hc0 hc1
+
 end
 
 end AIEFGate

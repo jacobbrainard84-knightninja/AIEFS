@@ -3,15 +3,21 @@
 
 Each mutant drops a hypothesis or changes a constant in a main theorem STATEMENT and keeps the original proof. The
 mutant is written to a temporary file outside the project and elaborated with `lake env lean`; it must FAIL (the
-proof no longer goes through). This shows the hypotheses/constants are load-bearing for these proofs. It does not by
-itself prove the mutated statements false; RedTeam.lean proves concrete negations for the corresponding claims
-(false_drop_kernel, false_wrong_constant, false_two_sided).
-The unmutated file must elaborate cleanly (positive control). Exit 0 iff the control passes and every mutant fails.
+proof no longer goes through). The unmutated file must elaborate cleanly (positive control). Exit 0 iff the control
+passes and every mutant fails.
 
-Limit, stated plainly: M1-M3 (dropped hypotheses) are rejected mainly because the proof refers to the hypothesis by
-name ("Unknown identifier"), which is a syntactic failure and weak evidence on its own. The semantic evidence that
-those hypotheses are needed is the set of negation theorems in RedTeam.lean. M4-M5 (wrong constant) fail on
-unsolved goals / failed rewrites, i.e. the original proof genuinely does not establish the mutated statement.
+What rejects each mutant, stated exactly:
+  * M1 (drop hker), M2 (drop hc1), M3 (drop hclip): inside THIS script they are rejected only by name reference --
+    the kept proof mentions the dropped hypothesis ("Unknown identifier"), a syntactic failure that is weak evidence
+    on its own. Each of these mutated statements is, separately, REFUTED by a negation theorem in RedTeam.lean
+    (`¬ ∀ ...` of the main theorem on K3 with exactly that hypothesis dropped, every other hypothesis holding):
+      M1 -> false_drop_ker,  M2 -> false_drop_hc1,  M3 -> false_drop_clip.
+    (Also there, not mutants here: false_drop_hc0 for hc0, and false_drop_hon for hon -- the latter only for a
+    non-engine gate test; for engine-shaped Params, hon is implied, see GateMap.stepB_add_smul_of_branch_engine.)
+  * M4 (main theorem without the (1 - γ dt) factor): rejected semantically here (unsolved goals / failed rewrite),
+    and a K3 specialisation of the mutated claim (response (t s) • vRay 2) is refuted by RedTeam.false_wrong_constant.
+  * M5 (multiplier formula without the (1 - γ dt) factor): rejected semantically here (unsolved goals / failed
+    rewrite); there is no separate negation theorem for M5 in RedTeam.lean.
 
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built Mathlib in the project)
 """

@@ -18,12 +18,16 @@ What is checked (replay seed 4619122171158768524, rho 1.0, t = 250, exactly kapp
      hold with residual exactly 0 (it is a theorem; a nonzero residual would mean the transcription is wrong).
   E  Engine agreement. The Lean branch multiplier lam_branch = (1-γdt) Σ branchScale_e h_e² / Σ h_e² is compared with
      the engine's one-sided finite-difference multiplier <(step_B(B + d H) - step_B(B))/d, h>/<h,h> at an on-branch
-     step with small rounding (ENGINE_DELTA), tolerance ENGINE_TOL (= ERRATA E5/E22 resolved bound 2.1e-10).
+     step with small rounding (ENGINE_DELTA), tolerance ENGINE_TOL (= resolved bound 2.1e-10 of ERRATA E5 and of
+     E22 on research/rate-law-delta-sweep (pending merge)).
      For the gate component also: K3_gate_component_multiplier's closed form a(min(s0,s1)+s0+s1)/3 equals lam_branch
      exactly, and lam_branch - lam_state = -a|s0-s1|/6 exactly (K3_gate_branch_sub_state).
-  N  Negative controls (each must be DETECTED, else the run fails):
+  N  Negative controls (each must be DETECTED where enforced, else the run fails; N1 on both components, N2-N4 on
+     GATE only):
      N1 wrong constant (factor 1-γdt dropped) disagrees with the engine by >> ENGINE_TOL;
      N2 wrong controller set (mean scale over all component nodes, i.e. node 11 counted as a controller);
+        ENFORCED ON GATE ONLY: on CONTROL all nodes are tied, so this coincides with the branch formula and
+        N2_detected = false there is expected (reported, not a failure);
      N3 off-fiber direction (gate component, v = (+1 on (7,11), -1 on (2,7),(2,11))): InCtrlKer fails and the affine
         identity has a nonzero exact residual;
      N4 branch crossing: at least one gate-component sample with H false has a nonzero exact residual.
