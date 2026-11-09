@@ -374,6 +374,257 @@ theorem false_drop_hon : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (ctrl : Fi
   simp [gated, sc, scale, pLow, vRay] at key
   norm_num at key
 
+
+/-! ## P2 red team
+
+* `false_main_no_gamma`, `false_multiplier_no_gamma`: the main theorem / the multiplier formula
+with the
+  factor `(1 - γ dt)` dropped (mutants M4 / M5 of `lean_mutation_check.py`) are false, on an
+  instance
+  where every hypothesis holds (`p0`, `drive0`, `B0`, `vRay 2`, `t = 1/10`, `ctrlPlus 2`).
+* `false_rel_x_only`, `false_rel_h_only`: the per-edge theorem `stepB_add_smul_of_branch_on` with
+its
+  edge set `Rel x h` (`x_e ≠ 0 ∨ h_e ≠ 0`) shrunk to `x_e ≠ 0` alone, or to `h_e ≠ 0` alone, is
+  false.
+* `rel_strictly_weaker`: an instance where the per-edge hypotheses hold but the all-edge kernel
+  hypothesis fails for *every* controller assignment, so `stepB_add_smul_of_branch_on` applies where
+  `stepB_add_smul_of_branch` cannot.
+-/
+
+/-- Perturbed proposal of the standard witness. -/
+theorem prop_B0_plus :
+    prop p0 drive0 (B0 + (1 / 10 : ℝ) • vRay 2) = ![99 / 100, 81 / 100, 81 / 100] := by
+  have hnn : ∀ e, 0 ≤ (B0 + (1 / 10 : ℝ) • vRay 2) e := by
+    intro e; fin_cases e <;> simp [B0, vRay] <;> norm_num
+  funext e; rw [prop_eval _ _ (hnn e)]; fin_cases e <;> simp [B0, vRay] <;> norm_num
+
+theorem w_clip : ∀ e, vRay 2 e ≠ 0 →
+    0 ≤ pre p0 drive0 B0 e ∧ 0 ≤ pre p0 drive0 (B0 + (1 / 10 : ℝ) • vRay 2) e := by
+  have hnn : ∀ e, 0 ≤ (B0 + (1 / 10 : ℝ) • vRay 2) e := by
+    intro e; fin_cases e <;> simp [B0, vRay] <;> norm_num
+  exact fun e _ => ⟨by simp [pre, p0, drive0, B0]; norm_num, by
+    have := hnn e; simp only [pre, p0, drive0]; nlinarith⟩
+
+theorem w_on0 : GateOn p0 G3 (prop p0 drive0 B0) := gateOn_of _ (by rw [prop_B0]; norm_num)
+
+theorem w_on1 : GateOn p0 G3 (prop p0 drive0 (B0 + (1 / 10 : ℝ) • vRay 2)) :=
+  gateOn_of _ (by rw [prop_B0_plus]; simp; norm_num)
+
+theorem w_hc0 : IsCtrl p0 G3 (prop p0 drive0 B0) (ctrlPlus 2) :=
+  isCtrl_of_tied (ctrlPlus_mem 2) (fun i j => by rw [sc_B0, sc_B0])
+
+theorem w_hc1 : IsCtrl p0 G3 (prop p0 drive0 (B0 + (1 / 10 : ℝ) • vRay 2)) (ctrlPlus 2) := by
+  rw [prop_B0_plus, ctrlPlus_two]; intro e
+  fin_cases e <;> refine ⟨by simp, ?_, ?_⟩ <;> simp [sc, scale, p0] <;> norm_num
+
+/-- **M4 is false.** The main theorem with the factor `(1 - γ dt)` dropped fails on an instance
+where
+every hypothesis holds: on edge 0 the map moves by `1/20`, the mutant claims `1/18`. -/
+theorem false_main_no_gamma : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (ctrl : Fin 3 → Fin 3),
+    (∀ e, h e ≠ 0 → 0 ≤ pre p0 drive B e ∧ 0 ≤ pre p0 drive (B + t • h) e) →
+    (GateOn p0 G3 (prop p0 drive B) ↔ GateOn p0 G3 (prop p0 drive (B + t • h))) →
+    InCtrlKer G3 ctrl h →
+    IsCtrl p0 G3 (prop p0 drive B) ctrl →
+    IsCtrl p0 G3 (prop p0 drive (B + t • h)) ctrl →
+    stepB p0 G3 drive (B + t • h) =
+      fun e => stepB p0 G3 drive B e + t * branchScale p0 G3 drive B ctrl e * h e := by
+  intro H
+  have hon : GateOn p0 G3 (prop p0 drive0 B0) ↔
+      GateOn p0 G3 (prop p0 drive0 (B0 + (1 / 10 : ℝ) • vRay 2)) := ⟨fun _ => w_on1, fun _ => w_on0⟩
+  have hm := congrFun (H drive0 B0 (vRay 2) (1 / 10) (ctrlPlus 2) w_clip hon ker_ctrlPlus_two
+    w_hc0 w_hc1) 0
+  have ht := congrFun (stepB_add_smul_of_branch p0 G3 drive0 B0 (vRay 2) (1 / 10) (ctrlPlus 2)
+    w_clip hon ker_ctrlPlus_two w_hc0 w_hc1) 0
+  rw [hm, branchScale_of_on 0 w_on0, sc_B0] at ht
+  simp [vRay, p0] at ht
+
+/-- **M5 is false.** The multiplier formula with the factor `(1 - γ dt)` dropped fails on an
+instance
+where every hypothesis holds: the estimator is `1/2`, the mutant claims `5/9`. -/
+theorem false_multiplier_no_gamma : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (ctrl : Fin 3 → Fin 3),
+    t ≠ 0 →
+    (∀ e, h e ≠ 0 → 0 ≤ pre p0 drive B e ∧ 0 ≤ pre p0 drive (B + t • h) e) →
+    (GateOn p0 G3 (prop p0 drive B) ↔ GateOn p0 G3 (prop p0 drive (B + t • h))) →
+    InCtrlKer G3 ctrl h →
+    IsCtrl p0 G3 (prop p0 drive B) ctrl →
+    IsCtrl p0 G3 (prop p0 drive (B + t • h)) ctrl →
+    (∑ e, (stepB p0 G3 drive (B + t • h) e - stepB p0 G3 drive B e) / t * h e) / ∑ e, h e ^ 2 =
+      (∑ e, branchScale p0 G3 drive B ctrl e * h e ^ 2) / ∑ e, h e ^ 2 := by
+  intro H
+  have hon : GateOn p0 G3 (prop p0 drive0 B0) ↔
+      GateOn p0 G3 (prop p0 drive0 (B0 + (1 / 10 : ℝ) • vRay 2)) := ⟨fun _ => w_on1, fun _ => w_on0⟩
+  have hm := H drive0 B0 (vRay 2) (1 / 10) (ctrlPlus 2) (by norm_num) w_clip hon ker_ctrlPlus_two
+    w_hc0 w_hc1
+  rw [multiplier_eq_branch_formula p0 G3 drive0 B0 (vRay 2) (1 / 10) (ctrlPlus 2) (by norm_num)
+    w_clip hon ker_ctrlPlus_two w_hc0 w_hc1] at hm
+  have hbs : ∀ e, branchScale p0 G3 drive0 B0 (ctrlPlus 2) e = 5 / 9 := fun e => by
+    rw [branchScale_of_on e w_on0, sc_B0]
+  simp only [hbs, vRay_sq, Fin.sum_univ_three] at hm
+  simp [p0] at hm
+  norm_num at hm
+
+/-- Base for `false_rel_x_only`: edge `(0,1)` empty, `B = (0, 2, 2)`. -/
+def Bx : Fin 3 → ℝ := ![0, 2, 2]
+
+/-- Controller for `false_rel_x_only`: node 2 on edges 1, 2 (node 0 on the empty edge 0). -/
+def ctrlX : Fin 3 → Fin 3 := ![0, 2, 2]
+
+/-- **The edge set cannot be shrunk to `x_e ≠ 0`.** Per-edge theorem with `Rel x h` replaced by
+`x_e ≠ 0`: at `Bx = (0,2,2)` along `e0`, `t = 1`, every hypothesis holds (edge 0 has `x_0 = 0`, so
+it
+carries no condition), but edge 0 moves to `1/3` while the claim gives `1/2`. -/
+theorem false_rel_x_only : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (ctrl : Fin 3 → Fin 3),
+    (∀ e, h e ≠ 0 → 0 ≤ pre p0 drive B e ∧ 0 ≤ pre p0 drive (B + t • h) e) →
+    (GateOn p0 G3 (prop p0 drive B) ↔ GateOn p0 G3 (prop p0 drive (B + t • h))) →
+    InCtrlKerOn G3 (fun e => prop p0 drive B e ≠ 0) ctrl h →
+    IsCtrlOn p0 G3 (fun e => prop p0 drive B e ≠ 0) (prop p0 drive B) ctrl →
+    IsCtrlOn p0 G3 (fun e => prop p0 drive B e ≠ 0) (prop p0 drive (B + t • h)) ctrl →
+    stepB p0 G3 drive (B + t • h) =
+      fun e => stepB p0 G3 drive B e +
+        t * (1 - p0.γ * p0.dt) * branchScale p0 G3 drive B ctrl e * h e := by
+  intro H
+  have hnn0 : ∀ e, 0 ≤ Bx e := by intro e; fin_cases e <;> simp [Bx]
+  have hnn : ∀ e, 0 ≤ (Bx + (1 : ℝ) • e0) e := by intro e; fin_cases e <;> simp [Bx, e0]
+  have hx0 : prop p0 drive0 Bx = ![0, 9 / 5, 9 / 5] := by
+    funext e; rw [prop_eval _ _ (hnn0 e)]; fin_cases e <;> simp [Bx] <;> norm_num
+  have hx : prop p0 drive0 (Bx + (1 : ℝ) • e0) = ![9 / 10, 9 / 5, 9 / 5] := by
+    funext e; rw [prop_eval _ _ (hnn e)]; fin_cases e <;> simp [Bx, e0] <;> norm_num
+  have on0 : GateOn p0 G3 (prop p0 drive0 Bx) := gateOn_of _ (by rw [hx0]; simp; norm_num)
+  have on1 : GateOn p0 G3 (prop p0 drive0 (Bx + (1 : ℝ) • e0)) :=
+    gateOn_of _ (by rw [hx]; simp; norm_num)
+  have hker : InCtrlKerOn G3 (fun e => prop p0 drive0 Bx e ≠ 0) ctrlX e0 := by
+    intro e he; rw [hx0] at he; fin_cases e
+    · simp at he
+    all_goals simp [ctrlX, e0]
+  have hc0 : IsCtrlOn p0 G3 (fun e => prop p0 drive0 Bx e ≠ 0) (prop p0 drive0 Bx) ctrlX := by
+    intro e he; rw [hx0] at he ⊢; fin_cases e
+    · simp at he
+    all_goals (refine ⟨by simp [ctrlX], ?_, ?_⟩ <;> simp [ctrlX, sc, scale, p0]; norm_num)
+  have hc1 : IsCtrlOn p0 G3 (fun e => prop p0 drive0 Bx e ≠ 0)
+      (prop p0 drive0 (Bx + (1 : ℝ) • e0)) ctrlX := by
+    intro e he; rw [hx0] at he; rw [hx]; fin_cases e
+    · simp at he
+    all_goals (refine ⟨by simp [ctrlX], ?_, ?_⟩ <;> simp [ctrlX, sc, scale, p0]; norm_num)
+  have key := congrFun (H drive0 Bx e0 1 ctrlX
+    (fun e _ => ⟨by have := hnn0 e; simp only [pre, p0, drive0]; nlinarith, by
+      have := hnn e; simp only [pre, p0, drive0]; nlinarith⟩)
+    ⟨fun _ => on1, fun _ => on0⟩ hker hc0 hc1) 0
+  rw [stepB_of_on on1, stepB_of_on on0, branchScale_of_on 0 on0, hx, hx0] at key
+  simp [gated, sc, scale, p0, e0, ctrlX] at key
+  norm_num at key
+
+/-- Base for `false_rel_h_only`: `B = (2, 2, 1)`, node 0 the most loaded. -/
+def Bh : Fin 3 → ℝ := ![2, 2, 1]
+
+/-- Direction for `false_rel_h_only`: `(1, -1, 0)`, zero on edge `(1,2)`, `(A h)_0 = 0`. -/
+def hd : Fin 3 → ℝ := ![1, -1, 0]
+
+/-- **The edge set cannot be shrunk to `h_e ≠ 0`.** Per-edge theorem with `Rel x h` replaced by
+`h_e ≠ 0`: at `Bh = (2,2,1)` along `hd = (1,-1,0)`, `t = 1/10`, `ctrl = (0,0,1)`, every hypothesis
+holds, but on edge 2 (`h_2 = 0`, `x_2 = 9/10 ≠ 0`) the endpoint minimum moves: the map gives
+`10/31`,
+the claim `1/3`. -/
+theorem false_rel_h_only : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (ctrl : Fin 3 → Fin 3),
+    (∀ e, h e ≠ 0 → 0 ≤ pre p0 drive B e ∧ 0 ≤ pre p0 drive (B + t • h) e) →
+    (GateOn p0 G3 (prop p0 drive B) ↔ GateOn p0 G3 (prop p0 drive (B + t • h))) →
+    InCtrlKerOn G3 (fun e => h e ≠ 0) ctrl h →
+    IsCtrlOn p0 G3 (fun e => h e ≠ 0) (prop p0 drive B) ctrl →
+    IsCtrlOn p0 G3 (fun e => h e ≠ 0) (prop p0 drive (B + t • h)) ctrl →
+    stepB p0 G3 drive (B + t • h) =
+      fun e => stepB p0 G3 drive B e +
+        t * (1 - p0.γ * p0.dt) * branchScale p0 G3 drive B ctrl e * h e := by
+  intro H
+  have hnn0 : ∀ e, 0 ≤ Bh e := by intro e; fin_cases e <;> simp [Bh]
+  have hnn : ∀ e, 0 ≤ (Bh + (1 / 10 : ℝ) • hd) e := by
+    intro e; fin_cases e <;> simp [Bh, hd] <;> norm_num
+  have hx0 : prop p0 drive0 Bh = ![9 / 5, 9 / 5, 9 / 10] := by
+    funext e; rw [prop_eval _ _ (hnn0 e)]; fin_cases e <;> simp [Bh] <;> norm_num
+  have hx : prop p0 drive0 (Bh + (1 / 10 : ℝ) • hd) = ![189 / 100, 171 / 100, 9 / 10] := by
+    funext e; rw [prop_eval _ _ (hnn e)]; fin_cases e <;> simp [Bh, hd] <;> norm_num
+  have on0 : GateOn p0 G3 (prop p0 drive0 Bh) := gateOn_of _ (by rw [hx0]; simp; norm_num)
+  have on1 : GateOn p0 G3 (prop p0 drive0 (Bh + (1 / 10 : ℝ) • hd)) :=
+    gateOn_of _ (by rw [hx]; simp; norm_num)
+  have hker : InCtrlKerOn G3 (fun e => hd e ≠ 0) ![0, 0, 1] hd := by
+    intro e he; fin_cases e
+    · simp [hd]
+    · simp [hd]
+    · simp [hd] at he
+  have hc0 : IsCtrlOn p0 G3 (fun e => hd e ≠ 0) (prop p0 drive0 Bh) ![0, 0, 1] := by
+    intro e he; rw [hx0]; fin_cases e
+    · (refine ⟨by simp, ?_, ?_⟩ <;> simp [sc, scale, p0]); norm_num
+    · (refine ⟨by simp, ?_, ?_⟩ <;> simp [sc, scale, p0]); norm_num
+    · simp [hd] at he
+  have hc1 : IsCtrlOn p0 G3 (fun e => hd e ≠ 0) (prop p0 drive0 (Bh + (1 / 10 : ℝ) • hd))
+      ![0, 0, 1] := by
+    intro e he; rw [hx]; fin_cases e
+    · (refine ⟨by simp, ?_, ?_⟩ <;> simp [sc, scale, p0]); norm_num
+    · (refine ⟨by simp, ?_, ?_⟩ <;> simp [sc, scale, p0]); norm_num
+    · simp [hd] at he
+  have key := congrFun (H drive0 Bh hd (1 / 10) ![0, 0, 1]
+    (fun e _ => ⟨by have := hnn0 e; simp only [pre, p0, drive0]; nlinarith, by
+      have := hnn e; simp only [pre, p0, drive0]; nlinarith⟩)
+    ⟨fun _ => on1, fun _ => on0⟩ hker hc0 hc1) 2
+  rw [stepB_of_on on1, stepB_of_on on0, hx, hx0] at key
+  simp [gated, sc, scale, p0, hd] at key
+  norm_num at key
+
+/-- Direction for `rel_strictly_weaker`: `(0, 1, -1)`; `(A h)_0 = 1`, `(A h)_1 = -1`,
+`(A h)_2 = 0`. -/
+def hw : Fin 3 → ℝ := ![0, 1, -1]
+
+/-- **The per-edge hypotheses are strictly weaker than the all-edge ones.** At `Bx = (0,2,2)` along
+`hw = (0,1,-1)`, `t = 1/10`, `ctrl = ctrlX = (0,2,2)`: all hypotheses of
+`stepB_add_smul_of_branch_on` hold, while `InCtrlKer G3 ctrl hw` (the all-edge kernel hypothesis of
+`stepB_add_smul_of_branch`) fails for every controller assignment `ctrl` (edge 0 has no endpoint
+with
+`(A hw)_i = 0`). The conclusion is then the per-edge theorem's identity. -/
+theorem rel_strictly_weaker :
+    (∀ ctrl : Fin 3 → Fin 3, (∀ e, ctrl e = G3.src e ∨ ctrl e = G3.dst e) →
+      ¬ InCtrlKer G3 ctrl hw) ∧
+    (∀ e, hw e ≠ 0 → 0 ≤ pre p0 drive0 Bx e ∧ 0 ≤ pre p0 drive0 (Bx + (1 / 10 : ℝ) • hw) e) ∧
+    GateOn p0 G3 (prop p0 drive0 Bx) ∧ GateOn p0 G3 (prop p0 drive0 (Bx + (1 / 10 : ℝ) • hw)) ∧
+    InCtrlKerOn G3 (Rel (prop p0 drive0 Bx) hw) ctrlX hw ∧
+    IsCtrlOn p0 G3 (Rel (prop p0 drive0 Bx) hw) (prop p0 drive0 Bx) ctrlX ∧
+    IsCtrlOn p0 G3 (Rel (prop p0 drive0 Bx) hw) (prop p0 drive0 (Bx + (1 / 10 : ℝ) • hw)) ctrlX ∧
+    stepB p0 G3 drive0 (Bx + (1 / 10 : ℝ) • hw) =
+      fun e => stepB p0 G3 drive0 Bx e +
+        (1 / 10) * (1 - p0.γ * p0.dt) * branchScale p0 G3 drive0 Bx ctrlX e * hw e := by
+  have hnn0 : ∀ e, 0 ≤ Bx e := by intro e; fin_cases e <;> simp [Bx]
+  have hnn : ∀ e, 0 ≤ (Bx + (1 / 10 : ℝ) • hw) e := by
+    intro e; fin_cases e <;> simp [Bx, hw] <;> norm_num
+  have hx0 : prop p0 drive0 Bx = ![0, 9 / 5, 9 / 5] := by
+    funext e; rw [prop_eval _ _ (hnn0 e)]; fin_cases e <;> simp [Bx] <;> norm_num
+  have hx : prop p0 drive0 (Bx + (1 / 10 : ℝ) • hw) = ![0, 189 / 100, 171 / 100] := by
+    funext e; rw [prop_eval _ _ (hnn e)]; fin_cases e <;> simp [Bx, hw] <;> norm_num
+  have hclip : ∀ e, hw e ≠ 0 → 0 ≤ pre p0 drive0 Bx e ∧
+      0 ≤ pre p0 drive0 (Bx + (1 / 10 : ℝ) • hw) e :=
+    fun e _ => ⟨by have := hnn0 e; simp only [pre, p0, drive0]; nlinarith, by
+      have := hnn e; simp only [pre, p0, drive0]; nlinarith⟩
+  have on0 : GateOn p0 G3 (prop p0 drive0 Bx) := ⟨2, by rw [hx0]; simp [p0]; norm_num⟩
+  have on1 : GateOn p0 G3 (prop p0 drive0 (Bx + (1 / 10 : ℝ) • hw)) :=
+    ⟨2, by rw [hx]; simp [p0]; norm_num⟩
+  have hrel : ∀ e, Rel (prop p0 drive0 Bx) hw e ↔ e ≠ 0 := by
+    intro e; rw [hx0]; fin_cases e <;> simp [Rel, hw]
+  have hker : InCtrlKerOn G3 (Rel (prop p0 drive0 Bx) hw) ctrlX hw := by
+    intro e he; rw [hrel] at he; fin_cases e
+    · exact absurd rfl he
+    all_goals simp [ctrlX, hw]
+  have hc0 : IsCtrlOn p0 G3 (Rel (prop p0 drive0 Bx) hw) (prop p0 drive0 Bx) ctrlX := by
+    intro e he; rw [hrel] at he; rw [hx0]; fin_cases e
+    · exact absurd rfl he
+    all_goals (refine ⟨by simp [ctrlX], ?_, ?_⟩ <;> simp [ctrlX, sc, scale, p0]; norm_num)
+  have hc1 : IsCtrlOn p0 G3 (Rel (prop p0 drive0 Bx) hw)
+      (prop p0 drive0 (Bx + (1 / 10 : ℝ) • hw)) ctrlX := by
+    intro e he; rw [hrel] at he; rw [hx]; fin_cases e
+    · exact absurd rfl he
+    all_goals (refine ⟨by simp [ctrlX], ?_, ?_⟩ <;> simp [ctrlX, sc, scale, p0]; norm_num)
+  refine ⟨?_, hclip, on0, on1, hker, hc0, hc1,
+    stepB_add_smul_of_branch_on p0 G3 drive0 Bx hw (1 / 10) ctrlX hclip ⟨fun _ => on1, fun _ => on0⟩
+      hker hc0 hc1⟩
+  intro ctrl hmem hk
+  have h0 := hk 0
+  rcases hmem 0 with h | h <;> rw [h] at h0 <;> simp [hw] at h0
+
 end
 
 end RedTeam

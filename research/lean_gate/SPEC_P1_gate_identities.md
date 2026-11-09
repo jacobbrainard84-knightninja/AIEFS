@@ -1,6 +1,8 @@
 # Lean work package P1: branch-conditional capacity-gate / controller-kernel identities
 
 Status: NEW unpinned research, branch `research/lean-gate-identities` (from `main` `eb3933c`), 2026-11-09.
+P2 (stacked on P1 `dfdb63f`, branch `research/lean-gate-p2`): see §7, which supersedes the P1 statements in §3/§4/§5
+where they say "not done", "argued, not proved" or "no separate negation theorem".
 Lean project: [`lean/AIEFGateCore`](../../lean/AIEFGateCore). Cross-check: [`lean_gate_crosscheck_v1.py`](lean_gate_crosscheck_v1.py).
 Nothing hash-pinned is edited. `registry/claims.csv`, `registry/artifacts.csv` and the ERRATA are not edited.
 
@@ -424,3 +426,119 @@ theorem false_drop_hc1 : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (ctrl : Fi
       fun e => stepB p0 G3 drive B e +
         t * (1 - p0.γ * p0.dt) * branchScale p0 G3 drive B ctrl e * h e
 ```
+
+## 7. P2 (branch `research/lean-gate-p2`, stacked on P1 `dfdb63f`)
+
+Everything below is proved in `lean/AIEFGateCore` with no `sorry`/`admit`/`axiom`; `#print axioms` on every theorem
+reports only `propext`, `Classical.choice`, `Quot.sound` (`check_lean_gate.sh` step 7: 237 declarations audited,
+110 theorems printed, `disallowed=0`). All P1 theorems keep their exact statements; the P1 main/multiplier/uniform/
+engine theorems and `gated_add_smul_of_branch`, `gateOn_of_branch_aux`, `gateOn_iff_of_branch` are now proved as
+corollaries of the P2 per-edge versions.
+
+### 7.1 Per-edge controller hypotheses (residual 1 of the P1 review)
+
+`Rel x h e := x e ≠ 0 ∨ h e ≠ 0`; `IsCtrlOn p G S x ctrl` / `InCtrlKerOn G S ctrl h` are `IsCtrl` / `InCtrlKer`
+required only for edges `e` with `S e`.
+
+* `stepB_add_smul_of_branch_on`: the P1 main theorem with `hker`, `hc0`, `hc1` required only on `Rel x h`, where
+  `x = prop drive B` is the base proposal (the same `Rel x h` for the base and the perturbed controller condition).
+  Same conclusion `stepB (B + t h) = stepB B + t(1 − γdt)·branchScale·h`. Proof idea: an edge with `x_e = h_e = 0`
+  is `0` on both sides whatever its controller.
+* `gated_add_smul_of_branch_on`, `multiplier_eq_branch_formula_on`, `stepB_sub_eq_smul_of_uniform_on`: same weakening.
+* `gateOn_iff_of_branch_on` (engine-shaped gate): needs the kernel/controller conditions only on edges with `h_e ≠ 0`;
+  `stepB_add_smul_of_branch_engine_on`: engine-shaped main theorem without `hon`, hypotheses on `Rel x h`.
+* The edge set cannot be shrunk further (proved, `RedTeam`, on `p0`):
+  `false_rel_x_only` (edge set `x_e ≠ 0` alone: `Bx = (0,2,2)`, `h = e0`, `t = 1`; edge 0 maps to `1/3`, claim `1/2`)
+  and `false_rel_h_only` (edge set `h_e ≠ 0` alone: `Bh = (2,2,1)`, `h = (1,−1,0)`, `t = 1/10`; on edge 2 the endpoint
+  minimum moves, `10/31` vs claim `1/3`).
+* `rel_strictly_weaker`: at `Bx = (0,2,2)`, `h = (0,1,−1)`, `t = 1/10`, `ctrl = (0,2,2)` all per-edge hypotheses hold
+  and the identity follows, while the all-edge `InCtrlKer G3 ctrl h` is false for **every** controller assignment
+  (edge `(0,1)` has `(A h)_0 = 1`, `(A h)_1 = −1`). So the P2 theorem covers cases the P1 theorem cannot.
+* Remark, not formalised: on the clip branch `x(B + t h) = x + t(1 − γdt) h`, so for `t(1 − γdt) ≠ 0` the set
+  "`x_e ≠ 0` at the base **or** at the perturbed state" equals `Rel x h`. The P1 review note's phrase "edges with
+  `x_e ≠ 0` at either state" is therefore right only in that reading; "`x_e ≠ 0` at the base" alone is false
+  (`false_rel_x_only`).
+* Still stronger than the audit: `IsCtrlOn` asks for a single exact controller per relevant edge valid at both
+  states, and `InCtrlKerOn` asks `(A h)_{ctrl e} = 0` on every relevant edge (all 66 edges are relevant when `x > 0`
+  everywhere, as in the cross-check). The audit's `J` uses `TIE_TOL`; no Lean statement about `TIE_TOL`.
+
+### 7.2 Engine-shaped non-vacuity with `ε > 0` (residual 2)
+
+`EngineWitness.lean`: `pE = ⟨dt = 1/100, γ = 15/1000, cap = (1 − 5/100)/(3/2), ε = 10⁻¹², a = 1, q = 3/2,
+delta = 5/100⟩` (the frozen production values of `aief_experiment_engine_v1.py`, read as exact reals), K3,
+`drive = (η + μ)·R − μ` with `η = 0.04`, `μ = 0.03`, `R = 1` (so `1/25`), `B = 8/3` (fixed point of the unclipped
+update), `h = vRay 2`, `t = 1/10`, `ctrl = ctrlPlus 2`.
+* `engine_nonvacuous`: `EngineGate pE`, `ε > 0`, the gate fires at the base, the scale is binding
+  (`sE = cap/(16/3 + 10⁻¹²) < 1`), and every hypothesis of `stepB_add_smul_of_branch_engine_on` holds; the response is
+  `stepB(B + t h) − stepB B = (t(1 − γdt)·sE) • vRay 2`.
+* `engine_false_no_gamma`: the response is not `(t·sE) • vRay 2`.
+Scope: exact reals (the float engine's `capacity` is not exactly `19/30`, see §3 `EngineGate`); a K3 instance with
+chosen inputs, not a 12-node engine state reached by a trajectory. `R = 1` is a chosen coherence value, not computed
+from phases. This is non-vacuity of the theorem for engine-shaped parameters, nothing more. The value is also pinned by
+`tests/test_lean_gate_p2.py` against the independent exact-rational transcription.
+
+Limit of `engine_nonvacuous` (Auditor Seat 002, note N3): it has `x_e ≠ 0` on every edge, so `Rel x h` is all edges
+there and it does not exercise the per-edge weakening of §7.1. That is covered by:
+* `engine_rel_strictly_weaker` (same `pE`, `ε = 10⁻¹²`): K3, `B = (0, 8/3, 8/3)`, coherence `R = (3/7, 1, 1)` (so
+  `drive = (0, 1/25, 1/25)` and `x = (0, 8/3, 8/3)`), `h = RedTeam.hw = (0, 1, −1)`, `t = 1/10`,
+  `ctrl = ctrlX = (0, 2, 2)`. Edge 0 has `x_0 = h_0 = 0`; the P1 all-edge `InCtrlKer G3 ctrl hw` is false for every
+  controller assignment (`(A hw)_0 = 1`, `(A hw)_1 = −1`), so the P1 theorems cannot be applied; every hypothesis of
+  `stepB_add_smul_of_branch_engine_on` holds, the gate fires at both states, and its conclusion follows. This is the
+  `ε > 0`, engine-parameter analogue of `RedTeam.rel_strictly_weaker`. Same scope as above (exact reals, chosen K3
+  inputs, `R = 3/7` on the empty edge is chosen so that its drive is exactly 0); pinned by
+  `tests/test_lean_gate_p2.py::test_engine_rel_strictly_weaker_value`. Its false variant is mutant M10 (§7.3).
+
+### 7.3 M5 negation and a semantic mutation check (residual 3)
+
+* `RedTeam.false_multiplier_no_gamma` (M5) and `RedTeam.false_main_no_gamma` (M4): the multiplier formula / main
+  theorem with `(1 − γdt)` dropped are false on `p0`, `B0`, `vRay 2`, `t = 1/10`, `ctrlPlus 2`, where every hypothesis
+  holds (estimator `1/2` vs `5/9`; edge 0 `1/20` vs `1/18`).
+* `lean_mutation_check.py` has 10 mutants (M1–M5 as before; M6/M7 edge set `x_e ≠ 0` / `h_e ≠ 0` in
+  `stepB_add_smul_of_branch_on`; M8 `stepM_eq_stepB` without symmetry; M9 `engine_nonvacuous` without `(1 − γdt)`;
+  M10 `engine_rel_strictly_weaker` claiming the all-edge kernel condition holds). A mutant is REJECTED only if all of:
+  * (a) build rejection: the mutated file fails to elaborate with the kept proof. For M4–M10 this is a real proof
+    failure (type mismatch / unsolved goals); for **M1–M3 it is name-reference only** ("Unknown identifier"), which
+    is weak evidence on its own: for M1–M3 the rejection is carried by (b);
+  * (b) semantic refutation: the mutated statement, extracted from the mutated source and closed over its section
+    variables, is refuted by a proved negation theorem: `theorem aief_refutation : ¬ ∀ …, mutant :=
+    fun H => negation (H instance)` elaborates against the built project with no error, the output contains neither
+    `declaration uses` nor `sorry`, and `#print axioms aief_refutation` lists only propext / Classical.choice /
+    Quot.sound. Negative controls of this validator (Auditor Seat 002, note N1): a `sorry` refutation and a
+    refutation through a freshly declared `axiom aief_cheat : False` are both rejected, and the run fails otherwise;
+  * (c) term-specificity: the same refutation term applied to the unmutated statement fails to elaborate. This only
+    shows that the refutation term depends on the mutation (any type mismatch satisfies it); it is **not** a
+    semantic control and adds no evidence beyond (b) (note N2). That the unmutated statements are true is shown by
+    the positive control: the unmutated files elaborate with their proofs (and by the full build).
+  Result: 10/10 rejected; both validator negative controls rejected.
+
+### 7.4 Matrix form = edge-vector form (residual 4; previously "argued, not proved")
+
+`MatrixForm.lean`: `stepM p D Bm i j` transcribes the engine's matrix B step (`:790-813`: proposal, clip,
+`0.5(x + xᵀ)`, zero diagonal, row sums, gate test, `min(s_i, s_j)` gating, zero diagonal) for any finite linearly
+ordered node type; `KG V` is the complete graph with edges `i < j`; `toEdge` reads a matrix on edges.
+* `stepM_eq_stepB`: for symmetric `Bm` and symmetric drive `D`, `stepM p D Bm i j = stepB p (KG V) (toEdge D)
+  (toEdge Bm) ⟨(i, j), _⟩` for every `i < j`.
+* `stepM_symm`, `stepM_diag`: the matrix output is symmetric with zero diagonal (so it is determined by its edge values).
+* `rowSum_eq_incAct`, `gateOnM_iff`: row sums = unsigned incidence action, matrix gate test ⇔ edge-vector gate test.
+* `false_matrix_no_symm`: without the symmetry hypotheses the statement is false (two nodes, `B₀₁ = 1`, `B₁₀ = 0`:
+  matrix `9/20`, edge vector `9/10`).
+Scope: exact reals; the diagonal of `B` and of the drive is arbitrary (overwritten); symmetry of `B` and of
+`R_driver` is a hypothesis (the engine's `B` is symmetric after every step by construction; `R` symmetric is an
+engine property not proved here; `shuffle_driver` keeps it symmetric by construction but is not modelled).
+
+### 7.5 Imports (residual 5)
+
+`GateMap.lean` imports 18 specific Mathlib modules instead of `import Mathlib`. Clean `check_lean_gate.sh`:
+2032 jobs (was 8712), wall time 26 s (was 6 min 13 s on the same box), still 0 warnings with the Mathlib
+style linters active (verified by a temporary over-long line and an unused simp argument, both reported, then removed).
+
+### 7.6 Still open (P2)
+
+* Branch persistence over time and any quantitative branch radius (only small-`t` persistence of clip/gate is proved).
+* The closed-form clique multiplier `λ_k`, finite-time departure from it, float64 error, `TIE_TOL`.
+* A bridge to the pinned `lean/AIEFProofs` `CCtrl`/`vCtrl` (still re-declared, not imported).
+* An engine-shaped counterexample for `hon` cannot exist (P1, `gateOn_iff_of_branch`); the `hon` negation remains on
+  the non-engine `pLow`. The P2 red-team negations (`false_rel_*`, M4/M5) use `p0` (`ε = 0`), not engine parameters;
+  only the positive witnesses of §7.2 (`engine_nonvacuous`, `engine_rel_strictly_weaker`) are engine-shaped.
+* `R` symmetry / `B` symmetry invariance of the engine are hypotheses of §7.4, not theorems.
+* **AUD-RATELAW stays UNEXPLAINED.** P2 does not change any label, ERRATA entry or registry claim.
