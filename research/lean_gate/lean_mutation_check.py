@@ -10,14 +10,23 @@ its source file and keeps the original proof. A mutant counts as REJECTED only i
       unsolved goals, failed rewrite, ...);
   (b) semantic rejection (P2): the mutated statement itself is REFUTED by a proved negation theorem. The script
       extracts the mutated statement from the mutated file, closes it over its section variables, and elaborates
-          example : ¬ (∀ <section variables> <binders>, <conclusion>) := fun H => <negation theorem> (H <instance>)
-      against the built project (`import AIEFGateCore`). This is a real Lean proof that the mutant is false, not a
-      name reference. As a positive control, the same refutation applied to the UNMUTATED statement must FAIL to
-      elaborate (a true theorem cannot be refuted, so a refutation that also "refutes" the original would be
-      meaningless).
+          theorem aief_refutation : ¬ (∀ <section variables> <binders>, <conclusion>) :=
+            fun H => <negation theorem> (H <instance>)
+          #print axioms aief_refutation
+      against the built project (`import AIEFGateCore`). The refutation counts only if Lean exits 0, reports no
+      error, the output contains neither "declaration uses" nor "sorry", and `#print axioms aief_refutation` lists
+      only propext / Classical.choice / Quot.sound (so a `sorry`- or `axiom`-based "refutation" is not accepted;
+      see the negative controls below). This is a real Lean proof that the mutant is false, not a name reference.
+  (c) term-specificity control: the same refutation term applied to the UNMUTATED statement must FAIL to elaborate.
+      This only shows that the refutation term depends on the mutation (any type mismatch satisfies it); it is NOT
+      a semantic control and adds no evidence beyond (b). (That the unmutated statement is true is shown separately
+      by the positive control below: the unmutated file, with its proof, elaborates.)
+
+Negative controls of the step-(b) validator (must be REJECTED, else the run fails): a refutation whose term is
+`sorry`, and a refutation that uses a freshly declared `axiom aief_cheat : False`.
 
 The unmutated files must elaborate cleanly (positive control). Exit 0 iff every control passes and every mutant is
-rejected in both senses. Requires a built project (`lake build` in lean/AIEFGateCore) for step (b).
+rejected in senses (a), (b) and (c). Requires a built project (`lake build` in lean/AIEFGateCore) for step (b).
 
 Mutants (statement -> negation theorem used in step (b)):
   M1 stepB_add_smul_of_branch without hker            -> RedTeam.false_drop_ker
@@ -29,6 +38,8 @@ Mutants (statement -> negation theorem used in step (b)):
   M7 stepB_add_smul_of_branch_on, edge set h_e ≠ 0    -> RedTeam.false_rel_h_only
   M8 MatrixForm.stepM_eq_stepB without symmetry       -> MatrixForm.false_matrix_no_symm
   M9 EngineWitness.engine_nonvacuous without (1-γdt)  -> EngineWitness.engine_false_no_gamma
+  M10 EngineWitness.engine_rel_strictly_weaker with "¬ InCtrlKer" -> "InCtrlKer" (the all-edge kernel condition
+      claimed to hold) -> refuted by the unmutated theorem's own clause at ctrl = ctrlX
 
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
@@ -76,9 +87,15 @@ MUTANTS = [
     ("M9_engine_witness_no_gamma_dt", "EngineWitness.lean", "engine_nonvacuous",
      [("((1 / 10) * (1 - 15 / 1000 * (1 / 100)) * sE) • vRay 2", "((1 / 10) * sE) • vRay 2", 1)],
      "", "EngineWitness.engine_false_no_gamma H.2.2.2.2.2.2.2.2.2"),
+    ("M10_engine_weakening_claims_all_edge_kernel", "EngineWitness.lean", "engine_rel_strictly_weaker",
+     [("      ¬ InCtrlKer G3 ctrl hw) ∧", "      InCtrlKer G3 ctrl hw) ∧", 1)], "",
+     "(EngineWitness.engine_rel_strictly_weaker.2.2.2.2.1 RedTeam.ctrlX EngineWitness.ctrlX_mem)"
+     " (H.2.2.2.2.1 RedTeam.ctrlX EngineWitness.ctrlX_mem)"),
 ]
 
-OPENS = "open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM)\nopen AIEFGate.EngineWitness (pE driveE BE sE)\n"
+OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM)\n"
+         "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n")
+ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
 def theorem_span(src, name):
@@ -141,9 +158,28 @@ def lean(text):
         return r.returncode, errs, out
 
 
-def refutation_file(prop, term):
-    return ("import AIEFGateCore\n\nset_option autoImplicit false\n\nnamespace AIEFGate\n" + OPENS +
-            f"\nexample : ¬ {prop} := fun H => {term}\n\nend AIEFGate\n")
+def refutation_file(prop, term, preamble=""):
+    return ("import AIEFGateCore\n\nset_option autoImplicit false\n\nnamespace AIEFGate\n" + OPENS + preamble +
+            f"\ntheorem aief_refutation : ¬ {prop} := fun H => {term}\n\n#print axioms aief_refutation\n"
+            "\nend AIEFGate\n")
+
+
+def refutation_valid(rc, errs, out):
+    """(ok, reason): a refutation counts only if it elaborates with no error, no sorry, and standard axioms only."""
+    if rc != 0 or errs:
+        return False, "does not elaborate"
+    if "declaration uses" in out or "sorry" in out:
+        return False, "uses sorry"
+    m = re.search(r"'AIEFGate\.aief_refutation' depends on axioms: \[([^\]]*)\]", out, re.S)
+    if m:
+        axs = {a.strip() for a in m.group(1).replace("\n", " ").split(",") if a.strip()}
+    elif "'AIEFGate.aief_refutation' does not depend on any axioms" in out:
+        axs = set()
+    else:
+        return False, "no #print axioms output"
+    if not axs <= ALLOWED_AXIOMS:
+        return False, f"non-standard axioms {sorted(axs - ALLOWED_AXIOMS)}"
+    return True, f"axioms {sorted(axs)}"
 
 
 def classify(errs, out):
@@ -162,6 +198,15 @@ def main():
         good = rc == 0 and not errs
         print(f"CONTROL unmutated {f}: rc={rc} errors={len(errs)} -> {'PASS' if good else 'FAIL'}")
         ok &= good
+    # negative controls of the step-(b) validator: a sorry refutation and an axiom refutation must be rejected
+    _, f1, t1, e1, c1, _ = MUTANTS[0]
+    prop1 = statement_prop(mutate(srcs[f1], t1, e1), t1, c1)
+    for label, term, pre in (("sorry", "sorry", ""),
+                             ("axiom", "aief_cheat.elim", "\naxiom aief_cheat : False\n")):
+        valid, why = refutation_valid(*lean(refutation_file(prop1, term, pre)))
+        print(f"VALIDATOR NEGATIVE CONTROL ({label}-based refutation of M1): "
+              f"{'ACCEPTED (BAD)' if valid else 'REJECTED (good)'} [{why}]")
+        ok &= not valid
     n_rej = 0
     for name, f, thm, edits, closure, term in MUTANTS:
         src = srcs[f]
@@ -172,14 +217,15 @@ def main():
         kind = classify(errs, out)
         # (b) semantic: refute the mutated statement; control: the same refutation of the original must fail
         rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term))
-        refuted = rrc == 0 and not rerrs
+        refuted, why = refutation_valid(rrc, rerrs, rout)
         crc, cerrs, _ = lean(refutation_file(statement_prop(src, thm, closure), term))
         control_ok = crc != 0 and bool(cerrs)
         rejected = build_rej and refuted and control_ok
         n_rej += rejected
         print(f"{name}: build {'REJECTED' if build_rej else 'ACCEPTED (BAD)'} [{kind}]; "
-              f"refuted by proof: {'YES' if refuted else 'NO (BAD)'}; "
-              f"refutation of unmutated statement fails: {'YES' if control_ok else 'NO (BAD)'} -> "
+              f"refuted by proof: {'YES' if refuted else 'NO (BAD)'} [{why}]; "
+              f"same term on unmutated statement fails (term-specificity only): "
+              f"{'YES' if control_ok else 'NO (BAD)'} -> "
               f"{'REJECTED (good)' if rejected else 'NOT REJECTED (BAD)'}")
         for l in errs[:1]:
             print("    build: " + l.split("Mutant.lean:")[-1][:150])
