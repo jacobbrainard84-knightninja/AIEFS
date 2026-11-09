@@ -8,3 +8,5 @@ import AIEFGateCore.Pinned.ControllerFiberProjector
 import AIEFGateCore.Pinned.ControllerFiberQuotient
 import AIEFGateCore.Pinned.CompleteGraphIncidence
 import AIEFGateCore.Bridge
+import AIEFGateCore.Persistence
+import AIEFGateCore.PersistenceWitness
