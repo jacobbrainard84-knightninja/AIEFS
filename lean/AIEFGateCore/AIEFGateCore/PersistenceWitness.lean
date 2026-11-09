@@ -222,6 +222,29 @@ theorem engine_gated_persistence (n : ℕ) :
   · exact iterate_stepB_add_smul_of_branch pE G3 driveE BE (vRay 2) (1 / 10) sP
       (fun _ => ctrlPlus 2) n (fun k _ => hbr k)
 
+/-- **Wrong persistence statement is false** (red team, mutant M13 of `lean_mutation_check.py`):
+`iterate_stepB_add_smul_of_branch` with the amplitude `amp n` replaced by `t` (no decay of the
+perturbation) fails at `pE` for `n = 1` on the `engine_gated_persistence` instance, where every
+hypothesis holds: the true amplitude is `t (1 - γdt) sP 0 < t`. -/
+theorem false_iterate_no_decay : ¬ ∀ (drive B h : Fin 3 → ℝ) (t : ℝ) (s : ℕ → ℝ)
+    (ctrl : ℕ → Fin 3 → Fin 3) (n : ℕ),
+    (∀ k < n, UniformBranch pE G3 drive ((stepB pE G3 drive)^[k] B) h (amp pE t s k) (s k)
+      (ctrl k)) →
+    (stepB pE G3 drive)^[n] (B + t • h) = (stepB pE G3 drive)^[n] B + t • h := by
+  intro H
+  obtain ⟨-, hbr, htrue⟩ := engine_gated_persistence 1
+  have hm := H driveE BE (vRay 2) (1 / 10) sP (fun _ => ctrlPlus 2) 1 hbr
+  rw [htrue] at hm
+  have h0 := congrFun (add_left_cancel hm) 0
+  simp only [Pi.smul_apply, smul_eq_mul, amp, Finset.prod_range_one] at h0
+  have hv : vRay 2 0 = 1 := by simp [vRay]
+  rw [hv, mul_one, mul_one] at h0
+  have hs := sP_lt_one 0
+  have hf := factor_mem 0
+  have hg : 1 - pE.γ * pE.dt = 1 - 15 / 1000 * (1 / 100) := by simp [pE]
+  rw [hg] at h0 hf
+  nlinarith
+
 end
 
 end PersistenceWitness

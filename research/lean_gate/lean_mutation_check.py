@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
-"""Lean P1/P2 red team, part 2: mutation check of lean/AIEFGateCore.
+"""Lean P1/P2/P3 red team, part 2: mutation check of lean/AIEFGateCore.
 
-Each mutant changes a theorem STATEMENT (drops a hypothesis, shrinks an edge set, or drops a constant) in a copy of
-its source file and keeps the original proof. A mutant counts as REJECTED only if BOTH hold:
+Each mutant changes a theorem STATEMENT (weakens a hypothesis to `True`, shrinks an edge set, drops a constant,
+replaces the bridge vector, ...) in a copy of its source file and keeps the original proof. A mutant counts as
+REJECTED only if ALL of the following hold:
 
   (a) build rejection: the mutated file, written to a temporary directory outside the project and elaborated with
-      `lake env lean`, fails (the kept proof no longer goes through). The script reports whether the errors are
-      only name references ("Unknown identifier": weak, syntactic) or a real proof failure (type mismatch,
-      unsolved goals, failed rewrite, ...);
+      `lake env lean`, fails (the kept proof no longer goes through) AND the failure is a real proof failure (type
+      mismatch, unsolved goals, failed rewrite, ...). P3 rule change: a failure consisting only of name-reference
+      errors ("Unknown identifier" / "unknown constant") no longer counts as a build rejection, because it says
+      nothing about the mutated statement (it only shows the proof mentions a deleted binder name). For that reason
+      M1-M3 now weaken the hypothesis to `(name : True)` instead of deleting it: `True -> P` is equivalent to `P`,
+      so the mutated statement is the same proposition as "hypothesis dropped", the binder name stays in scope, and
+      the kept proof must fail on the type (M8 likewise: its P2 deletion form failed with name errors plus one
+      cascading `rfl` failure, so it was only formally a "real" failure). Classifier negative control: the P2 deletion form of M1 is still run
+      and must be classified NAME-REFERENCE ONLY and NOT counted as a build rejection;
   (b) semantic rejection (P2): the mutated statement itself is REFUTED by a proved negation theorem. The script
       extracts the mutated statement from the mutated file, closes it over its section variables, and elaborates
           theorem aief_refutation : ¬ (∀ <section variables> <binders>, <conclusion>) :=
@@ -17,10 +24,14 @@ its source file and keeps the original proof. A mutant counts as REJECTED only i
       error, the output contains neither "declaration uses" nor "sorry", and `#print axioms aief_refutation` lists
       only propext / Classical.choice / Quot.sound (so a `sorry`- or `axiom`-based "refutation" is not accepted;
       see the negative controls below). This is a real Lean proof that the mutant is false, not a name reference.
+      P3: for M1-M5 a SECOND refutation at the frozen engine parameters `EngineWitness.pE` (`ε = 10⁻¹² > 0`,
+      `EngineRedTeam.engine_false_*`) must also pass the same validator, so these mutants are refuted at an
+      engine-shaped instance and not only at the toy `RedTeam.p0` (`ε = 0`);
   (c) term-specificity control: the same refutation term applied to the UNMUTATED statement must FAIL to elaborate.
       This only shows that the refutation term depends on the mutation (any type mismatch satisfies it); it is NOT
       a semantic control and adds no evidence beyond (b). (That the unmutated statement is true is shown separately
-      by the positive control below: the unmutated file, with its proof, elaborates.)
+      by the positive control below: the unmutated file, with its proof, elaborates.) Checked for every
+      refutation term (toy and engine).
 
 Negative controls of the step-(b) validator (must be REJECTED, else the run fails): a refutation whose term is
 `sorry`, and a refutation that uses a freshly declared `axiom aief_cheat : False`.
@@ -28,18 +39,25 @@ Negative controls of the step-(b) validator (must be REJECTED, else the run fail
 The unmutated files must elaborate cleanly (positive control). Exit 0 iff every control passes and every mutant is
 rejected in senses (a), (b) and (c). Requires a built project (`lake build` in lean/AIEFGateCore) for step (b).
 
-Mutants (statement -> negation theorem used in step (b)):
-  M1 stepB_add_smul_of_branch without hker            -> RedTeam.false_drop_ker
-  M2 stepB_add_smul_of_branch without hc1             -> RedTeam.false_drop_hc1
-  M3 stepB_add_smul_of_branch without hclip           -> RedTeam.false_drop_clip
-  M4 stepB_add_smul_of_branch without (1 - γ dt)      -> RedTeam.false_main_no_gamma
+Mutants (statement -> negation theorem used in step (b); "+ engine" = second refutation at pE):
+  M1 stepB_add_smul_of_branch, hker := True           -> RedTeam.false_drop_ker + engine_false_drop_ker
+  M2 stepB_add_smul_of_branch, hc1 := True            -> RedTeam.false_drop_hc1 + engine_false_drop_hc1
+  M3 stepB_add_smul_of_branch, hclip := True          -> RedTeam.false_drop_clip + engine_false_drop_clip
+  M4 stepB_add_smul_of_branch without (1 - γ dt)      -> RedTeam.false_main_no_gamma + engine_false_main_no_gamma
   M5 multiplier_eq_branch_formula without (1 - γ dt)  -> RedTeam.false_multiplier_no_gamma
+                                                         + engine_false_multiplier_no_gamma
   M6 stepB_add_smul_of_branch_on, edge set x_e ≠ 0    -> RedTeam.false_rel_x_only
   M7 stepB_add_smul_of_branch_on, edge set h_e ≠ 0    -> RedTeam.false_rel_h_only
-  M8 MatrixForm.stepM_eq_stepB without symmetry       -> MatrixForm.false_matrix_no_symm
+  M8 MatrixForm.stepM_eq_stepB, hD hB := True         -> MatrixForm.false_matrix_no_symm
   M9 EngineWitness.engine_nonvacuous without (1-γdt)  -> EngineWitness.engine_false_no_gamma
   M10 EngineWitness.engine_rel_strictly_weaker with "¬ InCtrlKer" -> "InCtrlKer" (the all-edge kernel condition
       claimed to hold) -> refuted by the unmutated theorem's own clause at ctrl = ctrlX
+  M11 Bridge.inCtrlKer_iff_smul_vCtrl with the pinned vCtrl replaced by the pinned vRay 0 (wrong kernel vector)
+      -> Bridge.false_bridge_wrong_vector
+  M12 Bridge.inCtrlKer_iff_smul_vCtrl with CtrlJ01 weakened to "ctrl e is an endpoint of e" (J not restricted)
+      -> Bridge.false_bridge_any_ctrl
+  M13 iterate_stepB_add_smul_of_branch with the amplitude amp n replaced by t (no decay)
+      -> PersistenceWitness.false_iterate_no_decay
 
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
@@ -60,41 +78,76 @@ GATE_INST = "@H (Fin 3) (Fin 3) _ _ RedTeam.p0 G3"
 pL = "    (hclip : ∀ e, h e ≠ 0 → 0 ≤ pre p drive B e ∧ 0 ≤ pre p drive (B + t • h) e)\n"
 REL = "(Rel (prop p drive B) h)"
 
+ENGINE_INST = "@H (Fin 3) (Fin 3) _ _ EngineWitness.pE G3"
+
+
+def via(inst, binders, pos):
+    """Term `fun <binders without pos> => inst <binders with `trivial` at pos>` (feeds `True` to H)."""
+    bs = binders.split()
+    lam = " ".join(b for i, b in enumerate(bs) if i != pos)
+    app = " ".join("trivial" if i == pos else b for i, b in enumerate(bs))
+    return f"(fun {lam} => {inst} {app})"
+
+
+MAIN_BINDERS = "drive B h t ctrl hclip hon hker hc0 hc1"   # binder order of stepB_add_smul_of_branch
+
 MUTANTS = [
-    # name, file, theorem, [(old, new, count)], closure vars, refutation term
-    ("M1_drop_kernel_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
-     [("    (hker : InCtrlKer G ctrl h)\n", "", 1)], GATE_VARS, f"RedTeam.false_drop_ker ({GATE_INST})"),
-    ("M2_drop_perturbed_controller_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
-     [("    (hc1 : IsCtrl p G (prop p drive (B + t • h)) ctrl) :\n", "    :\n", 1)], GATE_VARS,
-     f"RedTeam.false_drop_hc1 ({GATE_INST})"),
-    ("M3_drop_clip_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch", [(pL, "", 1)], GATE_VARS,
-     f"RedTeam.false_drop_clip ({GATE_INST})"),
+    # name, file, theorem, [(old, new, count)], closure vars, refutation term, engine refutation term (or None)
+    ("M1_kernel_hypothesis_weakened_to_True", "GateMap.lean", "stepB_add_smul_of_branch",
+     [("    (hker : InCtrlKer G ctrl h)\n", "    (hker : True)\n", 1)], GATE_VARS,
+     f"RedTeam.false_drop_ker {via(GATE_INST, MAIN_BINDERS, 7)}",
+     f"EngineRedTeam.engine_false_drop_ker {via(ENGINE_INST, MAIN_BINDERS, 7)}"),
+    ("M2_perturbed_controller_hypothesis_weakened_to_True", "GateMap.lean", "stepB_add_smul_of_branch",
+     [("    (hc1 : IsCtrl p G (prop p drive (B + t • h)) ctrl) :\n", "    (hc1 : True) :\n", 1)], GATE_VARS,
+     f"RedTeam.false_drop_hc1 {via(GATE_INST, MAIN_BINDERS, 9)}",
+     f"EngineRedTeam.engine_false_drop_hc1 {via(ENGINE_INST, MAIN_BINDERS, 9)}"),
+    ("M3_clip_hypothesis_weakened_to_True", "GateMap.lean", "stepB_add_smul_of_branch",
+     [(pL, "    (hclip : True)\n", 1)], GATE_VARS,
+     f"RedTeam.false_drop_clip {via(GATE_INST, MAIN_BINDERS, 5)}",
+     f"EngineRedTeam.engine_false_drop_clip {via(ENGINE_INST, MAIN_BINDERS, 5)}"),
     ("M4_wrong_constant_no_gamma_dt", "GateMap.lean", "stepB_add_smul_of_branch",
      [("t * (1 - p.γ * p.dt) * branchScale p G drive B ctrl e * h e", "t * branchScale p G drive B ctrl e * h e", 1)],
-     GATE_VARS, f"RedTeam.false_main_no_gamma ({GATE_INST})"),
+     GATE_VARS, f"RedTeam.false_main_no_gamma ({GATE_INST})",
+     f"EngineRedTeam.engine_false_main_no_gamma ({ENGINE_INST})"),
     ("M5_multiplier_wrong_constant", "GateMap.lean", "multiplier_eq_branch_formula",
      [("      (1 - p.γ * p.dt) * (∑ e, branchScale p G drive B ctrl e * h e ^ 2) / ∑ e, h e ^ 2",
        "      (∑ e, branchScale p G drive B ctrl e * h e ^ 2) / ∑ e, h e ^ 2", 1)],
-     GATE_VARS, f"RedTeam.false_multiplier_no_gamma ({GATE_INST})"),
+     GATE_VARS, f"RedTeam.false_multiplier_no_gamma ({GATE_INST})",
+     f"EngineRedTeam.engine_false_multiplier_no_gamma ({ENGINE_INST})"),
     ("M6_edge_set_x_only", "GateMap.lean", "stepB_add_smul_of_branch_on",
-     [(REL, "(fun e => prop p drive B e ≠ 0)", 3)], GATE_VARS, f"RedTeam.false_rel_x_only ({GATE_INST})"),
+     [(REL, "(fun e => prop p drive B e ≠ 0)", 3)], GATE_VARS, f"RedTeam.false_rel_x_only ({GATE_INST})", None),
     ("M7_edge_set_h_only", "GateMap.lean", "stepB_add_smul_of_branch_on",
-     [(REL, "(fun e => h e ≠ 0)", 3)], GATE_VARS, f"RedTeam.false_rel_h_only ({GATE_INST})"),
-    ("M8_matrix_drop_symmetry", "MatrixForm.lean", "stepM_eq_stepB",
-     [("(hD : ∀ i j, D i j = D j i)\n    (hB : ∀ i j, Bm i j = Bm j i) ", "", 1)],
+     [(REL, "(fun e => h e ≠ 0)", 3)], GATE_VARS, f"RedTeam.false_rel_h_only ({GATE_INST})", None),
+    ("M8_matrix_symmetry_weakened_to_True", "MatrixForm.lean", "stepM_eq_stepB",
+     [("(hD : ∀ i j, D i j = D j i)\n    (hB : ∀ i j, Bm i j = Bm j i) ", "(hD : True)\n    (hB : True) ", 1)],
      "{V : Type} [Fintype V] [LinearOrder V] (p : Params)",
-     "MatrixForm.false_matrix_no_symm (@H (Fin 2) _ _ MatrixForm.pT)"),
+     "MatrixForm.false_matrix_no_symm (fun D Bm e => @H (Fin 2) _ _ MatrixForm.pT D Bm trivial trivial e)", None),
     ("M9_engine_witness_no_gamma_dt", "EngineWitness.lean", "engine_nonvacuous",
      [("((1 / 10) * (1 - 15 / 1000 * (1 / 100)) * sE) • vRay 2", "((1 / 10) * sE) • vRay 2", 1)],
-     "", "EngineWitness.engine_false_no_gamma H.2.2.2.2.2.2.2.2.2"),
+     "", "EngineWitness.engine_false_no_gamma H.2.2.2.2.2.2.2.2.2", None),
     ("M10_engine_weakening_claims_all_edge_kernel", "EngineWitness.lean", "engine_rel_strictly_weaker",
      [("      ¬ InCtrlKer G3 ctrl hw) ∧", "      InCtrlKer G3 ctrl hw) ∧", 1)], "",
      "(EngineWitness.engine_rel_strictly_weaker.2.2.2.2.1 RedTeam.ctrlX EngineWitness.ctrlX_mem)"
-     " (H.2.2.2.2.1 RedTeam.ctrlX EngineWitness.ctrlX_mem)"),
+     " (H.2.2.2.2.1 RedTeam.ctrlX EngineWitness.ctrlX_mem)", None),
+    ("M11_bridge_wrong_kernel_vector", "Bridge.lean", "inCtrlKer_iff_smul_vCtrl",
+     [("∃ a : ℝ, h = a • toR vCtrl", "∃ a : ℝ, h = a • toR (CompleteGraphIncidence.vRay 0)", 1)], "",
+     "Bridge.false_bridge_wrong_vector (fun _ hc h => H hc h)", None),
+    ("M12_bridge_controller_set_unrestricted", "Bridge.lean", "inCtrlKer_iff_smul_vCtrl",
+     [("(hc : CtrlJ01 ctrl)", "(hc : ∀ e, ctrl e = G3.src e ∨ ctrl e = G3.dst e)", 1)], "",
+     "Bridge.false_bridge_any_ctrl (fun _ hc h => H hc h)", None),
+    ("M13_persistence_no_decay", "Persistence.lean", "iterate_stepB_add_smul_of_branch",
+     [("(stepB p G drive)^[n] B + amp p t s n • h", "(stepB p G drive)^[n] B + t • h", 1)], GATE_VARS,
+     f"PersistenceWitness.false_iterate_no_decay ({ENGINE_INST})", None),
 ]
 
+# Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
+# name-reference errors only; it must be classified as such and must NOT count as a build rejection.
+LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
+                    [("    (hker : InCtrlKer G ctrl h)\n", "", 1)])
+
 OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM)\n"
-         "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n")
+         "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n"
+         "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
@@ -189,6 +242,19 @@ def classify(errs, out):
     return "NAME-REFERENCE ONLY (weak)" if name_only else "REAL PROOF FAILURE"
 
 
+def build_rejected(rc, errs, kind):
+    """P3 rule: a build rejection counts only if the kept proof fails for a real reason (not name-only)."""
+    return rc != 0 and bool(errs) and kind == "REAL PROOF FAILURE"
+
+
+def refute(msrc, src, thm, closure, term):
+    """(refuted, why, control_ok): step (b) on the mutated statement and step (c) on the unmutated one."""
+    rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term))
+    refuted, why = refutation_valid(rrc, rerrs, rout)
+    crc, cerrs, _ = lean(refutation_file(statement_prop(src, thm, closure), term))
+    return refuted, why, crc != 0 and bool(cerrs), (rerrs or rout.splitlines())
+
+
 def main():
     ok = True
     srcs = {}
@@ -199,7 +265,7 @@ def main():
         print(f"CONTROL unmutated {f}: rc={rc} errors={len(errs)} -> {'PASS' if good else 'FAIL'}")
         ok &= good
     # negative controls of the step-(b) validator: a sorry refutation and an axiom refutation must be rejected
-    _, f1, t1, e1, c1, _ = MUTANTS[0]
+    _, f1, t1, e1, c1, _, _ = MUTANTS[0]
     prop1 = statement_prop(mutate(srcs[f1], t1, e1), t1, c1)
     for label, term, pre in (("sorry", "sorry", ""),
                              ("axiom", "aief_cheat.elim", "\naxiom aief_cheat : False\n")):
@@ -207,31 +273,44 @@ def main():
         print(f"VALIDATOR NEGATIVE CONTROL ({label}-based refutation of M1): "
               f"{'ACCEPTED (BAD)' if valid else 'REJECTED (good)'} [{why}]")
         ok &= not valid
+    # classifier negative control: a name-only build failure must not count as a build rejection
+    lname, lf, lthm, ledits = LEGACY_NAME_ONLY
+    lrc, lerrs, lout = lean(mutate(srcs[lf], lthm, ledits))
+    lkind = classify(lerrs, lout)
+    lgood = lrc != 0 and lkind.startswith("NAME-REFERENCE ONLY") and not build_rejected(lrc, lerrs, lkind)
+    print(f"CLASSIFIER NEGATIVE CONTROL ({lname}): build fails [{lkind}]; counted as build rejection: "
+          f"{'YES (BAD)' if build_rejected(lrc, lerrs, lkind) else 'NO'} -> {'PASS' if lgood else 'FAIL'}")
+    ok &= lgood
     n_rej = 0
-    for name, f, thm, edits, closure, term in MUTANTS:
+    for name, f, thm, edits, closure, term, eterm in MUTANTS:
         src = srcs[f]
         msrc = mutate(src, thm, edits)
         assert msrc != src
         rc, errs, out = lean(msrc)
-        build_rej = rc != 0 and bool(errs)
         kind = classify(errs, out)
-        # (b) semantic: refute the mutated statement; control: the same refutation of the original must fail
-        rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term))
-        refuted, why = refutation_valid(rrc, rerrs, rout)
-        crc, cerrs, _ = lean(refutation_file(statement_prop(src, thm, closure), term))
-        control_ok = crc != 0 and bool(cerrs)
+        build_rej = build_rejected(rc, errs, kind)
+        refuted, why, control_ok, rmsg = refute(msrc, src, thm, closure, term)
         rejected = build_rej and refuted and control_ok
+        line = (f"{name}: build {'REJECTED' if build_rej else 'NOT REJECTED (BAD)'} [{kind}]; "
+                f"refuted by proof: {'YES' if refuted else 'NO (BAD)'} [{why}]; "
+                f"same term on unmutated statement fails (term-specificity only): {'YES' if control_ok else 'NO (BAD)'}")
+        emsg = []
+        if eterm is not None:
+            erefuted, ewhy, econtrol, emsg = refute(msrc, src, thm, closure, eterm)
+            rejected = rejected and erefuted and econtrol
+            line += (f"; engine-shaped (pE, ε>0) refutation: {'YES' if erefuted else 'NO (BAD)'} [{ewhy}], "
+                     f"term-specific: {'YES' if econtrol else 'NO (BAD)'}")
+            if erefuted:
+                emsg = []
         n_rej += rejected
-        print(f"{name}: build {'REJECTED' if build_rej else 'ACCEPTED (BAD)'} [{kind}]; "
-              f"refuted by proof: {'YES' if refuted else 'NO (BAD)'} [{why}]; "
-              f"same term on unmutated statement fails (term-specificity only): "
-              f"{'YES' if control_ok else 'NO (BAD)'} -> "
-              f"{'REJECTED (good)' if rejected else 'NOT REJECTED (BAD)'}")
+        print(f"{line} -> {'REJECTED (good)' if rejected else 'NOT REJECTED (BAD)'}")
         for l in errs[:1]:
             print("    build: " + l.split("Mutant.lean:")[-1][:150])
         if not refuted:
-            for l in (rerrs or rout.splitlines())[:3]:
+            for l in rmsg[:3]:
                 print("    refutation: " + l.split("Mutant.lean:")[-1][:200])
+        for l in emsg[:3]:
+            print("    engine refutation: " + l.split("Mutant.lean:")[-1][:200])
         ok &= rejected
     print(f"mutants rejected: {n_rej}/{len(MUTANTS)}")
     print("RESULT:", "PASS" if ok else "FAIL")
