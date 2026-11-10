@@ -1,0 +1,45 @@
+{
+  "mode": "baseline",
+  "optimized_python": false,
+  "tests_run": 12,
+  "failures": 5,
+  "errors": 0,
+  "skipped": 0,
+  "failure_methods": [
+    "test_alias_duplicate",
+    "test_candidate_duplicate",
+    "test_oracle_duplicate",
+    "test_shared_duplicate",
+    "test_status_in_key"
+  ],
+  "error_methods": [],
+  "census": {
+    "ordered_table_pairs": 1600,
+    "expected_passes": 12,
+    "observed_passes": 256,
+    "mismatches": 244,
+    "false_accepts": 244,
+    "false_rejects": 0
+  },
+  "candidate_only_invalid_key_cases": 0,
+  "fixture_group_counts": {
+    "unique": 1,
+    "order_alias": 4,
+    "candidate_duplicate": 1,
+    "oracle_duplicate": 1,
+    "shared_duplicate": 2,
+    "status_in_key": 1,
+    "coverage": 7,
+    "scalar": 3,
+    "npz": 5,
+    "metadata": 2,
+    "counts": 1,
+    "alias_duplicate": 2
+  },
+  "boundary": {
+    "actual_public_api": true,
+    "simulation_or_runner_entrypoints_called": false
+  },
+  "public_sources_unchanged": 12,
+  "elapsed_seconds": 3.8160187040000437
+}

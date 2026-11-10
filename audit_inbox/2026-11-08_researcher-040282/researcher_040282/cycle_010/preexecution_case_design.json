@@ -1,0 +1,196 @@
+{
+  "phase": "Before acquired-engine import/advance; independent scalar design only",
+  "reference": "math/cmath, no NumPy or acquired code",
+  "cases": [
+    {
+      "case": "inactive_D1",
+      "N": 3,
+      "D": 1,
+      "pre_violation": false,
+      "projection_active": false,
+      "g_min_pre": 0.1678136633694446,
+      "g_min": 0.1678136633694446,
+      "theta": [
+        0.4041391349938893,
+        1.4186776812987445,
+        4.352839341505965
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.07860569078800575
+    },
+    {
+      "case": "active_D2",
+      "N": 3,
+      "D": 2,
+      "pre_violation": true,
+      "projection_active": true,
+      "g_min_pre": -0.34573756948342016,
+      "g_min": 0.10000000000100329,
+      "theta": [
+        0.4097551287319256,
+        1.4139502387955527,
+        4.355478572179514
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.1614783978454979
+    },
+    {
+      "case": "active_D3",
+      "N": 3,
+      "D": 3,
+      "pre_violation": true,
+      "projection_active": true,
+      "g_min_pre": -0.33558979083295637,
+      "g_min": 0.10000000000101072,
+      "theta": [
+        0.4105305960280428,
+        1.4128158378483457,
+        4.355820100609233
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.1681059894783784
+    },
+    {
+      "case": "zero_C_new_drive_D2",
+      "N": 3,
+      "D": 2,
+      "pre_violation": false,
+      "projection_active": false,
+      "g_min_pre": 0.1936375734129442,
+      "g_min": 0.1936375734129442,
+      "theta": [
+        0.40353383725854497,
+        1.4174317932252485,
+        4.351936807681926
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.0786624755290186
+    },
+    {
+      "case": "phase_wrap_D1",
+      "N": 3,
+      "D": 1,
+      "pre_violation": false,
+      "projection_active": false,
+      "g_min_pre": 0.1739973340965404,
+      "g_min": 0.1739973340965404,
+      "theta": [
+        0.07764709118065216,
+        0.16356392254644053,
+        0.19322079144840476
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.08289357442643124
+    },
+    {
+      "case": "exact_capacity_N2",
+      "N": 2,
+      "D": 1,
+      "pre_violation": false,
+      "projection_active": false,
+      "g_min_pre": 0.5,
+      "g_min": 0.5,
+      "theta": [
+        0.4024640961627627,
+        1.3326636836438692
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.5
+    },
+    {
+      "case": "negative_proposal_clipped",
+      "N": 3,
+      "D": 2,
+      "pre_violation": false,
+      "projection_active": false,
+      "g_min_pre": 1.0,
+      "g_min": 1.0,
+      "theta": [
+        0.3725,
+        1.395,
+        4.3175
+      ],
+      "minimum_raw_offdiagonal_proposal": -0.778800783071405
+    },
+    {
+      "case": "directed_C_N4_D4",
+      "N": 4,
+      "D": 4,
+      "pre_violation": true,
+      "projection_active": true,
+      "g_min_pre": -0.4503795906193895,
+      "g_min": 0.10000000000093079,
+      "theta": [
+        0.3807843946981819,
+        1.3867087506243583,
+        4.354153716748924,
+        2.828574383269851
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.16196551318201532
+    },
+    {
+      "case": "dyadic_D1",
+      "N": 1,
+      "D": 1,
+      "pre_violation": false,
+      "projection_active": false,
+      "g_min_pre": 1.0,
+      "g_min": 1.0,
+      "theta": [
+        0.375
+      ],
+      "minimum_raw_offdiagonal_proposal": 0.0
+    }
+  ],
+  "fixed_control_witnesses": [
+    {
+      "model": "newest",
+      "intended_field": "C",
+      "component_difference": 0.35851321625192645
+    },
+    {
+      "model": "second_oldest",
+      "intended_field": "C",
+      "component_difference": 0.41826406501469854
+    },
+    {
+      "model": "individual_frequency",
+      "intended_field": "C",
+      "component_difference": 0.02395607081678272
+    },
+    {
+      "model": "old_C_for_R",
+      "intended_field": "R_physical",
+      "component_difference": 0.21639115411686247
+    },
+    {
+      "model": "symmetrize_C_first",
+      "intended_field": "R_physical",
+      "component_difference": 0.436263731802221
+    },
+    {
+      "model": "old_B_for_phase",
+      "intended_field": "theta",
+      "component_difference": 0.005545783091789769
+    },
+    {
+      "model": "unprojected_B_for_phase",
+      "intended_field": "theta",
+      "component_difference": 0.018809418284226886
+    },
+    {
+      "model": "reversed_sine",
+      "intended_field": "theta",
+      "component_difference": 0.07595714435902856
+    },
+    {
+      "model": "append_old_theta",
+      "intended_field": "history",
+      "component_difference": 0.22547857217951428
+    },
+    {
+      "model": "alias_new_theta",
+      "intended_field": "storage_ownership",
+      "component_difference": null
+    },
+    {
+      "model": "unconditional_gate",
+      "intended_field": "B",
+      "component_difference": 0.009803921568627472
+    }
+  ]
+}

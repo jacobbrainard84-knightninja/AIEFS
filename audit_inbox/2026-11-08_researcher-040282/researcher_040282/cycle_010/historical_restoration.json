@@ -1,0 +1,12 @@
+{
+  "restored_path": "cycle_006/source_state/main/.github/workflows/repo-checks.yml",
+  "source_delivered_archive": "researcher040282-cycle009-anchored-cohort-admission.zip",
+  "missing_before_this_administrative_step": true,
+  "restored_bytes": 9175,
+  "restored_content_matches_delivered_member": true,
+  "existing_source_or_log_overwritten": false,
+  "historical_science_rerun": false,
+  "scientific010_inputs_code_results_changed": false,
+  "user_deleted_legacy_lua_audit_remains_absent": true,
+  "scope": "Exact missing-only old evidence recovery; no new finding, old-source audit, source repair or chronology reconstruction"
+}

@@ -1,0 +1,5 @@
+{
+  "type": "RuntimeError",
+  "message": "Formal proof/control run blocked, never detection",
+  "semantic_negative_detection_credited": false
+}

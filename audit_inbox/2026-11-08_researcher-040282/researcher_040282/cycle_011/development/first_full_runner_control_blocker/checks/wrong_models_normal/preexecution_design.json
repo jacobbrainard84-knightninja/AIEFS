@@ -1,0 +1,243 @@
+{
+  "phase": "Independent scalar design before acquired-engine import/advance; not source observations",
+  "cases": [
+    {
+      "name": "positive_wrap_D1",
+      "N": 3,
+      "D": 1,
+      "first_increment": [
+        0.05360259904774863,
+        0.11802245643122745,
+        0.20337494452102392
+      ],
+      "first_windings": [
+        1,
+        0,
+        0
+      ],
+      "first_pre_violation": true,
+      "first_projection_active": true
+    },
+    {
+      "name": "active_D2",
+      "N": 3,
+      "D": 2,
+      "first_increment": [
+        0.0579317666269875,
+        0.12075869227755759,
+        0.1963095410954549
+      ],
+      "first_windings": [
+        0,
+        0,
+        0
+      ],
+      "first_pre_violation": true,
+      "first_projection_active": true
+    },
+    {
+      "name": "active_D3",
+      "N": 3,
+      "D": 3,
+      "first_increment": [
+        0.0579317666269875,
+        0.12075869227755759,
+        0.1963095410954549
+      ],
+      "first_windings": [
+        0,
+        0,
+        0
+      ],
+      "first_pre_violation": true,
+      "first_projection_active": true
+    },
+    {
+      "name": "coupled_N4_D4",
+      "N": 4,
+      "D": 4,
+      "first_increment": [
+        0.07904646900936489,
+        0.1419095277152389,
+        0.165059268771988,
+        0.14523473450340818
+      ],
+      "first_windings": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "first_pre_violation": true,
+      "first_projection_active": true
+    },
+    {
+      "name": "negative_wrap_D2",
+      "N": 3,
+      "D": 2,
+      "first_increment": [
+        -0.13359217105176302,
+        0.08691580063936165,
+        0.20292637041240136
+      ],
+      "first_windings": [
+        -1,
+        0,
+        0
+      ],
+      "first_pre_violation": true,
+      "first_projection_active": true
+    },
+    {
+      "name": "multiwrap_D2",
+      "N": 3,
+      "D": 2,
+      "first_increment": [
+        20.120431766626986,
+        -17.87924130772244,
+        3.383809541095455
+      ],
+      "first_windings": [
+        3,
+        -3,
+        1
+      ],
+      "first_pre_violation": true,
+      "first_projection_active": true
+    },
+    {
+      "name": "free_drift_N1_D3",
+      "N": 1,
+      "D": 3,
+      "first_increment": [
+        0.125
+      ],
+      "first_windings": [
+        0
+      ],
+      "first_pre_violation": false,
+      "first_projection_active": false
+    }
+  ],
+  "actual_advances_planned": 56,
+  "input_complex_coordinates_planned": 496,
+  "adjacent_complex_coordinates_planned": 434,
+  "startup_adjacent_coordinates_planned": 157,
+  "ten_fixed_control_witnesses": [
+    {
+      "model": "omit_startup_guard",
+      "field": "factor",
+      "component_difference": 0.12068496986146218,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "one_step_early",
+      "field": "factor",
+      "component_difference": 0.12068393293079901,
+      "witness": {
+        "case": "active_D2",
+        "n": 1,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "current_delayed_increment",
+      "field": "factor",
+      "component_difference": 0.008387031264128972,
+      "witness": {
+        "case": "active_D2",
+        "n": 3,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "one_extra_delay",
+      "field": "factor",
+      "component_difference": 0.12068099581739043,
+      "witness": {
+        "case": "active_D2",
+        "n": 2,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "reverse_difference",
+      "field": "factor",
+      "component_difference": 0.09598421576808373,
+      "witness": {
+        "case": "active_D2",
+        "n": 3,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "old_B_increment",
+      "field": "factor",
+      "component_difference": 0.0052739455320261405,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "unprojected_B_increment",
+      "field": "factor",
+      "component_difference": 0.0031603045096356003,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "omit_mean_offset",
+      "field": "absolute_input",
+      "component_difference": 0.16275191423722463,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "next_step_C_input",
+      "field": "absolute_input",
+      "component_difference": 0.0521000678316027,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      }
+    },
+    {
+      "model": "raw_angle_increment",
+      "field": "real_increment",
+      "component_difference": 18.84955592153876,
+      "witness": {
+        "case": "multiwrap_D2",
+        "n": 0,
+        "i": 0
+      }
+    }
+  ],
+  "absolute_tolerance": 5e-13,
+  "relative_tolerance": 0.0,
+  "positive_equivalences_not_misclassified_as_mutants": [
+    "stored-angle-difference versus unwrapped increment inside phasor",
+    "constant mean-frequency offset cancels in adjacent input ratio"
+  ]
+}

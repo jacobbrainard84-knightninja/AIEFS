@@ -1,0 +1,156 @@
+[
+  {
+    "case": "two_field_certificate_resealed",
+    "group": "certificate_repin",
+    "action": "certificate_minimal",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+    "precall_input_digests": {
+      "scalar_csv": "628961db30c80c99f9dc3d7a599e3efd6fd23d72bf9e21916496ba0f2a211477",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "d109e1d7bfbcc769b8d1c41046ffe2bfb128aae59fa2325a08e7cf917f3828b2",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "964ccab4ef55eaa6ce93526ff24624ae57d5596f2b8fa2895490c12d3e47baff"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  },
+  {
+    "case": "invented_lineage_changed_resealed",
+    "group": "certificate_repin",
+    "action": "certificate_lineage",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+    "precall_input_digests": {
+      "scalar_csv": "628961db30c80c99f9dc3d7a599e3efd6fd23d72bf9e21916496ba0f2a211477",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "d99b8d006372f0a8633bd4108467de02b3826018a0d4e5b3e81269c08c84e846",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "5236b33025425ffe1c64c6541ceea08857f3b57b4b0701911986d5022c49c2ca"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  },
+  {
+    "case": "finite_Bc_manifest_change",
+    "group": "manifest_repin",
+    "action": "manifest_model",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+    "precall_input_digests": {
+      "scalar_csv": "628961db30c80c99f9dc3d7a599e3efd6fd23d72bf9e21916496ba0f2a211477",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "3c670f801dc1bf30089aeaffbec0832ec90ac6e211196814361e4047cbcca69a",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "307a152584ac0c664f46053650e9c4d14e26b45908e0dc9de974c8b8414dbd02"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  },
+  {
+    "case": "caller_claims_expected_anchor",
+    "group": "manifest_repin",
+    "action": "manifest_claim",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+    "precall_input_digests": {
+      "scalar_csv": "628961db30c80c99f9dc3d7a599e3efd6fd23d72bf9e21916496ba0f2a211477",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "a7d9675c565214b027a91b7cc31b549750d3cfa0956c95ccf286b54544da3951",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "307a152584ac0c664f46053650e9c4d14e26b45908e0dc9de974c8b8414dbd02"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  },
+  {
+    "case": "same_JSON_different_bytes",
+    "group": "manifest_repin",
+    "action": "manifest_whitespace",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+    "precall_input_digests": {
+      "scalar_csv": "628961db30c80c99f9dc3d7a599e3efd6fd23d72bf9e21916496ba0f2a211477",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "d4a02f0f0efcb9dfae74ee0521a1c2d5b029fe08a3b63da6a36c7ff0438df100",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "307a152584ac0c664f46053650e9c4d14e26b45908e0dc9de974c8b8414dbd02"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  },
+  {
+    "case": "fabricated_cohort_against_repository_S01_pin",
+    "group": "official_pin",
+    "action": "official_pin",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "7d1b86ab39eed397e2d281faf729ee5c3ac515efc00b2789c2e0013dce0d1e78",
+    "precall_input_digests": {
+      "scalar_csv": "628961db30c80c99f9dc3d7a599e3efd6fd23d72bf9e21916496ba0f2a211477",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "307a152584ac0c664f46053650e9c4d14e26b45908e0dc9de974c8b8414dbd02"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  },
+  {
+    "case": "finite_scalar_changed_and_resealed",
+    "group": "scalar_repin",
+    "action": "scalar_repin",
+    "expected_accept": false,
+    "observed_accept": true,
+    "expected_stage": "root",
+    "observed_stage": "accepted",
+    "observed_reason": "",
+    "expected_delegate_calls": 0,
+    "observed_delegate_calls": 1,
+    "expected_external_anchor": "0fbee8729bc0c60036f8855c3c0c570fcd6d4944fa234176185304e7a21db1d5",
+    "precall_input_digests": {
+      "scalar_csv": "59ead4f777e794e5984efdc941b8f3183a63ba39bb66f18cdbd41b660521e0d6",
+      "branch_npz": "47cdcac61946695ec9ae80ffbd6c7bae5af2d0209276438484c012e2a7ef493b",
+      "manifest": "b272ed30e7129284f6ccd9c504b71aec5194a6f1a16a024b5c6c7107a1ebd0e1",
+      "condition_status": "466276637951fe54c8ac2a242d588cb7226599f7ea22da3d5d43337c0b10c769",
+      "baseline_certificate": "307a152584ac0c664f46053650e9c4d14e26b45908e0dc9de974c8b8414dbd02"
+    },
+    "manifest_matches_external_anchor_before_call": false,
+    "all_five_input_files_and_inventory_unchanged": true
+  }
+]

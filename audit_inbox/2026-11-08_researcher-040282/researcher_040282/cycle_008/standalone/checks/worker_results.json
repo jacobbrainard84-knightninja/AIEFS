@@ -1,0 +1,790 @@
+[
+  {
+    "mode": "baseline",
+    "optimized_python": false,
+    "tests_run": 12,
+    "failures": 5,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [
+      "test_alias_duplicate",
+      "test_candidate_duplicate",
+      "test_oracle_duplicate",
+      "test_shared_duplicate",
+      "test_status_in_key"
+    ],
+    "error_methods": [],
+    "census": {
+      "ordered_table_pairs": 1600,
+      "expected_passes": 12,
+      "observed_passes": 256,
+      "mismatches": 244,
+      "false_accepts": 244,
+      "false_rejects": 0
+    },
+    "candidate_only_invalid_key_cases": 0,
+    "fixture_group_counts": {
+      "unique": 1,
+      "order_alias": 4,
+      "candidate_duplicate": 1,
+      "oracle_duplicate": 1,
+      "shared_duplicate": 2,
+      "status_in_key": 1,
+      "coverage": 7,
+      "scalar": 3,
+      "npz": 5,
+      "metadata": 2,
+      "counts": 1,
+      "alias_duplicate": 2
+    },
+    "boundary": {
+      "actual_public_api": true,
+      "simulation_or_runner_entrypoints_called": false
+    },
+    "public_sources_unchanged": 12,
+    "elapsed_seconds": 3.7196537269999226,
+    "observed_returncode": 1
+  },
+  {
+    "mode": "baseline",
+    "optimized_python": true,
+    "tests_run": 12,
+    "failures": 5,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [
+      "test_alias_duplicate",
+      "test_candidate_duplicate",
+      "test_oracle_duplicate",
+      "test_shared_duplicate",
+      "test_status_in_key"
+    ],
+    "error_methods": [],
+    "census": {
+      "ordered_table_pairs": 1600,
+      "expected_passes": 12,
+      "observed_passes": 256,
+      "mismatches": 244,
+      "false_accepts": 244,
+      "false_rejects": 0
+    },
+    "candidate_only_invalid_key_cases": 0,
+    "fixture_group_counts": {
+      "unique": 1,
+      "order_alias": 4,
+      "candidate_duplicate": 1,
+      "oracle_duplicate": 1,
+      "shared_duplicate": 2,
+      "status_in_key": 1,
+      "coverage": 7,
+      "scalar": 3,
+      "npz": 5,
+      "metadata": 2,
+      "counts": 1,
+      "alias_duplicate": 2
+    },
+    "boundary": {
+      "actual_public_api": true,
+      "simulation_or_runner_entrypoints_called": false
+    },
+    "public_sources_unchanged": 12,
+    "elapsed_seconds": 3.3041853539999693,
+    "observed_returncode": 1
+  },
+  {
+    "mode": "candidate",
+    "optimized_python": false,
+    "tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "census": {
+      "ordered_table_pairs": 1600,
+      "expected_passes": 12,
+      "observed_passes": 12,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "candidate_only_invalid_key_cases": 10,
+    "fixture_group_counts": {
+      "unique": 1,
+      "order_alias": 4,
+      "candidate_duplicate": 1,
+      "oracle_duplicate": 1,
+      "shared_duplicate": 2,
+      "status_in_key": 1,
+      "coverage": 7,
+      "scalar": 3,
+      "npz": 5,
+      "metadata": 2,
+      "counts": 1,
+      "alias_duplicate": 2
+    },
+    "boundary": {
+      "actual_public_api": true,
+      "only_changed_function": "_compare_condition_coverage",
+      "other_top_level_nodes_preserved": 17,
+      "simulation_or_runner_entrypoints_called": false,
+      "proposal_installed": false
+    },
+    "public_sources_unchanged": 12,
+    "elapsed_seconds": 3.336992656999996,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "candidate",
+    "optimized_python": true,
+    "tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failure_methods": [],
+    "error_methods": [],
+    "census": {
+      "ordered_table_pairs": 1600,
+      "expected_passes": 12,
+      "observed_passes": 12,
+      "mismatches": 0,
+      "false_accepts": 0,
+      "false_rejects": 0
+    },
+    "candidate_only_invalid_key_cases": 10,
+    "fixture_group_counts": {
+      "unique": 1,
+      "order_alias": 4,
+      "candidate_duplicate": 1,
+      "oracle_duplicate": 1,
+      "shared_duplicate": 2,
+      "status_in_key": 1,
+      "coverage": 7,
+      "scalar": 3,
+      "npz": 5,
+      "metadata": 2,
+      "counts": 1,
+      "alias_duplicate": 2
+    },
+    "boundary": {
+      "actual_public_api": true,
+      "only_changed_function": "_compare_condition_coverage",
+      "other_top_level_nodes_preserved": 17,
+      "simulation_or_runner_entrypoints_called": false,
+      "proposal_installed": false
+    },
+    "public_sources_unchanged": 12,
+    "elapsed_seconds": 3.4851202680000597,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "mutants",
+    "optimized_python": false,
+    "detected": 8,
+    "records": [
+      {
+        "mutant": "legacy_set_collapse",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "count_plus_set_only",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "status_in_identity",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "failed"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "failed"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "require_condition_row_order",
+        "detected": true,
+        "reason": "verdict",
+        "expected": true,
+        "observed": false,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "raw_rho_text_keys",
+        "detected": true,
+        "reason": "verdict",
+        "expected": true,
+        "observed": false,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "5e-1",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "ignore_status",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "failed"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "bypass_existing_npz_gate",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "rewrite_requested_input",
+        "detected": true,
+        "reason": "input_preservation",
+        "expected": "all six files unchanged",
+        "observed": "modified",
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      }
+    ],
+    "setup_errors_credited": 0,
+    "public_sources_unchanged": 12,
+    "elapsed_seconds": 0.05469527399998242,
+    "observed_returncode": 0
+  },
+  {
+    "mode": "mutants",
+    "optimized_python": true,
+    "detected": 8,
+    "records": [
+      {
+        "mutant": "legacy_set_collapse",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "count_plus_set_only",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "status_in_identity",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "failed"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "failed"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "require_condition_row_order",
+        "detected": true,
+        "reason": "verdict",
+        "expected": true,
+        "observed": false,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "raw_rho_text_keys",
+        "detected": true,
+        "reason": "verdict",
+        "expected": true,
+        "observed": false,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "5e-1",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "ignore_status",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "failed"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "bypass_existing_npz_gate",
+        "detected": true,
+        "reason": "verdict",
+        "expected": false,
+        "observed": true,
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      },
+      {
+        "mutant": "rewrite_requested_input",
+        "detected": true,
+        "reason": "input_preservation",
+        "expected": "all six files unchanged",
+        "observed": "modified",
+        "precall_rows": {
+          "candidate_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ],
+            [
+              "s0",
+              "0.5",
+              "success"
+            ]
+          ],
+          "oracle_rows": [
+            [
+              "s0",
+              "0.5",
+              "success"
+            ],
+            [
+              "s1",
+              "1",
+              "success"
+            ]
+          ]
+        }
+      }
+    ],
+    "setup_errors_credited": 0,
+    "public_sources_unchanged": 12,
+    "elapsed_seconds": 0.0748088480000888,
+    "observed_returncode": 0
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "evidence_label": "EXECUTABLE_REGRESSION_CHECK",
+  "decision": "BOUNDED_PUBLIC_API_PROPOSAL_SUPPORTED_BY_OWN_TESTS_NOT_INSTALLED_OR_INDEPENDENTLY_REVIEWED",
+  "known_condition": "B-F7 set collapse of condition-row multiplicity, previously reproduced by R001 on minimal toy inputs",
+  "finding_count": 1,
+  "changed_function": "_compare_condition_coverage",
+  "other_top_level_ast_nodes_preserved": 17,
+  "semantic_condition_key": "exact seed text, existing float(rho) normalization; finite parsed rho required",
+  "status_is": "VALUE_NOT_KEY",
+  "row_count_equality_explicit": true,
+  "unique_keys_required_on_both_sides": true,
+  "original_expected_failures_observed_each_mode": 5,
+  "original_errors_each_mode": 0,
+  "candidate_contract_passes_each_mode": 12,
+  "public_api_census_pairs_each_target_each_mode": 1600,
+  "original_false_accepts_each_mode": 244,
+  "original_false_rejects_each_mode": 0,
+  "candidate_census_mismatches_each_mode": 0,
+  "candidate_only_invalid_finite_key_cases_each_mode": 10,
+  "distinct_mutants_detected_each_mode": 8,
+  "source_policy": "ART-0076 Supported/lock_status none; separate local full-module candidate, source-cache unchanged",
+  "standalone_receipt_required_before_delivery": "cycle_008/standalone_reproduction.json",
+  "current_candidate_harness_independently_reviewed": false,
+  "not_approved": [
+    "production repair installation or successful full-study certification",
+    "real S01 or 201-vs200 production witness, all saved-artifact census or quantified real impact",
+    "all malformed CSV/NPZ, complete schema, positive rho, complete cohort/status allowlist or atomic I/O validation",
+    "self-supplied-manifest trust root, uploader, bridge, engine, interval estimands or authority lock changes",
+    "universal Python/NumPy theorem, new Lean proof, coupled oscillator stability or scientific inference",
+    "independent-seat approval of008 candidate, independent contract, fixtures, census, or mutants",
+    "remote branch push, PR, outside contact, inbox merge, upload or unattended next cycle"
+  ]
+}

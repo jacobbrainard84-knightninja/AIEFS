@@ -1,0 +1,6 @@
+{
+  "cause": "Concurrent same-file edit calls overwrote most intended changes; not a new mathematical issue",
+  "correction": "Single sequential atomic text rewrite with per-edit precondition, inspect actual bytes before next compile",
+  "credited_as_semantic_control": false,
+  "source_engine_execution": false
+}

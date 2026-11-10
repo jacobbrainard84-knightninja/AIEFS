@@ -1,0 +1,82 @@
+[
+  {
+    "case": "invalid_candidate_rho_'NaN'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in candidate row 0",
+      "Condition status coverage differs: missing=[('s0', 0.5, 'success')], extra=[]"
+    ]
+  },
+  {
+    "case": "invalid_oracle_rho_'NaN'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in oracle row 0",
+      "Condition status coverage differs: missing=[], extra=[('s0', 0.5, 'success')]"
+    ]
+  },
+  {
+    "case": "invalid_candidate_rho_'Inf'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in candidate row 0",
+      "Condition status coverage differs: missing=[('s0', 0.5, 'success')], extra=[]"
+    ]
+  },
+  {
+    "case": "invalid_oracle_rho_'Inf'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in oracle row 0",
+      "Condition status coverage differs: missing=[], extra=[('s0', 0.5, 'success')]"
+    ]
+  },
+  {
+    "case": "invalid_candidate_rho_'-Inf'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in candidate row 0",
+      "Condition status coverage differs: missing=[('s0', 0.5, 'success')], extra=[]"
+    ]
+  },
+  {
+    "case": "invalid_oracle_rho_'-Inf'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in oracle row 0",
+      "Condition status coverage differs: missing=[], extra=[('s0', 0.5, 'success')]"
+    ]
+  },
+  {
+    "case": "invalid_candidate_rho_'not-numeric'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in candidate row 0",
+      "Condition status coverage differs: missing=[('s0', 0.5, 'success')], extra=[]"
+    ]
+  },
+  {
+    "case": "invalid_oracle_rho_'not-numeric'",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in oracle row 0",
+      "Condition status coverage differs: missing=[], extra=[('s0', 0.5, 'success')]"
+    ]
+  },
+  {
+    "case": "invalid_candidate_rho_''",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in candidate row 0",
+      "Condition status coverage differs: missing=[('s0', 0.5, 'success')], extra=[]"
+    ]
+  },
+  {
+    "case": "invalid_oracle_rho_''",
+    "status": "failed",
+    "errors": [
+      "Condition status invalid finite rho in oracle row 0",
+      "Condition status coverage differs: missing=[], extra=[('s0', 0.5, 'success')]"
+    ]
+  }
+]

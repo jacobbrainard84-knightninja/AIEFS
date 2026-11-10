@@ -1,0 +1,12 @@
+{
+  "kind": "ADMINISTRATIVE_MISSING_ONLY_RESTORATION_NOT_SCIENTIFIC_REEXECUTION",
+  "reason": "Prior008 archive comparison found this one old006 workflow absent in current workspace; cause not inferred",
+  "path": "cycle_006/source_state/main/.github/workflows/repo-checks.yml",
+  "delivered_archive": "researcher040282-cycle008-oracle-condition-uniqueness.zip",
+  "restored_bytes": 9175,
+  "restored_content_matches_delivered_member": true,
+  "existing_source_or_log_overwritten": false,
+  "scientific009_inputs_code_results_changed": false,
+  "historical_science_rerun": false,
+  "user_deleted_legacy_lua_audit_remains_absent": true
+}

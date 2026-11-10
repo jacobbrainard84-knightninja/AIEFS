@@ -1,0 +1,32 @@
+{
+  "repo": "jacobbrainard84-knightninja/AIEFS",
+  "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "engine": "aief_experiment_engine_v1.py",
+  "modules": [
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "blob": "0d116e83a0d2f6b3f6be0e21d8a730c0aec3b689",
+      "bytes": 119493
+    }
+  ],
+  "metadata": [
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "lean/AIEFProofs/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    }
+  ],
+  "lean_toolchain": {
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "asset_name": "lean-4.33.1-linux.tar.zst",
+    "url": "https://github.com/leanprover/lean4/releases/download/v4.33.1/lean-4.33.1-linux.tar.zst",
+    "bytes": 570405234,
+    "published_digest": "sha256:890afd185370f85666025b883914ab4f4b339136f8c96167b69cfb62aecaf235",
+    "scope": "Disposable core compiler/runtime only, no Mathlib; no raw uploader/contact/signature metadata retained"
+  }
+}

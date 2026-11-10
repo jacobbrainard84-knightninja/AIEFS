@@ -1,0 +1,33 @@
+{
+  "open_pr_count_seen": 0,
+  "branch_count_seen": 15,
+  "matching_open_prs": [],
+  "matching_public_branch_names": [
+    "fix/check-manifest-g1g2",
+    "fix/manifest-nonempty"
+  ],
+  "new_public_inbox_material_since008": [
+    "audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md",
+    "audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py",
+    "audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py"
+  ],
+  "scope_adjustment": "Colleague reports a copied-function full-schema acceptance; static review only by this agent.009 will not claim novelty or rerun their code: actual imported API and new-file external-anchor admission proposal, synthetic positive/negative controls.",
+  "scope": "First100 public PR/branch names plus selected public inbox navigation; not private coordination, no contact/author payload saved",
+  "matching_branch_scope_readonly_files": [
+    {
+      "branch": "fix/check-manifest-g1g2",
+      "files": [],
+      "candidate_analysis_file_touched": false,
+      "scope": "Comparison file list only, not exhaustive code/private coordination review"
+    },
+    {
+      "branch": "fix/manifest-nonempty",
+      "files": [
+        "registry/artifacts_current.csv",
+        "tools/redteam/REDTEAM.md"
+      ],
+      "candidate_analysis_file_touched": false,
+      "scope": "Comparison file list only, not exhaustive code/private coordination review"
+    }
+  ]
+}

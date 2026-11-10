@@ -1,0 +1,168 @@
+{
+  "branch": "main",
+  "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "fetched_and_verified": 32,
+  "files": [
+    {
+      "path": "CURRENT_STATUS.md",
+      "blob": "c51401924a2179ce87eaf107b01515e2d3f4e37f",
+      "bytes": 23963
+    },
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "blob": "d37558fa77a3724e608754069c45224c593372bc",
+      "bytes": 42752
+    },
+    {
+      "path": "README.md",
+      "blob": "78d59085f77e911f314fc054af066c5d4d9592df",
+      "bytes": 8170
+    },
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "blob": "0d116e83a0d2f6b3f6be0e21d8a730c0aec3b689",
+      "bytes": 119493
+    },
+    {
+      "path": "lean/AIEFFreezeCore/AIEFFreezeCore.lean",
+      "blob": "4614036d156946044ff72bc69442657f207ef732",
+      "bytes": 72
+    },
+    {
+      "path": "lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean",
+      "blob": "2703d6461a0a96d16bc2fa529cd42a123963da47",
+      "bytes": 6730
+    },
+    {
+      "path": "lean/AIEFFreezeCore/README.md",
+      "blob": "9c92eb8bcd8166c0c31585867888cf75d3f17bc8",
+      "bytes": 2405
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lake-manifest.json",
+      "blob": "51e230e0f5c1b54739e809ffb40804752b3cc34a",
+      "bytes": 3148
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lakefile.toml",
+      "blob": "3e16bee0d85092f787731a6abd0c85ef630e060f",
+      "bytes": 371
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs.lean",
+      "blob": "dc26fd2efccb09c92347b43d6b768036e6abf847",
+      "bytes": 213
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/Basic.lean",
+      "blob": "ee75690e5e19b5ce22ad477d443552d2c31882d9",
+      "bytes": 353
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/CompleteGraphIncidence.lean",
+      "blob": "321a42751aef2af511068d9312816baa8b616e8e",
+      "bytes": 7658
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean",
+      "blob": "73158febdb6f2979b7226c5738b99a6e981eadd7",
+      "bytes": 4206
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean",
+      "blob": "37c2820fc4dd98297a5b06ce210e36733ebf7756",
+      "bytes": 9364
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiberQuotient.lean",
+      "blob": "516f4980edc6a79584999e96ae34a34b095cdbe8",
+      "bytes": 2774
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/Smoke.lean",
+      "blob": "2f456b84fe3b8a2df720bc48caf5609d02ee04da",
+      "bytes": 748
+    },
+    {
+      "path": "lean/AIEFProofs/README.md",
+      "blob": "f18fdc5875684bf65455588e7998595e54b8ff04",
+      "bytes": 5309
+    },
+    {
+      "path": "lean/AIEFProofs/lake-manifest.json",
+      "blob": "e6c34897cbe880f625aa52983ab1521a61d9bebb",
+      "bytes": 3144
+    },
+    {
+      "path": "lean/AIEFProofs/lakefile.toml",
+      "blob": "2a8cfd2b9ff96891189b80299701c481a7d372a5",
+      "bytes": 359
+    },
+    {
+      "path": "lean/AIEFProofs/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn.lean",
+      "blob": "b74c4eebf6421ed6287255e383a371965875b7ed",
+      "bytes": 192
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphKn.lean",
+      "blob": "3eb42bc26df3de5626da2482c287e588fe2ffce7",
+      "bytes": 13837
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphRightInverse.lean",
+      "blob": "2bfd62c13d1103218e8a26b2868391cabe8c9941",
+      "bytes": 4063
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/IncMatrixRank.lean",
+      "blob": "c48280d84871a08f8c7ebc1b8b04ffd03d929c8f",
+      "bytes": 11170
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/KernelDimFormula.lean",
+      "blob": "f6447ae22f197fc16fb6d7fb53e287360bc1b7c6",
+      "bytes": 2987
+    },
+    {
+      "path": "lean/AIEFProofsKn/README.md",
+      "blob": "d862fe206d91413bffd247f72ab8ae237cf9a775",
+      "bytes": 5831
+    },
+    {
+      "path": "lean/AIEFProofsKn/lake-manifest.json",
+      "blob": "fb97553c6503753e97264d422009be7dedef1af4",
+      "bytes": 3409
+    },
+    {
+      "path": "lean/AIEFProofsKn/lakefile.toml",
+      "blob": "e10fcc1f003eb14c1ddb73f0b0dc704a3865cc81",
+      "bytes": 515
+    },
+    {
+      "path": "lean/AIEFProofsKn/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "registry/claims.csv",
+      "blob": "d8af0b5e4c04dd1c55c88f26cca433f97db58146",
+      "bytes": 83106
+    }
+  ],
+  "scope": "Selected010 current source/feedback navigation; not exhaustive repository review, old science rerun, or remote submission"
+}

@@ -1,0 +1,17 @@
+{
+  "own_cache": "/home/user/.cache/researcher040282-cycle011",
+  "measured_before_removal": true,
+  "regular_files_removed": 62891,
+  "regular_file_logical_bytes_removed": 6022343486,
+  "allocated_bytes_summed_over_regular_file_entries": 6141032960,
+  "allocated_sum_not_unique_physical_freed_space_claim": true,
+  "symlinks_removed": 15,
+  "subdirectories_removed": 3119,
+  "actually_removed_after_successful_full_reproduction": true,
+  "only_cycle011_owned_runtime_archive_decoder_Git_Mathlib_target_removed": true,
+  "compiler_global_setting_changed": false,
+  "all_unrelated_caches_untouched_claimed": false,
+  "old_AIEFS_evidence_deleted": false,
+  "legacy_deleted_Lua_restored": false,
+  "cache_absent_after_removal": true
+}

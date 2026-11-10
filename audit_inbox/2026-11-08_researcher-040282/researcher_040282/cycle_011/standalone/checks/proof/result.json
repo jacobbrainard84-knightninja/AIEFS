@@ -1,0 +1,274 @@
+{
+  "compiler_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "Mathlib_used": true,
+  "dependency": {
+    "accepted": true,
+    "reasons": [],
+    "named_declarations": [
+      "historyTrace_index",
+      "historyTrace_oldest",
+      "historyTrace_newest"
+    ],
+    "requested_axiom_prints": [
+      "Researcher040282.Delay.historyTrace_index",
+      "Researcher040282.Delay.historyTrace_oldest",
+      "Researcher040282.Delay.historyTrace_newest"
+    ],
+    "footprints": {
+      "Researcher040282.Delay.historyTrace_index": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Delay.historyTrace_oldest": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Delay.historyTrace_newest": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "unapproved_axioms": {},
+    "raw_compiler_returncode": 0
+  },
+  "main": {
+    "accepted": true,
+    "reasons": [],
+    "named_declarations": [
+      "phasor_wrap",
+      "delayed_input_step",
+      "delayed_input_chord_bound"
+    ],
+    "requested_axiom_prints": [
+      "Researcher040282.Phase.phasor_wrap",
+      "Researcher040282.Phase.delayed_input_step",
+      "Researcher040282.Phase.delayed_input_chord_bound"
+    ],
+    "footprints": {
+      "Researcher040282.Phase.phasor_wrap": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Phase.delayed_input_step": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Phase.delayed_input_chord_bound": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "unapproved_axioms": {},
+    "raw_compiler_returncode": 0
+  },
+  "new_named_declarations_compiled": 3,
+  "reused_named_history_declarations_recompiled_not_new_labels": 3,
+  "formal_controls": 8,
+  "positive_controls_accepted": 2,
+  "false_math_witnesses_rejected_by_compiler": 3,
+  "compiling_integrity_payloads_rejected_by_policy": 3,
+  "controls": [
+    {
+      "control": "positive_startup_nonzero",
+      "kind": "positive",
+      "expected_mechanism": null,
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": true,
+        "reasons": [],
+        "named_declarations": [
+          "controlStartup"
+        ],
+        "requested_axiom_prints": [
+          "controlStartup"
+        ],
+        "footprints": {
+          "controlStartup": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ]
+        },
+        "unapproved_axioms": {},
+        "raw_compiler_returncode": 0
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "positive_live_nonzero",
+      "kind": "positive",
+      "expected_mechanism": null,
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": true,
+        "reasons": [],
+        "named_declarations": [
+          "controlLive"
+        ],
+        "requested_axiom_prints": [
+          "controlLive"
+        ],
+        "footprints": {
+          "controlLive": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ]
+        },
+        "unapproved_axioms": {},
+        "raw_compiler_returncode": 0
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "false_no_wrap",
+      "kind": "false_math",
+      "expected_mechanism": null,
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": false,
+        "reasons": [
+          "compiler_nonzero",
+          "compiler_error",
+          "axiom_print_coverage"
+        ],
+        "named_declarations": [],
+        "requested_axiom_prints": [],
+        "footprints": {},
+        "unapproved_axioms": {},
+        "raw_compiler_returncode": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "false_startup_delayed_increment",
+      "kind": "false_math",
+      "expected_mechanism": null,
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": false,
+        "reasons": [
+          "compiler_nonzero",
+          "compiler_error",
+          "axiom_print_coverage"
+        ],
+        "named_declarations": [],
+        "requested_axiom_prints": [],
+        "footprints": {},
+        "unapproved_axioms": {},
+        "raw_compiler_returncode": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "false_current_instead_of_aged",
+      "kind": "false_math",
+      "expected_mechanism": null,
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": false,
+        "reasons": [
+          "compiler_nonzero",
+          "compiler_error",
+          "axiom_print_coverage"
+        ],
+        "named_declarations": [],
+        "requested_axiom_prints": [],
+        "footprints": {},
+        "unapproved_axioms": {},
+        "raw_compiler_returncode": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "compiling_sorry",
+      "kind": "integrity",
+      "expected_mechanism": "forbidden_source:sorry",
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": false,
+        "reasons": [
+          "compiler_warning",
+          "forbidden_source:sorry",
+          "unapproved_axiom_footprint"
+        ],
+        "named_declarations": [
+          "controlSorry"
+        ],
+        "requested_axiom_prints": [
+          "controlSorry"
+        ],
+        "footprints": {
+          "controlSorry": [
+            "sorryAx"
+          ]
+        },
+        "unapproved_axioms": {
+          "controlSorry": [
+            "sorryAx"
+          ]
+        },
+        "raw_compiler_returncode": 0
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "compiling_extra_axiom",
+      "kind": "integrity",
+      "expected_mechanism": "unapproved_axiom_footprint",
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": false,
+        "reasons": [
+          "forbidden_source:axiom",
+          "unapproved_axiom_footprint"
+        ],
+        "named_declarations": [
+          "controlExtraAxiom"
+        ],
+        "requested_axiom_prints": [
+          "controlExtraAxiom"
+        ],
+        "footprints": {
+          "controlExtraAxiom": [
+            "injectedFalse"
+          ]
+        },
+        "unapproved_axioms": {
+          "controlExtraAxiom": [
+            "injectedFalse"
+          ]
+        },
+        "raw_compiler_returncode": 0
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "control": "omitted_axiom_print",
+      "kind": "integrity",
+      "expected_mechanism": "axiom_print_coverage",
+      "expected_outcome_observed": true,
+      "policy": {
+        "accepted": false,
+        "reasons": [
+          "axiom_print_coverage"
+        ],
+        "named_declarations": [
+          "controlNoPrint"
+        ],
+        "requested_axiom_prints": [],
+        "footprints": {},
+        "unapproved_axioms": {},
+        "raw_compiler_returncode": 0
+      },
+      "setup_errors_credited": 0
+    }
+  ],
+  "setup_errors_credited": 0,
+  "all_preregistered_formal_conditions_met": true,
+  "scope": "Exact-real floor modulo/complex input identity and signed-increment chord bound, not Python/float FFI, full coupled dynamics or locking; fixed-file policy not general sandbox"
+}

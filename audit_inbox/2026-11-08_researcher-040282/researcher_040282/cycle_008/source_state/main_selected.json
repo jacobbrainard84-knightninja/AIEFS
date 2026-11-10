@@ -1,0 +1,104 @@
+{
+  "branch": "main",
+  "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "fetched_and_verified": 19,
+  "files": [
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "blob": "2693906361d9b8a958dcca3809a1e48f3ba3d37b",
+      "bytes": 429
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/artifacts.py",
+      "blob": "1755fd1c91c78306efe185614a5ec25ccb2812f0",
+      "bytes": 12582
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/authority.py",
+      "blob": "23f50b547e5035cd8638ccf00525e18ffeab188f",
+      "bytes": 9065
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/branches.py",
+      "blob": "28e364284afbf799ee2d474bb5791a6efab3f56c",
+      "bytes": 3477
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/collectors.py",
+      "blob": "06ea96da686224bdbbf0790792e83a58f73b2abe",
+      "bytes": 9992
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/factors.py",
+      "blob": "a9c16999baf18b0ada513bc29b62ccb0da0c7ebf",
+      "bytes": 12545
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/oracle.py",
+      "blob": "d2c59fe2ded5c842fcfd56dd8819f50cc55dc434",
+      "bytes": 5683
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/registry.py",
+      "blob": "2b50e409c851bf02b87ecdd3b1fe56fec2c66169",
+      "bytes": 3180
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/runner.py",
+      "blob": "9e3eb431444f3f32b3b3e616014332939bf0ea59",
+      "bytes": 32813
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "blob": "6ce7361d85e14946a0b854bb9078bcb58f75e9dc",
+      "bytes": 19734
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/studies/__init__.py",
+      "blob": "2b1fcdde0aa007b747e60cf0bdd234ab8e186840",
+      "bytes": 58
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py",
+      "blob": "9afffc1c0e3d1f8e0ad726e33d3b059e9337a1da",
+      "bytes": 11178
+    },
+    {
+      "path": "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests_modular/test_twindow_oracle_equivalence.py",
+      "blob": "befa41e25fae952a830909ba6d1313b88af56945",
+      "bytes": 813
+    },
+    {
+      "path": "CURRENT_STATUS.md",
+      "blob": "c51401924a2179ce87eaf107b01515e2d3f4e37f",
+      "bytes": 23963
+    },
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "blob": "d37558fa77a3724e608754069c45224c593372bc",
+      "bytes": 42752
+    },
+    {
+      "path": "README.md",
+      "blob": "78d59085f77e911f314fc054af066c5d4d9592df",
+      "bytes": 8170
+    },
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "registry/claims.csv",
+      "blob": "d8af0b5e4c04dd1c55c88f26cca433f97db58146",
+      "bytes": 83106
+    },
+    {
+      "path": "test_output/frozen_anchor_validation.csv",
+      "blob": "b0b4faacbe863d1d65d42802083566b7abb8c353",
+      "bytes": 14903
+    }
+  ],
+  "scope": "Selected008 current source/feedback navigation; not exhaustive repository review, old science rerun, or remote submission",
+  "dependency_note": "Initial11 selected main files plus static verified oracle/package import closure; original refresh log retained"
+}

@@ -1,0 +1,49 @@
+{
+  "branch": "audit-inbox",
+  "commit": "4fbd00b6e5f975b49bd74885e8c381af9abaf9f7",
+  "fetched_and_verified": 8,
+  "files": [
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+      "blob": "35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+      "bytes": 18284
+    },
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+      "blob": "41f194cee485a4531e2ff41047b8da7b3527a5da",
+      "bytes": 21778
+    },
+    {
+      "path": "audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md",
+      "blob": "cf5f52ef2bb40f64e3541835232ac32a65eda09c",
+      "bytes": 11976
+    },
+    {
+      "path": "audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt",
+      "blob": "0eee9a48b76ef9a0db2e3968725be456d6ec8ddc",
+      "bytes": 4351
+    },
+    {
+      "path": "audit_inbox/README.md",
+      "blob": "efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+      "bytes": 1982
+    },
+    {
+      "path": "audit_inbox/TRIAGE.md",
+      "blob": "48791b8fbf1cee17c3732989f5d0e1b1b98767fb",
+      "bytes": 30004
+    },
+    {
+      "path": "audit_inbox/briefing/OPEN_QUESTIONS.md",
+      "blob": "6c72ebbd786865bcae7bdc57a70f02470d347c81",
+      "bytes": 9486
+    },
+    {
+      "path": "audit_inbox/briefing/STATE.md",
+      "blob": "d391480d4ac94ec5e912cee9b611ac08a4b66c4a",
+      "bytes": 8717
+    }
+  ],
+  "scope": "Selected011 current source/feedback navigation; not exhaustive repository review, old science rerun, or remote submission",
+  "additional_scope": "New trust-anchor design/evidence read only; contributed regression reproducer not fetched or executed"
+}

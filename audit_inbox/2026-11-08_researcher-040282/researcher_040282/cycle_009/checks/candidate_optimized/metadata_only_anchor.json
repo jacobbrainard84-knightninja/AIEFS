@@ -1,0 +1,5 @@
+{
+  "committed_manifest_metadata_anchor_passed": true,
+  "full_genuine_S01_positive_executed": false,
+  "scope": "Only committed manifest bytes authenticated; no genuine child files opened or validate_run call"
+}

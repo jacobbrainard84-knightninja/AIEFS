@@ -1,0 +1,300 @@
+[
+  {
+    "kind": "common",
+    "optimized_python": false,
+    "tests_run": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_engine_advances": 78,
+    "source_initializations": 1,
+    "reference_compared_transitions": 78,
+    "maximum_component_error": 2.220446049250313e-16,
+    "oldest_pair": {
+      "C_change": 0.44172933482654353,
+      "theta_change": 0.09008349810808441
+    },
+    "interior_pair": {
+      "instantaneous_changes": {
+        "C": 0.0,
+        "R": 0.0,
+        "B": 0.0,
+        "theta": 0.0
+      },
+      "shifted_history_change": 2.8899999999999997
+    },
+    "dyadic_exact_states": 65,
+    "dyadic_exact_stored_coordinates": 260,
+    "invalid_exact_delay_configs_rejected_not_semantic_detections": 2,
+    "absolute_tolerance": 5e-13,
+    "relative_tolerance": 0.0,
+    "immutable_cases_rng_and_history_ownership_verified": true,
+    "source_files_unchanged": 1,
+    "metadata_files_unchanged": 2,
+    "actual_full_engine_import_no_source_function_copy_replacement_or_edit": true,
+    "production_simulation_baseline_CLI_or_certificate_called": false,
+    "observed_returncode": 0,
+    "elapsed_seconds": 0.739461146000167
+  },
+  {
+    "kind": "common",
+    "optimized_python": true,
+    "tests_run": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_engine_advances": 78,
+    "source_initializations": 1,
+    "reference_compared_transitions": 78,
+    "maximum_component_error": 2.220446049250313e-16,
+    "oldest_pair": {
+      "C_change": 0.44172933482654353,
+      "theta_change": 0.09008349810808441
+    },
+    "interior_pair": {
+      "instantaneous_changes": {
+        "C": 0.0,
+        "R": 0.0,
+        "B": 0.0,
+        "theta": 0.0
+      },
+      "shifted_history_change": 2.8899999999999997
+    },
+    "dyadic_exact_states": 65,
+    "dyadic_exact_stored_coordinates": 260,
+    "invalid_exact_delay_configs_rejected_not_semantic_detections": 2,
+    "absolute_tolerance": 5e-13,
+    "relative_tolerance": 0.0,
+    "immutable_cases_rng_and_history_ownership_verified": true,
+    "source_files_unchanged": 1,
+    "metadata_files_unchanged": 2,
+    "actual_full_engine_import_no_source_function_copy_replacement_or_edit": true,
+    "production_simulation_baseline_CLI_or_certificate_called": false,
+    "observed_returncode": 0,
+    "elapsed_seconds": 1.8318284009999388
+  },
+  {
+    "kind": "wrong_models",
+    "optimized_python": false,
+    "detected": 11,
+    "records": [
+      {
+        "model": "newest",
+        "detected": true,
+        "intended_field": "C",
+        "detected_field": "C",
+        "maximum_component_difference": 0.35851321625192645,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "second_oldest",
+        "detected": true,
+        "intended_field": "C",
+        "detected_field": "C",
+        "maximum_component_difference": 0.41826406501469854,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "individual_frequency",
+        "detected": true,
+        "intended_field": "C",
+        "detected_field": "C",
+        "maximum_component_difference": 0.02395607081678272,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "old_C_for_R",
+        "detected": true,
+        "intended_field": "R_physical",
+        "detected_field": "R_physical",
+        "maximum_component_difference": 0.21639115411686247,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "symmetrize_C_first",
+        "detected": true,
+        "intended_field": "R_physical",
+        "detected_field": "R_physical",
+        "maximum_component_difference": 0.436263731802221,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "old_B_for_phase",
+        "detected": true,
+        "intended_field": "theta",
+        "detected_field": "theta",
+        "maximum_component_difference": 0.005545783091789769,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "unprojected_B_for_phase",
+        "detected": true,
+        "intended_field": "theta",
+        "detected_field": "theta",
+        "maximum_component_difference": 0.018809418284226886,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "reversed_sine",
+        "detected": true,
+        "intended_field": "theta",
+        "detected_field": "theta",
+        "maximum_component_difference": 0.07595714435902856,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "append_old_theta",
+        "detected": true,
+        "intended_field": "history",
+        "detected_field": "history",
+        "maximum_component_difference": 0.22547857217951428,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "alias_new_theta",
+        "detected": true,
+        "intended_field": "storage_ownership",
+        "detected_field": "storage_ownership",
+        "maximum_component_difference": null,
+        "minimum_numeric_witness_required": null,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "unconditional_gate",
+        "detected": true,
+        "intended_field": "B",
+        "detected_field": "B",
+        "maximum_component_difference": 0.009803921568627472,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      }
+    ],
+    "actual_engine_advances": 0,
+    "setup_errors_credited": 0,
+    "source_files_unchanged": 1,
+    "metadata_files_unchanged": 2,
+    "observed_returncode": 0,
+    "elapsed_seconds": 0.4205335650001416
+  },
+  {
+    "kind": "wrong_models",
+    "optimized_python": true,
+    "detected": 11,
+    "records": [
+      {
+        "model": "newest",
+        "detected": true,
+        "intended_field": "C",
+        "detected_field": "C",
+        "maximum_component_difference": 0.35851321625192645,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "second_oldest",
+        "detected": true,
+        "intended_field": "C",
+        "detected_field": "C",
+        "maximum_component_difference": 0.41826406501469854,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "individual_frequency",
+        "detected": true,
+        "intended_field": "C",
+        "detected_field": "C",
+        "maximum_component_difference": 0.02395607081678272,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "old_C_for_R",
+        "detected": true,
+        "intended_field": "R_physical",
+        "detected_field": "R_physical",
+        "maximum_component_difference": 0.21639115411686247,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "symmetrize_C_first",
+        "detected": true,
+        "intended_field": "R_physical",
+        "detected_field": "R_physical",
+        "maximum_component_difference": 0.436263731802221,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "old_B_for_phase",
+        "detected": true,
+        "intended_field": "theta",
+        "detected_field": "theta",
+        "maximum_component_difference": 0.005545783091789769,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "unprojected_B_for_phase",
+        "detected": true,
+        "intended_field": "theta",
+        "detected_field": "theta",
+        "maximum_component_difference": 0.018809418284226886,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "reversed_sine",
+        "detected": true,
+        "intended_field": "theta",
+        "detected_field": "theta",
+        "maximum_component_difference": 0.07595714435902856,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "append_old_theta",
+        "detected": true,
+        "intended_field": "history",
+        "detected_field": "history",
+        "maximum_component_difference": 0.22547857217951428,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "alias_new_theta",
+        "detected": true,
+        "intended_field": "storage_ownership",
+        "detected_field": "storage_ownership",
+        "maximum_component_difference": null,
+        "minimum_numeric_witness_required": null,
+        "setup_errors_credited": 0
+      },
+      {
+        "model": "unconditional_gate",
+        "detected": true,
+        "intended_field": "B",
+        "detected_field": "B",
+        "maximum_component_difference": 0.009803921568627472,
+        "minimum_numeric_witness_required": 1e-07,
+        "setup_errors_credited": 0
+      }
+    ],
+    "actual_engine_advances": 0,
+    "setup_errors_credited": 0,
+    "source_files_unchanged": 1,
+    "metadata_files_unchanged": 2,
+    "observed_returncode": 0,
+    "elapsed_seconds": 1.0141720940000596
+  }
+]

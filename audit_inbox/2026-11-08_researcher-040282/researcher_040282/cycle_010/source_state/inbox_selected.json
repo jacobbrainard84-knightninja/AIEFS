@@ -1,0 +1,49 @@
+{
+  "branch": "audit-inbox",
+  "commit": "00a29ce538a40b553a723dd73dbd676129bfcd9a",
+  "fetched_and_verified": 8,
+  "files": [
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+      "blob": "35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+      "bytes": 18284
+    },
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+      "blob": "41f194cee485a4531e2ff41047b8da7b3527a5da",
+      "bytes": 21778
+    },
+    {
+      "path": "audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt",
+      "blob": "bad661941d5dca119e55ae7403924e18863b31be",
+      "bytes": 2777
+    },
+    {
+      "path": "audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md",
+      "blob": "2dbeea9b64c9022e693b6d0b0757cb9fb06954b6",
+      "bytes": 10740
+    },
+    {
+      "path": "audit_inbox/README.md",
+      "blob": "efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+      "bytes": 1982
+    },
+    {
+      "path": "audit_inbox/TRIAGE.md",
+      "blob": "48791b8fbf1cee17c3732989f5d0e1b1b98767fb",
+      "bytes": 30004
+    },
+    {
+      "path": "audit_inbox/briefing/OPEN_QUESTIONS.md",
+      "blob": "6c72ebbd786865bcae7bdc57a70f02470d347c81",
+      "bytes": 9486
+    },
+    {
+      "path": "audit_inbox/briefing/STATE.md",
+      "blob": "d391480d4ac94ec5e912cee9b611ac08a4b66c4a",
+      "bytes": 8717
+    }
+  ],
+  "scope": "Selected010 current source/feedback navigation; not exhaustive repository review, old science rerun, or remote submission",
+  "additional_scope": "Read new provenance review/evidence only; contributed reproducer not fetched/executed; no010 duplicate repair"
+}

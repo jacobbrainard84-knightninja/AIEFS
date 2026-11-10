@@ -1,0 +1,10 @@
+{
+  "only_function_changed": "_compare_condition_coverage",
+  "other_top_level_ast_nodes_preserved": 17,
+  "original_function_lines": [
+    97,
+    111
+  ],
+  "source_cache_or_upstream_modified": false,
+  "proposal_installed": false
+}

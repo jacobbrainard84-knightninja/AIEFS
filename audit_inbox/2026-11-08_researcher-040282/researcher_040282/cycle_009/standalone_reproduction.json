@@ -1,0 +1,88 @@
+{
+  "actually_executed": true,
+  "runner_returncode": 0,
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "critical_file_count": 9,
+  "critical_files": [
+    "anchored_admission.py",
+    "synthetic_cohort.py",
+    "admission_contract.py",
+    "load_reviewed.py",
+    "test_admission.py",
+    "run_checks.py",
+    "source_modules.json",
+    "fetch_public_dependencies.py",
+    "extract_from_report.py"
+  ],
+  "all_extracted_files_byte_identical": true,
+  "fresh_public_dependencies_fetched_and_verified": 14,
+  "fresh_public_python_sources": 12,
+  "fresh_authority_metadata_files": 2,
+  "scientific_summary_matches_original": true,
+  "all_six_worker_nontiming_results_match_original": true,
+  "all_twelve_detailed_records_byte_identical": true,
+  "detailed_matching_files": [
+    "baseline_normal/admission_observations.json",
+    "baseline_optimized/admission_observations.json",
+    "candidate_normal/admission_observations.json",
+    "candidate_optimized/admission_observations.json",
+    "baseline_normal/verdict_mismatches.json",
+    "baseline_optimized/verdict_mismatches.json",
+    "candidate_normal/verdict_mismatches.json",
+    "candidate_optimized/verdict_mismatches.json",
+    "candidate_normal/configuration_results.json",
+    "candidate_optimized/configuration_results.json",
+    "candidate_normal/metadata_only_anchor.json",
+    "candidate_optimized/metadata_only_anchor.json"
+  ],
+  "commands_observed": [
+    {
+      "program": "proposal/extract_from_report.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/fetch_public_dependencies.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/run_checks.py",
+      "returncode": 0
+    }
+  ],
+  "original_failures_each_mode": [
+    4,
+    4
+  ],
+  "original_errors_each_mode": [
+    0,
+    0
+  ],
+  "guard_passes_each_mode": [
+    9,
+    9
+  ],
+  "original_unanchored_acceptances_relative_to_policy_each_mode": [
+    7,
+    7
+  ],
+  "guard_verdict_mismatches_each_mode": [
+    0,
+    0
+  ],
+  "mutants_detected_each_mode": [
+    8,
+    8
+  ],
+  "configuration_rejections_not_semantic_detections_each_mode": [
+    4,
+    4
+  ],
+  "genuine_S01_full_positive_executed": false,
+  "repository_manifest_positive_is_metadata_only": true,
+  "original_elapsed_seconds": 25.864430058999915,
+  "extracted_elapsed_seconds": 23.95053404300006,
+  "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks",
+  "result": "cycle_009/standalone/checks/cycle_results.json",
+  "log": "cycle_009/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note actual-module/new-guard reproduction, not independent guard approval, genuine S01 positive, CLI/bundle/certificate issuance or installed production repair"
+}

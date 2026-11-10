@@ -1,0 +1,5 @@
+{
+  "issue": "Git default quoting obscured Unicode paths in first metadata listing; no relevant acquired content changed",
+  "correction": "NUL-delimited exact-path tree before preregistration, no new-file claim from quoted rendering",
+  "scientific_execution": false
+}

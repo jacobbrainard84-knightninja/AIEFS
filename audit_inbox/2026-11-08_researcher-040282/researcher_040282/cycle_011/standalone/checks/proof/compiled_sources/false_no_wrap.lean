@@ -1,0 +1,7 @@
+import PhaseIncrement
+open Researcher040282.Phase
+noncomputable def controlX0 (_ : Unit) : ℝ := 0
+noncomputable def controlOmega (_ : Unit) : ℝ := 0
+noncomputable def controlU (n : ℕ) (_ : Unit) : ℝ := if n = 0 then Real.pi / 2 else Real.pi
+example : wrapPhase (2 * Real.pi) = 2 * Real.pi := by
+  norm_num [wrapPhase, Real.pi_ne_zero]

@@ -1,0 +1,15 @@
+{
+  "issues": [
+    "Deprecated import alias produced a warning",
+    "Startup algebra needed phasor(0)=1 explicitly after subtraction normalization",
+    "Full simp pushed the real cast away before the unit-norm matcher"
+  ],
+  "fixes": [
+    "Use recommended underlying Real Archimedean module (already in cache closure)",
+    "Supply phasor-zero identity; remove unused simp arguments",
+    "Directly apply norm_exp_ofReal_mul_I without cast-distributing simp"
+  ],
+  "statements_recurrence_tolerance_cases_unchanged": true,
+  "credited_as_planned_controls_or_final_compiled_claims": false,
+  "engine_still_not_executed": true
+}

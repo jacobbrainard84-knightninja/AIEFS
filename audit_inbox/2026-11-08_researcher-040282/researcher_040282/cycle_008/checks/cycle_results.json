@@ -1,0 +1,27 @@
+{
+  "science": {
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "common_contract_methods": 12,
+    "original_expected_failures_each_mode": 5,
+    "original_errors_each_mode": 0,
+    "candidate_passes_each_mode": 12,
+    "public_api_table_pairs_each_target": 1600,
+    "independent_expected_accepts": 12,
+    "original_accepted": 256,
+    "original_false_accepts": 244,
+    "original_false_rejects": 0,
+    "candidate_accepted": 12,
+    "candidate_mismatches": 0,
+    "candidate_only_invalid_key_cases_each_mode": 10,
+    "mutants_detected_each_mode": 8,
+    "all_workers_nontiming_results_equal_under_optimization": true,
+    "reviewed_public_source_files_unchanged": 12,
+    "no_simulation_real_data_or_new_lean": true,
+    "proposal_not_installed_no_remote_changes": true,
+    "all_preregistered_acceptance_conditions_met": true
+  },
+  "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+  "numpy": "2.3.5",
+  "elapsed_seconds": 16.538016760999994,
+  "scope": "Actual compare_twindow_run on synthetic CSV/NPZ/status bundles, original and separate one-function candidate. No mocked reader/NPZ stage, real S01, engine, baseline certificate, full study validity or independent approval."
+}

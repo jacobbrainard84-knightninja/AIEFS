@@ -1,0 +1,7 @@
+{
+  "raw_compiler_returncode": 0,
+  "eligible_final_main": false,
+  "reason": "Four unused/unreachable tactic warnings; field_simp already closed both branch goals",
+  "fix": "Remove two unreachable ring calls, do not suppress warning linters",
+  "all_three_footprints_standard_but_not_promoted_before_clean_full_runner": true
+}

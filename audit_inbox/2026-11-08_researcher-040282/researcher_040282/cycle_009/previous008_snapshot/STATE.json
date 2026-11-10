@@ -1,0 +1,316 @@
+{
+  "agent": "Researcher 040282",
+  "owner_instruction": "Self-direct bounded, red-teamed AIEFS research; create dated audit-inbox handoffs for owner upload. Continue does not authorize remote submission or unattended work.",
+  "workflow": "WORKFLOW.md",
+  "queue": "RESEARCH_QUEUE.md",
+  "claim_ledger": "CLAIM_LEDGER.csv",
+  "last_updated_date": "2026-09-04",
+  "timezone": "Atlantic/Reykjavik",
+  "date_provenance": {
+    "session_supplied_preparation_date": "2026-09-04",
+    "prior_owner_correspondence_handoff_label": "2026-11-08",
+    "historical004_execution_date_reconstructed": false,
+    "historical006_notice": "cycle_006/ADMINISTRATIVE_PROVENANCE.md",
+    "note": "Session preparation labels and prior owner/repository labels are separate; no chronology inferred from runtime clocks/compiler builds. Earlier scientific protocols/seeds/reports preserved."
+  },
+  "current_cycle": 8,
+  "current_status": "COMPLETED_LOCAL_ORACLE_UNIQUENESS_PROPOSAL_UNREVIEWED",
+  "current_directory": "cycle_008",
+  "ledger_rows": 113,
+  "current_question": "One actual-current-public-API repair proposal for known B-F7 row multiplicity/semantic-key uniqueness, preserving scalar/NPZ comparison and separate authority boundaries.",
+  "current_answer": "Original5 intended failing common methods/0 errors; separate one-function candidate12 pass, normal/-O.1600 ordered toy table pairs give244 original false accepts/0 false rejects versus0 candidate mismatches.10 candidate-only invalid-rho cases explicitly fail and8 mutants detected each mode. Full runner reproduced from8 inline files/12 fresh sources with matching6 worker and14 detailed records. No production installation, real S01 or independent approval.",
+  "latest_completed_report": "2026-09-04_researcher040282_008_oracle-condition-uniqueness.md",
+  "short004_addendum": "2026-11-08_researcher040282_004_addendum.md",
+  "optional_supporting_bundle": "researcher040282-cycle008-oracle-condition-uniqueness.zip",
+  "artifact_validation_record": "cycle_008/packet_validation.json",
+  "source_refresh": {
+    "branch_for_current_code": "main",
+    "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "selected_files_verified": 19,
+    "public_source_closure_files_verified": 12,
+    "metadata": "cycle_008/source_state/main_selected.json",
+    "source_execution_scope": "Actual aief_modular package/original oracle and separate full candidate; public compare_twindow_run only. Package imports runner definitions but no runner/simulation entry point called; all12 reviewed closure files verified, not all their functions tested.",
+    "inbox_navigation_commit": "fef8b0262c31cbdd23f9668a55fffb43b2dc1002",
+    "inbox_selected_files": 6,
+    "inbox_metadata": "cycle_008/source_state/inbox_selected.json",
+    "targeted_intake_R001_notes_unchanged": true,
+    "general_TRIAGE_changed": true,
+    "new005_006_007_008_named_followup_found_in_selected_navigation": false,
+    "nonduplication_check": "cycle_008/nonduplication_check.json",
+    "scope": "Selected read-only public intake/source/branch review, not exhaustive repository/private coordination or feedback acceptance."
+  },
+  "tool_environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "packages": {
+      "numpy": "2.3.5"
+    },
+    "package_or_compiler_installation_this_cycle": false,
+    "fresh_lean_run_this_cycle": false,
+    "lean_cache_restored_this_cycle": false,
+    "historical_lean_toolchain_record": "cycle_005/completed_004_snapshot/STATE_before_feedback.json"
+  },
+  "adversarial_evidence": {
+    "common_contract_methods": 12,
+    "public_api_fixtures_each_suite": 30,
+    "original_expected_failures_each_mode": 5,
+    "original_errors_each_mode": 0,
+    "candidate_passes_each_mode": 12,
+    "candidate_only_invalid_key_cases_each_mode": 10,
+    "mutants_detected_normal": 8,
+    "mutants_detected_optimized": 8,
+    "setup_errors_credited_as_detections": 0,
+    "normal_and_optimized_nontiming_results_match": true,
+    "results": "cycle_008/checks/cycle_results.json",
+    "worker_results": "cycle_008/checks/worker_results.json",
+    "original_runner_elapsed_seconds": 16.538016760999994
+  },
+  "source_comparison": {
+    "evidence_label": "EXECUTABLE_REGRESSION_CHECK",
+    "scope": "Full public comparator on six-file synthetic bundles, scalar/NPZ gates unchanged and active; no full study/simulation/real data.",
+    "table_sequences_per_side": 40,
+    "ordered_table_pairs_each_target_each_mode": 1600,
+    "independent_expected_accepts": 12,
+    "original_accepted": 256,
+    "original_false_accepts": 244,
+    "original_false_rejects": 0,
+    "candidate_accepted": 12,
+    "candidate_mismatches": 0,
+    "semantic_key": "exact seed text, finite float(rho); status is value",
+    "key_uniqueness_both_sides": true,
+    "row_count_equality_explicit": true,
+    "numeric_tolerance": 0,
+    "randomness": "NONE;deterministic fixtures",
+    "public_source_closure_files_verified_unchanged": 12,
+    "test_only_changed_ast_function_nodes": 1,
+    "other_top_level_ast_nodes_preserved": 17
+  },
+  "standalone_reproduction": {
+    "actually_executed": true,
+    "runner_returncode": 0,
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "critical_file_count": 8,
+    "critical_files": [
+      "oracle_candidate.py",
+      "status_contract.py",
+      "load_reviewed.py",
+      "test_status_contract.py",
+      "run_checks.py",
+      "source_modules.json",
+      "fetch_public_dependencies.py",
+      "extract_from_report.py"
+    ],
+    "all_extracted_files_byte_identical": true,
+    "fresh_public_source_files_fetched_and_verified": 12,
+    "scientific_summary_matches_original": true,
+    "all_six_worker_nontiming_results_match_original": true,
+    "all_fourteen_detailed_census_and_invalid_key_files_byte_identical": true,
+    "detailed_matching_files": [
+      "baseline_normal/table_census.json",
+      "baseline_optimized/table_census.json",
+      "candidate_normal/table_census.json",
+      "candidate_optimized/table_census.json",
+      "baseline_normal/census_mismatches.json",
+      "baseline_optimized/census_mismatches.json",
+      "candidate_normal/census_mismatches.json",
+      "candidate_optimized/census_mismatches.json",
+      "baseline_normal/sequence_definitions.json",
+      "baseline_optimized/sequence_definitions.json",
+      "candidate_normal/sequence_definitions.json",
+      "candidate_optimized/sequence_definitions.json",
+      "candidate_normal/invalid_key_results.json",
+      "candidate_optimized/invalid_key_results.json"
+    ],
+    "commands_observed": [
+      {
+        "program": "proposal/extract_from_report.py",
+        "returncode": 0
+      },
+      {
+        "program": "standalone/extracted/fetch_public_dependencies.py",
+        "returncode": 0
+      },
+      {
+        "program": "standalone/extracted/run_checks.py",
+        "returncode": 0
+      }
+    ],
+    "original_failures_each_mode": [
+      5,
+      5
+    ],
+    "original_errors_each_mode": [
+      0,
+      0
+    ],
+    "candidate_passes_each_mode": [
+      12,
+      12
+    ],
+    "original_census_false_accepts_each_mode": [
+      244,
+      244
+    ],
+    "candidate_census_mismatches_each_mode": [
+      0,
+      0
+    ],
+    "candidate_only_invalid_key_cases_each_mode": [
+      10,
+      10
+    ],
+    "mutants_detected_each_mode": [
+      8,
+      8
+    ],
+    "original_elapsed_seconds": 16.538016760999994,
+    "extracted_elapsed_seconds": 15.685279412,
+    "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks",
+    "result": "cycle_008/standalone/checks/cycle_results.json",
+    "log": "cycle_008/standalone/reproduction.log",
+    "scope": "Submitter-local exact-note actual-public-API reproduction, not independent-seat approval, installed repair, real S01/201-vs200 or authority/whole-study certificate",
+    "record": "cycle_008/standalone_reproduction.json",
+    "report": "2026-09-04_researcher040282_008_oracle-condition-uniqueness.md"
+  },
+  "review_scope": {
+    "review_acquired_from_inbox": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+    "intake_note": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "researcher001_triage": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+    "evidence_kind": "Publicly acquired colleague reports of their own execution; not our reexecution of their witnesses",
+    "reviewer_main_basis": "942f8526daee5ac547f2e422101fa95c61eeef41",
+    "independent_compilation_reported": {
+      "002": 22,
+      "003": 44,
+      "004_EMA": 22,
+      "004_drive": 6
+    },
+    "compiled_total": 94,
+    "reported_warnings": 0,
+    "reported_errors": 0,
+    "reported_footprint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope_exclusions": [
+      "library-grade statement-fidelity approval",
+      "integration decision",
+      "our check_cycle.py controls",
+      "our ZIP checkers",
+      "full S01 reanalysis",
+      "our4800 saved held-event comparisons",
+      "real-array finiteness census",
+      "new005 repair-candidate review"
+    ],
+    "additional_review_confirmation": "Coarse baseline ON bound fails to reach threshold; not evidence of OFF",
+    "uploader_disposition": "Owner reports PR10 uploader and PR11 checksum checker merged; supplied main head matches acquired head. No new uploader work; no behavioral certification of those merges here.",
+    "current_python_CI": ".github/workflows/repo-checks.yml exists on the tested source; withdraw the stale no-Python-CI generalization as a current-main claim",
+    "contact_or_remote_write_by_this_agent": false,
+    "reviewer_private_log_paths": "Mentioned by reviewer; not fetched or represented as included local evidence",
+    "prior005_main_tested": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+    "this_is_prior_002_003_004_compilation_review_only": true,
+    "current006_harness_or_inference_independently_reviewed": false,
+    "current006_review_basis": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "historical_intake_receipt": "Actual audit-inbox intake and triage found; uploaded root ledger independently counted78 rows, versus108 at completed004",
+    "historical_intake_inventory_not_a_new_inbox_census": true,
+    "latest_selected_navigation_commit": "fef8b0262c31cbdd23f9668a55fffb43b2dc1002",
+    "prior_R001_BF6_mechanism_reproduction_reported": true,
+    "historical007_helper_and_harness_independently_reviewed": false,
+    "prior_R001_BF7_minimal_mechanism_reproduction_reported": true,
+    "current008_candidate_contract_harness_independently_reviewed": false,
+    "general_TRIAGE_changed_with_other_agent_static_reviews": true
+  },
+  "independent_review_received": true,
+  "current_cycle_independent_review_received": false,
+  "owner_upload_confirmed": true,
+  "latest_packet_owner_upload_confirmed": false,
+  "publication_status": "Prior receipt/94-declaration compilation footprint and minimal B-F7 mechanism reports only.008 candidate/contract locally prepared and self-reproduced; no new independent review, installation, upload or authority certificate.",
+  "privacy": {
+    "report": "cycle_008/privacy_results.json",
+    "new_metadata_minimal_at_acquisition": true,
+    "branch_metadata_records_expected": 14,
+    "no_personal_commit_contacts_or_signed_payloads_in_branch_metadata": true,
+    "historical_two_synthetic_public_fixture_addresses_distinguished": true,
+    "not_exhaustive_secret_detection_or_security_certification": true
+  },
+  "evidence_navigation": {
+    "index": "EVIDENCE_INDEX.json",
+    "historical_log_map": "HISTORICAL_ARCHIVE_LOG_MAP.csv",
+    "all_ledger_references_unpacked": true,
+    "old_archives_not_nested_or_changed": true,
+    "historical_missing_only_restoration": "cycle_008/historical_restoration.json"
+  },
+  "previous_cycle": 7,
+  "previous_cycle_evidence": {
+    "completed007_state": "cycle_008/previous007_snapshot/STATE.json",
+    "completed007_ledger112": "cycle_008/previous007_snapshot/CLAIM_LEDGER.csv",
+    "science_not_rerun_this_cycle": true,
+    "completed006_state": "cycle_007/previous006_snapshot/STATE.json",
+    "completed006_ledger111": "cycle_007/previous006_snapshot/CLAIM_LEDGER.csv",
+    "completed005_ledger109": "cycle_006/previous005_snapshot/CLAIM_LEDGER.csv",
+    "completed004_ledger108": "cycle_005/completed_004_snapshot/CLAIM_LEDGER_COMPLETED_004.csv"
+  },
+  "completed_this_cycle": [
+    "fresh source/targeted feedback and limited public nonduplication/authority check",
+    "preregistered finite semantic-key/count/status contract and fixed falsifiers",
+    "one-function separate full oracle candidate;17 other AST nodes unchanged",
+    "actual full public API red/green normal/-O with unchanged scalar/NPZ stages",
+    "1600-pair census original244false accepts versus0 candidate mismatches",
+    "10 candidate-only invalid keys and8 intended mutants each mode",
+    "8 inline files/12 fresh public sources;full runner actually reproduced;6 workers/14 detailed files match",
+    "prior112 ledger rows/94 formal labels preserved;one bounded008 proposal record",
+    "packet closure requires actual separate receipt before delivery"
+  ],
+  "not_proved_or_promoted": [
+    "Universal float64 or machine-checked Python execution equivalence",
+    "Fresh saved bridge replay, full S01 reanalysis,4800-case check or finiteness census",
+    "Independent controls or approval of the new005 repair",
+    "Library-grade statement fidelity/main integration of94 prior Lean declarations",
+    "Complete delay-buffer/phase-step semantics, sharp derived future drive bands",
+    "Gated-OFF/finite aggregation, explicit freeze times, selected-controller rate law",
+    "Coupled locking or unconditional convergence",
+    "project freeze or artifact/claim registry promotion",
+    "real S01 output changes or zero-impact claims",
+    "population-valid boundary confidence intervals",
+    "full validate_run/run_analysis/provenance/atomic bundle audit",
+    "all floating schedules or translation invariance at tolerance boundaries",
+    "metric-channel swaps or distinct target-channel behavior: synthetic masks/targets are deliberately shared",
+    "physical trajectory feasibility, step-level crossings, full dynamics or Lean theorem",
+    "any edit of frozen source, lock/registry update or production installation",
+    "full run_baseline_equivalence, simulations or frozen-run certificate",
+    "actual saved-array finiteness, data corruption or production false-certificate claim",
+    "all NumPy/platform/dtype correctness or arbitrary-code security",
+    "existing max-difference diagnostic masks",
+    "new007 independent-seat approval or any coupled-dynamics/Lean result",
+    "production repair installation or successful full-study certification",
+    "real S01 or 201-vs200 production witness, all saved-artifact census or quantified real impact",
+    "all malformed CSV/NPZ, complete schema, positive rho, complete cohort/status allowlist or atomic I/O validation",
+    "self-supplied-manifest trust root, uploader, bridge, engine, interval estimands or authority lock changes",
+    "universal Python/NumPy theorem, new Lean proof, coupled oscillator stability or scientific inference",
+    "independent-seat approval of008 candidate, independent contract, fixtures, census, or mutants",
+    "remote branch push, PR, outside contact, inbox merge, upload or unattended next cycle"
+  ],
+  "in_progress": null,
+  "research_processes_running": [],
+  "next_cycle": 9,
+  "next_directory": "cycle_009",
+  "next_selected_work": "Fresh-check the candidate assessment-tool self-supplied-manifest trust boundary and isolate one executed negative control if still unaddressed. Structural concern only so far, no false-accept witness yet; avoid rate-law sweep/docs duplication.",
+  "immediate_next_action": "On next Continue, fresh-check main/feedback and supplied versus independently pinned manifest/certificate inputs before preregistering009. No real run, frozen-authority edit, campaign, contact or unattended continuation.",
+  "remote_changes_by_this_agent": false,
+  "contacted_other_bots": false,
+  "automatic_work_between_turns": false,
+  "handoff_status": "LOCAL_PACKET_CLOSURE_VERIFIED;NOT_UPLOADED",
+  "authority_boundary": {
+    "proposed_oracle_artifact": "ART-0076",
+    "current_oracle_status": "Supported",
+    "current_oracle_lock_status": "none",
+    "frozen_engine_artifact": "ART-0702",
+    "frozen_source_edited": false,
+    "lock_or_registry_changed": false,
+    "new_helper_installed": false,
+    "source_cache_edited": false,
+    "authority_validation_run": false,
+    "full_equivalence_pipeline_run": false,
+    "candidate_file_identity": "SEPARATE_LOCAL_FULL_ORACLE_PROPOSAL_NOT_AUTHORITY_OR_INSTALLATION",
+    "integration_decision": "OWNER_SEAT_PENDING;ISOLATED_ONE_HELPER_REVIEW_BRANCH_ONLY"
+  }
+}

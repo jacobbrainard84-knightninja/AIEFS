@@ -1,0 +1,67 @@
+{
+  "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "verified_modules": 12,
+  "main_selected_total": 19,
+  "import_graph": {
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/oracle.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/registry.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/runner.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/runner.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/artifacts.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/authority.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/branches.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/collectors.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/factors.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/registry.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/registry.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/studies/__init__.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/studies/__init__.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/factors.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/collectors.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/factors.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/branches.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/authority.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/artifacts.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ],
+    "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/artifacts.py": [
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/__init__.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/spec.py",
+      "AIEF_Experiments/aief_modular_platform_v1_analysis_v4/aief_modular/validation.py"
+    ]
+  },
+  "code_executed_by_acquisition_helper": false
+}

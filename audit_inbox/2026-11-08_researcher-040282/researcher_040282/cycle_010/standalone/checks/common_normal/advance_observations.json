@@ -1,0 +1,2298 @@
+[
+  {
+    "label": "one_step/inactive_D1",
+    "case": "inactive_D1",
+    "N": 3,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 2.7755575615628914e-17,
+      "R_driver": 2.7755575615628914e-17,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 2.7755575615628914e-17,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.4041391349938893,
+      1.4186776812987445,
+      4.352839341505965
+    ],
+    "g_min_pre": 0.1678136633694446,
+    "g_min": 0.1678136633694446,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/active_D2",
+    "case": "active_D2",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/active_D3",
+    "case": "active_D3",
+    "N": 3,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4105305960280428,
+      1.4128158378483457,
+      4.355820100609233
+    ],
+    "g_min_pre": -0.33558979083295637,
+    "g_min": 0.10000000000101072,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/zero_C_new_drive_D2",
+    "case": "zero_C_new_drive_D2",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.40353383725854497,
+      1.4174317932252485,
+      4.351936807681926
+    ],
+    "g_min_pre": 0.1936375734129442,
+    "g_min": 0.1936375734129442,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/phase_wrap_D1",
+    "case": "phase_wrap_D1",
+    "N": 3,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 5.551115123125783e-17,
+      "R_driver": 5.551115123125783e-17,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 5.551115123125783e-17,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.07764709118065216,
+      0.16356392254644053,
+      0.19322079144840476
+    ],
+    "g_min_pre": 0.1739973340965404,
+    "g_min": 0.1739973340965404,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/exact_capacity_N2",
+    "case": "exact_capacity_N2",
+    "N": 2,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.4024640961627627,
+      1.3326636836438692
+    ],
+    "g_min_pre": 0.5,
+    "g_min": 0.5,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/negative_proposal_clipped",
+    "case": "negative_proposal_clipped",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.3725,
+      1.395,
+      4.3175
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/directed_C_N4_D4",
+    "case": "directed_C_N4_D4",
+    "N": 4,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 5.551115123125783e-17,
+      "R_driver": 5.551115123125783e-17,
+      "B": 2.7755575615628914e-17,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 5.551115123125783e-17,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.3807843946981819,
+      1.3867087506243583,
+      4.354153716748924,
+      2.828574383269851
+    ],
+    "g_min_pre": -0.4503795906193895,
+    "g_min": 0.10000000000093079,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "one_step/dyadic_D1",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "oldest/base",
+    "case": "oldest_pair_base",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "oldest/changed",
+    "case": "oldest_pair_changed",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 5.551115123125783e-17,
+      "R_driver": 5.551115123125783e-17,
+      "B": 5.551115123125783e-17,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 2.220446049250313e-16
+    },
+    "maximum_component_error": 2.220446049250313e-16,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.3196716306238412,
+      1.336117277645795,
+      4.36591210054341
+    ],
+    "g_min_pre": -0.24262520243251395,
+    "g_min": 0.10000000000108633,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "interior/base",
+    "case": "interior_pair_base",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "interior/changed",
+    "case": "interior_pair_changed",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step1",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step2",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step3",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step4",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step5",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.875
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step6",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.0
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step7",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.125
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step8",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.25
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step9",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step10",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step11",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D1/step12",
+    "case": "dyadic_D1",
+    "N": 1,
+    "D": 1,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step1",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step2",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step3",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step4",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step5",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.875
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step6",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.0
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step7",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.125
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step8",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.25
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step9",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step10",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step11",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D2/step12",
+    "case": "dyadic_D2",
+    "N": 1,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step1",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step2",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step3",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step4",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step5",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.875
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step6",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.0
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step7",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.125
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step8",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.25
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step9",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step10",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step11",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D3/step12",
+    "case": "dyadic_D3",
+    "N": 1,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step1",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step2",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step3",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step4",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step5",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.875
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step6",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.0
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step7",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.125
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step8",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.25
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step9",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step10",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step11",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D4/step12",
+    "case": "dyadic_D4",
+    "N": 1,
+    "D": 4,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step1",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step2",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step3",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step4",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step5",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.875
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step6",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.0
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step7",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.125
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step8",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.25
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step9",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.375
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step10",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.5
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step11",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.625
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "dyadic/D5/step12",
+    "case": "dyadic_D5",
+    "N": 1,
+    "D": 5,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      1.75
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "phase/new_gated_B",
+    "case": "new_gated_B",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "C/updated_then_magnitude",
+    "case": "updated_directed_C",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "clipping/negative_raw",
+    "case": "negative_proposal_clipped",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": false,
+      "projection_active": false
+    },
+    "theta": [
+      0.3725,
+      1.395,
+      4.3175
+    ],
+    "g_min_pre": 1.0,
+    "g_min": 1.0,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "ownership/current_mutation",
+    "case": "copy_probe",
+    "N": 3,
+    "D": 2,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4097551287319256,
+      1.4139502387955527,
+      4.355478572179514
+    ],
+    "g_min_pre": -0.34573756948342016,
+    "g_min": 0.10000000000100329,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  },
+  {
+    "label": "ownership/history_mutation",
+    "case": "copy_probe_D3",
+    "N": 3,
+    "D": 3,
+    "component_errors": {
+      "C": 0.0,
+      "R_physical": 0.0,
+      "R_driver": 0.0,
+      "B": 0.0,
+      "theta": 0.0,
+      "history": 0.0,
+      "g_min_pre": 0.0,
+      "g_min": 0.0
+    },
+    "maximum_component_error": 0.0,
+    "flags": {
+      "pre_violation": true,
+      "projection_active": true
+    },
+    "theta": [
+      0.4105305960280428,
+      1.4128158378483457,
+      4.355820100609233
+    ],
+    "g_min_pre": -0.33558979083295637,
+    "g_min": 0.10000000000101072,
+    "input_case_unchanged": true,
+    "rng_unchanged": true,
+    "independent_history_storage": true
+  }
+]

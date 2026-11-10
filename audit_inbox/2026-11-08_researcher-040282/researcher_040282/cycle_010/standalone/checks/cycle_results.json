@@ -1,0 +1,58 @@
+{
+  "science": {
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "source_contract_methods_each_mode": 9,
+    "source_passes_each_mode": 9,
+    "source_failures_errors_skips_each_mode": [
+      0,
+      0,
+      0
+    ],
+    "actual_advances_each_common_mode": 78,
+    "initializer_calls_each_common_mode": 1,
+    "nine_one_step_cases_each_mode": 9,
+    "dyadic_transitions_each_mode": 60,
+    "dyadic_exact_states_each_mode": 65,
+    "dyadic_exact_stored_coordinates_each_mode": 260,
+    "maximum_observed_component_error": 2.220446049250313e-16,
+    "absolute_tolerance": 5e-13,
+    "relative_tolerance": 0.0,
+    "wrong_models_detected_each_mode": 11,
+    "invalid_exact_delay_configs_rejected_each_mode_not_semantic_detections": 2,
+    "setup_errors_credited_as_detections": 0,
+    "normal_optimized_nontiming_results_match": true,
+    "new_named_Lean_declarations_actually_compiled": 3,
+    "formal_controls": 8,
+    "formal_positive_controls": 2,
+    "formal_false_math_controls": 3,
+    "formal_compiling_integrity_controls": 3,
+    "axiom_footprints": {
+      "Researcher040282.Delay.historyTrace_index": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Delay.historyTrace_oldest": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Delay.historyTrace_newest": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "core_Std_only_no_Mathlib": true,
+    "reviewed_public_engine_unchanged": 1,
+    "reviewed_metadata_unchanged": 2,
+    "actual_engine_import_no_copied_replaced_or_edited_source_functions": true,
+    "no_source_repair_or_failing_before_claim": true,
+    "all_preregistered_acceptance_conditions_met": true
+  },
+  "environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "compiler": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "elapsed_seconds": 8.73614141600001,
+  "formal_elapsed_seconds": 6.023609656999952,
+  "scope": "Generic reachable value-buffer theorem + finite non-shuffled scalar-reference primitive agreement. NOT a Lean proof of Python, floating trigonometry, whole coupled map, full baseline-equivalence, production study, stability/locking, certificate, installation or independent approval."
+}

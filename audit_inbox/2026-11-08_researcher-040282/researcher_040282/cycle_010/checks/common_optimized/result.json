@@ -1,0 +1,35 @@
+{
+  "kind": "common",
+  "optimized_python": true,
+  "tests_run": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "actual_engine_advances": 78,
+  "source_initializations": 1,
+  "reference_compared_transitions": 78,
+  "maximum_component_error": 2.220446049250313e-16,
+  "oldest_pair": {
+    "C_change": 0.44172933482654353,
+    "theta_change": 0.09008349810808441
+  },
+  "interior_pair": {
+    "instantaneous_changes": {
+      "C": 0.0,
+      "R": 0.0,
+      "B": 0.0,
+      "theta": 0.0
+    },
+    "shifted_history_change": 2.8899999999999997
+  },
+  "dyadic_exact_states": 65,
+  "dyadic_exact_stored_coordinates": 260,
+  "invalid_exact_delay_configs_rejected_not_semantic_detections": 2,
+  "absolute_tolerance": 5e-13,
+  "relative_tolerance": 0.0,
+  "immutable_cases_rng_and_history_ownership_verified": true,
+  "source_files_unchanged": 1,
+  "metadata_files_unchanged": 2,
+  "actual_full_engine_import_no_source_function_copy_replacement_or_edit": true,
+  "production_simulation_baseline_CLI_or_certificate_called": false
+}

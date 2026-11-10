@@ -1,0 +1,109 @@
+{
+  "actually_executed": true,
+  "runner_returncode": 0,
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "critical_file_count": 10,
+  "critical_files": [
+    "HistoryBuffer.lean",
+    "step_contract.py",
+    "check_engine.py",
+    "load_reviewed.py",
+    "check_lean.py",
+    "prepare_lean.py",
+    "run_checks.py",
+    "source_modules.json",
+    "fetch_public_dependencies.py",
+    "extract_from_report.py"
+  ],
+  "all_extracted_files_byte_identical": true,
+  "fresh_public_dependencies_fetched_and_verified": 3,
+  "fresh_public_python_sources": 1,
+  "fresh_scope_compiler_metadata_files": 2,
+  "same_original_verified_compiler_reused": true,
+  "fresh_clean_compiler_installation_claimed": false,
+  "scientific_summary_matches_original": true,
+  "all_four_worker_nontiming_results_match_original": true,
+  "all_twentyfive_detailed_records_byte_identical": true,
+  "detailed_matching_files": [
+    "common_normal/advance_observations.json",
+    "common_normal/domain_checks.json",
+    "common_optimized/advance_observations.json",
+    "common_optimized/domain_checks.json",
+    "proof/compiled_sources/HistoryBuffer.lean",
+    "proof/compiled_sources/compiling_extra_axiom.lean",
+    "proof/compiled_sources/compiling_sorry.lean",
+    "proof/compiled_sources/false_append_old.lean",
+    "proof/compiled_sources/false_extra_delay.lean",
+    "proof/compiled_sources/false_youngest_read.lean",
+    "proof/compiled_sources/omitted_axiom_print.lean",
+    "proof/compiled_sources/positive_abstract_D0.lean",
+    "proof/compiled_sources/positive_nonzero.lean",
+    "proof/compiler_logs/HistoryBuffer.log",
+    "proof/compiler_logs/compiling_extra_axiom.log",
+    "proof/compiler_logs/compiling_sorry.log",
+    "proof/compiler_logs/false_append_old.log",
+    "proof/compiler_logs/false_extra_delay.log",
+    "proof/compiler_logs/false_youngest_read.log",
+    "proof/compiler_logs/omitted_axiom_print.log",
+    "proof/compiler_logs/positive_abstract_D0.log",
+    "proof/compiler_logs/positive_nonzero.log",
+    "proof/result.json",
+    "wrong_models_normal/wrong_models.json",
+    "wrong_models_optimized/wrong_models.json"
+  ],
+  "commands_observed": [
+    {
+      "program": "proposal/extract_from_report.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/fetch_public_dependencies.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/run_checks.py",
+      "returncode": 0
+    }
+  ],
+  "source_passes_each_mode": [
+    9,
+    9
+  ],
+  "source_failures_errors_skips_each_mode": [
+    0,
+    0,
+    0
+  ],
+  "actual_advances_each_common_mode": [
+    78,
+    78
+  ],
+  "source_initializations_each_common_mode": [
+    1,
+    1
+  ],
+  "dyadic_exact_states_each_mode": [
+    65,
+    65
+  ],
+  "dyadic_exact_stored_coordinates_each_mode": [
+    260,
+    260
+  ],
+  "wrong_models_detected_each_mode": [
+    11,
+    11
+  ],
+  "invalid_delay_config_rejections_separate_each_mode": [
+    2,
+    2
+  ],
+  "named_Lean_declarations_compiled": 3,
+  "formal_controls_repeated": 8,
+  "original_elapsed_seconds": 10.67612152400011,
+  "extracted_elapsed_seconds": 8.73614141600001,
+  "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks --lean <same verified compiler>",
+  "result": "cycle_010/standalone/checks/cycle_results.json",
+  "log": "cycle_010/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note repetition, not independent review or formal Python/float/coupled-map equivalence; no real study, authority/baseline certificate, frozen edit or installation"
+}

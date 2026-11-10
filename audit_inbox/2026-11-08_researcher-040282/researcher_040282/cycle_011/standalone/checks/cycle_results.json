@@ -1,0 +1,85 @@
+{
+  "science": {
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "source_contract_methods_each_mode": 9,
+    "source_passes_each_mode": 9,
+    "source_failures_errors_skips_each_mode": [
+      0,
+      0,
+      0
+    ],
+    "actual_advances_each_common_mode": 56,
+    "initializer_calls_each_common_mode": 0,
+    "synthetic_traces_each_mode": 7,
+    "complex_input_coordinates_each_mode": 496,
+    "adjacent_complex_coordinates_each_mode": 434,
+    "startup_coordinates_each_mode": 157,
+    "live_coordinates_each_mode": 277,
+    "first_live_coordinates_each_mode": 62,
+    "later_live_coordinates_each_mode": 215,
+    "maximum_observed_component_error": 4.440892098500626e-16,
+    "maximum_ratio_component_error": 7.348288644237755e-15,
+    "age_and_chord_stats": {
+      "startup_coordinates": 157,
+      "first_live_coordinates": 62,
+      "first_live_versus_extra_delay_difference": 1.963225072909311,
+      "later_live_coordinates": 215,
+      "nonzero_chords_with_bound_below_two": 382,
+      "maximum_one_sided_chord_excess": 2.509554599787633e-16,
+      "omitted_offset_absolute_difference": 1.9133793755744422,
+      "offset_cancellation_ratio_error": 5.218048215738236e-15,
+      "constant_offset_ratio_invariance_is_valid_not_a_wrong_model": true
+    },
+    "winding_stats": {
+      "positive_windings": 14,
+      "negative_windings": 9,
+      "multiple_turn_windings": 16,
+      "maximum_raw_representative_increment_discrepancy": 25.132741228718345,
+      "maximum_valid_representative_phasor_error": 9.992007221626409e-16,
+      "representative_difference_phasor_is_valid_not_a_wrong_model": true
+    },
+    "absolute_tolerance": 5e-13,
+    "relative_tolerance": 0.0,
+    "wrong_models_detected_each_mode": 10,
+    "setup_errors_credited_as_detections": 0,
+    "normal_optimized_nontiming_results_match": true,
+    "new_named_Lean_declarations_actually_compiled": 3,
+    "reused_history_declarations_recompiled_not_new_labels": 3,
+    "formal_controls": 8,
+    "formal_positive_controls": 2,
+    "formal_false_math_controls": 3,
+    "formal_compiling_integrity_controls": 3,
+    "axiom_footprints": {
+      "Researcher040282.Phase.phasor_wrap": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Phase.delayed_input_step": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Phase.delayed_input_chord_bound": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "targeted_Mathlib_used": true,
+    "reviewed_public_engine_unchanged": 1,
+    "reviewed_metadata_unchanged": 3,
+    "actual_engine_import_no_copied_replaced_or_edited_source_functions": true,
+    "no_source_repair_or_failing_before_claim": true,
+    "all_preregistered_acceptance_conditions_met": true
+  },
+  "environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "compiler": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474"
+  },
+  "elapsed_seconds": 443.7656343220001,
+  "formal_elapsed_seconds": 441.60787989599976,
+  "scope": "Exact-real modulo-safe startup-aware delayed input/chord theorem plus finite intact-engine correspondence. Not a Lean proof of Python/float FFI, full coupled map/locking, production baseline, certificate, integration or independent approval."
+}

@@ -1,0 +1,33 @@
+{
+  "revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "scope": "Small public theorem/API sources only, no code execution or compiler",
+  "files": [
+    {
+      "path": "Mathlib/Analysis/Complex/Trigonometric.lean",
+      "available": true,
+      "bytes": 34610
+    },
+    {
+      "path": "Mathlib/Analysis/Complex/Exponential.lean",
+      "available": true,
+      "bytes": 28641
+    },
+    {
+      "path": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Bounds.lean",
+      "available": true,
+      "bytes": 12125
+    },
+    {
+      "path": "Mathlib/Analysis/SpecialFunctions/Complex/Circle.lean",
+      "available": true,
+      "bytes": 23058
+    },
+    {
+      "path": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Basic.lean",
+      "available": true,
+      "bytes": 47962
+    }
+  ],
+  "all_available_raw_inspection_files_match_actual_prescribed_Mathlib_source_before_cleanup": true,
+  "comparison_scope": "Public source bytes only; no commit author/contact/signature metadata copied"
+}

@@ -1,0 +1,371 @@
+{
+  "agent": "Researcher 040282",
+  "owner_instruction": "Self-direct bounded, red-teamed AIEFS research; create dated audit-inbox handoffs for owner upload. Continue does not authorize remote submission or unattended work.",
+  "workflow": "WORKFLOW.md",
+  "queue": "RESEARCH_QUEUE.md",
+  "claim_ledger": "CLAIM_LEDGER.csv",
+  "last_updated_date": "2026-09-04",
+  "timezone": "Atlantic/Reykjavik",
+  "date_provenance": {
+    "session_supplied_preparation_date": "2026-09-04",
+    "prior_owner_correspondence_handoff_label": "2026-11-08",
+    "historical004_execution_date_reconstructed": false,
+    "historical006_notice": "cycle_006/ADMINISTRATIVE_PROVENANCE.md",
+    "note": "Session preparation labels and prior owner/repository labels are separate; no chronology inferred from runtime clocks/compiler builds. Earlier scientific protocols/seeds/reports preserved."
+  },
+  "current_cycle": 10,
+  "current_status": "COMPLETED_LOCAL_HISTORY_FOUNDATION_AND_PHASE_CONTRACT_UNREVIEWED",
+  "current_directory": "cycle_010",
+  "ledger_rows": 118,
+  "current_question": "Close a load-bearing dynamics-library boundary: reachable constant-prehistory D+1 buffer indexing and actual non-shuffled coupled one-step update order, without assuming lag or full coupled stability.",
+  "current_answer": "Three Std-only history declarations compile with propext/Quot.sound; oldest=x(max(0,n-D)), newest=x(n). Actual unchanged engine passes9 methods normal/-O,78advances+1initializer each, max component error2.220446049250313e-16 at abs5e-13/rel0;65dyadic states/260 exact stored coordinates.11wrong models eachmode;8formal controls;2exact-delay domain errors separately. Ten inline files/3fresh deps full rerun matches4workers/25details; own disposable compiler removed. Not formal Python/coupled-map equivalence, real study, installation or independent review.",
+  "latest_completed_report": "2026-09-04_researcher040282_010_history-phase-contract.md",
+  "short004_addendum": "2026-11-08_researcher040282_004_addendum.md",
+  "optional_supporting_bundle": "researcher040282-cycle010-history-phase-contract.zip",
+  "artifact_validation_record": "cycle_010/packet_validation.json",
+  "source_refresh": {
+    "branch_for_current_code": "main",
+    "commit": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "selected_files_verified": 32,
+    "public_python_source_closure_verified": 1,
+    "scope_compiler_metadata_dependencies_verified": 2,
+    "metadata": "cycle_010/source_state/main_selected.json",
+    "source_execution_scope": "Actual full frozen engine import; ModelConfig/DynamicState validation, one synthetic initialize_state and78advance_state calls per mode. No run_seed/simulate_prefix/future/baseline-equivalence/production/CLI/certificate.",
+    "inbox_navigation_commit": "00a29ce538a40b553a723dd73dbd676129bfcd9a",
+    "inbox_selected_files": 8,
+    "inbox_metadata": "cycle_010/source_state/inbox_selected.json",
+    "targeted_intake_R001_notes_unchanged": true,
+    "general_TRIAGE_changed": false,
+    "new_provenance_mutation_review_evidence_read_only": true,
+    "new_inbox_reproducer_fetched_or_executed": false,
+    "nonduplication_check": "cycle_010/nonduplication_check.json",
+    "scope": "Selected read-only public inspection, not exhaustive/private-work coordination or independent approval."
+  },
+  "tool_environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "packages_used": {
+      "numpy": "2.3.5"
+    },
+    "fresh_lean_run_this_cycle": true,
+    "new_compiled_named_declarations": 3,
+    "formal_controls": 8,
+    "core_compiler_and_decoder_temporarily_installed_into_own_target_this_cycle": true,
+    "Mathlib_installed": false,
+    "global_toolchain_changed": false,
+    "earlier_lean_cache_restored": false,
+    "setup_receipt": "cycle_010/compiler_setup.json",
+    "own_disposable_setup_removed_after_reproduction": true,
+    "cleanup_receipt": "cycle_010/compiler_cleanup.json",
+    "compiler": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
+  },
+  "adversarial_evidence": {
+    "common_contract_methods": 9,
+    "source_passes_each_mode": 9,
+    "source_failures_errors_skips_each_mode": [
+      0,
+      0,
+      0
+    ],
+    "wrong_models_detected_normal": 11,
+    "wrong_models_detected_optimized": 11,
+    "formal_controls": 8,
+    "formal_positive": 2,
+    "formal_false_math": 3,
+    "formal_compiling_integrity": 3,
+    "invalid_exact_delay_configs_each_mode_not_semantic_detections": 2,
+    "setup_errors_credited_as_detections": 0,
+    "normal_and_optimized_nontiming_results_match": true,
+    "results": "cycle_010/checks/cycle_results.json",
+    "worker_results": "cycle_010/checks/worker_results.json",
+    "original_runner_elapsed_seconds": 10.67612152400011,
+    "initial_owned_proof_error_preserved_not_a_control": "cycle_010/development/initial_proof/compiler.log"
+  },
+  "source_comparison": {
+    "evidence_label": "EXECUTABLE_REGRESSION_CHECK",
+    "scope": "Finite actual-engine non-shuffled primitive with independent scalar oracle, not formal Python equivalence.",
+    "actual_advances_each_mode": 78,
+    "initializer_calls_each_mode": 1,
+    "dyadic_exact_states_each_mode": 65,
+    "dyadic_exact_stored_coordinates_each_mode": 260,
+    "absolute_tolerance": 5e-13,
+    "relative_tolerance": 0.0,
+    "maximum_observed_component_error": 2.220446049250313e-16,
+    "reference": "Immutable math/cmath scalar cases; expected values before target advance, no pre-call compute_R",
+    "source_functions_copied_replaced_or_edited": false,
+    "source_files_verified_unchanged": 1,
+    "metadata_files_verified_unchanged": 2,
+    "source_repair_or_failing_before_claim": false,
+    "production_study_or_full_baseline_equivalence": false
+  },
+  "standalone_reproduction": {
+    "actually_executed": true,
+    "runner_returncode": 0,
+    "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "critical_file_count": 10,
+    "critical_files": [
+      "HistoryBuffer.lean",
+      "step_contract.py",
+      "check_engine.py",
+      "load_reviewed.py",
+      "check_lean.py",
+      "prepare_lean.py",
+      "run_checks.py",
+      "source_modules.json",
+      "fetch_public_dependencies.py",
+      "extract_from_report.py"
+    ],
+    "all_extracted_files_byte_identical": true,
+    "fresh_public_dependencies_fetched_and_verified": 3,
+    "fresh_public_python_sources": 1,
+    "fresh_scope_compiler_metadata_files": 2,
+    "same_original_verified_compiler_reused": true,
+    "fresh_clean_compiler_installation_claimed": false,
+    "scientific_summary_matches_original": true,
+    "all_four_worker_nontiming_results_match_original": true,
+    "all_twentyfive_detailed_records_byte_identical": true,
+    "detailed_matching_files": [
+      "common_normal/advance_observations.json",
+      "common_normal/domain_checks.json",
+      "common_optimized/advance_observations.json",
+      "common_optimized/domain_checks.json",
+      "proof/compiled_sources/HistoryBuffer.lean",
+      "proof/compiled_sources/compiling_extra_axiom.lean",
+      "proof/compiled_sources/compiling_sorry.lean",
+      "proof/compiled_sources/false_append_old.lean",
+      "proof/compiled_sources/false_extra_delay.lean",
+      "proof/compiled_sources/false_youngest_read.lean",
+      "proof/compiled_sources/omitted_axiom_print.lean",
+      "proof/compiled_sources/positive_abstract_D0.lean",
+      "proof/compiled_sources/positive_nonzero.lean",
+      "proof/compiler_logs/HistoryBuffer.log",
+      "proof/compiler_logs/compiling_extra_axiom.log",
+      "proof/compiler_logs/compiling_sorry.log",
+      "proof/compiler_logs/false_append_old.log",
+      "proof/compiler_logs/false_extra_delay.log",
+      "proof/compiler_logs/false_youngest_read.log",
+      "proof/compiler_logs/omitted_axiom_print.log",
+      "proof/compiler_logs/positive_abstract_D0.log",
+      "proof/compiler_logs/positive_nonzero.log",
+      "proof/result.json",
+      "wrong_models_normal/wrong_models.json",
+      "wrong_models_optimized/wrong_models.json"
+    ],
+    "commands_observed": [
+      {
+        "program": "proposal/extract_from_report.py",
+        "returncode": 0
+      },
+      {
+        "program": "standalone/extracted/fetch_public_dependencies.py",
+        "returncode": 0
+      },
+      {
+        "program": "standalone/extracted/run_checks.py",
+        "returncode": 0
+      }
+    ],
+    "source_passes_each_mode": [
+      9,
+      9
+    ],
+    "source_failures_errors_skips_each_mode": [
+      0,
+      0,
+      0
+    ],
+    "actual_advances_each_common_mode": [
+      78,
+      78
+    ],
+    "source_initializations_each_common_mode": [
+      1,
+      1
+    ],
+    "dyadic_exact_states_each_mode": [
+      65,
+      65
+    ],
+    "dyadic_exact_stored_coordinates_each_mode": [
+      260,
+      260
+    ],
+    "wrong_models_detected_each_mode": [
+      11,
+      11
+    ],
+    "invalid_delay_config_rejections_separate_each_mode": [
+      2,
+      2
+    ],
+    "named_Lean_declarations_compiled": 3,
+    "formal_controls_repeated": 8,
+    "original_elapsed_seconds": 10.67612152400011,
+    "extracted_elapsed_seconds": 8.73614141600001,
+    "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks --lean <same verified compiler>",
+    "result": "cycle_010/standalone/checks/cycle_results.json",
+    "log": "cycle_010/standalone/reproduction.log",
+    "scope": "Submitter-local exact-note repetition, not independent review or formal Python/float/coupled-map equivalence; no real study, authority/baseline certificate, frozen edit or installation",
+    "record": "cycle_010/standalone_reproduction.json",
+    "report": "2026-09-04_researcher040282_010_history-phase-contract.md"
+  },
+  "review_scope": {
+    "review_acquired_from_inbox": "b466ab6cdd564ce3f7848e7701b378c5f0cc475f",
+    "intake_note": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "researcher001_triage": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+    "evidence_kind": "Publicly acquired colleague reports of their own execution; not our reexecution of their witnesses",
+    "reviewer_main_basis": "942f8526daee5ac547f2e422101fa95c61eeef41",
+    "independent_compilation_reported": {
+      "002": 22,
+      "003": 44,
+      "004_EMA": 22,
+      "004_drive": 6
+    },
+    "compiled_total": 94,
+    "reported_warnings": 0,
+    "reported_errors": 0,
+    "reported_footprint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope_exclusions": [
+      "library-grade statement-fidelity approval",
+      "integration decision",
+      "our check_cycle.py controls",
+      "our ZIP checkers",
+      "full S01 reanalysis",
+      "our4800 saved held-event comparisons",
+      "real-array finiteness census",
+      "new005 repair-candidate review"
+    ],
+    "additional_review_confirmation": "Coarse baseline ON bound fails to reach threshold; not evidence of OFF",
+    "uploader_disposition": "Owner reports PR10 uploader and PR11 checksum checker merged; supplied main head matches acquired head. No new uploader work; no behavioral certification of those merges here.",
+    "current_python_CI": ".github/workflows/repo-checks.yml exists on the tested source; withdraw the stale no-Python-CI generalization as a current-main claim",
+    "contact_or_remote_write_by_this_agent": false,
+    "reviewer_private_log_paths": "Mentioned by reviewer; not fetched or represented as included local evidence",
+    "prior005_main_tested": "f3e3a57632c613e860a9941f007732cb4c2c91c6",
+    "this_is_prior_002_003_004_compilation_review_only": true,
+    "current006_harness_or_inference_independently_reviewed": false,
+    "current006_review_basis": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+    "historical_intake_receipt": "Actual audit-inbox intake and triage found; uploaded root ledger independently counted78 rows, versus108 at completed004",
+    "historical_intake_inventory_not_a_new_inbox_census": true,
+    "latest_selected_navigation_commit": "00a29ce538a40b553a723dd73dbd676129bfcd9a",
+    "prior_R001_BF6_mechanism_reproduction_reported": true,
+    "historical007_helper_and_harness_independently_reviewed": false,
+    "prior_R001_BF7_minimal_mechanism_reproduction_reported": true,
+    "historical008_candidate_contract_harness_independently_reviewed": false,
+    "historical008_general_TRIAGE_changed_with_other_agent_static_reviews": true,
+    "general_TRIAGE_changed_since008": false,
+    "new_colleague_copied_function_runtime_report_found": true,
+    "colleague_downstream_runtime_independently_rerun_here": false,
+    "known_lead_observed_on_actual_module_with_own_fixture": true,
+    "historical009_policy_guard_contract_harness_independently_reviewed": false,
+    "general_TRIAGE_changed_since009": false,
+    "new_provenance_mutation_report_evidence_read_only": true,
+    "new_contributed_reproducer_fetched_or_executed": false,
+    "current010_history_oracle_controls_independently_reviewed": false
+  },
+  "independent_review_received": true,
+  "current_cycle_independent_review_received": false,
+  "owner_upload_confirmed": true,
+  "latest_packet_owner_upload_confirmed": false,
+  "publication_status": "Prior114 rows/94 formal labels preserved. New3 generic history declarations actually compiled; finite source contract and controls/full extracted rerun pass. No independent010 review, library integration, authority promotion or upload.",
+  "privacy": {
+    "report": "cycle_010/privacy_results.json",
+    "new_metadata_minimal_at_acquisition": true,
+    "branch_metadata_records_expected": 18,
+    "no_personal_commit_contacts_or_signed_payloads_in_branch_metadata": true,
+    "new_contributed_reproducer_not_acquired_or_executed": true,
+    "historical_two_synthetic_public_fixture_addresses_distinguished": true,
+    "not_exhaustive_secret_detection_or_security_certification": true
+  },
+  "evidence_navigation": {
+    "index": "EVIDENCE_INDEX.json",
+    "historical_log_map": "HISTORICAL_ARCHIVE_LOG_MAP.csv",
+    "all_ledger_references_unpacked": true,
+    "old_archives_not_nested_or_changed": true,
+    "historical_missing_only_restoration": "cycle_010/historical_restoration.json"
+  },
+  "previous_cycle": 9,
+  "previous_cycle_evidence": {
+    "completed009_state": "cycle_010/previous009_snapshot/STATE.json",
+    "completed009_ledger114": "cycle_010/previous009_snapshot/CLAIM_LEDGER.csv",
+    "prior_science_not_rerun_this_cycle": true,
+    "completed008_state": "cycle_009/previous008_snapshot/STATE.json",
+    "completed008_ledger113": "cycle_009/previous008_snapshot/CLAIM_LEDGER.csv",
+    "completed007_ledger112": "cycle_008/previous007_snapshot/CLAIM_LEDGER.csv",
+    "completed006_ledger111": "cycle_007/previous006_snapshot/CLAIM_LEDGER.csv",
+    "completed005_ledger109": "cycle_006/previous005_snapshot/CLAIM_LEDGER.csv",
+    "completed004_ledger108": "cycle_005/completed_004_snapshot/CLAIM_LEDGER_COMPLETED_004.csv"
+  },
+  "completed_this_cycle": [
+    "fresh32main/8inbox selection and limited public nonduplication check; provenance report/evidence read-only",
+    "preregistered reachable history/scalar primitive contract and fixed tolerances before engine execution/proof compilation",
+    "three corrected Std-only history declarations compile; initial draft error preserved, not credited as a control",
+    "actual unchanged engine9pass normal/-O with78advances and1initializer each;65states/260exact stored coordinates",
+    "11intended wrong models eachmode;8formal controls;2invalid-delay domain cases separately",
+    "teninline files extracted/threefresh deps;complete runner repeats;4workers/25detailed records match",
+    "own temporary compiler/archive/decoder removed after actual rerun; no Mathlib/global toolchain change",
+    "prior114 ledger rows/94formal labels preserved;three scoped compiled rows plusone finite contract row",
+    "packet closure receipt required before delivery"
+  ],
+  "not_proved_or_promoted": [
+    "Universal Python/NumPy or float/trigonometry equivalence, full Lean coupled one-step theorem, stability or phase locking",
+    "Lag identity for every arbitrary history accepted by state.validate, or source validity of abstract D0",
+    "Production simulation, real S01, baseline-equivalence campaign, shuffle/intervention, certificate, CLI or full-study result",
+    "Registry/lock/frozen source edit, replacement engine, reference-library integration or installation",
+    "Independent approval of new history theorem, scalar oracle, fixtures, tests, controls or earlier005-009 companions",
+    "Novelty against all existing/private work, approval of third-party provenance calculations, remote push/contact/PR/upload or unattended011",
+    "Modulo-safe phase-input increment/delayed-drive theorem, sharper derived future ON/OFF bands or common finite freeze time",
+    "Independent approval/integration of prior005-009 companions; exact historical boundaries in previous009 snapshot/reports"
+  ],
+  "in_progress": null,
+  "research_processes_running": [],
+  "next_cycle": 11,
+  "next_directory": "cycle_011",
+  "next_selected_work": "Fresh-check modulo-safe phase-increment/delayed-input bridge, separating constant startup from live delayed history; choose smallest noncircular useful statement before any new run.",
+  "immediate_next_action": "Only on another Continue: read latest owner/seat feedback and current source/library state, then preregister one smallest useful modulo-safe phase-increment/delayed-input lemma with constant startup distinct from live delayed trace. No coupled-locking assumption, production campaign, frozen edit or unattended work.",
+  "remote_changes_by_this_agent": false,
+  "contacted_other_bots": false,
+  "automatic_work_between_turns": false,
+  "handoff_status": "LOCAL_PACKET_CLOSURE_VERIFIED;NOT_UPLOADED",
+  "authority_boundary": {
+    "new_unregistered_library_candidate_and_finite_specification_only": true,
+    "actual_frozen_engine_read_only_import_and_synthetic_primitives": true,
+    "frozen_source_edited": false,
+    "lock_or_registry_changed": false,
+    "source_cache_edited": false,
+    "new_helper_or_module_installed": false,
+    "authority_validation_run": false,
+    "full_equivalence_pipeline_run": false,
+    "run_seed_simulate_production_CLI_or_writer_called": false,
+    "integration_decision": "OWNER_SEAT_PENDING;NO_AUTHORITY_PROMOTION_OR_PRODUCTION_REPAIR"
+  },
+  "formal_result": {
+    "evidence_label": "LEAN_COMPILED",
+    "new_named_declarations": 3,
+    "total_formal_ledger_labels": 97,
+    "imports": [
+      "Std"
+    ],
+    "axiom_footprints": {
+      "Researcher040282.Delay.historyTrace_index": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Delay.historyTrace_oldest": [
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Delay.historyTrace_newest": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "theorem": "H(n)[i]=x(n+i-D), Nat truncated subtraction, constant prehistory/shift-append recurrence",
+    "scope": "Generic reachable value history; not arbitrary validated Python histories, allocations, floating phases or whole coupled map",
+    "source_valid_D_minimum": 1,
+    "abstract_D0_not_source_valid": true,
+    "record": "cycle_010/checks/proof/result.json"
+  }
+}

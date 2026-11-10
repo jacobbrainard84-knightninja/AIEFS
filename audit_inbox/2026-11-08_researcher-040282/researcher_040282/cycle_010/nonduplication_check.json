@@ -1,0 +1,15 @@
+{
+  "open_pr_count_seen": 1,
+  "branch_count_seen": 16,
+  "matching_open_prs": [],
+  "matching_public_branch_names": [],
+  "current_main_Lean_keyword_review": "Only exclusions/comments on delay/history; no matching implementation found among selected main lean/*.lean. Limited static keyword/header review, not exhaustive theorem search/private work assurance.",
+  "scope": "Public first100 names and selected main/source/feedback only; no contact or author payload persisted",
+  "open_pr_navigation": [
+    {
+      "number": 16,
+      "title": "Corrigenda: fix the chronicler's own two errors at the source (shallow-clone dates, mention-vs-assertion bare refs)",
+      "head_branch": "arena/8aa39f3a-aiefs"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "mode": "baseline",
+  "optimized_python": true,
+  "tests_run": 9,
+  "failures": 4,
+  "errors": 0,
+  "skipped": 0,
+  "failure_methods": [
+    "test_certificate_repin",
+    "test_manifest_repin",
+    "test_official_pin",
+    "test_scalar_repin"
+  ],
+  "error_methods": [],
+  "observations": {
+    "admission_calls": 18,
+    "expected_accepts": 3,
+    "observed_accepts": 10,
+    "false_accepts": 7,
+    "false_rejects": 0,
+    "delegate_calls": 18,
+    "mismatched_verdicts": 7
+  },
+  "fixture_group_counts": {
+    "positive": 1,
+    "relocation": 1,
+    "scalar_repin": 1,
+    "certificate_repin": 2,
+    "manifest_repin": 3,
+    "official_pin": 1,
+    "child_hash": 4,
+    "schema": 4,
+    "counts": 1
+  },
+  "fixture_inspection": {
+    "trajectory_arrays": 2400,
+    "continue_matrices": 200,
+    "npz_total_keys": 2600,
+    "samples_per_trajectory": 640,
+    "all_keys_shapes_finiteness_and_ranges_checked": true,
+    "synthetic_not_engine_trajectories": true,
+    "scalar_rows": 800,
+    "successful_condition_rows": 200,
+    "unique_seed_count": 40,
+    "fixture_npz_bytes": 9129447
+  },
+  "authority_metadata": {
+    "artifact_id": "ART-2217",
+    "committed_manifest_metadata_matches_inventory": true,
+    "genuine_five_file_S01_positive_executed": false,
+    "scope": "METADATA_ONLY_NOT_AUTHORITY_ISSUANCE"
+  },
+  "configuration_rejections_not_semantic_detections": 0,
+  "candidate_only_metadata_anchor": null,
+  "source_boundary": {
+    "actual_full_module_imported": true,
+    "actual_discover_inputs_and_validate_run_called": true,
+    "source_functions_copied_replaced_or_edited": false,
+    "new_guard_installed": false,
+    "run_analysis_main_or_writer_called": false,
+    "genuine_S01_five_file_validation_executed": false
+  },
+  "public_source_files_unchanged": 12,
+  "authority_metadata_files_unchanged": 2,
+  "elapsed_seconds": 2.5242460659999324
+}

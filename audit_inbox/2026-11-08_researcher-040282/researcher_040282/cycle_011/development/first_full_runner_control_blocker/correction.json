@@ -1,0 +1,6 @@
+{
+  "outcomes_before_blocker": "Four Python workers all passed; main + reused history compiled clean with standard footprints",
+  "blocker": "Positive control broad simp transformed the Fin oldest argument before oldest lemma matching; no false control credited",
+  "fix": "Concrete n0 control reduces the actual constant-history definition directly; statements/main proof/cases/tolerance/source unchanged",
+  "new_claims_not_promoted_yet": true
+}

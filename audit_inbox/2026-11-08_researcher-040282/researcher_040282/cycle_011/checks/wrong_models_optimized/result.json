@@ -1,0 +1,151 @@
+{
+  "kind": "wrong_models",
+  "optimized_python": true,
+  "detected": 10,
+  "records": [
+    {
+      "model": "omit_startup_guard",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.12068496986146218,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "one_step_early",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.12068393293079901,
+      "witness": {
+        "case": "active_D2",
+        "n": 1,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "current_delayed_increment",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.008387031264128972,
+      "witness": {
+        "case": "active_D2",
+        "n": 3,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "one_extra_delay",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.12068099581739043,
+      "witness": {
+        "case": "active_D2",
+        "n": 2,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "reverse_difference",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.09598421576808373,
+      "witness": {
+        "case": "active_D2",
+        "n": 3,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "old_B_increment",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.0052739455320261405,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "unprojected_B_increment",
+      "detected": true,
+      "intended_field": "factor",
+      "detected_field": "factor",
+      "component_difference": 0.0031603045096356003,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "omit_mean_offset",
+      "detected": true,
+      "intended_field": "absolute_input",
+      "detected_field": "absolute_input",
+      "component_difference": 0.16275191423722463,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "next_step_C_input",
+      "detected": true,
+      "intended_field": "absolute_input",
+      "detected_field": "absolute_input",
+      "component_difference": 0.0521000678316027,
+      "witness": {
+        "case": "active_D2",
+        "n": 0,
+        "i": 0,
+        "j": 1
+      },
+      "setup_errors_credited": 0
+    },
+    {
+      "model": "raw_angle_increment",
+      "detected": true,
+      "intended_field": "real_increment",
+      "detected_field": "real_increment",
+      "component_difference": 18.84955592153876,
+      "witness": {
+        "case": "multiwrap_D2",
+        "n": 0,
+        "i": 0
+      },
+      "setup_errors_credited": 0
+    }
+  ],
+  "actual_engine_advances": 0,
+  "actual_engine_imported": false,
+  "setup_errors_credited": 0,
+  "source_files_unchanged": 1,
+  "metadata_files_unchanged": 3
+}

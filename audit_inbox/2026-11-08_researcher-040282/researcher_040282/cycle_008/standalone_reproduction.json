@@ -1,0 +1,85 @@
+{
+  "actually_executed": true,
+  "runner_returncode": 0,
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "critical_file_count": 8,
+  "critical_files": [
+    "oracle_candidate.py",
+    "status_contract.py",
+    "load_reviewed.py",
+    "test_status_contract.py",
+    "run_checks.py",
+    "source_modules.json",
+    "fetch_public_dependencies.py",
+    "extract_from_report.py"
+  ],
+  "all_extracted_files_byte_identical": true,
+  "fresh_public_source_files_fetched_and_verified": 12,
+  "scientific_summary_matches_original": true,
+  "all_six_worker_nontiming_results_match_original": true,
+  "all_fourteen_detailed_census_and_invalid_key_files_byte_identical": true,
+  "detailed_matching_files": [
+    "baseline_normal/table_census.json",
+    "baseline_optimized/table_census.json",
+    "candidate_normal/table_census.json",
+    "candidate_optimized/table_census.json",
+    "baseline_normal/census_mismatches.json",
+    "baseline_optimized/census_mismatches.json",
+    "candidate_normal/census_mismatches.json",
+    "candidate_optimized/census_mismatches.json",
+    "baseline_normal/sequence_definitions.json",
+    "baseline_optimized/sequence_definitions.json",
+    "candidate_normal/sequence_definitions.json",
+    "candidate_optimized/sequence_definitions.json",
+    "candidate_normal/invalid_key_results.json",
+    "candidate_optimized/invalid_key_results.json"
+  ],
+  "commands_observed": [
+    {
+      "program": "proposal/extract_from_report.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/fetch_public_dependencies.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/run_checks.py",
+      "returncode": 0
+    }
+  ],
+  "original_failures_each_mode": [
+    5,
+    5
+  ],
+  "original_errors_each_mode": [
+    0,
+    0
+  ],
+  "candidate_passes_each_mode": [
+    12,
+    12
+  ],
+  "original_census_false_accepts_each_mode": [
+    244,
+    244
+  ],
+  "candidate_census_mismatches_each_mode": [
+    0,
+    0
+  ],
+  "candidate_only_invalid_key_cases_each_mode": [
+    10,
+    10
+  ],
+  "mutants_detected_each_mode": [
+    8,
+    8
+  ],
+  "original_elapsed_seconds": 16.538016760999994,
+  "extracted_elapsed_seconds": 15.685279412,
+  "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks",
+  "result": "cycle_008/standalone/checks/cycle_results.json",
+  "log": "cycle_008/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note actual-public-API reproduction, not independent-seat approval, installed repair, real S01/201-vs200 or authority/whole-study certificate"
+}

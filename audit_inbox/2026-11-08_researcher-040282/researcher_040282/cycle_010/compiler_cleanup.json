@@ -1,0 +1,15 @@
+{
+  "actually_removed_after_successful_full_reproduction": true,
+  "own_cache": "/home/user/.cache/researcher040282-cycle010",
+  "regular_files_removed": 7492,
+  "symlinks_removed": null,
+  "regular_file_logical_bytes_removed": 2718508891,
+  "regular_file_allocated_bytes_removed": 2733250560,
+  "cache_absent_after_removal": true,
+  "only_cycle010_owned_compiler_archive_decoder_target_removed": true,
+  "other_research_and_cache_directories_not_deleted": true,
+  "Mathlib_or_global_toolchain_installation": false,
+  "legacy_lua_audit_remains_absent": true,
+  "science_proofs_sources_logs_receipts_preserved": true,
+  "symlink_count_note": "Not measured before deletion; the initial receipt inspected saved paths after deletion, so its reported zero is not reliable and is not used."
+}

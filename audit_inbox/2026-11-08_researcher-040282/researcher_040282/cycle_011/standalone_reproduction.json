@@ -1,0 +1,115 @@
+{
+  "actually_executed": true,
+  "runner_returncode": 0,
+  "tested_main": "eb3933c196ee19e80e1621ae80d89ca72e6d9485",
+  "critical_file_count": 13,
+  "critical_files": [
+    "HistoryBuffer.lean",
+    "PhaseIncrement.lean",
+    "phase_contract.py",
+    "prepare_mathlib.py",
+    "step_contract.py",
+    "check_engine.py",
+    "load_reviewed.py",
+    "check_lean.py",
+    "prepare_lean.py",
+    "run_checks.py",
+    "source_modules.json",
+    "fetch_public_dependencies.py",
+    "extract_from_report.py"
+  ],
+  "all_extracted_files_byte_identical": true,
+  "fresh_public_dependencies_fetched_and_verified": 4,
+  "fresh_public_python_sources": 1,
+  "fresh_scope_compiler_metadata_files": 3,
+  "same_original_verified_compiler_and_Mathlib_reused": true,
+  "fresh_clean_compiler_or_Mathlib_installation_claimed": false,
+  "scientific_summary_matches_original": true,
+  "all_four_worker_nontiming_results_match_original": true,
+  "all_thirtyone_detailed_records_byte_identical": true,
+  "detailed_matching_files": [
+    "common_normal/advance_observations.json",
+    "common_normal/input_ratio_observations.json",
+    "common_normal/preexecution_design.json",
+    "common_optimized/advance_observations.json",
+    "common_optimized/input_ratio_observations.json",
+    "common_optimized/preexecution_design.json",
+    "proof/compiled_sources/HistoryBuffer.lean",
+    "proof/compiled_sources/PhaseIncrement.lean",
+    "proof/compiled_sources/compiling_extra_axiom.lean",
+    "proof/compiled_sources/compiling_sorry.lean",
+    "proof/compiled_sources/false_current_instead_of_aged.lean",
+    "proof/compiled_sources/false_no_wrap.lean",
+    "proof/compiled_sources/false_startup_delayed_increment.lean",
+    "proof/compiled_sources/omitted_axiom_print.lean",
+    "proof/compiled_sources/positive_live_nonzero.lean",
+    "proof/compiled_sources/positive_startup_nonzero.lean",
+    "proof/compiler_logs/HistoryBuffer.log",
+    "proof/compiler_logs/PhaseIncrement.log",
+    "proof/compiler_logs/compiling_extra_axiom.log",
+    "proof/compiler_logs/compiling_sorry.log",
+    "proof/compiler_logs/false_current_instead_of_aged.log",
+    "proof/compiler_logs/false_no_wrap.log",
+    "proof/compiler_logs/false_startup_delayed_increment.log",
+    "proof/compiler_logs/omitted_axiom_print.log",
+    "proof/compiler_logs/positive_live_nonzero.log",
+    "proof/compiler_logs/positive_startup_nonzero.log",
+    "proof/result.json",
+    "wrong_models_normal/preexecution_design.json",
+    "wrong_models_normal/wrong_models.json",
+    "wrong_models_optimized/preexecution_design.json",
+    "wrong_models_optimized/wrong_models.json"
+  ],
+  "commands_observed": [
+    {
+      "program": "proposal/extract_from_report.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/fetch_public_dependencies.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/run_checks.py",
+      "returncode": 0
+    }
+  ],
+  "source_passes_each_mode": [
+    9,
+    9
+  ],
+  "source_failures_errors_skips_each_mode": [
+    0,
+    0,
+    0
+  ],
+  "actual_advances_each_common_mode": [
+    56,
+    56
+  ],
+  "source_initializations_each_common_mode": [
+    0,
+    0
+  ],
+  "input_complex_coordinates_each_mode": [
+    496,
+    496
+  ],
+  "adjacent_complex_coordinates_each_mode": [
+    434,
+    434
+  ],
+  "wrong_models_detected_each_mode": [
+    10,
+    10
+  ],
+  "new_named_Lean_declarations_compiled": 3,
+  "reused_history_labels_not_added": 3,
+  "formal_controls_repeated": 8,
+  "original_elapsed_seconds": 448.87374336899984,
+  "extracted_elapsed_seconds": 443.7656343220001,
+  "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks --lean <same verified compiler> --mathlib <same targeted Mathlib>",
+  "result": "cycle_011/standalone/checks/cycle_results.json",
+  "log": "cycle_011/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note full repetition, not independent review, Python/float/full-coupled proof, real study, authority certificate, source repair/integration or upload"
+}

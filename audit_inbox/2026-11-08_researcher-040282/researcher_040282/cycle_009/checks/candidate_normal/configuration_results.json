@@ -1,0 +1,26 @@
+[
+  {
+    "configuration": "none",
+    "TrustConfigurationError": true,
+    "delegate_calls": 0,
+    "semantic_negative_detection_credited": false
+  },
+  {
+    "configuration": "empty",
+    "TrustConfigurationError": true,
+    "delegate_calls": 0,
+    "semantic_negative_detection_credited": false
+  },
+  {
+    "configuration": "nonhex64",
+    "TrustConfigurationError": true,
+    "delegate_calls": 0,
+    "semantic_negative_detection_credited": false
+  },
+  {
+    "configuration": "shorthex63",
+    "TrustConfigurationError": true,
+    "delegate_calls": 0,
+    "semantic_negative_detection_credited": false
+  }
+]

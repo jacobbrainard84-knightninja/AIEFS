@@ -1,0 +1,25 @@
+{
+  "scope": "Scoped static expanded-text pattern scan, not full security/code review or execution approval",
+  "records": [
+    {
+      "path": "source_state/inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py",
+      "static_decode_only": true,
+      "source_executed": false,
+      "expanded_bytes": 46517,
+      "expanded_source_syntax_parsed": true,
+      "expanded_email_pattern_matches": 0,
+      "printed_contact_values": false,
+      "expanded_source_not_added_as_new_executable_file": true
+    },
+    {
+      "path": "source_state/inbox/audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py",
+      "static_decode_only": true,
+      "source_executed": false,
+      "expanded_bytes": 11576,
+      "expanded_source_syntax_parsed": true,
+      "expanded_email_pattern_matches": 0,
+      "printed_contact_values": false,
+      "expanded_source_not_added_as_new_executable_file": true
+    }
+  ]
+}

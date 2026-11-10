@@ -1,0 +1,9 @@
+{
+  "issue": "Redirected validator stdout was itself an included log; final buffered output changed it after the archive check",
+  "archived_active_log_bytes": 0,
+  "frozen_completed_log_bytes": 3131,
+  "correction": "Freeze/move completed capture before repacking; final validator stdout goes only to tool output, no active in-packet capture",
+  "scientific_code_inputs_results_ledger_rows_changed": false,
+  "source_or_compiler_science_rerun": false,
+  "old_archive_superseded_before_delivery": true
+}
