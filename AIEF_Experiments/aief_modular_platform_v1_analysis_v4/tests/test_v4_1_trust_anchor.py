@@ -288,6 +288,39 @@ def test_caller_supplied_policy_is_trusted_by_design(run_copy: Path):
     assert len(_validate(run_copy, weak).seeds) == 40
 
 
+@pytest.mark.parametrize("root", ["[]", '"x"', "42", "null"])
+def test_non_object_certificate_root_is_rejected(run_copy: Path, root: str):
+    """ERRATA E26: a non-object certificate root is an integrity error, not AttributeError.
+
+    Under the default policy the manifest pin rejects such a file first, so a
+    caller-supplied policy (trusted by design, E25) is needed to reach the check.
+    """
+    cert = run_copy / "baseline_equivalence_certificate.json"
+    cert.write_text(root)
+    _repin(run_copy, "baseline_certificate", cert)
+    manifest = json.loads((run_copy / "manifest.json").read_text())
+    weak = {
+        **dict(POLICY),
+        "manifest_sha256": _sha(run_copy / "manifest.json"),
+        "output_hashes": dict(manifest["output_hashes"]),
+    }
+    with pytest.raises(v41.ArtifactIntegrityError, match="root must be an object"):
+        _validate(run_copy, weak)
+
+
+def test_missing_npz_bytes_raise_instead_of_reopening_the_path():
+    """ERRATA E26: no silent fallback to the NPZ path when the verified bytes are absent."""
+    import dataclasses
+
+    run = _validate(RUN)
+    bare = dataclasses.replace(run, branch_npz_bytes=None)
+    key = v41._npz_key("continue", run.seeds[0], run.rho_values[0], "B_final")
+    with pytest.raises(v41.ArtifactIntegrityError, match="branch_npz_bytes is missing"):
+        v41._run_npz_keys(bare, [key])
+    with pytest.raises(v41.ArtifactIntegrityError, match="branch_npz_bytes is missing"):
+        v41.cross_t_topology(bare)
+
+
 def test_policy_is_keyword_only():
     """Keyword-only, so a policy cannot be passed positionally by accident."""
     inputs = v41.discover_inputs(RUN)
@@ -325,14 +358,26 @@ def test_run_analysis_does_not_pass_a_policy(monkeypatch, tmp_path: Path):
 # --- file-system swaps after the guard (R001 note N3, ERRATA E25) ---------------
 
 def _forged_copy(tmp_path: Path) -> Path:
-    """A forged run: edited scalar, re-pinned manifest, and a valid NPZ with 42.0."""
+    """A forged run: edited scalar, failing status/certificate, re-pinned, NPZ with 42.0.
+
+    Status and certificate forgeries deliberately fail validate_run's later checks if
+    re-read from disk (non-success status / non-passing certificate), so a regression
+    that re-opens those paths after the guard makes the swap test fail.
+    """
     forged = tmp_path / "forged"
     forged.mkdir()
     for name in NEEDED:
         if name != NEEDED[2]:
             shutil.copyfile(RUN / name, forged / name)
     _edit_scalar(forged)
+    status_path = forged / NEEDED[3]
+    status = pd.read_csv(status_path, dtype={"seed": str})
+    status.loc[0, "status"] = "failed"
+    status.to_csv(status_path, index=False)
+    (forged / NEEDED[4]).write_text('{"status":"failed","n_seeds":40}')
     _repin(forged, "scalar_csv", _scalar(forged))
+    _repin(forged, "condition_status_csv", status_path)
+    _repin(forged, "baseline_certificate", forged / NEEDED[4])
     run = _validate(RUN)
     key = v41._npz_key("continue", run.seeds[0], run.rho_values[0], "B_final")
     np.savez(forged / NEEDED[2], **{key: np.full((12, 12), 42.0)})
@@ -340,19 +385,22 @@ def _forged_copy(tmp_path: Path) -> Path:
 
 
 def test_files_swapped_after_the_guard_are_not_used(run_copy: Path, tmp_path: Path, monkeypatch):
-    """Swap manifest, scalar CSV and NPZ on disk right after the guard returns.
+    """Swap all five S01 outputs on disk right after the guard returns.
 
     Before the follow-up, validate_run re-opened the manifest and scalar and the
     analysis re-opened the NPZ, so the forged data was used while input_hashes
-    recorded the genuine digests (a false provenance record). Now every parse uses
-    the guard's in-memory bytes, so the swap has no effect.
+    recorded the genuine digests (a false provenance record). E25 closed those
+    three. The condition-status CSV and certificate were already parsed from the
+    guard's bytes, but no test covered them (R001 note 1). Now every parse uses
+    the guard's in-memory bytes, so the swap has no effect. The forged status and
+    certificate fail validate_run's later checks if re-read from disk.
     """
     forged = _forged_copy(tmp_path)
     original = v41.verify_trusted_inputs
 
     def guard_then_swap(inputs, *, policy):
         verified = original(inputs, policy=policy)
-        for name in ("manifest.json", NEEDED[1], NEEDED[2]):
+        for name in (NEEDED[0], NEEDED[1], NEEDED[2], NEEDED[3], NEEDED[4]):
             shutil.copyfile(forged / name, run_copy / name)
         return verified
 
@@ -364,6 +412,13 @@ def test_files_swapped_after_the_guard_are_not_used(run_copy: Path, tmp_path: Pa
     assert _sha(run_copy / "manifest.json") != POLICY["manifest_sha256"]
     assert _sha(_scalar(run_copy)) != POLICY["output_hashes"]["scalar_csv"]
     assert _sha(run_copy / NEEDED[2]) != POLICY["output_hashes"]["branch_npz"]
+    assert _sha(run_copy / NEEDED[3]) != POLICY["output_hashes"]["condition_status_csv"]
+    assert _sha(run_copy / NEEDED[4]) != POLICY["output_hashes"]["baseline_certificate"]
+    # ... and the on-disk status/certificate would fail if parsed ...
+    disk_status = pd.read_csv(run_copy / NEEDED[3], dtype={"seed": str})
+    assert set(disk_status["status"]) != {"success"}
+    disk_cert = json.loads((run_copy / NEEDED[4]).read_text())
+    assert disk_cert.get("status") != "passed"
     # ... but none of it was used.
     genuine = _validate(RUN)
     pd.testing.assert_frame_equal(run.scalar, genuine.scalar)
@@ -371,6 +426,8 @@ def test_files_swapped_after_the_guard_are_not_used(run_copy: Path, tmp_path: Pa
     assert run.input_hashes == genuine.input_hashes
     assert run.input_hashes["simulation_manifest"] == POLICY["manifest_sha256"]
     assert run.input_hashes["scalar_csv"] == POLICY["output_hashes"]["scalar_csv"]
+    assert run.input_hashes["condition_status"] == POLICY["output_hashes"]["condition_status_csv"]
+    assert run.input_hashes["baseline_certificate"] == POLICY["output_hashes"]["baseline_certificate"]
     assert hashlib.sha256(run.branch_npz_bytes).hexdigest() == POLICY["output_hashes"]["branch_npz"]
     pd.testing.assert_frame_equal(v41.cross_t_topology(run), v41.cross_t_topology(genuine))
 

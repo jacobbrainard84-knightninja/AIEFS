@@ -47,7 +47,7 @@ Changes from Analysis v4 (and nothing else)
   ``verify_trusted_inputs`` with ``TRUSTED_S01_POLICY``, a reviewed in-code
   policy. It hashes the raw manifest bytes against the ART-2217 pin before
   parsing, requires the manifest's output_hashes, study identity and ordered
-  40 paired seeds to equal the policy, rejects symlinked inputs, and checks all
+  40 paired seeds to equal the policy, rejects a symlink at the final path component, and checks all
   five S01 output files against the policy digests. Before this, a caller
   could edit data and re-pin a manifest, swap in a stub certificate, or supply
   a different seed cohort and pass validation. All earlier checks are kept.
@@ -178,8 +178,8 @@ class ValidatedRun:
     input_hashes: dict[str, str]
     # The verified NPZ bytes. validate_run always sets this, and the analysis
     # loads the NPZ from it, never from inputs.branch_npz, so the arrays used are
-    # the bytes whose digest is recorded in input_hashes["branch_npz"]. It is None
-    # only for hand-built synthetic runs in unit tests, which then read the path.
+    # the bytes whose digest is recorded in input_hashes["branch_npz"]. Synthetic
+    # tests must pass the bytes explicitly; a missing value raises.
     branch_npz_bytes: bytes | None = dataclass_field(default=None, repr=False, compare=False)
 
 
@@ -736,7 +736,7 @@ def _npz_key(branch: str, seed: str, rho: float, field: str) -> str:
 
 
 def load_npz_keys(source: Path | bytes, keys: Iterable[str]) -> dict[str, np.ndarray]:
-    """Load keys from an NPZ given as verified bytes (production) or a path (synthetic tests)."""
+    """Load keys from an NPZ given as verified bytes, or a path for direct reads in tests."""
     requested = tuple(dict.fromkeys(keys))
     result: dict[str, np.ndarray] = {}
     if isinstance(source, (bytes, bytearray)):
@@ -759,10 +759,14 @@ def load_npz_keys(source: Path | bytes, keys: Iterable[str]) -> dict[str, np.nda
 
 def _run_npz_keys(run: ValidatedRun, keys: Iterable[str]) -> dict[str, np.ndarray]:
     # Use the verified in-memory bytes so the arrays are exactly the bytes whose
-    # digest is in run.input_hashes. The path is only for hand-built test runs.
-    if run.branch_npz_bytes is not None:
-        return load_npz_keys(run.branch_npz_bytes, keys)
-    return load_npz_keys(run.inputs.branch_npz, keys)
+    # digest is in run.input_hashes. Never re-open the path: a missing value is an
+    # error (validate_run always sets the bytes; synthetic tests must pass them).
+    if run.branch_npz_bytes is None:
+        raise ArtifactIntegrityError(
+            "ValidatedRun.branch_npz_bytes is missing; pass the verified NPZ bytes "
+            "(validate_run always sets them; synthetic tests must pass them explicitly)"
+        )
+    return load_npz_keys(run.branch_npz_bytes, keys)
 
 
 def cross_t_topology(run: ValidatedRun) -> pd.DataFrame:
