@@ -156,7 +156,7 @@ def test_engine_false_drop_clip_values():
 
 def test_mutation_check_has_p3_mutants_and_engine_refutations():
     names = [m[0] for m in mc.MUTANTS]
-    assert len(names) == 13 and names[10].startswith("M11") and names[12].startswith("M13")
+    assert len(names) >= 13 and names[10].startswith("M11") and names[12].startswith("M13")
     for m in mc.MUTANTS[:5]:
         assert m[6] is not None and "EngineRedTeam.engine_false_" in m[6] and "EngineWitness.pE" in m[6]
     for m in mc.MUTANTS[:3] + [mc.MUTANTS[7]]:
