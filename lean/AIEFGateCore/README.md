@@ -55,7 +55,7 @@ standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` ref
 controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated
 statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as
 dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,
-weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. P5 adds 16 *definition* mutants M37–M52 (list `DEF_MUTANTS`; M24–M36 are reserved for P4b): a mutant is killed iff the mutated file fails with a real proof failure in a pre-declared pin theorem (SPEC §11.3); `KNOWN_SURVIVORS` documents one expected survivor.
+weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. P5 adds 16 *definition* mutants M37–M52 (list `DEF_MUTANTS`; M24–M36 are reserved for P4b): a mutant is killed iff the mutated file fails to build, with no name-reference or parse error line anywhere, and a pre-declared closed-form VALUE probe fails (rewrite lemmas earn no credit; SPEC §11.3); 9 equivalence controls (`* 1`, `+ 0`, `id`, …) must not be killed, 3 typo controls must be flagged invalid, and `KNOWN_SURVIVORS` documents one expected survivor.
 
 `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the
 cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`.

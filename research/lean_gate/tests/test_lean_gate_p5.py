@@ -6,7 +6,7 @@ deposited sources (the deposit is not on main, so the statements are recorded be
 shape and the EXACT COUNT of the P5 mutants of lean_mutation_check.py without running Lean.
 
 Mutation-count pin (this file is the only exact pin; the P4a test still asserts the 23 statement mutants of
-`MUTANTS`): `MUTANTS` has 23 entries (M1-M23) and `DEF_MUTANTS` 16 (M37-M52), total 39. M24-M36 are reserved for P4b
+`MUTANTS`): `MUTANTS` has 23 entries (M1-M23) and `DEF_MUTANTS` 16 (M37-M52), total 39; controls: 9 equivalence, 3 typo, 2 statement-level. M24-M36 are reserved for P4b
 (PR #26): when P4b merges, `MUTANTS` becomes 36 entries (its own test pins 36) and the total becomes 52, so
 `TOTAL_MUTANTS` below must be reconciled to 52 (and the `MUTANTS` pin to 36) in that merge.
 
@@ -211,37 +211,76 @@ def test_p5_mutants_shape_and_exact_count():
         assert any(r in n for n in names), r
 
 
-def test_def_mutants_apply_exactly_once_and_pins_exist():
+def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():
     srcs = {"PhaseIncrement.lean": PI, "PhaseCoherence.lean": PC}
-    for name, f, edits, pins in mc.DEF_MUTANTS + [(n, f, e, []) for n, f, e in mc.KNOWN_SURVIVORS]:
+    rewrite_lemmas = ("input_engine_convention", "delayed_input_step", "innovation_engine_convention",
+                      "innovation_transport", "reported_symm", "reported_offdiag", "reported_diag",
+                      "main_preM_source_formula", "drive_eta_response", "coherenceTrace_unitDisk")
+    for f, probes in mc.VALUE_PROBES.items():
+        for p in probes:
+            assert re.search(rf"^theorem {p}\b", srcs[f], re.M), (f, p)
+            assert p.startswith("probe_") and p not in rewrite_lemmas
+    for name, f, edits, pins in mc.DEF_MUTANTS:
         assert f in srcs, name
         assert mc.mutate_file(srcs[f], edits) != srcs[f], name        # each edit matches exactly `count` times
-        for p in pins:
-            assert re.search(rf"^theorem {p}\b", srcs[f], re.M), (name, p)
-        if f == "PhaseCoherence.lean":
-            assert "PhaseIncrement" not in "".join(e[0] for e in edits)
+        assert pins and set(pins) <= set(mc.VALUE_PROBES[f]), (name, pins)   # credit only via VALUE probes
+    for name, f, edits in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS + mc.KNOWN_SURVIVORS:
+        assert mc.mutate_file(srcs[f], edits) != srcs[f], name
+
+
+def test_controls_exist_with_exact_counts():
+    assert len(mc.EQUIV_CONTROLS) == 9 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2
+    eq = {n.split("_")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}
+    ci_new = {k: eq[k][1][0][1] for k in ("E1", "E2", "E3")}
+    assert "* 1" in ci_new["E1"] and "+ 0" in ci_new["E2"] and "id (inputPhasor" in ci_new["E3"]   # the audit's three
+    # one equivalent rewrite on each of: the 011 delayed read, the EMA step, reported
+    assert {f for n, f, e in mc.EQUIV_CONTROLS if n.startswith(("E4", "E5", "E6"))} == {"PhaseIncrement.lean"}
+    assert any(n.startswith("E7_ema") for n, f, e in mc.EQUIV_CONTROLS)
+    assert any(n.startswith("E8_reported") for n, f, e in mc.EQUIV_CONTROLS)
+    assert [n.split("_")[0] for n, f, e in mc.TYPO_CONTROLS] == ["T1", "T2", "T3"]
+    assert "inputPhasorXX" in mc.TYPO_CONTROLS[0][2][0][1]
+    assert [c[0].split("_")[0] for c in mc.STATEMENT_CONTROLS] == ["SE1", "ST1"]
+    names = [m[0] for m in mc.DEF_MUTANTS] + [c[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
+    assert len(names) == len(set(names))
 
 
 def test_def_mutants_never_edit_unlisted_files_and_survivor_is_only_the_011_offset():
     assert {m[1] for m in mc.DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
     assert [s[0] for s in mc.KNOWN_SURVIVORS] == ["S1_phase_input_dropped_offset_in_011_only"]
-    # the offset IS pinned one level up: M43 must name input_engine_convention as its pin
+    # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value
     m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M43")][0]
-    assert m43[3] == ["input_engine_convention"]
-    # the two cycle-013 survivors are pinned by theorems that do not go through the mutated def's own lemma
+    assert m43[3] == ["probe_input_offset_value", "probe_coherence_values"]
     m51 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M51")][0]
     m52 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M52")][0]
-    assert m51[3] == ["probe_asym_reported"] and m52[3] == ["reported_diag"]
+    assert m51[3] == ["probe_asym_reported"] and m52[3] == ["probe_asym_reported_diag"]
 
 
-def test_def_mutant_kill_rule_negative_controls():
+def test_kill_rule_revised_negative_controls():
     real = ["Mutant.lean:10:2: error: type mismatch"]
-    name_only = ["Mutant.lean:10:2: error: Unknown identifier `foo`"]
+    unk = ["Mutant.lean:60:2: error(lean.unknownIdentifier): Unknown identifier `inputPhasorXX`"]
+    unkc = ["Mutant.lean:61:2: error(lean.unknownIdentifier): Unknown constant `foo`"]
+    parse = ["Mutant.lean:60:37: error: unexpected token ')'; expected command"]
     msrc = "\n".join(["x"] * 3 + ["theorem pin_a : True := by", "  trivial", "theorem other : True := by"] +
                      ["  sorry"] * 4 + ["  rfl"])
     assert mc.failing_decls(msrc, ["Mutant.lean:5:3: error: boom"]) == ["pin_a"]
     assert mc.failing_decls(msrc, ["Mutant.lean:9:3: error: boom"]) == ["other"]
-    assert mc.def_mutant_killed(1, real, "REAL PROOF FAILURE", ["pin_a"], ["pin_a"])
-    assert not mc.def_mutant_killed(1, real, "REAL PROOF FAILURE", ["other"], ["pin_a"])     # unrelated lemma fails
-    assert not mc.def_mutant_killed(0, [], "none", [], ["pin_a"])                            # builds: survived
-    assert not mc.def_mutant_killed(1, name_only, mc.classify(name_only, ""), ["pin_a"], ["pin_a"])  # name-only
+    st = mc.def_mutant_status
+    assert st(1, real, ["pin_a"], ["pin_a"]) == "KILLED"
+    assert st(1, real, ["other"], ["pin_a"]) == "SURVIVED"                    # only a rewrite lemma fails: no credit
+    assert st(0, [], [], ["pin_a"]) == "BUILDS"
+    for bad in (unk, unkc, parse, real + unk, unk + real):                    # ANY invalid line anywhere
+        assert st(1, bad, ["pin_a"], ["pin_a"]) == "INVALID"
+        assert not mc.def_mutant_killed(1, bad, ["pin_a"], ["pin_a"])
+    # a type mismatch message mentions "expected to have type": it must NOT be read as a parse error
+    mism = ["Mutant.lean:7:2: error: Type mismatch\n  has type A but is expected to have type B"]
+    assert mc.invalid_lines(mism) == [] and st(1, mism, ["pin_a"], ["pin_a"]) == "KILLED"
+    assert mc.invalid_lines(real + unk) == unk
+
+
+def test_value_probe_statements_are_closed_value_equalities():
+    # every VALUE probe states `f concrete = concrete` (an equality over concrete data, only node indices quantified)
+    for f, src in (("PhaseIncrement.lean", PI), ("PhaseCoherence.lean", PC)):
+        for p in mc.VALUE_PROBES[f]:
+            st = _stmt(src, p)
+            assert "=" in st, p
+            assert not re.search(r"\((d|x0|u|omega|tau|alpha|C0|eta|mu|C) :", st), p   # no quantified data

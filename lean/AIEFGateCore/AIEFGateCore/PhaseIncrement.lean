@@ -111,5 +111,36 @@ theorem delayed_input_chord_bound (d : ℕ) (x0 : ι → ℝ) (u : ℕ → ι �
   simpa only [phasor, mul_comm, Real.norm_eq_abs] using
     (Real.norm_exp_I_mul_ofReal_sub_one_le (x := u n i - delayedIncrement d u n j))
 
+/-! (P5, audit fix) Closed-form VALUE probes of the two definitions the theorems above are about.
+They are proved from the definitions (not through `delayed_input_step`), so that a mutated
+definition fails here by its value, not only through a rewrite lemma. -/
+
+/-- `delayedIncrement 2` of the increment sequence `u n = n + 1`: `0, 0, u 0, u 1`. -/
+theorem probe_delayed_increment_values :
+    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 0 () = 0 ∧
+    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 1 () = 0 ∧
+    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 2 () = 1 ∧
+    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 3 () = 2 := by
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> norm_num [delayedIncrement]
+
+/-- One-step value of the input phasor with delay `D = 1`: node 0 advances by `π/2`, so
+`z₁ 0 0 = exp(i (θ₁ 0 − θ₀ 0)) = i`; reading the newest slot would give `1`. -/
+theorem probe_input_delay_values :
+    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ i => if i = 0 then Real.pi / 2 else 0)
+      (fun _ => (0 : ℝ)) 0 1 0 0 = Complex.I := by
+  have hw : wrapPhase (Real.pi / 2) = Real.pi / 2 := by
+    unfold wrapPhase
+    have h : Int.floor (Real.pi / 2 / (2 * Real.pi)) = 0 := by
+      rw [Int.floor_eq_zero_iff, Set.mem_Ico]
+      constructor
+      · positivity
+      · rw [div_lt_one (by positivity)]
+        linarith [Real.pi_pos]
+    rw [h]
+    simp
+  unfold inputPhasor
+  rw [AIEFGate.History.historyTrace_oldest]
+  simp [phaseTrace, hw, phasor]
+
 end Phase
 end AIEFGate

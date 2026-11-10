@@ -830,6 +830,7 @@ deposit statements (6 for 010/011, 17 for 013) with the md5s above and checks th
 | **new** `probe_asym_coherence_values`, `probe_asym_directed_magnitudes`, `probe_asym_directed_ne` | none | (N1, N5) `D = 1`, `x0 = 0`, `ω = 0`, `τ = 0`, node 0 advances `π/2` per step, node 1 not, `α = 1/2`, **`C0 = 0` (engine zero init)**: `C₂ 0 j = 1/4 + i/2`, `C₂ 1 j = 3/4`; `‖C₂ 0 1‖ = √5/4 ≠ 3/4 = ‖C₂ 1 0‖` |
 | **new** `probe_asym_reported`, `_swapped`, `probe_asym_drive`, `probe_asym_reported_diag` | none | reported `= (3 + √5)/8` in both directions (proved by unfolding `reported`, **not** through `reported_offdiag`), drive `= 3 (3+√5)/8 − 1` at `η = 2, μ = 1`; diagonal `0` |
 | **new** `probe_alpha_quarter` | none | `α = 1/2` is self-dual so the older probes cannot see an `α ↔ 1−α` swap; with `α = 1/4`, `C₁ = 3/4` |
+| **new (audit fix)** `Phase.probe_delayed_increment_values`, `Phase.probe_input_delay_values`, `probe_input_offset_value` | none | closed-form value probes of the definitions (`delayedIncrement 2` of `u n = n+1` is `0, 0, 1, 2`; `D = 1` input `z₁ 0 0 = i`; input at read time 0 with `ω = 1, τ = π` is `−1`); the only credit-bearing pins of M37–M39 and M43 |
 
 **Fix list from the audit.** (a) the asymmetric node-dependent probe above pins the symmetrised average (the "reported = `‖C i j‖` only" mutant is now
 killed, M51); (b) `reported_diag` and the direct `probe_asym_reported_diag` pin the zero diagonal (M52); (c) the `wrong_*_refuted` lemmas are renamed
@@ -858,58 +859,83 @@ definition mutants (a second kind, see below), numbered **M37–M52**, and live 
 
 Why a new kind. M1–M36 change a theorem *statement* and are refuted by a proved negation theorem. The survivors reported for cycle 004 and cycle 013 are wrong
 *implementations* (a different delay index, a swapped `i j`, a one-sided `reported`, …): a mutated definition has no statement to refute, so steps (b)/(c) of
-the original rule cannot apply. **Rule added (written reason above), nothing existing relaxed:** a definition mutant is *killed* iff (a') the mutated file, with
-all proofs kept, fails to build, (a'') the failure is a REAL PROOF FAILURE (same classifier as before: not name-reference-only) and (a''') at least one failing
-declaration is a **pin theorem declared for that mutant before the run** (an unrelated generic lemma failing does not count). The unmutated files must build (positive
-control, as before). `test_lean_gate_p5.py` checks that every edit applies exactly once, that every pin theorem exists, and the kill rule's negative controls (a
-build that passes, a failure only in an unlisted lemma, and a name-reference-only failure are all NOT kills). Mutants listed in `KNOWN_SURVIVORS` are run and
-reported but not counted.
+the original rule cannot apply.
 
-| # | Mutant (definition changed, proofs kept) | File | Pin theorem(s) declared |
+**Rule change after the audit of `64f39eb` (written reason).** The first version of the definition-mutant rule was: the mutated file fails to build with a "REAL PROOF
+FAILURE" and one of the pin *theorems* fails. Auditor Seat 002 showed it scores semantically **equivalent** rewrites as killed (`inputPhasor … * 1`, `(… + 0)`, `id (…)`
+in `coherenceInput`: `input_engine_convention` fails with unsolved goals) and even a **misspelled identifier** (one "Unknown identifier" plus cascading unsolved goals
+classified as real). So 16/16 measured the brittleness of rewrite lemmas, not detection. The rule is now stricter (nothing is relaxed): a definition mutant is **KILLED
+iff** (1) the mutated file fails to build; (2) **no error line anywhere is a name-reference error (Unknown identifier/constant/namespace) or a parse error** (otherwise the
+mutant is INVALID, which fails the run); (3) at least one of the **value probes** declared for that mutant fails. Value probes (`VALUE_PROBES`) are the closed-form
+equalities `f (concrete data) = concrete value` proved from the definitions (`probe_*`); rewrite lemmas (`input_engine_convention`, `delayed_input_step`,
+`innovation_*`, `reported_symm`, `reported_diag`, …) give **no credit**, because they fail under equivalent rewrites too. New value probes added for this:
+`probe_delayed_increment_values` (`delayedIncrement 2` of `u n = n+1`: `0, 0, 1, 2`), `probe_input_delay_values` (D = 1, node 0 advancing `π/2`: `z₁ 0 0 = i`, newest slot
+would give `1`; proved from the definitions, not through `delayed_input_step`) in `PhaseIncrement.lean`, and `probe_input_offset_value` (`ω = 1, τ = π`: input at read time 0
+is `−1`, proved by `simp` from the definitions) in `PhaseCoherence.lean`.
+
+**Negative controls (the run FAILS if any is not as expected):**
+
+* *Equivalence controls* (9; must NOT be killed, i.e. no declared value probe of the file fails): E1 `* 1`, E2 `+ 0`, E3 `id (…)` on `coherenceInput`; E4 `¬ n < d` for `d ≤ n`,
+  E5 `u (n − d + 0)` and E6 another proof term for the oldest slot on the 011 delayed read / input read; E7 reordered EMA sum; E8 commuted `‖C i j‖ + ‖C j i‖` in `reported`;
+  E9 `(μ + η)` for `(η + μ)` in the drive. (A first version of `probe_input_offset_value` closed its goal with `exact reference_zero …` and was killed by E1/E2, i.e. it
+  was itself brittle; it was re-proved by `simp` from the definitions, after which E1/E2 are not killed. This was caught by the controls, which is their purpose.)
+* *Typo controls* (3; must be classified INVALID and not killed): T1 `inputPhasorXX`, T2 an unbalanced parenthesis (parse error), T3 `delayedIncrementXX`.
+* *Statement-level controls* (2, on M4's statement): SE1 an equivalent rewrite `(1 − dt·γ)` and ST1 a typo `branchScaleXX` must NOT be rejected.
+* Known survivor S1 (unchanged, below). Mutants in `KNOWN_SURVIVORS` are run and reported but not counted; a survivor that starts being detected fails the run (stale list).
+
+**Re-check of the 23 statement mutants (M1–M23).** They are protected by step (b), which the definition mutants lacked: the mutated statement must be refuted by a *proved
+negation theorem* (standard axioms, no `sorry`), and an equivalent statement is true so no negation applies, while a misspelled statement does not elaborate in the refutation
+file at all. The two statement-level controls above test exactly that. Their build step (a) keeps the P3 classifier (name-reference-only failures give no credit, mixed
+ones do); the run now **flags** any statement mutant whose build output also contains a name-reference/parse error line (information only; result below). The classifier itself
+is not changed: M1–M23 were designed so that the kept proof fails on the type, and tightening it would change P3's recorded rule without a demonstrated weakness (the
+verdict of every statement mutant also needs (b) and (c)).
+
+| # | Mutant (definition changed, proofs kept) | File | Value probe(s) declared and observed failing |
 |---|---|---|---|
-| M37 | `delayedIncrement`: `d ≤ n` → `d < n` (011 auditor mutant) | PhaseIncrement | `delayed_input_step` |
-| M38 | `delayedIncrement`: `u (n−d)` → `u (n−d+1)` | PhaseIncrement | `delayed_input_step` |
-| M39 | `inputPhasor` reads the newest slot instead of the oldest | PhaseIncrement | `delayed_input_step` |
-| M40 | 004: wrong delay index, `D` → `D+1` | PhaseCoherence | `input_engine_convention`, `probe_coherence_values` |
+| M37 | `delayedIncrement`: `d ≤ n` → `d < n` (011 auditor mutant) | PhaseIncrement | `probe_delayed_increment_values` |
+| M38 | `delayedIncrement`: `u (n−d)` → `u (n−d+1)` | PhaseIncrement | `probe_delayed_increment_values` |
+| M39 | `inputPhasor` reads the newest slot instead of the oldest | PhaseIncrement | `probe_input_delay_values` |
+| M40 | 004: wrong delay index, `D` → `D+1` | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
 | M41 | 004: wrong delay index, `D` → `D−1` (younger read) | PhaseCoherence | same |
 | M42 | 004: current `θ` instead of the delayed `θ` | PhaseCoherence | same |
-| M43 | 004: dropped `ω·τ` offset (ω := 0) | PhaseCoherence | `input_engine_convention` |
-| M44 | 004: `phase := 0` (input `1`) | PhaseCoherence | `input_engine_convention`, `probe_coherence_values` |
-| M45 | 004: missing `η` (`(η+μ) R` → `μ R`) | PhaseCoherence | `drive_eta_response`, `main_preM_source_formula`, `probe_drive_second` |
-| M46 | 013 (auditor): swap `i`/`j` in `coherenceInput` | PhaseCoherence | `input_engine_convention`, `probe_coherence_values` |
+| M43 | 004: dropped `ω·τ` offset (ω := 0) | PhaseCoherence | `probe_input_offset_value`, `probe_coherence_values` (both fail) |
+| M44 | 004: `phase := 0` (input `1`) | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` (and `probe_input_offset_value`) |
+| M45 | 004: missing `η` (`(η+μ) R` → `μ R`) | PhaseCoherence | `probe_drive_second`, `probe_asym_drive` |
+| M46 | 013 (auditor): swap `i`/`j` in `coherenceInput` | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
 | M47 | 013 (auditor): conjugated input | PhaseCoherence | same |
-| M48 | 013 (auditor): `α` ↔ `1−α` in the EMA | PhaseCoherence | `probe_alpha_quarter`, `innovation_engine_convention` |
-| M49 | 013 (auditor): drive `−μ` → `+μ` | PhaseCoherence | `main_preM_source_formula`, `probe_drive_second` |
+| M48 | 013 (auditor): `α` ↔ `1−α` in the EMA | PhaseCoherence | `probe_alpha_quarter` only (the `α = 1/2` probes are blind to it) |
+| M49 | 013 (auditor): drive `−μ` → `+μ` | PhaseCoherence | `probe_drive_second`, `probe_asym_drive` |
 | M50 | 013 (auditor): trace step uses the input of step `n+1` (off by one) | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
-| M51 | 013 survivor: `reported` one-sided (`‖C i j‖` only) | PhaseCoherence | `probe_asym_reported` |
-| M52 | 013 survivor: `reported` diagonal `1` instead of `0` | PhaseCoherence | `reported_diag` |
+| M51 | 013 survivor: `reported` one-sided (`‖C i j‖` only) | PhaseCoherence | `probe_asym_reported` (also `probe_asym_reported_swapped`) |
+| M52 | 013 survivor: `reported` diagonal `1` instead of `0` | PhaseCoherence | `probe_asym_reported_diag` |
 
-Known survivor **S1** (documented, not counted): dropping the static offset `(ω_i+ω_j)/2·τ` in `PhaseIncrement.inputPhasor` alone is not detected by
-that file's theorems (the offset cancels in the step ratio; Auditor Seat 002's note on 011); it *is* pinned one level up (M43, `input_engine_convention`).
+Known survivor **S1** (documented, not counted): dropping the static offset `(ω_i+ω_j)/2·τ` in `PhaseIncrement.inputPhasor` alone is not detected by that file's theorems or value probes
+(the offset cancels in the step ratio; Auditor Seat 002's note on 011; no value probe of that file involves `ω` or `τ`). It **is** killed one level up by the value probes
+`probe_input_offset_value` and `probe_coherence_values` of `PhaseCoherence.lean` (M43), so "pinned one level up" now rests on value probes, not on `input_engine_convention`.
 
-Result (local, 2026-11-10; full run, `lean_mutation_check.py`): positive controls PASS (8 files, the two new ones included), both validator negative controls
-REJECTED, classifier negative control PASS, **23/23 statement mutants rejected (M1–M23 unchanged), 16/16 definition mutants KILLED (M37–M52), 39/39 in total, 0
-survivors among the counted mutants**; the documented survivor S1 survives as expected (not counted). Every kill was a REAL PROOF FAILURE. The pins that actually failed:
-M37–M39 `delayed_input_step`; M40–M42, M44, M46 `input_engine_convention` and `probe_coherence_values` (and `probe_asym_coherence_values`); M43 `input_engine_convention`
-(the pinned theorem, plus the probes); M45 `drive_eta_response`, `main_preM_source_formula`, `probe_drive_second`; M47 `input_engine_convention`, `probe_coherence_values`;
-M48 `innovation_engine_convention` **and** `probe_alpha_quarter` (the older `α = 1/2` probes do **not** fail under M48: `α` and `1−α` coincide); M49 `main_preM_source_formula`,
-`probe_drive_second`; M50 `probe_coherence_values`, `probe_asym_coherence_values`; **M51 `probe_asym_reported` (also `reported_offdiag`, `probe_asym_reported_swapped`)**;
-**M52 `reported_diag` (also `probe_asym_reported_diag`)**. Without the fixes M51 and M52 would survive, as the auditor found. Everything was run once: no mutant, pin or
-proof was changed after seeing a result, except that the first draft of `probe_asym_reported` went through `reported_offdiag` and so failed only together with it; it
-was re-proved from the definition of `reported` and the pin lists of M48, M51 and M52 were set to the probe/lemma named in the fix list before the final run (M48 initially
-listed `probe_coherence_values`, which does not fail under an `α` swap at `α = 1/2`; `probe_alpha_quarter` was added instead of weakening the pin).
+Result (local, 2026-11-10; full run of the revised rule, `lean_mutation_check.py`): positive controls PASS (8 files), both validator negative controls REJECTED, classifier negative
+control PASS; **23/23 statement mutants rejected (M1–M23 unchanged; 0 of them flagged with a name-reference/parse error line)**; statement controls SE1 (equivalent) and ST1 (typo)
+NOT rejected; **16/16 definition mutants KILLED by a declared value probe (M37–M52), 39/39 in total; no counted survivor**; **9/9 equivalence controls NOT killed** (E1–E5, E7–E9 fail
+only in rewrite lemmas, E6 builds); **3/3 typo controls flagged INVALID** (unknown identifier, parse error, unknown identifier); S1 survives as documented. RESULT PASS.
+Under the first version of the rule E1, E2 and E3 would have been scored killed and T1 too (audit of `64f39eb`). The value probes that actually failed are in the table above
+(per mutant); rewrite lemmas also failed for most mutants but earn no credit. No mutant, pin or proof was changed after seeing a mutation result, except the re-proof of
+`probe_input_offset_value` described under the controls (it was itself brittle: killed by E1/E2) and the pin changes recorded earlier (M48 → `probe_alpha_quarter`, M51/M52 → direct
+probes). Limits that remain: a value probe can still fail because its *proof script* is brittle rather than because the value differs; the equivalence controls bound this (nine
+rewrites, none kills) but cannot exclude it for other rewrites. The `ω` probes use a node-uniform `ω`, so a mutant replacing `(ω_i+ω_j)/2` by `ω_i` is not in the list (not tested).
 
 ### 11.4 Gate results (local, 2026-11-10, Europe/Tirane)
 
 * `SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2297 jobs, 0 warnings, 18 `.lean` files (root + 17 modules; 3 modules new) hashed in `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` (22 entries),
-  step 6: 18 files scanned, 0 hits, **612 declarations audited** (512 on `main`; +100: the three new files; 49 of them are theorems printed with `#print axioms`),
-  every one depending only on `propext`, `Classical.choice`, `Quot.sound` (`disallowed=0`). Iterations needed: two (Mathlib line-length linter on a docstring; a docstring line
-  beginning with the word `theorem`, which the step-7 declaration scan read as a declaration); no proof changed.
-* `lean_mutation_check.py` (full run): 39/39 (above).
-* `research/lean_gate/tests`: 50 passed (40 before; `test_lean_gate_p5.py` adds 10 tests: restated statements vs the deposit, banned markers and credit by handle,
-  presence of the fix lemmas, the asymmetric zero-init probe and the `α = 1/4` probe against an independent simulation, the node-uniform probe values, the exact mutant count 39,
-  every edit applies once and every pin exists, the kill rule's negative controls).
-* Repository checks (`tools/ci`, local venv): `check_artifact_pins`, `check_sha256sums`, `check_modes --strict`, `hygiene_scan --pii`, `lint_claims`, `check_manifest`, `check_current_inventory`, `check_pinned_restatement` all PASS; `unittest discover tools/ci/tests`: 179 tests OK. `registry/artifacts_current.csv` regenerated with `build_current_inventory.py` after the new files were staged (the builder lists tracked files only): rows for the three Lean files and `test_lean_gate_p5.py`.
+  step 6: 18 files scanned, 0 hits, **615 declarations audited** (512 on `main`; +103 for the three new files, 3 of them the audit-fix value probes), every one depending only on
+  `propext`, `Classical.choice`, `Quot.sound` (`disallowed=0`). Iterations: two for the first commit (Mathlib line-length linter; a docstring line starting with `theorem` read by the step-7
+  declaration scan), none for the audit-fix commit; no proof changed.
+* `lean_mutation_check.py` (full run): 39/39 with the revised rule plus 9 + 3 + 2 controls (above).
+* `research/lean_gate/tests`: 52 passed (40 before P5; `test_lean_gate_p5.py` has 12 tests: restated statements vs the deposit, banned markers and credit by handle, fix lemmas present,
+  the probes against an independent simulation, the exact counts 23 + 16 = 39 mutants and 9 / 3 / 2 controls, every edit applies once and every pin is a value probe, the revised kill rule's
+  negative controls incl. name-reference and parse errors anywhere, closed-value-equality shape of the probes).
+* Repository checks (`tools/ci`, local venv): `check_artifact_pins`, `check_sha256sums`, `check_modes --strict`, `hygiene_scan --pii`, `lint_claims`, `check_manifest`, `check_current_inventory`,
+  `check_pinned_restatement` all PASS; `unittest discover tools/ci/tests`: 179 tests OK. `registry/artifacts_current.csv` regenerated after staging (the builder lists tracked files only).
+* Not done (not on `main`): mutants for the auditor's `Capacity` lemmas `preM_between` and `convex_weights_iff` (PR #27). `Capacity.lean`, `.github/` and `Pinned/` are untouched.
 
 ### 11.5 Expected merge conflicts with P4b (PR #26)
 

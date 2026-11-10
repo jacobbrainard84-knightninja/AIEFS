@@ -332,6 +332,12 @@ theorem probe_coherence_values (i j : Fin 2) :
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     norm_num [coherenceTrace, coherenceStep, coherenceInput, probeC0, h0, h1, h2, h3] <;> ring
 
+/-- Value of the input at read time `0` with `ω = 1`, `τ = π` (nonzero offset
+`(ω_i+ω_j)/2 · τ = π`): `exp(i (0 − 0 − π)) = −1`; with the offset dropped it would be `1`. -/
+theorem probe_input_offset_value :
+    coherenceInput 2 probeX probeU probeOmega Real.pi 0 0 1 = -1 := by
+  simp [coherenceInput, inputPhasor, historyTrace, phaseTrace, probeX, probeOmega, phasor]
+
 theorem probe_late_start : lateSource 2 probeU 1 (0 : Fin 2) = 0 := by
   norm_num [lateSource]
 

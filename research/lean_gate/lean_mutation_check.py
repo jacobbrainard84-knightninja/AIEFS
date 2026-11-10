@@ -74,12 +74,24 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
 
   P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
   mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are reserved for P4b / PR #26).
-  A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. A
-  definition mutant is KILLED only if (a') the mutated file fails to build, (a'') the failure is a REAL PROOF
-  FAILURE (not name-reference-only, same classifier as above) and (a''') at least one failing declaration is one
-  of the PIN theorems declared for that mutant before the run (a mutant that only breaks some unrelated generic
-  lemma does not count). `KNOWN_SURVIVORS` lists mutants that are expected to survive; they are run and reported
-  but do not enter the count.
+  A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. RULE
+  (revised after the audit of 64f39eb, which showed that the first version scored semantically EQUIVALENT rewrites
+  such as `* 1`, `+ 0`, `id (...)` and even a misspelled identifier as killed, i.e. it measured proof brittleness):
+  a definition mutant is KILLED iff
+    (1) the mutated file fails to build;
+    (2) NO error line anywhere is a name-reference error (Unknown identifier / constant / namespace) or a parse error
+        (unexpected token, expected ...): such a mutant is INVALID and fails the run (it says nothing about semantics);
+    (3) at least one of the VALUE PROBES declared for that mutant (closed-form value equalities, `VALUE_PROBES`)
+        fails. A rewrite lemma such as `input_engine_convention` or `delayed_input_step` failing does NOT count: it
+        fails under equivalent rewrites too.
+  Negative controls, all of which must come out as expected or the run FAILS: EQUIV_CONTROLS (semantically equal
+  definitions: `* 1`, `+ 0`, `id`, a reordered EMA sum, a commuted `reported`, `not (n < d)` for `d <= n`, a
+  different proof term for the oldest slot, a commuted `(eta + mu)`) must NOT be killed; TYPO_CONTROLS (a misspelled
+  identifier, syntax garbage) must be classified INVALID and not killed. The statement mutants M1-M23 are protected
+  by step (b) (a typo or an equivalent statement cannot be refuted by a proved negation); STATEMENT_CONTROLS checks
+  one of each, and every statement mutant whose build output contains a name-reference/parse error line is flagged
+  (information only, the verdict is unchanged). `KNOWN_SURVIVORS` lists mutants that are expected to survive; they
+  are run and reported but do not enter the count.
 
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
@@ -202,7 +214,8 @@ MUTANTS = [
 ]
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
-# name, file, [(old, new, count)] applied to the whole file text, PIN theorems (declared in advance; >= 1 must fail)
+# name, file, [(old, new, count)] applied to the whole file text, VALUE PROBES declared in advance (>= 1 must fail).
+# Rule (see the module docstring): build fails, no name-reference/parse error line, and a declared VALUE PROBE fails.
 CI_OLD = "    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=\n  inputPhasor d x0 u omega tau n i j\n"
 
 
@@ -210,19 +223,29 @@ def ci(new):
     return [(CI_OLD, "    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=\n  " + new + "\n", 1)]
 
 
-PIN_INPUT = ["input_engine_convention", "probe_coherence_values"]
+# closed-form value equalities (statements of the form `f (concrete data) = concrete value`), proved from the
+# definitions; rewrite lemmas (input_engine_convention, delayed_input_step, innovation_*, ...) are NOT in these lists
+VP_INC = ["probe_delayed_increment_values", "probe_input_delay_values"]
+VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_quarter", "probe_input_offset_value",
+          "probe_reported_second", "probe_drive_second", "probe_asym_drive", "probe_main_preM",
+          "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag"]
+VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH}
+PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
+PIN_DRIVE = ["probe_drive_second", "probe_asym_drive"]
 DRIVE_OLD = "  (eta + mu) * reported C i j - mu\n"
 REP_OLD = "  if i = j then 0 else (‖C i j‖ + ‖C j i‖) / 2\n"
+EMA_OLD = "  (alpha : ℂ) * C i j + ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j\n"
+DELAY_OLD = "  if d ≤ n then u (n - d) j else 0"
+SLOT_OLD = "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -"
 DEF_MUTANTS = [
-    # 011 (PhaseIncrement.lean): three mutants that must break `delayed_input_step`
+    # 011 (PhaseIncrement.lean): value probes of `delayedIncrement` (M37, M38) and of the input read (M39)
     ("M37_phase_delayed_increment_starts_late", "PhaseIncrement.lean",
-     [("  if d ≤ n then u (n - d) j else 0", "  if d < n then u (n - d) j else 0", 1)], ["delayed_input_step"]),
+     [(DELAY_OLD, "  if d < n then u (n - d) j else 0", 1)], ["probe_delayed_increment_values"]),
     ("M38_phase_delayed_increment_off_by_one", "PhaseIncrement.lean",
-     [("  if d ≤ n then u (n - d) j else 0", "  if d ≤ n then u (n - d + 1) j else 0", 1)], ["delayed_input_step"]),
+     [(DELAY_OLD, "  if d ≤ n then u (n - d + 1) j else 0", 1)], ["probe_delayed_increment_values"]),
     ("M39_phase_input_reads_newest_slot", "PhaseIncrement.lean",
-     [("AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -",
-       "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨d, Nat.lt_succ_self d⟩ j -", 1)],
-     ["delayed_input_step"]),
+     [(SLOT_OLD, "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨d, Nat.lt_succ_self d⟩ j -", 1)],
+     ["probe_input_delay_values"]),
     # cycle-004 survivors, now on the phase-specific coherence input (PhaseCoherence.lean)
     ("M40_coherence_input_wrong_delay_plus_one", "PhaseCoherence.lean",
      ci("inputPhasor (d + 1) x0 u omega tau n i j"), PIN_INPUT),
@@ -231,38 +254,72 @@ DEF_MUTANTS = [
     ("M42_coherence_input_current_theta_not_delayed", "PhaseCoherence.lean",
      ci("phasor (phaseTrace x0 u n i - phaseTrace x0 u n j - ((omega i + omega j) / 2) * tau)"), PIN_INPUT),
     ("M43_coherence_input_dropped_omega_tau", "PhaseCoherence.lean",
-     ci("inputPhasor d x0 u (fun _ => 0) tau n i j"), ["input_engine_convention"]),
+     ci("inputPhasor d x0 u (fun _ => 0) tau n i j"), ["probe_input_offset_value", "probe_coherence_values"]),
     ("M44_coherence_input_phase_is_zero", "PhaseCoherence.lean", ci("1"), PIN_INPUT),
     ("M45_drive_missing_eta", "PhaseCoherence.lean",
-     [(DRIVE_OLD, "  mu * reported C i j - mu\n", 1)],
-     ["drive_eta_response", "main_preM_source_formula", "probe_drive_second"]),
+     [(DRIVE_OLD, "  mu * reported C i j - mu\n", 1)], PIN_DRIVE),
     # the auditor's cycle-013 mutants (five killed in the audit, two survivors of the original file)
     ("M46_coherence_input_swap_i_j", "PhaseCoherence.lean",
      ci("inputPhasor d x0 u omega tau n j i"), PIN_INPUT),
     ("M47_coherence_input_conjugated", "PhaseCoherence.lean",
      ci("(starRingEnd ℂ) (inputPhasor d x0 u omega tau n i j)"), PIN_INPUT),
     ("M48_coherence_ema_alpha_swapped", "PhaseCoherence.lean",
-     [("  (alpha : ℂ) * C i j + ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j\n",
-       "  ((1 - alpha : ℝ) : ℂ) * C i j + (alpha : ℂ) * coherenceInput d x0 u omega tau n i j\n", 1)],
-     ["probe_alpha_quarter", "innovation_engine_convention"]),
+     [(EMA_OLD, "  ((1 - alpha : ℝ) : ℂ) * C i j + (alpha : ℂ) * coherenceInput d x0 u omega tau n i j\n", 1)],
+     ["probe_alpha_quarter"]),
     ("M49_drive_mu_sign", "PhaseCoherence.lean",
-     [(DRIVE_OLD, "  (eta + mu) * reported C i j + mu\n", 1)],
-     ["main_preM_source_formula", "probe_drive_second"]),
+     [(DRIVE_OLD, "  (eta + mu) * reported C i j + mu\n", 1)], PIN_DRIVE),
     ("M50_trace_step_uses_next_input", "PhaseCoherence.lean",
      [("  | n + 1 => coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau n\n",
        "  | n + 1 =>\n    coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau (n + 1)\n", 1)],
-     ["probe_coherence_values", "probe_asym_coherence_values"]),
+     PIN_INPUT),
     ("M51_reported_one_sided_not_symmetrised", "PhaseCoherence.lean",
-     [(REP_OLD, "  if i = j then 0 else ‖C i j‖\n", 1)],
-     ["probe_asym_reported"]),
+     [(REP_OLD, "  if i = j then 0 else ‖C i j‖\n", 1)], ["probe_asym_reported"]),
     ("M52_reported_diagonal_one", "PhaseCoherence.lean",
-     [(REP_OLD, "  if i = j then 1 else (‖C i j‖ + ‖C j i‖) / 2\n", 1)],
-     ["reported_diag"]),
+     [(REP_OLD, "  if i = j then 1 else (‖C i j‖ + ‖C j i‖) / 2\n", 1)], ["probe_asym_reported_diag"]),
+]
+
+# Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
+# the file fails); a control scored killed FAILS the run (the rule would then measure proof brittleness).
+EQUIV_CONTROLS = [
+    ("E1_coherence_input_times_one", "PhaseCoherence.lean", ci("inputPhasor d x0 u omega tau n i j * 1")),
+    ("E2_coherence_input_plus_zero", "PhaseCoherence.lean", ci("(inputPhasor d x0 u omega tau n i j + 0)")),
+    ("E3_coherence_input_id", "PhaseCoherence.lean", ci("id (inputPhasor d x0 u omega tau n i j)")),
+    ("E4_delayed_read_not_lt", "PhaseIncrement.lean", [(DELAY_OLD, "  if ¬ n < d then u (n - d) j else 0", 1)]),
+    ("E5_delayed_read_plus_zero", "PhaseIncrement.lean", [(DELAY_OLD, "  if d ≤ n then u (n - d + 0) j else 0", 1)]),
+    ("E6_oldest_slot_other_proof_term", "PhaseIncrement.lean",
+     [(SLOT_OLD, "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.succ_pos d⟩ j -", 1)]),
+    ("E7_ema_sum_commuted", "PhaseCoherence.lean",
+     [(EMA_OLD, "  ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j + (alpha : ℂ) * C i j\n", 1)]),
+    ("E8_reported_sum_commuted", "PhaseCoherence.lean",
+     [(REP_OLD, "  if i = j then 0 else (‖C j i‖ + ‖C i j‖) / 2\n", 1)]),
+    ("E9_drive_coefficient_commuted", "PhaseCoherence.lean",
+     [(DRIVE_OLD, "  (mu + eta) * reported C i j - mu\n", 1)]),
+]
+
+# Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
+TYPO_CONTROLS = [
+    ("T1_misspelled_identifier_inputPhasorXX", "PhaseCoherence.lean", ci("inputPhasorXX d x0 u omega tau n i j")),
+    ("T2_syntax_garbage_unbalanced_paren", "PhaseCoherence.lean", ci("inputPhasor d x0 u omega tau n i j )")),
+    ("T3_misspelled_identifier_delayedIncrementXX", "PhaseIncrement.lean",
+     [(DELAY_OLD, "  if d ≤ n then u (n - d) j else delayedIncrementXX", 1)]),
+]
+
+# Statement-level controls on M4's statement (GateMap.stepB_add_smul_of_branch): an equivalent rewrite and a typo must
+# both be NOT rejected (step (b): neither can be refuted by the proved negation `false_main_no_gamma`).
+M4_OLD = "t * (1 - p.γ * p.dt) * branchScale p G drive B ctrl e * h e"
+STATEMENT_CONTROLS = [
+    ("SE1_statement_equivalent_commuted_gamma_dt", "GateMap.lean", "stepB_add_smul_of_branch",
+     [(M4_OLD, "t * (1 - p.dt * p.γ) * branchScale p G drive B ctrl e * h e", 1)], GATE_VARS,
+     f"RedTeam.false_main_no_gamma ({GATE_INST})"),
+    ("ST1_statement_typo_branchScaleXX", "GateMap.lean", "stepB_add_smul_of_branch",
+     [(M4_OLD, "t * (1 - p.γ * p.dt) * branchScaleXX p G drive B ctrl e * h e", 1)], GATE_VARS,
+     f"RedTeam.false_main_no_gamma ({GATE_INST})"),
 ]
 
 # Expected survivors: reported and run, never counted. The static offset (ω_i + ω_j)/2 · τ cancels in the step ratio
 # of `delayed_input_step` (auditor note on cycle 011), so dropping it in PhaseIncrement.lean alone cannot be detected
-# by that file's theorems; it is pinned one level up (M43, `PhaseCoherence.input_engine_convention`).
+# by that file's theorems (no value probe of that file involves ω or τ). It is killed one level up by the VALUE probes
+# `probe_input_offset_value` and `probe_coherence_values` of PhaseCoherence.lean (M43).
 KNOWN_SURVIVORS = [
     ("S1_phase_input_dropped_offset_in_011_only", "PhaseIncrement.lean",
      [("    ((omega i + omega j) / 2) * tau)\n\nnoncomputable def delayedIncrement",
@@ -407,9 +464,30 @@ def failing_decls(msrc, errs):
     return names
 
 
-def def_mutant_killed(rc, errs, kind, failing, pins):
-    """Definition-mutant rule (P5): real build failure AND at least one declared PIN theorem fails."""
-    return build_rejected(rc, errs, kind) and any(p in failing for p in pins)
+NAME_REF_RE = re.compile(r"nknown (identifier|constant|namespace)")
+PARSE_ERR_RE = re.compile(r"\berror(\([^)]*\))?: (unexpected |expected )")
+
+
+def invalid_lines(errs):
+    """Error lines that are name-reference or parse errors (such a mutant says nothing about semantics)."""
+    return [l for l in errs if NAME_REF_RE.search(l) or PARSE_ERR_RE.search(l)]
+
+
+def def_mutant_status(rc, errs, failing, pins):
+    """Definition-mutant rule (P5, revised): 'BUILDS' (no error), 'INVALID' (any name-reference or parse error line),
+    'KILLED' (builds fail, no invalid line, and a declared VALUE PROBE fails) or 'SURVIVED' (fails only in other
+    declarations, e.g. brittle rewrite lemmas, which gives no credit)."""
+    if rc == 0 and not errs:
+        return "BUILDS"
+    if rc == 0 or not errs:
+        return "INVALID"
+    if invalid_lines(errs):
+        return "INVALID"
+    return "KILLED" if any(p in failing for p in pins) else "SURVIVED"
+
+
+def def_mutant_killed(rc, errs, failing, pins):
+    return def_mutant_status(rc, errs, failing, pins) == "KILLED"
 
 
 def refute(msrc, src, thm, closure, term):
@@ -423,7 +501,7 @@ def refute(msrc, src, thm, closure, term):
 def main():
     ok = True
     srcs = {}
-    for f in sorted({m[1] for m in MUTANTS} | {m[1] for m in DEF_MUTANTS} | {m[1] for m in KNOWN_SURVIVORS}):
+    for f in sorted({m[1] for m in MUTANTS} | {m[1] for m in DEF_MUTANTS} | {m[1] for m in KNOWN_SURVIVORS} | {m[1] for m in EQUIV_CONTROLS} | {m[1] for m in TYPO_CONTROLS}):
         srcs[f] = (SRCDIR / f).read_text()
         rc, errs, _ = lean(srcs[f])
         good = rc == 0 and not errs
@@ -447,6 +525,7 @@ def main():
           f"{'YES (BAD)' if build_rejected(lrc, lerrs, lkind) else 'NO'} -> {'PASS' if lgood else 'FAIL'}")
     ok &= lgood
     n_rej = 0
+    n_flag = 0
     for name, f, thm, edits, closure, term, eterm in MUTANTS:
         src = srcs[f]
         msrc = mutate(src, thm, edits)
@@ -468,6 +547,9 @@ def main():
             if erefuted:
                 emsg = []
         n_rej += rejected
+        if invalid_lines(errs):
+            line += "; NOTE: build output also has a name-reference/parse error line (info only)"
+            n_flag += 1
         print(f"{line} -> {'REJECTED (good)' if rejected else 'NOT REJECTED (BAD)'}")
         for l in errs[:1]:
             print("    build: " + l.split("Mutant.lean:")[-1][:150])
@@ -477,31 +559,72 @@ def main():
         for l in emsg[:3]:
             print("    engine refutation: " + l.split("Mutant.lean:")[-1][:200])
         ok &= rejected
-    print(f"statement mutants rejected: {n_rej}/{len(MUTANTS)}")
-    # P5: definition mutants (kill = real proof failure in a pre-declared pin theorem)
+    print(f"statement mutants rejected: {n_rej}/{len(MUTANTS)}; flagged with a name-reference/parse error line: {n_flag}")
+    # statement-level controls: an equivalent statement and a typo must NOT be rejected
+    for name, f, thm, edits, closure, term in STATEMENT_CONTROLS:
+        src = srcs[f]
+        msrc = mutate(src, thm, edits)
+        rc, errs, out = lean(msrc)
+        build_rej = build_rejected(rc, errs, classify(errs, out))
+        refuted, why, control_ok, _ = refute(msrc, src, thm, closure, term)
+        rejected = build_rej and refuted and control_ok
+        good = not rejected and not refuted
+        print(f"STATEMENT CONTROL {name}: build rejected: {build_rej}; refuted by proof: {refuted} -> "
+              f"{'NOT REJECTED (good)' if good else 'REJECTED (BAD)'}")
+        ok &= good
+    # P5: definition mutants (rule: build fails, no name-reference/parse error line, a declared value probe fails)
     n_def = 0
     for name, f, edits, pins in DEF_MUTANTS:
         src = srcs[f]
         msrc = mutate_file(src, edits)
         assert msrc != src
         rc, errs, out = lean(msrc)
-        kind = classify(errs, out)
         failing = failing_decls(msrc, errs)
-        killed = def_mutant_killed(rc, errs, kind, failing, pins)
+        status = def_mutant_status(rc, errs, failing, pins)
+        killed = status == "KILLED"
         n_def += killed
         hit = [p for p in pins if p in failing]
-        print(f"{name}: build {'FAILS' if rc != 0 else 'PASSES (BAD)'} [{kind}]; failing declarations: "
-              f"{', '.join(failing) or '-'}; pin theorems failing: {', '.join(hit) or 'NONE (BAD)'} -> "
-              f"{'KILLED (good)' if killed else 'SURVIVED (BAD)'}")
+        print(f"{name}: {status}; failing declarations: {', '.join(failing) or '-'}; "
+              f"value probes failing: {', '.join(hit) or 'NONE'} -> "
+              f"{'KILLED (good)' if killed else status + ' (BAD)'}")
+        for l in invalid_lines(errs)[:1]:
+            print("    invalid-mutant line: " + l.split("Mutant.lean:")[-1][:150])
         ok &= killed
     print(f"definition mutants killed: {n_def}/{len(DEF_MUTANTS)}")
     print(f"mutants rejected in total: {n_rej + n_def}/{len(MUTANTS) + len(DEF_MUTANTS)}")
+    # equivalence controls: must NOT be killed
+    n_eq = 0
+    for name, f, edits in EQUIV_CONTROLS:
+        msrc = mutate_file(srcs[f], edits)
+        rc, errs, out = lean(msrc)
+        failing = failing_decls(msrc, errs)
+        status = def_mutant_status(rc, errs, failing, VALUE_PROBES[f])
+        good = status != "KILLED"
+        n_eq += good
+        print(f"EQUIVALENCE CONTROL {name}: {status}; build {'passes' if rc == 0 and not errs else 'fails'}; "
+              f"failing declarations: {', '.join(failing) or '-'} -> "
+              f"{'NOT KILLED (good)' if good else 'KILLED (BAD: the rule scores an equivalent rewrite as a kill)'}")
+        ok &= good
+    print(f"equivalence controls not killed: {n_eq}/{len(EQUIV_CONTROLS)}")
+    # typo / invalid-mutant controls: must be classified INVALID
+    n_ty = 0
+    for name, f, edits in TYPO_CONTROLS:
+        msrc = mutate_file(srcs[f], edits)
+        rc, errs, out = lean(msrc)
+        failing = failing_decls(msrc, errs)
+        status = def_mutant_status(rc, errs, failing, VALUE_PROBES[f])
+        good = status == "INVALID"
+        n_ty += good
+        print(f"TYPO CONTROL {name}: {status} -> {'FLAGGED INVALID, not killed (good)' if good else 'NOT FLAGGED (BAD)'}")
+        ok &= good
+    print(f"typo controls flagged invalid: {n_ty}/{len(TYPO_CONTROLS)}")
     # expected survivors: reported honestly, not counted
     for name, f, edits in KNOWN_SURVIVORS:
         rc, errs, out = lean(mutate_file(srcs[f], edits))
         clean = rc == 0 and not errs
         print(f"{name}: build {'PASSES' if clean else 'FAILS'} -> "
               f"{'SURVIVES, as documented (not counted)' if clean else 'now detected (documented survivor is stale)'}")
+        ok &= clean
     print("RESULT:", "PASS" if ok else "FAIL")
     sys.exit(0 if ok else 1)
 
