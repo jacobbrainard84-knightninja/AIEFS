@@ -1,0 +1,39 @@
+Part 5 execution evidence — v4.1 fail-closed trust-anchor guard
+Date: 2026-11-09 UTC
+Source reviewed: main@eb3933c196ee19e80e1621ae80d89ca72e6d9485
+v4.1 source blob: df78b01607e6792afe9afc09fcc9b0cb83585ec6
+Registry README blob: b3ab739359393aae5d1e02aded5d4c6885981144
+Current-inventory checker blob: 0471299194219395d8e94b12494cdccc474c192e
+Execution command: python AIEFS_Part5_v41_trust_anchor_regression.py
+Environment: Python 3.13.5 (standard-library-only harness)
+Expanded harness SHA-256: 144fa95486e9ba5185d22b439052cb3a0503bcc2a5788040ad1c606147138e86
+Expanded harness bytes: 15104
+Isolation: temp directory; no checkout, repository files, credentials, salvage files, or genuine S01 binary artifacts were executed.
+
+OUTPUT
+SYNTHETIC_TRUSTED_POSITIVE=ACCEPTED | seeds=40
+MISSING_TRUST_POLICY=REJECTED | no independent trust policy supplied
+CHILD_TAMPER_WITH_OLD_TRUSTED_PIN=REJECTED | trusted child hash mismatch for scalar_csv: expected=d7e2db7b17c369a4f23a1e40479c60ec5103764a13c20867f3140c12fa3b3370, observed=190989b75d297ad3c92672995a5f255a3120c22f3eecc82a0aac3407af216426
+CHILD_TAMPER_AND_UNTRUSTED_MANIFEST_REPIN=REJECTED | manifest trust-anchor mismatch: expected=0a2f323749762db9fd98f0ed9adb0da0eebeb55de0811a9bb61ddd230a4f199c, observed=79e42c9928d9c78fc46d0be7a90049ade10b459d709de8b1640d35d4d1d9b8ee
+CERTIFICATE_TAMPER=REJECTED | trusted child hash mismatch for baseline_certificate: expected=e7c1716d2deb6be12e22132dfb1aab96c36d6a8999e01a0b23c1f11a3d68e2c0, observed=3b95a40f09aabe348f93ee93bf8932e308883e554cd2f1c031068b8990680f88
+CERTIFICATE_TAMPER_AND_UNTRUSTED_MANIFEST_REPIN=REJECTED | manifest trust-anchor mismatch: expected=0a2f323749762db9fd98f0ed9adb0da0eebeb55de0811a9bb61ddd230a4f199c, observed=54696566851689f004430201f5ccbb08b985a5d0f699934c547e3bbdda683f89
+ALTERNATE_COHORT_IDENTITY=REJECTED | manifest trust-anchor mismatch: expected=0a2f323749762db9fd98f0ed9adb0da0eebeb55de0811a9bb61ddd230a4f199c, observed=9b2f7add6adc7b6cfd7823ff733c04a8dc3cbfe423a414025e4c32a3291897d0
+MANIFEST_WHITESPACE_REWRITE=REJECTED | manifest trust-anchor mismatch: expected=0a2f323749762db9fd98f0ed9adb0da0eebeb55de0811a9bb61ddd230a4f199c, observed=77a7cc35baeb8dcc88c675d2f9ecbe7e8976b05f7b4c0e02074554c7b261f3e4
+SYMLINKED_CHILD_INPUT=REJECTED | required input is missing, non-regular or symlinked: AIEF_1_4_Twindow_sensitivity_b57562a8ee77_scalar_summary.csv
+SUMMARY=1 synthetic positive control accepted; 7 tamper/misconfiguration controls rejected
+S01_POLICY_MANIFEST_SHA256=7d1b86ab39eed397e2d281faf729ee5c3ac515efc00b2789c2e0013dce0d1e78
+S01_POLICY_CERTIFICATE_SHA256=08314de365196fa369bfa2b0363352cf04bdfb1a957f3ed86847f5d17b9d620f
+S01_POLICY_CHILD_HASH_COUNT=5
+S01_POLICY_SEED_COUNT=40
+S01_POLICY_SEEDS_MATCH_EXPECTED_SOURCE_LENGTH=True
+SCOPE=Guard design tested against synthetic fixture only; no genuine S01 bundle executed
+
+INTERPRETATION
+- The positive control is an intentionally generated synthetic bundle, accepted against a TrustPolicy frozen before mutation. It is not genuine S01 data.
+- All mutations are rejected by the proposed wrapper before the original candidate validator is entered.
+- Updating the manifest's own child hash does not help because manifest bytes are checked first against an independent policy hash.
+- The child file hash check remains in place, now against values held outside the input manifest.
+- The baseline certificate gets an independent digest comparison; existing validate_run status/n_seeds checks are retained after this guard.
+- The verifier enforces exact seed ordering and the exact run-directory identity and rejects symlinks.
+- S01 policy constants are transcribed from runs/b57562a8ee77/manifest.json and registry/artifacts_current.csv on the cited main commit; the manifest SHA itself was cross-checked against ART-2217. The 28 MB S01 NPZ and 4.3 MB certificate were not locally available, so no authentic S01 positive-control run was possible.
+- The repo's registry/README.md calls artifacts_current.csv a generated current-tree inventory and says check_current_inventory.py regenerates and compares it; it is not a signature or self-authenticating root. A production fix must carry the expected S01 manifest/certificate pins in reviewed trusted configuration (or an equivalently independent signed trust store), not read the expected pin from the run-supplied manifest.

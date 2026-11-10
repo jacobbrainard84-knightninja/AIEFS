@@ -1,0 +1,42 @@
+# Part 4 execution evidence — v4.1 provenance mutations
+
+- Date: 2026-11-09 UTC
+- Source reviewed: main@eb3933c196ee19e80e1621ae80d89ca72e6d9485
+- v4.1 source blob: df78b01607e6792afe9afc09fcc9b0cb83585ec6
+- Command: python AIEFS_Part4_v41_provenance_mutations.py
+- Python: 3.13.5
+- NumPy: 2.3.5
+- pandas: 2.2.3
+- Reproducer SHA-256: 504d8240518165e142f553f29b01dbe307d22b1528b21af5c6f87c23ed9d42ea (16,413 bytes)
+- Isolation: temporary directory only; no checkout, credentials, salvage files, or genuine S01 artifacts.
+
+## Standard output
+
+\`\`\`text
+BASELINE_FORGED_MANIFEST_AND_CERT=ACCEPTED | n_seeds=40 first_seed=fake_seed_00
+FAKE_MANIFEST_SHA256=93a89fb0e6e381d10355b857b33aba6be84614ac850daa2454820eb7b4f12404
+FAKE_MANIFEST_MATCHES_TRUSTED_S01_PIN=False
+FAKE_SEED_IDENTIFIERS=40 synthetic IDs
+MISSING_MANIFEST_FIELDS=run_id,study_name,spec_sha256,config_hash,source_sha256,oracle_certified,schema,signed_identity
+CERTIFICATE_STATUS_COUNT=(passed,40)
+CERTIFICATE_CONTRADICTIONS=(tested=1,passed=0,frozen_scalar_hash=000000000000...)
+CHILD_BYTES_CHANGED_WITH_OLD_PIN=REJECTED | ArtifactIntegrityError: Input hash mismatch for scalar_csv: expected=aa61dde7aaa5e23121b7e67ec16ac58e618bf3225a96b5a368460b3c375ed132, observed=f481434e0e728107c5a5e99cae8434e50ff4df69c51fe37b93fbc0a6e53f8013
+CHILD_BYTES_CHANGED_AND_MANIFEST_REPINNED=ACCEPTED | n_seeds=40 first_seed=fake_seed_00
+CERT_PROVENANCE_CONTRADICTIONS_REPINNED=ACCEPTED | n_seeds=40 first_seed=fake_seed_00
+CERT_STATUS_FAILED=REJECTED | ArtifactIntegrityError: Baseline certificate is not a passing 40-seed certificate
+CERT_N_SEEDS_39=REJECTED | ArtifactIntegrityError: Baseline certificate is not a passing 40-seed certificate
+ALTERNATE_40_SEED_NAMESPACE=ACCEPTED | n_seeds=40 first_seed=alternate_fake_00
+SUMMARY=4 forged/provenance scenarios accepted; 3 genuine local integrity/status checks rejected
+SCOPE=Copied validate_run only; no full module, CLI, bundle writer, or genuine S01 file executed
+\`\`\`
+
+## Interpretation
+
+- The child-file digest check works as an integrity check when the expected digest is not changed.
+- It does not authenticate the child file if the caller can also replace the digest in the manifest.
+- The baseline certificate's status and n_seeds fields are checked; extra contradictory provenance-shaped fields in this synthetic certificate are ignored.
+- The 40-seed count and exact row/status coverage are checked, but the seed identifiers need not be the trusted S01 seed list.
+- The fake manifest is not the ART-2217 pinned S01 manifest, yet the copied validator accepted it.
+- This transcript reports copied-function execution only, not a full project-module / CLI / S01 run.
+
+Evidence-file SHA-256: 42e373c13cc7deb907559d124acbf1ec74d9c0f5154e4901ac4a8f31e4d7d981 (1,967 bytes).

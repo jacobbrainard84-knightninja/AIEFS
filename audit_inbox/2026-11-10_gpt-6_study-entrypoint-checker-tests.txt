@@ -1,0 +1,12 @@
+ENTRYPOINT_CHECKER_UNIT_TESTS
+test_exact_and_glob_positive ... PASS
+test_missing_exact_rejected ... PASS
+test_unmatched_glob_rejected ... PASS
+test_glob_does_not_cross_directory ... PASS
+test_path_traversal_rejected ... PASS
+test_duplicate_study_id_rejected ... PASS
+
+Ran 6 tests in 0.001s
+OK
+EXIT=0
+PY_COMPILE=PASS

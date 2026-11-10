@@ -1,0 +1,7 @@
+INPUT_ERROR: missing: runs/b57562a8ee77/manifest.json
+INPUT_ERROR: missing: runs/b57562a8ee77/AIEF_1_4_Twindow_sensitivity_b57562a8ee77_branch_diagnostics.npz
+INPUT_ERROR: missing: runs/b57562a8ee77/AIEF_1_4_Twindow_sensitivity_b57562a8ee77_scalar_summary.csv
+INPUT_ERROR: missing: runs/b57562a8ee77/baseline_equivalence_by_seed.json
+INPUT_ERROR: missing: runs/b57562a8ee77/baseline_equivalence_certificate.json
+INPUT_ERROR: missing: runs/b57562a8ee77/twindow_condition_status.csv
+EXPECTED_MISSING_BUNDLE_EXIT=1
