@@ -35,8 +35,10 @@ Theorems (all on this factoring; `X` nonnegative with zero diagonal unless state
   `gateM_stepM` (the gate fixes the engine step output), `stepM_nonneg`.
 * Port bridge to the cycle-003 proposal form: `symM_eq_convex`, `stepM_eq_gateM_convex`. For
   `γ ≠ 0`, `preM = (1 - γ dt) B + γ dt (D/γ)`, so `stepM` is the gate of the symmetrised clip of
-  that convex combination. Statements about the source `weightStep` follow by unfolding its
-  definition and are not part of the library.
+  that affine combination; it is a convex combination only when `0 ≤ γ dt ≤ 1`
+  (`convex_weights_iff`, `preM_between`; negative witness `false_preM_between_no_bound`).
+  Statements about the source `weightStep` follow by unfolding its definition and are not part
+  of the library.
 
 Negations and non-vacuity (GateCore style, `ε = 10⁻¹²` at the frozen `pE` where possible):
 `false_kernel_row_no_eps`, `false_kernel_fixes_boundary`, `false_kernel_idempotent`,
@@ -298,8 +300,10 @@ theorem symM_eq_convex (hγ : p.γ ≠ 0) (D Bm : V → V → ℝ) (i j : V) :
   unfold symM clipM
   simp only [preM_eq_convex p hγ]
 
-/-- `stepM` is the guarded gate of the symmetrised clip of the convex proposal
-`(1 - γ dt) B + γ dt (D/γ)`. -/
+/-- `stepM` is the guarded gate of the symmetrised clip of the proposal
+`(1 - γ dt) B + γ dt (D/γ)`. Only `γ ≠ 0` is assumed, so this is an affine rewriting; the weights
+form a genuine convex pair only when `0 ≤ γ dt ≤ 1` (`convex_weights_iff`, `preM_between`;
+`false_preM_between_no_bound` shows the bound is needed). The name is kept for the port. -/
 theorem stepM_eq_gateM_convex (hγ : p.γ ≠ 0) (D Bm : V → V → ℝ) :
     stepM p D Bm = gateM p (fun i j =>
       if i = j then 0 else
@@ -310,7 +314,36 @@ theorem stepM_eq_gateM_convex (hγ : p.γ ≠ 0) (D Bm : V → V → ℝ) :
   funext i j
   exact symM_eq_convex p hγ D Bm i j
 
+/-- The proposal weights `1 - γ dt` and `γ dt` are both nonnegative (they always sum to `1`)
+exactly when `0 ≤ γ dt ≤ 1`. -/
+theorem convex_weights_iff :
+    (0 ≤ 1 - p.γ * p.dt ∧ 0 ≤ p.γ * p.dt) ↔ (0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1) := by
+  constructor <;> rintro ⟨h1, h2⟩ <;> constructor <;> linarith
+
+omit [Fintype V] [LinearOrder V] in
+/-- Under `0 ≤ γ dt ≤ 1` the proposal lies between the old weight `B` and the target `D/γ`. -/
+theorem preM_between (hγ : p.γ ≠ 0) (h0 : 0 ≤ p.γ * p.dt) (h1 : p.γ * p.dt ≤ 1)
+    (D Bm : V → V → ℝ) (i j : V) :
+    min (Bm i j) (D i j / p.γ) ≤ preM p D Bm i j ∧
+      preM p D Bm i j ≤ max (Bm i j) (D i j / p.γ) := by
+  rw [preM_eq_convex p hγ]
+  have hw : 0 ≤ 1 - p.γ * p.dt := by linarith
+  constructor
+  · nlinarith [mul_le_mul_of_nonneg_left (min_le_left (Bm i j) (D i j / p.γ)) hw,
+      mul_le_mul_of_nonneg_left (min_le_right (Bm i j) (D i j / p.γ)) h0]
+  · nlinarith [mul_le_mul_of_nonneg_left (le_max_left (Bm i j) (D i j / p.γ)) hw,
+      mul_le_mul_of_nonneg_left (le_max_right (Bm i j) (D i j / p.γ)) h0]
+
 end General
+
+/-- Negative witness: without `γ dt ≤ 1` the proposal can leave `[min B (D/γ), max B (D/γ)]`
+(`γ = 1`, `dt = 2`, `B = 1`, `D = 0` gives `-1 < 0`), so `preM_between` needs its bound. -/
+theorem false_preM_between_no_bound :
+    ¬ ∀ (p : Params) (D Bm : Unit → Unit → ℝ) (i j : Unit), p.γ ≠ 0 → 0 ≤ p.γ * p.dt →
+      min (Bm i j) (D i j / p.γ) ≤ preM p D Bm i j := by
+  intro H
+  have h := H ⟨2, 1, 1, 0, 0, 0, 0⟩ (fun _ _ => 0) (fun _ _ => 1) () () (by norm_num) (by norm_num)
+  norm_num [preM] at h
 
 /-! ### Negations and non-vacuity witnesses (`Fin 2`) -/
 
