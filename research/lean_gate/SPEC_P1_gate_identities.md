@@ -784,3 +784,99 @@ script, and no mutant, statement or proof was changed to make it pass.
 * The mutation check is not run in CI (it needs a built Lean project and about 5 minutes locally).
 * **AUD-RATELAW stays UNEXPLAINED.**
 
+
+## 10. P4b (branch `research/lean-gate-p4b`, from `main` `3c5c0ef`, which contains P4a)
+
+Port of the cycle-003 weight-update bridge into `lean/AIEFGateCore/AIEFGateCore/WeightUpdate.lean` (namespace
+`AIEFGate.WeightUpdate`) and `Freeze.lean` (namespace `AIEFGate.Freeze`), restated on `main`'s definitions (`Params`,
+`scale`, `EngineGate`, `symM`, `rowM`, `stepM`, and `Capacity.gateM/appliedFactor`). Nothing under `Pinned/`,
+`lean/AIEFProofs*`, `lean/AIEFFreezeCore` or any other hash-pinned artifact is edited; `registry/claims.csv`,
+`audit_inbox/TRIAGE.md` and the ERRATA are not edited. **AUD-RATELAW stays UNEXPLAINED**; this package does not touch it.
+
+**Credit.** Statements come from Researcher 040282 (handle only):
+`audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_003/GateProposalBridge.lean` on branch `audit-inbox`,
+commit `b18a27d`. Its `weightStep`/`proposal`/`gate` model is not imported or copied; every proof here is written for this
+project's definitions. The selection and the corrections (drop `hf0`, add `trajectory_symmetric`, N = 12 threshold) come from
+Researcher 001's review of that deposit (audited CLEAN WITH NOTES by Auditor Seat 002); the review is not a library artifact.
+
+### 10.1 `Freeze.lean` (scalar core)
+
+`AIEFGateCore` may not have path dependencies (step 2 of `check_lean_gate.sh`), so it cannot import
+`AIEFFreezeCore`. `Freeze.lean` restates its five scalar statements (`upper_geom`, `eventually_off`, `eventually_on`,
+`edge_eventually_off`, `edge_eventually_on`) with the same statements; `test_lean_gate_p4b.py` checks the statements agree
+textually with `lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean`. New: the additive-drive forms `edge_off`, `edge_on`
+(`B⁺ = λ max 0 ((1 - h) B + d)`, no division by `h`), derived from the u-forms.
+
+### 10.2 What is proved (`WeightUpdate.lean`; `B`, `D` symmetric, `B ≥ 0` where noted)
+
+| Theorem | Hypotheses (exactly as proved) | Content / source statement (cycle 003) |
+|---|---|---|
+| `rowM_le_upper` | `B ≥ 0`, `B`,`D` symmetric, `0 ≤ dt`, `γ dt ≤ 1` | `rowM ≤ (1-γdt) rowS B + dt · pdriveRow D` (`proposal_row_upper`) |
+| `rowM_le_envelope` | as above, `rowS B ≤ cap`, `pdriveRow D i ≤ S` | `rowM ≤ (1-γdt) cap + dt S` (`proposal_row_upper_of_feasible`) |
+| `stepM_scalar_recurrence` | `B`,`D` symmetric, `i ≠ j` | `stepM_ij = appliedFactor · max 0 ((1-γdt) B_ij + dt D_ij)` (`weightStep_scalar_recurrence`) |
+| `appliedFactor_lower` | `EngineGate p`, `X ≥ 0`, `rowS X i ≤ Mi`, `rowS X j ≤ Mj` | factor `≥ scale (max Mi Mj)` (`appliedFactor_lower_of_row_uppers`) |
+| `stepM_factor_lower` | `EngineGate p`, `0 ≤ dt`, `γ dt ≤ 1`, `B ≥ 0` symmetric and feasible, `D` symmetric, drive-row bounds | factor `≥ edgeFloor` (`weightStep_factor_lower_of_drive_bounds`) |
+| `good_step` | `EngineGate p`; none on `D`, `B` | `stepM` output is `Good` (nonneg, symmetric, zero diagonal, row sums `≤ cap`) |
+| `trajectory_symmetric`, `trajectory_zero_diag`, `trajectory_nonneg` | `B 0` symmetric / zero diagonal / `≥ 0`; `EngineGate p` for `nonneg` | **new**: the source assumes symmetry, here `B` stays symmetric and zero-diagonal |
+| `trajectory_feasible_from_first` | `EngineGate p`; none on `B 0` | `trajectory_feasible_from_first` |
+| `trajectory_good_of_start` | `EngineGate p`, `Good (B 0) ∨ 1 ≤ T` | `trajectory_good_of_start` (H0) |
+| `edge_eventually_off_from`, `edge_eventually_off` | `EngineGate p`, `0 < dt`, `0 < γ`, `γ dt < 1`, `D` symmetric, `D_ij ≤ U`, `0 ≤ U < γ B_c`; start `Good (B 0) ∨ 1 ≤ T` (`_from`); **no hypothesis on `B 0`** (`edge_eventually_off`) | `adaptive_edge_eventually_off(_from)` |
+| `edge_eventually_on_from`, `edge_eventually_on` | as OFF, drive rows `≤ Si, Sj`, `D_ij ≥ L ≥ 0`, `B_c < κ dt L/(1 - κ(1-γdt))`, `κ = edgeFloor`; **no `hf0`, no hypothesis on `B 0`** (`edge_eventually_on`) | `adaptive_edge_eventually_on(_from)` (source needs `hf0`, redundant) |
+| `onGap_iff` | `0 ≤ S`; at `pE`, `L = 1/25`, `B_c = 3/25` | `3/25 < onGap S ↔ S < 18999999991/90000000000` |
+| `onGap_N12_fails`, `onGap_N12_value`, `onGap_five_neighbours`, `onGap_six_neighbours_fail` | none | N = 12 coarse envelope `S = 11/25` fails (`0.0575 < onGap < 0.0576`); 5 maximally driven neighbours hold; 6 fail |
+
+**Exact threshold proved:** at `pE` (`dt = 1/100`, `γ = 3/200`, `cap = 19/30`, `ε = 10⁻¹²`), maximal drive `D = 1/25`
+(`η = 0.04`, `R = 1`; `u = D/γ = 8/3`) and `B_c = 3/25`, the ON hypothesis holds iff the positive-drive-row bound is
+`S < 18999999991/90000000000` (`= 0.2111…`, `19/90 - 10⁻¹⁰`; `5.2777…` times the maximal drive; `S/γ < 14.0740…` in `u`
+units; the review's "≈ 14.07 = 5.28 L" is this value rounded). At `N = 12`, `S = 11/25`: it fails (`onGap ≈ 0.0576`).
+This is about the hypothesis of `edge_eventually_on`, not a statement that ON fails.
+
+**Statement changes against the source:** no division by `γ` (drive `D`, proposal `preM = (1-γdt)B + dt D`; `0 < γ`, `0 < dt`,
+`γ dt < 1` explicit; the engine validates only `γ ≥ 0`, so `γ = 0` and `γ dt ≥ 1` are engine-legal but not covered);
+`EngineGate p` instead of `0 < ε`, `0 ≤ c`; `hf0` and `hB0` dropped from the ON/OFF theorems (one step already gives a `Good`
+matrix); the per-node capacity vector of the source is the scalar `cap` of `Params`.
+
+**ε scope.** Exactly as proved: every gate statement here uses `EngineGate p`, hence `0 < ε`. The only `0 ≤ ε` result is
+`Capacity.kernel_row_le_cap` (P4a). Nothing is claimed for `ε ≤ 0`.
+
+### 10.3 Negations and non-vacuity (`Fin 2`; `pE` unless noted)
+
+`false_rowM_upper_no_hh1` (`pH`, `γ dt = 2`), `false_recurrence_no_symm`, `false_factor_lower_no_rowbound`,
+`false_factor_lower_no_drivebounds`, `false_trajectory_symmetric_no_start`, `false_trajectory_diag_no_start`,
+`false_trajectory_nonneg_no_start`, `false_good_no_start` (and `witness_trajectory_not_good_at_zero`: not `Good` at 0,
+`Good` after one step), `false_off_no_gap(_from)` (the ON instance violates the OFF gap), `false_on_no_gap(_from)` (the OFF
+instance violates the ON gap), `false_gap_at_threshold` (strictness of `onGap_iff`); non-vacuity:
+`witness_on_instance` (all hypotheses of `edge_eventually_on` discharged at `pE`, **engine `B_c = 3/25`**, `Si = Sj = L = 1/25`,
+`B 0 = 0`; conclusion `3/25 < B_n(0,1)` eventually) and `witness_off_instance` (`B 0 = 1/5 > 3/25`, `U = 1/1000 < γ B_c`;
+conclusion `B_n(0,1) < 3/25` eventually). Not claimed: that the coupled engine produces such drive sequences.
+
+### 10.4 Mutation check: M24–M36 (13 new mutants, 36 total)
+
+M24 `rowM_le_upper` (`γ dt ≤ 1` to `True`), M25 `stepM_scalar_recurrence` (`B` symmetric to `True`), M26 `appliedFactor_lower`
+(row bound to `True`), M27 `stepM_factor_lower` (both drive bounds to `True`), M28–M30 `trajectory_symmetric/zero_diag/nonneg`
+(`B 0` hypothesis to `True`), M31 `trajectory_good_of_start` (`hstart` to `True`), M32–M35 `edge_eventually_off(_from)` and
+`edge_eventually_on(_from)` (gap hypothesis to `True`), M36 `onGap_iff` (`<` to `≤`). Same three tests as M1–M23. Rule changes (written
+reason): (i) `OPENS` of the refutation file additionally opens `MatrixForm.symM/rowM` and `WeightUpdate.pdriveRow/edgeFloor/Good/onGap/Sstar`
+so that the closed statements of the new mutants elaborate (no acceptance criterion changed); (ii) an optional environment variable
+`AIEF_MUT_ONLY` (regex on mutant names) restricts a debugging run; the recorded run is the full one. The first full run had 8 of the 13 new mutants
+with refutation terms that did not elaborate (missing `open`s, one unsolved `norm_num`); this was a defect of the new terms, fixed in the script;
+no mutant, statement or proof was changed to make it pass. Mutation-count pin: `test_lean_gate_p4b.py` pins the exact count (36); the
+P4a test now asserts `>= 23`.
+
+### 10.5 Gate results (local, 2026-11-10, Europe/Tirane)
+
+* `SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2152 jobs, 0 warnings, 17 source files, **599 declarations audited** (512 before),
+  every one depending only on `propext`, `Classical.choice`, `Quot.sound`; step 6: 0 hits.
+* `lean_mutation_check.py` (full run): positive controls PASS (7 files), both validator negative controls REJECTED, classifier
+  negative control PASS, **36/36 mutants rejected** (M1-M23 unchanged, M24-M36 new, none survived), every build rejection a REAL PROOF
+  FAILURE, each refuted by a proved negation with standard axioms only, each term-specific.
+* `research/lean_gate/tests`: 50 passed (`test_lean_gate_p4b.py`: 10 tests pinning the threshold, N = 12 / five / six neighbours,
+  the `Freeze.lean` statements against `FreezeCore.lean`, banned markers, credit by handle, exact mutant count 36).
+
+### 10.6 Still open (P4b)
+
+* Drive sequences satisfying the band hypotheses are not shown to arise from the coupled engine; the coarse `(N-1)·D` envelope does not
+  certify ON at `N = 12` (`onGap_N12_fails`); a sharper row-sum bound is needed.
+* `γ = 0` and `γ dt ≥ 1` (engine-legal) are outside the edge theorems; float64, phases, delay and the EMA are not modelled.
+* No Lean-side statement pin (Lea-style statement hash) in CI yet.
+* **AUD-RATELAW stays UNEXPLAINED.**

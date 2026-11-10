@@ -72,6 +72,22 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M22 Capacity.gateM_feasible, hp (EngineGate) := True       -> Capacity.false_gateM_feasible_no_link
   M23 Capacity.stepM_row_le_cap, hp (EngineGate) := True     -> Capacity.false_stepM_row_no_link
 
+  P4b (WeightUpdate.lean, port of the cycle-003 weight-update bridge of Researcher 040282; statement -> negation
+  theorem, all at the frozen `pE` except M24 (`γ dt = 2`, `pH`)):
+  M24 WeightUpdate.rowM_le_upper, hh1 (γ dt ≤ 1) := True        -> WeightUpdate.false_rowM_upper_no_hh1
+  M25 WeightUpdate.stepM_scalar_recurrence, hB (B symmetric) := True -> WeightUpdate.false_recurrence_no_symm
+  M26 WeightUpdate.appliedFactor_lower, hi (row bound) := True   -> WeightUpdate.false_factor_lower_no_rowbound
+  M27 WeightUpdate.stepM_factor_lower, hSi, hSj := True          -> WeightUpdate.false_factor_lower_no_drivebounds
+  M28 WeightUpdate.trajectory_symmetric, hB0 := True             -> WeightUpdate.false_trajectory_symmetric_no_start
+  M29 WeightUpdate.trajectory_zero_diag, hB0 := True             -> WeightUpdate.false_trajectory_diag_no_start
+  M30 WeightUpdate.trajectory_nonneg, hB0 := True                -> WeightUpdate.false_trajectory_nonneg_no_start
+  M31 WeightUpdate.trajectory_good_of_start, hstart := True      -> WeightUpdate.false_good_no_start
+  M32 WeightUpdate.edge_eventually_off_from, hUc := True         -> WeightUpdate.false_off_no_gap_from (ON instance)
+  M33 WeightUpdate.edge_eventually_on_from, hgap := True         -> WeightUpdate.false_on_no_gap_from (OFF instance)
+  M34 WeightUpdate.edge_eventually_off, hUc := True              -> WeightUpdate.false_off_no_gap
+  M35 WeightUpdate.edge_eventually_on, hgap := True              -> WeightUpdate.false_on_no_gap
+  M36 WeightUpdate.onGap_iff, `S < Sstar` -> `S ≤ Sstar`          -> WeightUpdate.false_gap_at_threshold
+
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
 import os
@@ -95,6 +111,9 @@ ENGINE_INST = "@H (Fin 3) (Fin 3) _ _ EngineWitness.pE G3"
 CAP_VARS = "{V : Type} [Fintype V] [LinearOrder V] (p : Params)"
 XO_NN = "(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))"
 GP = "EngineWitness.engineGate_pE"
+WU_VARS = CAP_VARS + " (B D : ℕ → V → V → ℝ)"
+WU_FAC = ("(by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE])"
+          " (fun n => rfl) (fun n i j => Capacity.Xo_symm _ i j) ")
 
 
 def via(inst, binders, pos):
@@ -190,6 +209,79 @@ MUTANTS = [
      [("(hp : EngineGate p)", "(hp : True)", 1)], CAP_VARS,
      "Capacity.false_stepM_row_no_link (@H (Fin 2) _ _ Capacity.pB trivial (Capacity.Xo 75)"
      " (fun _ _ => (0 : ℝ)) 0)", None),
+    # ---- P4b: WeightUpdate.lean (statement -> negation theorem) ----
+    ("M24_weight_update_row_upper_gamma_dt_dropped", "WeightUpdate.lean", "rowM_le_upper",
+     [("(hh1 : p.γ * p.dt ≤ 1)", "(hh1 : True)", 1)], CAP_VARS,
+     "WeightUpdate.false_rowM_upper_no_hh1 (@H (Fin 2) _ _ WeightUpdate.pH (Capacity.Xo 0) (Capacity.Xo 1)"
+     " (Capacity.Xo_symm 0) (Capacity.Xo_symm 1) (by norm_num [WeightUpdate.pH]) trivial"
+     " (Capacity.Xo_nonneg (by norm_num)) 0)", None),
+    ("M25_weight_update_recurrence_symmetry_dropped", "WeightUpdate.lean", "stepM_scalar_recurrence",
+     [("(hB : ∀ i j, Bm i j = Bm j i)", "(hB : True)", 1)], CAP_VARS,
+     "WeightUpdate.false_recurrence_no_symm (@H (Fin 2) _ _ EngineWitness.pE (Capacity.Xo 0) Capacity.Xn"
+     " (Capacity.Xo_symm 0) trivial 0 1 (by decide))", None),
+    ("M26_weight_update_factor_floor_row_bound_dropped", "WeightUpdate.lean", "appliedFactor_lower",
+     [("(hi : rowS X i ≤ Mi)", "(hi : True)", 1)], CAP_VARS,
+     "WeightUpdate.false_factor_lower_no_rowbound (@H (Fin 2) _ _ EngineWitness.pE EngineWitness.engineGate_pE"
+     " WeightUpdate.Xr WeightUpdate.Xr_nonneg 0 1 0 0 trivial (by simp [Capacity.rowS, WeightUpdate.Xr, Fin.sum_univ_two]))", None),
+    ("M27_weight_update_drive_bounds_dropped", "WeightUpdate.lean", "stepM_factor_lower",
+     [("(hSi : pdriveRow D i ≤ Si)", "(hSi : True)", 1), ("(hSj : pdriveRow D j ≤ Sj)", "(hSj : True)", 1)],
+     CAP_VARS,
+     "WeightUpdate.false_factor_lower_no_drivebounds (@H (Fin 2) _ _ EngineWitness.pE EngineWitness.engineGate_pE"
+     " (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (Capacity.Xo 100) (fun _ _ => (0 : ℝ))"
+     " (Capacity.Xo_symm 100) (fun _ _ => rfl) (fun _ _ => le_rfl)"
+     " (fun i => by simp [Capacity.rowS]; norm_num [EngineWitness.pE]) 0 1 0 0 trivial trivial)", None),
+    ("M28_weight_update_symmetric_start_dropped", "WeightUpdate.lean", "trajectory_symmetric",
+     [("(hB0 : ∀ i j, B 0 i j = B 0 j i)", "(hB0 : True)", 1)], WU_VARS,
+     "WeightUpdate.false_trajectory_symmetric_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) Capacity.Xn) (fun _ => Capacity.Xo 0) (fun n => rfl) trivial 0 0 1)",
+     None),
+    ("M29_weight_update_zero_diag_start_dropped", "WeightUpdate.lean", "trajectory_zero_diag",
+     [("(hB0 : ∀ i, B 0 i i = 0)", "(hB0 : True)", 1)], WU_VARS,
+     "WeightUpdate.false_trajectory_diag_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) (fun _ _ => 1)) (fun _ => Capacity.Xo 0) (fun n => rfl) trivial 0 0)",
+     None),
+    ("M30_weight_update_nonneg_start_dropped", "WeightUpdate.lean", "trajectory_nonneg",
+     [("(hB0 : ∀ i j, 0 ≤ B 0 i j)", "(hB0 : True)", 1)], WU_VARS,
+     "WeightUpdate.false_trajectory_nonneg_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) (fun _ _ => -1)) (fun _ => Capacity.Xo 0)"
+     " EngineWitness.engineGate_pE (fun n => rfl) trivial 0 0 0)", None),
+    ("M31_weight_update_good_start_dropped", "WeightUpdate.lean", "trajectory_good_of_start",
+     [("(hstart : Good p (B 0) ∨ 1 ≤ T)", "(hstart : True)", 1)], WU_VARS,
+     "WeightUpdate.false_good_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) (Capacity.Xo 1)) (fun _ => Capacity.Xo 0)"
+     " EngineWitness.engineGate_pE (fun n => rfl) 0 trivial 0 le_rfl)", None),
+    ("M32_weight_update_edge_off_from_gap_dropped", "WeightUpdate.lean", "edge_eventually_off_from",
+     [("(hUc : U < p.γ * Bc)", "(hUc : True)", 1)], WU_VARS,
+     "WeightUpdate.false_off_no_gap_from (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Bon"
+     " (fun _ => Capacity.Xo (1 / 25)) EngineWitness.engineGate_pE " + WU_FAC +
+     "1 (Or.inr le_rfl) 0 1 (by decide) (1 / 25) (3 / 25) (fun n => by simp [Capacity.Xo]) (by norm_num) trivial)", None),
+    ("M33_weight_update_edge_on_from_gap_dropped", "WeightUpdate.lean", "edge_eventually_on_from",
+     [("(hgap : Bc < edgeFloor p Si Sj * (p.dt * L) / (1 - edgeFloor p Si Sj * (1 - p.γ * p.dt)))",
+       "(hgap : True)", 1)], WU_VARS,
+     "WeightUpdate.false_on_no_gap_from (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Boff"
+     " (fun _ => Capacity.Xo (1 / 1000)) EngineWitness.engineGate_pE " + WU_FAC +
+     "1 (Or.inr le_rfl) 0 1 (by decide) (1 / 1000) (1 / 1000) (1 / 1000) (3 / 25)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 0).le)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 1).le) (fun n => by simp [Capacity.Xo])"
+     " (by norm_num) trivial)", None),
+    ("M34_weight_update_edge_off_gap_dropped", "WeightUpdate.lean", "edge_eventually_off",
+     [("(hUc : U < p.γ * Bc)", "(hUc : True)", 1)], WU_VARS,
+     "WeightUpdate.false_off_no_gap (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Bon"
+     " (fun _ => Capacity.Xo (1 / 25)) EngineWitness.engineGate_pE " + WU_FAC +
+     "0 1 (by decide) (1 / 25) (3 / 25) (fun n => by simp [Capacity.Xo]) (by norm_num) trivial)", None),
+    ("M35_weight_update_edge_on_gap_dropped", "WeightUpdate.lean", "edge_eventually_on",
+     [("(hgap : Bc < edgeFloor p Si Sj * (p.dt * L) / (1 - edgeFloor p Si Sj * (1 - p.γ * p.dt)))",
+       "(hgap : True)", 1)], WU_VARS,
+     "WeightUpdate.false_on_no_gap (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Boff"
+     " (fun _ => Capacity.Xo (1 / 1000)) EngineWitness.engineGate_pE " + WU_FAC +
+     "0 1 (by decide) (1 / 1000) (1 / 1000) (1 / 1000) (3 / 25)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 0).le)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 1).le) (fun n => by simp [Capacity.Xo])"
+     " (by norm_num) trivial)", None),
+    ("M36_weight_update_threshold_strictness", "WeightUpdate.lean", "onGap_iff",
+     [("3 / 25 < onGap S ↔ S < Sstar", "3 / 25 < onGap S ↔ S ≤ Sstar", 1)], "",
+     "WeightUpdate.false_gap_at_threshold ((H WeightUpdate.Sstar (by norm_num [WeightUpdate.Sstar])).2 le_rfl)",
+     None),
 ]
 
 # Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
@@ -197,10 +289,11 @@ MUTANTS = [
 LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
                     [("    (hker : InCtrlKer G ctrl h)\n", "", 1)])
 
-OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM)\n"
+OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n"
          "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n"
          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
-         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\n")
+         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\n"
+         "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
@@ -335,7 +428,10 @@ def main():
           f"{'YES (BAD)' if build_rejected(lrc, lerrs, lkind) else 'NO'} -> {'PASS' if lgood else 'FAIL'}")
     ok &= lgood
     n_rej = 0
+    only = os.environ.get("AIEF_MUT_ONLY")   # debugging aid: regex on mutant names; the full run is the record
     for name, f, thm, edits, closure, term, eterm in MUTANTS:
+        if only and not re.search(only, name):
+            continue
         src = srcs[f]
         msrc = mutate(src, thm, edits)
         assert msrc != src

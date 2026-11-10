@@ -12,3 +12,5 @@ import AIEFGateCore.Persistence
 import AIEFGateCore.PersistenceWitness
 import AIEFGateCore.EngineRedTeam
 import AIEFGateCore.Capacity
+import AIEFGateCore.Freeze
+import AIEFGateCore.WeightUpdate
