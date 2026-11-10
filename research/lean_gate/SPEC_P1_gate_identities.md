@@ -732,6 +732,8 @@ Auditor Seat 002); the review is not part of this repository and is not a librar
 The `0 < ε` / `0 ≤ ε` scope is exactly what is proved: `0 ≤ ε` for the kernel row bound only; everything that
 involves the guard goes through `EngineGate`, hence `0 < ε`. "`0 < ε` can be relaxed" is **not** claimed in general.
 
+`AIEFGateCore.Capacity.scale_nonneg` and `scale_le_one` reuse the names of the `pE`-only lemmas in `PersistenceWitness.lean` (`:85`, `:90`), in a different namespace, so the names do not clash. The `Capacity` versions generalise those: they hold for any `p` with `0 ≤ cap` and `0 ≤ ε` (`scale_le_one` holds for any `p`).
+
 The port bridge states that `stepM` is the gate of the symmetrised clip of `(1 - γ dt) B + γ dt (D/γ)`. The
 statement `stepM = weightStep` of Researcher 040282's model (which needs `EngineGate`, `0 < γ`, symmetric `D`, `B`;
 `false_matrix_no_symm` refutes it without symmetry) is *not* in the library: it would need their definitions.
