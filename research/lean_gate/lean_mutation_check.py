@@ -59,6 +59,19 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M13 iterate_stepB_add_smul_of_branch with the amplitude amp n replaced by t (no decay)
       -> PersistenceWitness.false_iterate_no_decay
 
+  P4a (Capacity.lean, port of the guarded-capacity statements of Researcher 040282; all refuted at the frozen
+  `pE` (`ε = 10⁻¹²`) except M14 (`ε < 0`, `pN`) and M22/M23 (`EngineGate` link broken, `pB`)):
+  M14 Capacity.kernel_row_le_cap, hε (0 ≤ ε) := True       -> Capacity.false_kernel_row_no_eps (ε = -1/2)
+  M15 Capacity.gateM_idempotent, gate -> unguarded kernel    -> Capacity.false_kernel_idempotent
+  M16 Capacity.gateM_fixes_feasible, hf (feasible) := True   -> Capacity.false_fixes_without_feasible
+  M17 Capacity.gateM_feasible, `≤ cap` -> `< cap`            -> Capacity.false_row_lt_cap
+  M18 Capacity.gateM_le_input, inequality reversed           -> Capacity.false_le_reversed
+  M19 Capacity.gateM_sub_of_rowSum_eq, hrow := True          -> Capacity.false_diff_without_equal_rows
+  M20 Capacity.kernel_row_lower, hℓ := True                  -> Capacity.false_kernel_lower_no_hyp
+  M21 Capacity.gateM_symm, hs (symmetry) := True             -> Capacity.false_gateM_symm_no_hs
+  M22 Capacity.gateM_feasible, hp (EngineGate) := True       -> Capacity.false_gateM_feasible_no_link
+  M23 Capacity.stepM_row_le_cap, hp (EngineGate) := True     -> Capacity.false_stepM_row_no_link
+
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
 import os
@@ -79,6 +92,9 @@ pL = "    (hclip : ∀ e, h e ≠ 0 → 0 ≤ pre p drive B e ∧ 0 ≤ pre p dr
 REL = "(Rel (prop p drive B) h)"
 
 ENGINE_INST = "@H (Fin 3) (Fin 3) _ _ EngineWitness.pE G3"
+CAP_VARS = "{V : Type} [Fintype V] [LinearOrder V] (p : Params)"
+XO_NN = "(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))"
+GP = "EngineWitness.engineGate_pE"
 
 
 def via(inst, binders, pos):
@@ -138,6 +154,42 @@ MUTANTS = [
     ("M13_persistence_no_decay", "Persistence.lean", "iterate_stepB_add_smul_of_branch",
      [("(stepB p G drive)^[n] B + amp p t s n • h", "(stepB p G drive)^[n] B + t • h", 1)], GATE_VARS,
      f"PersistenceWitness.false_iterate_no_decay ({ENGINE_INST})", None),
+    # ---- P4a: Capacity.lean (statement -> negation theorem, all at engine-shaped parameters but M14/M22/M23) ----
+    ("M14_capacity_eps_nonneg_dropped", "Capacity.lean", "kernel_row_le_cap",
+     [("(hε : 0 ≤ p.ε)", "(hε : True)", 1)], CAP_VARS,
+     f"Capacity.false_kernel_row_no_eps (@H (Fin 2) _ _ Capacity.pN (Capacity.Xo (3 / 2)) {XO_NN}"
+     " (by norm_num [Capacity.pN]) trivial 0)", None),
+    ("M15_capacity_idempotence_unguarded", "Capacity.lean", "gateM_idempotent",
+     [("gateM p (gateM p X) = gateM p X", "kernelM p (kernelM p X) = kernelM p X", 1)], CAP_VARS,
+     f"Capacity.false_kernel_idempotent (@H (Fin 2) _ _ pE {GP} (Capacity.Xo pE.cap) {XO_NN})", None),
+    ("M16_capacity_fixes_without_feasibility", "Capacity.lean", "gateM_fixes_feasible",
+     [("(hf : ∀ i, rowS X i ≤ p.cap)", "(hf : True)", 1)], CAP_VARS,
+     f"Capacity.false_fixes_without_feasible (@H (Fin 2) _ _ pE {GP} (Capacity.Xo 1) trivial)", None),
+    ("M17_capacity_strict_bound", "Capacity.lean", "gateM_feasible",
+     [("rowS (gateM p X) i ≤ p.cap", "rowS (gateM p X) i < p.cap", 1)], CAP_VARS,
+     f"Capacity.false_row_lt_cap (@H (Fin 2) _ _ pE {GP} (Capacity.Xo pE.cap) {XO_NN} 0)", None),
+    ("M18_capacity_gate_ge_input", "Capacity.lean", "gateM_le_input",
+     [("gateM p X i j ≤ X i j", "X i j ≤ gateM p X i j", 1)], CAP_VARS,
+     f"Capacity.false_le_reversed (@H (Fin 2) _ _ pE (Capacity.Xo 1) {XO_NN} 0 1)", None),
+    ("M19_capacity_difference_without_equal_rows", "Capacity.lean", "gateM_sub_of_rowSum_eq",
+     [("(hrow : ∀ i, rowS X i = rowS Y i)", "(hrow : True)", 1)], CAP_VARS,
+     "Capacity.false_diff_without_equal_rows (@H (Fin 2) _ _ pE (Capacity.Xo 0) (Capacity.Xo 1)"
+     " (Capacity.Xo_diag 0) (Capacity.Xo_diag 1) trivial 0 1)", None),
+    ("M20_capacity_lower_bound_without_scale_hypothesis", "Capacity.lean", "kernel_row_lower",
+     [("(hℓ : ∀ k, ℓ ≤ scale p (rowS X k))", "(hℓ : True)", 1)], CAP_VARS,
+     f"Capacity.false_kernel_lower_no_hyp (@H (Fin 2) _ _ pE (Capacity.Xo 1) {XO_NN}"
+     " (Capacity.Xo_diag 1) 1 trivial 0)", None),
+    ("M21_capacity_symmetry_dropped", "Capacity.lean", "gateM_symm",
+     [("(hs : ∀ i j, X i j = X j i)", "(hs : True)", 1)], CAP_VARS,
+     "Capacity.false_gateM_symm_no_hs (@H (Fin 2) _ _ pE Capacity.Xn trivial 0 1)", None),
+    ("M22_capacity_engine_gate_dropped", "Capacity.lean", "gateM_feasible",
+     [("(hp : EngineGate p)", "(hp : True)", 1)], CAP_VARS,
+     f"Capacity.false_gateM_feasible_no_link (@H (Fin 2) _ _ Capacity.pB trivial (Capacity.Xo (3 / 4)) {XO_NN} 0)",
+     None),
+    ("M23_capacity_stepM_engine_gate_dropped", "Capacity.lean", "stepM_row_le_cap",
+     [("(hp : EngineGate p)", "(hp : True)", 1)], CAP_VARS,
+     "Capacity.false_stepM_row_no_link (@H (Fin 2) _ _ Capacity.pB trivial (Capacity.Xo 75)"
+     " (fun _ _ => (0 : ℝ)) 0)", None),
 ]
 
 # Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
@@ -147,7 +199,8 @@ LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB
 
 OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM)\n"
          "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n"
-         "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n")
+         "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
+         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 

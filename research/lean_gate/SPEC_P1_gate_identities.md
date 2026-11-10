@@ -696,3 +696,91 @@ negative control PASS, **13/13 mutants rejected**, every build rejection a REAL 
 * The mutation check is not run in CI (it needs a built Lean project and about 2 minutes locally).
 * `R` symmetry / `B` symmetry invariance of the engine remain hypotheses (§7.4).
 * **AUD-RATELAW stays UNEXPLAINED.** P3 does not change any label, ERRATA entry or registry claim.
+
+## 9. P4a (branch `research/lean-gate-p4a`, from `main` `b198a77`)
+
+Port of the cycle-002 guarded-capacity content into `lean/AIEFGateCore/AIEFGateCore/Capacity.lean`, restated on
+`main`'s definitions (`Params`, `scale`, `EngineGate`, `symM`, `GateOnM`, `stepM`). Nothing under `Pinned/`,
+`lean/AIEFProofs*` or any other hash-pinned artifact is edited; `registry/claims.csv`, `audit_inbox/TRIAGE.md` and
+the ERRATA are not edited. **AUD-RATELAW stays UNEXPLAINED**; this package does not touch it.
+
+**Credit.** Statements and the shape of the counterexamples come from Researcher 040282 (handle only):
+`audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_002/GateFoundations.lean` on branch
+`audit-inbox`, commit `b18a27d`. That file defines its own `feasible`/`kernel`/`gate`/`rowSum` model; none of those
+definitions is copied. Every proof in `Capacity.lean` is written for this project's definitions.
+The content was selected by an in-session review of that deposit (Researcher 001, audited CLEAN WITH NOTES by
+Auditor Seat 002); the review is not part of this repository and is not a library artifact.
+
+### 9.1 What is proved (all on `Capacity.lean`, namespace `AIEFGate.Capacity`)
+
+`stepM p D Bm = gateM p (symM p D Bm)` (`stepM_eq_gateM`, `rfl`), with
+`kernelM p X i j = if i = j then 0 else X i j * min (scale p (row i)) (scale p (row j))` and
+`gateM p X = if GateOnX p X then kernelM p X else X` (`GateOnX` is `GateOnM` with `X` for `symM p D Bm`).
+
+| Theorem | Hypotheses (exactly as proved) | Source statement (cycle 002) |
+|---|---|---|
+| `kernel_row_le_cap` | `X ≥ 0`, `0 ≤ cap`, **`0 ≤ ε`** | `kernel_feasible` (ε ≥ 0 version, Researcher 001's relaxation) |
+| `kernel_row_upper`, `kernel_row_lower`, `kernel_le_input`, `kernel_nonneg`, `kernel_symm` | `X ≥ 0`; `0 ≤ cap`, `0 ≤ ε` where `scale ≥ 0` is used; zero diagonal for `kernel_row_lower` | `kernel_row_upper/lower`, `kernel_le_input`, `kernel_nonneg`, `kernel_symmetric` |
+| `gateOnX_iff` | `EngineGate p` | (new; `GateOnM` ⇔ some row sum `> cap`) |
+| `gateM_feasible` | `EngineGate p` (so `0 < ε`, `0 < cap`, link, `0 < gapQ`), `X ≥ 0` | `gate_feasible` (needs `0 < ε`) |
+| `gateM_fixes_feasible`, `gateM_idempotent` | `EngineGate p` (`X ≥ 0` for idempotence) | `gate_fixes_feasible`, `gate_idempotent` |
+| `gateM_nonneg`, `gateM_le_input`, `gateM_symm`, `gateM_diag` | as named (`EngineGate` not needed) | `gate_nonneg`, `kernel_le_input`, `gate_symmetric`, `gate_zero_diag` |
+| `gateM_sub_of_rowSum_eq` | equal row sums, zero diagonals | `gate_difference_of_rowSum_eq` |
+| `stepM_row_le_cap`, `stepM_nonneg`, `gateM_stepM` | `EngineGate p`; **no symmetry hypothesis on `D`, `Bm`** | (new, on `stepM`) |
+| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form |
+
+The `0 < ε` / `0 ≤ ε` scope is exactly what is proved: `0 ≤ ε` for the kernel row bound only; everything that
+involves the guard goes through `EngineGate`, hence `0 < ε`. "`0 < ε` can be relaxed" is **not** claimed in general.
+
+`AIEFGateCore.Capacity.scale_nonneg` and `scale_le_one` reuse the names of the `pE`-only lemmas in `PersistenceWitness.lean` (`:85`, `:90`), in a different namespace, so the names do not clash. The `Capacity` versions generalise those: they hold for any `p` with `0 ≤ cap` and `0 ≤ ε` (`scale_le_one` holds for any `p`).
+
+The port bridge states that `stepM` is the gate of the symmetrised clip of `(1 - γ dt) B + γ dt (D/γ)`. The
+statement `stepM = weightStep` of Researcher 040282's model (which needs `EngineGate`, `0 < γ`, symmetric `D`, `B`;
+`false_matrix_no_symm` refutes it without symmetry) is *not* in the library: it would need their definitions.
+
+### 9.2 Negations and non-vacuity (`Fin 2`, `Xo a` = off-diagonal `a`; at `pE`, `ε = 10⁻¹²` unless noted)
+
+`false_kernel_fixes_boundary`, `false_kernel_idempotent` (the unguarded kernel moves/does not fix the boundary
+`row = cap`; `gateM_Xo_boundary`: the strict guard fixes it), `false_gate_nonexpansive` (a jump of size `~ε` at the
+boundary against an input change of `10⁻¹⁵`), `false_fixes_without_feasible`, `false_row_lt_cap`,
+`false_le_reversed`, `false_diff_without_equal_rows`, `false_kernel_lower_no_hyp`, `false_gateM_symm_no_hs`,
+`false_kernel_row_no_eps` (`pN`: `cap = 1`, `ε = -1/2`; kernel row `3/2 > cap`), `false_gateM_feasible_no_link` and
+`false_stepM_row_no_link` (`pB`: `cap = 1/2` against guard threshold `1`; not `EngineGate`),
+`witness_gate_active` (gate fires on `Xo 1`, output `< cap`, `≠` input), `witness_gate_inactive`,
+`witness_stepM_active` (drive `Xo 100`, `B = 0`, proposal `Xo 1`, gate fires).
+
+### 9.3 Mutation check: M14–M23
+
+`lean_mutation_check.py` now has 23 mutants; M14–M23 each weaken or alter one statement of `Capacity.lean`
+(`ε`-hypothesis to `True`, idempotence for the unguarded kernel, feasibility to `True`, strict capacity bound,
+reversed inequality, equal-row-sums to `True`, scale hypothesis to `True`, symmetry to `True`, `EngineGate` to `True`
+for `gateM_feasible` and for `stepM_row_le_cap`), and each must pass the same three tests as M1–M13
+(real proof failure; refuted by the proved `false_*` theorem with standard axioms only; term-specificity). M14, M22
+and M23 are refuted at `pN`/`pB` (the hypothesis in question is a parameter condition `pE` satisfies); the rest at `pE`.
+
+Result (local, 2026-11-10): positive controls PASS (6 files), both validator negative controls REJECTED, classifier
+negative control PASS, **23/23 mutants rejected**, every build rejection a REAL PROOF FAILURE (type mismatch,
+`simp` made no progress, invalid field on `True`), each refuted by a proved negation with standard axioms only, each
+term-specific, RESULT PASS. The first run of M14-M23 had 3 mutants whose refutation term did not elaborate (an
+underdetermined `by norm_num` and a missing `open`); that is a defect of the new refutation terms, fixed in the
+script, and no mutant, statement or proof was changed to make it pass.
+
+### 9.4 Gate results (local, 2026-11-10, Europe/Tirane)
+
+* `SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2150 jobs, 0 warnings, 15 source files, 512 declarations audited
+  (439 before; `Capacity.lean` has 58 theorems and 9 defs, plus 6 auto-generated `eq_1` lemmas), `disallowed=0`;
+  every `Capacity` declaration depends only on `propext`, `Classical.choice`, `Quot.sound`. No `sorry`/`admit`/
+  `native_decide`/user `axiom`/`unsafe`/`implemented_by`/`extern` (step 6: 0 hits). Two build iterations were
+  needed to clear Mathlib style-linter warnings (line length, 7 then 1), no proof changed.
+* `lean_mutation_check.py`: 23/23 (above). `research/lean_gate/tests`: 40 passed (`test_lean_gate_p4a.py` pins the
+  witness values against an independent exact-rational transcription and the M14-M23 shape).
+
+### 9.5 Still open (P4a)
+
+* Not ported: the cycle-004 phase/delay content (no theorem there depends on `phaseInput`'s argument; review §4.3),
+  the four `rat_*` counterexamples are ported only as `Fin 2` matrix witnesses, not as the 12-node engine state.
+* No trajectory statement: one step, exact reals, chosen `Fin 2` inputs; nothing about float64 or `TIE_TOL`.
+* The gate is not nonexpansive (`false_gate_nonexpansive`); no Lipschitz bound is claimed.
+* The mutation check is not run in CI (it needs a built Lean project and about 5 minutes locally).
+* **AUD-RATELAW stays UNEXPLAINED.**
+

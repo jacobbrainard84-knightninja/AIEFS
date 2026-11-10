@@ -1,6 +1,6 @@
 # AIEFGateCore (Lean 4 + Mathlib)
 
-Lean work packages P1, P2 (SPEC §7) and P3 (SPEC §8): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
+Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8) and P4a (SPEC §9, `Capacity.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
 directions, which the rate-law audit (`AUD-RATELAW`; ERRATA E5, and E22 on
 `main` (landed via PR #18)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
 proves one-step real-arithmetic algebra used by the audit's estimator; it does not explain the rate law. Spec, code mapping and scope:
@@ -30,6 +30,7 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched
 | `iterate_stepB_add_smul_of_branch`, `stepB_add_smul_of_uniformBranch`, `amp_mem_Icc` | (P3) if the uniform branch holds at every step `k < n`, then `stepB^[n](B + t h) = stepB^[n] B + amp n · h`, `amp n = t ∏ (1−γdt) s_k` |
 | `PersistenceWitness.engine_gated_persistence` | (P3) for every `n`, at `ε = 10⁻¹²`, K3, `R` frozen, `h = vCtrl`: gate firing and binding scale at every step, branch hypothesis holds for all `k < n`; `false_iterate_no_decay` |
 | `EngineRedTeam.engine_false_{drop_ker,drop_hc1,drop_clip,main_no_gamma,multiplier_no_gamma}` | (P3) the same negations at engine-shaped parameters (`ε = 10⁻¹² > 0`, `EngineGate`) |
+| `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex`, `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |
 
 **Scope.** Reals, not float64; edge-vector form, not the symmetric matrix; one step with `R` fixed (ERRATA E5);
 exact controller order (no `TIE_TOL`). Persistence (P3) is conditional on staying in the branch, with `R` frozen;
@@ -46,14 +47,14 @@ build with 0 warnings, forbidden markers, axiom audit (only propext, Classical.c
 2026-11-09 (P3, `SKIP_CACHE=1`): PASS, 2149 jobs, 0 warnings, 14 source files, 439 declarations audited, 239
 theorems printed with `#print axioms`, 0 disallowed.
 Cross-check against the pinned engine: `research/lean_gate/lean_gate_crosscheck_v1.py`; mutation check:
-`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4): 13 mutants, each must (a) fail to build with the kept
+`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4, §9.3): 23 mutants, each must (a) fail to build with the kept
 proof by a real proof failure (since P3 a failure made only of `Unknown identifier`/`unknown constant` errors does
 not count; a classifier negative control checks this), (b) be refuted by a proved negation theorem (no `sorry`,
 standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` refutation are rejected as negative
 controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated
 statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as
 dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,
-weakened controller set, persistence without decay.
+weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems.
 
 `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the
 cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`.

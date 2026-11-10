@@ -11,3 +11,4 @@ import AIEFGateCore.Bridge
 import AIEFGateCore.Persistence
 import AIEFGateCore.PersistenceWitness
 import AIEFGateCore.EngineRedTeam
+import AIEFGateCore.Capacity
