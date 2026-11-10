@@ -72,6 +72,15 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M22 Capacity.gateM_feasible, hp (EngineGate) := True       -> Capacity.false_gateM_feasible_no_link
   M23 Capacity.stepM_row_le_cap, hp (EngineGate) := True     -> Capacity.false_stepM_row_no_link
 
+  P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
+  mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are reserved for P4b / PR #26).
+  A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. A
+  definition mutant is KILLED only if (a') the mutated file fails to build, (a'') the failure is a REAL PROOF
+  FAILURE (not name-reference-only, same classifier as above) and (a''') at least one failing declaration is one
+  of the PIN theorems declared for that mutant before the run (a mutant that only breaks some unrelated generic
+  lemma does not count). `KNOWN_SURVIVORS` lists mutants that are expected to survive; they are run and reported
+  but do not enter the count.
+
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
 import os
@@ -192,6 +201,74 @@ MUTANTS = [
      " (fun _ _ => (0 : ℝ)) 0)", None),
 ]
 
+# ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
+# name, file, [(old, new, count)] applied to the whole file text, PIN theorems (declared in advance; >= 1 must fail)
+CI_OLD = "    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=\n  inputPhasor d x0 u omega tau n i j\n"
+
+
+def ci(new):
+    return [(CI_OLD, "    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=\n  " + new + "\n", 1)]
+
+
+PIN_INPUT = ["input_engine_convention", "probe_coherence_values"]
+DRIVE_OLD = "  (eta + mu) * reported C i j - mu\n"
+REP_OLD = "  if i = j then 0 else (‖C i j‖ + ‖C j i‖) / 2\n"
+DEF_MUTANTS = [
+    # 011 (PhaseIncrement.lean): three mutants that must break `delayed_input_step`
+    ("M37_phase_delayed_increment_starts_late", "PhaseIncrement.lean",
+     [("  if d ≤ n then u (n - d) j else 0", "  if d < n then u (n - d) j else 0", 1)], ["delayed_input_step"]),
+    ("M38_phase_delayed_increment_off_by_one", "PhaseIncrement.lean",
+     [("  if d ≤ n then u (n - d) j else 0", "  if d ≤ n then u (n - d + 1) j else 0", 1)], ["delayed_input_step"]),
+    ("M39_phase_input_reads_newest_slot", "PhaseIncrement.lean",
+     [("AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -",
+       "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨d, Nat.lt_succ_self d⟩ j -", 1)],
+     ["delayed_input_step"]),
+    # cycle-004 survivors, now on the phase-specific coherence input (PhaseCoherence.lean)
+    ("M40_coherence_input_wrong_delay_plus_one", "PhaseCoherence.lean",
+     ci("inputPhasor (d + 1) x0 u omega tau n i j"), PIN_INPUT),
+    ("M41_coherence_input_wrong_delay_minus_one", "PhaseCoherence.lean",
+     ci("inputPhasor (d - 1) x0 u omega tau n i j"), PIN_INPUT),
+    ("M42_coherence_input_current_theta_not_delayed", "PhaseCoherence.lean",
+     ci("phasor (phaseTrace x0 u n i - phaseTrace x0 u n j - ((omega i + omega j) / 2) * tau)"), PIN_INPUT),
+    ("M43_coherence_input_dropped_omega_tau", "PhaseCoherence.lean",
+     ci("inputPhasor d x0 u (fun _ => 0) tau n i j"), ["input_engine_convention"]),
+    ("M44_coherence_input_phase_is_zero", "PhaseCoherence.lean", ci("1"), PIN_INPUT),
+    ("M45_drive_missing_eta", "PhaseCoherence.lean",
+     [(DRIVE_OLD, "  mu * reported C i j - mu\n", 1)],
+     ["drive_eta_response", "main_preM_source_formula", "probe_drive_second"]),
+    # the auditor's cycle-013 mutants (five killed in the audit, two survivors of the original file)
+    ("M46_coherence_input_swap_i_j", "PhaseCoherence.lean",
+     ci("inputPhasor d x0 u omega tau n j i"), PIN_INPUT),
+    ("M47_coherence_input_conjugated", "PhaseCoherence.lean",
+     ci("(starRingEnd ℂ) (inputPhasor d x0 u omega tau n i j)"), PIN_INPUT),
+    ("M48_coherence_ema_alpha_swapped", "PhaseCoherence.lean",
+     [("  (alpha : ℂ) * C i j + ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j\n",
+       "  ((1 - alpha : ℝ) : ℂ) * C i j + (alpha : ℂ) * coherenceInput d x0 u omega tau n i j\n", 1)],
+     ["probe_alpha_quarter", "innovation_engine_convention"]),
+    ("M49_drive_mu_sign", "PhaseCoherence.lean",
+     [(DRIVE_OLD, "  (eta + mu) * reported C i j + mu\n", 1)],
+     ["main_preM_source_formula", "probe_drive_second"]),
+    ("M50_trace_step_uses_next_input", "PhaseCoherence.lean",
+     [("  | n + 1 => coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau n\n",
+       "  | n + 1 =>\n    coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau (n + 1)\n", 1)],
+     ["probe_coherence_values", "probe_asym_coherence_values"]),
+    ("M51_reported_one_sided_not_symmetrised", "PhaseCoherence.lean",
+     [(REP_OLD, "  if i = j then 0 else ‖C i j‖\n", 1)],
+     ["probe_asym_reported"]),
+    ("M52_reported_diagonal_one", "PhaseCoherence.lean",
+     [(REP_OLD, "  if i = j then 1 else (‖C i j‖ + ‖C j i‖) / 2\n", 1)],
+     ["reported_diag"]),
+]
+
+# Expected survivors: reported and run, never counted. The static offset (ω_i + ω_j)/2 · τ cancels in the step ratio
+# of `delayed_input_step` (auditor note on cycle 011), so dropping it in PhaseIncrement.lean alone cannot be detected
+# by that file's theorems; it is pinned one level up (M43, `PhaseCoherence.input_engine_convention`).
+KNOWN_SURVIVORS = [
+    ("S1_phase_input_dropped_offset_in_011_only", "PhaseIncrement.lean",
+     [("    ((omega i + omega j) / 2) * tau)\n\nnoncomputable def delayedIncrement",
+       "    0)\n\nnoncomputable def delayedIncrement", 1)]),
+]
+
 # Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
 # name-reference errors only; it must be classified as such and must NOT count as a build rejection.
 LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
@@ -300,6 +377,41 @@ def build_rejected(rc, errs, kind):
     return rc != 0 and bool(errs) and kind == "REAL PROOF FAILURE"
 
 
+def mutate_file(src, edits):
+    """Definition mutants: exact-count textual edits on the whole file."""
+    out = src
+    for old, new, count in edits:
+        if out.count(old) != count:
+            raise RuntimeError(f"expected {count} occurrence(s) of {old!r}, found {out.count(old)}")
+        out = out.replace(old, new)
+    return out
+
+
+DECL_RE = re.compile(r"^\s*(?:private\s+|protected\s+)*(?:noncomputable\s+)?(?:theorem|lemma|def|abbrev|instance)\s+(\S+)")
+
+
+def failing_decls(msrc, errs):
+    """Names of the declarations that contain an error line (`Mutant.lean:LINE:COL: error: ...`)."""
+    lines = msrc.splitlines()
+    names = []
+    for e in errs:
+        m = re.search(r"Mutant\.lean:(\d+):", e)
+        if not m:
+            continue
+        for k in range(int(m.group(1)) - 1, -1, -1):
+            d = DECL_RE.match(lines[k])
+            if d:
+                if d.group(1) not in names:
+                    names.append(d.group(1))
+                break
+    return names
+
+
+def def_mutant_killed(rc, errs, kind, failing, pins):
+    """Definition-mutant rule (P5): real build failure AND at least one declared PIN theorem fails."""
+    return build_rejected(rc, errs, kind) and any(p in failing for p in pins)
+
+
 def refute(msrc, src, thm, closure, term):
     """(refuted, why, control_ok): step (b) on the mutated statement and step (c) on the unmutated one."""
     rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term))
@@ -311,7 +423,7 @@ def refute(msrc, src, thm, closure, term):
 def main():
     ok = True
     srcs = {}
-    for f in sorted({m[1] for m in MUTANTS}):
+    for f in sorted({m[1] for m in MUTANTS} | {m[1] for m in DEF_MUTANTS} | {m[1] for m in KNOWN_SURVIVORS}):
         srcs[f] = (SRCDIR / f).read_text()
         rc, errs, _ = lean(srcs[f])
         good = rc == 0 and not errs
@@ -365,7 +477,31 @@ def main():
         for l in emsg[:3]:
             print("    engine refutation: " + l.split("Mutant.lean:")[-1][:200])
         ok &= rejected
-    print(f"mutants rejected: {n_rej}/{len(MUTANTS)}")
+    print(f"statement mutants rejected: {n_rej}/{len(MUTANTS)}")
+    # P5: definition mutants (kill = real proof failure in a pre-declared pin theorem)
+    n_def = 0
+    for name, f, edits, pins in DEF_MUTANTS:
+        src = srcs[f]
+        msrc = mutate_file(src, edits)
+        assert msrc != src
+        rc, errs, out = lean(msrc)
+        kind = classify(errs, out)
+        failing = failing_decls(msrc, errs)
+        killed = def_mutant_killed(rc, errs, kind, failing, pins)
+        n_def += killed
+        hit = [p for p in pins if p in failing]
+        print(f"{name}: build {'FAILS' if rc != 0 else 'PASSES (BAD)'} [{kind}]; failing declarations: "
+              f"{', '.join(failing) or '-'}; pin theorems failing: {', '.join(hit) or 'NONE (BAD)'} -> "
+              f"{'KILLED (good)' if killed else 'SURVIVED (BAD)'}")
+        ok &= killed
+    print(f"definition mutants killed: {n_def}/{len(DEF_MUTANTS)}")
+    print(f"mutants rejected in total: {n_rej + n_def}/{len(MUTANTS) + len(DEF_MUTANTS)}")
+    # expected survivors: reported honestly, not counted
+    for name, f, edits in KNOWN_SURVIVORS:
+        rc, errs, out = lean(mutate_file(srcs[f], edits))
+        clean = rc == 0 and not errs
+        print(f"{name}: build {'PASSES' if clean else 'FAILS'} -> "
+              f"{'SURVIVES, as documented (not counted)' if clean else 'now detected (documented survivor is stale)'}")
     print("RESULT:", "PASS" if ok else "FAIL")
     sys.exit(0 if ok else 1)
 

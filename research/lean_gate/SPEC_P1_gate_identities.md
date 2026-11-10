@@ -784,3 +784,147 @@ script, and no mutant, statement or proof was changed to make it pass.
 * The mutation check is not run in CI (it needs a built Lean project and about 5 minutes locally).
 * **AUD-RATELAW stays UNEXPLAINED.**
 
+
+## 11. P5 (branch `research/lean-gate-p5`, from `main` `3c5c0ef`, which contains P4a; **not** based on P4b / PR #26)
+
+Port of Researcher 040282's cycles 010 (`HistoryBuffer`), 011 (`PhaseIncrement`) and 013 (`PhaseCoherenceBridge`) into
+`lean/AIEFGateCore/AIEFGateCore/{HistoryBuffer,PhaseIncrement,PhaseCoherence}.lean` (namespaces `AIEFGate.History`,
+`AIEFGate.Phase`, `AIEFGate.PhaseCoherence`), with the fixes required by Auditor Seat 002. Nothing under `Pinned/`,
+`lean/AIEFProofs*`, `lean/AIEFFreezeCore`, `Capacity.lean`, `.github/` or any other hash-pinned artifact is edited;
+`registry/claims.csv`, `audit_inbox/TRIAGE.md` and the ERRATA are not edited. **AUD-RATELAW stays UNEXPLAINED**; this
+package does not touch it.
+
+**Credit.** Statements and proofs come from Researcher 040282 (handle only). Cycles 010/011: `audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_010/proposal/HistoryBuffer.lean`
+(md5 `fe47db36…`, identical copy in cycle 011) and `cycle_011/proposal/PhaseIncrement.lean` (md5 `b26f225f…`) on branch `audit-inbox`, commit
+`1b5ae52`. Cycle 013: `PhaseCoherenceBridge.lean`, md5 `410275adc4ea837a6384cefe2d545c2d`; **this file is not on `audit-inbox`** (the owner
+supplied it; the auditor's built copy is the reference). The deposit sources are not imported: `AIEFGateCore` may have no path dependency
+(step 2 of `check_lean_gate.sh`) and the files import `HistoryBuffer`/`PhaseIncrement` by bare module name, so the three files are restated inside
+the project (namespace, imports and docstrings changed; statements and proofs otherwise as deposited). Because the deposit is not on `main`, there
+is nothing to compare textually against in the repository (unlike P4b's `FreezeCore.lean`): `test_lean_gate_p5.py` records the whitespace-normalised
+deposit statements (6 for 010/011, 17 for 013) with the md5s above and checks that the restated statements agree. Audited by Auditor Seat 002
+(010 ADOPT, 011 ADOPT AS BUILDING BLOCK, 013 ADOPT WITH NOTES); the selection and the fixes follow that audit.
+
+**Overlap with `main`'s definitions.** `coherenceTrace`/`reported`/`sourceDrive` feed `main`'s `MatrixForm.preM`/`stepM` (`main_preM_source_formula`,
+`main_phase_preM` are `rfl`); new: `sourceDrive_symm` and `main_phase_stepM_eq_stepB` discharge the symmetric-drive hypothesis of
+`MatrixForm.stepM_eq_stepB` for the phase-specific drive, so the matrix step with that drive equals the edge-vector step `stepB`.
+`History`/`Phase` overlap nothing in `main` (no phase or delay state yet); the engine convention is a source-convention extension.
+
+### 11.1 What is proved
+
+| Theorem | Hypotheses (exactly as proved) | Content |
+|---|---|---|
+| `History.historyTrace_index`, `_oldest`, `_newest` | none | slot `i` at read `n` holds `x (n + i - D)` (constant prehistory); oldest `x (n - D)`; newest `x n` |
+| `Phase.phasor_wrap` | none | `phasor (wrapPhase t) = phasor t` |
+| `Phase.delayed_input_step` | none | `z_{n+1} = z_n · phasor (u n i − delayedIncrement d u n j)`; `delayedIncrement = 0` for `n < D`, `u (n−D) j` else. The offset `(ω_i+ω_j)/2·τ` **cancels**: this theorem does not pin it |
+| `Phase.delayed_input_chord_bound` | none | `‖z_{n+1} − z_n‖ ≤ |u n i − delayedIncrement d u n j|` (circular chord) |
+| `PhaseCoherence.input_engine_convention` | none | `coherenceInput = exp(i (θ_n,i − θ_{n−D},j − (ω_i+ω_j)/2 · τ))` with the **read-time `n − D`** index; this is what pins the offset and the delay index |
+| `input_norm`, `innovation_engine_convention`, `lateSource_startup`, `innovation_transport` | none | unit modulus; `C_{n+1} − αC_n = (1−α) exp(i dphi)`; startup clock; transport of the innovations by `phasor (u n i − lateSource d u n j)` |
+| `coherenceTrace_unitDisk` | `0 ≤ α ≤ 1`, `‖C0‖ ≤ 1` | `‖C_n i j‖ ≤ 1` |
+| `reported_bounds`, `phase_drive_bounds`, `phase_normalized_drive_bounds`, `phase_positiveRow_bound` | `‖C‖ ≤ 1`; `0 ≤ η, μ`, `0 ≤ α ≤ 1`, `‖C0‖ ≤ 1`; `0 < γ` for the normalised/row forms | generic bounds: `0 ≤ reported ≤ 1`, drive in `[−μ, η]`, positive-row envelope `(N−1) η/γ` (survive phase mutants by nature; auditor note N4) |
+| `drive_eta_response` | none | `sourceDrive (η+δ) μ C − sourceDrive η μ C = δ · reported C` |
+| `main_preM_source_formula`, `main_phase_preM` | none | `preM p (sourceDrive …) B = B + dt ((η+μ) reported − μ − γ B)` on `main`'s `Params` |
+| **new** `reported_diag`, `sourceDrive_diag` | none | `reported C i i = 0`, `sourceDrive C i i = −μ` (N2) |
+| **new** `reported_offdiag`, `reported_symm`, `sourceDrive_symm` | `i ≠ j` for `_offdiag` | `reported = (‖C i j‖ + ‖C j i‖)/2` and symmetric although `C` need not be (N1) |
+| **new** `main_phase_stepM_eq_stepB` | `B` symmetric, `Fintype V`, `LinearOrder V` | link to `MatrixForm.stepM_eq_stepB` for the phase drive |
+| probes (`probe_coherence_values`, `probe_reported_second`, `probe_drive_second`, `probe_main_preM`, …) | none | node-uniform probe, `D = 2`, `x0 = 0`, `u = π/2`, `ω = 1`, `τ = π`, `α = 1/2`, `C0 = 1` (as deposited) |
+| **new** `probe_asym_coherence_values`, `probe_asym_directed_magnitudes`, `probe_asym_directed_ne` | none | (N1, N5) `D = 1`, `x0 = 0`, `ω = 0`, `τ = 0`, node 0 advances `π/2` per step, node 1 not, `α = 1/2`, **`C0 = 0` (engine zero init)**: `C₂ 0 j = 1/4 + i/2`, `C₂ 1 j = 3/4`; `‖C₂ 0 1‖ = √5/4 ≠ 3/4 = ‖C₂ 1 0‖` |
+| **new** `probe_asym_reported`, `_swapped`, `probe_asym_drive`, `probe_asym_reported_diag` | none | reported `= (3 + √5)/8` in both directions (proved by unfolding `reported`, **not** through `reported_offdiag`), drive `= 3 (3+√5)/8 − 1` at `η = 2, μ = 1`; diagonal `0` |
+| **new** `probe_alpha_quarter` | none | `α = 1/2` is self-dual so the older probes cannot see an `α ↔ 1−α` swap; with `α = 1/4`, `C₁ = 3/4` |
+
+**Fix list from the audit.** (a) the asymmetric node-dependent probe above pins the symmetrised average (the "reported = `‖C i j‖` only" mutant is now
+killed, M51); (b) `reported_diag` and the direct `probe_asym_reported_diag` pin the zero diagonal (M52); (c) the `wrong_*_refuted` lemmas are renamed
+`inputPhasor_delay_{three,one,zero}_differs`, `inputPhasor_no_offset_differs`, `constant_input_differs`, `drive_without_eta_differs` and their
+docstring says they are facts about the function `Phase.inputPhasor` (and two arithmetic comparisons), not mutation evidence; the mutation evidence is
+the check in `lean_mutation_check.py` (§11.3); (d) the C0 = 0 probe (zero initial coherence, as the engine's `coherence_acc`).
+
+**Transcription is hand-checked, not proved against Python.** `coherenceInput` is read off `aief_experiment_engine_v1.py` `compute_R` (about
+lines 735-751: `dphi = theta_i − delayed_j − mean(omega) tau`, EMA `alpha C + (1 − alpha) z`, `abs`, `0.5 (R + R^T)`, zero diagonal; the engine
+initialises `coherence_acc` to zeros) and `reported`/`sourceDrive` off the `advance_state` drive (about lines 790-794: `B + dt ((eta+mu) R − mu − gamma B)`);
+Auditor Seat 002 and Researcher 001 each compared these lines by hand. `test_lean_gate_p5.py` additionally checks the Lean values against an independent
+floating-point simulation of the same convention (also hand-written from the same lines). No theorem relates this Lean model to the Python code.
+
+**Scope (not covered).** The trajectory of `B` itself, phase locking, the clip/projection (`np.maximum`, symmetrisation of `B`) and `shuffle_driver` (the
+driver `R` used in `advance_state` may be shuffled); float64 and the `fmod`/remainder of the Python phase wrap (`wrapPhase` is the exact-real floor wrap);
+`D = 0` and `τ`, `ω` arbitrary reals are covered by the general statements but only `D ∈ {1, 2}` is probed.
+
+### 11.2 Numbering of the mutants
+
+`MUTANTS` (M1–M23) is unchanged. **M24–M36 are reserved for P4b** (PR #26, `research/lean-gate-p4b`), which appends them to `MUTANTS`. The P5 mutants are
+definition mutants (a second kind, see below), numbered **M37–M52**, and live in a separate list `DEF_MUTANTS` so that neither the P4a test (which asserts the
+23 statement mutants) nor P4b's `len(MUTANTS) == 36` pin is affected. Exact pin: `test_lean_gate_p5.py` (23 statement + 16 definition = **39** on this branch; 36 + 16 =
+**52** after P4b merges: the file's `TOTAL_MUTANTS` and the P4a/P4b pins must be reconciled in whichever of P4b/P5 merges second).
+
+### 11.3 Mutation check: M37–M52 (16 definition mutants)
+
+Why a new kind. M1–M36 change a theorem *statement* and are refuted by a proved negation theorem. The survivors reported for cycle 004 and cycle 013 are wrong
+*implementations* (a different delay index, a swapped `i j`, a one-sided `reported`, …): a mutated definition has no statement to refute, so steps (b)/(c) of
+the original rule cannot apply. **Rule added (written reason above), nothing existing relaxed:** a definition mutant is *killed* iff (a') the mutated file, with
+all proofs kept, fails to build, (a'') the failure is a REAL PROOF FAILURE (same classifier as before: not name-reference-only) and (a''') at least one failing
+declaration is a **pin theorem declared for that mutant before the run** (an unrelated generic lemma failing does not count). The unmutated files must build (positive
+control, as before). `test_lean_gate_p5.py` checks that every edit applies exactly once, that every pin theorem exists, and the kill rule's negative controls (a
+build that passes, a failure only in an unlisted lemma, and a name-reference-only failure are all NOT kills). Mutants listed in `KNOWN_SURVIVORS` are run and
+reported but not counted.
+
+| # | Mutant (definition changed, proofs kept) | File | Pin theorem(s) declared |
+|---|---|---|---|
+| M37 | `delayedIncrement`: `d ≤ n` → `d < n` (011 auditor mutant) | PhaseIncrement | `delayed_input_step` |
+| M38 | `delayedIncrement`: `u (n−d)` → `u (n−d+1)` | PhaseIncrement | `delayed_input_step` |
+| M39 | `inputPhasor` reads the newest slot instead of the oldest | PhaseIncrement | `delayed_input_step` |
+| M40 | 004: wrong delay index, `D` → `D+1` | PhaseCoherence | `input_engine_convention`, `probe_coherence_values` |
+| M41 | 004: wrong delay index, `D` → `D−1` (younger read) | PhaseCoherence | same |
+| M42 | 004: current `θ` instead of the delayed `θ` | PhaseCoherence | same |
+| M43 | 004: dropped `ω·τ` offset (ω := 0) | PhaseCoherence | `input_engine_convention` |
+| M44 | 004: `phase := 0` (input `1`) | PhaseCoherence | `input_engine_convention`, `probe_coherence_values` |
+| M45 | 004: missing `η` (`(η+μ) R` → `μ R`) | PhaseCoherence | `drive_eta_response`, `main_preM_source_formula`, `probe_drive_second` |
+| M46 | 013 (auditor): swap `i`/`j` in `coherenceInput` | PhaseCoherence | `input_engine_convention`, `probe_coherence_values` |
+| M47 | 013 (auditor): conjugated input | PhaseCoherence | same |
+| M48 | 013 (auditor): `α` ↔ `1−α` in the EMA | PhaseCoherence | `probe_alpha_quarter`, `innovation_engine_convention` |
+| M49 | 013 (auditor): drive `−μ` → `+μ` | PhaseCoherence | `main_preM_source_formula`, `probe_drive_second` |
+| M50 | 013 (auditor): trace step uses the input of step `n+1` (off by one) | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
+| M51 | 013 survivor: `reported` one-sided (`‖C i j‖` only) | PhaseCoherence | `probe_asym_reported` |
+| M52 | 013 survivor: `reported` diagonal `1` instead of `0` | PhaseCoherence | `reported_diag` |
+
+Known survivor **S1** (documented, not counted): dropping the static offset `(ω_i+ω_j)/2·τ` in `PhaseIncrement.inputPhasor` alone is not detected by
+that file's theorems (the offset cancels in the step ratio; Auditor Seat 002's note on 011); it *is* pinned one level up (M43, `input_engine_convention`).
+
+Result (local, 2026-11-10; full run, `lean_mutation_check.py`): positive controls PASS (8 files, the two new ones included), both validator negative controls
+REJECTED, classifier negative control PASS, **23/23 statement mutants rejected (M1–M23 unchanged), 16/16 definition mutants KILLED (M37–M52), 39/39 in total, 0
+survivors among the counted mutants**; the documented survivor S1 survives as expected (not counted). Every kill was a REAL PROOF FAILURE. The pins that actually failed:
+M37–M39 `delayed_input_step`; M40–M42, M44, M46 `input_engine_convention` and `probe_coherence_values` (and `probe_asym_coherence_values`); M43 `input_engine_convention`
+(the pinned theorem, plus the probes); M45 `drive_eta_response`, `main_preM_source_formula`, `probe_drive_second`; M47 `input_engine_convention`, `probe_coherence_values`;
+M48 `innovation_engine_convention` **and** `probe_alpha_quarter` (the older `α = 1/2` probes do **not** fail under M48: `α` and `1−α` coincide); M49 `main_preM_source_formula`,
+`probe_drive_second`; M50 `probe_coherence_values`, `probe_asym_coherence_values`; **M51 `probe_asym_reported` (also `reported_offdiag`, `probe_asym_reported_swapped`)**;
+**M52 `reported_diag` (also `probe_asym_reported_diag`)**. Without the fixes M51 and M52 would survive, as the auditor found. Everything was run once: no mutant, pin or
+proof was changed after seeing a result, except that the first draft of `probe_asym_reported` went through `reported_offdiag` and so failed only together with it; it
+was re-proved from the definition of `reported` and the pin lists of M48, M51 and M52 were set to the probe/lemma named in the fix list before the final run (M48 initially
+listed `probe_coherence_values`, which does not fail under an `α` swap at `α = 1/2`; `probe_alpha_quarter` was added instead of weakening the pin).
+
+### 11.4 Gate results (local, 2026-11-10, Europe/Tirane)
+
+* `SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2297 jobs, 0 warnings, 18 `.lean` files (root + 17 modules; 3 modules new) hashed in `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` (22 entries),
+  step 6: 18 files scanned, 0 hits, **612 declarations audited** (512 on `main`; +100: the three new files; 49 of them are theorems printed with `#print axioms`),
+  every one depending only on `propext`, `Classical.choice`, `Quot.sound` (`disallowed=0`). Iterations needed: two (Mathlib line-length linter on a docstring; a docstring line
+  beginning with the word `theorem`, which the step-7 declaration scan read as a declaration); no proof changed.
+* `lean_mutation_check.py` (full run): 39/39 (above).
+* `research/lean_gate/tests`: 50 passed (40 before; `test_lean_gate_p5.py` adds 10 tests: restated statements vs the deposit, banned markers and credit by handle,
+  presence of the fix lemmas, the asymmetric zero-init probe and the `α = 1/4` probe against an independent simulation, the node-uniform probe values, the exact mutant count 39,
+  every edit applies once and every pin exists, the kill rule's negative controls).
+* Repository checks (`tools/ci`, local venv): `check_artifact_pins`, `check_sha256sums`, `check_modes --strict`, `hygiene_scan --pii`, `lint_claims`, `check_manifest`, `check_current_inventory`, `check_pinned_restatement` all PASS; `unittest discover tools/ci/tests`: 179 tests OK. `registry/artifacts_current.csv` regenerated with `build_current_inventory.py` after the new files were staged (the builder lists tracked files only): rows for the three Lean files and `test_lean_gate_p5.py`.
+
+### 11.5 Expected merge conflicts with P4b (PR #26)
+
+Both branches append to the same places: `AIEFGateCore.lean` (import lines), `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` (regenerate), `README.md` (table/summary text),
+this SPEC (§10 vs §11 appended at the end), `research/lean_gate/lean_mutation_check.py` (P4b appends M24–M36 to `MUTANTS` and edits `OPENS`/docstring; P5 adds `DEF_MUTANTS`,
+`KNOWN_SURVIVORS` and helpers after `MUTANTS` and a loop at the end of `main`), `registry/artifacts_current.csv` (regenerate with
+`build_current_inventory.py`) and `tests/test_lean_gate_p4a.py` (P4b relaxes `== 23` to `>= 23`; P5 does not touch it). No Lean file is shared (P4b: `WeightUpdate.lean`, `Freeze.lean`;
+P5: `HistoryBuffer.lean`, `PhaseIncrement.lean`, `PhaseCoherence.lean`). The declaration count after both merges is not the sum of the two gate totals as printed here
+(P4b 599, P5 612, base 512): expect `512 + 87 + 100 = 699` (to be re-measured).
+
+### 11.6 Still open (P5)
+
+* No proof that the Lean convention is the Python one (hand-checked only); `shuffle_driver`, the clip/projection and the `B` trajectory are outside the model.
+* Probes use `D ∈ {1, 2}`, `Fin 2` and phase multiples of `π/2`; the general statements cover all `D`, `V`, `ω`, `τ`.
+* The generic bounds (unit disk, drive range, row envelope) survive phase mutants by nature (auditor note N4); they are not evidence about phases.
+* `α = 1/2` probes cannot see an `α ↔ 1−α` swap; `probe_alpha_quarter` and `innovation_engine_convention` do.
+* No Lean-side statement pin (Lea-style statement hash) in CI; the mutation check is not run in CI (a parallel auditor branch proposes adding it).
+* **AUD-RATELAW stays UNEXPLAINED.**

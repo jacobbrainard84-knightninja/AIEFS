@@ -1,6 +1,6 @@
 # AIEFGateCore (Lean 4 + Mathlib)
 
-Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8) and P4a (SPEC §9, `Capacity.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
+Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8), P4a (SPEC §9, `Capacity.lean`) and P5 (SPEC §11, `HistoryBuffer.lean`, `PhaseIncrement.lean`, `PhaseCoherence.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
 directions, which the rate-law audit (`AUD-RATELAW`; ERRATA E5, and E22 on
 `main` (landed via PR #18)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
 proves one-step real-arithmetic algebra used by the audit's estimator; it does not explain the rate law. Spec, code mapping and scope:
@@ -31,6 +31,7 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched
 | `PersistenceWitness.engine_gated_persistence` | (P3) for every `n`, at `ε = 10⁻¹²`, K3, `R` frozen, `h = vCtrl`: gate firing and binding scale at every step, branch hypothesis holds for all `k < n`; `false_iterate_no_decay` |
 | `EngineRedTeam.engine_false_{drop_ker,drop_hc1,drop_clip,main_no_gamma,multiplier_no_gamma}` | (P3) the same negations at engine-shaped parameters (`ε = 10⁻¹² > 0`, `EngineGate`) |
 | `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex`, `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |
+| `History.historyTrace_{index,oldest,newest}`, `Phase.{phasor_wrap,delayed_input_step,delayed_input_chord_bound}`, `PhaseCoherence.{input_engine_convention,innovation_*,coherenceTrace_unitDisk,phase_*_bounds,drive_eta_response,main_preM_source_formula,main_phase_preM,reported_{diag,offdiag,symm},sourceDrive_{diag,symm},main_phase_stepM_eq_stepB,probe_*}` | (P5) phase-specific coherence EMA and drive on `Params`/`preM`/`stepM`, ported from cycles 010, 011 and 013 of Researcher 040282 (handle only; cycles 010/011 on `audit-inbox` commit `1b5ae52`, cycle 013 supplied by the owner, md5 `410275ad…`, see SPEC §11): the delayed read is `n − D`, the input is `exp(i(θ_n,i − θ_{n−D},j − (ω_i+ω_j)τ/2))`, the EMA/reported/drive follow the engine convention (`compute_R`, `advance_state`, **hand-checked, not proved against Python**); node-uniform and asymmetric zero-init probes pin delay, offset, EMA weight, symmetrised average and zero diagonal. Out of scope: trajectory of `B`, locking, clip/projection, `shuffle_driver` |
 
 **Scope.** Reals, not float64; edge-vector form, not the symmetric matrix; one step with `R` fixed (ERRATA E5);
 exact controller order (no `TIE_TOL`). Persistence (P3) is conditional on staying in the branch, with `R` frozen;
@@ -38,7 +39,7 @@ its witness is the tied K3 `+vCtrl` side only. P1's `IsCtrl`/`InCtrlKer` quantif
 need them only on edges with `x_e ≠ 0` or `h_e ≠ 0` (SPEC §7.1). Matrix vs edge-vector form: proved for symmetric
 `B` and drive (P2, SPEC §7.4).
 Not formalised: the closed-form clique multiplier `λ_k`, finite-time
-departure from the locked state, persistence with moving `R` or non-uniform scales, phases, delay, EMA, K12 (`lean/AIEFProofsKn`).
+departure from the locked state, persistence with moving `R` or non-uniform scales, locking, the `B` trajectory with phases, K12 (`lean/AIEFProofsKn`). (Delay, phase input and EMA are modelled by P5 only as the coherence component, SPEC §11.)
 
 **Check** (from this directory): `./check_lean_gate.sh` (or `SKIP_CACHE=1 ./check_lean_gate.sh` offline). Seven
 steps as in `lean/AIEFFreezeCore/check_lean_freeze.sh`: toolchain, pins (`AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt`),
@@ -54,7 +55,7 @@ standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` ref
 controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated
 statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as
 dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,
-weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems.
+weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. P5 adds 16 *definition* mutants M37–M52 (list `DEF_MUTANTS`; M24–M36 are reserved for P4b): a mutant is killed iff the mutated file fails with a real proof failure in a pre-declared pin theorem (SPEC §11.3); `KNOWN_SURVIVORS` documents one expected survivor.
 
 `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the
 cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`.
