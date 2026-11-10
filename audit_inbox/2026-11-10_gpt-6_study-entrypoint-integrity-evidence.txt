@@ -1,0 +1,47 @@
+AIEFS PART 7 — STUDY ENTRYPOINT TREE AUDIT
+Date: 2026-11-10 (Europe/Tirane)
+Main commit: 543e7e1aaa11e4c810783806cb180eee36ec5313
+Main tree: 9f5469090bdb4e0414b9fb4c5ed4311eced89f00
+Recursive tree response: 3,246 entries; truncated=false.
+registry/studies.csv blob: 86a39aeaff94502cb8a549da50be4205f8a1d454
+registry/supersessions.csv blob: c256888eecec39c160a543b756cca5a2558072b5
+CURRENT_STATUS.md blob: c51401924a2179ce87eaf107b01515e2d3f4e37f
+.github/workflows/repo-checks.yml blob: a2f313f82c947c20ea7b717f67b1ad7251f39737
+tools/ci/check_current_inventory.py blob: 0471299194219395d8e94b12494cdccc474c192e
+registry/README.md blob: b3ab739359393aae5d1e02aded5d4c6885981144
+
+UNRESOLVED TOKENS (11)
+row 3 AIEF_1_0_TO_1_2_FOUNDATIONAL:
+- AIEF_1_0_*.py [0 tracked matches]
+- AIEF_1_1_*.py [0 tracked matches]
+- AIEF_1_2_*.py [0 tracked matches]
+row 5 AIEF_1_3_DISJOINT_100SEED:
+- AIEF_1_3_sensitivity_audit_updated.py [exact path absent]
+- AIEF_1_3_persistence_mechanism_test_updated.py [exact path absent]
+row 7 AIEF_1_4_MATCHED_PHASE_ABLATION:
+- AIEF_1_4_driver_mechanism.py [exact path absent]
+row 10 AIEF_1_4_TANGENT_AND_COCYCLE:
+- aief_1_4_full_state_tangent_operator.py [exact path absent]
+- aief_1_4_history_cocycle_test.py [exact path absent]
+- aief_1_4_branch_tangent_comparison.py [exact path absent]
+row 12 AIEF_1_4_CONTROLLER_FIBER:
+- aief_1_4_intertwining_controller.py [exact path absent]
+- aief_1_4_fiber_coordinate_controller.py [exact path absent]
+
+RELATED CURRENT FILES (NOT AUTOMATIC ALIASES)
+- AIEF_1_4_augmented_tangent_cocycle_analysis.py
+- AIEF_1_4_cocycle_controls_coupled_comparison.py
+- AIEF_1_4_frozen_driver_cocycle_analysis.py
+- AIEF_1_4_intertwining_controller_analysis.py
+
+CI SEARCH
+- GitHub code search for canonical_entrypoints returned only registry/studies.csv.
+- repo-checks.yml has no study entrypoint job.
+- check_current_inventory.py is explicitly scoped to artifacts_current.csv and tracked files/zip members (lines 2-25); it does not check studies.csv.
+
+PROTOTYPE
+- Python 3.13.5 standard-library-only prototype.
+- py_compile: PASS.
+- unittest: 6 passed, 0 failed.
+- Tests include a valid exact+glob fixture and known-false missing exact/glob, path traversal, directory-boundary and duplicate-study-ID cases.
+- Prototype is not integrated into main CI and was not run on a full local checkout.
