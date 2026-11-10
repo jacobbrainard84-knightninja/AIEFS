@@ -14,3 +14,4 @@ import AIEFGateCore.EngineRedTeam
 import AIEFGateCore.Capacity
 import AIEFGateCore.Freeze
 import AIEFGateCore.WeightUpdate
+import AIEFGateCore.TrajectoryInvariants
