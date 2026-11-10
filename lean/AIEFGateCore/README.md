@@ -1,12 +1,15 @@
 # AIEFGateCore (Lean 4 + Mathlib)
 
-Lean work packages P1 and P2 (SPEC §7): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
+Lean work packages P1, P2 (SPEC §7) and P3 (SPEC §8): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
 directions, which the rate-law audit (`AUD-RATELAW`; ERRATA E5, and E22 on
 `main` (landed via PR #18)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
 proves one-step real-arithmetic algebra used by the audit's estimator; it does not explain the rate law. Spec, code mapping and scope:
 [`research/lean_gate/SPEC_P1_gate_identities.md`](../../research/lean_gate/SPEC_P1_gate_identities.md).
 A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched. Same toolchain
 (`leanprover/lean4:v4.33.1`) and Mathlib pin (`0df444a3…`) as the other projects; depends on Mathlib only.
+`AIEFGateCore/Pinned/` (P3) holds verbatim restatements of four pinned `lean/AIEFProofs` modules (only the
+`namespace`/`end` lines and internal imports renamed), byte-checked by `tools/ci/check_pinned_restatement.py`
+(SPEC §8.1); do not edit them.
 
 | declaration (namespace `AIEFGate`) | statement (real arithmetic, one step, `R` fixed) |
 |---|---|
@@ -23,26 +26,34 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched
 | `EngineWitness.engine_rel_strictly_weaker` | (P2) same parameters (`ε = 10⁻¹²`), an edge with `x_e = h_e = 0`: every per-edge (`_on`) hypothesis holds while the P1 all-edge kernel hypothesis fails for every controller (`engine_nonvacuous` alone has `x_e ≠ 0` everywhere, so it does not exercise the weakening) |
 | `MatrixForm.stepM_eq_stepB`, `stepM_symm`, `stepM_diag` | (P2) the engine's matrix step equals the edge-vector step on the complete graph for symmetric `B` and drive; `false_matrix_no_symm` |
 | `RedTeam.*` | non-vacuity instance (`ε = 0`, not an engine config); proved negations of four known-false variants; `false_drop_{clip,hon,ker,hc0,hc1}`: main theorem with exactly one hypothesis dropped is false (`hon` only for a non-engine gate) |
+| `Bridge.inCtrlKer_iff_exists_smul_vCtrl`, `inCtrlKer_iff_smul_vCtrl`, `inCtrlKer_iff_CCtrl`, `incCoeff_eq_inc`, `vRay_two_eq_vCtrl`, `sc_ctrl_eq_of_PPerp_eq`, `stepB_add_smul_vCtrl` | (P3) the gate's kernel hypothesis on K3 for every controller assignment with `J ⊆ {0,1}` (`CtrlJ01`) is exactly the pinned `ker CCtrl = span vCtrl`; the gate incidence is the pinned `inc`; main theorem along `vCtrl` with `hker` discharged; `false_bridge_wrong_vector`, `false_bridge_any_ctrl` |
+| `iterate_stepB_add_smul_of_branch`, `stepB_add_smul_of_uniformBranch`, `amp_mem_Icc` | (P3) if the uniform branch holds at every step `k < n`, then `stepB^[n](B + t h) = stepB^[n] B + amp n · h`, `amp n = t ∏ (1−γdt) s_k` |
+| `PersistenceWitness.engine_gated_persistence` | (P3) for every `n`, at `ε = 10⁻¹²`, K3, `R` frozen, `h = vCtrl`: gate firing and binding scale at every step, branch hypothesis holds for all `k < n`; `false_iterate_no_decay` |
+| `EngineRedTeam.engine_false_{drop_ker,drop_hc1,drop_clip,main_no_gamma,multiplier_no_gamma}` | (P3) the same negations at engine-shaped parameters (`ε = 10⁻¹² > 0`, `EngineGate`) |
 
 **Scope.** Reals, not float64; edge-vector form, not the symmetric matrix; one step with `R` fixed (ERRATA E5);
-exact controller order (no `TIE_TOL`). P1's `IsCtrl`/`InCtrlKer` quantify over all edges; P2's `_on` theorems
+exact controller order (no `TIE_TOL`). Persistence (P3) is conditional on staying in the branch, with `R` frozen;
+its witness is the tied K3 `+vCtrl` side only. P1's `IsCtrl`/`InCtrlKer` quantify over all edges; P2's `_on` theorems
 need them only on edges with `x_e ≠ 0` or `h_e ≠ 0` (SPEC §7.1). Matrix vs edge-vector form: proved for symmetric
 `B` and drive (P2, SPEC §7.4).
 Not formalised: the closed-form clique multiplier `λ_k`, finite-time
-departure from the locked state, branch persistence over time, phases, delay, EMA.
+departure from the locked state, persistence with moving `R` or non-uniform scales, phases, delay, EMA, K12 (`lean/AIEFProofsKn`).
 
 **Check** (from this directory): `./check_lean_gate.sh` (or `SKIP_CACHE=1 ./check_lean_gate.sh` offline). Seven
 steps as in `lean/AIEFFreezeCore/check_lean_freeze.sh`: toolchain, pins (`AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt`),
-imports/orphans (strict), cache, clean build with 0 warnings, forbidden markers, axiom audit (only propext,
-Classical.choice, Quot.sound). Local result 2026-11-09 (P2): PASS, 2032 jobs, 0 warnings, 246 declarations audited
-(`GateMap.lean` imports specific Mathlib modules since P2).
+step 2b (P3: `Pinned/` must pass `tools/ci/check_pinned_restatement.py`), imports/orphans (strict), cache, clean
+build with 0 warnings, forbidden markers, axiom audit (only propext, Classical.choice, Quot.sound). Local result
+2026-11-09 (P3, `SKIP_CACHE=1`): PASS, 2149 jobs, 0 warnings, 14 source files, 439 declarations audited, 239
+theorems printed with `#print axioms`, 0 disallowed.
 Cross-check against the pinned engine: `research/lean_gate/lean_gate_crosscheck_v1.py`; mutation check:
-`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3): 10 mutants, each must (a) fail to build with the kept
-proof, (b) be refuted by a proved negation theorem (no `sorry`, standard axioms only, checked with `#print axioms`;
-a `sorry` and an `axiom` refutation are rejected as negative controls) and (c) the same refutation term must fail on
-the unmutated statement (term-specificity only, not a semantic control). **M1–M3 (dropped `hker`, `hc1`, `hclip`)
-are rejected by the build only through a name reference ("Unknown identifier"); their rejection is carried by the
-step-(b) refutations `false_drop_ker`, `false_drop_hc1`, `false_drop_clip`.**
+`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4): 13 mutants, each must (a) fail to build with the kept
+proof by a real proof failure (since P3 a failure made only of `Unknown identifier`/`unknown constant` errors does
+not count; a classifier negative control checks this), (b) be refuted by a proved negation theorem (no `sorry`,
+standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` refutation are rejected as negative
+controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated
+statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as
+dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,
+weakened controller set, persistence without decay.
 
 `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the
 cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`.

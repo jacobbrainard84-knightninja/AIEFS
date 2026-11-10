@@ -3,6 +3,9 @@
 Status: NEW unpinned research, branch `research/lean-gate-identities` (from `main` `eb3933c`), 2026-11-09.
 P2 (stacked on P1 `dfdb63f`, branch `research/lean-gate-p2`): see §7, which supersedes the P1 statements in §3/§4/§5
 where they say "not done", "argued, not proved" or "no separate negation theorem".
+P3 (branch `research/lean-gate-p3`, from `main` `ba171d0`): see §8 (bridge to the pinned `lean/AIEFProofs` controller
+fiber, n-step branch persistence, engine-shaped negations, semantic mutation check); it supersedes the §7.6 items it
+closes.
 Lean project: [`lean/AIEFGateCore`](../../lean/AIEFGateCore). Cross-check: [`lean_gate_crosscheck_v1.py`](lean_gate_crosscheck_v1.py).
 Nothing hash-pinned is edited. `registry/claims.csv`, `registry/artifacts.csv` and the ERRATA are not edited.
 
@@ -542,3 +545,154 @@ style linters active (verified by a temporary over-long line and an unused simp 
   only the positive witnesses of §7.2 (`engine_nonvacuous`, `engine_rel_strictly_weaker`) are engine-shaped.
 * `R` symmetry / `B` symmetry invariance of the engine are hypotheses of §7.4, not theorems.
 * **AUD-RATELAW stays UNEXPLAINED.** P2 does not change any label, ERRATA entry or registry claim.
+
+## 8. P3 (branch `research/lean-gate-p3`, from `main` `ba171d0`)
+
+Everything below is proved in `lean/AIEFGateCore` with no `sorry`/`admit`/`axiom`/`native_decide`. Clean
+`SKIP_CACHE=1 ./check_lean_gate.sh` (2026-11-09): PASS, 2149 jobs, 0 warnings, 439 declarations audited, 239
+theorems/lemmas printed with `#print axioms`, `disallowed=0`; every new public theorem depends only on `propext`,
+`Classical.choice`, `Quot.sound` (two depend on `propext` alone). No P1/P2 statement changed. Nothing under
+`lean/AIEFProofs`, `lean/AIEFProofsKn` or any hash-pinned artifact is edited; `registry/claims.csv`,
+`audit_inbox/TRIAGE.md` and the ERRATA are not edited. **AUD-RATELAW stays UNEXPLAINED.**
+
+### 8.1 Bridge to the pinned controller fiber (`CCtrl`, `vCtrl`)
+
+**Route taken: verbatim restatement plus a byte-level check, not a cross-project import.** `check_lean_gate.sh`
+step 2 rejects Lake path dependencies for this project (since P1: the gate package depends on Mathlib only, so its
+CI job does not build or trust the pinned project's outputs). Importing `lean/AIEFProofs` would mean adding a path
+dependency, i.e. loosening that rule, so it was not done. Instead:
+
+* `AIEFGateCore/Pinned/{ControllerFiber,ControllerFiberProjector,ControllerFiberQuotient,CompleteGraphIncidence}.lean`
+  are the four pinned modules, compiled again inside `AIEFGateCore`, with exactly these whole-line changes:
+  `namespace AIEFProofs` → `namespace AIEFGate`, `end AIEFProofs` → `end AIEFGate`, and the internal imports
+  `import AIEFProofs.X` → `import AIEFGateCore.Pinned.X`. Every definition, lemma, proof, comment and blank line is
+  otherwise identical (so the restated constants are `AIEFGate.ControllerFiber.CCtrl`, `….vCtrl`,
+  `AIEFGate.CompleteGraphIncidence.inc`, `….vRay`, …).
+* `tools/ci/check_pinned_restatement.py` (stdlib; re-executes as `python -I -B` like `check_sha256sums.py`) checks:
+  the pinned sources have the hard-coded sha256 values, which are also the values listed in
+  `lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt`; each restated file equals its pinned source after only those
+  substitutions (byte for byte, including whitespace and the final newline); `Pinned/` holds no other file. 11
+  unittest cases in `tools/ci/tests/test_check_pinned_restatement.py` (run by the `repo-checks` unittest step),
+  including negative controls: a wrong `vCtrl` entry in the restatement, a whitespace-only change, an added final
+  newline, a renamed namespace line, a changed pinned source with its sums list updated to match (caught by the
+  hard-coded pin), an extra file, a missing file, and a shadowing `tools/ci/hashlib.py`.
+* **Pass/fail rule change (stricter) with reason:** `check_lean_gate.sh` gains step 2b: if `AIEFGateCore/Pinned`
+  exists, `tools/ci/check_pinned_restatement.py` must exist and PASS, else the script fails with exit 2. Reason: a
+  restated "pinned" definition is only evidence about the pinned object if the text is verified to be the pinned
+  text; without this check a later edit to `Pinned/` would silently turn the bridge into a statement about some
+  other matrix. Negative control run locally: changing `| 2 => -1` to `| 2 => 1` in the restated `vCtrl` (and
+  regenerating the gate sums) makes `check_lean_gate.sh` fail at step 2 with exit 2.
+* **Scope of the binding (limit):** the check is textual and covers the files in `Pinned/` only. It does not stop
+  another `AIEFGateCore` file from adding attributes, instances or `simp` lemmas about the restated names. That cannot
+  change what the stated bridge theorems say (their statements and the restated definitions are fixed text), but it
+  can change how later proofs are found; such additions are not part of the pinned object.
+
+Bridge theorems (`AIEFGateCore/Bridge.lean`, namespace `AIEFGate.Bridge`; `toR` casts a `ℚ` vector to `ℝ`):
+
+| theorem | statement |
+|---|---|
+| `incCoeff_eq_inc` | for a loopless edge list `(src, dst)`, the gate's `incCoeff i e` equals the pinned `inc src dst i e` (cast) |
+| `incAct_toR_eq_mulVec`, `incAct_toR_eq_zero_iff` | the gate's `incAct` on `toR x` is `(inc src dst *ᵥ x)` (cast); full gate kernel ⇔ `inc *ᵥ x = 0` |
+| `G3_eq_pinned`, `vRay_eq_pinned` | the gate's `G3` is the pinned `(src3, dst3)`; the gate's `vRay c` is `toR` of the pinned `vRay c` |
+| `vRay_two_eq_vCtrl` | the gate's `vRay 2 = toR vCtrl` (through the pinned `vRay_two_eq_vCtrl`) |
+| `incAct_G3_ctrlRow` | rows `0, 1` of the gate's incidence action on `toR x` are `(CCtrl *ᵥ x) 0, 1` (through the pinned `inc3_rows_eq_CCtrl`) |
+| `CtrlJ01`, `CtrlJ01.forced` | a K3 controller assignment (endpoint per edge) never using node 2 (the audit's `J ⊆ {0,1}`); it forces `ctrl 1 = 0`, `ctrl 2 = 1` |
+| `inCtrlKer_iff_CCtrl` | `CtrlJ01 ctrl →` (`InCtrlKer G3 ctrl (toR x)` ⇔ `CCtrl *ᵥ x = 0`) |
+| `inCtrlKer_iff_exists_smul_vCtrl` | `CtrlJ01 ctrl →` (`InCtrlKer G3 ctrl (toR x)` ⇔ `∃ a : ℚ, x = a • vCtrl`) (through the pinned `CCtrl_mulVec_eq_zero_iff_exists_smul`) |
+| `inCtrlKer_iff_smul_vCtrl` | `CtrlJ01 ctrl →` for every real `h`: (`InCtrlKer G3 ctrl h` ⇔ `∃ a : ℝ, h = a • toR vCtrl`) |
+| `sc_ctrl_eq_of_PPerp_eq` | `CtrlJ01 ctrl → PPerp *ᵥ x = PPerp *ᵥ y →` the controller scales of `toR x` and `toR y` agree (through the pinned `CCtrl_eq_iff_PPerp_eq`) |
+| `stepB_add_smul_vCtrl` | the main theorem `stepB_add_smul_of_branch` along `a • toR vCtrl` with `hker` discharged by the bridge |
+| `false_bridge_wrong_vector` | refuted: the bridge with `vCtrl` replaced by the pinned `vRay 0` |
+| `false_bridge_any_ctrl` | refuted: the bridge with `CtrlJ01` weakened to "endpoint per edge" (`ctrl = (0,0,2)`) |
+
+So the kernel hypothesis `hker` of the main gate theorem, for every controller assignment of the audit's gate
+component, **is** the pinned `ker CCtrl = ℚ·vCtrl` (and its real span), proved, not asserted.
+
+Limits (blunt): (i) the identity with `lean/AIEFProofs` is by verified source text (same toolchain and Mathlib pin),
+not by a kernel-level identity of constants across projects: `AIEFGate.ControllerFiber.CCtrl` and
+`AIEFProofs.ControllerFiber.CCtrl` are different Lean constants elaborated from the same text. (ii) K3 only, fixed
+edge order `(0,1), (0,2), (1,2)`; the node relabelling `[2, 7, 11] ↦ 0, 1, 2` and the claim that the audit's `J`
+is `{0,1}` remain external correspondences, exactly as in the pinned files. (iii) `incCoeff_eq_inc` is general
+(any loopless edge list, so also the pinned `src4…src6` lists), but nothing from `lean/AIEFProofsKn` (K12,
+`finrank_ker_inc`) is restated or bridged. (iv) The controller-fiber files are re-checked by this project's build;
+the pinned project's own `check_lean.sh` is unchanged and still separately required in CI.
+
+### 8.2 Branch persistence over `n` steps
+
+`AIEFGateCore/Persistence.lean` (general `V`, `E`): `UniformBranch p G drive B h t s ctrl` bundles the hypotheses of
+`stepB_sub_eq_smul_of_uniform_on` (clip on `supp h`, same gate decision, kernel and controller conditions on
+`Rel x h` at both states, one branch scale `s` on `supp h`); `amp p t s k = t ∏_{j<k} (1 − γdt) s_j`.
+
+* `stepB_add_smul_of_uniformBranch`: one step, `stepB (B + t h) = stepB B + (t (1 − γdt) s) • h`.
+* `iterate_stepB_add_smul_of_branch`: if `UniformBranch` holds at `(stepB^[k] B, amp k, s k, ctrl k)` for every
+  `k < n` (explicit hypothesis: the state stays in the branch region), then
+  `stepB^[n] (B + t • h) = stepB^[n] B + amp n • h` exactly.
+* `amp_mem_Icc`: `amp k ∈ [0, t]` when every factor `(1 − γdt) s_j ∈ [0, 1]`.
+
+Non-vacuity (`AIEFGateCore/PersistenceWitness.lean`), engine-shaped, gate firing, **every `n`**:
+`engine_gated_persistence n`: at `pE` (frozen production parameters as exact reals, `ε = 10⁻¹²`), K3, `R = 1`
+(drive `1/25`), `B = 8/3`, `h = vRay 2` (`= vCtrl`, §8.1), `t = 1/10`, `ctrl = ctrlPlus 2`: the gate fires and the
+scale is binding (`sP k < 1`) at every step, `UniformBranch` holds for every `k < n`, and the `n`-step identity
+follows. The base trajectory stays tied, `stepB^[k] BE = cst (bseq k)` (`iterate_BE`), and the invariant
+`2 x_k > cap` is preserved (`inv_step`; margin ≈ 4.5·10⁻⁴ in `x`, from the drive term `dt/25`). Red team:
+`false_iterate_no_decay` (the `n`-step statement with `amp n` replaced by `t`) is refuted at `n = 1` on this
+instance (mutant M13). Values pinned by `tests/test_lean_gate_p3.py` (exact 4-step response against the
+independent transcription; a 10 000-step float check of the invariant margin).
+
+Limits (blunt): the drive is frozen for all `n` (`R` fixed; the engine's `R` moves with the phases, so this is the
+`B`-subsystem with frozen coherence, not the engine); the branch hypothesis is assumed, not derived, in the general
+theorem; uniform scale on `supp h` is needed (with non-uniform scales the direction changes after one step and this
+theorem does not apply, so it does not cover the audit's untied gate component `K3_gate_component_multiplier`); the
+witness is the symmetric all-tied K3 `+vRay 2` side with chosen inputs (the `−vRay 2` side leaves the branch,
+`K3_tied_minus_not_eigen`); no quantitative branch radius.
+
+### 8.3 Engine-shaped negations (`ε = 10⁻¹² > 0`)
+
+`AIEFGateCore/EngineRedTeam.lean`, all at `pE` with `EngineGate pE`:
+
+| theorem | negated statement (as the toy `RedTeam` version, `p0` → `pE`) | instance |
+|---|---|---|
+| `engine_false_drop_ker` | main theorem without `hker` | `B = 8/3`, `R = 1`, `h = e0`, `t = 1/10`; edge 1 is `8/3·cap/(16/3+u+ε)`, claim `8/3·cap/(16/3+ε)` |
+| `engine_false_drop_hc1` | main theorem without `hc1` | `B = 8/3`, `h = vRay 2`, `t = −1/10`; node 2 becomes the smallest scale |
+| `engine_false_drop_clip` | main theorem without `hclip` | `B = 0`, `R = 0` (drive `−3/100`), `h = vRay 2`, `t = 1/1000`; edges 1, 2 clipped, gate off |
+| `engine_false_main_no_gamma` | main theorem without `(1 − γdt)` | the `engine_nonvacuous` instance (all hypotheses hold) |
+| `engine_false_multiplier_no_gamma` | multiplier formula without `(1 − γdt)` | same; estimator `(1 − γdt) sE`, claim `sE` |
+
+Not done (open): `false_drop_hc0`, `false_rel_x_only`, `false_rel_h_only` at `pE`. Impossible: `false_drop_hon` at
+engine-shaped parameters (`hon` is implied there, `gateOn_iff_of_branch`). Same scope as §7.2 (exact reals, chosen
+K3 inputs, not engine trajectories).
+
+### 8.4 Mutation check: semantic build rejections, engine refutations, M11–M13
+
+**Pass/fail rule change (stricter) with reason.** Step (a) of `lean_mutation_check.py` now counts a build failure
+only if it is a real proof failure; a failure made only of name-reference errors (`Unknown identifier` /
+`unknown constant`) no longer counts. Reason: such a failure only shows that the kept proof mentions the deleted
+binder; it says nothing about the mutated statement (P2 already called it "weak"). To keep M1–M3 meaningful under
+the stricter rule they now weaken the hypothesis to `(hker : True)`, `(hc1 : True)`, `(hclip : True)` instead of
+deleting it; `True → P` is the same proposition as `P`, so the mutant is the same statement as "hypothesis dropped",
+while the binder name stays in scope and the kept proof must fail on the type (it does: `Application type
+mismatch`). M8 is changed the same way (`hD hB := True`): its P2 deletion form failed with eight name errors and one
+cascading `rfl` failure, i.e. it was only formally "real". Classifier negative control: the P2 deletion form of M1 is
+still elaborated each run and must be classified NAME-REFERENCE ONLY and not counted, else the run fails.
+
+Additionally M1–M5 need a **second** step-(b) refutation at engine parameters (`EngineRedTeam.engine_false_*` at
+`pE`), validated exactly like the first (no error, no `declaration uses`/`sorry`, `#print axioms` ⊆ standard),
+with its own term-specificity control (c). New mutants: M11 (`inCtrlKer_iff_smul_vCtrl` with the pinned `vCtrl`
+replaced by the pinned `vRay 0`; refuted by `false_bridge_wrong_vector`), M12 (same with `CtrlJ01` weakened to
+"endpoint per edge"; `false_bridge_any_ctrl`), M13 (`iterate_stepB_add_smul_of_branch` without amplitude decay;
+`false_iterate_no_decay`). The `sorry` and `axiom aief_cheat : False` validator negative controls are unchanged.
+
+Result (local, 2026-11-09): positive controls PASS (5 files), both validator negative controls REJECTED, classifier
+negative control PASS, **13/13 mutants rejected**, every build rejection a REAL PROOF FAILURE, M1–M5 refuted at both
+`p0` and `pE`, RESULT PASS.
+
+### 8.5 Still open (P3)
+
+* Branch persistence with non-uniform scales (the audit's untied gate component), with moving `R`, or with a
+  quantitative radius; persistence is only proved conditionally (general) and on one tied engine-shaped instance.
+* The closed-form clique multiplier `λ_k`, finite-time departure from it, float64 error, `TIE_TOL`.
+* Engine-shaped versions of `false_drop_hc0`, `false_rel_x_only`, `false_rel_h_only` (§8.3).
+* The bridge covers K3 / `CCtrl` / `vCtrl` and the general incidence; no bridge to `lean/AIEFProofsKn` (K12).
+* The mutation check is not run in CI (it needs a built Lean project and about 2 minutes locally).
+* `R` symmetry / `B` symmetry invariance of the engine remain hypotheses (§7.4).
+* **AUD-RATELAW stays UNEXPLAINED.** P3 does not change any label, ERRATA entry or registry claim.

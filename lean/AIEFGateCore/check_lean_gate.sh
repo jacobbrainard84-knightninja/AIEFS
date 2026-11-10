@@ -30,6 +30,8 @@
 #                   sha256sum lean-toolchain lakefile.toml lake-manifest.json AIEFGateCore.lean \
 #                     $(find AIEFGateCore -name '*.lean' | sort) check_lean_gate.sh \
 #                     > AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt
+#   2b pinned     (P3) if AIEFGateCore/Pinned exists: tools/ci/check_pinned_restatement.py must PASS (the
+#                 restated files equal the pinned lean/AIEFProofs sources up to the namespace/import lines)
 #   3 imports     every `import AIEFProofs.X` in the root resolves to a file; orphan report
 #   4 cache       `lake exe cache get` (prebuilt Mathlib oleans)
 #   5 build       rm -rf .lake/build (unless REUSE_BUILD=1), then `lake build`; job count, warnings, errors
@@ -94,6 +96,19 @@ UNLISTED="$( { echo "$LIB.lean"; find "$LIB" -name '*.lean' | sort; echo check_l
 [ -z "$UNLISTED" ] || fail 2 "files not covered by $SUMS: $(echo $UNLISTED)"
 echo "source hashes OK: $(wc -l < "$SUMS") entries" >> "$LOG_DIR/2_pins.log"
 pass 2 "mathlib rev $EXPECTED_MATHLIB_REV; $SUMS verified ($(wc -l < "$SUMS") files)"
+
+# ---- 2b pinned restatement (Lean P3 bridge) ---------------------------------
+# AIEFGateCore/Pinned/*.lean are verbatim copies of pinned lean/AIEFProofs modules (no path dependency is
+# allowed above). They are only trusted if tools/ci/check_pinned_restatement.py confirms the copies; if the
+# Pinned directory exists the checker is required (fail-closed). See SPEC_P1_gate_identities.md section 8.1.
+REPO_ROOT="$(cd "$PROJ/../.." && pwd)"
+RCHK="$REPO_ROOT/tools/ci/check_pinned_restatement.py"
+if [ -e "$LIB/Pinned" ]; then
+  [ -f "$RCHK" ] || fail 2 "$LIB/Pinned exists but $RCHK is missing"
+  python3 "$RCHK" --repo "$REPO_ROOT" > "$LOG_DIR/2b_pinned_restatement.log" 2>&1 \
+    || fail 2 "pinned restatement check failed (see 2b_pinned_restatement.log)"
+  pass 2 "pinned restatement: $(tail -1 "$LOG_DIR/2b_pinned_restatement.log")"
+fi
 
 # ---- 3 imports / orphans ---------------------------------------------------
 python3 - "$LIB" > "$LOG_DIR/3_imports.log" 2>&1 <<'PY'
