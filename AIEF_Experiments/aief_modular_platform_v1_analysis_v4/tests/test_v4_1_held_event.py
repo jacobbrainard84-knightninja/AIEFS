@@ -169,6 +169,7 @@ def test_v4_1_synthetic_compute_recovery_row_counts(tmp_path):
                 )
     npz = tmp_path / "synthetic_branches.npz"
     np.savez(npz, **arrays)
+    npz_bytes = npz.read_bytes()
     inputs = v41.RunInputs(tmp_path, tmp_path / "x.csv", npz, tmp_path / "m", tmp_path / "c", tmp_path / "b")
     run = v41.ValidatedRun(
         inputs=inputs,
@@ -180,6 +181,7 @@ def test_v4_1_synthetic_compute_recovery_row_counts(tmp_path):
         b_c=0.12,
         t_star=25.0,
         input_hashes={},
+        branch_npz_bytes=npz_bytes,
     )
     events, auc = v41.compute_recovery(run)
     assert len(events) == 19200 and len(auc) == 1600
