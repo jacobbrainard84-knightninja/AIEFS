@@ -106,6 +106,6 @@ def test_capacity_lean_has_no_banned_markers_and_credits_by_handle_only():
 
 def test_p4a_mutants_shape():
     names = [m[0] for m in mc.MUTANTS]
-    assert len(names) == 23 and names[13].startswith("M14") and names[22].startswith("M23")
-    assert {m[1] for m in mc.MUTANTS[13:]} == {"Capacity.lean"}
-    assert [m[2] for m in mc.MUTANTS[13:]].count("gateM_feasible") == 2
+    assert len(names) >= 23 and names[13].startswith("M14") and names[22].startswith("M23")
+    assert {m[1] for m in mc.MUTANTS[13:23]} == {"Capacity.lean"}
+    assert [m[2] for m in mc.MUTANTS[13:23]].count("gateM_feasible") == 2

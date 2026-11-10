@@ -1,6 +1,6 @@
 # AIEFGateCore (Lean 4 + Mathlib)
 
-Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8) and P4a (SPEC §9, `Capacity.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
+Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8), P4a (SPEC §9, `Capacity.lean`) and P4b (SPEC §10, `Freeze.lean`, `WeightUpdate.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
 directions, which the rate-law audit (`AUD-RATELAW`; ERRATA E5, and E22 on
 `main` (landed via PR #18)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
 proves one-step real-arithmetic algebra used by the audit's estimator; it does not explain the rate law. Spec, code mapping and scope:
@@ -31,6 +31,7 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched
 | `PersistenceWitness.engine_gated_persistence` | (P3) for every `n`, at `ε = 10⁻¹²`, K3, `R` frozen, `h = vCtrl`: gate firing and binding scale at every step, branch hypothesis holds for all `k < n`; `false_iterate_no_decay` |
 | `EngineRedTeam.engine_false_{drop_ker,drop_hc1,drop_clip,main_no_gamma,multiplier_no_gamma}` | (P3) the same negations at engine-shaped parameters (`ε = 10⁻¹² > 0`, `EngineGate`) |
 | `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex`, `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |
+| `WeightUpdate.rowM_le_upper`, `stepM_factor_lower`, `stepM_scalar_recurrence`, `trajectory_symmetric`, `trajectory_good_of_start`, `edge_eventually_off/on(_from)`, `onGap_iff`, `onGap_N12_fails`, `false_*`, `witness_*` | (P4b) weight-update bridge of the cycle-003 deposit on `Params`/`stepM`: Lemma 1 row sandwich, gate-factor floor, scalar recurrence, trajectory invariants (B stays symmetric, nonnegative, zero-diagonal, feasible), per-edge ∃N OFF/ON freezing (`Freeze.lean` restates the scalar core), and the exact ON-certificate threshold `S < 18999999991/90000000000` at `pE`, `B_c = 3/25` (fails at the N = 12 coarse envelope) |
 
 **Scope.** Reals, not float64; edge-vector form, not the symmetric matrix; one step with `R` fixed (ERRATA E5);
 exact controller order (no `TIE_TOL`). Persistence (P3) is conditional on staying in the branch, with `R` frozen;
@@ -54,7 +55,7 @@ standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` ref
 controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated
 statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as
 dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,
-weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems.
+weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. M24–M36 (P4b): the same for `WeightUpdate.lean`.
 
 `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the
 cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`.
