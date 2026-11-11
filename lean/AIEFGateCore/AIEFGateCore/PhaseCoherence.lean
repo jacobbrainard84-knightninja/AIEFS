@@ -338,6 +338,17 @@ theorem probe_input_offset_value :
     coherenceInput 2 probeX probeU probeOmega Real.pi 0 0 1 = -1 := by
   simp [coherenceInput, inputPhasor, historyTrace, phaseTrace, probeX, probeOmega, phasor]
 
+/-- (N2) Asymmetric-`ω` value of the coherence input: `ω = (1, 0)`, `τ = π`, no increments, read
+time `0`; the offset is the mean `1/2 · π`, so `exp(−i π/2) = −i` for both `(0,1)` and `(1,0)`.
+`ω_i` alone (`−1` at `(0,1)`), `ω_j` alone (`1`) or a node-uniform `ω` all differ. -/
+theorem probe_coherence_input_asym_omega :
+    coherenceInput 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
+      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 0 1 = -Complex.I ∧
+    coherenceInput 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
+      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 1 0 = -Complex.I := by
+  obtain ⟨-, h01, h10, -⟩ := AIEFGate.Phase.probe_input_asym_omega_value
+  simpa [coherenceInput] using And.intro h01 h10
+
 theorem probe_late_start : lateSource 2 probeU 1 (0 : Fin 2) = 0 := by
   norm_num [lateSource]
 

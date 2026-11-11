@@ -142,5 +142,26 @@ theorem probe_input_delay_values :
   rw [AIEFGate.History.historyTrace_oldest]
   simp [phaseTrace, hw, phasor]
 
+/-- (N2) Asymmetric-`ω` value probe of the static offset `(ω_i + ω_j)/2 · τ`: `D = 1`, `x0 = 0`, no
+increments, `τ = π`, `ω = (1, 0)` (the two nodes differ). The offset is the MEAN of the two natural
+frequencies, so the input is `exp(−i π) = −1` for `(0,0)`, `exp(−i π/2) = −i` for both `(0,1)`
+and `(1,0)`, and `1` for `(1,1)`. Using `ω_i` only, `ω_j` only, a node-uniform `ω`, or no offset
+changes at least one of the four values. -/
+theorem probe_input_asym_omega_value :
+    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
+      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 0 0 = -1 ∧
+    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
+      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 0 1 = -Complex.I ∧
+    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
+      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 1 0 = -Complex.I ∧
+    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
+      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 1 1 = 1 := by
+  have hI : Complex.exp (2⁻¹ * (Real.pi : ℂ) * Complex.I) = Complex.I := by
+    rw [show 2⁻¹ * (Real.pi : ℂ) * Complex.I = (Real.pi : ℂ) / 2 * Complex.I by ring]
+    exact Complex.exp_pi_div_two_mul_I
+  refine ⟨?_, ?_, ?_, ?_⟩ <;>
+    (unfold inputPhasor; rw [AIEFGate.History.historyTrace_oldest];
+     simp [phaseTrace, phasor, Complex.exp_neg, hI])
+
 end Phase
 end AIEFGate

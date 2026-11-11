@@ -5,10 +5,11 @@ statements restated in HistoryBuffer.lean / PhaseIncrement.lean / PhaseCoherence
 deposited sources (the deposit is not on main, so the statements are recorded below with their md5s), and pin the
 shape and the EXACT COUNT of the P5 mutants of lean_mutation_check.py without running Lean.
 
-Mutation-count pin (this file is the only exact pin; the P4a test still asserts the 23 statement mutants of
-`MUTANTS`): `MUTANTS` has 23 entries (M1-M23) and `DEF_MUTANTS` 16 (M37-M52), total 39; controls: 9 equivalence, 3 typo, 2 statement-level. M24-M36 are reserved for P4b
-(PR #26): when P4b merges, `MUTANTS` becomes 36 entries (its own test pins 36) and the total becomes 52, so
-`TOTAL_MUTANTS` below must be reconciled to 52 (and the `MUTANTS` pin to 36) in that merge.
+Mutation-count pin (`TOTAL_MUTANTS` below is the exact combined pin; the P4b test pins `len(MUTANTS)`): after the
+merge of P4b (PR #26) and the #27 follow-ups, `MUTANTS` has 38 entries (M1-M36 statement mutants, plus M57, M58 on
+`Capacity.preM_between` / `convex_weights_iff`) and `DEF_MUTANTS` 20 (M37-M56: M37-M52 as ported, M53-M56 the N2
+asymmetric-omega offset mutants), total 58; controls: 10 equivalence, 3 typo, 2 statement-level; no expected survivor
+(the former S1 is the counted M55).
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -28,9 +29,9 @@ HB = (GATE / "HistoryBuffer.lean").read_text()
 PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
-N_STATEMENT_MUTANTS = 23          # M1-M23 (P1-P4a); P4b's M24-M36 are not on this branch
-N_DEF_MUTANTS = 16                # M37-M52
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 39; reconcile to 52 when P4b merges (see module docstring)
+N_STATEMENT_MUTANTS = 38          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups)
+N_DEF_MUTANTS = 20                # M37-M56
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 58 (52 before the N2 mutants M53-M56 and the #27 mutants M57-M58)
 
 # Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...
 # PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.
@@ -197,12 +198,12 @@ def test_uniform_c0_one_probe_values():
 # ---- mutants: shape, edits apply, pins exist, kill rule --------------------------------------------------------
 
 def test_p5_mutants_shape_and_exact_count():
-    assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M23, untouched
+    assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (39 on this branch)
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (58)
     names = [m[0] for m in mc.DEF_MUTANTS]
-    assert names[0].startswith("M37") and names[-1].startswith("M52")
-    assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 53))
+    assert names[0].startswith("M37") and names[-1].startswith("M56")
+    assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
     assert len({m[0] for m in mc.MUTANTS} & set(names)) == 0
     required = ("delay_plus_one", "delay_minus_one", "current_theta", "dropped_omega_tau", "phase_is_zero",
                 "missing_eta", "swap_i_j", "conjugated", "alpha_swapped", "mu_sign", "next_input",
@@ -229,7 +230,7 @@ def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():
 
 
 def test_controls_exist_with_exact_counts():
-    assert len(mc.EQUIV_CONTROLS) == 9 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2
+    assert len(mc.EQUIV_CONTROLS) == 10 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2
     eq = {n.split("_")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}
     ci_new = {k: eq[k][1][0][1] for k in ("E1", "E2", "E3")}
     assert "* 1" in ci_new["E1"] and "+ 0" in ci_new["E2"] and "id (inputPhasor" in ci_new["E3"]   # the audit's three
@@ -244,15 +245,43 @@ def test_controls_exist_with_exact_counts():
     assert len(names) == len(set(names))
 
 
-def test_def_mutants_never_edit_unlisted_files_and_survivor_is_only_the_011_offset():
+def test_def_mutants_never_edit_unlisted_files_and_no_expected_survivor_since_n2():
     assert {m[1] for m in mc.DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
-    assert [s[0] for s in mc.KNOWN_SURVIVORS] == ["S1_phase_input_dropped_offset_in_011_only"]
+    assert mc.KNOWN_SURVIVORS == []          # the former S1 (offset dropped in 011 only) is the counted M55 since N2
     # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value
     m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M43")][0]
     assert m43[3] == ["probe_input_offset_value", "probe_coherence_values"]
     m51 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M51")][0]
     m52 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M52")][0]
     assert m51[3] == ["probe_asym_reported"] and m52[3] == ["probe_asym_reported_diag"]
+
+
+def test_n2_asymmetric_omega_probe_and_offset_mutants():
+    """(N2) the static offset `(omega i + omega j)/2 * tau`: every earlier probe has node-uniform omega (1 or 0), so a
+    wrong index (omega i only / omega j only), a dropped offset and a node-uniform omega are pinned only by the new
+    asymmetric probes (omega = (1, 0)), declared in advance for M53-M56."""
+    assert "theorem probe_input_asym_omega_value" in PI
+    assert "theorem probe_coherence_input_asym_omega" in PC
+    assert "if i = 0 then (1 : ℝ) else 0" in PI                              # omega differs per node: (1, 0)
+    assert "probe_input_asym_omega_value" in mc.VP_INC
+    assert "probe_coherence_input_asym_omega" in mc.VP_COH
+    by = {m[0].split("_")[0]: m for m in mc.DEF_MUTANTS}
+    for k in ("M53", "M54", "M55"):
+        assert by[k][1] == "PhaseIncrement.lean" and by[k][3] == ["probe_input_asym_omega_value"], k
+    assert by["M56"][1] == "PhaseCoherence.lean" and by["M56"][3] == ["probe_coherence_input_asym_omega"]
+    new = {k: by[k][2][0][1] for k in ("M53", "M54", "M55")}
+    assert "omega i * tau" in new["M53"] and "omega j * tau" in new["M54"] and "    0)" in new["M55"]
+    assert "(fun _ => omega i)" in by["M56"][2][0][1]
+    # the equivalence control commutes the offset sum and must not be killed by the new probe
+    assert any(n.startswith("E10_offset_sum_commuted") and f == "PhaseIncrement.lean"
+               for n, f, e in mc.EQUIV_CONTROLS)
+    # numeric content of the probe: exp(-i (w_i + w_j)/2 * pi) for w = (1, 0)
+    w = (1.0, 0.0)
+    want = {(0, 0): -1, (0, 1): -1j, (1, 0): -1j, (1, 1): 1}
+    for (i, j), v in want.items():
+        assert abs(cmath.exp(-1j * ((w[i] + w[j]) / 2) * math.pi) - v) < 1e-12
+        assert abs(cmath.exp(-1j * (w[i] * math.pi)) - v) > 1e-9 or i == j     # omega_i only differs off the diagonal
+    assert abs(cmath.exp(-1j * w[1] * math.pi) - want[(0, 1)]) > 1e-9            # omega_j only differs too
 
 
 def test_kill_rule_revised_negative_controls():

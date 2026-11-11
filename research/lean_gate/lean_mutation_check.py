@@ -72,8 +72,28 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M22 Capacity.gateM_feasible, hp (EngineGate) := True       -> Capacity.false_gateM_feasible_no_link
   M23 Capacity.stepM_row_le_cap, hp (EngineGate) := True     -> Capacity.false_stepM_row_no_link
 
+  P4b (WeightUpdate.lean, port of the cycle-003 weight-update bridge of Researcher 040282; statement -> negation
+  theorem, all at the frozen `pE` except M24 (`γ dt = 2`, `pH`)):
+  M24 WeightUpdate.rowM_le_upper, hh1 (γ dt ≤ 1) := True        -> WeightUpdate.false_rowM_upper_no_hh1
+  M25 WeightUpdate.stepM_scalar_recurrence, hB (B symmetric) := True -> WeightUpdate.false_recurrence_no_symm
+  M26 WeightUpdate.appliedFactor_lower, hi (row bound) := True   -> WeightUpdate.false_factor_lower_no_rowbound
+  M27 WeightUpdate.stepM_factor_lower, hSi, hSj := True          -> WeightUpdate.false_factor_lower_no_drivebounds
+  M28 WeightUpdate.trajectory_symmetric, hB0 := True             -> WeightUpdate.false_trajectory_symmetric_no_start
+  M29 WeightUpdate.trajectory_zero_diag, hB0 := True             -> WeightUpdate.false_trajectory_diag_no_start
+  M30 WeightUpdate.trajectory_nonneg, hB0 := True                -> WeightUpdate.false_trajectory_nonneg_no_start
+  M31 WeightUpdate.trajectory_good_of_start, hstart := True      -> WeightUpdate.false_good_no_start
+  M32 WeightUpdate.edge_eventually_off_from, hUc := True         -> WeightUpdate.false_off_no_gap_from (ON instance)
+  M33 WeightUpdate.edge_eventually_on_from, hgap := True         -> WeightUpdate.false_on_no_gap_from (OFF instance)
+  M34 WeightUpdate.edge_eventually_off, hUc := True              -> WeightUpdate.false_off_no_gap
+  M35 WeightUpdate.edge_eventually_on, hgap := True              -> WeightUpdate.false_on_no_gap
+  M36 WeightUpdate.onGap_iff, `S < Sstar` -> `S ≤ Sstar`          -> WeightUpdate.false_gap_at_threshold
+
+  #27 (Capacity.lean follow-ups; numbered M57-M58 because M37-M56 are the P5 definition mutants):
+  M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
+  M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
+
   P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
-  mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are reserved for P4b / PR #26).
+  mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are the P4b statement mutants).
   A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. RULE
   (revised after the audit of 64f39eb, which showed that the first version scored semantically EQUIVALENT rewrites
   such as `* 1`, `+ 0`, `id (...)` and even a misspelled identifier as killed, i.e. it measured proof brittleness):
@@ -91,7 +111,11 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   by step (b) (a typo or an equivalent statement cannot be refuted by a proved negation); STATEMENT_CONTROLS checks
   one of each, and every statement mutant whose build output contains a name-reference/parse error line is flagged
   (information only, the verdict is unchanged). `KNOWN_SURVIVORS` lists mutants that are expected to survive; they
-  are run and reported but do not enter the count.
+  are run and reported but do not enter the count (the list is empty since N2).
+  (N1) KILLED means "a pre-declared closed-number VALUE probe FAILS TO BUILD", not "the mutant computes a different
+  value": the harness never evaluates the mutated definition, it only sees which probe declarations no longer
+  elaborate. (N2) M53-M56 mutate the static offset (ω_i + ω_j)/2 · τ (wrong index, dropped, node-uniform ω); they are
+  killed only by the asymmetric-ω probes (ω = (1, 0)), because every earlier probe has node-uniform ω.
 
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
@@ -116,6 +140,9 @@ ENGINE_INST = "@H (Fin 3) (Fin 3) _ _ EngineWitness.pE G3"
 CAP_VARS = "{V : Type} [Fintype V] [LinearOrder V] (p : Params)"
 XO_NN = "(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))"
 GP = "EngineWitness.engineGate_pE"
+WU_VARS = CAP_VARS + " (B D : ℕ → V → V → ℝ)"
+WU_FAC = ("(by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE])"
+          " (fun n => rfl) (fun n i j => Capacity.Xo_symm _ i j) ")
 
 
 def via(inst, binders, pos):
@@ -211,6 +238,87 @@ MUTANTS = [
      [("(hp : EngineGate p)", "(hp : True)", 1)], CAP_VARS,
      "Capacity.false_stepM_row_no_link (@H (Fin 2) _ _ Capacity.pB trivial (Capacity.Xo 75)"
      " (fun _ _ => (0 : ℝ)) 0)", None),
+    # ---- P4b: WeightUpdate.lean (statement -> negation theorem) ----
+    ("M24_weight_update_row_upper_gamma_dt_dropped", "WeightUpdate.lean", "rowM_le_upper",
+     [("(hh1 : p.γ * p.dt ≤ 1)", "(hh1 : True)", 1)], CAP_VARS,
+     "WeightUpdate.false_rowM_upper_no_hh1 (@H (Fin 2) _ _ WeightUpdate.pH (Capacity.Xo 0) (Capacity.Xo 1)"
+     " (Capacity.Xo_symm 0) (Capacity.Xo_symm 1) (by norm_num [WeightUpdate.pH]) trivial"
+     " (Capacity.Xo_nonneg (by norm_num)) 0)", None),
+    ("M25_weight_update_recurrence_symmetry_dropped", "WeightUpdate.lean", "stepM_scalar_recurrence",
+     [("(hB : ∀ i j, Bm i j = Bm j i)", "(hB : True)", 1)], CAP_VARS,
+     "WeightUpdate.false_recurrence_no_symm (@H (Fin 2) _ _ EngineWitness.pE (Capacity.Xo 0) Capacity.Xn"
+     " (Capacity.Xo_symm 0) trivial 0 1 (by decide))", None),
+    ("M26_weight_update_factor_floor_row_bound_dropped", "WeightUpdate.lean", "appliedFactor_lower",
+     [("(hi : rowS X i ≤ Mi)", "(hi : True)", 1)], CAP_VARS,
+     "WeightUpdate.false_factor_lower_no_rowbound (@H (Fin 2) _ _ EngineWitness.pE EngineWitness.engineGate_pE"
+     " WeightUpdate.Xr WeightUpdate.Xr_nonneg 0 1 0 0 trivial (by simp [Capacity.rowS, WeightUpdate.Xr, Fin.sum_univ_two]))", None),
+    ("M27_weight_update_drive_bounds_dropped", "WeightUpdate.lean", "stepM_factor_lower",
+     [("(hSi : pdriveRow D i ≤ Si)", "(hSi : True)", 1), ("(hSj : pdriveRow D j ≤ Sj)", "(hSj : True)", 1)],
+     CAP_VARS,
+     "WeightUpdate.false_factor_lower_no_drivebounds (@H (Fin 2) _ _ EngineWitness.pE EngineWitness.engineGate_pE"
+     " (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (Capacity.Xo 100) (fun _ _ => (0 : ℝ))"
+     " (Capacity.Xo_symm 100) (fun _ _ => rfl) (fun _ _ => le_rfl)"
+     " (fun i => by simp [Capacity.rowS]; norm_num [EngineWitness.pE]) 0 1 0 0 trivial trivial)", None),
+    ("M28_weight_update_symmetric_start_dropped", "WeightUpdate.lean", "trajectory_symmetric",
+     [("(hB0 : ∀ i j, B 0 i j = B 0 j i)", "(hB0 : True)", 1)], WU_VARS,
+     "WeightUpdate.false_trajectory_symmetric_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) Capacity.Xn) (fun _ => Capacity.Xo 0) (fun n => rfl) trivial 0 0 1)",
+     None),
+    ("M29_weight_update_zero_diag_start_dropped", "WeightUpdate.lean", "trajectory_zero_diag",
+     [("(hB0 : ∀ i, B 0 i i = 0)", "(hB0 : True)", 1)], WU_VARS,
+     "WeightUpdate.false_trajectory_diag_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) (fun _ _ => 1)) (fun _ => Capacity.Xo 0) (fun n => rfl) trivial 0 0)",
+     None),
+    ("M30_weight_update_nonneg_start_dropped", "WeightUpdate.lean", "trajectory_nonneg",
+     [("(hB0 : ∀ i j, 0 ≤ B 0 i j)", "(hB0 : True)", 1)], WU_VARS,
+     "WeightUpdate.false_trajectory_nonneg_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) (fun _ _ => -1)) (fun _ => Capacity.Xo 0)"
+     " EngineWitness.engineGate_pE (fun n => rfl) trivial 0 0 0)", None),
+    ("M31_weight_update_good_start_dropped", "WeightUpdate.lean", "trajectory_good_of_start",
+     [("(hstart : Good p (B 0) ∨ 1 ≤ T)", "(hstart : True)", 1)], WU_VARS,
+     "WeightUpdate.false_good_no_start (@H (Fin 2) _ _ EngineWitness.pE"
+     " (WeightUpdate.orbit (fun _ => Capacity.Xo 0) (Capacity.Xo 1)) (fun _ => Capacity.Xo 0)"
+     " EngineWitness.engineGate_pE (fun n => rfl) 0 trivial 0 le_rfl)", None),
+    ("M32_weight_update_edge_off_from_gap_dropped", "WeightUpdate.lean", "edge_eventually_off_from",
+     [("(hUc : U < p.γ * Bc)", "(hUc : True)", 1)], WU_VARS,
+     "WeightUpdate.false_off_no_gap_from (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Bon"
+     " (fun _ => Capacity.Xo (1 / 25)) EngineWitness.engineGate_pE " + WU_FAC +
+     "1 (Or.inr le_rfl) 0 1 (by decide) (1 / 25) (3 / 25) (fun n => by simp [Capacity.Xo]) (by norm_num) trivial)", None),
+    ("M33_weight_update_edge_on_from_gap_dropped", "WeightUpdate.lean", "edge_eventually_on_from",
+     [("(hgap : Bc < edgeFloor p Si Sj * (p.dt * L) / (1 - edgeFloor p Si Sj * (1 - p.γ * p.dt)))",
+       "(hgap : True)", 1)], WU_VARS,
+     "WeightUpdate.false_on_no_gap_from (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Boff"
+     " (fun _ => Capacity.Xo (1 / 1000)) EngineWitness.engineGate_pE " + WU_FAC +
+     "1 (Or.inr le_rfl) 0 1 (by decide) (1 / 1000) (1 / 1000) (1 / 1000) (3 / 25)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 0).le)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 1).le) (fun n => by simp [Capacity.Xo])"
+     " (by norm_num) trivial)", None),
+    ("M34_weight_update_edge_off_gap_dropped", "WeightUpdate.lean", "edge_eventually_off",
+     [("(hUc : U < p.γ * Bc)", "(hUc : True)", 1)], WU_VARS,
+     "WeightUpdate.false_off_no_gap (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Bon"
+     " (fun _ => Capacity.Xo (1 / 25)) EngineWitness.engineGate_pE " + WU_FAC +
+     "0 1 (by decide) (1 / 25) (3 / 25) (fun n => by simp [Capacity.Xo]) (by norm_num) trivial)", None),
+    ("M35_weight_update_edge_on_gap_dropped", "WeightUpdate.lean", "edge_eventually_on",
+     [("(hgap : Bc < edgeFloor p Si Sj * (p.dt * L) / (1 - edgeFloor p Si Sj * (1 - p.γ * p.dt)))",
+       "(hgap : True)", 1)], WU_VARS,
+     "WeightUpdate.false_on_no_gap (@H (Fin 2) _ _ EngineWitness.pE WeightUpdate.Boff"
+     " (fun _ => Capacity.Xo (1 / 1000)) EngineWitness.engineGate_pE " + WU_FAC +
+     "0 1 (by decide) (1 / 1000) (1 / 1000) (1 / 1000) (3 / 25)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 0).le)"
+     " (fun n => (WeightUpdate.pdriveRow_Xo (by norm_num) 1).le) (fun n => by simp [Capacity.Xo])"
+     " (by norm_num) trivial)", None),
+    ("M36_weight_update_threshold_strictness", "WeightUpdate.lean", "onGap_iff",
+     [("3 / 25 < onGap S ↔ S < Sstar", "3 / 25 < onGap S ↔ S ≤ Sstar", 1)], "",
+     "WeightUpdate.false_gap_at_threshold ((H WeightUpdate.Sstar (by norm_num [WeightUpdate.Sstar])).2 le_rfl)",
+     None),
+    # ---- #27 (Capacity.lean, auditor follow-ups); numbered after the P5 definition mutants M37-M56 ----
+    ("M57_capacity_preM_between_gamma_dt_bound_dropped", "Capacity.lean", "preM_between",
+     [("(h1 : p.γ * p.dt ≤ 1)", "(h1 : True)", 1)], CAP_VARS,
+     "Capacity.false_preM_between_no_bound (fun p D Bm i j hγ h0 => (@H Unit _ _ p hγ h0 trivial D Bm i j).1)",
+     None),
+    ("M58_capacity_convex_weights_upper_bound_dropped", "Capacity.lean", "convex_weights_iff",
+     [("(0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1)", "(0 ≤ p.γ * p.dt)", 1)], CAP_VARS,
+     "(by have h := ((@H Unit _ _ ⟨2, 1, 1, 0, 0, 0, 0⟩).2 (by norm_num)).1; norm_num at h)", None),
 ]
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
@@ -225,10 +333,11 @@ def ci(new):
 
 # closed-form value equalities (statements of the form `f (concrete data) = concrete value`), proved from the
 # definitions; rewrite lemmas (input_engine_convention, delayed_input_step, innovation_*, ...) are NOT in these lists
-VP_INC = ["probe_delayed_increment_values", "probe_input_delay_values"]
+VP_INC = ["probe_delayed_increment_values", "probe_input_delay_values", "probe_input_asym_omega_value"]
 VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_quarter", "probe_input_offset_value",
           "probe_reported_second", "probe_drive_second", "probe_asym_drive", "probe_main_preM",
-          "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag"]
+          "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag",
+          "probe_coherence_input_asym_omega"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH}
 PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
 PIN_DRIVE = ["probe_drive_second", "probe_asym_drive"]
@@ -236,6 +345,15 @@ DRIVE_OLD = "  (eta + mu) * reported C i j - mu\n"
 REP_OLD = "  if i = j then 0 else (‖C i j‖ + ‖C j i‖) / 2\n"
 EMA_OLD = "  (alpha : ℂ) * C i j + ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j\n"
 DELAY_OLD = "  if d ≤ n then u (n - d) j else 0"
+OFFSET_OLD = "    ((omega i + omega j) / 2) * tau)\n\nnoncomputable def delayedIncrement"
+
+
+def offset(new):
+    """edit of the static offset `(ω_i + ω_j)/2 · τ` at the end of `inputPhasor` (PhaseIncrement.lean, line 58)"""
+    return [(OFFSET_OLD, "    " + new + ")\n\nnoncomputable def delayedIncrement", 1)]
+
+
+PIN_OMEGA = ["probe_input_asym_omega_value"]
 SLOT_OLD = "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -"
 DEF_MUTANTS = [
     # 011 (PhaseIncrement.lean): value probes of `delayedIncrement` (M37, M38) and of the input read (M39)
@@ -276,6 +394,13 @@ DEF_MUTANTS = [
      [(REP_OLD, "  if i = j then 0 else ‖C i j‖\n", 1)], ["probe_asym_reported"]),
     ("M52_reported_diagonal_one", "PhaseCoherence.lean",
      [(REP_OLD, "  if i = j then 1 else (‖C i j‖ + ‖C j i‖) / 2\n", 1)], ["probe_asym_reported_diag"]),
+    # (N2) the static offset `(ω_i + ω_j)/2 · τ` of `inputPhasor` (PhaseIncrement.lean line 58): the node-uniform
+    # probes (`ω = 1` or `ω = 0`) cannot see a wrong index; the asymmetric probe (`ω = (1, 0)`) pins it.
+    ("M53_phase_input_offset_omega_i_only", "PhaseIncrement.lean", offset("omega i * tau"), PIN_OMEGA),
+    ("M54_phase_input_offset_omega_j_only", "PhaseIncrement.lean", offset("omega j * tau"), PIN_OMEGA),
+    ("M55_phase_input_offset_dropped", "PhaseIncrement.lean", offset("0"), PIN_OMEGA),
+    ("M56_coherence_input_node_uniform_omega_i", "PhaseCoherence.lean",
+     ci("inputPhasor d x0 u (fun _ => omega i) tau n i j"), ["probe_coherence_input_asym_omega"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -294,6 +419,7 @@ EQUIV_CONTROLS = [
      [(REP_OLD, "  if i = j then 0 else (‖C j i‖ + ‖C i j‖) / 2\n", 1)]),
     ("E9_drive_coefficient_commuted", "PhaseCoherence.lean",
      [(DRIVE_OLD, "  (mu + eta) * reported C i j - mu\n", 1)]),
+    ("E10_offset_sum_commuted", "PhaseIncrement.lean", offset("((omega j + omega i) / 2) * tau")),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -316,25 +442,23 @@ STATEMENT_CONTROLS = [
      f"RedTeam.false_main_no_gamma ({GATE_INST})"),
 ]
 
-# Expected survivors: reported and run, never counted. The static offset (ω_i + ω_j)/2 · τ cancels in the step ratio
-# of `delayed_input_step` (auditor note on cycle 011), so dropping it in PhaseIncrement.lean alone cannot be detected
-# by that file's theorems (no value probe of that file involves ω or τ). It is killed one level up by the VALUE probes
-# `probe_input_offset_value` and `probe_coherence_values` of PhaseCoherence.lean (M43).
-KNOWN_SURVIVORS = [
-    ("S1_phase_input_dropped_offset_in_011_only", "PhaseIncrement.lean",
-     [("    ((omega i + omega j) / 2) * tau)\n\nnoncomputable def delayedIncrement",
-       "    0)\n\nnoncomputable def delayedIncrement", 1)]),
-]
+# Expected survivors: reported and run, never counted. EMPTY since the (N2) asymmetric-ω value probe: the static
+# offset (ω_i + ω_j)/2 · τ cancels in the step ratio of `delayed_input_step`, so before N2 dropping it in
+# PhaseIncrement.lean alone survived (that file had no value probe involving ω or τ; S1, killed only one level up by
+# M43). `probe_input_asym_omega_value` (PhaseIncrement.lean) now kills it (M55, a counted definition mutant). The
+# mechanism is kept: a mutant listed here is run, reported, and fails the run if it is detected (stale entry).
+KNOWN_SURVIVORS = []
 
 # Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
 # name-reference errors only; it must be classified as such and must NOT count as a build rejection.
 LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
                     [("    (hker : InCtrlKer G ctrl h)\n", "", 1)])
 
-OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM)\n"
+OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n"
          "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n"
          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
-         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\n")
+         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\nopen AIEFGate.MatrixForm (preM)\n"
+         "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
@@ -526,7 +650,10 @@ def main():
     ok &= lgood
     n_rej = 0
     n_flag = 0
+    only = os.environ.get("AIEF_MUT_ONLY")   # debugging aid: regex on mutant names; the full run is the record
     for name, f, thm, edits, closure, term, eterm in MUTANTS:
+        if only and not re.search(only, name):
+            continue
         src = srcs[f]
         msrc = mutate(src, thm, edits)
         assert msrc != src
@@ -575,6 +702,8 @@ def main():
     # P5: definition mutants (rule: build fails, no name-reference/parse error line, a declared value probe fails)
     n_def = 0
     for name, f, edits, pins in DEF_MUTANTS:
+        if only and not re.search(only, name):
+            continue
         src = srcs[f]
         msrc = mutate_file(src, edits)
         assert msrc != src

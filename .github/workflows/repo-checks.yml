@@ -189,6 +189,12 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python -m pytest -q -p no:cacheprovider tests/test_v4_1_held_event.py tests/test_v4_1_trust_anchor.py
+      # Lean-gate exact-rational cross-checks and mutant-shape pins (research/lean_gate/tests; no Lean needed).
+      # The Lean mutation check itself runs in lean.yml on the AIEFGateCore row.
+      - name: research/lean_gate tests
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python -m pytest -q -p no:cacheprovider research/lean_gate/tests
       # Current-tree counterpart of verify_inventory.py (which stays the e47bad1 gate and fails at [1/5]
       # on later trees): snapshot pins, current inventory, vocabularies, Lean lock hashes, authority lock.
       - name: verify_inventory_current.py

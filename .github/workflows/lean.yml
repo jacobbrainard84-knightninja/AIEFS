@@ -87,6 +87,19 @@ jobs:
         run: |
           chmod +x "./$SCRIPT"
           SKIP_CACHE=1 STRICT_ORPHANS=1 LOG_DIR="$GITHUB_WORKSPACE/lean-check-logs" "./$SCRIPT"
+      # Lean-gate red team, part 2 (statement mutants M1..; see research/lean_gate/lean_mutation_check.py).
+      # Runs on the AIEFGateCore row only, against the project the step above just built; the `if:` must stay
+      # exactly the gate test (tools/ci/tests/test_lean_presence.py), so the row filter is in the run line.
+      - name: Lean-gate mutation check (AIEFGateCore only)
+        if: steps.present.outputs.present == 'true'
+        env:
+          PROJECT: ${{ matrix.project }}
+        run: |
+          if [ "$PROJECT" = "AIEFGateCore" ]; then
+            python3 research/lean_gate/lean_mutation_check.py
+          else
+            echo "no mutation check for $PROJECT"
+          fi
       - name: Upload check logs
         if: always() && steps.present.outputs.present == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
