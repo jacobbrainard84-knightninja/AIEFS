@@ -1,0 +1,6 @@
+{
+  "attempt": "Two optional corollaries after the clean core",
+  "outcome": "Compiler subprocess exceeded300s; blocked, no proof or negative credit; partial compiler stdout not preserved by that draft driver",
+  "disposition": "Exclude both optional corollaries, restore already clean compiled35claim model; no mathematical model definition changes",
+  "timeout_threshold_not_relaxed": true
+}

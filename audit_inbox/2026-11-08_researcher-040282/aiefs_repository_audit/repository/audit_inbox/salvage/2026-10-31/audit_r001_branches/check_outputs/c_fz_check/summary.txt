@@ -1,0 +1,11 @@
+check_lean_freeze.sh  project=AIEFFreezeCore  utc=20261029T115749Z
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474; AIEF_LEAN_FREEZE_SOURCE_SHA256SUMS.txt verified (6 files)
+  AIEFFreezeCore imports AIEFFreezeCore.FreezeCore
+PASS step 3: all root imports resolve
+SKIP step 4 (SKIP_CACHE=1)
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+PASS step 5: Build completed successfully (1669 jobs); warnings=0
+PASS step 6: scanned 2 files, hits=0
+PASS step 7: AUDITED 5 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in /workspace/audit_r001_branches/logs/c_fz_check)

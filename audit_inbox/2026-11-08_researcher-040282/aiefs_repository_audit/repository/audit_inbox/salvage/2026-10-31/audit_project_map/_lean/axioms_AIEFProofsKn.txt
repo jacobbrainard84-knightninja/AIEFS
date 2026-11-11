@@ -1,0 +1,52 @@
+'AIEFProofs.CompleteGraphKn.vecMul_inc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.inc_mulVecLin_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_inc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.sum_edgeList_eq_sum_edgeFinset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.card_eq_choose_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_inc_eq_choose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.inc_apply_eq_incMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.rinv_eq_rinv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.inc_mul_rinv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.complete12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K12_eq_54' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.rinv12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K12_eq_edgeIncMatrix_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K3_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K4_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K5_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.finrank_ker_K6_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.exists_left_kernel_char_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.not_surjective_char_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphKn.exists_left_kernel_K2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphRightInverse.J_mul_J' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphRightInverse.incMatrix_mul_transpose_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.CompleteGraphRightInverse.Q_mul_Qinv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphRightInverse.incMatrix_mul_rinv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.CompleteGraphRightInverse.rinv_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.mulVecLin_surjective_of_vecMul_eq_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.IncMatrixRank.finrank_ker_mulVecLin_of_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.IncMatrixRank.walk_eq_or_eq_neg_of_forall_adj_add_eq_zero' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.IncMatrixRank.eq_zero_of_forall_adj_add_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.vecMul_incMatrix_mk_of_adj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.incMatrix_mulVecLin_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.rank_incMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.edgeIncMatrix_mulVecLin_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.finrank_ker_edgeIncMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.not_isBipartite_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.connected_top_fin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.incMatrix_top_mulVecLin_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.edgeIncMatrix_top_mulVecLin_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.IncMatrixRank.finrank_ker_edgeIncMatrix_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.finrank_ker_edgeIncMatrix_top'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.IncMatrixRank.finrank_ker_incMatrix_top' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,12 @@
+{
+  "change": "input_drops_frequency_tau",
+  "runtime_utc_start": "2026-11-10T13:15:23.527937+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 98.60880092800016,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "probe_frequency_offset",
+  "first_errors": [
+    "Probe.lean:211:54: error: unsolved goals"
+  ]
+}

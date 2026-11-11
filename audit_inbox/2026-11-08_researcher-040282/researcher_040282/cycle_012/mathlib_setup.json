@@ -1,0 +1,26 @@
+{
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "compiler_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "compiler_prescription": "leanprover/lean4:v4.33.1",
+  "mathlib_directory": "/home/user/.cache/researcher040282-cycle012/mathlib4",
+  "compiler_binary": "/home/user/.cache/researcher040282-cycle012/lean-4.33.1-linux/bin/lean",
+  "cache": "/home/user/.cache/researcher040282-cycle012",
+  "targeted_roots": [
+    "Mathlib/Analysis/SpecialFunctions/Trigonometric/Bounds.lean",
+    "Mathlib/Algebra/Order/Archimedean/Real/Basic.lean",
+    "Mathlib/Tactic/Ring.lean",
+    "Mathlib/Tactic/FieldSimp.lean",
+    "Mathlib/Tactic/NormNum.lean",
+    "Mathlib/Tactic/Linarith.lean",
+    "Mathlib/Analysis/SpecificLimits/Normed.lean",
+    "Mathlib/Tactic/Positivity.lean"
+  ],
+  "targeted_not_omnibus_Mathlib": true,
+  "cache_helper_returncode": 0,
+  "owned_regular_file_logical_bytes": 6021761311,
+  "all_setup_cache_download_targets_inside_own_prefix": true,
+  "global_toolchain_changed": false,
+  "raw_git_objects_not_copied_to_packet": true,
+  "remove_only_own_cache_after_full_extracted_reproduction": true,
+  "elapsed_seconds": 53.50482302099999
+}

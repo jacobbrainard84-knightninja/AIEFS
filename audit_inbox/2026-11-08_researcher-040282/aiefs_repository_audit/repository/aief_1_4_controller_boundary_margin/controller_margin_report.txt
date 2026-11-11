@@ -1,0 +1,69 @@
+======================================================================
+AIEF-1.4 Controller Boundary Margin Diagnostic
+======================================================================
+
+r_EMA: 0.057133   dt: 0.01
+
+Winner map: (25->7, 29->2, 59->7)
+
+Margins (positive = current controller still wins):
+  m_25 = s_2 - s_7   (edge 25: 7 wins while s_7 < s_2)
+  m_29 = s_11 - s_2  (edge 29: 2 wins while s_2 < s_11)
+  m_59 = s_11 - s_7  (edge 59: 7 wins while s_7 < s_11)
+
+Equivalences (equal capacities):
+  m_25 ~ d^R = x_59 - x_29
+  m_29 ~ d^L = x_25 - x_59
+  m_59 ~ d^L + d^R
+
+----------------------------------------------------------------------
+Margins at Final Step (t=320):
+----------------------------------------------------------------------
+  m_25 (s_2-s_7):  4.440892e-14
+  m_29 (s_11-s_2): 8.543074e-09
+  m_59 (s_11-s_7): 8.543119e-09
+
+----------------------------------------------------------------------
+Margin Decay Rates by Interval:
+----------------------------------------------------------------------
+  Interval            m_25_rate    m_29_rate    m_59_rate     d_L_rate     d_R_rate
+  ---------------- ------------ ------------ ------------ ------------ ------------
+  [  0,50 )          0.027311     0.051838     0.051838     0.043913     0.027300
+  [ 50,100)          0.048923     0.057226     0.057226     0.056524     0.048922
+  [100,150)          0.055904     0.057039     0.057039     0.056998     0.055904
+  [150,200)          0.056991     0.057114     0.057114     0.057112     0.056991
+  [200,250)          0.057119     0.057131     0.057131     0.057131     0.057119
+  [250,300)          0.057132     0.057133     0.057133     0.057133     0.057133
+  [300,320)          0.057136     0.057133     0.057133     0.057133     0.057137
+
+----------------------------------------------------------------------
+Projected Time-to-Tie (linear extrapolation of final margin at final rate):
+----------------------------------------------------------------------
+  m_25 -> 1e-16: 106.7 time units
+  m_29 -> 1e-16: 319.7 time units
+  m_59 -> 1e-16: 319.7 time units
+
+Caveat: extrapolation assumes constant log-linear decay.
+Actual margin dynamics may accelerate or decelerate.
+
+----------------------------------------------------------------------
+Controller Scale Values (final step):
+----------------------------------------------------------------------
+  s_2  = 0.998888079854
+  s_7  = 0.998888079854
+  s_11 = 0.998888088397
+
+Node loading (q_i / c, final step):
+  q_2/c  = 1.001113157887
+  q_7/c  = 1.001113157887
+  q_11/c = 1.001113149325
+
+Interpretation:
+  All three margins remain positive (no controller switch in 32k steps).
+  If margin decay rates -> r_EMA, boundaries are approached exponentially.
+  If rates -> 0, boundaries are stabilizing at a fixed gap.
+  If all three -> 0 together, the triple tie is approached.
+  If m_25/m_29/m_59 diverge at different rates, the boundary
+  structure is hierarchical (one margin closes before others).
+
+Evidence class: diagnostic mechanism exploration.

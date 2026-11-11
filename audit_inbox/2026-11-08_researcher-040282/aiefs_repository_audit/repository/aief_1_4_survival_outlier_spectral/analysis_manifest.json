@@ -1,0 +1,27 @@
+{
+  "analysis": "AIEF-1.4 survival, basin features, spectra, and residuals",
+  "analysis_seed": 20260717,
+  "bootstrap_repetitions": 20000,
+  "future_censor_time": 320.0,
+  "npz_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+  "npz_sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f",
+  "plots": [
+    "/home/deck/AI_Programs/SSRH/aief_1_4_survival_outlier_spectral/KM_similarity90_recovery.png",
+    "/home/deck/AI_Programs/SSRH/aief_1_4_survival_outlier_spectral/KM_density90_recovery.png"
+  ],
+  "recovery_endpoints": {
+    "density90": "sustained_density_90_rest",
+    "similarity90": "sustained_similarity_90_rest"
+  },
+  "scalar_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+  "scalar_sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda",
+  "source_manifest_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+  "source_manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+  "trajectory_metrics_path": "/home/deck/AI_Programs/SSRH/aief_1_4_trajectory_recovery/trajectory_metrics_by_seed.csv",
+  "trajectory_metrics_sha256": "22fdf9a4adbf3b7121c85ea5bc8e021552f9881fb61c5697d9f4d7e8b027adb3",
+  "warnings": [
+    "B_carrier_only/full_reset is exploratory because r2 phase resets were unmatched.",
+    "Feature associations are descriptive with n=40.",
+    "Spectra are available only at split, late mean, and final state."
+  ]
+}

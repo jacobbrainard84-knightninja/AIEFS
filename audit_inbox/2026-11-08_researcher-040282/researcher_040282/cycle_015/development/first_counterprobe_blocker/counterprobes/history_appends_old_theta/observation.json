@@ -1,0 +1,12 @@
+{
+  "change": "history_appends_old_theta",
+  "runtime_utc_start": "2026-11-10T13:10:52.457134+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 101.40037762200018,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "probe_theta_new/probe_history_newest",
+  "first_errors": [
+    "Probe.lean:211:104: error: unsolved goals"
+  ]
+}

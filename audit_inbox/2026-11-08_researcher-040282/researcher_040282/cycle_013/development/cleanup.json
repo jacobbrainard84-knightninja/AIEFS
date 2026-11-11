@@ -1,0 +1,10 @@
+{
+  "observed_runtime_utc": "2026-11-10T02:54:01.026968+00:00",
+  "own_cache": "/home/user/.cache/researcher040282-cycle013",
+  "regular_file_entries_measured_before_removal": 62935,
+  "logical_bytes_measured_before_removal": 6026519920,
+  "symlinks_measured_before_removal": 15,
+  "absent_after_removal": true,
+  "scope": "Only own013runtime/archive/decoder/Git/Mathlib/mutant compilation cache; no old research/source deletion, no extracted replay claimed",
+  "unrelated_cache_audit_claimed": false
+}

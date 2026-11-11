@@ -1,0 +1,12 @@
+{
+  "case": "increase_envelope_for_abs",
+  "runtime_utc_start": "2026-11-11T02:02:00.909345+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 81.92515960800006,
+  "setup_name_or_timeout_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "increase_only_abs_refuted",
+  "first_errors": [
+    "Probe.lean:90:80: error: unsolved goals"
+  ]
+}

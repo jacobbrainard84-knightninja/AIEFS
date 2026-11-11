@@ -1,0 +1,88 @@
+AIEF local admissibility versus entropy-dual one-step comparison
+================================================================
+
+All methods start from the same explicitly interiorized mature state.
+Coordinate-equivalent and mirror dual updates are distinct constructions.
+
+Solver status
+-------------
+  coordinate_equivalent_dual / failed:FloatingPointError:dual coordinate overflow: 12
+  coordinate_equivalent_dual / ok: 195
+  coordinate_equivalent_dual / solver_not_converged: 18
+  current_admissibility / ok: 225
+  mirror_beta_0.1 / ok: 225
+  mirror_beta_1 / ok: 225
+  mirror_beta_10 / ok: 225
+
+Selected comparison summaries
+-----------------------------
+  representative interiorization: edge_eps=1e-05, margin_eps=1e-05
+  current_admissibility vs coordinate_equivalent_dual; edge_eps=1e-05, margin_eps=1e-05, dt=1e-06
+    increment_discrepancy_norm: median=1.7006e-09, max=2.04711e-09, valid=5/5
+    discrepancy_rate_norm: median=0.0017006, max=0.00204711, valid=5/5
+    relative_discrepancy_to_left: median=0.00734336, max=0.00901387, valid=5/5
+    increment_cosine: median=0.999977, max=1, valid=5/5
+  current_admissibility vs coordinate_equivalent_dual; edge_eps=1e-05, margin_eps=1e-05, dt=1e-05
+    increment_discrepancy_norm: median=1.77131e-07, max=2.13326e-07, valid=5/5
+    discrepancy_rate_norm: median=0.0177131, max=0.0213326, valid=5/5
+    relative_discrepancy_to_left: median=0.0764869, max=0.0939319, valid=5/5
+    increment_cosine: median=0.997336, max=0.999999, valid=5/5
+  current_admissibility vs coordinate_equivalent_dual; edge_eps=1e-05, margin_eps=1e-05, dt=0.0001
+    increment_discrepancy_norm: median=2.92805e-05, max=3.53445e-05, valid=5/5
+    discrepancy_rate_norm: median=0.292805, max=0.353445, valid=5/5
+    relative_discrepancy_to_left: median=1.26436, max=1.5563, valid=5/5
+    increment_cosine: median=0.471163, max=0.999906, valid=5/5
+  current_admissibility vs coordinate_equivalent_dual; edge_eps=1e-05, margin_eps=1e-05, dt=0.001
+    increment_discrepancy_norm: median=0.633642, max=0.83684, valid=5/5
+    discrepancy_rate_norm: median=633.642, max=836.84, valid=5/5
+    relative_discrepancy_to_left: median=5419.44, max=7546.08, valid=5/5
+    increment_cosine: median=-0.28274, max=0.968507, valid=5/5
+  current_admissibility vs coordinate_equivalent_dual; edge_eps=1e-05, margin_eps=1e-05, dt=0.01
+    increment_discrepancy_norm: median=0.617503, max=0.81763, valid=2/2
+    discrepancy_rate_norm: median=61.7503, max=81.763, valid=2/2
+    relative_discrepancy_to_left: median=4502.23, max=5032.16, valid=2/2
+    increment_cosine: median=-0.706123, max=-0.601769, valid=2/2
+  current_admissibility vs mirror_beta_1; edge_eps=1e-05, margin_eps=1e-05, dt=1e-06
+    increment_discrepancy_norm: median=2.271e-07, max=2.4046e-07, valid=5/5
+    discrepancy_rate_norm: median=0.2271, max=0.24046, valid=5/5
+    relative_discrepancy_to_left: median=0.999972, max=0.999976, valid=5/5
+    increment_cosine: median=0.79656, max=0.987517, valid=5/5
+  current_admissibility vs mirror_beta_1; edge_eps=1e-05, margin_eps=1e-05, dt=1e-05
+    increment_discrepancy_norm: median=2.271e-06, max=2.4046e-06, valid=5/5
+    discrepancy_rate_norm: median=0.2271, max=0.24046, valid=5/5
+    relative_discrepancy_to_left: median=0.999972, max=0.999976, valid=5/5
+    increment_cosine: median=0.796568, max=0.987544, valid=5/5
+  current_admissibility vs mirror_beta_1; edge_eps=1e-05, margin_eps=1e-05, dt=0.0001
+    increment_discrepancy_norm: median=2.271e-05, max=2.4046e-05, valid=5/5
+    discrepancy_rate_norm: median=0.2271, max=0.24046, valid=5/5
+    relative_discrepancy_to_left: median=0.999972, max=0.999976, valid=5/5
+    increment_cosine: median=0.796548, max=0.987524, valid=5/5
+  current_admissibility vs mirror_beta_1; edge_eps=1e-05, margin_eps=1e-05, dt=0.001
+    increment_discrepancy_norm: median=0.00011089, max=0.00012261, valid=5/5
+    discrepancy_rate_norm: median=0.11089, max=0.12261, valid=5/5
+    relative_discrepancy_to_left: median=0.999935, max=0.999946, valid=5/5
+    increment_cosine: median=0.903953, max=0.99203, valid=5/5
+  current_admissibility vs mirror_beta_1; edge_eps=1e-05, margin_eps=1e-05, dt=0.01
+    increment_discrepancy_norm: median=0.0001624, max=0.000164961, valid=5/5
+    discrepancy_rate_norm: median=0.01624, max=0.0164961, valid=5/5
+    relative_discrepancy_to_left: median=0.999488, max=0.999502, valid=5/5
+    increment_cosine: median=0.997323, max=0.997671, valid=5/5
+
+Estimated discrepancy orders
+----------------------------
+  coordinate_equivalent_dual vs mirror_beta_0.1: median order=1.07048, valid_epsilon_pairs=9
+  coordinate_equivalent_dual vs mirror_beta_1: median order=1.07008, valid_epsilon_pairs=9
+  coordinate_equivalent_dual vs mirror_beta_10: median order=1.07007, valid_epsilon_pairs=9
+  current_admissibility vs coordinate_equivalent_dual: median order=2.11799, valid_epsilon_pairs=9
+  current_admissibility vs mirror_beta_0.1: median order=0.981368, valid_epsilon_pairs=9
+  current_admissibility vs mirror_beta_1: median order=0.981409, valid_epsilon_pairs=9
+  current_admissibility vs mirror_beta_10: median order=0.981415, valid_epsilon_pairs=9
+
+Interpretation constraints
+--------------------------
+* O(dt^2) increment discrepancy indicates first-order consistency.
+* O(dt) increment discrepancy indicates different limiting vector fields.
+* Results depend jointly on timestep, edge floor, margin floor, and beta.
+* The actual AIEF admissibility map is used; it is not assumed to be an orthogonal projection.
+* Mirror_beta updates define metric-preconditioned dynamics, not coordinate changes.
+* This is a one-step local comparison, not evidence of long-time attractor equivalence.

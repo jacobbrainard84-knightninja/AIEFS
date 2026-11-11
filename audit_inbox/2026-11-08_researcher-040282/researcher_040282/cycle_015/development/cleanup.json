@@ -1,0 +1,10 @@
+{
+  "runtime_utc_observed": "2026-11-10T13:19:08.213775+00:00",
+  "own_cache": "/home/user/.cache/researcher040282-cycle015",
+  "regular_file_entries_measured_before_removal": 62953,
+  "logical_bytes_measured_before_removal": 6032871219,
+  "symlinks_measured_before_removal": 15,
+  "absent_after_removal": true,
+  "scope": "Only own015runtime/archive/decoder/Git/Mathlib/temporary compilation cache; no old research deletion, packet or extracted replay",
+  "unrelated_cache_audit_claimed": false
+}

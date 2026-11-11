@@ -1,0 +1,30 @@
+{
+  "main": "1c30ca56e56f11517d1e04f90d521a5aa6990c52",
+  "merged_observed": [
+    26,
+    27
+  ],
+  "open_PRs_observed": 0,
+  "main_missing": [
+    "HistoryBuffer.lean",
+    "PhaseIncrement.lean",
+    "PhaseCoherence.lean",
+    "TrajectoryInvariants.lean",
+    "ClosedLoopCore.lean"
+  ],
+  "unmerged_team_P5_branch": {
+    "revision": "54037ea1fabbeaed1eab44636971051000ac1673",
+    "modules": [
+      "AIEFGateCore.HistoryBuffer",
+      "AIEFGateCore.PhaseIncrement",
+      "AIEFGateCore.PhaseCoherence"
+    ]
+  },
+  "unmerged_team_C014_branch": {
+    "revision": "9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+    "module": "AIEFGateCore.TrajectoryInvariants"
+  },
+  "ClosedLoopCore_port_not_publicly_present": true,
+  "scope": "Read-only availability/namespace navigation, no pretend main imports or direct merge",
+  "candidate_math_not_proved016": "Rone-step envelope alphaR-(1-alpha)<=Rnext<=alphaR+(1-alpha);abschange<=2(1-alpha)underunitdisk; nonresetdt1/2\u03b31B0offdiag1/2oldestpi/2/current0carry/gatingpoint planned only"
+}

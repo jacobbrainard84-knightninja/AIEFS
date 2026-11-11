@@ -1,0 +1,51 @@
+======================================================================
+AIEF-1.4 Slow Bundle Internal Geometry
+======================================================================
+r_EMA: 0.057133   slow subspace dim: 7
+alpha: 0.999428829846   mean(diag(T)): 0.999428780488
+
+T = Q_slow^T · J_full · Q_slow   (compressed slow operator, 7×7)
+
+──────────────────────────────────────────────────────────────────────
+Global structure diagnostics (7×7):
+──────────────────────────────────────────────────────────────────────
+  ‖T‖_F                              = 2.644240e+00
+  ‖off-diag‖_F / ‖diag‖_F           = 4.252798e-07
+  Nearly scalar × I?  fraction       = 1.0000
+  Non-normality  ‖TT^T − T^TT‖/‖T‖² = 2.724158e-13
+  Schur lower-tri / (diag+upper)     = 1.890891e-09
+
+  → T is essentially diagonal.  Slow modes are decoupled.
+  → T is normal to machine precision.
+  → T ≈ α·I.  All slow modes are isotropic.
+  → Schur form is essentially upper triangular (no 2×2 blocks).
+
+──────────────────────────────────────────────────────────────────────
+Principal angles: slow subspace vs. C-coordinate plane (12-dim):
+──────────────────────────────────────────────────────────────────────
+  angle[0] = 0.000000e+00 rad = 0.0000°
+  angle[1] = 0.000000e+00 rad = 0.0000°
+  angle[2] = 1.490116e-08 rad = 0.0000°
+  angle[3] = 1.490116e-08 rad = 0.0000°
+  angle[4] = 1.852485e-06 rad = 0.0001°
+  angle[5] = 4.187785e-04 rad = 0.0240°
+  angle[6] = 4.111749e-03 rad = 0.2356°
+
+  → Max angle < 0.01 rad (< 0.6°).  Strongly C-aligned.
+
+──────────────────────────────────────────────────────────────────────
+Frobenius projection norms (basis-independent):
+──────────────────────────────────────────────────────────────────────
+  ‖Π_h Q_slow‖_F² / d  = 2.297082e-31
+  ‖Π_B Q_slow‖_F² / d  = 2.440252e-06
+  ‖Π_C Q_slow‖_F² / d  = 9.999976e-01
+
+  → C-dominant at 4+ nines.  B contribution at ~10⁻⁴ level.
+
+──────────────────────────────────────────────────────────────────────
+Compressed eigenvalues (continuous-time rates):
+──────────────────────────────────────────────────────────────────────
+  [np.float64(0.05712922798662593), np.float64(0.05713238668827897), np.float64(0.05713353764107907), np.float64(0.057133809631898284), np.float64(0.057133809631898284), np.float64(0.05713481810127344)]
+  mean = 0.057138,  std = 1.318722e-05
+
+  Reference: r_EMA = 0.057133

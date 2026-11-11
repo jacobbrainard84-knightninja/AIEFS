@@ -1,0 +1,15 @@
+{
+  "mutation": "drop_frequency_tau",
+  "runtime_utc_start": "2026-11-10T02:47:35.765968+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 102.34223684800008,
+  "setup_or_name_error": false,
+  "independent_baseline_refutation": "wrong_offset_refuted",
+  "first_errors": [
+    "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+    "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+    "PhaseCoherenceBridge.lean:343:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+  ]
+}

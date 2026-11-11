@@ -1,0 +1,116 @@
+{
+  "analysis_version": "v3.0",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 20260715
+  },
+  "command_line": "AIEF_1_4_Twindow_sensitivity_analysis_v3.py runs/b57562a8ee77 --bootstrap-seed 20260715 --n-bootstrap 1000",
+  "environment": {
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "python": "3.13.5 (main, Jun 21 2025, 09:35:00) [GCC 15.1.1 20250425]"
+  },
+  "input_hashes": {
+    "baseline_certificate": "08314de365196fa369bfa2b0363352cf04bdfb1a957f3ed86847f5d17b9d620f",
+    "branch_npz": "55a419c790d0a46bad2a52488d9de018a539ad3daa3759eee849cebf4df468c2",
+    "condition_status": "1f6985026c292c15b5fa8cacacbe92600916ab8d43bdbc8df4f9f0a76baa98e8",
+    "scalar_csv": "e9aa74e68b758b21e64b5757607af3c4bf98e88f616757319cb9e4e6d3a8e378",
+    "simulation_manifest": "7d1b86ab39eed397e2d281faf729ee5c3ac515efc00b2789c2e0013dce0d1e78"
+  },
+  "notes": {
+    "density_horizon_duplication": "Density recovery rows are duplicated across horizon_system by design. They are horizon-independent and must not be pooled across the two labels.",
+    "discrete_held_duration_convention": "ceil(T_window / diagnostic_sample_spacing) consecutive saved samples",
+    "expected_branches": [
+      "continue",
+      "reset_ema",
+      "reset_B",
+      "future_shuffle"
+    ],
+    "expected_n_did": 1440,
+    "expected_n_recovery_did_groups": 624,
+    "expected_n_recovery_did_rows": 24960,
+    "expected_n_recovery_groups": 80,
+    "expected_n_recovery_rows": 3200,
+    "expected_n_regime_contrasts": 480,
+    "expected_n_seeds": 40,
+    "expected_n_topology": 160,
+    "expected_rho_values": [
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "horizon_definitions": {
+      "fixed_physical": {
+        "immediate": "0-17.5 time units",
+        "late": "87.5-320 time units",
+        "recovery": "17.5-87.5 time units"
+      },
+      "normalized_EMA": {
+        "immediate": "0-1\u00d7T_window",
+        "late": "5\u00d7T_window to end",
+        "recovery": "1-5\u00d7T_window"
+      }
+    },
+    "interpretation_constraints": {
+      "primary_estimand": "fixed_physical horizons",
+      "recovery_metrics": "t_rec/T_window for both horizon systems",
+      "secondary_estimand": "normalized_EMA horizons"
+    },
+    "primary_outcomes": [
+      "Weighted_similarity_late_fixed_physical",
+      "Retention_contrast_late_fixed_physical",
+      "P_mean_late_fixed_physical"
+    ],
+    "secondary_outcomes": [
+      "Weighted_similarity_late_normalized_EMA",
+      "Retention_contrast_late_normalized_EMA",
+      "P_mean_late_normalized_EMA"
+    ],
+    "similarity_nan_recovery_convention": "undefined zero-vector cosine imputed as zero for recovery and AUC only"
+  },
+  "output_hashes": {
+    "branch_did": "cb07e36e9e8f5ff28892e5d7f352aa44b2caa0ee08cdfe9971bc8d04a367dd85",
+    "branch_did_combined": "cb74b0bdefa00d0b75c7c6d66ad646151dbc59c1677645fefb8619773a2324b9",
+    "branch_did_secondary": "1540c8528ed8a426784d34680b7c47ea5749392ba64961926df236d518ecbc33",
+    "did_summary": "a74f8d00007d289aef78ae00511f7466460ad9eda24eece7564e6a69f938ff46",
+    "did_summary_secondary": "ffa7691bc8a4e2d75fbe8f8102704c32818b30734f10452f6e7541888298bf27",
+    "recovery_by_seed": "1addb0ccd5b17ea694f948e0b1b10492a97ce3daae01de13949b4affac6a8cbb",
+    "recovery_did": "74e1307e8b51d4b28811bbd35fbe4b31902d8b8881076cd315d4d5eeb0459088",
+    "recovery_did_summary": "316e689ff00eab7c37fb7e2b5c6f05b9e4ae18f86bcc3f3c9f95c802cdedf834",
+    "recovery_summary": "8d5c2c0db25581004c2963ce1d4cf7c2860c159715d7ee56b280c50418b01a77",
+    "regime_contrasts": "4dfbcfdf8298bdfdff7cde97da609ce912812f90212e17a2d4c37ec6a5f2a12d",
+    "regime_contrasts_combined": "6efb9199d0efe9ba9002e46c8dfea8ae0c7ed11588363127df4b583581080217",
+    "regime_contrasts_secondary": "7a1aa010a5e690c1f2f2b38acc4ae8dc184410f36ef37609de2f82be46fc5fd4",
+    "regime_summary": "b8f92f40ebaaf9bea3fcb992d836114ac5b83b55a7400c79637efb1b12f04a7d",
+    "regime_summary_secondary": "40aa985e48f6de482b485ccc775888e4be3741dda517865681a866b501eb62e7",
+    "report": "030c697f476e8946f528d4dc0298b6e96956057b1d0896db3174ae7c26302789",
+    "topology": "acfd5dbd7fa499c9ff97a20a0fdc5189fa8d48fe212c7419987bb753d2326466",
+    "topology_summary": "72773f5485c2c51291dd40c8bce0759ec77bf0a251a72c173dd7f50a3c7e7ee3"
+  },
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_Twindow_sensitivity_analysis_v3.py",
+    "sha256": "348093079c37697a1b84a250aca2d0fa74180b39a1b62e20893190a974ffd919"
+  },
+  "study_name": "AIEF_1_4_Twindow_sensitivity",
+  "timestamp": 1786495477,
+  "validation": {
+    "baseline_certificate_hash": "08314de365196fa369bfa2b0363352cf04bdfb1a957f3ed86847f5d17b9d620f",
+    "condition_status_hash": "1f6985026c292c15b5fa8cacacbe92600916ab8d43bdbc8df4f9f0a76baa98e8",
+    "errors": [],
+    "status": "passed",
+    "validation": {
+      "baseline_certificate_hash": "08314de365196fa369bfa2b0363352cf04bdfb1a957f3ed86847f5d17b9d620f",
+      "baseline_equivalence": "passed",
+      "freezeable": true,
+      "n_branches": 4,
+      "n_duplicates": 0,
+      "n_missing_combinations": 0,
+      "n_rho": 5,
+      "n_rows": 800,
+      "n_seeds": 40
+    },
+    "warnings": []
+  }
+}

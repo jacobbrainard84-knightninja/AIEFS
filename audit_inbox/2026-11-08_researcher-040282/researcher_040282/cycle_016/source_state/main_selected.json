@@ -1,0 +1,256 @@
+{
+  "branch": "main",
+  "commit": "1c30ca56e56f11517d1e04f90d521a5aa6990c52",
+  "files": [
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "bytes": 63130,
+      "blob": "bdfa3b3c0eb15d2f15787ef52e0399aedd56a43d"
+    },
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "bytes": 119493,
+      "blob": "0d116e83a0d2f6b3f6be0e21d8a730c0aec3b689"
+    },
+    {
+      "path": "lean/AIEFFreezeCore/AIEFFreezeCore.lean",
+      "bytes": 72,
+      "blob": "4614036d156946044ff72bc69442657f207ef732"
+    },
+    {
+      "path": "lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean",
+      "bytes": 6730,
+      "blob": "2703d6461a0a96d16bc2fa529cd42a123963da47"
+    },
+    {
+      "path": "lean/AIEFFreezeCore/README.md",
+      "bytes": 2405,
+      "blob": "9c92eb8bcd8166c0c31585867888cf75d3f17bc8"
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lake-manifest.json",
+      "bytes": 3148,
+      "blob": "51e230e0f5c1b54739e809ffb40804752b3cc34a"
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lakefile.toml",
+      "bytes": 371,
+      "blob": "3e16bee0d85092f787731a6abd0c85ef630e060f"
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lean-toolchain",
+      "bytes": 25,
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "bytes": 561,
+      "blob": "b6c004eaf65a7f93f3209e0f30bff88c9ea6d5ce"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Bridge.lean",
+      "bytes": 13034,
+      "blob": "d815d4a7242761decaa2578e2ebb287cd8adabc2"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Capacity.lean",
+      "bytes": 24691,
+      "blob": "fe441b628617d5312ec957727ea3cf1d6cf9c5ae"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/EngineRedTeam.lean",
+      "bytes": 12046,
+      "blob": "2ffdb66f0880cf36e4bf8f8ce74e90b1862d485d"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/EngineWitness.lean",
+      "bytes": 12151,
+      "blob": "6abfdc73f1567d99fe91f41c9c1c109c81fe5e12"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Freeze.lean",
+      "bytes": 8628,
+      "blob": "c6457aaf033ff565125193b91170d98179f48b43"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/GateMap.lean",
+      "bytes": 26939,
+      "blob": "befc13a0b961cc81391e246ab726d5f0ceaf88ba"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/K3.lean",
+      "bytes": 18898,
+      "blob": "9f4e59ed2fdb11ed40ab8a159ead4d51c6738457"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/MatrixForm.lean",
+      "bytes": 9341,
+      "blob": "b527fa6a96adb413df8fcefa1f1342aa05c49996"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Persistence.lean",
+      "bytes": 4861,
+      "blob": "d20d3166030e51cbf5fb1dcf69ca5c3a35d27bee"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PersistenceWitness.lean",
+      "bytes": 11055,
+      "blob": "48c271865e4aa1f3473ab6c7ffec5662c9255da9"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/CompleteGraphIncidence.lean",
+      "bytes": 7663,
+      "blob": "13a992b130fca37c88096f5e8a825892a079d8f2"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiber.lean",
+      "bytes": 4202,
+      "blob": "f86f44b54ca44395513b306f1aa589e4e2449220"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberProjector.lean",
+      "bytes": 9369,
+      "blob": "ec4d14e854396cc80401b74ed5430c69b41511d6"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberQuotient.lean",
+      "bytes": 2779,
+      "blob": "78dc0c2248e16353897a1cc4e3fc39faa309b232"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/RedTeam.lean",
+      "bytes": 34238,
+      "blob": "7c2266c7d460a27a50ce0ee96d6280639b099d53"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/WeightUpdate.lean",
+      "bytes": 32319,
+      "blob": "ebdd160cdd50fc2603b7eeae61e8817e8ccdb318"
+    },
+    {
+      "path": "lean/AIEFGateCore/README.md",
+      "bytes": 8908,
+      "blob": "630829d9b45508acf627fc8664e2684a84adeabe"
+    },
+    {
+      "path": "lean/AIEFGateCore/lake-manifest.json",
+      "bytes": 3146,
+      "blob": "89601b20d9e52cca983308bca517881cb79d47ab"
+    },
+    {
+      "path": "lean/AIEFGateCore/lakefile.toml",
+      "bytes": 365,
+      "blob": "359e52cab97083cf195c090542b671b80d0e24f7"
+    },
+    {
+      "path": "lean/AIEFGateCore/lean-toolchain",
+      "bytes": 25,
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs.lean",
+      "bytes": 213,
+      "blob": "dc26fd2efccb09c92347b43d6b768036e6abf847"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/Basic.lean",
+      "bytes": 353,
+      "blob": "ee75690e5e19b5ce22ad477d443552d2c31882d9"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/CompleteGraphIncidence.lean",
+      "bytes": 7658,
+      "blob": "321a42751aef2af511068d9312816baa8b616e8e"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean",
+      "bytes": 4206,
+      "blob": "73158febdb6f2979b7226c5738b99a6e981eadd7"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean",
+      "bytes": 9364,
+      "blob": "37c2820fc4dd98297a5b06ce210e36733ebf7756"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiberQuotient.lean",
+      "bytes": 2774,
+      "blob": "516f4980edc6a79584999e96ae34a34b095cdbe8"
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/Smoke.lean",
+      "bytes": 748,
+      "blob": "2f456b84fe3b8a2df720bc48caf5609d02ee04da"
+    },
+    {
+      "path": "lean/AIEFProofs/README.md",
+      "bytes": 5309,
+      "blob": "f18fdc5875684bf65455588e7998595e54b8ff04"
+    },
+    {
+      "path": "lean/AIEFProofs/lake-manifest.json",
+      "bytes": 3144,
+      "blob": "e6c34897cbe880f625aa52983ab1521a61d9bebb"
+    },
+    {
+      "path": "lean/AIEFProofs/lakefile.toml",
+      "bytes": 359,
+      "blob": "2a8cfd2b9ff96891189b80299701c481a7d372a5"
+    },
+    {
+      "path": "lean/AIEFProofs/lean-toolchain",
+      "bytes": 25,
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473"
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn.lean",
+      "bytes": 192,
+      "blob": "b74c4eebf6421ed6287255e383a371965875b7ed"
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphKn.lean",
+      "bytes": 13837,
+      "blob": "3eb42bc26df3de5626da2482c287e588fe2ffce7"
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphRightInverse.lean",
+      "bytes": 4063,
+      "blob": "2bfd62c13d1103218e8a26b2868391cabe8c9941"
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/IncMatrixRank.lean",
+      "bytes": 11170,
+      "blob": "c48280d84871a08f8c7ebc1b8b04ffd03d929c8f"
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/KernelDimFormula.lean",
+      "bytes": 2987,
+      "blob": "f6447ae22f197fc16fb6d7fb53e287360bc1b7c6"
+    },
+    {
+      "path": "lean/AIEFProofsKn/README.md",
+      "bytes": 5831,
+      "blob": "d862fe206d91413bffd247f72ab8ae237cf9a775"
+    },
+    {
+      "path": "lean/AIEFProofsKn/lake-manifest.json",
+      "bytes": 3409,
+      "blob": "fb97553c6503753e97264d422009be7dedef1af4"
+    },
+    {
+      "path": "lean/AIEFProofsKn/lakefile.toml",
+      "bytes": 515,
+      "blob": "e10fcc1f003eb14c1ddb73f0b0dc704a3865cc81"
+    },
+    {
+      "path": "lean/AIEFProofsKn/lean-toolchain",
+      "bytes": 25,
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473"
+    },
+    {
+      "path": "research/lean_gate/SPEC_P1_gate_identities.md",
+      "bytes": 65988,
+      "blob": "0788acaf56258e2c9616e66a1d14ac4c1f2bbe04"
+    }
+  ]
+}

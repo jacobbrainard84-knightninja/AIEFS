@@ -1,0 +1,24 @@
+{
+  "analysis": "AIEF-1.4 slow subspace projection v2",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "r_EMA": 0.05713333333333142,
+    "alpha": 0.9994288298464774,
+    "perturbation": 1e-08
+  },
+  "n_slow_modes": 7,
+  "real_slow_dim": 7,
+  "effective_slow_dim": 4,
+  "mean_pairwise_overlap": 0.5632646545350779,
+  "mean_observable_correlation": 0.7393569215172623,
+  "mean_variance_fraction": 1.2494084626990252e+35,
+  "h_B_machine_zero": false,
+  "outputs": [
+    "observable_projections.csv",
+    "variance_fractions.csv",
+    "eigenvector_decomposition.csv",
+    "slow_subspace_report.txt",
+    "analysis_manifest.json"
+  ]
+}

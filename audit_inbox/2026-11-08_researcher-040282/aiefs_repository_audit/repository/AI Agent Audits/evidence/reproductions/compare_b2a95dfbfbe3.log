@@ -1,0 +1,72 @@
+$ python "AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.py"   (from the repo root at 6b49a7b; numpy 2.5.4, pandas 3.0.6, python 3.13.5; 2026-10-28)
+{
+ "zip_folder": "Project Histories",
+ "zip_file": "workspace-019ff425-d36a-7d5d-bfa7-8e81a82fa8f2.zip",
+ "zip_sha256": "281bf33be105cb6219af7aecb9f8ae547459856c1548fdf646f5caee9f8d17ad",
+ "zip_run_dir": "runs/frozen_production_20260806/b2a95dfbfbe3/",
+ "zip_run_files": 43,
+ "official_run": "runs/5a9f093a2fe0",
+ "model_equal": true,
+ "protocol_equal": true,
+ "randomization_equal": true,
+ "schema_equal": true,
+ "manifest_keys_differing": [
+  "config_hash",
+  "environment",
+  "source_sha256"
+ ],
+ "env_rerun": {
+  "numpy": "2.3.5",
+  "python": "3.13.14"
+ },
+ "env_official": {
+  "numpy": "2.5.1",
+  "python": "3.13.5"
+ },
+ "source_sha256_rerun": "a94acae3f6b7cc2baef62c53eaaa07acac346ce073e18d8f566e22bef7d03549",
+ "source_sha256_official": "34d37908479f766c4036b35975b334935a5b5fb60c0c437d7649db8d14473257",
+ "source_files": {
+  "AIEF_1_4_memory_ablation_updated.py": "a94acae3f6b7cc2baef62c53eaaa07acac346ce073e18d8f566e22bef7d03549",
+  "Older files/AIEF_1_4_memory_ablation_updated.py": "34d37908479f766c4036b35975b334935a5b5fb60c0c437d7649db8d14473257"
+ },
+ "source_diff_changed_lines": 58,
+ "source_diff_blank_or_comment_lines": 56,
+ "source_diff_code_lines": [
+  "-        R_physical, _, _ = advance_state(",
+  "+        R_physical, *_ = advance_state("
+ ],
+ "seed_files_rerun": 40,
+ "seed_files_official": 40,
+ "seed_fields_compared": 15160,
+ "seed_fields_nonzero_diff": 1255,
+ "seed_files_byte_identical": 0,
+ "seed_worst_abs_diff": 6.661338147750939e-16,
+ "seed_label_fields_rerun_vs_official": {
+  "config_hash": [
+   [
+    "b2a95dfbfbe3",
+    "5a9f093a2fe0"
+   ]
+  ]
+ },
+ "csv_shape": [
+  [
+   280,
+   46
+  ],
+  [
+   280,
+   46
+  ]
+ ],
+ "csv_worst_abs_diff": 6.661338147750939e-16,
+ "csv_nonnumeric_equal": true,
+ "branch_diag_fields": 3320,
+ "branch_diag_worst_abs_diff": 5.551115123125783e-16,
+ "zip_also_contains_stub_runs_5a9f093a2fe0_manifest": true,
+ "zip_stub_model_matches_official": false,
+ "problems": [],
+ "tolerance": 1e-12,
+ "verdict": "REPRODUCED"
+}
+exit 0

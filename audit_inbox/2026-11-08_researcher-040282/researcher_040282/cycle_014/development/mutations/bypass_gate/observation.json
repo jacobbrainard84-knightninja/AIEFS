@@ -1,0 +1,13 @@
+{
+  "mutation": "bypass_gate",
+  "runtime_utc_start": "2026-11-10T04:05:45.655711+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 75.70980333499983,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "noGate_over_capacity",
+  "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+  "first_errors": [
+    "Probe.lean:90:76: error: unsolved goals"
+  ]
+}

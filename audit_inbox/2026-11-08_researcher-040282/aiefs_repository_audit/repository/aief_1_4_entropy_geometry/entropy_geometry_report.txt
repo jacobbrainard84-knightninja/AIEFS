@@ -1,0 +1,299 @@
+AIEF-1.4 entropy-geometry boundary and conditioning diagnostics
+================================================================
+
+The metric is evaluated only after explicit interiorization.
+Bregman divergence is not interpreted as geodesic distance.
+
+Raw mature-state boundary occupancy
+-----------------------------------
+Seeds: 40
+Mean exact-zero edge fraction: 0.698864
+Median minimum positive edge: 0.126667
+Median minimum node margin: 9.9698e-13
+Mean fraction of node margins <= 1e-12: 0.65
+
+Interior Hessian conditioning
+-----------------------------
+  edge_eps=1e-12, margin_eps=1e-12
+    hessian_condition_number: median=2.62005e+12, max=4.63844e+12, valid=40/40
+    woodbury_relative_inverse_error: median=2.62231e-05, max=4.20729e-05, valid=40/40
+    margin_reconstruction_relative_error: median=1.21613e-17, max=1.64171e-06, valid=40/40
+    edge_reconstruction_relative_error: median=1.29504e-15, max=1.85044e-15, valid=40/40
+  edge_eps=1e-12, margin_eps=1e-09
+    hessian_condition_number: median=1.28607e+11, max=2.14458e+11, valid=40/40
+    woodbury_relative_inverse_error: median=2.77293e-08, max=4.15846e-08, valid=40/40
+    margin_reconstruction_relative_error: median=2.40477e-16, max=6.10618e-08, valid=40/40
+    edge_reconstruction_relative_error: median=2.46369e-15, max=8.40856e-15, valid=40/40
+  edge_eps=1e-12, margin_eps=1e-06
+    hessian_condition_number: median=1.26676e+11, max=2.11138e+11, valid=40/40
+    woodbury_relative_inverse_error: median=3.0725e-11, max=5.54981e-11, valid=40/40
+    margin_reconstruction_relative_error: median=1.64286e-16, max=3.52047e-11, valid=40/40
+    edge_reconstruction_relative_error: median=5.18934e-16, max=2.18184e-15, valid=40/40
+  edge_eps=1e-12, margin_eps=0.0001
+    hessian_condition_number: median=1.26654e+11, max=2.11094e+11, valid=40/40
+    woodbury_relative_inverse_error: median=5.17283e-13, max=7.3485e-13, valid=40/40
+    margin_reconstruction_relative_error: median=1.62919e-16, max=3.72277e-13, valid=40/40
+    edge_reconstruction_relative_error: median=6.86518e-16, max=1.21055e-15, valid=40/40
+  edge_eps=1e-09, margin_eps=1e-12
+    hessian_condition_number: median=2.53335e+12, max=4.49456e+12, valid=40/40
+    woodbury_relative_inverse_error: median=2.25645e-05, max=5.99382e-05, valid=40/40
+    margin_reconstruction_relative_error: median=9.52657e-21, max=2.04156e-09, valid=40/40
+    edge_reconstruction_relative_error: median=1.2283e-15, max=2.34974e-15, valid=40/40
+  edge_eps=1e-09, margin_eps=1e-09
+    hessian_condition_number: median=2.74625e+09, max=4.78738e+09, valid=40/40
+    woodbury_relative_inverse_error: median=3.77611e-08, max=5.76311e-08, valid=40/40
+    margin_reconstruction_relative_error: median=8.763e-18, max=2.43736e-09, valid=40/40
+    edge_reconstruction_relative_error: median=1.33994e-15, max=5.08787e-13, valid=40/40
+  edge_eps=1e-09, margin_eps=1e-06
+    hessian_condition_number: median=1.28599e+08, max=2.14484e+08, valid=40/40
+    woodbury_relative_inverse_error: median=4.11266e-11, max=5.31859e-11, valid=40/40
+    margin_reconstruction_relative_error: median=1.212e-16, max=1.85976e-11, valid=40/40
+    edge_reconstruction_relative_error: median=4.90183e-16, max=1.19126e-15, valid=40/40
+  edge_eps=1e-09, margin_eps=0.0001
+    hessian_condition_number: median=1.26666e+08, max=2.11111e+08, valid=40/40
+    woodbury_relative_inverse_error: median=5.66424e-13, max=8.75522e-13, valid=40/40
+    margin_reconstruction_relative_error: median=1.44626e-16, max=1.87122e-13, valid=40/40
+    edge_reconstruction_relative_error: median=6.70246e-16, max=1.36556e-15, valid=40/40
+  edge_eps=1e-06, margin_eps=1e-12
+    hessian_condition_number: median=2.53322e+12, max=4.49428e+12, valid=40/40
+    woodbury_relative_inverse_error: median=2.98145e-05, max=6.44518e-05, valid=40/40
+    margin_reconstruction_relative_error: median=1.49176e-23, max=3.08556e-12, valid=40/40
+    edge_reconstruction_relative_error: median=1.33219e-15, max=1.50761e-13, valid=40/40
+  edge_eps=1e-06, margin_eps=1e-09
+    hessian_condition_number: median=2.65971e+09, max=4.64431e+09, valid=40/40
+    woodbury_relative_inverse_error: median=3.99588e-08, max=7.09627e-08, valid=40/40
+    margin_reconstruction_relative_error: median=1.75301e-16, max=2.5591e-12, valid=40/40
+    edge_reconstruction_relative_error: median=1.285e-15, max=2.77338e-15, valid=40/40
+  edge_eps=1e-06, margin_eps=1e-06
+    hessian_condition_number: median=2.74657e+06, max=4.79671e+06, valid=40/40
+    woodbury_relative_inverse_error: median=4.53232e-11, max=6.92372e-11, valid=40/40
+    margin_reconstruction_relative_error: median=8.55932e-18, max=2.05124e-12, valid=40/40
+    edge_reconstruction_relative_error: median=4.94611e-16, max=7.76003e-16, valid=40/40
+  edge_eps=1e-06, margin_eps=0.0001
+    hessian_condition_number: median=146729, max=246400, valid=40/40
+    woodbury_relative_inverse_error: median=4.73408e-13, max=7.24953e-13, valid=40/40
+    margin_reconstruction_relative_error: median=1.89899e-16, max=1.17716e-13, valid=40/40
+    edge_reconstruction_relative_error: median=6.55534e-16, max=1.09032e-15, valid=40/40
+  edge_eps=0.0001, margin_eps=1e-12
+    hessian_condition_number: median=2.53078e+12, max=4.48808e+12, valid=40/40
+    woodbury_relative_inverse_error: median=4.48285e-05, max=9.52537e-05, valid=40/40
+    margin_reconstruction_relative_error: median=1.75603e-16, max=5.13935e-14, valid=40/40
+    edge_reconstruction_relative_error: median=1.40073e-15, max=2.17569e-15, valid=40/40
+  edge_eps=0.0001, margin_eps=1e-09
+    hessian_condition_number: median=2.65713e+09, max=4.63836e+09, valid=40/40
+    woodbury_relative_inverse_error: median=4.10899e-08, max=8.56625e-08, valid=40/40
+    margin_reconstruction_relative_error: median=8.78018e-17, max=2.91859e-14, valid=40/40
+    edge_reconstruction_relative_error: median=1.22746e-15, max=6.22898e-14, valid=40/40
+  edge_eps=0.0001, margin_eps=1e-06
+    hessian_condition_number: median=2.65833e+06, max=4.64005e+06, valid=40/40
+    woodbury_relative_inverse_error: median=3.37566e-11, max=8.09563e-11, valid=40/40
+    margin_reconstruction_relative_error: median=2.75254e-19, max=4.36262e-14, valid=40/40
+    edge_reconstruction_relative_error: median=5.09942e-16, max=9.6359e-16, valid=40/40
+  edge_eps=0.0001, margin_eps=0.0001
+    hessian_condition_number: median=27436, max=47900.1, valid=40/40
+    woodbury_relative_inverse_error: median=4.94592e-13, max=7.38689e-13, valid=40/40
+    margin_reconstruction_relative_error: median=1.7688e-16, max=3.81211e-14, valid=40/40
+    edge_reconstruction_relative_error: median=7.13116e-16, max=1.19719e-15, valid=40/40
+
+Selected intrinsic-distance diagnostics
+---------------------------------------
+  full_reset, edge_eps=1e-12, margin_eps=1e-12
+    euclidean_edge_distance: median=0.408928, max=0.747112
+    local_metric_norm_at_reference: median=365670, max=801279
+    symmetrized_bregman: median=33.6664, max=67.8009
+  full_reset, edge_eps=1e-12, margin_eps=1e-09
+    euclidean_edge_distance: median=0.408928, max=0.747112
+    local_metric_norm_at_reference: median=365289, max=452062
+    symmetrized_bregman: median=29.491, max=62.7657
+  full_reset, edge_eps=1e-12, margin_eps=1e-06
+    euclidean_edge_distance: median=0.408927, max=0.747111
+    local_metric_norm_at_reference: median=365047, max=452061
+    symmetrized_bregman: median=25.1095, max=59.0979
+  full_reset, edge_eps=1e-12, margin_eps=0.0001
+    euclidean_edge_distance: median=0.408863, max=0.746994
+    local_metric_norm_at_reference: median=364990, max=451990
+    symmetrized_bregman: median=22.1916, max=58.9967
+  full_reset, edge_eps=1e-09, margin_eps=1e-12
+    euclidean_edge_distance: median=0.408927, max=0.747112
+    local_metric_norm_at_reference: median=11989.8, max=801287
+    symmetrized_bregman: median=29.2914, max=59.0511
+  full_reset, edge_eps=1e-09, margin_eps=1e-09
+    euclidean_edge_distance: median=0.408927, max=0.747112
+    local_metric_norm_at_reference: median=11563.5, max=28319.8
+    symmetrized_bregman: median=25.1161, max=50.5356
+  full_reset, edge_eps=1e-09, margin_eps=1e-06
+    euclidean_edge_distance: median=0.408927, max=0.747111
+    local_metric_norm_at_reference: median=11551.4, max=14295.4
+    symmetrized_bregman: median=20.7346, max=45.2491
+  full_reset, edge_eps=1e-09, margin_eps=0.0001
+    euclidean_edge_distance: median=0.408863, max=0.746994
+    local_metric_norm_at_reference: median=11542.1, max=14293.2
+    symmetrized_bregman: median=17.8174, max=43.3683
+  full_reset, edge_eps=1e-06, margin_eps=1e-12
+    euclidean_edge_distance: median=0.40892, max=0.747099
+    local_metric_norm_at_reference: median=3250.05, max=801265
+    symmetrized_bregman: median=24.9161, max=50.3003
+  full_reset, edge_eps=1e-06, margin_eps=1e-09
+    euclidean_edge_distance: median=0.40892, max=0.747099
+    local_metric_norm_at_reference: median=379.674, max=28319.3
+    symmetrized_bregman: median=20.7408, max=41.785
+  full_reset, edge_eps=1e-06, margin_eps=1e-06
+    euclidean_edge_distance: median=0.40892, max=0.747098
+    local_metric_norm_at_reference: median=365.664, max=895.653
+    symmetrized_bregman: median=16.3594, max=33.0032
+  full_reset, edge_eps=1e-06, margin_eps=0.0001
+    euclidean_edge_distance: median=0.408856, max=0.746981
+    local_metric_norm_at_reference: median=365.226, max=452.213
+    symmetrized_bregman: median=13.4429, max=29.1912
+  full_reset, edge_eps=0.0001, margin_eps=1e-12
+    euclidean_edge_distance: median=0.408217, max=0.745815
+    local_metric_norm_at_reference: median=3224.07, max=799980
+    symmetrized_bregman: median=21.9116, max=44.387
+  full_reset, edge_eps=0.0001, margin_eps=1e-09
+    euclidean_edge_distance: median=0.408217, max=0.745815
+    local_metric_norm_at_reference: median=127.127, max=28270.6
+    symmetrized_bregman: median=17.7875, max=35.8861
+  full_reset, edge_eps=0.0001, margin_eps=1e-06
+    euclidean_edge_distance: median=0.408217, max=0.745813
+    local_metric_norm_at_reference: median=36.6547, max=894.113
+    symmetrized_bregman: median=13.4178, max=27.1195
+  full_reset, edge_eps=0.0001, margin_eps=0.0001
+    euclidean_edge_distance: median=0.408153, max=0.745697
+    local_metric_norm_at_reference: median=36.5078, max=89.4056
+    symmetrized_bregman: median=10.5068, max=21.2713
+  reset_B, edge_eps=1e-12, margin_eps=1e-12
+    euclidean_edge_distance: median=6.10543e-08, max=0.000226957
+    local_metric_norm_at_reference: median=0.0711943, max=73.7852
+    symmetrized_bregman: median=1.15715e-06, max=0.00168477
+  reset_B, edge_eps=1e-12, margin_eps=1e-09
+    euclidean_edge_distance: median=6.10543e-08, max=0.000226957
+    local_metric_norm_at_reference: median=0.00262194, max=2.97743
+    symmetrized_bregman: median=4.42518e-07, max=0.0010792
+  reset_B, edge_eps=1e-12, margin_eps=1e-06
+    euclidean_edge_distance: median=6.10542e-08, max=0.000226956
+    local_metric_norm_at_reference: median=8.29281e-05, max=0.0941841
+    symmetrized_bregman: median=6.64606e-09, max=0.000429114
+  reset_B, edge_eps=1e-12, margin_eps=0.0001
+    euclidean_edge_distance: median=6.10447e-08, max=0.000226921
+    local_metric_norm_at_reference: median=8.29272e-06, max=0.0142676
+    symmetrized_bregman: median=6.8745e-11, max=0.000150701
+  reset_B, edge_eps=1e-09, margin_eps=1e-12
+    euclidean_edge_distance: median=6.10543e-08, max=0.000226957
+    local_metric_norm_at_reference: median=0.0711928, max=73.7877
+    symmetrized_bregman: median=1.15715e-06, max=0.00168477
+  reset_B, edge_eps=1e-09, margin_eps=1e-09
+    euclidean_edge_distance: median=6.10543e-08, max=0.000226957
+    local_metric_norm_at_reference: median=0.00262194, max=2.97743
+    symmetrized_bregman: median=4.42518e-07, max=0.0010792
+  reset_B, edge_eps=1e-09, margin_eps=1e-06
+    euclidean_edge_distance: median=6.10542e-08, max=0.000226956
+    local_metric_norm_at_reference: median=8.29281e-05, max=0.0941841
+    symmetrized_bregman: median=6.64606e-09, max=0.000429114
+  reset_B, edge_eps=1e-09, margin_eps=0.0001
+    euclidean_edge_distance: median=6.10447e-08, max=0.000226921
+    local_metric_norm_at_reference: median=8.29272e-06, max=0.0142676
+    symmetrized_bregman: median=6.8745e-11, max=0.000150701
+  reset_B, edge_eps=1e-06, margin_eps=1e-12
+    euclidean_edge_distance: median=6.10533e-08, max=0.000226953
+    local_metric_norm_at_reference: median=0.0711925, max=73.7814
+    symmetrized_bregman: median=1.15713e-06, max=0.00168473
+  reset_B, edge_eps=1e-06, margin_eps=1e-09
+    euclidean_edge_distance: median=6.10533e-08, max=0.000226953
+    local_metric_norm_at_reference: median=0.00262189, max=2.97738
+    symmetrized_bregman: median=4.42509e-07, max=0.00107918
+  reset_B, edge_eps=1e-06, margin_eps=1e-06
+    euclidean_edge_distance: median=6.10532e-08, max=0.000226953
+    local_metric_norm_at_reference: median=8.29267e-05, max=0.0941825
+    symmetrized_bregman: median=6.64584e-09, max=0.000429105
+  reset_B, edge_eps=1e-06, margin_eps=0.0001
+    euclidean_edge_distance: median=6.10436e-08, max=0.000226917
+    local_metric_norm_at_reference: median=8.29258e-06, max=0.0142675
+    symmetrized_bregman: median=6.87426e-11, max=0.000150697
+  reset_B, edge_eps=0.0001, margin_eps=1e-12
+    euclidean_edge_distance: median=6.09483e-08, max=0.000226563
+    local_metric_norm_at_reference: median=0.0710837, max=73.6796
+    symmetrized_bregman: median=1.15499e-06, max=0.00168174
+  reset_B, edge_eps=0.0001, margin_eps=1e-09
+    euclidean_edge_distance: median=6.09483e-08, max=0.000226563
+    local_metric_norm_at_reference: median=0.00261739, max=2.97226
+    symmetrized_bregman: median=4.41566e-07, max=0.00107716
+  reset_B, edge_eps=0.0001, margin_eps=1e-06
+    euclidean_edge_distance: median=6.09482e-08, max=0.000226562
+    local_metric_norm_at_reference: median=8.27841e-05, max=0.0940206
+    symmetrized_bregman: median=6.62338e-09, max=0.000428207
+  reset_B, edge_eps=0.0001, margin_eps=0.0001
+    euclidean_edge_distance: median=6.09386e-08, max=0.000226527
+    local_metric_norm_at_reference: median=8.27832e-06, max=0.0142516
+    symmetrized_bregman: median=6.85065e-11, max=0.00015038
+  reset_ema, edge_eps=1e-12, margin_eps=1e-12
+    euclidean_edge_distance: median=1.01393e-05, max=0.640612
+    local_metric_norm_at_reference: median=10.04, max=25764.5
+    symmetrized_bregman: median=0.00017505, max=27.7997
+  reset_ema, edge_eps=1e-12, margin_eps=1e-09
+    euclidean_edge_distance: median=1.01393e-05, max=0.640612
+    local_metric_norm_at_reference: median=0.336282, max=25764.5
+    symmetrized_bregman: median=0.000100524, max=27.7995
+  reset_ema, edge_eps=1e-12, margin_eps=1e-06
+    euclidean_edge_distance: median=1.01393e-05, max=0.640611
+    local_metric_norm_at_reference: median=0.0106348, max=25764.5
+    symmetrized_bregman: median=2.61853e-05, max=27.7994
+  reset_ema, edge_eps=1e-12, margin_eps=0.0001
+    euclidean_edge_distance: median=1.01377e-05, max=0.640511
+    local_metric_norm_at_reference: median=0.00106369, max=25760.4
+    symmetrized_bregman: median=1.07538e-06, max=27.7948
+  reset_ema, edge_eps=1e-09, margin_eps=1e-12
+    euclidean_edge_distance: median=1.01393e-05, max=0.640612
+    local_metric_norm_at_reference: median=10.0402, max=814.861
+    symmetrized_bregman: median=0.000175051, max=20.5481
+  reset_ema, edge_eps=1e-09, margin_eps=1e-09
+    euclidean_edge_distance: median=1.01393e-05, max=0.640612
+    local_metric_norm_at_reference: median=0.336281, max=814.748
+    symmetrized_bregman: median=0.000100524, max=20.548
+  reset_ema, edge_eps=1e-09, margin_eps=1e-06
+    euclidean_edge_distance: median=1.01393e-05, max=0.640611
+    local_metric_norm_at_reference: median=0.0106348, max=814.746
+    symmetrized_bregman: median=2.61853e-05, max=20.5478
+  reset_ema, edge_eps=1e-09, margin_eps=0.0001
+    euclidean_edge_distance: median=1.01377e-05, max=0.640511
+    local_metric_norm_at_reference: median=0.00106369, max=814.619
+    symmetrized_bregman: median=1.07538e-06, max=20.5444
+  reset_ema, edge_eps=1e-06, margin_eps=1e-12
+    euclidean_edge_distance: median=1.01392e-05, max=0.640601
+    local_metric_norm_at_reference: median=10.0401, max=224.441
+    symmetrized_bregman: median=0.000175048, max=13.2963
+  reset_ema, edge_eps=1e-06, margin_eps=1e-09
+    euclidean_edge_distance: median=1.01392e-05, max=0.640601
+    local_metric_norm_at_reference: median=0.336276, max=30.6838
+    symmetrized_bregman: median=0.000100522, max=13.2962
+  reset_ema, edge_eps=1e-06, margin_eps=1e-06
+    euclidean_edge_distance: median=1.01392e-05, max=0.6406
+    local_metric_norm_at_reference: median=0.0106346, max=30.6192
+    symmetrized_bregman: median=2.61847e-05, max=13.296
+  reset_ema, edge_eps=1e-06, margin_eps=0.0001
+    euclidean_edge_distance: median=1.01376e-05, max=0.6405
+    local_metric_norm_at_reference: median=0.00106368, max=25.8227
+    symmetrized_bregman: median=1.07534e-06, max=13.2938
+  reset_ema, edge_eps=0.0001, margin_eps=1e-12
+    euclidean_edge_distance: median=1.01217e-05, max=0.639499
+    local_metric_norm_at_reference: median=10.023, max=224.132
+    symmetrized_bregman: median=0.000174728, max=8.44622
+  reset_ema, edge_eps=0.0001, margin_eps=1e-09
+    euclidean_edge_distance: median=1.01217e-05, max=0.639499
+    local_metric_norm_at_reference: median=0.335697, max=30.6574
+    symmetrized_bregman: median=0.000100331, max=8.44609
+  reset_ema, edge_eps=0.0001, margin_eps=1e-06
+    euclidean_edge_distance: median=1.01217e-05, max=0.639498
+    local_metric_norm_at_reference: median=0.0106164, max=30.5928
+    symmetrized_bregman: median=2.61228e-05, max=8.44594
+  reset_ema, edge_eps=0.0001, margin_eps=0.0001
+    euclidean_edge_distance: median=1.01201e-05, max=0.639398
+    local_metric_norm_at_reference: median=0.00106185, max=25.7126
+    symmetrized_bregman: median=1.07173e-06, max=8.4444
+
+Interpretation constraints
+--------------------------
+* The entropy potential is a natural choice, not a uniquely canonical metric.
+* Metric scale and dimensional normalization remain modeling choices.
+* Existing AIEF states lie on the boundary; epsilon dependence is substantive.
+* Local metric norms are not global geodesic distances.
+* This script does not define mirror dynamics or claim that geometry stores memory.

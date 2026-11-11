@@ -1,0 +1,8 @@
+{
+  "issues": [
+    "Concrete rational-complex probe needed ring normalization after norm_num",
+    "Unneeded main-interface Fintype/LinearOrder assumptions and unused simp arguments"
+  ],
+  "fix": "Explicit ring on concrete components, remove redundant assumptions/simp args; add requested normalized drive and after-coherence current-main preM interface",
+  "initial_failed_proofs_not_promoted_or_mutation_detections": true
+}

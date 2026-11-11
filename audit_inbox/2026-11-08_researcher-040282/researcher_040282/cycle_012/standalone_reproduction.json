@@ -1,0 +1,122 @@
+{
+  "actually_executed": true,
+  "runner_returncode": 0,
+  "tested_main": "543e7e1aaa11e4c810783806cb180eee36ec5313",
+  "critical_file_count": 16,
+  "critical_files": [
+    "CoherenceEMA.lean",
+    "EMATracking.lean",
+    "tracking_contract.py",
+    "HistoryBuffer.lean",
+    "PhaseIncrement.lean",
+    "phase_contract.py",
+    "prepare_mathlib.py",
+    "step_contract.py",
+    "check_engine.py",
+    "load_reviewed.py",
+    "check_lean.py",
+    "prepare_lean.py",
+    "run_checks.py",
+    "source_modules.json",
+    "fetch_public_dependencies.py",
+    "extract_from_report.py"
+  ],
+  "all_extracted_files_byte_identical": true,
+  "fresh_public_dependencies_fetched_and_verified": 4,
+  "fresh_public_python_sources": 1,
+  "fresh_scope_compiler_metadata_files": 3,
+  "same_original_verified_compiler_and_Mathlib_reused": true,
+  "fresh_clean_compiler_or_Mathlib_installation_claimed": false,
+  "scientific_summary_matches_original": true,
+  "all_four_worker_nontiming_results_match_original": true,
+  "all_thirtyfive_detailed_records_byte_identical": true,
+  "detailed_matching_files": [
+    "common_normal/advance_observations.json",
+    "common_normal/preexecution_design.json",
+    "common_normal/tracking_observations.json",
+    "common_optimized/advance_observations.json",
+    "common_optimized/preexecution_design.json",
+    "common_optimized/tracking_observations.json",
+    "proof/compiled_sources/CoherenceEMA.lean",
+    "proof/compiled_sources/EMATracking.lean",
+    "proof/compiled_sources/HistoryBuffer.lean",
+    "proof/compiled_sources/PhaseIncrement.lean",
+    "proof/compiled_sources/compiling_extra_axiom.lean",
+    "proof/compiled_sources/compiling_sorry.lean",
+    "proof/compiled_sources/false_beta_scaled_drift.lean",
+    "proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+    "proof/compiled_sources/false_reverse_weights.lean",
+    "proof/compiled_sources/omitted_axiom_print.lean",
+    "proof/compiled_sources/positive_alpha0_nonzero.lean",
+    "proof/compiled_sources/positive_alpha1_nonzero.lean",
+    "proof/compiler_logs/CoherenceEMA.log",
+    "proof/compiler_logs/EMATracking.log",
+    "proof/compiler_logs/HistoryBuffer.log",
+    "proof/compiler_logs/PhaseIncrement.log",
+    "proof/compiler_logs/compiling_extra_axiom.log",
+    "proof/compiler_logs/compiling_sorry.log",
+    "proof/compiler_logs/false_beta_scaled_drift.log",
+    "proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "proof/compiler_logs/false_reverse_weights.log",
+    "proof/compiler_logs/omitted_axiom_print.log",
+    "proof/compiler_logs/positive_alpha0_nonzero.log",
+    "proof/compiler_logs/positive_alpha1_nonzero.log",
+    "proof/result.json",
+    "wrong_models_normal/preexecution_design.json",
+    "wrong_models_normal/wrong_models.json",
+    "wrong_models_optimized/preexecution_design.json",
+    "wrong_models_optimized/wrong_models.json"
+  ],
+  "commands_observed": [
+    {
+      "program": "proposal/extract_from_report.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/fetch_public_dependencies.py",
+      "returncode": 0
+    },
+    {
+      "program": "standalone/extracted/run_checks.py",
+      "returncode": 0
+    }
+  ],
+  "source_passes_each_mode": [
+    9,
+    9
+  ],
+  "source_failures_errors_skips_each_mode": [
+    0,
+    0,
+    0
+  ],
+  "actual_advances_each_common_mode": [
+    60,
+    60
+  ],
+  "source_initializations_each_common_mode": [
+    0,
+    0
+  ],
+  "current_tracking_coordinates_each_mode": [
+    370,
+    370
+  ],
+  "adjacent_causal_coordinates_each_mode": [
+    333,
+    333
+  ],
+  "wrong_models_detected_each_mode": [
+    10,
+    10
+  ],
+  "new_named_Lean_declarations_compiled": 3,
+  "reused_dependency_labels_not_added": 28,
+  "formal_controls_repeated": 8,
+  "original_elapsed_seconds": 554.1702804020001,
+  "extracted_elapsed_seconds": 562.327805163,
+  "command": "python -B standalone/extracted/run_checks.py --source standalone/upstream --output standalone/checks --lean <same verified compiler> --mathlib <same targeted Mathlib>",
+  "result": "cycle_012/standalone/checks/cycle_results.json",
+  "log": "cycle_012/standalone/reproduction.log",
+  "scope": "Submitter-local exact-note full repetition, not independent review, Python/float/full-coupled proof, real study, authority certificate, source repair/integration or upload"
+}

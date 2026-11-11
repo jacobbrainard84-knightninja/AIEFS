@@ -1,0 +1,236 @@
+{
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "rate_law_census_r4.py",
+  "status": "ok",
+  "warnings": []
+ },
+ "census": {
+  "n_components": 406,
+  "by_type": {
+   "K3": 115,
+   "K4": 88,
+   "K5": 24,
+   "K6": 179
+  },
+  "two_sided_nonzero_fiber": {
+   "n": 296,
+   "by_type": {
+    "K3": 5,
+    "K4": 88,
+    "K5": 24,
+    "K6": 179
+   },
+   "resolved": 264,
+   "poorly_resolved": 32
+  },
+  "all_tied_K3_zero_lineality": {
+   "n": 110,
+   "resolved": 110,
+   "kernel_dim_values": [
+    0
+   ],
+   "with_plus_ray_slow": 110,
+   "with_minus_ray_slow": 0
+  },
+  "other_components": 0,
+  "complete_all_tied": {
+   "n": 373,
+   "dim_ker_eq_n_n_minus_3_over_2": 373
+  },
+  "resolved_total": 374,
+  "poorly_resolved_total": 32,
+  "split_identity": "374 resolved = 264 resolved two-sided-fiber + 110 resolved all-tied K3 (one-sided rays)"
+ },
+ "two_sided_resolved_errors": {
+  "n": 264,
+  "max_rel_err_lam_vs_closed_form": 2.071385042e-08,
+  "max_rel_err_lam_vs_state_formula": 2.038720579e-08,
+  "max_abs_err_kappa": 2.0713899999968977e-06,
+  "max_rel_err_rate": 1.64063597e-05,
+  "max_s_spread_J": 8.467968549e-10,
+  "max_rel_residual": 4.272342519e-08
+ },
+ "two_sided_poorly_resolved_errors": {
+  "n": 32,
+  "max_rel_err_lam_vs_closed_form": 4.789539093e-06,
+  "max_rel_err_lam_vs_state_formula": 4.789544691e-06,
+  "max_abs_err_kappa": 0.0004789550600000081,
+  "max_rel_err_rate": 0.003793553036,
+  "max_s_spread_J": 2.110878028e-09,
+  "max_rel_residual": 1.333218752e-05
+ },
+ "K3_one_sided_resolved_errors": {
+  "n_components": 110,
+  "n_slow_node_rays": 294,
+  "max_rel_err_lam_vs_closed_form_slow_rays": 1.7171666406383812e-07,
+  "max_rel_residual_slow_rays": 2.428296518e-07,
+  "max_rel_err_lam_vs_closed_form_all_plus_rays": 1.7896881451018342e-05,
+  "minus_ray_lam_over_lam_k_range": [
+   0.3333333333667088,
+   0.33336909899411077
+  ]
+ },
+ "finite_eps_fixed_point": {
+  "params": {
+   "c": 0.6333333333333333,
+   "dt": 0.01,
+   "eta": 0.04,
+   "gamma": 0.015,
+   "eps": 1e-12
+  },
+  "by_k": {
+   "2": {
+    "row_sum_fixed_point": 0.6333333333323344,
+    "c_minus_row_sum": 9.988676552552533e-13,
+    "lam_fixed_point": 0.9987382466359795,
+    "lam_closed_form": 0.9987382466344065,
+    "rel_change_lam": 1.5750623438046994e-12,
+    "abs_change_kappa": 1.5750623461735502e-10
+   },
+   "3": {
+    "row_sum_fixed_point": 0.6333333333323351,
+    "c_minus_row_sum": 9.982015214404782e-13,
+    "lam_fixed_point": 0.998108563217331,
+    "lam_closed_form": 0.9981085632157608,
+    "rel_change_lam": 1.5731639639163499e-12,
+    "abs_change_kappa": 1.573163908169528e-10
+   },
+   "4": {
+    "row_sum_fixed_point": 0.6333333333323358,
+    "c_minus_row_sum": 9.975353876257032e-13,
+    "lam_fixed_point": 0.9974796733026478,
+    "lam_closed_form": 0.9974796733010808,
+    "rel_change_lam": 1.570928028809034e-12,
+    "abs_change_kappa": 1.570928283289863e-10
+   },
+   "5": {
+    "row_sum_fixed_point": 0.6333333333323364,
+    "c_minus_row_sum": 9.96869253810928e-13,
+    "lam_fixed_point": 0.9968515753929577,
+    "lam_closed_form": 0.9968515753913936,
+    "rel_change_lam": 1.569022145024765e-12,
+    "abs_change_kappa": 1.5690222558706335e-10
+   }
+  },
+  "note": "lam_fp uses the exact finite-eps fixed-point row sum instead of c; relative changes are ~1e-12, i.e. far below the observed deviations (two_sided_resolved_errors.max_rel_err_lam_vs_closed_form) and below the 10-significant-digit storage of kappa_cycle_kernel.json. The observed deviations therefore come from the replayed state not being exactly at the ideal point (R < 1, finite time), not from eps."
+ },
+ "tie_patterns_synthetic": {
+  "K3": {
+   "k": 2,
+   "nonadditivity": 0.5,
+   "formula_nonadditivity": 0.5,
+   "odd_defect": 0.8164965809277464,
+   "formula_odd_defect": 0.816496580927726,
+   "abs_diff_nonadditivity": 0.0,
+   "abs_diff_odd_defect": 2.0317081350640365e-14,
+   "rays": [
+    {
+     "plus_lam_over_lam_k": 0.9999999999176299,
+     "plus_rel_residual": 4.5381925985273637e-10,
+     "minus_lam_over_lam_k": 0.3333333331989104
+    },
+    {
+     "plus_lam_over_lam_k": 0.99999999991763,
+     "plus_rel_residual": 4.5381925985273637e-10,
+     "minus_lam_over_lam_k": 0.3333333331989104
+    },
+    {
+     "plus_lam_over_lam_k": 0.99999999991763,
+     "plus_rel_residual": 4.5381925985273637e-10,
+     "minus_lam_over_lam_k": 0.3333333331989104
+    }
+   ]
+  },
+  "K4": {
+   "k": 3,
+   "nonadditivity": 0.28867513447442145,
+   "formula_nonadditivity": 0.2886751345948129,
+   "odd_defect": 0.707106780744157,
+   "formula_odd_defect": 0.7071067811865476,
+   "abs_diff_nonadditivity": 1.2039147456732735e-10,
+   "abs_diff_odd_defect": 4.4239056862238613e-10
+  },
+  "K5": {
+   "k": 4,
+   "nonadditivity": 0.20412414515624,
+   "formula_nonadditivity": 0.20412414523193154,
+   "odd_defect": 0.6324555317521465,
+   "formula_odd_defect": 0.6324555320336759,
+   "abs_diff_nonadditivity": 7.569153637199122e-11,
+   "abs_diff_odd_defect": 2.8152935538372503e-10
+  },
+  "K6": {
+   "k": 5,
+   "nonadditivity": 0.1581138829754596,
+   "formula_nonadditivity": 0.15811388300841897,
+   "odd_defect": 0.5773502690557223,
+   "formula_odd_defect": 0.5773502691896257,
+   "abs_diff_nonadditivity": 3.2959357465500716e-11,
+   "abs_diff_odd_defect": 1.3390344388852782e-10
+  },
+  "K7": {
+   "k": 6,
+   "nonadditivity": 0.12909944488804442,
+   "formula_nonadditivity": 0.12909944487358055,
+   "odd_defect": 0.5345224838887386,
+   "formula_odd_defect": 0.5345224838248488,
+   "abs_diff_nonadditivity": 1.4463874542514077e-11,
+   "abs_diff_odd_defect": 6.388978235349896e-11
+  },
+  "K8": {
+   "k": 7,
+   "nonadditivity": 0.10910894508006844,
+   "formula_nonadditivity": 0.1091089451179962,
+   "odd_defect": 0.4999999998171228,
+   "formula_odd_defect": 0.5,
+   "abs_diff_nonadditivity": 3.792775815636418e-11,
+   "abs_diff_odd_defect": 1.828772133727341e-10
+  },
+  "K4_unequal_edges_equal_row_sums": {
+   "edge_weights_relative": [
+    0.3,
+    0.2,
+    0.1
+   ],
+   "nonadditivity": 0.20030234356970433,
+   "odd_defect": 0.7253897202177342,
+   "formula_nonadditivity": 0.2886751345948129,
+   "formula_odd_defect": 0.7071067811865476,
+   "note": "single step from a non-fixed-point tied state; shows the closed-form ratios assume equal edge weights"
+  }
+ },
+ "tie_patterns_observed_vs_derived": {
+  "source": "results/kappa_cycle_kernel_summary.json: tie_nonadditivity_all_tied_resolved",
+  "by_type": {
+   "K3": {
+    "n": 110,
+    "formula_nonadditivity": 0.5,
+    "formula_odd_defect": 0.816496580927726,
+    "max_rel_dev_nonadditivity": 3.0076399999967585e-05,
+    "max_rel_dev_odd_defect": 5.760211227412469e-05
+   },
+   "K4": {
+    "n": 78,
+    "formula_nonadditivity": 0.2886751345948129,
+    "formula_odd_defect": 0.7071067811865476,
+    "max_rel_dev_nonadditivity": 3.5243751863773255e-05,
+    "max_rel_dev_odd_defect": 2.872463832617142e-05
+   },
+   "K5": {
+    "n": 21,
+    "formula_nonadditivity": 0.20412414523193154,
+    "formula_odd_defect": 0.6324555320336759,
+    "max_rel_dev_nonadditivity": 3.849437763772052e-05,
+    "max_rel_dev_odd_defect": 1.4979920636394285e-05
+   },
+   "K6": {
+    "n": 164,
+    "formula_nonadditivity": 0.15811388300841897,
+    "formula_odd_defect": 0.5773502691896257,
+    "max_rel_dev_nonadditivity": 4.7219183267885185e-05,
+    "max_rel_dev_odd_defect": 1.6994864555025868e-05
+   }
+  }
+ }
+}

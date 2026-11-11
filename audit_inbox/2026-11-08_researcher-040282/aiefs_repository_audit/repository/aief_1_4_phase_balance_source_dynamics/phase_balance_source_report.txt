@@ -1,0 +1,36 @@
+AIEF K3 delayed phase-balance and source-dynamics analysis
+=========================================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+Final replay exact: True
+
+Exact source increment identities
+---------------------------------
+  source_phase_edge_a_forward: max=1.72554e-15, median=1.38778e-16
+  source_phase_edge_b_forward: max=1.04738e-15, median=1.57009e-16
+  source_increment_forward: max=2.24321e-15, median=2.25119e-16
+  source_phase_edge_a_reverse: max=1.72554e-15, median=1.38778e-16
+  source_phase_edge_b_reverse: max=1.26585e-15, median=1.11022e-16
+  source_increment_reverse: max=2.04068e-15, median=1.78082e-16
+
+Interval phase-balance diagnostics
+----------------------------------
+  channel=forward, interval=[0,99.99): mean_increment_rate=0.0495056, separation_increment_rate=0.0513457, source_increment_rate=0.0510649, mean_cancellation=0.000119, separation_cancellation=0.025, first_order_error=3.41e-06, mean_sep_error=3.41e-06, mean_limit_spread=0.0477, separation_limit_spread=0.00956
+  channel=forward, interval=[100,149.99): mean_increment_rate=0.0569768, separation_increment_rate=0.0570034, source_increment_rate=0.0569989, mean_cancellation=1.65e-06, separation_cancellation=0.000344, first_order_error=4.76e-08, mean_sep_error=4.71e-08, mean_limit_spread=1.29e-06, separation_limit_spread=2.47e-07
+  channel=forward, interval=[150,199.99): mean_increment_rate=0.057098, separation_increment_rate=0.0570989, source_increment_rate=0.0570988, mean_cancellation=9.5e-08, separation_cancellation=1.99e-05, first_order_error=5.1e-08, mean_sep_error=1.65e-08, mean_limit_spread=1.67e-08, separation_limit_spread=3.73e-09
+  channel=forward, interval=[200,249.99): mean_increment_rate=0.0571288, separation_increment_rate=0.0571287, source_increment_rate=0.0571288, mean_cancellation=5.46e-09, separation_cancellation=1.14e-06, first_order_error=9.03e-07, mean_sep_error=2.62e-07, mean_limit_spread=1.24e-10, separation_limit_spread=2.85e-11
+  channel=forward, interval=[250,319.99): mean_increment_rate=0.057133, separation_increment_rate=0.057133, source_increment_rate=0.057133, mean_cancellation=1.77e-10, separation_cancellation=3.71e-08, first_order_error=2.7e-05, mean_sep_error=7.82e-06, mean_limit_spread=9.03e-13, separation_limit_spread=2.02e-13
+  channel=reverse, interval=[0,99.99): mean_increment_rate=0.0533768, separation_increment_rate=0.0514636, source_increment_rate=0.0514904, mean_cancellation=6.96e-05, separation_cancellation=0.000528, first_order_error=1.81e-06, mean_sep_error=1.81e-06, mean_limit_spread=0.00414, separation_limit_spread=0.0133
+  channel=reverse, interval=[100,149.99): mean_increment_rate=0.0570325, separation_increment_rate=0.0570046, source_increment_rate=0.0570049, mean_cancellation=9.09e-07, separation_cancellation=7.11e-06, first_order_error=2.57e-08, mean_sep_error=2.37e-08, mean_limit_spread=1.04e-07, separation_limit_spread=3.53e-07
+  channel=reverse, interval=[150,199.99): mean_increment_rate=0.0571002, separation_increment_rate=0.0570996, source_increment_rate=0.0570996, mean_cancellation=5.24e-08, separation_cancellation=4.1e-07, first_order_error=4.54e-08, mean_sep_error=1.69e-08, mean_limit_spread=1.92e-09, separation_limit_spread=5.27e-09
+  channel=reverse, interval=[200,249.99): mean_increment_rate=0.0571288, separation_increment_rate=0.0571289, source_increment_rate=0.0571289, mean_cancellation=3.01e-09, separation_cancellation=2.36e-08, first_order_error=8.08e-07, mean_sep_error=2.88e-07, mean_limit_spread=1.51e-11, separation_limit_spread=4.01e-11
+  channel=reverse, interval=[250,319.99): mean_increment_rate=0.057133, separation_increment_rate=0.057133, source_increment_rate=0.057133, mean_cancellation=9.78e-11, separation_cancellation=7.65e-10, first_order_error=2.48e-05, mean_sep_error=9.18e-06, mean_limit_spread=1.14e-13, separation_limit_spread=2.83e-13
+
+Interpretation constraints
+--------------------------
+* Intrinsic, coupling, and delayed-history terms are exact contributions to source-phase increments modulo 2pi.
+* Small net increments can arise through cancellation of large terms; cancellation indices are reported.
+* First-order complex source formulas are approximations and are compared with the exact exponential increment.
+* Converged phase means/separations are replay observations, not invariant-manifold proofs.
+* Results remain conditional on one seed and fixed branch.

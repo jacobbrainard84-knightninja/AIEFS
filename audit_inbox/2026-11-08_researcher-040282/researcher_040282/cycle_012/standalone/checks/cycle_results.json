@@ -1,0 +1,110 @@
+{
+  "science": {
+    "tested_main": "543e7e1aaa11e4c810783806cb180eee36ec5313",
+    "source_contract_methods_each_mode": 9,
+    "source_passes_each_mode": 9,
+    "source_failures_errors_skips_each_mode": [
+      0,
+      0,
+      0
+    ],
+    "actual_advances_each_common_mode": 60,
+    "initializer_calls_each_common_mode": 0,
+    "synthetic_traces_each_mode": 6,
+    "current_tracking_coordinates_each_mode": 370,
+    "consumed_input_coordinates_each_mode": 370,
+    "adjacent_causal_coordinates_each_mode": 333,
+    "startup_adjacent_coordinates_each_mode": 115,
+    "live_adjacent_coordinates_each_mode": 218,
+    "first_live_coordinates_each_mode": 37,
+    "decoded_C_innovation_coordinates_each_mode": 360,
+    "alpha1_formula_only_input_coordinates_each_mode": 10,
+    "reported_R_offdiag_bounds_each_mode": 240,
+    "reported_R_exact_diagonal_zeros_each_mode": 130,
+    "maximum_observed_component_error": 9.992007221626409e-16,
+    "tracking_stats": {
+      "adjacent_causal_coordinates": 333,
+      "maximum_causal_component_residual": 4.440892098500626e-16,
+      "tracking_coordinates": 370,
+      "maximum_unroll_component_residual": 4.440892098500626e-16,
+      "nonzero_tracking_bounds_below_two": 245,
+      "maximum_one_sided_input_budget_excess": 0.0,
+      "consumed_input_coordinates": 370,
+      "maximum_consumed_component_residual": 2.220446049250313e-16,
+      "startup_adjacent_coordinates": 115,
+      "live_adjacent_coordinates": 218,
+      "first_live_coordinates": 37,
+      "alpha_less_one_stationary_tails": [
+        {
+          "case": "matched_start_N1_D3",
+          "first_tail_error": 0.2964698721901245,
+          "last_tail_error": 0.06615137006096694
+        },
+        {
+          "case": "fast_tail_N1_D1",
+          "first_tail_error": 0.17834921530308442,
+          "last_tail_error": 2.007056014602578e-08
+        }
+      ],
+      "rounded_alpha1_tail_error": 0.8062257748298549,
+      "alpha1_C_exactly_constant": true,
+      "alpha1_not_strict_contraction": true,
+      "reported_R_offdiag_bound_coordinates": 240,
+      "reported_R_exact_diag_coordinates": 130,
+      "tight_nonzero_reported_R_bounds_below_one": 12,
+      "maximum_one_sided_R_bound_excess": 0.0,
+      "decoded_C_innovation_coordinates": 360,
+      "alpha1_formula_only_input_coordinates": 10,
+      "first_active_gate_cases": 3,
+      "positive_windings": 21,
+      "negative_windings": 11,
+      "multiple_turn_windings": 20,
+      "beta0_divisions": 0,
+      "source_alpha0_configs": 0
+    },
+    "absolute_tolerance": 5e-13,
+    "relative_tolerance": 0.0,
+    "wrong_models_detected_each_mode": 10,
+    "setup_errors_credited_as_detections": 0,
+    "normal_optimized_nontiming_results_match": true,
+    "new_named_Lean_declarations_actually_compiled": 3,
+    "reused_named_declarations_recompiled_not_new_labels": 28,
+    "formal_controls": 8,
+    "formal_positive_controls": 2,
+    "formal_false_math_controls": 3,
+    "formal_compiling_integrity_controls": 3,
+    "axiom_footprints": {
+      "Researcher040282.Tracking.tracking_error_step": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Tracking.tracking_error_budget": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "Researcher040282.Tracking.delayed_phase_tracking_budget": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "targeted_Mathlib_used": true,
+    "reviewed_public_engine_unchanged": 1,
+    "reviewed_metadata_unchanged": 3,
+    "actual_engine_import_no_copied_replaced_or_edited_source_functions": true,
+    "no_source_repair_or_failing_before_claim": true,
+    "alpha1_no_division_or_strict_contraction_assumption": true,
+    "all_preregistered_acceptance_conditions_met": true
+  },
+  "environment": {
+    "python": "3.13.16 (main, Oct  6 2026, 04:38:44) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "compiler": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474"
+  },
+  "elapsed_seconds": 562.327805163,
+  "formal_elapsed_seconds": 559.970921694,
+  "scope": "Exact-real causal error/finite convolution composed with phase input; finite intact-engine trajectories including rounded alpha1. Not floating FFI/full coupled locking, sharp future bands, production/S01/baseline/CLI/certificate, installed library or independent review."
+}

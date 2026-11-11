@@ -1,0 +1,5 @@
+{
+  "branch": "audit-inbox",
+  "commit": "b61f4340a4dfc9ae5b2732e51efeb49d0c10bd3d",
+  "metadata_policy": "Only branch/commit; omit all author/committer/contact/signature payloads"
+}

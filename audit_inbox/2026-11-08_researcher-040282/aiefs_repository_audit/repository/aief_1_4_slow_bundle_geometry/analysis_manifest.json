@@ -1,0 +1,11 @@
+{
+  "analysis": "AIEF-1.4 slow bundle internal geometry",
+  "seed": "4619122171158768524",
+  "slow_dim": 7,
+  "diag_ratio": 4.252797609778697e-07,
+  "scalar_fraction": 0.9999995547435075,
+  "nonnormality": 2.7241584072838696e-13,
+  "schur_quasi_tri": 1.890891320134508e-09,
+  "max_principal_angle_deg": 0.23558588229898098,
+  "mean_compressed_rate": 0.05713827202108363
+}

@@ -1,0 +1,66 @@
+✔ [1157/1511] Built AIEFProofs.Basic (342ms)
+✔ [7632/7872] Built AIEFProofs.ControllerFiber (1.7s)
+✔ [8708/8713] Built AIEFProofs.ControllerFiberProjector (2.1s)
+✔ [8709/8713] Built AIEFProofs.ControllerFiberQuotient (1.3s)
+✔ [8710/8713] Built AIEFProofs.CompleteGraphIncidence (13s)
+⚠ [8711/8713] Built AIEFProofs.Smoke (13s)
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+Copyright too short!
+
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `set_option autoImplicit false`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+Copyright too short!
+
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `namespace AIEFProofs`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+Copyright too short!
+
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `example (x y : ℝ) : x + y = y + x := by ring`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+Copyright too short!
+
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `example (x : ℝ) : x - x = 0 := by ring`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+Copyright too short!
+
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `end AIEFProofs`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+Copyright too short!
+
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before ``.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+✔ [8712/8713] Built AIEFProofs (4.4s)
+Build completed successfully (8713 jobs).
+
+real	0m21.625s
+user	0m40.420s
+sys	0m9.647s

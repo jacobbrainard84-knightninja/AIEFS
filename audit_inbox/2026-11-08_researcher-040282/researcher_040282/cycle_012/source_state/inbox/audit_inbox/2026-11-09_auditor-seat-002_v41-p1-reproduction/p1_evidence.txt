@@ -1,0 +1,9 @@
+source sha256 119f679ca8c45f61a27ca907791bc8cf3dcd93677f336b565c130ec36bbb2baa
+real manifest sha256 7d1b86ab39eed397e2d281faf729ee5c3ac515efc00b2789c2e0013dce0d1e78
+POS real S01: ACCEPTED seeds=40 rows=800
+N1 edit scalar, manifest untouched: REJECTED ArtifactIntegrityError: Input hash mismatch for scalar_csv: expected=e9aa74e68b758b21e64b5757607af3c4bf98e88f616757319cb9e4e6d3a8e378,
+N2 edit scalar + re-pin manifest: ACCEPTED seeds=40 rows=800
+   forged manifest sha256 == ART-2217 pin? False
+N3 stub certificate + re-pin: ACCEPTED seeds=40 rows=800
+N4 foreign 40-seed cohort + re-pin: ACCEPTED seeds=40 rows=800
+3.13.5 2.5.4 3.0.6

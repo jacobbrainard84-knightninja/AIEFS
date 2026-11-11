@@ -1,0 +1,44 @@
+{
+  "analysis": "AIEF local current/coordinate/mirror one-step comparison",
+  "beta_values": [
+    10.0,
+    1.0,
+    0.1
+  ],
+  "dt_values": [
+    0.01,
+    0.001,
+    0.0001,
+    1e-05,
+    1e-06
+  ],
+  "edge_epsilons": [
+    0.0001,
+    1e-05,
+    1e-06
+  ],
+  "margin_epsilons": [
+    0.0001,
+    1e-05,
+    1e-06
+  ],
+  "max_seeds": 5,
+  "methods": [
+    "current_admissibility",
+    "coordinate_equivalent_dual",
+    "mirror_beta_*"
+  ],
+  "notes": [
+    "All comparisons start from the same interiorized split state.",
+    "Current AIEF map is positivity clipping plus symmetric row scaling.",
+    "Coordinate-equivalent dual Euler uses psi += dt * H(w)F.",
+    "Mirror Euler uses psi += dt * F / beta and changes the vector field.",
+    "No long-time mirror simulation is performed."
+  ],
+  "npz_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+  "npz_sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f",
+  "scalar_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+  "scalar_sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda",
+  "source_manifest_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+  "source_manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+}

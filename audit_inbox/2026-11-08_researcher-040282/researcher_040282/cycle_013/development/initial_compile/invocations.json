@@ -1,0 +1,32 @@
+[
+  {
+    "file": "HistoryBuffer.lean",
+    "runtime_utc_start": "2026-11-10T02:35:22.848556+00:00",
+    "returncode": 0,
+    "seconds": 1.0713811529999475
+  },
+  {
+    "file": "PhaseIncrement.lean",
+    "runtime_utc_start": "2026-11-10T02:35:23.920772+00:00",
+    "returncode": 0,
+    "seconds": 57.63008526099998
+  },
+  {
+    "file": "AIEFGateCore/GateMap.lean",
+    "runtime_utc_start": "2026-11-10T02:36:21.563046+00:00",
+    "returncode": 0,
+    "seconds": 41.95464293700002
+  },
+  {
+    "file": "AIEFGateCore/MatrixForm.lean",
+    "runtime_utc_start": "2026-11-10T02:37:03.520669+00:00",
+    "returncode": 0,
+    "seconds": 42.567214553999975
+  },
+  {
+    "file": "PhaseCoherenceBridge.lean",
+    "runtime_utc_start": "2026-11-10T02:37:46.096910+00:00",
+    "returncode": 1,
+    "seconds": 63.984728017000066
+  }
+]

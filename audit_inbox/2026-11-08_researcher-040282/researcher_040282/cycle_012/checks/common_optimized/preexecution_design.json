@@ -1,0 +1,206 @@
+{
+  "phase": "Independent pure math/cmath design before acquired module import/advance",
+  "cases": [
+    {
+      "name": "active_N3_D2",
+      "N": 3,
+      "D": 2,
+      "alpha": 0.7788007830714049,
+      "one_minus_alpha": 0.22119921692859512,
+      "initial_error_max": 1.6125702169463703,
+      "first_windings": [
+        1,
+        0,
+        0
+      ],
+      "first_gate_active": true,
+      "input_channel": "prestate_formula_and_actual_C_innovation"
+    },
+    {
+      "name": "slow_negative_N3_D3",
+      "N": 3,
+      "D": 3,
+      "alpha": 0.9394130628134758,
+      "one_minus_alpha": 0.06058693718652419,
+      "initial_error_max": 1.6002067052907114,
+      "first_windings": [
+        -1,
+        0,
+        0
+      ],
+      "first_gate_active": true,
+      "input_channel": "prestate_formula_and_actual_C_innovation"
+    },
+    {
+      "name": "fast_multiwrap_N4_D4",
+      "N": 4,
+      "D": 4,
+      "alpha": 0.36787944117144233,
+      "one_minus_alpha": 0.6321205588285577,
+      "initial_error_max": 1.0,
+      "first_windings": [
+        3,
+        -3,
+        1,
+        0
+      ],
+      "first_gate_active": true,
+      "input_channel": "prestate_formula_and_actual_C_innovation"
+    },
+    {
+      "name": "matched_start_N1_D3",
+      "N": 1,
+      "D": 3,
+      "alpha": 0.7788007830714049,
+      "one_minus_alpha": 0.22119921692859512,
+      "initial_error_max": 0.0,
+      "first_windings": [
+        0
+      ],
+      "first_gate_active": false,
+      "input_channel": "prestate_formula_and_actual_C_innovation"
+    },
+    {
+      "name": "rounded_alpha1_N1_D2",
+      "N": 1,
+      "D": 2,
+      "alpha": 1.0,
+      "one_minus_alpha": 0.0,
+      "initial_error_max": 0.9309004857541066,
+      "first_windings": [
+        0
+      ],
+      "first_gate_active": false,
+      "input_channel": "prestate_formula_only_beta0_no_division"
+    },
+    {
+      "name": "fast_tail_N1_D1",
+      "N": 1,
+      "D": 1,
+      "alpha": 0.1353352832366127,
+      "one_minus_alpha": 0.8646647167633873,
+      "initial_error_max": 1.0,
+      "first_windings": [
+        0
+      ],
+      "first_gate_active": false,
+      "input_channel": "prestate_formula_and_actual_C_innovation"
+    }
+  ],
+  "actual_advances_planned": 60,
+  "input_tracking_complex_coordinates_planned": 370,
+  "consumed_input_complex_coordinates_planned": 370,
+  "adjacent_error_recurrences_planned": 333,
+  "startup_adjacent_coordinates_planned": 115,
+  "first_live_adjacent_coordinates_planned": 37,
+  "decoded_C_innovation_coordinates_planned": 360,
+  "alpha1_reconstructed_input_coordinates_planned": 10,
+  "reported_R_offdiag_bound_coordinates_planned": 240,
+  "reported_R_diag_zero_coordinates_planned": 130,
+  "ten_wrong_models": [
+    {
+      "model": "drift_beta",
+      "kind": "equality",
+      "field": "causal_error",
+      "case": "matched_start_N1_D3",
+      "n": 1,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.09257493526736936
+    },
+    {
+      "model": "drift_plus",
+      "kind": "equality",
+      "field": "causal_error",
+      "case": "matched_start_N1_D3",
+      "n": 1,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.23773713966304927
+    },
+    {
+      "model": "future_input_update",
+      "kind": "equality",
+      "field": "updated_C",
+      "case": "active_N3_D2",
+      "n": 0,
+      "i": 0,
+      "j": 1,
+      "intended_witness": 0.01302522614159568
+    },
+    {
+      "model": "omit_variation",
+      "kind": "upper_bound",
+      "field": "tracking_envelope",
+      "case": "matched_start_N1_D3",
+      "n": 1,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.12491863568476039
+    },
+    {
+      "model": "newest_weight_alpha",
+      "kind": "upper_bound",
+      "field": "tracking_envelope",
+      "case": "matched_start_N1_D3",
+      "n": 1,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.027631904393257453
+    },
+    {
+      "model": "reverse_weights",
+      "kind": "equality",
+      "field": "complex_error_unroll",
+      "case": "matched_start_N1_D3",
+      "n": 2,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.0033444335669670783
+    },
+    {
+      "model": "omit_initial",
+      "kind": "upper_bound",
+      "field": "tracking_envelope",
+      "case": "active_N3_D2",
+      "n": 0,
+      "i": 0,
+      "j": 1,
+      "intended_witness": 1.2843279264427772
+    },
+    {
+      "model": "drifting_prehistory",
+      "kind": "upper_bound",
+      "field": "tracking_envelope",
+      "case": "matched_start_N1_D3",
+      "n": 1,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.12491863568476039
+    },
+    {
+      "model": "alpha1_forced_decay",
+      "kind": "equality",
+      "field": "stationary_tail_error",
+      "case": "rounded_alpha1_N1_D2",
+      "n": 3,
+      "i": 0,
+      "j": 0,
+      "intended_witness": 0.35
+    },
+    {
+      "model": "stale_reported_R",
+      "kind": "equality",
+      "field": "reported_R",
+      "case": "active_N3_D2",
+      "n": 0,
+      "i": 0,
+      "j": 1,
+      "intended_witness": 0.09940954854603168
+    }
+  ],
+  "absolute_tolerance": 5e-13,
+  "relative_tolerance": 0.0,
+  "alpha0_formal_only_not_source_valid": true,
+  "float_alpha1_source_valid_not_ideal_exp_strictly_less_than_one": true
+}

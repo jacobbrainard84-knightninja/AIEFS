@@ -1,0 +1,123 @@
+{
+  "scope": "Eight fixed implementation mutations; direct compiler observations +separately compiled baseline semantic refutations, not a general verifier",
+  "rows": [
+    {
+      "mutation": "delay_extra",
+      "runtime_utc_start": "2026-11-10T02:45:52.133729+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 103.6243800279999,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "wrong_delay_refuted",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:87:72: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+      ]
+    },
+    {
+      "mutation": "younger_slot",
+      "runtime_utc_start": "2026-11-10T02:45:52.131209+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 103.63085123199994,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "wrong_younger_refuted",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:87:72: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+      ]
+    },
+    {
+      "mutation": "current_newest",
+      "runtime_utc_start": "2026-11-10T02:47:35.765146+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 102.30704792799997,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "wrong_current_refuted",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:87:72: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+      ]
+    },
+    {
+      "mutation": "drop_frequency_tau",
+      "runtime_utc_start": "2026-11-10T02:47:35.765968+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 102.34223684800008,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "wrong_offset_refuted",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "PhaseCoherenceBridge.lean:343:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+      ]
+    },
+    {
+      "mutation": "phase_constant_zero",
+      "runtime_utc_start": "2026-11-10T02:49:18.073997+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 100.61516846299992,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "constant_phase_refuted",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:87:72: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:253:90: error: `ring_nf` made no progress on the goal",
+        "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+      ]
+    },
+    {
+      "mutation": "complex_input_zero",
+      "runtime_utc_start": "2026-11-10T02:49:18.109028+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 100.55529196500015,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "input_norm_and_probe_coherence_values",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:253:90: error: `ring_nf` made no progress on the goal",
+        "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+      ]
+    },
+    {
+      "mutation": "startup_one_early",
+      "runtime_utc_start": "2026-11-10T02:50:58.665894+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 104.069291497,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "early_start_nonzero_and_probe_late_start",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:78:44: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:97:4: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:99:4: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:255:68: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "drop_eta",
+      "runtime_utc_start": "2026-11-10T02:50:58.690057+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 104.03109701300014,
+      "setup_or_name_error": false,
+      "independent_baseline_refutation": "missing_eta_refuted",
+      "first_errors": [
+        "PhaseCoherenceBridge.lean:178:94: error: unsolved goals",
+        "PhaseCoherenceBridge.lean:189:2: error: Tactic `rfl` failed: The left-hand side",
+        "PhaseCoherenceBridge.lean:198:2: error: Tactic `rfl` failed: The left-hand side",
+        "PhaseCoherenceBridge.lean:264:111: error: unsolved goals"
+      ]
+    }
+  ]
+}

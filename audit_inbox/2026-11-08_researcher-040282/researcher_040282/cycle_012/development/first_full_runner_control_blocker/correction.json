@@ -1,0 +1,6 @@
+{
+  "outcomes_before_blocker": "All4Python workers passed,3new and28dependency claims compiled clean; other controls logged",
+  "blocker": "False reverse-weight witness failed a complex numeral versus coerced-real norm rewrite, not reduced mathematical False; NOT credited",
+  "fix": "Normalize norm of complex2 through norm_def/normSq, same false statement and kept strict classifier",
+  "scientific_theorems_cases_tolerance_and_source_unchanged": true
+}

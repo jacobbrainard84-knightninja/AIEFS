@@ -1,0 +1,12 @@
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.
+warning: AIEFProofs/Smoke.lean:1:1: * '-/':
+warning: AIEFProofs/Smoke.lean:3:0: The module doc-string for a file should be the first command after the imports.

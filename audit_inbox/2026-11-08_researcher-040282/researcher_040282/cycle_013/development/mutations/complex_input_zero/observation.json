@@ -1,0 +1,15 @@
+{
+  "mutation": "complex_input_zero",
+  "runtime_utc_start": "2026-11-10T02:49:18.109028+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 100.55529196500015,
+  "setup_or_name_error": false,
+  "independent_baseline_refutation": "input_norm_and_probe_coherence_values",
+  "first_errors": [
+    "PhaseCoherenceBridge.lean:57:54: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:253:90: error: `ring_nf` made no progress on the goal",
+    "PhaseCoherenceBridge.lean:250:95: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:327:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+    "PhaseCoherenceBridge.lean:335:22: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+  ]
+}

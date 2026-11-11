@@ -1,0 +1,12 @@
+{
+  "change": "input_reads_newest",
+  "runtime_utc_start": "2026-11-10T13:10:52.458068+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 101.4155408509996,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "probe_oldest_input",
+  "first_errors": [
+    "Probe.lean:211:60: error: unsolved goals"
+  ]
+}

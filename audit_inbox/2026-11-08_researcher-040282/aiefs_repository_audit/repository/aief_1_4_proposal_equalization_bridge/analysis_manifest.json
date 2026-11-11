@@ -1,0 +1,78 @@
+{
+  "analysis": "AIEF-1.4 conditional proposal-equalization bridge audit",
+  "branch_checks": {
+    "controllers_clipped_all": true,
+    "gate_on_all": true,
+    "maximum_isolation_error": 0.0,
+    "minimum_winner_margin": 4.440892098500626e-14,
+    "selected_positive_all": true,
+    "winner_map_expected_all": true
+  },
+  "command": [
+    "AIEF_1_4_proposal_equalization_bridge_analysis.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--seed",
+    "4619122171158768524",
+    "--output-dir",
+    "aief_1_4_proposal_equalization_bridge"
+  ],
+  "dependencies": {
+    "augmented": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_augmented_tangent_cocycle_analysis.py",
+      "sha256": "0192656f21b5c4b3d09adebb15d0554ead0fca755860bb85f9fa03f75452e964"
+    },
+    "base": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "sha256": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc"
+    }
+  },
+  "exceptional_seed": "4619122171158768524",
+  "final_replay_exact": true,
+  "inputs": {
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "The exceptional seed is one seed/graph realization.",
+    "Exact recurrence checks do not prove infinite-time forcing decay.",
+    "Interval rate fits are finite-horizon descriptive evidence.",
+    "Saved branch persistence does not prove future branch persistence.",
+    "No production trajectory or model parameter is changed."
+  ],
+  "outputs": [
+    "proposal_equalization_trajectory.csv",
+    "proposal_equalization_identity_summary.csv",
+    "proposal_equalization_interval_summary.csv",
+    "proposal_equalization_report.txt",
+    "analysis_manifest.json"
+  ],
+  "parameters": {
+    "alpha": 0.9994288298464774,
+    "c0": 0.99985,
+    "dt": 0.01,
+    "intervals": [
+      0.0,
+      100.0,
+      150.0,
+      200.0,
+      250.0,
+      320.0
+    ],
+    "scale_epsilon": 1e-12,
+    "signal_floor": 1e-15
+  },
+  "production_run_hash": "5a9f093a2fe0",
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_proposal_equalization_bridge_analysis.py",
+    "sha256": "5329542f47c48a29e0f1588207aa5613ee1b7e49f1cd103ee2ac167ab6312188"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "repo": "jacobbrainard84-knightninja/AIEFS",
+  "commit": "b198a77afe9890a815c614031e382973258e2d94",
+  "engine": "aief_experiment_engine_v1.py",
+  "modules": [
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "blob": "0d116e83a0d2f6b3f6be0e21d8a730c0aec3b689",
+      "bytes": 119493
+    }
+  ],
+  "metadata": [
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "lean/AIEFProofs/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "lean/AIEFProofs/lake-manifest.json",
+      "blob": "e6c34897cbe880f625aa52983ab1521a61d9bebb",
+      "bytes": 3144
+    }
+  ],
+  "lean_toolchain": {
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "asset_name": "lean-4.33.1-linux.tar.zst",
+    "url": "https://github.com/leanprover/lean4/releases/download/v4.33.1/lean-4.33.1-linux.tar.zst",
+    "bytes": 570405234,
+    "published_digest": "sha256:890afd185370f85666025b883914ab4f4b339136f8c96167b69cfb62aecaf235",
+    "scope": "Disposable complete runtime for targeted Mathlib/cache helper012; no global setting; raw Git/irrelevant quarantined input removed after full repetition",
+    "metadata_provenance": "Retained official selected release length/digest from completed010/011; actual012archive download reverified, no fresh release-API claim"
+  },
+  "mathlib": {
+    "url": "https://github.com/leanprover-community/mathlib4",
+    "revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "inputRev": "v4.33.1",
+    "targets": [
+      "Mathlib/Algebra/Order/Archimedean/Real/Basic.lean",
+      "Mathlib/Analysis/Calculus/Deriv/Add.lean",
+      "Mathlib/Analysis/Calculus/Deriv/Comp.lean",
+      "Mathlib/Analysis/Calculus/Deriv/Inv.lean",
+      "Mathlib/Analysis/Calculus/Deriv/Mul.lean",
+      "Mathlib/Analysis/Calculus/Deriv/Shift.lean",
+      "Mathlib/Analysis/SpecialFunctions/Trigonometric/Bounds.lean",
+      "Mathlib/Analysis/SpecificLimits/Normed.lean",
+      "Mathlib/Data/Fin/VecNotation.lean",
+      "Mathlib/Data/Fintype/BigOperators.lean",
+      "Mathlib/Tactic/FieldSimp.lean",
+      "Mathlib/Tactic/FinCases.lean",
+      "Mathlib/Tactic/FunProp.lean",
+      "Mathlib/Tactic/Linarith.lean",
+      "Mathlib/Tactic/Linter.lean",
+      "Mathlib/Tactic/NormNum.lean",
+      "Mathlib/Tactic/Positivity.lean",
+      "Mathlib/Tactic/Push.lean",
+      "Mathlib/Tactic/Ring.lean",
+      "Mathlib/Topology/Algebra/Order/Field.lean",
+      "Mathlib/Topology/Instances/Real/Lemmas.lean"
+    ],
+    "scope": "Targeted public setup dependency in excluded disposable cache, not vendored scientific output/independent approval"
+  }
+}

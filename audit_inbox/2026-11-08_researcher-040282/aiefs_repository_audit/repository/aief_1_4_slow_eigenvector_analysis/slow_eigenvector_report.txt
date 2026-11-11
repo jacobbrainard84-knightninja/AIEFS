@@ -1,0 +1,124 @@
+======================================================================
+AIEF-1.4 Slow Eigenvector Analysis
+======================================================================
+
+r_EMA:  0.057133    alpha: 0.999428829846    dt: 0.01
+Number of slow EMA-cluster eigenvectors: 7
+Effective dimension of slow subspace (95% var): 4
+
+----------------------------------------------------------------------
+Variable-Group Decomposition of Slow Eigenvectors:
+----------------------------------------------------------------------
+   Mode       rate    % h_old        % B        % C
+  ----- ---------- ---------- ---------- ----------
+    0.0   0.057129        0.0        0.0      100.0
+    1.0   0.057132        0.0        0.0      100.0
+    2.0   0.057134        0.0        0.0      100.0
+    3.0   0.057134        0.0        0.0      100.0
+    4.0   0.057134        0.0        0.0      100.0
+    5.0   0.057135        0.0        0.0      100.0
+    6.0   0.057170        0.0        0.0      100.0
+
+  Mean fractions: h_old=0.0%  B=0.0%  C=100.0%
+
+  → Slow bundle is EMA/coherence-dominated.
+
+----------------------------------------------------------------------
+Pairwise Absolute Inner Products |<v_i|v_j>|:
+----------------------------------------------------------------------
+  Off-diagonal range: [0.345147, 0.934820]
+  Off-diagonal mean:  0.563265
+
+  → Moderate overlap.  Slow modes share significant
+    components but are not identical.
+
+     i    j    |<vi|vj>|
+  ---- ---- ------------
+   0.0  1.0     0.934820
+   0.0  2.0     0.429305
+   0.0  3.0     0.562798
+   0.0  4.0     0.562798
+   0.0  5.0     0.580152
+   0.0  6.0     0.892633
+   1.0  0.0     0.934820
+   1.0  2.0     0.485324
+   1.0  3.0     0.547330
+   1.0  4.0     0.547330
+   1.0  5.0     0.549283
+   1.0  6.0     0.785001
+   2.0  0.0     0.429305
+   2.0  1.0     0.485324
+   2.0  3.0     0.345147
+
+----------------------------------------------------------------------
+Singular Values of Slow Eigenvector Stack:
+----------------------------------------------------------------------
+   Index   Singular Value   Cumulative %
+  ------ ---------------- --------------
+     0.0     2.086332e+00           62.2
+     1.0     1.143401e+00           80.9
+     2.0     8.382656e-01           90.9
+     3.0     5.969843e-01           96.0
+     4.0     4.198176e-01           98.5
+     5.0     2.823929e-01           99.6
+     6.0     1.574205e-01          100.0
+
+  Effective dimension (95% variance): 4
+  Total slow modes: 7
+
+  → The slow subspace is genuinely 4-dimensional.
+    Multiple independent slow mechanisms coexist.
+
+----------------------------------------------------------------------
+Top Participation Factors per Slow Mode:
+----------------------------------------------------------------------
+  Mode 0 (rate=0.057129):
+        C_112_re  part=0.2142  |right|=0.2961  |left|=7.1406
+        C_117_re  part=0.1701  |right|=0.2313  |left|=7.2586
+        C_211_re  part=0.1399  |right|=0.4670  |left|=2.9571
+        C_211_im  part=0.1308  |right|=0.3227  |left|=3.9996
+         C_27_re  part=0.1066  |right|=0.2199  |left|=4.7865
+  Mode 1 (rate=0.057132):
+        C_112_re  part=0.1875  |right|=0.2319  |left|=1.8142
+        C_112_im  part=0.1603  |right|=0.2176  |left|=1.6524
+         C_72_re  part=0.1515  |right|=0.3330  |left|=1.0205
+        C_711_im  part=0.1321  |right|=0.1095  |left|=2.7044
+        C_711_re  part=0.0876  |right|=0.2303  |left|=0.8536
+  Mode 2 (rate=0.057134):
+        C_711_re  part=0.3108  |right|=0.4793  |left|=1.1065
+        C_112_im  part=0.1994  |right|=0.5100  |left|=0.6672
+         C_72_re  part=0.0979  |right|=0.2705  |left|=0.6177
+        C_711_im  part=0.0825  |right|=0.3576  |left|=0.3936
+        C_117_re  part=0.0785  |right|=0.1997  |left|=0.6708
+  Mode 3 (rate=0.057134):
+        C_211_re  part=0.2502  |right|=0.5782  |left|=1.0919
+        C_211_im  part=0.2214  |right|=0.4237  |left|=1.3188
+        C_112_re  part=0.1276  |right|=0.4220  |left|=0.7628
+         C_72_re  part=0.0869  |right|=0.2270  |left|=0.9664
+         C_27_im  part=0.0824  |right|=0.2090  |left|=0.9946
+  Mode 4 (rate=0.057134):
+        C_211_re  part=0.2502  |right|=0.5782  |left|=1.0919
+        C_211_im  part=0.2214  |right|=0.4237  |left|=1.3188
+        C_112_re  part=0.1276  |right|=0.4220  |left|=0.7628
+         C_72_re  part=0.0869  |right|=0.2270  |left|=0.9664
+         C_27_im  part=0.0824  |right|=0.2090  |left|=0.9946
+  ... (2 more modes, see participation_factors.csv)
+
+----------------------------------------------------------------------
+Summary:
+----------------------------------------------------------------------
+
+  Slow EMA-cluster modes: 7
+  Effective subspace dimension: 4
+  Mean pairwise overlap: 0.5633
+  Dominant variable group: C (EMA/coherence)
+
+  CONCLUSION: The slow bundle is genuinely multidimensional.
+  Multiple independent slow mechanisms coexist at similar
+  rates.  The replay's single-rate observables may be
+  following one particular direction through this subspace.
+  The downstream EMA-rate inheritance may be more complex
+  than a single-pole projection.
+
+Evidence class: diagnostic mechanism exploration.
+No interpretation is forced.  The eigenvectors speak.

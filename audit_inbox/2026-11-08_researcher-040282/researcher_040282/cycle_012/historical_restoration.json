@@ -1,0 +1,17 @@
+{
+  "prior_archive": "researcher040282-cycle011-modulo-phase-increment.zip",
+  "nonlive_members_checked": 1504,
+  "missing_before_administrative_recovery": [
+    {
+      "path": "cycle_006/source_state/main/.github/workflows/repo-checks.yml",
+      "bytes": 9175
+    }
+  ],
+  "missing_only_restored": 1,
+  "all_recovered_bytes_equal_delivered_members": true,
+  "existing_files_overwritten": false,
+  "historical_science_rerun": false,
+  "scientific012_inputs_code_results_changed": false,
+  "legacy_deleted_Lua_restored": false,
+  "user_deleted_legacy_Lua_absent": true
+}

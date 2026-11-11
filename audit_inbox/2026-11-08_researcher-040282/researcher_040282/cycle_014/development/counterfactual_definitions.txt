@@ -1,0 +1,18 @@
+namespace Counterfactual
+
+/-- Deliberately omit clipping; NOT the implementation used by trajectory. -/
+def noClip (p : Params) (D B : Weights V) : Weights V :=
+  Capacity.gateM p (fun i j => if i = j then 0 else (preM p D B i j + preM p D B j i) / 2)
+
+/-- Deliberately omit symmetrisation. -/
+def noSym (p : Params) (D B : Weights V) : Weights V :=
+  Capacity.gateM p (fun i j => if i = j then 0 else clipM p D B i j)
+
+/-- Deliberately retain the diagonal. -/
+def noDiag (p : Params) (D B : Weights V) : Weights V :=
+  Capacity.gateM p (fun i j => (clipM p D B i j + clipM p D B j i) / 2)
+
+/-- Deliberately bypass the capacity gate. -/
+def noGate (p : Params) (D B : Weights V) : Weights V := symM p D B
+
+end Counterfactual

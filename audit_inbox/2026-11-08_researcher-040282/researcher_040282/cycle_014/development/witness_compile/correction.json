@@ -1,0 +1,6 @@
+{
+  "issue": "One witness doc comment likewise had to follow open Classical in, rather than precede it",
+  "mathematical_proofs_including_feedback_cases_and_countervalues_elaborated_with_standard_footprints": true,
+  "fix": "Move comment, retain statements; extend already-chosen flip-feedback witness to exact all-n two-cycle to delimit safety versus freezing",
+  "draft_not_promoted_or_control": true
+}

@@ -1,0 +1,64 @@
+==============================================================================
+AIEF-1.4 Two-Channel Directed Alignment Decomposition (Version 4 Production)
+==============================================================================
+
+alpha_EMA: 0.999428829846
+dt: 0.01
+Final replay exact: True
+All-step resonance ordering R_25 > R_59 > R_29: PASS
+Minimum Left Gap (R_25 - R_59): 5.35277400182e-09
+Minimum Right Gap (R_59 - R_29): 2.01542116329e-11
+
+------------------------------------------------------------------------------
+Split-State & Per-Step Proposal Branch Diagnostics
+------------------------------------------------------------------------------
+  All-step winner map (7,2,7) active: True
+  All-step gate active: True (Active steps: 32000 / 32000)
+  All-step controllers clipped: True
+  Maximum Isolation Error: 0.000000e+00
+  Minimum Winner Margin: 4.440892e-14
+
+------------------------------------------------------------------------------
+Exact Identity Verification (Max Absolute Errors across Channels)
+------------------------------------------------------------------------------
+  Alignment residual e_n = T1_n + T2_n: ALL PASSED (Max error: 6.95e-16)
+  Radial recurrence DeltaM_{n+1} = alpha DeltaM_n + alpha(1-alpha)e_n: ALL PASSED (Max error: 7.29e-16)
+  Symmetrized R identity D_sym = Delta R: ALL PASSED (Max error: 3.89e-16)
+  Phase balance separation increment: ALL PASSED (Max error: 2.34e-15)
+  Phase balance mean increment: ALL PASSED (Max error: 1.25e-15)
+
+------------------------------------------------------------------------------
+Interval-by-Interval Mechanism Diagnostics Table
+------------------------------------------------------------------------------
+Interval     | Channel          | D Rate    | e Rate    | CancelIdx  | |T1/T2+1|  | ReinfFrac
+------------------------------------------------------------------------------
+[0,50)       | fixed_left:forward | 0.0479    | 0.0960    | 5.7731e-02 | 1.0916e-01 | 1.000    
+[50,100)     | fixed_left:forward | 0.0561    | 0.0983    | 5.9686e-03 | 1.1866e-02 | 1.000    
+[100,150)    | fixed_left:forward | 0.0570    | 0.1024    | 5.4305e-04 | 1.0855e-03 | 1.000    
+[150,200)    | fixed_left:forward | 0.0571    | 0.1049    | 4.4071e-05 | 8.8138e-05 | 1.000    
+[200,250)    | fixed_left:forward | 0.0571    | 0.1066    | 3.3138e-06 | 6.6277e-06 | 1.000    
+[250,300)    | fixed_left:forward | 0.0571    | 0.1078    | 2.3671e-07 | 4.7341e-07 | 1.000    
+[300,320)    | fixed_left:forward | 0.0571    | 0.1074    | 3.6545e-08 | 7.3090e-08 | 1.000    
+[0,50)       | fixed_left:reverse | 0.0484    | 0.0992    | 5.8308e-02 | 1.1019e-01 | 1.000    
+[50,100)     | fixed_left:reverse | 0.0563    | 0.1015    | 5.8178e-03 | 1.1568e-02 | 1.000    
+[100,150)    | fixed_left:reverse | 0.0570    | 0.1042    | 5.2466e-04 | 1.0488e-03 | 1.000    
+[150,200)    | fixed_left:reverse | 0.0571    | 0.1061    | 4.3064e-05 | 8.6124e-05 | 1.000    
+[200,250)    | fixed_left:reverse | 0.0571    | 0.1074    | 3.2980e-06 | 6.5959e-06 | 1.000    
+[250,300)    | fixed_left:reverse | 0.0571    | 0.1083    | 2.4040e-07 | 4.8080e-07 | 1.000    
+[300,320)    | fixed_left:reverse | 0.0571    | N/A       | 3.7804e-08 | 7.5608e-08 | N/A      
+[0,50)       | right_mode:forward | 0.0151    | 0.0332    | 2.7002e-02 | 5.5502e-02 | 1.000    
+[50,100)     | right_mode:forward | 0.0478    | 0.0849    | 9.9536e-03 | 2.0107e-02 | 1.000    
+[100,150)    | right_mode:forward | 0.0558    | 0.0975    | 1.0886e-03 | 2.1795e-03 | 1.000    
+[150,200)    | right_mode:forward | 0.0570    | 0.1025    | 9.1929e-05 | 1.8387e-04 | 1.000    
+[200,250)    | right_mode:forward | 0.0571    | 0.1052    | 6.9616e-06 | 1.3923e-05 | 1.000    
+[250,300)    | right_mode:forward | 0.0571    | 0.1066    | 4.9695e-07 | 9.9389e-07 | 1.000    
+[300,320)    | right_mode:forward | 0.0571    | N/A       | 8.4234e-08 | 1.6847e-07 | N/A      
+[0,50)       | right_mode:reverse | 0.0231    | 0.0344    | 1.8200e-02 | 3.7075e-02 | 1.000    
+[50,100)     | right_mode:reverse | 0.0487    | 0.0864    | 6.9911e-03 | 1.4081e-02 | 1.000    
+[100,150)    | right_mode:reverse | 0.0560    | 0.0983    | 7.7650e-04 | 1.5542e-03 | 1.000    
+[150,200)    | right_mode:reverse | 0.0570    | 0.1030    | 6.6024e-05 | 1.3206e-04 | 1.000    
+[200,250)    | right_mode:reverse | 0.0571    | 0.1055    | 5.0171e-06 | 1.0034e-05 | 1.000    
+[250,300)    | right_mode:reverse | 0.0571    | 0.1068    | 3.5828e-07 | 7.1657e-07 | 1.000    
+[300,320)    | right_mode:reverse | 0.0571    | N/A       | 6.1905e-08 | 1.2381e-07 | N/A      
+
+==============================================================================

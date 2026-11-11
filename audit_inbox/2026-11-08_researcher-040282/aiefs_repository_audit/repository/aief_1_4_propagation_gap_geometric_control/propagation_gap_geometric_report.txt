@@ -1,0 +1,84 @@
+AIEF propagation-gap and geometric-direction control
+====================================================
+
+POD direction: [0.5773410255782927, -0.5773687559683237, -0.5773410255782931]
+Geometric direction: [0.5773502691896258, -0.5773502691896258, -0.5773502691896258]
+Unsigned angle: 0.00129727752 degrees
+EMA rate: 0.0571333333
+
+Direction-control scalar diagnostics
+------------------------------------
+  axis=POD, direction=0: median_invariance=1.13208e-05, median_scalar_residual=0.000521296, median_weight_rate=0.127056, forcing_rate=0.0571319, forcing_R2=1
+  axis=POD, direction=1: median_invariance=1.13208e-05, median_scalar_residual=1.07922e-09, median_weight_rate=0.127056, forcing_rate=0.0571311, forcing_R2=1
+  axis=geometric, direction=0: median_invariance=6.45808e-13, median_scalar_residual=0.00052927, median_weight_rate=0.126255, forcing_rate=0.0571319, forcing_R2=1
+  axis=geometric, direction=1: median_invariance=6.45808e-13, median_scalar_residual=7.99866e-06, median_weight_rate=0.126255, forcing_rate=0.0571311, forcing_R2=1
+
+Direct propagation-gap tests
+----------------------------
+  axis=POD, direction=0, target=150, age_min=0: kappa_obs=0.0729118, rprop_scalar=0.12614, rg_scalar=0.0559123, gap_scalar=0.0702279, error_scalar=0.00268389, direct_contribution_rate=0.0702279, R2=0.999923
+  axis=POD, direction=0, target=150, age_min=10: kappa_obs=0.0729118, rprop_scalar=0.126094, rg_scalar=0.0559123, gap_scalar=0.0701813, error_scalar=0.00273051, direct_contribution_rate=0.0704208, R2=0.999957
+  axis=POD, direction=0, target=200, age_min=0: kappa_obs=0.0694548, rprop_scalar=0.126267, rg_scalar=0.057036, gap_scalar=0.0692311, error_scalar=0.000223738, direct_contribution_rate=0.0692311, R2=0.99996
+  axis=POD, direction=0, target=200, age_min=10: kappa_obs=0.0694548, rprop_scalar=0.126249, rg_scalar=0.057036, gap_scalar=0.0692128, error_scalar=0.000241982, direct_contribution_rate=0.069232, R2=1
+  axis=POD, direction=0, target=250, age_min=0: kappa_obs=0.06915, rprop_scalar=0.126272, rg_scalar=0.0571258, gap_scalar=0.0691462, error_scalar=3.84181e-06, direct_contribution_rate=0.0691462, R2=0.99996
+  axis=POD, direction=0, target=250, age_min=10: kappa_obs=0.06915, rprop_scalar=0.126255, rg_scalar=0.0571258, gap_scalar=0.0691291, error_scalar=2.08551e-05, direct_contribution_rate=0.0691306, R2=1
+  axis=POD, direction=0, target=320, age_min=0: kappa_obs=0.0691225, rprop_scalar=0.126272, rg_scalar=0.0571331, gap_scalar=0.0691389, error_scalar=-1.63711e-05, direct_contribution_rate=0.0691389, R2=0.99996
+  axis=POD, direction=0, target=320, age_min=10: kappa_obs=0.0691225, rprop_scalar=0.126255, rg_scalar=0.0571331, gap_scalar=0.0691219, error_scalar=6.21873e-07, direct_contribution_rate=0.0691219, R2=1
+  axis=POD, direction=1, target=150, age_min=0: kappa_obs=0.0746451, rprop_scalar=0.126164, rg_scalar=0.0551524, gap_scalar=0.0710118, error_scalar=0.0036333, direct_contribution_rate=0.0710118, R2=0.99987
+  axis=POD, direction=1, target=150, age_min=10: kappa_obs=0.0746451, rprop_scalar=0.126145, rg_scalar=0.0551524, gap_scalar=0.0709923, error_scalar=0.00365274, direct_contribution_rate=0.071385, R2=0.999863
+  axis=POD, direction=1, target=200, age_min=0: kappa_obs=0.0696454, rprop_scalar=0.12625, rg_scalar=0.0569785, gap_scalar=0.0692713, error_scalar=0.000374104, direct_contribution_rate=0.0692713, R2=0.999999
+  axis=POD, direction=1, target=200, age_min=10: kappa_obs=0.0696454, rprop_scalar=0.126248, rg_scalar=0.0569785, gap_scalar=0.0692699, error_scalar=0.000375577, direct_contribution_rate=0.0693003, R2=0.999999
+  axis=POD, direction=1, target=250, age_min=0: kappa_obs=0.0691663, rprop_scalar=0.126255, rg_scalar=0.0571214, gap_scalar=0.0691336, error_scalar=3.27083e-05, direct_contribution_rate=0.0691336, R2=1
+  axis=POD, direction=1, target=250, age_min=10: kappa_obs=0.0691663, rprop_scalar=0.126255, rg_scalar=0.0571214, gap_scalar=0.0691332, error_scalar=3.3091e-05, direct_contribution_rate=0.0691356, R2=1
+  axis=POD, direction=1, target=320, age_min=0: kappa_obs=0.0691229, rprop_scalar=0.126255, rg_scalar=0.057133, gap_scalar=0.0691223, error_scalar=6.49722e-07, direct_contribution_rate=0.0691223, R2=1
+  axis=POD, direction=1, target=320, age_min=10: kappa_obs=0.0691229, rprop_scalar=0.126255, rg_scalar=0.057133, gap_scalar=0.069122, error_scalar=9.63396e-07, direct_contribution_rate=0.069122, R2=1
+  axis=geometric, direction=0, target=150, age_min=0: kappa_obs=0.0729118, rprop_scalar=0.12614, rg_scalar=0.0559123, gap_scalar=0.0702279, error_scalar=0.00268389, direct_contribution_rate=0.0702279, R2=0.999923
+  axis=geometric, direction=0, target=150, age_min=10: kappa_obs=0.0729118, rprop_scalar=0.126094, rg_scalar=0.0559123, gap_scalar=0.0701813, error_scalar=0.00273051, direct_contribution_rate=0.0704208, R2=0.999957
+  axis=geometric, direction=0, target=200, age_min=0: kappa_obs=0.0694548, rprop_scalar=0.126267, rg_scalar=0.057036, gap_scalar=0.0692311, error_scalar=0.000223739, direct_contribution_rate=0.0692311, R2=0.99996
+  axis=geometric, direction=0, target=200, age_min=10: kappa_obs=0.0694548, rprop_scalar=0.126249, rg_scalar=0.057036, gap_scalar=0.0692128, error_scalar=0.000241982, direct_contribution_rate=0.069232, R2=1
+  axis=geometric, direction=0, target=250, age_min=0: kappa_obs=0.06915, rprop_scalar=0.126272, rg_scalar=0.0571258, gap_scalar=0.0691462, error_scalar=3.84227e-06, direct_contribution_rate=0.0691462, R2=0.99996
+  axis=geometric, direction=0, target=250, age_min=10: kappa_obs=0.06915, rprop_scalar=0.126255, rg_scalar=0.0571258, gap_scalar=0.0691291, error_scalar=2.08551e-05, direct_contribution_rate=0.0691306, R2=1
+  axis=geometric, direction=0, target=320, age_min=0: kappa_obs=0.0691225, rprop_scalar=0.126272, rg_scalar=0.0571331, gap_scalar=0.0691389, error_scalar=-1.63706e-05, direct_contribution_rate=0.0691389, R2=0.99996
+  axis=geometric, direction=0, target=320, age_min=10: kappa_obs=0.0691225, rprop_scalar=0.126255, rg_scalar=0.0571331, gap_scalar=0.0691219, error_scalar=6.21873e-07, direct_contribution_rate=0.0691219, R2=1
+  axis=geometric, direction=1, target=150, age_min=0: kappa_obs=0.0746451, rprop_scalar=0.126164, rg_scalar=0.0551524, gap_scalar=0.0710118, error_scalar=0.0036333, direct_contribution_rate=0.0710118, R2=0.99987
+  axis=geometric, direction=1, target=150, age_min=10: kappa_obs=0.0746451, rprop_scalar=0.126145, rg_scalar=0.0551524, gap_scalar=0.0709923, error_scalar=0.00365274, direct_contribution_rate=0.071385, R2=0.999863
+  axis=geometric, direction=1, target=200, age_min=0: kappa_obs=0.0696454, rprop_scalar=0.12625, rg_scalar=0.0569785, gap_scalar=0.0692713, error_scalar=0.000374104, direct_contribution_rate=0.0692713, R2=0.999999
+  axis=geometric, direction=1, target=200, age_min=10: kappa_obs=0.0696454, rprop_scalar=0.126248, rg_scalar=0.0569785, gap_scalar=0.0692699, error_scalar=0.000375577, direct_contribution_rate=0.0693003, R2=0.999999
+  axis=geometric, direction=1, target=250, age_min=0: kappa_obs=0.0691663, rprop_scalar=0.126255, rg_scalar=0.0571214, gap_scalar=0.0691336, error_scalar=3.27083e-05, direct_contribution_rate=0.0691336, R2=1
+  axis=geometric, direction=1, target=250, age_min=10: kappa_obs=0.0691663, rprop_scalar=0.126255, rg_scalar=0.0571214, gap_scalar=0.0691332, error_scalar=3.3091e-05, direct_contribution_rate=0.0691356, R2=1
+  axis=geometric, direction=1, target=320, age_min=0: kappa_obs=0.0691229, rprop_scalar=0.126255, rg_scalar=0.057133, gap_scalar=0.0691223, error_scalar=6.49732e-07, direct_contribution_rate=0.0691223, R2=1
+  axis=geometric, direction=1, target=320, age_min=10: kappa_obs=0.0691229, rprop_scalar=0.126255, rg_scalar=0.057133, gap_scalar=0.069122, error_scalar=9.63396e-07, direct_contribution_rate=0.069122, R2=1
+
+Forcing-state identifiability
+-----------------------------
+  axis=POD, dataset=direction_0, window=[150,210): rho=0.999647, chi=-2.66145e-07, R2=1, condition=1125.35, corr=0.999998
+  axis=POD, dataset=direction_1, window=[150,210): rho=0.999689, chi=-1.81667e-07, R2=1, condition=841.177, corr=0.999997
+  axis=POD, dataset=pooled, window=[150,210): rho=0.999656, chi=-1.58848e-07, R2=1, condition=786.936, corr=0.999997
+  axis=POD, dataset=direction_0, window=[175,235): rho=0.999636, chi=-2.52891e-07, R2=1, condition=3813.53, corr=1
+  axis=POD, dataset=direction_1, window=[175,235): rho=0.999659, chi=-1.60789e-07, R2=1, condition=2660.08, corr=1
+  axis=POD, dataset=pooled, window=[175,235): rho=0.999524, chi=-6.60093e-08, R2=1, condition=1706.85, corr=1
+  axis=POD, dataset=direction_0, window=[200,260): rho=0.999625, chi=-2.3905e-07, R2=1, condition=13001, corr=1
+  axis=POD, dataset=direction_1, window=[200,260): rho=0.99964, chi=-1.47829e-07, R2=1, condition=8814.54, corr=1
+  axis=POD, dataset=pooled, window=[200,260): rho=0.999442, chi=-8.76668e-09, R2=1, condition=2156.81, corr=1
+  axis=POD, dataset=direction_0, window=[225,285): rho=0.999614, chi=-2.26058e-07, R2=1, condition=44877.2, corr=1
+  axis=POD, dataset=direction_1, window=[225,285): rho=0.999628, chi=-1.38937e-07, R2=1, condition=30194.1, corr=1
+  axis=POD, dataset=pooled, window=[225,285): rho=0.99943, chi=-7.25433e-10, R2=1, condition=2218.1, corr=1
+  axis=geometric, dataset=direction_0, window=[150,210): rho=0.999647, chi=-2.66142e-07, R2=1, condition=1125.35, corr=0.999998
+  axis=geometric, dataset=direction_1, window=[150,210): rho=0.999689, chi=-1.81667e-07, R2=1, condition=841.177, corr=0.999997
+  axis=geometric, dataset=pooled, window=[150,210): rho=0.999656, chi=-1.58849e-07, R2=1, condition=786.939, corr=0.999997
+  axis=geometric, dataset=direction_0, window=[175,235): rho=0.999636, chi=-2.52888e-07, R2=1, condition=3813.53, corr=1
+  axis=geometric, dataset=direction_1, window=[175,235): rho=0.999659, chi=-1.60789e-07, R2=1, condition=2660.08, corr=1
+  axis=geometric, dataset=pooled, window=[175,235): rho=0.999524, chi=-6.60118e-08, R2=1, condition=1706.89, corr=1
+  axis=geometric, dataset=direction_0, window=[200,260): rho=0.999625, chi=-2.39047e-07, R2=1, condition=13001, corr=1
+  axis=geometric, dataset=direction_1, window=[200,260): rho=0.99964, chi=-1.47829e-07, R2=1, condition=8814.54, corr=1
+  axis=geometric, dataset=pooled, window=[200,260): rho=0.999442, chi=-8.7672e-09, R2=1, condition=2156.88, corr=1
+  axis=geometric, dataset=direction_0, window=[225,285): rho=0.999614, chi=-2.26055e-07, R2=1, condition=44877.2, corr=1
+  axis=geometric, dataset=direction_1, window=[225,285): rho=0.999628, chi=-1.38937e-07, R2=1, condition=30194.1, corr=1
+  axis=geometric, dataset=pooled, window=[225,285): rho=0.99943, chi=-7.2548e-10, R2=1, condition=2218.17, corr=1
+
+Interpretation constraints
+--------------------------
+* POD and analytic geometric axes are tested separately to avoid circularity.
+* Propagation fits use the actual forcing ensemble and are distinct from Rayleigh, eigenvalue, and singular-value rates.
+* Direct contribution-envelope fits include both forcing evolution and propagation; they should be compared directly with observed kappa.
+* Large design condition and |corr(a,g)| near one indicate non-identifiability of rho and chi even when R2 is excellent.
+* Results remain conditional on this replay and two initial directions.

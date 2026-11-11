@@ -1,0 +1,5 @@
+CSV_IDENTICAL
+only in Researcher totals.json (not produced by build_map.py): validation_hits.distinct_results_yes_partial
+only in Researcher totals.json (not produced by build_map.py): validation_hits.headline
+only in Researcher totals.json (not produced by build_map.py): validation_hits.distinct_results_yes
+only in Researcher totals.json (not produced by build_map.py): lean_note

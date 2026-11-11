@@ -1,0 +1,203 @@
+untrack_artifacts.sh check against a local bare copy of AIEFS main (60e6029); never GitHub
+--- dry-run:
+== Fetching origin ...
+
+== Tracked but ignored, NOT artifacts -- left alone, your decision (32):
+    AI Agent Audits/evidence/logs/ablation14_topology.log
+    AI Agent Audits/evidence/logs/analyze_delay.log
+    AI Agent Audits/evidence/logs/analyze_kappa_cycle_kernel.log
+    AI Agent Audits/evidence/logs/analyze_kappa_tw.log
+    AI Agent Audits/evidence/logs/archived13_closedform.log
+    AI Agent Audits/evidence/logs/delay_paired.log
+    AI Agent Audits/evidence/logs/evolution_checks.log
+    AI Agent Audits/evidence/logs/freq_predictor.log
+    AI Agent Audits/evidence/logs/frozen_topology_check.log
+    AI Agent Audits/evidence/logs/gate_idempotence.log
+    AI Agent Audits/evidence/logs/kappa_cycle_kernel.log
+    AI Agent Audits/evidence/logs/kappa_rows.log
+    AI Agent Audits/evidence/logs/kappa_tw.log
+    AI Agent Audits/evidence/logs/lean_build_original.log
+    AI Agent Audits/evidence/logs/lean_build_patched.log
+    AI Agent Audits/evidence/logs/lean_sorry_grep.log
+    AI Agent Audits/evidence/logs/matched_phase_check.log
+    AI Agent Audits/evidence/logs/mathcheck.log
+    AI Agent Audits/evidence/logs/omega_multistab.log
+    AI Agent Audits/evidence/logs/omega_random.log
+    AI Agent Audits/evidence/logs/repro13.log
+    AI Agent Audits/evidence/logs/run_all_verify.log
+    AI Agent Audits/evidence/logs/terminology_grep.log
+    AI Agent Audits/evidence/tooling/logs/pii_scan.log
+    AI Agent Audits/evidence/tooling/logs/pii_scan_selftest.log
+    AI Agent Audits/evidence/tooling/logs/verify_github_blobs_c9907a6.log
+    AI Agent Audits/evidence/tooling/logs/verify_manifest.log
+    AI Agent Audits/evidence/tooling/round1/deep/omega_multistab.log
+    AI Agent Audits/evidence/tooling/round1/deep/omega_random.log
+    AI Agent Audits/evidence/tooling/round1/mathcheck.log
+    AI Agent Audits/evidence/tooling/round1/repro13.log
+    AI Agent Audits/evidence/tooling/round1/summ.log
+   (to keep tracking them cleanly, add e.g.  !path/**/*.log  to .gitignore; to stop tracking: git rm --cached PATH)
+
+== Lines to add to .gitignore (8):
+    .lake/
+    lake-packages/
+    .check_logs/
+    .~lock.*#
+    *.swp
+    *.swo
+    *~
+    .#*
+
+== Artifacts to stop tracking (files stay on disk) (48):
+    .~lock.AI_AGENT_HANDOFF_PROMPT.md#
+    __pycache__/AIEF_1_4_Twindow_sensitivity.cpython-313.pyc
+    __pycache__/AIEF_1_4_Twindow_sensitivity_analysis_v3.cpython-313.pyc
+    __pycache__/AIEF_1_4_actual_admissibility_branch_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_augmented_tangent_cocycle_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_component_controller_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_exceptional_K3_transition_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_exceptional_tangent_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_face_spectrum_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_frozen_driver_cocycle_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_matched_phase_memory_ablation.cpython-313.pyc
+    __pycache__/AIEF_1_4_memory_ablation_updated.cpython-313.pyc
+    __pycache__/AIEF_1_4_nested_operator_family_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_proposal_equalization_bridge_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_stationarity_perturbation_analysis_updated.cpython-313.pyc
+    __pycache__/AIEF_1_4_tangent_spectrum_switch_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_trajectory_recovery_equivalence.cpython-313.pyc
+    __pycache__/aief_experiment_engine_v1.cpython-313.pyc
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs.c
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs.c.hash
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs.setup.json
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/Basic.c
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/Basic.c.hash
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/Basic.setup.json
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiber.c
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiber.c.hash
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiber.setup.json
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.ilean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.ilean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.olean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.olean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.trace
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.ilean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.ilean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.olean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.olean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.trace
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.ilean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.ilean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.olean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.olean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.trace
+    lean/AIEFProofs/.lake/config/1/lakefile.olean
+    lean/AIEFProofs/.lake/config/1/lakefile.olean.lock
+    lean/AIEFProofs/.lake/config/1/lakefile.olean.trace
+    lean/AIEFProofs/.lake/config/5/lakefile.olean
+    lean/AIEFProofs/.lake/config/5/lakefile.olean.lock
+    lean/AIEFProofs/.lake/config/5/lakefile.olean.trace
+
+(dry-run: nothing changed)
+--- real run (--yes) on git 2.47.3:
+== Fetching origin ...
+
+== Tracked but ignored, NOT artifacts -- left alone, your decision (32):
+    AI Agent Audits/evidence/logs/ablation14_topology.log
+    AI Agent Audits/evidence/logs/analyze_delay.log
+    AI Agent Audits/evidence/logs/analyze_kappa_cycle_kernel.log
+    AI Agent Audits/evidence/logs/analyze_kappa_tw.log
+    AI Agent Audits/evidence/logs/archived13_closedform.log
+    AI Agent Audits/evidence/logs/delay_paired.log
+    AI Agent Audits/evidence/logs/evolution_checks.log
+    AI Agent Audits/evidence/logs/freq_predictor.log
+    AI Agent Audits/evidence/logs/frozen_topology_check.log
+    AI Agent Audits/evidence/logs/gate_idempotence.log
+    AI Agent Audits/evidence/logs/kappa_cycle_kernel.log
+    AI Agent Audits/evidence/logs/kappa_rows.log
+    AI Agent Audits/evidence/logs/kappa_tw.log
+    AI Agent Audits/evidence/logs/lean_build_original.log
+    AI Agent Audits/evidence/logs/lean_build_patched.log
+    AI Agent Audits/evidence/logs/lean_sorry_grep.log
+    AI Agent Audits/evidence/logs/matched_phase_check.log
+    AI Agent Audits/evidence/logs/mathcheck.log
+    AI Agent Audits/evidence/logs/omega_multistab.log
+    AI Agent Audits/evidence/logs/omega_random.log
+    AI Agent Audits/evidence/logs/repro13.log
+    AI Agent Audits/evidence/logs/run_all_verify.log
+    AI Agent Audits/evidence/logs/terminology_grep.log
+    AI Agent Audits/evidence/tooling/logs/pii_scan.log
+    AI Agent Audits/evidence/tooling/logs/pii_scan_selftest.log
+    AI Agent Audits/evidence/tooling/logs/verify_github_blobs_c9907a6.log
+    AI Agent Audits/evidence/tooling/logs/verify_manifest.log
+    AI Agent Audits/evidence/tooling/round1/deep/omega_multistab.log
+    AI Agent Audits/evidence/tooling/round1/deep/omega_random.log
+    AI Agent Audits/evidence/tooling/round1/mathcheck.log
+    AI Agent Audits/evidence/tooling/round1/repro13.log
+    AI Agent Audits/evidence/tooling/round1/summ.log
+   (to keep tracking them cleanly, add e.g.  !path/**/*.log  to .gitignore; to stop tracking: git rm --cached PATH)
+
+== Lines to add to .gitignore (8):
+    .lake/
+    lake-packages/
+    .check_logs/
+    .~lock.*#
+    *.swp
+    *.swo
+    *~
+    .#*
+
+== Artifacts to stop tracking (files stay on disk) (48):
+    .~lock.AI_AGENT_HANDOFF_PROMPT.md#
+    __pycache__/AIEF_1_4_Twindow_sensitivity.cpython-313.pyc
+    __pycache__/AIEF_1_4_Twindow_sensitivity_analysis_v3.cpython-313.pyc
+    __pycache__/AIEF_1_4_actual_admissibility_branch_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_augmented_tangent_cocycle_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_component_controller_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_exceptional_K3_transition_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_exceptional_tangent_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_face_spectrum_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_frozen_driver_cocycle_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_matched_phase_memory_ablation.cpython-313.pyc
+    __pycache__/AIEF_1_4_memory_ablation_updated.cpython-313.pyc
+    __pycache__/AIEF_1_4_nested_operator_family_audit.cpython-313.pyc
+    __pycache__/AIEF_1_4_proposal_equalization_bridge_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_stationarity_perturbation_analysis_updated.cpython-313.pyc
+    __pycache__/AIEF_1_4_tangent_spectrum_switch_analysis.cpython-313.pyc
+    __pycache__/AIEF_1_4_trajectory_recovery_equivalence.cpython-313.pyc
+    __pycache__/aief_experiment_engine_v1.cpython-313.pyc
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs.c
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs.c.hash
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs.setup.json
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/Basic.c
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/Basic.c.hash
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/Basic.setup.json
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiber.c
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiber.c.hash
+    lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiber.setup.json
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.ilean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.ilean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.olean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.olean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs.trace
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.ilean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.ilean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.olean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.olean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/Basic.trace
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.ilean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.ilean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.olean
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.olean.hash
+    lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiber.trace
+    lean/AIEFProofs/.lake/config/1/lakefile.olean
+    lean/AIEFProofs/.lake/config/1/lakefile.olean.lock
+    lean/AIEFProofs/.lake/config/1/lakefile.olean.trace
+    lean/AIEFProofs/.lake/config/5/lakefile.olean
+    lean/AIEFProofs/.lake/config/5/lakefile.olean.lock
+    lean/AIEFProofs/.lake/config/5/lakefile.olean.trace
+== Committed 9dd8142 (local only so far).
+To /tmp/ct/fake_github.git
+   60e6029..9dd8142  HEAD -> main
+== Pushed 9dd8142db4b036a7a24f04f3000550535aab6fad
+--- result: tree paths identical to prepared local commit ba945cb: YES
+--- git 2.30.0: refuses pre-staged files (rc=1), then --no-push commit OK, remote unchanged

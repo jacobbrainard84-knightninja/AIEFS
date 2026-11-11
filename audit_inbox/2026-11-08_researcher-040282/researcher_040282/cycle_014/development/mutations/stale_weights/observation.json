@@ -1,0 +1,13 @@
+{
+  "mutation": "stale_weights",
+  "runtime_utc_start": "2026-11-10T04:03:12.662788+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 76.23936530299989,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "dirty_not_structural_and_dirty_start_repaired",
+  "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+  "first_errors": [
+    "Probe.lean:90:53: error: unsolved goals"
+  ]
+}

@@ -1,0 +1,7 @@
+Round 4 Lean check (2026-10-25), command: cd lean/AIEFProofs && STRICT_ORPHANS=1 LOG_DIR=<LOG_DIR> bash check_lean.sh
+Run in a local clone whose git HEAD is still dc0250a (hence "git HEAD: dc0250a ... dirty_files: 8" in summary.txt),
+but whose lean/AIEFProofs/ sources and .github/workflows/lean.yml were byte-identical to the round-4 tree rebased onto
+main 43ce98f (including the 43ce98f copyright/SPDX headers of ControllerFiber.lean and ControllerFiberProjector.lean).
+The source hashes actually built are in source_sha256.txt and match lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt.
+Local paths are replaced by <LEAN_REPO>, <LOG_DIR>, <ELAN_HOME>, <HOME>.
+An earlier run on the dc0250a-based sources (before the rebase) gave the same step results (8713 jobs, 12 Smoke-only warnings, 115 declarations).

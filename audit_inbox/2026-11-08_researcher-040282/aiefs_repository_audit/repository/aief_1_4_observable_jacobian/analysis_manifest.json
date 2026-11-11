@@ -1,0 +1,22 @@
+{
+  "analysis": "AIEF-1.4 observable Jacobian projection",
+  "seed": "4619122171158768524",
+  "parameters": {
+    "dt": 0.01,
+    "r_EMA": 0.05713333333333142,
+    "alpha": 0.9994288298464774,
+    "perturbation": 1e-08
+  },
+  "slow_dim": 7,
+  "effective_slow_dim": 4,
+  "mean_pairwise_overlap": 0.5632646545350778,
+  "mean_observable_slow_fraction": 0.10926717521072438,
+  "h_machine_zero": true,
+  "B_suppression_factor": 299203.7910857741,
+  "outputs": [
+    "observable_jacobian.csv",
+    "eigenvector_decomposition.csv",
+    "observable_jacobian_report.txt",
+    "analysis_manifest.json"
+  ]
+}

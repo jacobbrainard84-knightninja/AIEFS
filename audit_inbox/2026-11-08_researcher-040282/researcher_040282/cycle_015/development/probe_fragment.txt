@@ -1,0 +1,103 @@
+section Probes
+
+def probeParams : Params := ⟨1,1,1,1,1,1,0⟩
+def probeConfig : Config (Fin 2) :=
+  ⟨probeParams,4,0,(Real.log 2)⁻¹,1,fun _ => 0⟩
+def probeTheta : Fin 2 → ℝ := ![0,Real.pi/2]
+def zeroC : Fin 2 → Fin 2 → ℂ := fun _ _ => 0
+def zeroB : TrajectorySafety.Weights (Fin 2) := fun _ _ => 0
+def probeAux : Aux (Fin 2) 1 := initialAux 1 probeTheta zeroC
+
+theorem probe_gate_valid : EngineGate probeConfig.gate := by constructor <;> norm_num [probeConfig,probeParams]
+theorem probe_delay_valid : DelayConsistent probeConfig 1 := by norm_num [DelayConsistent,probeConfig,probeParams]
+theorem probe_Tw_positive : 0 < probeConfig.Tw := by
+  change 0 < (Real.log 2)⁻¹
+  exact inv_pos.mpr (Real.log_pos (by norm_num))
+
+theorem probe_alpha : alpha probeConfig = 1/2 := by
+  simp [alpha,probeConfig,probeParams,div_inv_eq_mul,Real.exp_neg,
+    Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+
+theorem probe_C_matrix :
+    newC probeConfig probeAux = ![![1/2,-Complex.I/2],![Complex.I/2,1/2]] := by
+  funext i j
+  simp only [newC,probe_alpha]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [rawInput,probeAux,initialAux,probeConfig,probeTheta,zeroC,mul_comm] <;> ring
+
+theorem probe_R_matrix : newR probeConfig probeAux = Capacity.Xo (1/2) := by
+  rw [newR,probe_C_matrix]
+  funext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [PhaseCoherence.reported,Capacity.Xo,Complex.norm_def,Complex.normSq]
+
+theorem probe_drive_matrix : drive probeConfig probeAux = Capacity.Xo 2 := by
+  funext i j
+  simp only [drive,probe_R_matrix]
+  fin_cases i <;> fin_cases j <;> norm_num [probeConfig,Capacity.Xo]
+
+theorem probe_unprojected : unprojected probeConfig probeAux zeroB = Capacity.Xo 2 := by
+  rw [unprojected,probe_drive_matrix]
+  funext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [MatrixForm.symM,MatrixForm.clipM,MatrixForm.preM,probeConfig,probeParams,zeroB,Capacity.Xo]
+
+theorem probe_B_new : BTrace probeConfig 1 probeTheta zeroC zeroB 1 = Capacity.Xo (2/3) := by
+  change MatrixForm.stepM probeConfig.gate (drive probeConfig probeAux) zeroB = _
+  rw [Capacity.stepM_eq_gateM]
+  change Capacity.gateM probeConfig.gate (unprojected probeConfig probeAux zeroB) = _
+  rw [probe_unprojected]
+  rw [Capacity.gateM_Xo_of_gt probeConfig.gate probe_gate_valid (by norm_num [probeConfig,probeParams])]
+  norm_num [scale,probeConfig,probeParams]
+
+theorem probe_increment_generated : incrementTrace probeConfig 1 probeTheta zeroC zeroB 0 0 = 2/3 := by
+  change sourceIncrement probeConfig probeAux (BTrace probeConfig 1 probeTheta zeroC zeroB 1) 0 = _
+  rw [probe_B_new]
+  norm_num [sourceIncrement,TrajectorySafety.sineCoupling,probeAux,initialAux,probeTheta,probeConfig,probeParams,Capacity.Xo,Fin.sum_univ_two]
+
+theorem probe_increment_used :
+    usedIncrement probeConfig probeAux zeroB (BTrace probeConfig 1 probeTheta zeroC zeroB 1) 0 = 2/3 := by
+  change sourceIncrement probeConfig probeAux (BTrace probeConfig 1 probeTheta zeroC zeroB 1) 0 = _
+  exact probe_increment_generated
+
+theorem old_B_increment_zero : sourceIncrement probeConfig probeAux zeroB 0 = 0 := by
+  norm_num [sourceIncrement,TrajectorySafety.sineCoupling,probeConfig,probeParams,zeroB]
+
+theorem unprojected_increment_two :
+    sourceIncrement probeConfig probeAux (unprojected probeConfig probeAux zeroB) 0 = 2 := by
+  rw [probe_unprojected]
+  norm_num [sourceIncrement,TrajectorySafety.sineCoupling,probeAux,initialAux,probeTheta,probeConfig,probeParams,Capacity.Xo,Fin.sum_univ_two]
+
+private theorem wrap_two_thirds : Researcher040282.Phase.wrapPhase (2/3) = (2/3 : ℝ) := by
+  unfold Researcher040282.Phase.wrapPhase
+  have hp : 0 < 2*Real.pi := by positivity
+  have hf : Int.floor ((2/3 : ℝ)/(2*Real.pi)) = 0 :=
+    Int.floor_eq_zero_iff.mpr ⟨div_nonneg (by norm_num) hp.le,
+      (div_lt_one hp).2 (by linarith [Real.two_le_pi])⟩
+  rw [hf]
+  norm_num
+
+theorem probe_theta_new : thetaTrace probeConfig 1 probeTheta zeroC zeroB 1 0 = 2/3 := by
+  rw [theta_succ,probe_increment_generated]
+  change Researcher040282.Phase.wrapPhase (0 + 2/3) = _
+  simpa using wrap_two_thirds
+
+theorem probe_history_newest :
+    (auxTrace probeConfig 1 probeTheta zeroC zeroB 1).history ⟨1,by decide⟩ 0 = 2/3 := by
+  have h := congrFun (newest_correct probeConfig 1 probeTheta zeroC zeroB 1) (0 : Fin 2)
+  exact h.trans probe_theta_new
+
+/-- Explicit current/oldest argument probe, not a claimed production trajectory. -/
+def readProbe : Aux (Fin 2) 1 :=
+  ⟨fun _ => Real.pi/2, fun k => if k.val=0 then (fun _ => 0) else (fun _ => Real.pi/2), zeroC⟩
+
+theorem probe_oldest_input : rawInput probeConfig readProbe 0 1 = Complex.I := by
+  simp [rawInput,probeConfig,readProbe,mul_comm]
+
+def offsetConfig : Config (Fin 2) := { probeConfig with omega := fun _ => 1, tau := Real.pi }
+def offsetAux : Aux (Fin 2) 1 := initialAux 1 (fun _ => 0) zeroC
+
+theorem probe_frequency_offset : rawInput offsetConfig offsetAux 0 1 = -1 := by
+  simp [rawInput,offsetConfig,offsetAux,initialAux,mul_comm]
+
+end Probes

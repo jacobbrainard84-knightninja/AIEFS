@@ -1,0 +1,110 @@
+{
+  "method": "Focused exact semantic probes; whole-file heartbeat failures separately blocked/not credited",
+  "six_positive_baselines_returncode": 0,
+  "rows": [
+    {
+      "mutation": "stale_weights",
+      "runtime_utc_start": "2026-11-10T04:03:12.662788+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 76.23936530299989,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "dirty_not_structural_and_dirty_start_repaired",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:53: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "omit_clipping",
+      "runtime_utc_start": "2026-11-10T04:03:12.665801+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 76.65696264300004,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "noClip_negative",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:55: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "omit_symmetrisation",
+      "runtime_utc_start": "2026-11-10T04:04:28.905769+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 77.201339104,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "noSym_asymmetric",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:93: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "keep_diagonal",
+      "runtime_utc_start": "2026-11-10T04:04:29.325467+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 76.32459489400026,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "noDiag_nonzero",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:52: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "bypass_gate",
+      "runtime_utc_start": "2026-11-10T04:05:45.655711+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 75.70980333499983,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "noGate_over_capacity",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:76: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "next_capacity_clock",
+      "runtime_utc_start": "2026-11-10T04:05:46.108224+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 76.99668189699969,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "capacity_clock_refuted",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:94: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "drop_initial_invariant",
+      "runtime_utc_start": "2026-11-10T04:07:01.370952+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 150.34127003100002,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "initial_time_refuted",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:87: error: unsolved goals"
+      ]
+    },
+    {
+      "mutation": "capacity_without_link",
+      "runtime_utc_start": "2026-11-10T04:07:03.105860+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 156.07301869000003,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "main_Capacity.false_stepM_row_no_link",
+      "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+      "first_errors": [
+        "Probe.lean:90:87: error: unsolved goals"
+      ]
+    }
+  ]
+}

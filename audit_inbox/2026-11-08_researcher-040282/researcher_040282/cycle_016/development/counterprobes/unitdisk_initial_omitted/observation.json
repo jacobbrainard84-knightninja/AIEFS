@@ -1,0 +1,12 @@
+{
+  "case": "unitdisk_initial_omitted",
+  "runtime_utc_start": "2026-11-11T02:04:43.212284+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 80.39650500399989,
+  "setup_name_or_timeout_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "nonunit_initial_refuted",
+  "first_errors": [
+    "Probe.lean:90:63: error: unsolved goals"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "mutation": "drop_eta",
+  "runtime_utc_start": "2026-11-10T02:50:58.690057+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 104.03109701300014,
+  "setup_or_name_error": false,
+  "independent_baseline_refutation": "missing_eta_refuted",
+  "first_errors": [
+    "PhaseCoherenceBridge.lean:178:94: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:189:2: error: Tactic `rfl` failed: The left-hand side",
+    "PhaseCoherenceBridge.lean:198:2: error: Tactic `rfl` failed: The left-hand side",
+    "PhaseCoherenceBridge.lean:264:111: error: unsolved goals"
+  ]
+}

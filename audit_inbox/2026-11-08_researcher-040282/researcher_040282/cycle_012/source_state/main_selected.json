@@ -1,0 +1,218 @@
+{
+  "branch": "main",
+  "commit": "543e7e1aaa11e4c810783806cb180eee36ec5313",
+  "fetched_and_verified": 42,
+  "files": [
+    {
+      "path": "CURRENT_STATUS.md",
+      "blob": "c51401924a2179ce87eaf107b01515e2d3f4e37f",
+      "bytes": 23963
+    },
+    {
+      "path": "ERRATA_2026-10-28.md",
+      "blob": "bdfa3b3c0eb15d2f15787ef52e0399aedd56a43d",
+      "bytes": 63130
+    },
+    {
+      "path": "README.md",
+      "blob": "78d59085f77e911f314fc054af066c5d4d9592df",
+      "bytes": 8170
+    },
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "blob": "0d116e83a0d2f6b3f6be0e21d8a730c0aec3b689",
+      "bytes": 119493
+    },
+    {
+      "path": "lean/AIEFFreezeCore/AIEFFreezeCore.lean",
+      "blob": "4614036d156946044ff72bc69442657f207ef732",
+      "bytes": 72
+    },
+    {
+      "path": "lean/AIEFFreezeCore/AIEFFreezeCore/FreezeCore.lean",
+      "blob": "2703d6461a0a96d16bc2fa529cd42a123963da47",
+      "bytes": 6730
+    },
+    {
+      "path": "lean/AIEFFreezeCore/README.md",
+      "blob": "9c92eb8bcd8166c0c31585867888cf75d3f17bc8",
+      "bytes": 2405
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lake-manifest.json",
+      "blob": "51e230e0f5c1b54739e809ffb40804752b3cc34a",
+      "bytes": 3148
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lakefile.toml",
+      "blob": "3e16bee0d85092f787731a6abd0c85ef630e060f",
+      "bytes": 371
+    },
+    {
+      "path": "lean/AIEFFreezeCore/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "blob": "2a53bb11d4a0642c127fc6f09af85248f04a49bd",
+      "bytes": 144
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/EngineWitness.lean",
+      "blob": "6abfdc73f1567d99fe91f41c9c1c109c81fe5e12",
+      "bytes": 12151
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/GateMap.lean",
+      "blob": "befc13a0b961cc81391e246ab726d5f0ceaf88ba",
+      "bytes": 26939
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/K3.lean",
+      "blob": "9f4e59ed2fdb11ed40ab8a159ead4d51c6738457",
+      "bytes": 18898
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/MatrixForm.lean",
+      "blob": "b527fa6a96adb413df8fcefa1f1342aa05c49996",
+      "bytes": 9341
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/RedTeam.lean",
+      "blob": "7c2266c7d460a27a50ce0ee96d6280639b099d53",
+      "bytes": 34238
+    },
+    {
+      "path": "lean/AIEFGateCore/README.md",
+      "blob": "2e2f0d3ba53969f984956b0fc8f4d6c9f7b6e29e",
+      "bytes": 5522
+    },
+    {
+      "path": "lean/AIEFGateCore/lake-manifest.json",
+      "blob": "89601b20d9e52cca983308bca517881cb79d47ab",
+      "bytes": 3146
+    },
+    {
+      "path": "lean/AIEFGateCore/lakefile.toml",
+      "blob": "359e52cab97083cf195c090542b671b80d0e24f7",
+      "bytes": 365
+    },
+    {
+      "path": "lean/AIEFGateCore/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs.lean",
+      "blob": "dc26fd2efccb09c92347b43d6b768036e6abf847",
+      "bytes": 213
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/Basic.lean",
+      "blob": "ee75690e5e19b5ce22ad477d443552d2c31882d9",
+      "bytes": 353
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/CompleteGraphIncidence.lean",
+      "blob": "321a42751aef2af511068d9312816baa8b616e8e",
+      "bytes": 7658
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiber.lean",
+      "blob": "73158febdb6f2979b7226c5738b99a6e981eadd7",
+      "bytes": 4206
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean",
+      "blob": "37c2820fc4dd98297a5b06ce210e36733ebf7756",
+      "bytes": 9364
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/ControllerFiberQuotient.lean",
+      "blob": "516f4980edc6a79584999e96ae34a34b095cdbe8",
+      "bytes": 2774
+    },
+    {
+      "path": "lean/AIEFProofs/AIEFProofs/Smoke.lean",
+      "blob": "2f456b84fe3b8a2df720bc48caf5609d02ee04da",
+      "bytes": 748
+    },
+    {
+      "path": "lean/AIEFProofs/README.md",
+      "blob": "f18fdc5875684bf65455588e7998595e54b8ff04",
+      "bytes": 5309
+    },
+    {
+      "path": "lean/AIEFProofs/lake-manifest.json",
+      "blob": "e6c34897cbe880f625aa52983ab1521a61d9bebb",
+      "bytes": 3144
+    },
+    {
+      "path": "lean/AIEFProofs/lakefile.toml",
+      "blob": "2a8cfd2b9ff96891189b80299701c481a7d372a5",
+      "bytes": 359
+    },
+    {
+      "path": "lean/AIEFProofs/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn.lean",
+      "blob": "b74c4eebf6421ed6287255e383a371965875b7ed",
+      "bytes": 192
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphKn.lean",
+      "blob": "3eb42bc26df3de5626da2482c287e588fe2ffce7",
+      "bytes": 13837
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/CompleteGraphRightInverse.lean",
+      "blob": "2bfd62c13d1103218e8a26b2868391cabe8c9941",
+      "bytes": 4063
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/IncMatrixRank.lean",
+      "blob": "c48280d84871a08f8c7ebc1b8b04ffd03d929c8f",
+      "bytes": 11170
+    },
+    {
+      "path": "lean/AIEFProofsKn/AIEFProofsKn/KernelDimFormula.lean",
+      "blob": "f6447ae22f197fc16fb6d7fb53e287360bc1b7c6",
+      "bytes": 2987
+    },
+    {
+      "path": "lean/AIEFProofsKn/README.md",
+      "blob": "d862fe206d91413bffd247f72ab8ae237cf9a775",
+      "bytes": 5831
+    },
+    {
+      "path": "lean/AIEFProofsKn/lake-manifest.json",
+      "blob": "fb97553c6503753e97264d422009be7dedef1af4",
+      "bytes": 3409
+    },
+    {
+      "path": "lean/AIEFProofsKn/lakefile.toml",
+      "blob": "e10fcc1f003eb14c1ddb73f0b0dc704a3865cc81",
+      "bytes": 515
+    },
+    {
+      "path": "lean/AIEFProofsKn/lean-toolchain",
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473",
+      "bytes": 25
+    },
+    {
+      "path": "registry/artifacts.csv",
+      "blob": "28fbbabc57caa095fe76dad223f15f099deabc5e",
+      "bytes": 1264455
+    },
+    {
+      "path": "tools/redteam/test_rt_matched_phase_anchor.py",
+      "blob": "e25638cea98e3e2543f8bc86302087bdb9b5c6d4",
+      "bytes": 3377
+    }
+  ],
+  "scope": "Selected012 current source/feedback navigation; not exhaustive repository review, old science rerun, or remote submission"
+}

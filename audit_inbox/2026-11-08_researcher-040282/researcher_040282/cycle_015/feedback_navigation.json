@@ -1,0 +1,8 @@
+{
+  "old_inbox": "1b5ae52bfe5ae60092f1bacb4a61175f09fde211",
+  "current_inbox": "df5c28f162bfb0b23d5ffb872dc2a8c6258b4193",
+  "changed_paths_only": [
+    "A\taudit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md"
+  ],
+  "scope": "Tree-name navigation only, not a source finding or whole-inbox execution"
+}

@@ -1,0 +1,18 @@
+### AIEF_1_4_FORWARD_PLAN.md
+HEAD:audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_lineage_freeze_manifest.json:3:    "AIEF_1_4_FORWARD_PLAN.md": "df7f3c4f793f811812f8f4cc344ebbcc558aca2f91b218ee82d242e6d55878e5
+HEAD:audits/github_reconciliation/zip_vs_tree_comparison.csv:79:workspace-019ff402-3611-7903-99ce-0679e00cb830.zip,AIEF_1_4_FORWARD_PLAN.md,AIEF_1_4_FORWARD_PLAN.md,IDENTICAL_TO_WORKTREE,df7f3c4f793f811812f8f4cc344ebbcc5
+HEAD:registry/artifacts.csv:13:ART-0012,worktree,AIEF_1_4_FORWARD_PLAN.md,df7f3c4f793f811812f8f4cc344ebbcc558aca2f91b218ee82d242e6d55878e5,10747,documentation_or_report,AIEF_1_4_CONTROLLER_FIBER,Supported,Finite numerica
+HEAD:registry/artifacts.csv:2839:ART-2838,zip:workspace-019ff402-3611-7903-99ce-0679e00cb830.zip,AIEF_1_4_FORWARD_PLAN.md,df7f3c4f793f811812f8f4cc344ebbcc558aca2f91b218ee82d242e6d55878e5,10747,zip_member,ARCHIVE_RECONCIL
+### AIEF_HISTORIC_UNFOLDING.md
+HEAD:audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_lineage_freeze_manifest.json:10:    "AIEF_HISTORIC_UNFOLDING.md": "6a0117621da57e34be43dd8183cc3dc7395c9d463d7ea69f65ab7cf161ee0
+HEAD:audits/github_reconciliation/zip_vs_tree_comparison.csv:129:workspace-019ff402-3611-7903-99ce-0679e00cb830.zip,AIEF_HISTORIC_UNFOLDING.md,AIEF_HISTORIC_UNFOLDING.md,IDENTICAL_TO_WORKTREE,6a0117621da57e34be43dd8183cc
+HEAD:registry/artifacts.csv:102:ART-0101,worktree,AIEF_HISTORIC_UNFOLDING.md,6a0117621da57e34be43dd8183cc3dc7395c9d463d7ea69f65ab7cf161ee0c6d,34515,documentation_or_report,AIEF_1_4_SYNTHESIS_DOCS,Supported,Controlled exp
+HEAD:registry/artifacts.csv:2889:ART-2888,zip:workspace-019ff402-3611-7903-99ce-0679e00cb830.zip,AIEF_HISTORIC_UNFOLDING.md,6a0117621da57e34be43dd8183cc3dc7395c9d463d7ea69f65ab7cf161ee0c6d,34515,zip_member,ARCHIVE_RECONC
+### AI_AGENT_HANDOFF_PROMPT.md
+HEAD:AI Agent Audits/evidence/audit_manifest.json:23:  "AI_AGENT_HANDOFF_PROMPT.md": "5c24dbdfa9f71e2feccc16369ab2001c81f37baeec786bef686eabf2985311c3",
+HEAD:audits/github_reconciliation/recovered_from_workspace_019ff402/PROVENANCE.json:126:      "worktree_sha256": "5c24dbdfa9f71e2feccc16369ab2001c81f37baeec786bef686eabf2985311c3",
+HEAD:audits/github_reconciliation/zip_vs_tree_comparison.csv:132:workspace-019ff402-3611-7903-99ce-0679e00cb830.zip,AI_AGENT_HANDOFF_PROMPT.md,AI_AGENT_HANDOFF_PROMPT.md,DIVERGENT_ZIP_HAS_EXPANDED_REVISION,e50443113589bf
+HEAD:registry/artifacts.csv:104:ART-0103,worktree,AI_AGENT_HANDOFF_PROMPT.md,5c24dbdfa9f71e2feccc16369ab2001c81f37baeec786bef686eabf2985311c3,16124,documentation_or_report,AIEF_1_4_SYNTHESIS_DOCS,Supported,Controlled exp
+### aief_1_4_augmented_spectrum/augmented_spectrum_report.txt
+HEAD:AI Agent Audits/evidence/audit_manifest.json:36:  "aief_1_4_augmented_spectrum/augmented_spectrum_report.txt": "e84941ea4c4630abcad49bcb323bfee567c34e1768b2f9e32ace3c6765c6b06d",
+HEAD:registry/artifacts.csv:344:ART-0343,worktree,aief_1_4_augmented_spectrum/augmented_spectrum_report.txt,e84941ea4c4630abcad49bcb323bfee567c34e1768b2f9e32ace3c6765c6b06d,3039,documentation_or_report,AIEF_1_4_CONTROLLE

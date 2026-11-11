@@ -1,0 +1,15 @@
+{
+  "mutation": "omit_clipping",
+  "runtime_utc_start": "2026-11-10T03:52:36.772968+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 89.83374602000004,
+  "setup_or_name_failure": true,
+  "baseline_semantic_witness": "noClip_negative",
+  "first_errors": [
+    "TrajectoryInvariants.lean:80:4: error: 'change' tactic failed, pattern",
+    "TrajectoryInvariants.lean:83:4: error: Type mismatch",
+    "TrajectoryInvariants.lean:84:4: error: Type mismatch",
+    "TrajectoryInvariants.lean:112:8: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached",
+    "TrajectoryInvariants.lean:224:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+  ]
+}

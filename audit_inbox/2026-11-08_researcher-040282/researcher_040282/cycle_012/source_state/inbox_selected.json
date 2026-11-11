@@ -1,0 +1,68 @@
+{
+  "branch": "audit-inbox",
+  "commit": "b61f4340a4dfc9ae5b2732e51efeb49d0c10bd3d",
+  "fetched_and_verified": 12,
+  "files": [
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+      "blob": "35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+      "bytes": 18284
+    },
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+      "blob": "41f194cee485a4531e2ff41047b8da7b3527a5da",
+      "bytes": 21778
+    },
+    {
+      "path": "audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md",
+      "blob": "4541a67e67c2f8df1beca024d7daa6d371c3c620",
+      "bytes": 10508
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-09-04_researcher040282_004_complex-ema.md",
+      "blob": "0923ad02f742d21dfef9f7c46830740a14313623",
+      "bytes": 117376
+    },
+    {
+      "path": "audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction/README.md",
+      "blob": "91cf173d1d5509444904bebf889c4291fac09f32",
+      "bytes": 4134
+    },
+    {
+      "path": "audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction/p1_evidence.txt",
+      "blob": "72d132d175fb4dc4eec9d681f107aa62118fbb2b",
+      "bytes": 635
+    },
+    {
+      "path": "audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md",
+      "blob": "f4ffb71adf14f581b3f736e8d7be871d28de88f5",
+      "bytes": 5129
+    },
+    {
+      "path": "audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md",
+      "blob": "06d4f5b3217ac64fbe2b9c34c2603ad9138b461f",
+      "bytes": 6849
+    },
+    {
+      "path": "audit_inbox/README.md",
+      "blob": "efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+      "bytes": 1982
+    },
+    {
+      "path": "audit_inbox/TRIAGE.md",
+      "blob": "87adf5fee4c2b93cb35cbc96b0acf95ffad2aa4f",
+      "bytes": 30242
+    },
+    {
+      "path": "audit_inbox/briefing/OPEN_QUESTIONS.md",
+      "blob": "0526551f44d70f4f2e0c5f65e2f34d564b8b22b2",
+      "bytes": 9610
+    },
+    {
+      "path": "audit_inbox/briefing/STATE.md",
+      "blob": "fe2421ca428888760206717a67f2afaf4e489f0f",
+      "bytes": 9451
+    }
+  ],
+  "scope": "Retained evidence only; irrelevant PII-path substring selection excluded in own disposable cache; new notes/evidence read-only, no contributed reproducer acquired/executed"
+}

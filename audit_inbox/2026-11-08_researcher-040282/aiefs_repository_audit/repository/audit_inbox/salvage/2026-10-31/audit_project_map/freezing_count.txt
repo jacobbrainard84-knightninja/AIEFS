@@ -1,0 +1,14 @@
+runs with certificates: 12 other entries: ['exogenous_periodic_R_counterexample(edge 0-1)']
+certified (run,T) pairs: 1412  with N>0: 249  violations: 0  all ok: True  max N: 1428
+repo_omega/delay/seed=10431384713483787270 140 0 0
+repo_omega/delay/seed=10856823803646276806 139 0 0
+repo_omega/delay/seed=11242426753702356865 140 0 0
+repo_omega/delay/seed=12123519807951751650 141 0 0
+repo_omega/delay/seed=1230287949579537403 131 0 0
+repo_omega/no_delay/seed=10431384713483787270 140 0 0
+random_omega_U[1,2]#0/seed=10431384713483787270 123 123 1428
+random_omega_U[1,2]#1/seed=10856823803646276806 146 0 0
+stress_near_identical/seed=10431384713483787270 123 123 1178
+reset_B_at_48000/seed=10431384713483787270 63 1 938
+reset_B_at_48000/seed=10856823803646276806 63 1 938
+reset_B_at_48000/seed=11242426753702356865 63 1 938

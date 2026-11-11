@@ -1,0 +1,27 @@
+# run_all.sh console output, round 4 (2026-10-25); command from the repo root: UPDATE=1 bash "AI Agent Audits/evidence/run_all.sh". Temp-dir path redacted. Exit 1 is expected with UPDATE=1 when results differ.
+ok: mathcheck
+ok: gate_idempotence
+ok: freq_predictor
+ok: kappa_rows
+ok: matched_phase_check
+ok: ablation14_topology
+ok: archived13_closedform
+ok: evolution_checks
+ok: kappa_tw
+ok: analyze_kappa_tw
+ok: kappa_cycle_kernel
+ok: analyze_kappa_cycle_kernel
+ok: rate_law_census_r4
+ok: delay_paired
+ok: analyze_delay
+ok: frozen_topology_check
+ok: omega_random
+ok: omega_multistab
+ok: repro13
+== comparing committed AI Agent Audits/evidence/results with fresh outputs in the temp dir
+DIFFERS: frozen_topology_check.json
+NEW (not committed): rate_law_census_r4.json
+UPDATE=1: copied fresh results and logs into AI Agent Audits/evidence
+fresh outputs kept in <TMPDIR>
+RESULTS DIFFER FROM COMMITTED
+exit 1

@@ -1,0 +1,18 @@
+{
+  "anchor_failed": true,
+  "error": "Anchor validation FAILED for seed=11242426753702356865. Check frozen_anchor_validation.csv for details.",
+  "failed_seeds": [
+    "11242426753702356865"
+  ],
+  "freezeable": false,
+  "full_cohort": false,
+  "initial_match_failed": false,
+  "run_scope": "partial",
+  "seed_status": {
+    "11242426753702356865": "failed: RuntimeError: Anchor validation FAILED for seed=11242426753702356865. Check frozen_anchor_validation.csv for details."
+  },
+  "seeds_requested": [
+    "11242426753702356865"
+  ],
+  "status": "FAILED"
+}

@@ -1,0 +1,3 @@
+IMPLEMENTATION ONLY; statements/reference/probes/main imports held fixed
+(eta + mu) * reported C i j - mu
+-> mu * reported C i j - mu

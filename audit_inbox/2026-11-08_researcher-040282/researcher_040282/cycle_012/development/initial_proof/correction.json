@@ -1,0 +1,7 @@
+{
+  "reason": "Imported additive inequality left/right helper orientation differed from guessed use; kernel rejected2proof steps",
+  "fix": "Use explicit componentwise add_le_add with reflexivity, not positional helper names",
+  "statements_coefficients_hypotheses_cases_tolerance_unchanged": true,
+  "draft_sorryAx_not_promoted_or_control": true,
+  "acquired_engine_not_executed": true
+}

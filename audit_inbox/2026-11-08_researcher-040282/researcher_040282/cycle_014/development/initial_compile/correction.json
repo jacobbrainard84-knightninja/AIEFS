@@ -1,0 +1,5 @@
+{
+  "issue": "Doc comments must follow omit...in rather than precede that command; mathematical core elaborated but parser rejected file",
+  "fix": "Move omit before two doc comments, no mathematical condition/statement change",
+  "not_credited_as_negative_control": true
+}

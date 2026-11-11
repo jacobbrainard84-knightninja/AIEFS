@@ -1,0 +1,820 @@
+<cursor_untrusted_data_1337 source="ReadCanvas">
+
+Canvas "AIEFS Research Sweep" (https://cursor.com/canvas/store-88642a02-8c46-4615-99f7-f3c004525fd5/d5add94b-32fc-490a-86a1-92d952b3dffc):
+
+import {
+  Page,
+  Section,
+  Text,
+  Table,
+  Callout,
+  LinkCards,
+  TableOfContents,
+  Segmented,
+  NumberedList,
+  BulletList,
+  Steps,
+  Equation,
+  Frac,
+  Paren,
+  Properties,
+  useState,
+} from "grok/canvas";
+import type { TableCell, Link } from "grok/canvas";
+
+type Cat = "all" | "numerics" | "theory" | "lean" | "method";
+type Fit = "Direct" | "Partial" | "Prior art";
+type Rating = "known" | "known-variant" | "likely-new-but-small" | "open gap";
+type Diff = "tiny" | "medium" | "long-shot" | "not a target";
+
+interface Finding {
+  n: number;
+  item: string;
+  src: string;
+  age: "Old" | "New" | "Old + new";
+  problem: string;
+  fit: Fit;
+  next: string;
+  cat: Exclude<Cat, "all">;
+}
+
+const findings: Finding[] = [
+  {
+    n: 1,
+    item: "Formal step (a) for every n: the classical rank fact, plus an explicit inverse",
+    src: "[R1] van Nuffelen 1976; [R2] Grossman–Kulkarni–Schochetman 1994; [L1] Mathlib SimpleGraph.incMatrix",
+    age: "Old + new",
+    problem: "Lean formal step (a): CompleteGraphIncidence.lean only proves n = 3..6",
+    fit: "Direct",
+    next: "Prove rinv = Mᵀ·Q⁻¹ for all n ≥ 3, where Q = M·Mᵀ = (n−2)I + J (equation in the Top findings section). That gives M·rinv = 1, and the existing finrank_ker_of_right_inverse then gives C(n,2) − n. Cite it as a known result, not a new one.",
+    cat: "lean",
+  },
+  {
+    n: 2,
+    item: "Step-size convergence (order) test for the ~2e-8 rate-law gap",
+    src: "[N1] Bellen–Zennaro 2003; [N2] Shampine–Thompson 2001",
+    age: "Old",
+    problem: "AUD-RATELAW (unexplained ~2e-8 gap), before or alongside the δ ∈ [1e-9, 1e-8) sweep",
+    fit: "Direct",
+    next: "Keep τ fixed and run dt = h, h/2, h/4 with delay_steps = τ/dt exact. Estimate the observed order p (equation below). p ≈ 1 means forward-Euler truncation error; a flat gap points to δ or floating-point effects instead.",
+    cat: "numerics",
+  },
+  {
+    n: 3,
+    item: "Event timing should use integer step indices, not float times",
+    src: "[N3] Goldberg 1991; [N4] Polhill–Izquierdo–Gotts 2006",
+    age: "Old",
+    problem: "v4 held-event end-time float bug; any 'held for T' detector",
+    fit: "Direct",
+    next: "Store event start and end as integer step counts k (t = k·dt) and compare times as |t − t*| ≤ dt/2. Add a regression test that reproduces the old bug.",
+    cat: "numerics",
+  },
+  {
+    n: 4,
+    item: "Discrete Halanay inequality that fits a fixed-step delayed recurrence",
+    src: "[H1] Mohamad–Gopalsamy 2000, Thm 3.1; [H2] Baker 2010 (survey)",
+    age: "Old",
+    problem: "Halanay plan / decay claims for the B-update with delay_steps lag",
+    fit: "Direct",
+    next: "Write the per-step error bound of the engine in the Thm 3.1 form, with h = dt and κ = delay_steps, then check inf(a − b) > 0 on the post-split regime. The theorem gives geometric decay λ^−n.",
+    cat: "theory",
+  },
+  {
+    n: 5,
+    item: "Correlation between natural frequency and structure is known in plastic phase-oscillator networks",
+    src: "[A6] Chauhan et al. 2022; [A3] Berner–Schöll–Yanchuk 2019; [F5] Seliger–Young–Tsimring 2002",
+    age: "Old + new",
+    problem: "Corr_physical (0.995 hand-picked ω vs ~0.71 random ω); AUD-NOVELTY",
+    fit: "Prior art",
+    next: "Treat the ω-to-topology link as an expected effect, with references. Report Corr_physical as a distribution over ω draws for each ω family, not as one number.",
+    cat: "theory",
+  },
+  {
+    n: 6,
+    item: "Seed and ω-draw aggregation with Fisher z, plus the point-biserial caveat",
+    src: "[S1] Fisher 1915; [S2] Tate 1954; [S3] Morris–White–Crowther 2019 (ADEMP)",
+    age: "Old",
+    problem: "AUD-SCOPE-1.4 (single seed); Corr_physical; EMP-AIEF14-03",
+    fit: "Direct",
+    next: "For each ω draw, compute r and then z = atanh(r). Average z over at least 30 draws and report a 95% CI from the spread of z across draws. Point-biserial r is Pearson r with one binary variable, so the textbook 1/√(n−3) standard error is only approximate. Use bootstrap CIs.",
+    cat: "method",
+  },
+  {
+    n: 7,
+    item: "Phase-locking predictor that uses the whole graph, not pairwise Δω",
+    src: "[F9] Dörfler–Chertkov–Bullo 2013; [F10] Dörfler–Bullo 2014 survey",
+    age: "Old",
+    problem: "AUD-TOPO-OMEGA (the Δω rule is exact only for repo-ω no_delay)",
+    fit: "Partial",
+    next: "Add a held-out predictor based on the incidence-matrix locking condition (roughly ‖Bᵀ L† ω‖∞ small versus the coupling; see the paper for the exact form). Compare its accuracy with the Δω rule on random and clustered ω. Expect misses from multistability.",
+    cat: "theory",
+  },
+  {
+    n: 8,
+    item: "Linearise delayed phase locking with the standard tools",
+    src: "[F3] Yeung–Strogatz 1999; [F4] Earl–Strogatz 2003; [A4] Berner et al. 2021 (adaptive master stability)",
+    age: "Old + new",
+    problem: "AUD-SLOWPOLE; the 966-dim response that is neither a Jacobian nor Floquet",
+    fit: "Partial",
+    next: "Earl–Strogatz: when every node has the same weighted in-degree, stability is decided by the sign of K·f′(−Ωτ), whatever the topology. Check the row sums of the frozen gated weights. If they are equal (the gate pushes toward this), the criterion applies to the frozen graph; if not, use the adaptive master stability function.",
+    cat: "theory",
+  },
+  {
+    n: 9,
+    item: "Delay plus Hebbian Kuramoto already exists",
+    src: "[A7] Timms–English 2014; [A8] Madadi Asl–Valizadeh–Tass 2017",
+    age: "Old",
+    problem: "AUD-DELAY (no delay-specific signature on random ω); AUD-NOVELTY",
+    fit: "Prior art",
+    next: "Reproduce one qualitative delay effect from Timms–English in the engine as a positive control. If the engine cannot show it, AUD-DELAY's null result may come from the parameter regime rather than the model.",
+    cat: "theory",
+  },
+  {
+    n: 10,
+    item: "The capacity gate is a known type of Hebbian normalisation",
+    src: "[F8] Miller–MacKay 1994",
+    age: "Old",
+    problem: "AUD-GATE (node-strength normalisation, not a projection)",
+    fit: "Prior art",
+    next: "Name the gate as a multiplicative (scaling) node-strength normalisation, cite Miller–MacKay, and run one subtractive-normalisation variant to see whether the split and freeze survive.",
+    cat: "theory",
+  },
+  {
+    n: 11,
+    item: "Use the field reviews as the novelty map",
+    src: "[A1] Berner–Gross–Kuehn–Kurths–Yanchuk 2023; [A2] Sawicki et al. 2023",
+    age: "New",
+    problem: "AUD-NOVELTY (literature review is an open owner decision)",
+    fit: "Partial",
+    next: "Go through the 2023 Physics Reports sections on phase oscillators with adaptive coupling and delays, and list which AIEFS ingredients each cited paper already has.",
+    cat: "method",
+  },
+  {
+    n: 12,
+    item: "Preregister before the next experiments run",
+    src: "[M1] Nosek et al. 2018; [M2] Sandve et al. 2013",
+    age: "Old",
+    problem: "AUD-LABEL (nothing preregistered); SSRH-ORIG-01..07",
+    fit: "Direct",
+    next: "Before running the δ sweep and the held-out ω test, write the hypothesis, metric, pass threshold and seed list into registry/ with a date and commit hash. Then label each result as confirmatory or exploratory.",
+    cat: "method",
+  },
+  {
+    n: 13,
+    item: "AI-generated claims need a machine evaluator and a literature check",
+    src: "[P1] FunSearch 2024; [P3] AlphaEvolve 2025; [P6] Beel et al. 2025; [P8] Erdős-problems episode 2025",
+    age: "New",
+    problem: "AUD-NOVELTY; claims registry practice",
+    fit: "Partial",
+    next: "Each claim row gets an 'evaluator' field (a script or Lean theorem that checks it). Novelty is worded 'not known to us after search X on date Y', never 'new'.",
+    cat: "method",
+  },
+  {
+    n: 14,
+    item: "Mathlib already has Gershgorin and Grönwall",
+    src: "[L2] Mathlib Gershgorin; [L3] Mathlib ODE.Gronwall; [L4] Immler 2018",
+    age: "New",
+    problem: "Lean scope beyond trivial linear algebra",
+    fit: "Partial",
+    next: "Next formal targets: a Gershgorin bound on the gated weight matrix using eigenvalue_mem_ball, and the discrete Halanay Thm 3.1 for sequences. We did not find Halanay in Mathlib (not exhaustively checked).",
+    cat: "lean",
+  },
+  {
+    n: 15,
+    item: "A blueprint linking registry claims to Lean declarations",
+    src: "[L5] Equational Theories Project 2025; [L6] leanblueprint",
+    age: "New",
+    problem: "Lean modules ↔ registry/claims.csv traceability",
+    fit: "Partial",
+    next: "Add a claim_id → Lean declaration column (or a blueprint), as the Equational Theories Project did for its millions of implications.",
+    cat: "lean",
+  },
+];
+
+const fitTone = (f: Fit): TableCell =>
+  f === "Direct"
+    ? { text: f, tone: "success" }
+    : f === "Partial"
+      ? { text: f, tone: "warning" }
+      : { text: f, tone: "danger" };
+
+const rateTone = (r: Rating): TableCell =>
+  r === "known"
+    ? { text: r, tone: "danger" }
+    : r === "known-variant"
+      ? { text: r, tone: "warning" }
+      : { text: r, tone: "success" };
+
+const diffTone = (d: Diff): TableCell =>
+  d === "tiny"
+    ? { text: d, tone: "success" }
+    : d === "medium"
+      ? { text: d, tone: "warning" }
+      : { text: d, tone: "danger" };
+
+// ---------- Novelty map ----------
+const noveltyRows: TableCell[][] = [
+  [
+    "(a) Min-endpoint capacity gate: Σ_j B_ij ≤ c, enforced by scaling each edge by min(scale_i, scale_j)",
+    "[V2] Assenza et al. 2011 (homophily + homeostasis that keeps each node's input strength fixed); [V1] Gutiérrez et al. 2011; [F8] Miller–MacKay 1994; [V3] Martens–Bick 2025 (adaptive Kuramoto with weighted-degree constraints); [G1] velvetmonkey/flywheel-universe 2026 (per-node row-sum budgets via a symmetric projection)",
+    "AIEF uses a one-sided cap (it only acts when the budget is exceeded) and symmetric min-endpoint scaling. The prior work uses equality normalisation or smooth homeostasis. That difference is a detail, not a new mechanism.",
+    rateTone("known-variant"),
+    "A1–A4, S1, W1, W2",
+  ],
+  [
+    "(b) Threshold-topology freezing: the future-window support is fully frozen and persistence is exactly binary",
+    "[A3] Berner–Schöll–Yanchuk 2019 (stationary multicluster states); [F6] Aoki–Aoyagi 2009; [V4] Gross–Blasius 2008 (adaptive-network review); [G1] flywheel-universe (freezing is imposed by a schedule)",
+    "In AIEF the freezing is emergent and exact. It follows from the settle-above-B_c threshold R > (μ+γB_c)/(η+μ) ≈ 0.4543 (E12; 3/7 = μ/(η+μ) ≈ 0.4286 is where B* = 0) together with the decay γ and the cap. No paper found proves finite-time exact support freezing under a hard min-endpoint cap. The freezing phenomenon itself is standard.",
+    rateTone("likely-new-but-small"),
+    "A6, S3",
+  ],
+  [
+    "(c) Corr_physical vs the Δω predictor",
+    "[A6] Chauhan et al. 2022; [F5] Seliger et al. 2002; [A3] Berner 2019; [F9] Dörfler–Chertkov–Bullo 2013",
+    "Mechanism-aligned and scoped, not a frequency-gap tautology (audit position E9 / AUD-CORR-0995-SCOPE, which revises audit H2's original 'near-circular' wording). Resonance drives weight growth, so the association is expected. In held-out tests, past R beat the Δω-only predictor at the repo ω with delay (AUC 0.99999 vs 0.972). In uniform ensembles it mainly lowered log loss (0.26 vs 0.45). In clustered ensembles it discriminated no better than chance (AUC 0.46–0.47 vs 0.65–0.73). The 0.995 figure is specific to the fixed repo frequency vector. Correlations between frequency structure and emergent network structure already have prior art in plastic phase-oscillator networks (Chauhan et al. 2022), and the Δω rule is ordinary two-oscillator locking.",
+    rateTone("known-variant"),
+    "A7, S4",
+  ],
+  [
+    "(d) Rate-law census on the unsigned-incidence kernel of K_n (λ = (1−γdt)·s_J, κ_k = kη/c − 1/T_w)",
+    "[R1] van Nuffelen 1976; [R2] Grossman et al. 1994; [R3] Cvetković–Rowlinson–Simić 2007; [V5] Cvetković–Rowlinson–Simić 2004 (book)",
+    "dim ker = m − n for connected non-bipartite graphs is classical signless-Laplacian theory. The per-mode decay is direct linear algebra of the update. A census tied to the gate is a specialisation.",
+    rateTone("known-variant"),
+    "A9, A10, S8",
+  ],
+  [
+    "(e) Delay is not necessary but not inert",
+    "[A7] Timms–English 2014; [A8] Madadi Asl et al. 2017; [F3] Yeung–Strogatz 1999; [A9] Kasatkin et al. 2017; [V6] Kasatkin–Nekorkin 2025; [A4] Berner et al. 2021",
+    "Delay plus plasticity is well studied, and delay-induced changes to cluster structure are expected. The AIEF claim is a statement about one ablation, not a mechanism.",
+    rateTone("known-variant"),
+    "A12, S6",
+  ],
+  [
+    "(f) Lean formalization",
+    "[G2] velvetmonkey/kuramoto-lean 2026 (39 sorry-free theorems, Zenodo DOI); [G3] taejun-song/kuramoto-lean 2026 (Ott–Antonsen); LeanPool port (seen in search results only, not fetched)",
+    "'First Lean Kuramoto' is not new. The gap: Mathlib's IncMatrix.lean has incMatrix · transpose but no rank or finrank theorem (grep, 2026-10-28). An all-n kernel-dimension proof could go upstream as a Mathlib PR.",
+    rateTone("open gap"),
+    "A13–A15, W3–W5, G-grep",
+  ],
+  [
+    "(g) AI-bot process: audit bots, claim registry, hash pinning, human owner",
+    "[X1] ARIS 2026 (claim ledger, cross-model reviewer); [X2] CrossAudit 2026 (git-native cross-vendor auditors, receipts bound to commit SHA and a hash manifest); [X3] XScientist 2026 (claim-to-evidence anchors, content hashes); [X4] Agent Laboratory; [X5] AgentRxiv; [X6] AI Scientist-v2; [X7] AI co-scientist",
+    "The pipeline design is a known variant. What may still be distinctive is the case data: a hobby owner, a retired-claims lineage, a recorded audit-bot sycophancy reversal, and Lean plus numerics in one registry. That suits an experience report, not a methods claim.",
+    rateTone("known-variant"),
+    "A16–A20, W6",
+  ],
+];
+
+// ---------- Origins ----------
+const originRows: TableCell[][] = [
+  [
+    "Laplace resonance; Molchanov 1968 'resonant structure of the solar system'",
+    "Mainstream: the Io–Europa–Ganymede resonance is real and explained by tidal evolution [O3 Goldreich 1965, O5 Peale 1976].",
+    "Molchanov's 'every planet sits in a resonance' law was challenged at once on statistical grounds [O2 Backus 1969; O2b Hénon 1969].",
+    "Build a null for coincidence. Draw random frequency sets and count near-commensurabilities (or near-locks) with the same tolerance. AIEF version: how often does random ω give Δω-locked edge sets this structured?",
+  ],
+  [
+    "Spin–orbit and tidal locking",
+    "Mainstream: spin–orbit capture by tidal dissipation [O4 Goldreich–Peale 1966]. Mathematically this is a dissipative Adler / phase-locking equation.",
+    "None.",
+    "Use as a known positive control. A forced Adler phase with dissipation should lock inside an Arnold tongue, and the engine should reproduce the tongue edge analytically.",
+  ],
+  [
+    "Planetary-tidal synchronisation of the solar dynamo (Venus–Earth–Jupiter, 11.07 yr)",
+    "Mainstream-negative: Cameron–Schüssler 2013 [O7]; Poluianov–Usoskin 2014 [O9]; Nataf 2022 rebuttal [O12], which found the Dicke-ratio 'clocked' demonstration invalid.",
+    "Contested: Scafetta 2010 [O6]; Abreu et al. 2012 [O8] (+ 2014 reply); Stefani et al. 2019, 2023, 2024 [O10, O11, O13]. In 2024 V-E-J spring tides are proposed to excite magneto-Rossby waves, with the 11.07-yr beat synchronising an α–Ω dynamo.",
+    "Calibrate the Dicke ratio on synthetic series: weakly forced phase oscillators (clocked) versus random-walk phases. Measure the false-positive and power curves vs record length. The output can be checked and is useful in either case.",
+  ],
+  [
+    "Rieger periods (~150–160 d) and QBO 1.723 yr (ORIG-02/05)",
+    "Mainstream as observations: Rieger et al. 1984 [O14].",
+    "Contested as tidal beats (Stefani et al. 2024 [O13]).",
+    "Toy beat test: two forced modes produce combination tones. Predict which beat periods are possible in a forced Kuramoto pair and check them by FFT. This is a known-variant exercise.",
+  ],
+  [
+    "60Fe rhythms (ORIG-03)",
+    "Mainstream: near-Earth supernova deposition [O15 Wallner et al. 2016].",
+    "Fringe: a planetary or tidal rhythm reading of 60Fe has no support in what we fetched.",
+    "None for the toy model. Keep 'Speculative / untested origin hypothesis'.",
+  ],
+  [
+    "Heliosphere as delay-coupled oscillators with ~10⁸ parametric amplification (ORIG-01; 'Ohira' DDE preprint, not verified)",
+    "Mainstream counterpart: delay-coupled Kuramoto [F3 Yeung–Strogatz 1999].",
+    "Fringe or untested: the 10⁸ figure has no verified source.",
+    "Floquet test: a periodically forced delayed Kuramoto pair. Compute the Floquet multipliers and bound any amplification with a certified inequality. This turns an untested number into a checkable bound.",
+  ],
+  [
+    "Faraday RM (06), piezo/flexoelectric and superionic ice (04), skyrmions, superconducting meteorite grains, gravity as 'squeeze vector'",
+    "No mainstream support was checked this sweep.",
+    "Fringe.",
+    "No toy direction. Keep 'Speculative / untested origin hypothesis'.",
+  ],
+  [
+    "SINDy hypergraph discovery (ORIG-07)",
+    "Mainstream as a method (sparse identification of dynamics). Reference not fetched this sweep.",
+    "None as a method.",
+    "Recover-the-law test: run sparse regression on AIEF trajectories. It should recover F = (η+μ)R − μ − γB and the cap from data alone. This makes a good audit of the engine.",
+  ],
+];
+
+const lessons: string[] = [
+  "Build a null before celebrating a coincidence. Backus (1969) against Molchanov is the template. In this repo the null-model example is the random-ω ensembles: Corr_physical ≈ 0.995 at the fixed repo ω fell to about 0.71 in uniform and 0.59–0.63 in clustered ensembles. In held-out tests, past R mainly lowered log loss in uniform ensembles and was no better than chance in clustered ones (E9 / AUD-CORR-0995-SCOPE). The same audit's held-out tests in turn revised audit H2's original 'near-circular' wording, so the null cut both ways.",
+  "A clever demonstration can be invalid. Nataf (2022) showed the Dicke-ratio 'clocked' argument fails, so calibrate any test statistic on synthetic data with a known answer first.",
+  "Separate seed cohorts from reruns. Independent 50-seed SeedSequence cohorts are evidence; a software-reproducibility rerun is not.",
+  "Use survival analysis rather than recovered-only means (the v1.4 90%-recovery table).",
+  "The v1.3 repair list shows where bugs hide: delay indexing, row-wise projection breaking symmetry, a no_delay leak, a shuffle that was not one, duplicated matrix entries, float-time drift, undefined correlations set to 0, and overlapping windows. Each one deserves a regression test.",
+  "Retire claims in public. The 10 retired interpretations (section XIX) and the 2026-10-28 downgrade of matched-phase 'mediates' to Exploratory (EMP-AIEF14-02) show the registry working. Keep doing it.",
+  "Treat AI enthusiasm as noise. The origin drafts escalate ('Submit it this week… historic'), and an audit bot reversed its SSRH verdict under owner pushback without new evidence. A verdict changes only with new evidence logged in the registry.",
+  "Never trust stand-ins in archives. The history zips contain fake manifests and stub scripts, and about 70 'FINAL/PRODUCTION READY' notes are not evidence. Only hash-pinned runs (such as b2a95dfbfbe3, 40/40 seeds) count.",
+  "Avoid circular hashing. The manifest deliberately excludes post-manifest logs.",
+];
+
+// ---------- People ----------
+const peopleRows: TableCell[][] = [
+  ["Rico Berner, Serhiy Yanchuk (with Eckehard Schöll, Thilo Gross)", "Adaptive dynamical networks, multiclusters, adaptive master stability", "[A1] Physics Reports 2023; [A4] PRL 2021; [A3] 2019"],
+  ["Erik A. Martens, Christian Bick", "Adaptive Kuramoto with constraints, multiple timescales", "[V3] Chaos 2025; [A5] Jüttner–Martens 2023"],
+  ["Dmitry Kasatkin, Vladimir Nekorkin", "Adaptive couplings, higher-order adaptivity", "[V6] Chaos 2025; [A9] 2017"],
+  ["Peter A. Tass and co-authors (Chauhan, Madadi Asl)", "Plasticity and delays in phase-oscillator networks", "[A6] 2022; [A8] 2017"],
+  ["Steven Strogatz, Alex Townsend, Martin Kassabov; Hongjin Wu, Ulrik Brandes; Eduardo Canale", "Global synchronisation on dense and structured graphs (backup problem B1–B3)", "[K1] 2021; [K4] 2025; [K2] 2022; [K5] 2020"],
+  ["Afonso S. Bandeira and co-authors", "Yearly open-problem lists (Randomstrasse101)", "[K3] 2024 list"],
+  ["Frank Stefani (HZDR); Hans-Peter Nataf; Robert Cameron & Manfred Schüssler", "Both sides of the tidal-dynamo debate", "[O10–O13], [O7]"],
+  ["Terence Tao and the Equational Theories Project team (Bolan et al.); Thomas Bloom (erdosproblems.com)", "Large-scale AI-assisted and crowd mathematics, with a log of AI rediscoveries", "[L5] 2025; [E0] AI-contributions wiki; erdosproblems.com"],
+];
+
+// ---------- Search log ----------
+const searchRows: TableCell[][] = [
+  ["A1", "all:\"node strength\" AND all:adaptive AND all:Kuramoto", "arXiv API", "0"],
+  ["A2", "all:normalization AND all:Hebbian AND all:\"phase oscillators\"", "arXiv API", "0"],
+  ["A3", "all:\"synaptic scaling\" AND all:oscillators AND all:plasticity", "arXiv API", "0"],
+  ["A4", "all:\"adaptive coupling\" AND all:\"phase oscillators\" AND all:capacity", "arXiv API", "0"],
+  ["A5", "all:\"limited resources\" AND all:adaptive AND all:synchronization", "arXiv API", "≥3 (top 3 read)"],
+  ["A6", "all:frozen AND all:topology AND all:\"adaptive network\" AND all:oscillators", "arXiv API", "0"],
+  ["A7", "all:\"adaptive Kuramoto\" AND all:\"network structure\" AND all:\"natural frequencies\"", "arXiv API", "0"],
+  ["A8", "all:\"phase locking value\" AND all:plasticity AND all:Kuramoto", "arXiv API", "0"],
+  ["A9", "all:\"signless\" AND all:\"adaptive network\"", "arXiv API", "0"],
+  ["A10", "all:\"incidence matrix\" AND all:\"adaptive\" AND all:\"phase oscillators\"", "arXiv API", "0"],
+  ["A11", "all:\"master stability\" AND all:\"adaptive networks\"", "arXiv API", "≥3"],
+  ["A12", "all:delay AND all:\"adaptive coupling\" AND all:multistability AND all:oscillators", "arXiv API", "0"],
+  ["A13", "all:Lean AND all:Mathlib AND all:\"dynamical systems\"", "arXiv API", "≥3"],
+  ["A14", "all:\"formal verification\" AND all:Kuramoto", "arXiv API", "0"],
+  ["A15", "all:\"formal verification\" AND all:synchronization AND all:oscillators", "arXiv API", "0"],
+  ["A16", "all:\"AI Scientist\" AND all:\"automated scientific discovery\"", "arXiv API", "≥3"],
+  ["A17", "all:\"Agent Laboratory\"", "arXiv API", "≥3"],
+  ["A18", "all:\"co-scientist\" AND all:hypothesis", "arXiv API", "≥3"],
+  ["A19", "all:LLM AND all:agents AND all:\"research integrity\"", "arXiv API", "≥3"],
+  ["A20", "all:\"claim\" AND all:\"provenance\" AND all:\"LLM agents\" AND all:reproducibility", "arXiv API", "≥3"],
+  ["S1", "adaptive Kuramoto node strength normalization Hebbian", "Semantic Scholar", "rate-limited, no result"],
+  ["S2", "synaptic scaling phase oscillators Hebbian plasticity", "Semantic Scholar", "837 total (top read)"],
+  ["S3", "adaptive network phase oscillators frozen topology", "Semantic Scholar", "2326 total (top read)"],
+  ["S4", "past synchrony predicts emergent topology adaptive oscillator network", "Semantic Scholar", "rate-limited, no result"],
+  ["S5", "linear stability adaptive network phase oscillators edge dynamics", "Semantic Scholar", "rate-limited, no result"],
+  ["S6", "delay adaptive coupling phase oscillators multistability", "Semantic Scholar", "rate-limited, no result"],
+  ["S7", "formal verification Kuramoto synchronization proof assistant", "Semantic Scholar", "rate-limited, no result"],
+  ["S8", "Lean 4 Mathlib formalization graph incidence matrix", "Semantic Scholar", "20 total"],
+  ["S9", "LLM agents autonomous research reproducibility audit", "Semantic Scholar", "rate-limited, no result"],
+  ["W1–W6", "web searches for budgeted/Hebbian Kuramoto code, Kuramoto Lean formalisations, and claim-ledger agent pipelines", "WebSearch + GitHub API", "found G1–G3, X1–X3"],
+  ["G-grep", "rank|finrank in Mathlib/Combinatorics/SimpleGraph/IncMatrix.lean", "local grep of Mathlib source", "0 matches"],
+  ["O1", "Crossref: Molchanov 1968; Backus 1969; Hénon 1969; Goldreich 1965; Goldreich–Peale 1966; Peale 1976", "Crossref API", "all found"],
+  ["O2", "Crossref: Cameron Schüssler 2013; Abreu 2012/2014; Poluianov Usoskin 2014; Scafetta 2010; Stefani 2019/2023/2024; Nataf 2022/2023; Rieger 1984; Wallner 2016", "Crossref API", "all found (one 429, retried)"],
+  ["B1", "OEIS search: 'Kuramoto'; 'globally synchronizing graphs'", "OEIS JSON", "0 relevant (only Fibonacci A000045)"],
+  ["B2", "erdosproblems problems.yaml filtered to graph theory + open/falsifiable", "GitHub raw (teorth/erdosproblems)", "125 (114 open, 10 falsifiable, 1 verifiable)"],
+  ["B3", "independence polynomial trees unimodal computational verification", "WebSearch", "BrettRey repo (n ≤ 29), Ramos–Sun 2025"],
+  ["B4", "Gyárfás tree packing conjecture computer verification n=10 n=11", "WebSearch", "Guichard–Massman 1990 (n ≤ 11)"],
+  ["B5", "Gallai path decomposition computer verification small graphs", "WebSearch", "Heller 2024 blog (n ≤ 11)"],
+  ["B6", "ti:\"R(5,5)\" AND au:McKay; ti:\"5-chromatic\" AND ti:\"unit distance\"; ti:\"Equational Theories Project\"", "arXiv API", "2; 3; 2"],
+  ["B7", "garden.irmacs.sfu.ca, openproblemgarden.org; Polymath wiki (michaelnielsen.org/polymath1)", "curl", "HTTP 500; HTTP 404, not used"],
+];
+
+// ---------- Backup problems ----------
+interface Backup {
+  id: string;
+  problem: string;
+  status: string;
+  fit: string;
+  win: string;
+  diff: Diff;
+}
+
+const backups: Backup[] = [
+  {
+    id: "B1",
+    problem: "Kuramoto dense-graph threshold μc: the smallest μ such that every graph with min degree ≥ μ(n−1) globally synchronises (homogeneous Kuramoto). Randomstrasse101 2024, Conjecture 5 [K3].",
+    status: "Open: 0.6875 ≤ μc ≤ 0.75. Upper bound [K1] Kassabov–Strogatz–Townsend 2021; lower bound is a construction by [K2] Canale 2022 (after [K6] Yoneda et al., 0.6838 via ILP over circulants). [K4] Wu–Brandes (v6, 2025) still treats it as open. No AI 'solution' found.",
+    fit: "This is exactly our domain. Circulant and ILP search runs on one box, and the witness is a finite object.",
+    win: "A graph with min-degree ratio > 0.6875 plus a certified stable non-synchronous equilibrium (an interval-arithmetic Jacobian certificate, which an audit bot can re-check). That raises the lower bound.",
+    diff: "medium",
+  },
+  {
+    id: "B2",
+    problem: "Ring plus extra edges: do Townsend–Stillman–Strogatz graphs have no stable state other than sync beyond n = 8? [K5]",
+    status: "Open. Twisted states are killed by O(n log² n) edges, but other attractors were ruled out only for n ≤ 8 (Macaulay2), and n = 16 already has ≥ 32,768 real equilibria.",
+    fit: "Polynomial-system enumeration for fixed small graphs. Certificates can be re-checked independently.",
+    win: "For named graphs with n = 9..12, a certified complete list of equilibria (homotopy continuation plus a certification step) showing that only sync is stable.",
+    diff: "medium",
+  },
+  {
+    id: "B3",
+    problem: "Census: how many connected graphs on n vertices are globally synchronising (homogeneous Kuramoto)?",
+    status: "No OEIS sequence found (search B1, 2026-10-28). There may be counts in the literature that we did not search; run a literature check before calling it new.",
+    fit: "Small n with nauty-style enumeration. A non-sync witness is easy to certify; global sync needs a complete equilibrium enumeration.",
+    win: "An OEIS-ready sequence for n ≤ 7 or 8, with per-graph certificates that an audit bot re-checks.",
+    diff: "medium",
+  },
+  {
+    id: "B4",
+    problem: "Mathlib: rank of the unsigned incidence matrix (n for connected non-bipartite graphs, n − 1 for connected bipartite ones) and dim ker = C(n,2) − n for K_n.",
+    status: "Not open math (classical, [R1–R3]). It is a formalization gap: IncMatrix.lean has incMatrix · transpose lemmas but no rank theorem (grep, 2026-10-28).",
+    fit: "The repo already has the n = 3..6 proofs and the explicit right inverse (equation 1).",
+    win: "A merged Mathlib PR, which Lean checks by construction.",
+    diff: "tiny",
+  },
+  {
+    id: "B5",
+    problem: "Erdős #583, Gallai's path decomposition: every connected graph on n vertices splits into ≤ ⌈n/2⌉ edge-disjoint paths. [E583]",
+    status: "Open, status 'falsifiable'. Heller (2024 blog) [E583v] verified n ≤ 11, but states the bound as ⌈(n+1)/2⌉, which is weaker for even n. The verification at the exact bound for n = 8 and 10 should be re-checked.",
+    fit: "Exhaustive enumeration with an ILP or SAT fallback is box-scale for n ≤ 10, and n = 11 (about 10⁹ graphs) takes days. Certificates are just path lists.",
+    win: "An independent re-verification at ⌈n/2⌉ for n ≤ 10 (or 11), with emitted decompositions and a separate checker. Not new math, but a clean audited result.",
+    diff: "tiny",
+  },
+  {
+    id: "B6",
+    problem: "Erdős #993: the independent-set sequence of every tree is unimodal (Alavi–Malde–Schwenk–Erdős 1987). [E993]",
+    status: "Open, and the formalised statement is missing ('No' on the site). Verified for all trees n ≤ 29 [E993a]; an AI-assisted search exists [E993b]; log-concavity fails from n = 26 [E993c].",
+    fit: "Lean statement work suits us. n = 30 has 14,830,871,802 trees (OEIS A000055), so it is borderline on one box.",
+    win: "Tiny: a Lean statement contributed to formal-conjectures. Medium: an exhaustive n = 30 run with an independent recount.",
+    diff: "tiny",
+  },
+  {
+    id: "B7",
+    problem: "Erdős #743, Gyárfás tree packing: T_2..T_n with |T_k| = k always pack into K_n. [E743]",
+    status: "Open. The site lists only Fishburn n ≤ 9, but Guichard–Massman 1990 [E743a] verified n ≤ 11 (per its abstract). That missing reference is a small contribution, and posting it needs owner approval.",
+    fit: "Packing search with SAT. The family count grows quickly.",
+    win: "A certified n = 12 verification. It needs strong reductions, so it is beyond the box without new ideas.",
+    diff: "long-shot",
+  },
+  {
+    id: "B8",
+    problem: "Erdős #617: every r-colouring of K_{r²+1} has r+1 vertices whose K_{r+1} misses a colour (r ≥ 3). [E617]",
+    status: "Open for r ≥ 5 (proved for r = 3, 4). The site shows 7 proof claims and many people working on it, so it is crowded.",
+    fit: "r = 5 is a SAT instance on K_26 with 5 colours.",
+    win: "A DRAT-certified UNSAT proof for r = 5, or an explicit balanced colouring.",
+    diff: "long-shot",
+  },
+  {
+    id: "B9",
+    problem: "Hadwiger–Nelson side problem: the smallest 5-chromatic unit-distance graph.",
+    status: "The smallest we found is 509 vertices (Parts 2020 [H509]). Newer Moser-spindle-free constructions are larger (e.g. 2131 vertices, Haugland 2026). Crowded (Polymath16 lineage).",
+    fit: "SAT colourability checks with exact algebraic coordinates.",
+    win: "A smaller graph with a SAT certificate that it is not 4-colourable, plus exact unit-distance checks.",
+    diff: "medium",
+  },
+  {
+    id: "B10",
+    problem: "Ramsey R(5,5).",
+    status: "43 ≤ R(5,5) ≤ 46 (Angeltveit–McKay 2024 [R55]). Expert-crowded and compute-heavy.",
+    fit: "Poor.",
+    win: "Do not attack. Listed so nobody spends time on it.",
+    diff: "not a target",
+  },
+  {
+    id: "B11",
+    problem: "Equational Theories Project.",
+    status: "Completed (Bolan et al. 2025 [L5]; Vampire follow-up 2025).",
+    fit: "Not a target. It is a model for blueprints, crowd audit and a claim-to-Lean mapping.",
+    win: "Copy its workflow, not its problems.",
+    diff: "not a target",
+  },
+];
+
+// ---------- References ----------
+const refsFoundations: Link[] = [
+  { title: "[F1] Kuramoto 1975, Self-entrainment of a population of coupled non-linear oscillators", site: "doi.org", date: "1975", href: "https://doi.org/10.1007/BFb0013365" },
+  { title: "[F2] Strogatz 2000, From Kuramoto to Crawford", site: "doi.org", date: "2000", href: "https://doi.org/10.1016/S0167-2789(00)00094-4" },
+  { title: "[F3] Yeung & Strogatz 1999, Time Delay in the Kuramoto Model", site: "arxiv.org", date: "1999", href: "https://arxiv.org/abs/chao-dyn/9807030" },
+  { title: "[F4] Earl & Strogatz 2003, Synchronization with delayed coupling: a stability criterion", site: "doi.org", date: "2003", href: "https://doi.org/10.1103/PhysRevE.67.036204" },
+  { title: "[F5] Seliger, Young & Tsimring 2002, Plasticity and learning in a network of coupled phase oscillators", site: "arxiv.org", date: "2002", href: "https://arxiv.org/abs/nlin/0110044" },
+  { title: "[F6] Aoki & Aoyagi 2009, Co-evolution of phases and connection strengths", site: "doi.org", date: "2009", href: "https://doi.org/10.1103/PhysRevLett.102.034101" },
+  { title: "[F7] Ott & Antonsen 2008, Low dimensional behavior of large systems of globally coupled oscillators", site: "arxiv.org", date: "2008", href: "https://arxiv.org/abs/0806.0004" },
+  { title: "[F8] Miller & MacKay 1994, The Role of Constraints in Hebbian Learning", site: "doi.org", date: "1994", href: "https://doi.org/10.1162/neco.1994.6.1.100" },
+  { title: "[F9] Dörfler, Chertkov & Bullo 2013, Synchronization in complex oscillator networks and smart grids", site: "doi.org", date: "2013", href: "https://doi.org/10.1073/pnas.1212134110" },
+  { title: "[F10] Dörfler & Bullo 2014, Synchronization in complex networks of phase oscillators: a survey", site: "doi.org", date: "2014", href: "https://doi.org/10.1016/j.automatica.2014.04.012" },
+  { title: "[F11] Bi & Poo 1998, Synaptic modifications depend on spike timing (STDP origin)", site: "doi.org", date: "1998", href: "https://doi.org/10.1523/JNEUROSCI.18-24-10464.1998" },
+  { title: "[R1] Van Nuffelen 1976, On the incidence matrix of a graph", site: "doi.org", date: "1976", href: "https://doi.org/10.1109/TCS.1976.1084251" },
+  { title: "[R2] Grossman, Kulkarni & Schochetman 1994, Algebraic graph theory without orientation", site: "doi.org", date: "1994", href: "https://doi.org/10.1016/0024-3795(94)90407-3" },
+  { title: "[R3] Cvetković, Rowlinson & Simić 2007, Signless Laplacians of finite graphs", site: "doi.org", date: "2007", href: "https://doi.org/10.1016/j.laa.2007.01.009" },
+];
+
+const refsNumerics: Link[] = [
+  { title: "[N1] Bellen & Zennaro 2003, Numerical Methods for Delay Differential Equations", site: "doi.org", date: "2003", href: "https://doi.org/10.1093/acprof:oso/9780198506546.001.0001" },
+  { title: "[N2] Shampine & Thompson 2001, Solving DDEs in Matlab", site: "doi.org", date: "2001", href: "https://doi.org/10.1016/S0168-9274(00)00055-6" },
+  { title: "[N3] Goldberg 1991, What every computer scientist should know about floating-point arithmetic", site: "doi.org", date: "1991", href: "https://doi.org/10.1145/103162.103163" },
+  { title: "[N4] Polhill, Izquierdo & Gotts 2006, What every agent-based modeller should know about floating point arithmetic", site: "doi.org", date: "2006", href: "https://doi.org/10.1016/j.envsoft.2004.10.011" },
+  { title: "[H1] Mohamad & Gopalsamy 2000, Continuous and discrete Halanay-type inequalities", site: "doi.org", date: "2000", href: "https://doi.org/10.1017/S0004972700022413" },
+  { title: "[H2] Baker 2010, Development and application of Halanay-type theory", site: "doi.org", date: "2010", href: "https://doi.org/10.1016/j.cam.2010.01.027" },
+  { title: "[S1] Fisher 1915, Frequency distribution of the values of the correlation coefficient", site: "doi.org", date: "1915", href: "https://doi.org/10.2307/2331838" },
+  { title: "[S2] Tate 1954, Correlation between a discrete and a continuous variable (point-biserial)", site: "doi.org", date: "1954", href: "https://doi.org/10.1214/aoms/1177728730" },
+  { title: "[S3] Morris, White & Crowther 2019, Using simulation studies to evaluate statistical methods (ADEMP)", site: "doi.org", date: "2019", href: "https://doi.org/10.1002/sim.8086" },
+  { title: "[M1] Nosek et al. 2018, The preregistration revolution", site: "doi.org", date: "2018", href: "https://doi.org/10.1073/pnas.1708274114" },
+  { title: "[M2] Sandve et al. 2013, Ten Simple Rules for Reproducible Computational Research", site: "doi.org", date: "2013", href: "https://doi.org/10.1371/journal.pcbi.1003285" },
+];
+
+const refsRecent: Link[] = [
+  { title: "[A1] Berner, Gross, Kuehn, Kurths & Yanchuk 2023, Adaptive Dynamical Networks (Physics Reports)", site: "arxiv.org", date: "2023", href: "https://arxiv.org/abs/2304.05652" },
+  { title: "[A2] Sawicki, Berner et al. 2023, Perspectives on adaptive dynamical systems", site: "arxiv.org", date: "2023", href: "https://arxiv.org/abs/2303.01459" },
+  { title: "[A3] Berner, Schöll & Yanchuk 2019, Multiclusters in networks of adaptively coupled phase oscillators", site: "arxiv.org", date: "2019", href: "https://arxiv.org/abs/1809.00573" },
+  { title: "[A4] Berner, Vock, Schöll & Yanchuk 2021, Desynchronization transitions in adaptive networks", site: "arxiv.org", date: "2021", href: "https://arxiv.org/abs/2008.10543" },
+  { title: "[A5] Jüttner & Martens 2023, Complex dynamics in adaptive phase oscillator networks", site: "doi.org", date: "2023", href: "https://doi.org/10.1063/5.0133190" },
+  { title: "[A6] Chauhan, Khaledi-Nasab, Neiman & Tass 2022, Phase oscillator networks with synaptic weight and structural plasticity", site: "nature.com", date: "2022", href: "https://www.nature.com/articles/s41598-022-19417-9" },
+  { title: "[A7] Timms & English 2014, Kuramoto networks with axonal delay and synaptic plasticity", site: "arxiv.org", date: "2014", href: "https://arxiv.org/abs/1307.8398" },
+  { title: "[A8] Madadi Asl, Valizadeh & Tass 2017, Propagation delays determine emergent structures with plastic synapses", site: "doi.org", date: "2017", href: "https://doi.org/10.1038/srep39682" },
+  { title: "[A9] Kasatkin, Yanchuk, Schöll & Nekorkin 2017, Multilayer structure and chimeras with adaptive couplings", site: "doi.org", date: "2017", href: "https://doi.org/10.1103/PhysRevE.96.062211" },
+  { title: "[A10] Röhr, Berner, Lameu, Popovych & Yanchuk 2019, Frequency cluster formation with plasticity", site: "doi.org", date: "2019", href: "https://doi.org/10.1371/journal.pone.0225094" },
+  { title: "[L1] Mathlib: SimpleGraph.incMatrix (unoriented incidence matrix)", site: "mathlib4_docs", href: "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/SimpleGraph/IncMatrix.html" },
+  { title: "[L2] Mathlib: Gershgorin circle theorem", site: "mathlib4_docs", href: "https://leanprover-community.github.io/mathlib4_docs/Mathlib/LinearAlgebra/Matrix/Gershgorin.html" },
+  { title: "[L3] Mathlib: Grönwall inequality for ODEs", site: "mathlib4_docs", href: "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/ODE/Gronwall.html" },
+  { title: "[L4] Immler 2018, A Verified ODE Solver and the Lorenz Attractor", site: "doi.org", date: "2018", href: "https://doi.org/10.1007/s10817-017-9448-y" },
+  { title: "[L5] Bolan et al. 2025, The Equational Theories Project", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2512.07087" },
+  { title: "[L6] leanblueprint (Massot)", site: "github.com", href: "https://github.com/PatrickMassot/leanblueprint" },
+  { title: "[P1] Romera-Paredes et al. 2024, Mathematical discoveries from program search with LLMs (FunSearch)", site: "doi.org", date: "2024", href: "https://doi.org/10.1038/s41586-023-06924-6" },
+  { title: "[P2] Hubert et al. 2025, Olympiad-level formal mathematical reasoning with RL (AlphaProof)", site: "nature.com", date: "2025", href: "https://www.nature.com/articles/s41586-025-09833-y" },
+  { title: "[P3] Novikov et al. 2025, AlphaEvolve", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2506.13131" },
+  { title: "[P4] Yang et al. 2023, LeanDojo", site: "arxiv.org", date: "2023", href: "https://arxiv.org/abs/2306.15626" },
+  { title: "[P5] Weng et al. 2025, Autoformalization in the Era of LLMs: A Survey", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2505.23486" },
+  { title: "[P6] Beel, Kan & Baumgart 2025, Evaluating Sakana's AI Scientist", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2502.14297" },
+  { title: "[P7] Gerbicz 2025, follow-up improving an AlphaEvolve bound", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2505.16105" },
+  { title: "[P8] TechCrunch 2025, the Erdős-problems episode", site: "techcrunch.com", date: "2025", href: "https://techcrunch.com/2025/10/19/openais-embarrassing-math/" },
+];
+
+const refsLandscape: Link[] = [
+  { title: "[V1] Gutiérrez, Amann, Assenza, Gómez-Gardeñes, Latora 2011, Emerging meso- and macroscales from synchronization of adaptive networks", site: "doi.org", date: "2011", href: "https://doi.org/10.1103/PhysRevLett.107.234103" },
+  { title: "[V2] Assenza et al. 2011, Emergence of structural patterns out of synchronization in networks with competitive interactions (homophily + homeostasis)", site: "doi.org", date: "2011", href: "https://doi.org/10.1038/srep00099" },
+  { title: "[V3] Martens & Bick 2025, Multiple timescale dynamics of network adaptation with constraints", site: "doi.org", date: "2025", href: "https://doi.org/10.1063/5.0289706" },
+  { title: "[V4] Gross & Blasius 2008, Adaptive coevolutionary networks: a review", site: "doi.org", date: "2008", href: "https://doi.org/10.1098/rsif.2007.1229" },
+  { title: "[V5] Cvetković, Rowlinson & Simić 2004, Spectral Generalizations of Line Graphs", site: "doi.org", date: "2004", href: "https://doi.org/10.1017/CBO9780511751752" },
+  { title: "[V6] Kasatkin & Nekorkin 2025, higher-order adaptive couplings (Chaos)", site: "doi.org", date: "2025", href: "https://doi.org/10.1063/5.0281585" },
+  { title: "[V7] Mikaberidze & Taylor 2025, coupling budget and optimal synchronization topology", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2509.18279" },
+  { title: "[G1] velvetmonkey/flywheel-universe (budgeted Hebbian Kuramoto, row-sum budgets, freeze schedule)", site: "github.com", date: "2026", href: "https://github.com/velvetmonkey/flywheel-universe" },
+  { title: "[G2] velvetmonkey/kuramoto-lean (39 sorry-free Lean theorems)", site: "github.com", date: "2026", href: "https://github.com/velvetmonkey/kuramoto-lean" },
+  { title: "[G2b] Zenodo record for kuramoto-lean", site: "doi.org", date: "2026", href: "https://doi.org/10.5281/zenodo.20617949" },
+  { title: "[G3] taejun-song/kuramoto-lean (Ott–Antonsen approach)", site: "github.com", date: "2026", href: "https://github.com/taejun-song/kuramoto-lean" },
+  { title: "[X1] Yang, Li & Li 2026, ARIS (claim ledger, cross-model reviewer)", site: "arxiv.org", date: "2026", href: "https://arxiv.org/abs/2605.03042" },
+  { title: "[X2] Dong & Chen 2026, CrossAudit (git-native cross-vendor auditing)", site: "arxiv.org", date: "2026", href: "https://arxiv.org/abs/2608.28631" },
+  { title: "[X3] Luo 2026, XScientist (claim-to-evidence anchors)", site: "arxiv.org", date: "2026", href: "https://arxiv.org/abs/2607.12301" },
+  { title: "[X4] Agent Laboratory 2025", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2501.04227" },
+  { title: "[X5] AgentRxiv 2025", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2503.18102" },
+  { title: "[X6] The AI Scientist-v2 2025", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2504.08066" },
+  { title: "[X7] Towards an AI co-scientist 2025", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2502.18864" },
+];
+
+const refsOrigins: Link[] = [
+  { title: "[O1] Molchanov 1968, The resonant structure of the solar system: the law of planetary distances", site: "doi.org", date: "1968", href: "https://doi.org/10.1016/0019-1035(68)90074-2" },
+  { title: "[O2] Backus 1969, critique of Molchanov (Icarus 11:88)", site: "doi.org", date: "1969", href: "https://doi.org/10.1016/0019-1035(69)90118-3" },
+  { title: "[O2b] Hénon 1969, comment on Molchanov (Icarus 11:93)", site: "doi.org", date: "1969", href: "https://doi.org/10.1016/0019-1035(69)90119-5" },
+  { title: "[O3] Goldreich 1965, An explanation of the frequent occurrence of commensurable mean motions", site: "doi.org", date: "1965", href: "https://doi.org/10.1093/mnras/130.3.159" },
+  { title: "[O4] Goldreich & Peale 1966, Spin-orbit coupling in the solar system", site: "doi.org", date: "1966", href: "https://doi.org/10.1086/109947" },
+  { title: "[O5] Peale 1976, Orbital resonances in the solar system (ARA&A)", site: "doi.org", date: "1976", href: "https://doi.org/10.1146/annurev.aa.14.090176.001243" },
+  { title: "[O6] Scafetta 2010, Empirical evidence for a celestial origin of the climate oscillations", site: "doi.org", date: "2010", href: "https://doi.org/10.1016/j.jastp.2010.04.015" },
+  { title: "[O7] Cameron & Schüssler 2013, No evidence for planetary influence on solar activity", site: "doi.org", date: "2013", href: "https://doi.org/10.1051/0004-6361/201321713" },
+  { title: "[O8] Abreu et al. 2012, Is there a planetary influence on solar activity?", site: "doi.org", date: "2012", href: "https://doi.org/10.1051/0004-6361/201219997" },
+  { title: "[O9] Poluianov & Usoskin 2014, critical analysis of a planetary-influence hypothesis (+ Abreu et al. reply, 10.1007/s11207-014-0473-2)", site: "doi.org", date: "2014", href: "https://doi.org/10.1007/s11207-014-0475-0" },
+  { title: "[O10] Stefani, Giesecke & Weier 2019, A model of a tidally synchronized solar dynamo", site: "doi.org", date: "2019", href: "https://doi.org/10.1007/s11207-019-1447-1" },
+  { title: "[O11] Stefani, Beer & Weier 2023, No evidence for absence of solar dynamo synchronization", site: "doi.org", date: "2023", href: "https://doi.org/10.1007/s11207-023-02174-x" },
+  { title: "[O12] Nataf 2022, Tidally synchronized solar dynamo: a rebuttal (+ 2023 response, 10.1007/s11207-023-02128-3)", site: "doi.org", date: "2022", href: "https://doi.org/10.1007/s11207-022-02038-w" },
+  { title: "[O13] Stefani et al. 2024, Rieger, Schwabe, Suess-de Vries: the sunny beats of resonance", site: "doi.org", date: "2024", href: "https://doi.org/10.1007/s11207-024-02295-x" },
+  { title: "[O14] Rieger et al. 1984, A 154-day periodicity in the occurrence of hard solar flares?", site: "doi.org", date: "1984", href: "https://doi.org/10.1038/312623a0" },
+  { title: "[O15] Wallner et al. 2016, Recent near-Earth supernovae probed by global deposition of interstellar 60Fe", site: "doi.org", date: "2016", href: "https://doi.org/10.1038/nature17196" },
+];
+
+const refsBackup: Link[] = [
+  { title: "[K1] Kassabov, Strogatz & Townsend 2021, Sufficiently dense Kuramoto networks are globally synchronizing", site: "doi.org", date: "2021", href: "https://doi.org/10.1063/5.0057659" },
+  { title: "[K2] Canale 2022, From weighted to unweighted graphs in Synchronizing Graph Theory", site: "arxiv.org", date: "2022", href: "https://arxiv.org/abs/2209.06362" },
+  { title: "[K3] Bandeira, Kireeva, Maillard & Rödder 2025, Randomstrasse101: Open Problems of 2024", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2504.20539" },
+  { title: "[K4] Wu & Brandes 2025, Global synchronization beyond dense graphs: the case of threshold graphs", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2511.12646" },
+  { title: "[K5] Townsend, Stillman & Strogatz 2020, Dense networks that do not synchronize and sparse ones that do", site: "doi.org", date: "2020", href: "https://doi.org/10.1063/5.0018322" },
+  { title: "[K6] Yoneda, Tatsukawa & Teramae 2021, The lower bound of the network connectivity guaranteeing in-phase synchronization", site: "arxiv.org", date: "2021", href: "https://arxiv.org/abs/2104.05954" },
+  { title: "[E0] teorth/erdosproblems wiki: AI contributions to Erdős problems (incl. AI 'solutions' later found in the literature)", site: "github.com", href: "https://github.com/teorth/erdosproblems/wiki" },
+  { title: "[E583] Erdős Problem #583 (Gallai path decomposition)", site: "erdosproblems.com", href: "https://www.erdosproblems.com/583" },
+  { title: "[E583v] Heller 2024, Verifying Gallai's Path Conjecture for Small Graphs (blog)", site: "till-heller.de", date: "2024", href: "https://till-heller.de/blog/gallais-path-conjecture" },
+  { title: "[E993] Erdős Problem #993 (tree independence sequence unimodal)", site: "erdosproblems.com", href: "https://www.erdosproblems.com/993" },
+  { title: "[E993a] BrettRey/erdos-problem-993 (exhaustive search, n ≤ 29)", site: "github.com", date: "2026", href: "https://github.com/BrettRey/erdos-problem-993" },
+  { title: "[E993b] Ramos & Sun 2025, An AI enhanced approach to the tree unimodality conjecture", site: "arxiv.org", date: "2025", href: "https://arxiv.org/abs/2510.18826" },
+  { title: "[E993c] Kadrawi & Levit 2025, The independence polynomial of trees is not always log-concave starting from order 26", site: "doi.org", date: "2025", href: "https://doi.org/10.26493/1855-3974.3207.2ad" },
+  { title: "[E743] Erdős Problem #743 (Gyárfás tree packing)", site: "erdosproblems.com", href: "https://www.erdosproblems.com/743" },
+  { title: "[E743a] Guichard & Massman 1990, A note on packing complete graphs with trees (JCMCC 8)", site: "combinatorialpress.com", date: "1990", href: "https://combinatorialpress.com/jcmcc-articles/volume-008/a-note-on-packing-complete-graphs-with-trees/" },
+  { title: "[E617] Erdős Problem #617 (balanced colourings of K_{r²+1})", site: "erdosproblems.com", href: "https://www.erdosproblems.com/617" },
+  { title: "[H509] Parts 2020, Graph minimization: 5-chromatic unit-distance graphs (509 vertices)", site: "arxiv.org", date: "2020", href: "https://arxiv.org/abs/2010.12665" },
+  { title: "[R55] Angeltveit & McKay 2024, R(5,5) ≤ 46", site: "arxiv.org", date: "2024", href: "https://arxiv.org/abs/2409.15709" },
+  { title: "google-deepmind/formal-conjectures (Lean statements of open conjectures)", site: "github.com", href: "https://github.com/google-deepmind/formal-conjectures" },
+];
+
+const catOptions = [
+  { value: "all" as Cat, label: "All", count: findings.length },
+  { value: "numerics" as Cat, label: "Numerics", count: findings.filter((f) => f.cat === "numerics").length },
+  { value: "theory" as Cat, label: "Dynamics", count: findings.filter((f) => f.cat === "theory").length },
+  { value: "lean" as Cat, label: "Lean", count: findings.filter((f) => f.cat === "lean").length },
+  { value: "method" as Cat, label: "Method", count: findings.filter((f) => f.cat === "method").length },
+];
+
+export default function AIEFSResearchSweep() {
+  const [cat, setCat] = useState<Cat>("all");
+  const shown = findings.filter((f) => cat === "all" || f.cat === cat);
+  const rows: TableCell[][] = shown.map((f) => [
+    `${f.n}. ${f.item}`,
+    f.src,
+    f.age,
+    f.problem,
+    fitTone(f.fit),
+    f.next,
+  ]);
+  const backupRows: TableCell[][] = backups.map((b) => [
+    `${b.id}. ${b.problem}`,
+    b.status,
+    b.fit,
+    b.win,
+    diffTone(b.diff),
+  ]);
+
+  return (
+    <Page
+      title="AIEFS Research Sweep"
+      summary="Sweeps 1–2, 2026-10-28. Sweep 1 mined the literature for methods that apply to AIEFS's open problems. Sweep 2 adds a novelty map of the seven core features, origin ideas as possible guides, people to follow, a dated search log and a list of backup problems. Every citation was checked by fetching its record. Read-only: no repo files were changed."
+      width="wide"
+    >
+      <TableOfContents
+        items={[
+          { label: "Top findings", id: "top" },
+          { label: "Findings table", id: "table" },
+          { label: "Prior art and risks", id: "risks" },
+          { label: "Weekly sweep design", id: "design" },
+          { label: "Novelty map", id: "novelty" },
+          { label: "Origins as inspiration", id: "origins" },
+          { label: "People to follow", id: "people" },
+          { label: "Search log", id: "searchlog" },
+          { label: "Backup problems: open and checkable", id: "backup" },
+          { label: "References", id: "refs" },
+        ]}
+      />
+
+      <Section heading="Top findings" id="top">
+        <Callout lead="Sweep 2 in one paragraph" tone="info">
+          None of the seven core features is clearly new. Five are known or known-variant. The capacity gate has close prior art in Assenza et al. 2011, Martens–Bick 2025 and a 2026 GitHub project (flywheel-universe) that also uses per-node budgets. 'First Lean Kuramoto' is already taken (kuramoto-lean, 2026). The AI-audit process resembles ARIS, CrossAudit and XScientist (all 2026). The realistic openings are small and checkable. (1) Prove finite-time exact support freezing under the min-endpoint cap. (2) Run a preregistered out-of-family test of the ω → topology predictor. (3) Upstream the unsigned-incidence rank theorem to Mathlib. The origin material is most useful for its method lessons, such as building null models for coincidences (Backus vs Molchanov) and calibrating test statistics (Nataf vs the Dicke-ratio argument). The tidal-dynamo claims themselves remain contested. The backup list has 9 workable problems and 2 to skip; the top picks are B1, B4 and B5.
+        </Callout>
+        <NumberedList
+          items={[
+            "Lean step (a) can be done for every n in one proof. The repo's own right inverse rinv equals Mᵀ·Q⁻¹, where Q = M·Mᵀ is the signless Laplacian of K_n (Mathlib already has M·Mᵀ for SimpleGraph.incMatrix). The rank fact itself is classical (unsigned incidence rank is n for connected non-bipartite graphs), so it supports the project but is not new.",
+            "Run a convergence-order test before the δ sweep. Halving dt with τ fixed shows whether the ~2e-8 rate-law gap is first-order Euler error (it halves) or something else (it stays put).",
+            "Fix event timing at the root. Time events by integer step index and compare with a dt/2 tolerance. Floating-point time accumulation is a documented cause of irreproducible results in simulations.",
+            "Mohamad–Gopalsamy's discrete Halanay Theorem 3.1 has the shape of a fixed-step recurrence with a delay of κ steps. It gives a checkable condition, inf(a−b) > 0, for geometric decay, a direct route for the Halanay plan.",
+            "Treat ω as a random input. Corr_physical and the Δω rule should be reported over many ω draws with Fisher-z CIs. The link from frequency to cluster to topology already exists in prior work (Seliger 2002, Berner 2019, Chauhan 2022), so expect multistability and present it as a known mechanism.",
+          ]}
+        />
+        <Equation label="(1)">
+          Q = M Mᵀ = (n − 2) I + J,  Q⁻¹ = <Frac num="1" den="n − 2" />
+          <Paren open="(" close=")">I − <Frac num="J" den="2(n − 1)" /></Paren>,  S = Mᵀ Q⁻¹,  M S = I
+        </Equation>
+        <Text>
+          Here M is the n × C(n,2) unsigned incidence matrix of K_n and J is the all-ones matrix. Entry by entry, S(e, j) = 1/(n−1) if j is an endpoint of edge e and −1/((n−1)(n−2)) otherwise, which is exactly the `rinv` in CompleteGraphIncidence.lean. Q has eigenvalues 2n−2 (once) and n−2 (n−1 times), so it is invertible for n ≥ 3. This derivation is ours and still has to be checked in Lean.
+        </Text>
+        <Equation label="(2)">
+          p ≈ log₂ <Paren open="(" close=")"><Frac num="|G(h) − G(h/2)|" den="|G(h/2) − G(h/4)|" /></Paren>
+        </Equation>
+        <Text>
+          G(h) is the measured rate-law gap at step size h. Forward Euler should give p ≈ 1.
+        </Text>
+        <Equation label="(3)">
+          x(n+1) ≤ <Frac num="x(n)" den="1 + a h" /> + <Frac num="b h" den="1 + a h" /> max over n−κ ≤ j ≤ n of x(j),  a − b ≥ α &gt; 0  ⟹  x(n) ≤ C λ^−(n−n₀), λ &gt; 1
+        </Equation>
+        <Text>
+          This is Theorem 3.1 of [H1] (it allows a(n), b(n) and κ(n) to vary with n). In AIEFS, x would be an error norm, h = dt and κ = delay_steps.
+        </Text>
+      </Section>
+
+      <Section heading="Findings table" id="table" caption="Fit: Direct = can be applied now; Partial = needs adapting; Prior art = affects novelty claims. Codes in Source refer to the References section.">
+        <Segmented<Cat> options={catOptions} value={cat} onChange={setCat} />
+        <Table
+          columns={["Item", "Source", "Old/new", "Problem", "Fit", "Next step"]}
+          rows={rows}
+        />
+      </Section>
+
+      <Section heading="Prior art and risks" id="risks">
+        <Callout lead="Novelty stays not established" tone="warning">
+          Every main ingredient of AIEFS has prior art: Hebbian Kuramoto with frequency clusters (Seliger 2002, Aoki–Aoyagi 2009, Berner 2019), delay plus plasticity (Timms–English 2014), node-strength normalisation (Miller–MacKay 1994), and the incidence-kernel dimension (classical). This sweep supports keeping AUD-NOVELTY open.
+        </Callout>
+        <BulletList
+          items={[
+            "dim ker of the unsigned incidence matrix of K_n = C(n,2) − n follows from the classical rank result for non-bipartite connected graphs [R1, R2]. I could not fetch those papers' full text, so cite them as 'classical; see' and keep the Lean proof as the primary evidence.",
+            "Multistability is expected, not a defect. Berner 2019 proves a high level of multistability for multicluster states, and Jüttner–Martens 2023 find multistability already at N = 2 with symmetric adaptation. AUD-TOPO-OMEGA agrees with this.",
+            "The Δω threshold rule resembles classical two-oscillator locking (lock when |Δω| is small versus the coupling). Present it as that, specialised to the gated Hebbian setting.",
+            "Corr_physical: Chauhan et al. 2022 report correlations between natural frequencies and node degrees in plastic phase-oscillator networks. This is close prior art.",
+            "AI-pipeline risk: the Oct 2025 Erdős episode (claimed 'solutions' were existing papers) and Beel et al. 2025 (weak novelty checks, failed experiments, made-up numbers) are the failure modes the claims registry must guard against.",
+            "New in sweep 2: [V2] Assenza 2011 and [V3] Martens–Bick 2025 are direct prior art for the capacity gate. [G1] flywheel-universe (GitHub, 2026) is a budgeted Hebbian Kuramoto with per-node budgets and a freeze schedule, the closest match found. [G2, G3] are two 2026 Lean Kuramoto libraries. [X1–X3] are 2026 claim-ledger and audit pipelines similar to the AIEFS process.",
+            "Not verified, so not used: Hebb 1949 (background only), the journal reference of Fialkowski et al. 2022, and three 2026 arXiv items on AI-science evaluation (2609.09203, 2605.10246, 2610.04915). Grossman 1994 and Ha–Noh–Park 2016 were checked by title and metadata only. Also not used: the 'Ohira' DDE preprint cited in the SSRH drafts (not found), the LeanPool Kuramoto port (seen in search results, GitHub API returned nothing) and Vlachos–Triesch 2025 (search metadata only).",
+          ]}
+        />
+      </Section>
+
+      <Section heading="Weekly sweep design" id="design" caption="How future sweeps add to this page without redoing it">
+        <Steps
+          steps={[
+            { title: "Fixed query set", detail: "Search arXiv (export.arxiv.org API) and Crossref for each tracked topic: adaptive phase oscillators, delay + plasticity, discrete Halanay, DDE numerics, Mathlib graph/ODE, AI-for-math evaluation, preregistration. Also watch the authors in 'People to follow'. Limit each search to papers since the last sweep date, and re-run the novelty queries in the Search log." },
+            { title: "Verify before listing", detail: "Fetch each record and confirm title, authors, year and DOI or arXiv id. Leave out anything that cannot be fetched, and put it in a Not-verified list instead." },
+            { title: "Map to a registry ID", detail: "Every new row must name an open item (AUD-*, CF*, SSRH-ORIG-*, EMP-*) and a concrete next step; otherwise it goes in a reading list, not the table." },
+            { title: "Append, never rewrite", detail: "Add rows with the next number, set Old/new, and record the sweep in the log below. When a next step is done in the repo, mark it with the commit hash." },
+            { title: "Novelty check", detail: "For any claim that might become a 'new' claim, run a dedicated prior-art search and record the query and date in the claim row and in the Search log." },
+          ]}
+        />
+        <Table
+          columns={["Sweep", "Date", "Rows added", "Notes"]}
+          rows={[
+            ["Sweep 1", "2026-10-28", "15", "Baseline: foundations + 2017–2025 adaptive networks, Lean/Mathlib, AI-for-math, reproducibility"],
+            ["Sweep 2", "2026-10-28", "7 novelty rows, 8 origin rows, 11 backup problems", "Novelty map, origins and history mining, people, search log, backup problems"],
+          ]}
+        />
+        <Properties
+          items={[
+            { label: "Repo state read", value: "origin/main 853498f; review branch merge-prep/arena-reconciled at 7fdf9ed on GitHub (read via git show; read-only). Sweep 1 read it at 487d5a9." },
+            { label: "Helper scripts", value: "/tmp/q.py (arXiv), /tmp/cr.py (Crossref), /tmp/ss.py (Semantic Scholar, rate-limited) on the box" },
+          ]}
+        />
+      </Section>
+
+      <Section heading="Novelty map" id="novelty" caption="Rating: known / known-variant / likely-new-but-small / open gap. 'Search' codes point to the Search log. Wording rule: 'not found after search X on 2026-10-28', never 'new'.">
+        <Table
+          columns={["Feature", "Closest prior work", "What differs", "Rating", "Search"]}
+          rows={noveltyRows}
+        />
+        <Callout lead="Candidate novelty directions (small, checkable)" tone="success">
+          These are the openings left after the searches; none is a guaranteed result. Run a dedicated prior-art search before any claim.
+        </Callout>
+        <NumberedList
+          items={[
+            "Finite-time exact support freezing theorem. Under the hard min-endpoint cap plus the threshold μ/(η+μ), give conditions under which supp(B) stops changing after a finite step, and prove them (paper proof, then Lean for the discrete map). Prior work uses equality normalisation or smooth homeostasis [V2, V3], or imposes freezing by schedule [G1]. Searches A6 and S3 found no such theorem.",
+            "A preregistered out-of-family test of the ω → topology predictor. Use new held-out ω families, compare the Δω rule with the Dörfler–Chertkov–Bullo incidence condition and an ω-only null, and preregister it. Prior work reports frequency–structure correlations [A6] but not a gated-threshold prediction scored against a null. The repo's existing held-out result (E9 / AUD-CORR-0995-SCOPE) is mechanism-aligned and scoped: past R beats Δω at the repo ω, mostly improves calibration in uniform ensembles and is no better than chance in clustered ones, so 0.995 cannot be cited as general.",
+            "A Mathlib PR for the unsigned incidence rank (n for connected non-bipartite graphs, n−1 for bipartite ones) and the K_n kernel dimension. The math is classical, but the formal result is absent from Mathlib (G-grep). It is small, certain to check, and useful beyond AIEFS.",
+            "A min-endpoint vs equality-normalisation ablation. Does the split-and-freeze survive Assenza-style input-strength homeostasis [V2] or subtractive normalisation [F8]? This turns a known-variant into a measured difference.",
+            "A process experience report, not a methods claim: the retired-claims lineage, the recorded audit-bot sycophancy reversal and the fake-archive traps, set against ARIS, CrossAudit and XScientist [X1–X3].",
+          ]}
+        />
+      </Section>
+
+      <Section heading="Origins as inspiration" id="origins" caption="Path: SSRH → AIEF toy model → v1.3/1.4 → checkable-work goal (Project Origins/, Project Histories/, AIEF_HISTORIC_UNFOLDING.md, SSRH-ORIG-01..07). All SSRH rows keep the status 'Speculative / untested origin hypothesis'.">
+        <Table
+          columns={["SSRH idea", "Mainstream", "Contested / fringe", "Checkable toy-model direction"]}
+          rows={originRows}
+        />
+        <Text>
+          Note: the origin texts mention Laplace, Stefani, Rieger and Kuramoto often, but never mention Molchanov, Scafetta or Cameron & Schüssler, so the drafts never engaged with the critics. Top origin-derived ideas: the coincidence null model (row 1), Dicke-ratio calibration (row 3) and the SINDy recover-the-law audit (last row).
+        </Text>
+        <Section heading="Methodology lessons from the history" collapsible defaultOpen>
+          <BulletList items={lessons} />
+        </Section>
+      </Section>
+
+      <Section heading="People to follow" id="people" caption="Only people whose 2023–2026 work was fetched and confirmed through paper or repository metadata this sweep. Homepages were not fetched.">
+        <Table columns={["People", "Topic", "Verified via"]} rows={peopleRows} />
+      </Section>
+
+      <Section heading="Search log" id="searchlog" caption="All searches were run on 2026-10-28 (America/Toronto). Strict arXiv phrase-AND queries often return 0; a 0 means 'not found by this query', not 'does not exist'. Semantic Scholar rate-limiting is logged as such.">
+        <Table columns={["Ref", "Query", "Engine", "Hits"]} rows={searchRows} />
+      </Section>
+
+      <Section heading="Backup problems: open and checkable" id="backup" caption="Filter: a result must be machine-checkable (computer witness, finite verification or Lean proof) and fit AI bots with Python, Lean 4/Mathlib, one shared Linux box and independent audit bots. Open Problem Garden returned HTTP 500 and the Polymath wiki URL returned 404 on 2026-10-28, so neither is used.">
+        <Callout lead="Top 3 picks" tone="success">
+          B1 (Kuramoto μc lower-bound search with certified witnesses) fits the project's own domain. B4 (Mathlib incidence-rank PR) is small and certain to check. B5 (Gallai re-verification at the exact ⌈n/2⌉ bound, with certificates) is a quick audited result that also checks a published verification.
+        </Callout>
+        <Callout lead="AI-solution caution" tone="warning">
+          The erdosproblems wiki [E0] lists about 20 AI 'solutions' that were later found in the literature (e.g. #120, 152, 218, 281, 333, 1089). Before announcing anything, search the literature and the problem's comments and claims page, and word results as 'not found after search X on date Y'.
+        </Callout>
+        <Table
+          columns={["Problem", "Status (checked 2026-10-28)", "Why our setup fits", "Checkable win", "Difficulty"]}
+          rows={backupRows}
+        />
+      </Section>
+
+      <Section heading="References" id="refs">
+        <Section heading="Foundations and graph theory" collapsible defaultOpen={false}>
+          <LinkCards links={refsFoundations} />
+        </Section>
+        <Section heading="Numerics, statistics, reproducibility" collapsible defaultOpen={false}>
+          <LinkCards links={refsNumerics} />
+        </Section>
+        <Section heading="Recent work, Lean, AI for math" collapsible defaultOpen={false}>
+          <LinkCards links={refsRecent} />
+        </Section>
+        <Section heading="Novelty landscape (sweep 2)" collapsible defaultOpen={false}>
+          <LinkCards links={refsLandscape} />
+        </Section>
+        <Section heading="Origins: resonance, tides, solar dynamo (sweep 2)" collapsible defaultOpen={false}>
+          <LinkCards links={refsOrigins} />
+        </Section>
+        <Section heading="Backup problems (sweep 2)" collapsible defaultOpen={false}>
+          <LinkCards links={refsBackup} />
+        </Section>
+      </Section>
+    </Page>
+  );
+}
+
+
+</cursor_untrusted_data_1337>

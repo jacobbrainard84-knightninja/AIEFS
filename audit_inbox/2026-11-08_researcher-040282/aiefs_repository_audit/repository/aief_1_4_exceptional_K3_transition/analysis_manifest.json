@@ -1,0 +1,127 @@
+{
+  "K3_edges": [
+    25,
+    29,
+    59
+  ],
+  "K3_identification": {
+    "all_K3_candidates": [
+      {
+        "edges": [
+          25,
+          29,
+          59
+        ],
+        "nodes": [
+          2,
+          7,
+          11
+        ],
+        "saturated_count": 1
+      }
+    ],
+    "candidate_count": 1,
+    "split_saturated_count": 1
+  },
+  "K3_nodes": [
+    2,
+    7,
+    11
+  ],
+  "analysis": "AIEF-1.4 dense exceptional K3 transition audit",
+  "command": [
+    "AIEF_1_4_exceptional_K3_transition_audit.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--seed",
+    "4619122171158768524",
+    "--check-times",
+    "100,120,123,125,150",
+    "--boundary-tol",
+    "1e-9",
+    "--boundary-tol-sweep",
+    "1e-12,1e-10,1e-9,1e-8,1e-7",
+    "--output-dir",
+    "aief_1_4_exceptional_K3_transition"
+  ],
+  "dependencies": {
+    "component_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_component_controller_audit.py",
+      "sha256": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e"
+    },
+    "face_spectrum": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_face_spectrum_analysis.py",
+      "sha256": "11c10dc5529be59d10dced8eaa87d9e3631e9044324377c1159766a681a28344"
+    },
+    "stationarity": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "sha256": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc"
+    }
+  },
+  "dt": 0.01,
+  "final_replay_exact": true,
+  "final_replay_max_error": 0.0,
+  "future_steps": 32000,
+  "inputs": {
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "This is a deterministic replay of one frozen seed, not a new independent experiment.",
+    "Controller balance on active rows is not full edge stationarity.",
+    "The all-node controller equation is not imposed on unsaturated K3 rows.",
+    "The K3 rate-equality conditions are exact for the identified active incidence matrix.",
+    "The saved dt trajectory cannot by itself prove a continuum active-switch result."
+  ],
+  "outputs": [
+    "exceptional_K3_step_summary.csv",
+    "exceptional_K3_node_trajectory.csv",
+    "exceptional_K3_edge_trajectory.csv",
+    "exceptional_K3_transition_window_summary.csv",
+    "exceptional_K3_transition_window_nodes.csv",
+    "exceptional_K3_transition_window_edges.csv",
+    "boundary_tolerance_switch_sensitivity.csv",
+    "exceptional_K3_key_matrices.npz",
+    "exceptional_K3_transition_report.txt"
+  ],
+  "parameters": {
+    "boundary_tolerance": 1e-09,
+    "boundary_tolerance_sweep": [
+      1e-12,
+      1e-10,
+      1e-09,
+      1e-08,
+      1e-07
+    ],
+    "check_times": [
+      100.0,
+      120.0,
+      123.0,
+      125.0,
+      150.0
+    ],
+    "rank_tolerance": 1e-10,
+    "restoration_tolerances": [
+      1e-10,
+      1e-08
+    ],
+    "support_tolerance": 1e-14,
+    "window_radius": 250
+  },
+  "seed": "4619122171158768524",
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_exceptional_K3_transition_audit.py",
+    "sha256": "cbca075aa549b1bd9d12b6134c9afa63eab3cbbca5fdd83240d33f996f6dc2f6"
+  },
+  "switch_steps": [
+    12405
+  ]
+}

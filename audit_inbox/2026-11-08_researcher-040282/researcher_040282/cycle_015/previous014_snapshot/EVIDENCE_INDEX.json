@@ -1,0 +1,2405 @@
+{
+  "current_cycle": 14,
+  "observed_runtime_utc": "2026-11-10T04:10:48.538163+00:00",
+  "ledger_rows": 130,
+  "formal_ledger_row_labels": 105,
+  "label_granularity_note": "013/014use grouped module rows, labels are not declaration-count progress",
+  "unique_ledger_references": 185,
+  "all_ledger_references_unpacked": true,
+  "archive_only_ledger_references": 0,
+  "ledger_evidence": [
+    {
+      "referenced_as": "2026-11-07_researcher040282_gate-foundations.md",
+      "availability": "UNPACKED",
+      "files": [
+        "2026-11-07_researcher040282_gate-foundations.md"
+      ]
+    },
+    {
+      "referenced_as": "2026-11-10_researcher040282_013_phase-coherence-bridge.md",
+      "availability": "UNPACKED",
+      "files": [
+        "2026-11-10_researcher040282_013_phase-coherence-bridge.md"
+      ]
+    },
+    {
+      "referenced_as": "2026-11-10_researcher040282_014_feedback-trajectory-invariants.md",
+      "availability": "UNPACKED",
+      "files": [
+        "2026-11-10_researcher040282_014_feedback-trajectory-invariants.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/GateFoundations.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_002/GateFoundations.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/check_cycle.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_002/check_cycle.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/checks/",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_002/checks/extra_axiom_payload.log",
+        "cycle_002/checks/false_unconditional_idempotence.log",
+        "cycle_002/checks/false_unrestricted_epsilon.log",
+        "cycle_002/checks/missing_footprint.log",
+        "cycle_002/checks/positive.log",
+        "cycle_002/checks/sorry_payload.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/checks/positive.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_002/checks/positive.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/cycle_checks.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_002/cycle_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_002/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/GateProposalBridge.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/GateProposalBridge.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/SOURCE_COMPARISON_PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/SOURCE_COMPARISON_PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/check_cycle.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/check_cycle.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/checks/",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/checks/FreezeCore.log",
+        "cycle_003/checks/GateFoundations.log",
+        "cycle_003/checks/extra_axiom_payload.log",
+        "cycle_003/checks/false_candidate_equals_applied.log",
+        "cycle_003/checks/false_previous_row_bound.log",
+        "cycle_003/checks/false_without_h_lower.log",
+        "cycle_003/checks/false_without_h_upper.log",
+        "cycle_003/checks/false_zero_row_ratio.log",
+        "cycle_003/checks/missing_footprint.log",
+        "cycle_003/checks/positive.log",
+        "cycle_003/checks/sorry_payload.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/checks/positive.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/checks/positive.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/compare_source.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/compare_source.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/cycle_checks.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/cycle_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/source_comparison.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/source_comparison.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/source_comparison_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/source_comparison_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/standalone_manifest.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/standalone_manifest.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/standalone_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/standalone_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/standalone_source_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_003/standalone_source_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/CoherenceDriveBridge.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/CoherenceDriveBridge.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/CoherenceEMA.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/CoherenceEMA.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/SOURCE_COMPARISON_PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/SOURCE_COMPARISON_PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/check_cycle.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/check_cycle.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/checks/",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/checks/CoherenceDriveBridge.log",
+        "cycle_004/checks/CoherenceEMA.log",
+        "cycle_004/checks/FreezeCore.log",
+        "cycle_004/checks/GateFoundations.log",
+        "cycle_004/checks/GateProposalBridge.log",
+        "cycle_004/checks/extra_axiom_payload.log",
+        "cycle_004/checks/false_coherence_equals_cosine.log",
+        "cycle_004/checks/false_complex_average_readout.log",
+        "cycle_004/checks/false_complex_zero_diagonal.log",
+        "cycle_004/checks/false_disk_without_alpha_lower.log",
+        "cycle_004/checks/false_disk_without_alpha_upper.log",
+        "cycle_004/checks/false_disk_without_input_bound.log",
+        "cycle_004/checks/false_strict_decay_at_alpha_one.log",
+        "cycle_004/checks/false_unforced_difference.log",
+        "cycle_004/checks/missing_footprint.log",
+        "cycle_004/checks/sorry_payload.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/checks/CoherenceDriveBridge.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/checks/CoherenceDriveBridge.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/checks/CoherenceEMA.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/checks/CoherenceEMA.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/compare_source.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/compare_source.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/cycle_checks.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/cycle_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/source_comparison.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/source_comparison.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/source_comparison_initial.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/source_comparison_initial.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/source_comparison_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/source_comparison_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/standalone_manifest.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/standalone_manifest.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/standalone_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/standalone_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/standalone_source_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_004/standalone_source_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/green_candidate.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/checks/green_candidate.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/green_candidate_optimized.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/checks/green_candidate_optimized.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/red_legacy.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/checks/red_legacy.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/AIEF_1_4_proposal_equalization_branch_selftest_r040282.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/proposal/AIEF_1_4_proposal_equalization_branch_selftest_r040282.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/run_checks.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/proposal/run_checks.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/source_modules.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/proposal/source_modules.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/test_proposal_equalization_branch_selftest_r040282.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/proposal/test_proposal_equalization_branch_selftest_r040282.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/standalone/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/standalone/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_005/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/PLAN_PREREGISTERED_BEFORE_ADMIN_NOTICE.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/PLAN_PREREGISTERED_BEFORE_ADMIN_NOTICE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/audit_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/audit_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/bootstrap_diagnostics.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/bootstrap_diagnostics.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/bootstrap_pointwise_summary.csv",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/bootstrap_pointwise_summary.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/mutation_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/mutation_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/policy_boundary_cases.csv",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/policy_boundary_cases.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/semantic_witnesses.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/semantic_witnesses.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_auc.csv",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/synthetic_auc.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_cohort_summary.csv",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/synthetic_cohort_summary.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_event_interactions.csv",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/synthetic_event_interactions.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_events.csv",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/checks/synthetic_events.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/optimized_audit_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/optimized_audit_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/optimized_checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/optimized_checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/prior_context/pasted_source_AUDIT-REPORT.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/prior_context/pasted_source_AUDIT-REPORT.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/ESTIMAND_CONTRACT.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/programs/ESTIMAND_CONTRACT.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/audit_v41.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/programs/audit_v41.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/load_upstream.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/programs/load_upstream.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/reference_contract.py",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/programs/reference_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/source_modules.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/programs/source_modules.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/standalone/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone/optimized_checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/standalone/optimized_checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_006/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/checks/baseline_normal.log",
+        "cycle_007/checks/baseline_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/baseline_normal/result.json",
+        "cycle_007/checks/baseline_optimized.log",
+        "cycle_007/checks/baseline_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/baseline_optimized/result.json",
+        "cycle_007/checks/candidate-engine_normal.log",
+        "cycle_007/checks/candidate-engine_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/candidate-engine_normal/result.json",
+        "cycle_007/checks/candidate-engine_optimized.log",
+        "cycle_007/checks/candidate-engine_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/candidate-engine_optimized/result.json",
+        "cycle_007/checks/candidate-leaf_normal.log",
+        "cycle_007/checks/candidate-leaf_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/candidate-leaf_normal/result.json",
+        "cycle_007/checks/candidate-leaf_optimized.log",
+        "cycle_007/checks/candidate-leaf_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/candidate-leaf_optimized/result.json",
+        "cycle_007/checks/cycle_results.json",
+        "cycle_007/checks/modular-extracted_normal.log",
+        "cycle_007/checks/modular-extracted_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/modular-extracted_normal/result.json",
+        "cycle_007/checks/modular-extracted_optimized.log",
+        "cycle_007/checks/modular-extracted_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/checks/modular-extracted_optimized/result.json",
+        "cycle_007/checks/mutants_normal.log",
+        "cycle_007/checks/mutants_normal/result.json",
+        "cycle_007/checks/mutants_optimized.log",
+        "cycle_007/checks/mutants_optimized/result.json",
+        "cycle_007/checks/science_summary.json",
+        "cycle_007/checks/target_runs.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/checks_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/proposal",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/proposal/INTEGRATION_NOTE.md",
+        "cycle_007/proposal/comparison_contract.py",
+        "cycle_007/proposal/componentwise_exact.py",
+        "cycle_007/proposal/extract_from_report.py",
+        "cycle_007/proposal/fetch_public_dependencies.py",
+        "cycle_007/proposal/load_reviewed.py",
+        "cycle_007/proposal/run_checks.py",
+        "cycle_007/proposal/source_modules.json",
+        "cycle_007/proposal/test_comparison_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/standalone/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/standalone/checks/baseline_normal.log",
+        "cycle_007/standalone/checks/baseline_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/baseline_normal/result.json",
+        "cycle_007/standalone/checks/baseline_optimized.log",
+        "cycle_007/standalone/checks/baseline_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/baseline_optimized/result.json",
+        "cycle_007/standalone/checks/candidate-engine_normal.log",
+        "cycle_007/standalone/checks/candidate-engine_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/candidate-engine_normal/result.json",
+        "cycle_007/standalone/checks/candidate-engine_optimized.log",
+        "cycle_007/standalone/checks/candidate-engine_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/candidate-engine_optimized/result.json",
+        "cycle_007/standalone/checks/candidate-leaf_normal.log",
+        "cycle_007/standalone/checks/candidate-leaf_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/candidate-leaf_normal/result.json",
+        "cycle_007/standalone/checks/candidate-leaf_optimized.log",
+        "cycle_007/standalone/checks/candidate-leaf_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/candidate-leaf_optimized/result.json",
+        "cycle_007/standalone/checks/cycle_results.json",
+        "cycle_007/standalone/checks/modular-extracted_normal.log",
+        "cycle_007/standalone/checks/modular-extracted_normal/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/modular-extracted_normal/result.json",
+        "cycle_007/standalone/checks/modular-extracted_optimized.log",
+        "cycle_007/standalone/checks/modular-extracted_optimized/reduced_alphabet_mismatches.json",
+        "cycle_007/standalone/checks/modular-extracted_optimized/result.json",
+        "cycle_007/standalone/checks/mutants_normal.log",
+        "cycle_007/standalone/checks/mutants_normal/result.json",
+        "cycle_007/standalone/checks/mutants_optimized.log",
+        "cycle_007/standalone/checks/mutants_optimized/result.json",
+        "cycle_007/standalone/checks/science_summary.json",
+        "cycle_007/standalone/checks/target_runs.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_007/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/candidate_boundary.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/candidate_boundary.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/checks/baseline_normal.log",
+        "cycle_008/checks/baseline_normal/census_mismatches.json",
+        "cycle_008/checks/baseline_normal/result.json",
+        "cycle_008/checks/baseline_normal/sequence_definitions.json",
+        "cycle_008/checks/baseline_normal/table_census.json",
+        "cycle_008/checks/baseline_optimized.log",
+        "cycle_008/checks/baseline_optimized/census_mismatches.json",
+        "cycle_008/checks/baseline_optimized/result.json",
+        "cycle_008/checks/baseline_optimized/sequence_definitions.json",
+        "cycle_008/checks/baseline_optimized/table_census.json",
+        "cycle_008/checks/candidate_normal.log",
+        "cycle_008/checks/candidate_normal/census_mismatches.json",
+        "cycle_008/checks/candidate_normal/invalid_key_results.json",
+        "cycle_008/checks/candidate_normal/result.json",
+        "cycle_008/checks/candidate_normal/sequence_definitions.json",
+        "cycle_008/checks/candidate_normal/table_census.json",
+        "cycle_008/checks/candidate_optimized.log",
+        "cycle_008/checks/candidate_optimized/census_mismatches.json",
+        "cycle_008/checks/candidate_optimized/invalid_key_results.json",
+        "cycle_008/checks/candidate_optimized/result.json",
+        "cycle_008/checks/candidate_optimized/sequence_definitions.json",
+        "cycle_008/checks/candidate_optimized/table_census.json",
+        "cycle_008/checks/cycle_results.json",
+        "cycle_008/checks/mutants_normal.log",
+        "cycle_008/checks/mutants_normal/result.json",
+        "cycle_008/checks/mutants_optimized.log",
+        "cycle_008/checks/mutants_optimized/result.json",
+        "cycle_008/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/checks_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/proposal",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/proposal/INTEGRATION_NOTE.md",
+        "cycle_008/proposal/extract_from_report.py",
+        "cycle_008/proposal/fetch_public_dependencies.py",
+        "cycle_008/proposal/load_reviewed.py",
+        "cycle_008/proposal/oracle_candidate.py",
+        "cycle_008/proposal/run_checks.py",
+        "cycle_008/proposal/source_modules.json",
+        "cycle_008/proposal/status_contract.py",
+        "cycle_008/proposal/test_status_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/standalone/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/standalone/checks/baseline_normal.log",
+        "cycle_008/standalone/checks/baseline_normal/census_mismatches.json",
+        "cycle_008/standalone/checks/baseline_normal/result.json",
+        "cycle_008/standalone/checks/baseline_normal/sequence_definitions.json",
+        "cycle_008/standalone/checks/baseline_normal/table_census.json",
+        "cycle_008/standalone/checks/baseline_optimized.log",
+        "cycle_008/standalone/checks/baseline_optimized/census_mismatches.json",
+        "cycle_008/standalone/checks/baseline_optimized/result.json",
+        "cycle_008/standalone/checks/baseline_optimized/sequence_definitions.json",
+        "cycle_008/standalone/checks/baseline_optimized/table_census.json",
+        "cycle_008/standalone/checks/candidate_normal.log",
+        "cycle_008/standalone/checks/candidate_normal/census_mismatches.json",
+        "cycle_008/standalone/checks/candidate_normal/invalid_key_results.json",
+        "cycle_008/standalone/checks/candidate_normal/result.json",
+        "cycle_008/standalone/checks/candidate_normal/sequence_definitions.json",
+        "cycle_008/standalone/checks/candidate_normal/table_census.json",
+        "cycle_008/standalone/checks/candidate_optimized.log",
+        "cycle_008/standalone/checks/candidate_optimized/census_mismatches.json",
+        "cycle_008/standalone/checks/candidate_optimized/invalid_key_results.json",
+        "cycle_008/standalone/checks/candidate_optimized/result.json",
+        "cycle_008/standalone/checks/candidate_optimized/sequence_definitions.json",
+        "cycle_008/standalone/checks/candidate_optimized/table_census.json",
+        "cycle_008/standalone/checks/cycle_results.json",
+        "cycle_008/standalone/checks/mutants_normal.log",
+        "cycle_008/standalone/checks/mutants_normal/result.json",
+        "cycle_008/standalone/checks/mutants_optimized.log",
+        "cycle_008/standalone/checks/mutants_optimized/result.json",
+        "cycle_008/standalone/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_008/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/checks/baseline_normal.log",
+        "cycle_009/checks/baseline_normal/admission_observations.json",
+        "cycle_009/checks/baseline_normal/result.json",
+        "cycle_009/checks/baseline_normal/verdict_mismatches.json",
+        "cycle_009/checks/baseline_optimized.log",
+        "cycle_009/checks/baseline_optimized/admission_observations.json",
+        "cycle_009/checks/baseline_optimized/result.json",
+        "cycle_009/checks/baseline_optimized/verdict_mismatches.json",
+        "cycle_009/checks/candidate_normal.log",
+        "cycle_009/checks/candidate_normal/admission_observations.json",
+        "cycle_009/checks/candidate_normal/configuration_results.json",
+        "cycle_009/checks/candidate_normal/metadata_only_anchor.json",
+        "cycle_009/checks/candidate_normal/result.json",
+        "cycle_009/checks/candidate_normal/verdict_mismatches.json",
+        "cycle_009/checks/candidate_optimized.log",
+        "cycle_009/checks/candidate_optimized/admission_observations.json",
+        "cycle_009/checks/candidate_optimized/configuration_results.json",
+        "cycle_009/checks/candidate_optimized/metadata_only_anchor.json",
+        "cycle_009/checks/candidate_optimized/result.json",
+        "cycle_009/checks/candidate_optimized/verdict_mismatches.json",
+        "cycle_009/checks/cycle_results.json",
+        "cycle_009/checks/mutants_normal.log",
+        "cycle_009/checks/mutants_normal/result.json",
+        "cycle_009/checks/mutants_optimized.log",
+        "cycle_009/checks/mutants_optimized/result.json",
+        "cycle_009/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/checks_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/proposal",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/proposal/INTEGRATION_NOTE.md",
+        "cycle_009/proposal/admission_contract.py",
+        "cycle_009/proposal/anchored_admission.py",
+        "cycle_009/proposal/extract_from_report.py",
+        "cycle_009/proposal/fetch_public_dependencies.py",
+        "cycle_009/proposal/load_reviewed.py",
+        "cycle_009/proposal/run_checks.py",
+        "cycle_009/proposal/source_modules.json",
+        "cycle_009/proposal/synthetic_cohort.py",
+        "cycle_009/proposal/test_admission.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/standalone/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/standalone/checks/baseline_normal.log",
+        "cycle_009/standalone/checks/baseline_normal/admission_observations.json",
+        "cycle_009/standalone/checks/baseline_normal/result.json",
+        "cycle_009/standalone/checks/baseline_normal/verdict_mismatches.json",
+        "cycle_009/standalone/checks/baseline_optimized.log",
+        "cycle_009/standalone/checks/baseline_optimized/admission_observations.json",
+        "cycle_009/standalone/checks/baseline_optimized/result.json",
+        "cycle_009/standalone/checks/baseline_optimized/verdict_mismatches.json",
+        "cycle_009/standalone/checks/candidate_normal.log",
+        "cycle_009/standalone/checks/candidate_normal/admission_observations.json",
+        "cycle_009/standalone/checks/candidate_normal/configuration_results.json",
+        "cycle_009/standalone/checks/candidate_normal/metadata_only_anchor.json",
+        "cycle_009/standalone/checks/candidate_normal/result.json",
+        "cycle_009/standalone/checks/candidate_normal/verdict_mismatches.json",
+        "cycle_009/standalone/checks/candidate_optimized.log",
+        "cycle_009/standalone/checks/candidate_optimized/admission_observations.json",
+        "cycle_009/standalone/checks/candidate_optimized/configuration_results.json",
+        "cycle_009/standalone/checks/candidate_optimized/metadata_only_anchor.json",
+        "cycle_009/standalone/checks/candidate_optimized/result.json",
+        "cycle_009/standalone/checks/candidate_optimized/verdict_mismatches.json",
+        "cycle_009/standalone/checks/cycle_results.json",
+        "cycle_009/standalone/checks/mutants_normal.log",
+        "cycle_009/standalone/checks/mutants_normal/result.json",
+        "cycle_009/standalone/checks/mutants_optimized.log",
+        "cycle_009/standalone/checks/mutants_optimized/result.json",
+        "cycle_009/standalone/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_009/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/SOURCE_CORRESPONDENCE.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/SOURCE_CORRESPONDENCE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/checks/common_normal.log",
+        "cycle_010/checks/common_normal/advance_observations.json",
+        "cycle_010/checks/common_normal/domain_checks.json",
+        "cycle_010/checks/common_normal/result.json",
+        "cycle_010/checks/common_optimized.log",
+        "cycle_010/checks/common_optimized/advance_observations.json",
+        "cycle_010/checks/common_optimized/domain_checks.json",
+        "cycle_010/checks/common_optimized/result.json",
+        "cycle_010/checks/cycle_results.json",
+        "cycle_010/checks/proof.log",
+        "cycle_010/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_010/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_010/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_010/checks/proof/compiled_sources/false_append_old.lean",
+        "cycle_010/checks/proof/compiled_sources/false_extra_delay.lean",
+        "cycle_010/checks/proof/compiled_sources/false_youngest_read.lean",
+        "cycle_010/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_010/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "cycle_010/checks/proof/compiled_sources/positive_nonzero.lean",
+        "cycle_010/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_010/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_010/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_010/checks/proof/compiler_logs/false_append_old.log",
+        "cycle_010/checks/proof/compiler_logs/false_extra_delay.log",
+        "cycle_010/checks/proof/compiler_logs/false_youngest_read.log",
+        "cycle_010/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_010/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "cycle_010/checks/proof/compiler_logs/positive_nonzero.log",
+        "cycle_010/checks/proof/result.json",
+        "cycle_010/checks/worker_results.json",
+        "cycle_010/checks/wrong_models_normal.log",
+        "cycle_010/checks/wrong_models_normal/result.json",
+        "cycle_010/checks/wrong_models_normal/wrong_models.json",
+        "cycle_010/checks/wrong_models_optimized.log",
+        "cycle_010/checks/wrong_models_optimized/result.json",
+        "cycle_010/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/checks/proof",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_010/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_010/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_010/checks/proof/compiled_sources/false_append_old.lean",
+        "cycle_010/checks/proof/compiled_sources/false_extra_delay.lean",
+        "cycle_010/checks/proof/compiled_sources/false_youngest_read.lean",
+        "cycle_010/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_010/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "cycle_010/checks/proof/compiled_sources/positive_nonzero.lean",
+        "cycle_010/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_010/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_010/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_010/checks/proof/compiler_logs/false_append_old.log",
+        "cycle_010/checks/proof/compiler_logs/false_extra_delay.log",
+        "cycle_010/checks/proof/compiler_logs/false_youngest_read.log",
+        "cycle_010/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_010/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "cycle_010/checks/proof/compiler_logs/positive_nonzero.log",
+        "cycle_010/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/checks_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/compiler_cleanup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/compiler_cleanup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/compiler_setup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/compiler_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/preexecution_case_design.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/preexecution_case_design.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/proposal",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/proposal/HistoryBuffer.lean",
+        "cycle_010/proposal/INTEGRATION_NOTE.md",
+        "cycle_010/proposal/check_engine.py",
+        "cycle_010/proposal/check_lean.py",
+        "cycle_010/proposal/extract_from_report.py",
+        "cycle_010/proposal/fetch_public_dependencies.py",
+        "cycle_010/proposal/load_reviewed.py",
+        "cycle_010/proposal/prepare_lean.py",
+        "cycle_010/proposal/run_checks.py",
+        "cycle_010/proposal/source_modules.json",
+        "cycle_010/proposal/step_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/proposal/HistoryBuffer.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/proposal/HistoryBuffer.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/source_state/inbox_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/source_state/inbox_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/standalone/checks/common_normal.log",
+        "cycle_010/standalone/checks/common_normal/advance_observations.json",
+        "cycle_010/standalone/checks/common_normal/domain_checks.json",
+        "cycle_010/standalone/checks/common_normal/result.json",
+        "cycle_010/standalone/checks/common_optimized.log",
+        "cycle_010/standalone/checks/common_optimized/advance_observations.json",
+        "cycle_010/standalone/checks/common_optimized/domain_checks.json",
+        "cycle_010/standalone/checks/common_optimized/result.json",
+        "cycle_010/standalone/checks/cycle_results.json",
+        "cycle_010/standalone/checks/proof.log",
+        "cycle_010/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/false_append_old.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/false_extra_delay.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/false_youngest_read.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/positive_nonzero.lean",
+        "cycle_010/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/false_append_old.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/false_extra_delay.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/false_youngest_read.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/positive_nonzero.log",
+        "cycle_010/standalone/checks/proof/result.json",
+        "cycle_010/standalone/checks/worker_results.json",
+        "cycle_010/standalone/checks/wrong_models_normal.log",
+        "cycle_010/standalone/checks/wrong_models_normal/result.json",
+        "cycle_010/standalone/checks/wrong_models_normal/wrong_models.json",
+        "cycle_010/standalone/checks/wrong_models_optimized.log",
+        "cycle_010/standalone/checks/wrong_models_optimized/result.json",
+        "cycle_010/standalone/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone/checks/proof",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/false_append_old.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/false_extra_delay.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/false_youngest_read.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "cycle_010/standalone/checks/proof/compiled_sources/positive_nonzero.lean",
+        "cycle_010/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/false_append_old.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/false_extra_delay.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/false_youngest_read.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "cycle_010/standalone/checks/proof/compiler_logs/positive_nonzero.log",
+        "cycle_010/standalone/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_010/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/SOURCE_CORRESPONDENCE.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/SOURCE_CORRESPONDENCE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/checks/common_normal.log",
+        "cycle_011/checks/common_normal/advance_observations.json",
+        "cycle_011/checks/common_normal/input_ratio_observations.json",
+        "cycle_011/checks/common_normal/preexecution_design.json",
+        "cycle_011/checks/common_normal/result.json",
+        "cycle_011/checks/common_optimized.log",
+        "cycle_011/checks/common_optimized/advance_observations.json",
+        "cycle_011/checks/common_optimized/input_ratio_observations.json",
+        "cycle_011/checks/common_optimized/preexecution_design.json",
+        "cycle_011/checks/common_optimized/result.json",
+        "cycle_011/checks/cycle_results.json",
+        "cycle_011/checks/proof.log",
+        "cycle_011/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_011/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_011/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_011/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_011/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "cycle_011/checks/proof/compiled_sources/false_no_wrap.lean",
+        "cycle_011/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "cycle_011/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_011/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "cycle_011/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "cycle_011/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_011/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_011/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_011/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_011/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "cycle_011/checks/proof/compiler_logs/false_no_wrap.log",
+        "cycle_011/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "cycle_011/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_011/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "cycle_011/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "cycle_011/checks/proof/result.json",
+        "cycle_011/checks/worker_results.json",
+        "cycle_011/checks/wrong_models_normal.log",
+        "cycle_011/checks/wrong_models_normal/preexecution_design.json",
+        "cycle_011/checks/wrong_models_normal/result.json",
+        "cycle_011/checks/wrong_models_normal/wrong_models.json",
+        "cycle_011/checks/wrong_models_optimized.log",
+        "cycle_011/checks/wrong_models_optimized/preexecution_design.json",
+        "cycle_011/checks/wrong_models_optimized/result.json",
+        "cycle_011/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/checks/proof",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_011/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_011/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_011/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_011/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "cycle_011/checks/proof/compiled_sources/false_no_wrap.lean",
+        "cycle_011/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "cycle_011/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_011/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "cycle_011/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "cycle_011/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_011/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_011/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_011/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_011/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "cycle_011/checks/proof/compiler_logs/false_no_wrap.log",
+        "cycle_011/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "cycle_011/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_011/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "cycle_011/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "cycle_011/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/checks_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/compiler_cleanup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/compiler_cleanup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/compiler_setup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/compiler_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/mathlib_setup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/mathlib_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/preexecution_case_design.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/preexecution_case_design.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/proposal",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/proposal/HistoryBuffer.lean",
+        "cycle_011/proposal/INTEGRATION_NOTE.md",
+        "cycle_011/proposal/PhaseIncrement.lean",
+        "cycle_011/proposal/check_engine.py",
+        "cycle_011/proposal/check_lean.py",
+        "cycle_011/proposal/extract_from_report.py",
+        "cycle_011/proposal/fetch_public_dependencies.py",
+        "cycle_011/proposal/load_reviewed.py",
+        "cycle_011/proposal/phase_contract.py",
+        "cycle_011/proposal/prepare_lean.py",
+        "cycle_011/proposal/prepare_mathlib.py",
+        "cycle_011/proposal/run_checks.py",
+        "cycle_011/proposal/source_modules.json",
+        "cycle_011/proposal/step_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/proposal/HistoryBuffer.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/proposal/HistoryBuffer.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/proposal/PhaseIncrement.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/proposal/PhaseIncrement.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/review_intake.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/review_intake.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/source_state/inbox_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/source_state/inbox_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/standalone/checks/common_normal.log",
+        "cycle_011/standalone/checks/common_normal/advance_observations.json",
+        "cycle_011/standalone/checks/common_normal/input_ratio_observations.json",
+        "cycle_011/standalone/checks/common_normal/preexecution_design.json",
+        "cycle_011/standalone/checks/common_normal/result.json",
+        "cycle_011/standalone/checks/common_optimized.log",
+        "cycle_011/standalone/checks/common_optimized/advance_observations.json",
+        "cycle_011/standalone/checks/common_optimized/input_ratio_observations.json",
+        "cycle_011/standalone/checks/common_optimized/preexecution_design.json",
+        "cycle_011/standalone/checks/common_optimized/result.json",
+        "cycle_011/standalone/checks/cycle_results.json",
+        "cycle_011/standalone/checks/proof.log",
+        "cycle_011/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/false_no_wrap.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "cycle_011/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/false_no_wrap.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "cycle_011/standalone/checks/proof/result.json",
+        "cycle_011/standalone/checks/worker_results.json",
+        "cycle_011/standalone/checks/wrong_models_normal.log",
+        "cycle_011/standalone/checks/wrong_models_normal/preexecution_design.json",
+        "cycle_011/standalone/checks/wrong_models_normal/result.json",
+        "cycle_011/standalone/checks/wrong_models_normal/wrong_models.json",
+        "cycle_011/standalone/checks/wrong_models_optimized.log",
+        "cycle_011/standalone/checks/wrong_models_optimized/preexecution_design.json",
+        "cycle_011/standalone/checks/wrong_models_optimized/result.json",
+        "cycle_011/standalone/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone/checks/proof",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/false_no_wrap.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "cycle_011/standalone/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "cycle_011/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/false_no_wrap.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "cycle_011/standalone/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "cycle_011/standalone/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_011/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/SOURCE_CORRESPONDENCE.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/SOURCE_CORRESPONDENCE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/checks/common_normal.log",
+        "cycle_012/checks/common_normal/advance_observations.json",
+        "cycle_012/checks/common_normal/preexecution_design.json",
+        "cycle_012/checks/common_normal/result.json",
+        "cycle_012/checks/common_normal/tracking_observations.json",
+        "cycle_012/checks/common_optimized.log",
+        "cycle_012/checks/common_optimized/advance_observations.json",
+        "cycle_012/checks/common_optimized/preexecution_design.json",
+        "cycle_012/checks/common_optimized/result.json",
+        "cycle_012/checks/common_optimized/tracking_observations.json",
+        "cycle_012/checks/cycle_results.json",
+        "cycle_012/checks/proof.log",
+        "cycle_012/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "cycle_012/checks/proof/compiled_sources/EMATracking.lean",
+        "cycle_012/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_012/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_012/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_012/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_012/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "cycle_012/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "cycle_012/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "cycle_012/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_012/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "cycle_012/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "cycle_012/checks/proof/compiler_logs/CoherenceEMA.log",
+        "cycle_012/checks/proof/compiler_logs/EMATracking.log",
+        "cycle_012/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_012/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_012/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_012/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_012/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "cycle_012/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "cycle_012/checks/proof/compiler_logs/false_reverse_weights.log",
+        "cycle_012/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_012/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "cycle_012/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "cycle_012/checks/proof/result.json",
+        "cycle_012/checks/worker_results.json",
+        "cycle_012/checks/wrong_models_normal.log",
+        "cycle_012/checks/wrong_models_normal/preexecution_design.json",
+        "cycle_012/checks/wrong_models_normal/result.json",
+        "cycle_012/checks/wrong_models_normal/wrong_models.json",
+        "cycle_012/checks/wrong_models_optimized.log",
+        "cycle_012/checks/wrong_models_optimized/preexecution_design.json",
+        "cycle_012/checks/wrong_models_optimized/result.json",
+        "cycle_012/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/checks/proof",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "cycle_012/checks/proof/compiled_sources/EMATracking.lean",
+        "cycle_012/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_012/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_012/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_012/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_012/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "cycle_012/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "cycle_012/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "cycle_012/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_012/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "cycle_012/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "cycle_012/checks/proof/compiler_logs/CoherenceEMA.log",
+        "cycle_012/checks/proof/compiler_logs/EMATracking.log",
+        "cycle_012/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_012/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_012/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_012/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_012/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "cycle_012/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "cycle_012/checks/proof/compiler_logs/false_reverse_weights.log",
+        "cycle_012/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_012/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "cycle_012/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "cycle_012/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/checks_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/compiler_cleanup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/compiler_cleanup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/compiler_setup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/compiler_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/mathlib_setup.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/mathlib_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/preexecution_case_design.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/preexecution_case_design.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/proposal/CoherenceEMA.lean",
+        "cycle_012/proposal/EMATracking.lean",
+        "cycle_012/proposal/HistoryBuffer.lean",
+        "cycle_012/proposal/INTEGRATION_NOTE.md",
+        "cycle_012/proposal/PhaseIncrement.lean",
+        "cycle_012/proposal/check_engine.py",
+        "cycle_012/proposal/check_lean.py",
+        "cycle_012/proposal/extract_from_report.py",
+        "cycle_012/proposal/fetch_public_dependencies.py",
+        "cycle_012/proposal/load_reviewed.py",
+        "cycle_012/proposal/phase_contract.py",
+        "cycle_012/proposal/prepare_lean.py",
+        "cycle_012/proposal/prepare_mathlib.py",
+        "cycle_012/proposal/run_checks.py",
+        "cycle_012/proposal/source_modules.json",
+        "cycle_012/proposal/step_contract.py",
+        "cycle_012/proposal/tracking_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/CoherenceEMA.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/proposal/CoherenceEMA.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/EMATracking.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/proposal/EMATracking.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/HistoryBuffer.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/proposal/HistoryBuffer.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/PhaseIncrement.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/proposal/PhaseIncrement.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/review_decision.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/review_intake.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/review_intake.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/selection_refinement.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/selection_refinement.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/source_state/inbox_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/source_state/inbox_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone/checks",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/standalone/checks/common_normal.log",
+        "cycle_012/standalone/checks/common_normal/advance_observations.json",
+        "cycle_012/standalone/checks/common_normal/preexecution_design.json",
+        "cycle_012/standalone/checks/common_normal/result.json",
+        "cycle_012/standalone/checks/common_normal/tracking_observations.json",
+        "cycle_012/standalone/checks/common_optimized.log",
+        "cycle_012/standalone/checks/common_optimized/advance_observations.json",
+        "cycle_012/standalone/checks/common_optimized/preexecution_design.json",
+        "cycle_012/standalone/checks/common_optimized/result.json",
+        "cycle_012/standalone/checks/common_optimized/tracking_observations.json",
+        "cycle_012/standalone/checks/cycle_results.json",
+        "cycle_012/standalone/checks/proof.log",
+        "cycle_012/standalone/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/EMATracking.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "cycle_012/standalone/checks/proof/compiler_logs/CoherenceEMA.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/EMATracking.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/false_reverse_weights.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "cycle_012/standalone/checks/proof/result.json",
+        "cycle_012/standalone/checks/worker_results.json",
+        "cycle_012/standalone/checks/wrong_models_normal.log",
+        "cycle_012/standalone/checks/wrong_models_normal/preexecution_design.json",
+        "cycle_012/standalone/checks/wrong_models_normal/result.json",
+        "cycle_012/standalone/checks/wrong_models_normal/wrong_models.json",
+        "cycle_012/standalone/checks/wrong_models_optimized.log",
+        "cycle_012/standalone/checks/wrong_models_optimized/preexecution_design.json",
+        "cycle_012/standalone/checks/wrong_models_optimized/result.json",
+        "cycle_012/standalone/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone/checks/proof",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/standalone/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/EMATracking.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "cycle_012/standalone/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "cycle_012/standalone/checks/proof/compiler_logs/CoherenceEMA.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/EMATracking.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/false_reverse_weights.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "cycle_012/standalone/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "cycle_012/standalone/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_012/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/PhaseCoherenceBridge.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/PhaseCoherenceBridge.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/development/final_compile/compiler.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/development/final_compile/compiler.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/development/final_compile/invocation.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/development/final_compile/invocation.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/development/mutation_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/development/mutation_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/development/mutations",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/development/mutations/complex_input_zero/change.txt",
+        "cycle_013/development/mutations/complex_input_zero/compiler.log",
+        "cycle_013/development/mutations/complex_input_zero/observation.json",
+        "cycle_013/development/mutations/current_newest/change.txt",
+        "cycle_013/development/mutations/current_newest/compiler.log",
+        "cycle_013/development/mutations/current_newest/observation.json",
+        "cycle_013/development/mutations/delay_extra/change.txt",
+        "cycle_013/development/mutations/delay_extra/compiler.log",
+        "cycle_013/development/mutations/delay_extra/observation.json",
+        "cycle_013/development/mutations/drop_eta/change.txt",
+        "cycle_013/development/mutations/drop_eta/compiler.log",
+        "cycle_013/development/mutations/drop_eta/observation.json",
+        "cycle_013/development/mutations/drop_frequency_tau/change.txt",
+        "cycle_013/development/mutations/drop_frequency_tau/compiler.log",
+        "cycle_013/development/mutations/drop_frequency_tau/observation.json",
+        "cycle_013/development/mutations/observations.json",
+        "cycle_013/development/mutations/phase_constant_zero/change.txt",
+        "cycle_013/development/mutations/phase_constant_zero/compiler.log",
+        "cycle_013/development/mutations/phase_constant_zero/observation.json",
+        "cycle_013/development/mutations/startup_one_early/change.txt",
+        "cycle_013/development/mutations/startup_one_early/compiler.log",
+        "cycle_013/development/mutations/startup_one_early/observation.json",
+        "cycle_013/development/mutations/younger_slot/change.txt",
+        "cycle_013/development/mutations/younger_slot/compiler.log",
+        "cycle_013/development/mutations/younger_slot/observation.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/development/source_hook_review.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/development/source_hook_review.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_013/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_013/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/PLAN.md",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/TrajectoryInvariants.lean",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/TrajectoryInvariants.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/development/baseline_compile/compiler.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/development/baseline_compile/compiler.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/development/baseline_compile/invocation.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/development/baseline_compile/invocation.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/development/main_compile",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/development/main_compile/Capacity.log",
+        "cycle_014/development/main_compile/EngineWitness.log",
+        "cycle_014/development/main_compile/GateMap.log",
+        "cycle_014/development/main_compile/K3.log",
+        "cycle_014/development/main_compile/MatrixForm.log",
+        "cycle_014/development/main_compile/RedTeam.log",
+        "cycle_014/development/main_compile/invocations.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/development/mutation_run.log",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/development/mutation_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/development/mutations",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/development/mutations/bypass_gate/compiler.log",
+        "cycle_014/development/mutations/bypass_gate/observation.json",
+        "cycle_014/development/mutations/bypass_gate/probe.lean",
+        "cycle_014/development/mutations/capacity_without_link/compiler.log",
+        "cycle_014/development/mutations/capacity_without_link/observation.json",
+        "cycle_014/development/mutations/capacity_without_link/probe.lean",
+        "cycle_014/development/mutations/drop_initial_invariant/compiler.log",
+        "cycle_014/development/mutations/drop_initial_invariant/observation.json",
+        "cycle_014/development/mutations/drop_initial_invariant/probe.lean",
+        "cycle_014/development/mutations/keep_diagonal/compiler.log",
+        "cycle_014/development/mutations/keep_diagonal/observation.json",
+        "cycle_014/development/mutations/keep_diagonal/probe.lean",
+        "cycle_014/development/mutations/next_capacity_clock/compiler.log",
+        "cycle_014/development/mutations/next_capacity_clock/observation.json",
+        "cycle_014/development/mutations/next_capacity_clock/probe.lean",
+        "cycle_014/development/mutations/observations.json",
+        "cycle_014/development/mutations/omit_clipping/compiler.log",
+        "cycle_014/development/mutations/omit_clipping/observation.json",
+        "cycle_014/development/mutations/omit_clipping/probe.lean",
+        "cycle_014/development/mutations/omit_symmetrisation/compiler.log",
+        "cycle_014/development/mutations/omit_symmetrisation/observation.json",
+        "cycle_014/development/mutations/omit_symmetrisation/probe.lean",
+        "cycle_014/development/mutations/positive_baselines/compiler.log",
+        "cycle_014/development/mutations/positive_baselines/probe.lean",
+        "cycle_014/development/mutations/stale_weights/compiler.log",
+        "cycle_014/development/mutations/stale_weights/observation.json",
+        "cycle_014/development/mutations/stale_weights/probe.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/development/source_hook_review.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/development/source_hook_review.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_014/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "files": [
+        "cycle_014/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "gate_foundations_checks.log",
+      "availability": "UNPACKED",
+      "files": [
+        "gate_foundations_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "gate_foundations_results.json",
+      "availability": "UNPACKED",
+      "files": [
+        "gate_foundations_results.json"
+      ]
+    }
+  ],
+  "logs": [
+    "cycle_002/checks/extra_axiom_payload.log",
+    "cycle_002/checks/false_unconditional_idempotence.log",
+    "cycle_002/checks/false_unrestricted_epsilon.log",
+    "cycle_002/checks/missing_footprint.log",
+    "cycle_002/checks/positive.log",
+    "cycle_002/checks/sorry_payload.log",
+    "cycle_002/cycle_checks.log",
+    "cycle_002/cycle_checks_first_run.log",
+    "cycle_002/lean_compile.log",
+    "cycle_002/lean_compile_initial.log",
+    "cycle_002/lean_setup.log",
+    "cycle_002/mathlib_extra_import.log",
+    "cycle_002/mathlib_setup.log",
+    "cycle_002/standalone_checks/extra_axiom_payload.log",
+    "cycle_002/standalone_checks/false_unconditional_idempotence.log",
+    "cycle_002/standalone_checks/false_unrestricted_epsilon.log",
+    "cycle_002/standalone_checks/missing_footprint.log",
+    "cycle_002/standalone_checks/positive.log",
+    "cycle_002/standalone_checks/sorry_payload.log",
+    "cycle_002/standalone_reproduction.log",
+    "cycle_003/checks/FreezeCore.log",
+    "cycle_003/checks/GateFoundations.log",
+    "cycle_003/checks/extra_axiom_payload.log",
+    "cycle_003/checks/false_candidate_equals_applied.log",
+    "cycle_003/checks/false_previous_row_bound.log",
+    "cycle_003/checks/false_without_h_lower.log",
+    "cycle_003/checks/false_without_h_upper.log",
+    "cycle_003/checks/false_zero_row_ratio.log",
+    "cycle_003/checks/missing_footprint.log",
+    "cycle_003/checks/positive.log",
+    "cycle_003/checks/sorry_payload.log",
+    "cycle_003/cycle_checks.log",
+    "cycle_003/exact_checks.log",
+    "cycle_003/lean_setup.log",
+    "cycle_003/mathlib_setup.log",
+    "cycle_003/pilot/FreezeCore.log",
+    "cycle_003/pilot/GateFoundations.log",
+    "cycle_003/pilot/GateProposalBridge.log",
+    "cycle_003/pilot_compile.log",
+    "cycle_003/pilot_compile_initial.log",
+    "cycle_003/pilot_initial/FreezeCore.log",
+    "cycle_003/pilot_initial/GateFoundations.log",
+    "cycle_003/pilot_initial/GateProposalBridge.log",
+    "cycle_003/source_comparison.log",
+    "cycle_003/source_comparison_initial.log",
+    "cycle_003/standalone_checks/FreezeCore.log",
+    "cycle_003/standalone_checks/GateFoundations.log",
+    "cycle_003/standalone_checks/extra_axiom_payload.log",
+    "cycle_003/standalone_checks/false_candidate_equals_applied.log",
+    "cycle_003/standalone_checks/false_previous_row_bound.log",
+    "cycle_003/standalone_checks/false_without_h_lower.log",
+    "cycle_003/standalone_checks/false_without_h_upper.log",
+    "cycle_003/standalone_checks/false_zero_row_ratio.log",
+    "cycle_003/standalone_checks/missing_footprint.log",
+    "cycle_003/standalone_checks/positive.log",
+    "cycle_003/standalone_checks/sorry_payload.log",
+    "cycle_003/standalone_reproduction.log",
+    "cycle_003/standalone_source.log",
+    "cycle_004/checks/CoherenceDriveBridge.log",
+    "cycle_004/checks/CoherenceEMA.log",
+    "cycle_004/checks/FreezeCore.log",
+    "cycle_004/checks/GateFoundations.log",
+    "cycle_004/checks/GateProposalBridge.log",
+    "cycle_004/checks/extra_axiom_payload.log",
+    "cycle_004/checks/false_coherence_equals_cosine.log",
+    "cycle_004/checks/false_complex_average_readout.log",
+    "cycle_004/checks/false_complex_zero_diagonal.log",
+    "cycle_004/checks/false_disk_without_alpha_lower.log",
+    "cycle_004/checks/false_disk_without_alpha_upper.log",
+    "cycle_004/checks/false_disk_without_input_bound.log",
+    "cycle_004/checks/false_strict_decay_at_alpha_one.log",
+    "cycle_004/checks/false_unforced_difference.log",
+    "cycle_004/checks/missing_footprint.log",
+    "cycle_004/checks/sorry_payload.log",
+    "cycle_004/cycle_checks.log",
+    "cycle_004/exact_checks.log",
+    "cycle_004/lean_setup.log",
+    "cycle_004/mathlib_setup.log",
+    "cycle_004/pilot/CoherenceDriveBridge.log",
+    "cycle_004/pilot/CoherenceEMA.log",
+    "cycle_004/pilot/FreezeCore.log",
+    "cycle_004/pilot/GateFoundations.log",
+    "cycle_004/pilot/GateProposalBridge.log",
+    "cycle_004/pilot_compile.log",
+    "cycle_004/pilot_compile_initial.log",
+    "cycle_004/pilot_initial/CoherenceEMA.log",
+    "cycle_004/pilot_initial/FreezeCore.log",
+    "cycle_004/pilot_initial/GateFoundations.log",
+    "cycle_004/pilot_initial/GateProposalBridge.log",
+    "cycle_004/source_comparison.log",
+    "cycle_004/source_comparison_initial.log",
+    "cycle_004/source_refresh.log",
+    "cycle_004/source_refresh_initial.log",
+    "cycle_004/standalone_checks/CoherenceDriveBridge.log",
+    "cycle_004/standalone_checks/CoherenceEMA.log",
+    "cycle_004/standalone_checks/FreezeCore.log",
+    "cycle_004/standalone_checks/GateFoundations.log",
+    "cycle_004/standalone_checks/GateProposalBridge.log",
+    "cycle_004/standalone_checks/extra_axiom_payload.log",
+    "cycle_004/standalone_checks/false_coherence_equals_cosine.log",
+    "cycle_004/standalone_checks/false_complex_average_readout.log",
+    "cycle_004/standalone_checks/false_complex_zero_diagonal.log",
+    "cycle_004/standalone_checks/false_disk_without_alpha_lower.log",
+    "cycle_004/standalone_checks/false_disk_without_alpha_upper.log",
+    "cycle_004/standalone_checks/false_disk_without_input_bound.log",
+    "cycle_004/standalone_checks/false_strict_decay_at_alpha_one.log",
+    "cycle_004/standalone_checks/false_unforced_difference.log",
+    "cycle_004/standalone_checks/missing_footprint.log",
+    "cycle_004/standalone_checks/sorry_payload.log",
+    "cycle_004/standalone_reproduction.log",
+    "cycle_004/standalone_source.log",
+    "cycle_005/checks/green_candidate.log",
+    "cycle_005/checks/green_candidate_optimized.log",
+    "cycle_005/checks/red_legacy.log",
+    "cycle_005/checks_run.log",
+    "cycle_005/dependency_acquisition.log",
+    "cycle_005/development_20test_checks/green_candidate.log",
+    "cycle_005/development_20test_checks/green_candidate_optimized.log",
+    "cycle_005/development_20test_checks/red_legacy.log",
+    "cycle_005/development_20test_checks_run.log",
+    "cycle_005/development_21test_checks/green_candidate.log",
+    "cycle_005/development_21test_checks/green_candidate_optimized.log",
+    "cycle_005/development_21test_checks/red_legacy.log",
+    "cycle_005/development_21test_checks_run.log",
+    "cycle_005/development_21test_standalone/checks/green_candidate.log",
+    "cycle_005/development_21test_standalone/checks/green_candidate_optimized.log",
+    "cycle_005/development_21test_standalone/checks/red_legacy.log",
+    "cycle_005/development_21test_standalone/extraction.log",
+    "cycle_005/development_21test_standalone/public_fetch.log",
+    "cycle_005/development_21test_standalone/reproduction.log",
+    "cycle_005/input_mutation_red.log",
+    "cycle_005/pilot_tests.log",
+    "cycle_005/privacy_sanitization.log",
+    "cycle_005/source_refresh.log",
+    "cycle_005/standalone/checks/green_candidate.log",
+    "cycle_005/standalone/checks/green_candidate_optimized.log",
+    "cycle_005/standalone/checks/red_legacy.log",
+    "cycle_005/standalone/extraction.log",
+    "cycle_005/standalone/public_fetch.log",
+    "cycle_005/standalone/reproduction.log",
+    "cycle_006/audit_run.log",
+    "cycle_006/dependency_acquisition.log",
+    "cycle_006/extraction.log",
+    "cycle_006/optimized_audit_run.log",
+    "cycle_006/source_refresh.log",
+    "cycle_006/standalone/normal_run.log",
+    "cycle_006/standalone/optimized_run.log",
+    "cycle_006/standalone/public_fetch.log",
+    "cycle_006/standalone/reproduction.log",
+    "cycle_007/checks/baseline_normal.log",
+    "cycle_007/checks/baseline_optimized.log",
+    "cycle_007/checks/candidate-engine_normal.log",
+    "cycle_007/checks/candidate-engine_optimized.log",
+    "cycle_007/checks/candidate-leaf_normal.log",
+    "cycle_007/checks/candidate-leaf_optimized.log",
+    "cycle_007/checks/modular-extracted_normal.log",
+    "cycle_007/checks/modular-extracted_optimized.log",
+    "cycle_007/checks/mutants_normal.log",
+    "cycle_007/checks/mutants_optimized.log",
+    "cycle_007/checks_run.log",
+    "cycle_007/extraction.log",
+    "cycle_007/historical_restoration.log",
+    "cycle_007/source_refresh.log",
+    "cycle_007/standalone/checks/baseline_normal.log",
+    "cycle_007/standalone/checks/baseline_optimized.log",
+    "cycle_007/standalone/checks/candidate-engine_normal.log",
+    "cycle_007/standalone/checks/candidate-engine_optimized.log",
+    "cycle_007/standalone/checks/candidate-leaf_normal.log",
+    "cycle_007/standalone/checks/candidate-leaf_optimized.log",
+    "cycle_007/standalone/checks/modular-extracted_normal.log",
+    "cycle_007/standalone/checks/modular-extracted_optimized.log",
+    "cycle_007/standalone/checks/mutants_normal.log",
+    "cycle_007/standalone/checks/mutants_optimized.log",
+    "cycle_007/standalone/public_fetch.log",
+    "cycle_007/standalone/reproduction.log",
+    "cycle_008/checks/baseline_normal.log",
+    "cycle_008/checks/baseline_optimized.log",
+    "cycle_008/checks/candidate_normal.log",
+    "cycle_008/checks/candidate_optimized.log",
+    "cycle_008/checks/mutants_normal.log",
+    "cycle_008/checks/mutants_optimized.log",
+    "cycle_008/checks_run.log",
+    "cycle_008/dependency_acquisition.log",
+    "cycle_008/historical_restoration.log",
+    "cycle_008/source_refresh.log",
+    "cycle_008/standalone/checks/baseline_normal.log",
+    "cycle_008/standalone/checks/baseline_optimized.log",
+    "cycle_008/standalone/checks/candidate_normal.log",
+    "cycle_008/standalone/checks/candidate_optimized.log",
+    "cycle_008/standalone/checks/mutants_normal.log",
+    "cycle_008/standalone/checks/mutants_optimized.log",
+    "cycle_008/standalone/reproduction.log",
+    "cycle_008/standalone_reproduction_run.log",
+    "cycle_009/checks/baseline_normal.log",
+    "cycle_009/checks/baseline_optimized.log",
+    "cycle_009/checks/candidate_normal.log",
+    "cycle_009/checks/candidate_optimized.log",
+    "cycle_009/checks/mutants_normal.log",
+    "cycle_009/checks/mutants_optimized.log",
+    "cycle_009/checks_run.log",
+    "cycle_009/dependency_acquisition.log",
+    "cycle_009/historical_restoration.log",
+    "cycle_009/source_refresh.log",
+    "cycle_009/standalone/checks/baseline_normal.log",
+    "cycle_009/standalone/checks/baseline_optimized.log",
+    "cycle_009/standalone/checks/candidate_normal.log",
+    "cycle_009/standalone/checks/candidate_optimized.log",
+    "cycle_009/standalone/checks/mutants_normal.log",
+    "cycle_009/standalone/checks/mutants_optimized.log",
+    "cycle_009/standalone/reproduction.log",
+    "cycle_009/standalone_reproduction_run.log",
+    "cycle_010/checks/common_normal.log",
+    "cycle_010/checks/common_optimized.log",
+    "cycle_010/checks/proof.log",
+    "cycle_010/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_010/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "cycle_010/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_010/checks/proof/compiler_logs/false_append_old.log",
+    "cycle_010/checks/proof/compiler_logs/false_extra_delay.log",
+    "cycle_010/checks/proof/compiler_logs/false_youngest_read.log",
+    "cycle_010/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "cycle_010/checks/proof/compiler_logs/positive_abstract_D0.log",
+    "cycle_010/checks/proof/compiler_logs/positive_nonzero.log",
+    "cycle_010/checks/wrong_models_normal.log",
+    "cycle_010/checks/wrong_models_optimized.log",
+    "cycle_010/checks_run.log",
+    "cycle_010/compiler_setup.log",
+    "cycle_010/development/initial_proof/compiler.log",
+    "cycle_010/development/projection_explicit/compiler.log",
+    "cycle_010/historical_restoration.log",
+    "cycle_010/source_refresh.log",
+    "cycle_010/standalone/checks/common_normal.log",
+    "cycle_010/standalone/checks/common_optimized.log",
+    "cycle_010/standalone/checks/proof.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/false_append_old.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/false_extra_delay.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/false_youngest_read.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/positive_abstract_D0.log",
+    "cycle_010/standalone/checks/proof/compiler_logs/positive_nonzero.log",
+    "cycle_010/standalone/checks/wrong_models_normal.log",
+    "cycle_010/standalone/checks/wrong_models_optimized.log",
+    "cycle_010/standalone/reproduction.log",
+    "cycle_010/standalone_reproduction_run.log",
+    "cycle_011/checks/common_normal.log",
+    "cycle_011/checks/common_optimized.log",
+    "cycle_011/checks/proof.log",
+    "cycle_011/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_011/checks/proof/compiler_logs/PhaseIncrement.log",
+    "cycle_011/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "cycle_011/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_011/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+    "cycle_011/checks/proof/compiler_logs/false_no_wrap.log",
+    "cycle_011/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+    "cycle_011/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "cycle_011/checks/proof/compiler_logs/positive_live_nonzero.log",
+    "cycle_011/checks/proof/compiler_logs/positive_startup_nonzero.log",
+    "cycle_011/checks/wrong_models_normal.log",
+    "cycle_011/checks/wrong_models_optimized.log",
+    "cycle_011/checks_run.log",
+    "cycle_011/compiler_setup.log",
+    "cycle_011/development/control_fixture_direct_startup/positive_live_nonzero.log",
+    "cycle_011/development/control_fixture_direct_startup/positive_startup_nonzero.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/common_normal.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/common_optimized.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/proof.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/PhaseIncrement.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_no_wrap.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_live_nonzero.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_startup_nonzero.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/wrong_models_normal.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks/wrong_models_optimized.log",
+    "cycle_011/development/first_full_runner_control_blocker/checks_run.log",
+    "cycle_011/development/packaging_capture_correction/first_validation_stdout.log",
+    "cycle_011/development/phase_pilot_01/HistoryBuffer.log",
+    "cycle_011/development/phase_pilot_01/PhaseIncrement.log",
+    "cycle_011/development/phase_pilot_02/PhaseIncrement.log",
+    "cycle_011/development/phase_pilot_03/PhaseIncrement.log",
+    "cycle_011/development/source_refresh_api403.log",
+    "cycle_011/mathlib_setup.log",
+    "cycle_011/source_refresh.log",
+    "cycle_011/standalone/checks/common_normal.log",
+    "cycle_011/standalone/checks/common_optimized.log",
+    "cycle_011/standalone/checks/proof.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/false_no_wrap.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/positive_live_nonzero.log",
+    "cycle_011/standalone/checks/proof/compiler_logs/positive_startup_nonzero.log",
+    "cycle_011/standalone/checks/wrong_models_normal.log",
+    "cycle_011/standalone/checks/wrong_models_optimized.log",
+    "cycle_011/standalone/reproduction.log",
+    "cycle_011/standalone_reproduction_run.log",
+    "cycle_012/checks/common_normal.log",
+    "cycle_012/checks/common_optimized.log",
+    "cycle_012/checks/proof.log",
+    "cycle_012/checks/proof/compiler_logs/CoherenceEMA.log",
+    "cycle_012/checks/proof/compiler_logs/EMATracking.log",
+    "cycle_012/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_012/checks/proof/compiler_logs/PhaseIncrement.log",
+    "cycle_012/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "cycle_012/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_012/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+    "cycle_012/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "cycle_012/checks/proof/compiler_logs/false_reverse_weights.log",
+    "cycle_012/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "cycle_012/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+    "cycle_012/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+    "cycle_012/checks/wrong_models_normal.log",
+    "cycle_012/checks/wrong_models_optimized.log",
+    "cycle_012/checks_run.log",
+    "cycle_012/compiler_setup.log",
+    "cycle_012/development/corrected_proof_driver.log",
+    "cycle_012/development/explicit_additions/EMATracking.log",
+    "cycle_012/development/explicit_norm_control/false_reverse_weights.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/common_normal.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/common_optimized.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/CoherenceEMA.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/EMATracking.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/PhaseIncrement.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_reverse_weights.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/wrong_models_normal.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks/wrong_models_optimized.log",
+    "cycle_012/development/first_full_runner_control_blocker/checks_run.log",
+    "cycle_012/development/initial_proof/CoherenceEMA.log",
+    "cycle_012/development/initial_proof/EMATracking.log",
+    "cycle_012/development/initial_proof/HistoryBuffer.log",
+    "cycle_012/development/initial_proof/PhaseIncrement.log",
+    "cycle_012/development/initial_proof/driver.log",
+    "cycle_012/mathlib_setup.log",
+    "cycle_012/source_refresh.log",
+    "cycle_012/standalone/checks/common_normal.log",
+    "cycle_012/standalone/checks/common_optimized.log",
+    "cycle_012/standalone/checks/proof.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/CoherenceEMA.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/EMATracking.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/false_reverse_weights.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+    "cycle_012/standalone/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+    "cycle_012/standalone/checks/wrong_models_normal.log",
+    "cycle_012/standalone/checks/wrong_models_optimized.log",
+    "cycle_012/standalone/reproduction.log",
+    "cycle_012/standalone_reproduction_run.log",
+    "cycle_013/development/compiler_setup.log",
+    "cycle_013/development/corrected_compile/compiler.log",
+    "cycle_013/development/direct_compile_run.log",
+    "cycle_013/development/final_compile/compiler.log",
+    "cycle_013/development/initial_compile/AIEFGateCore_GateMap.lean.log",
+    "cycle_013/development/initial_compile/AIEFGateCore_MatrixForm.lean.log",
+    "cycle_013/development/initial_compile/HistoryBuffer.lean.log",
+    "cycle_013/development/initial_compile/PhaseCoherenceBridge.lean.log",
+    "cycle_013/development/initial_compile/PhaseIncrement.lean.log",
+    "cycle_013/development/mathlib_setup.log",
+    "cycle_013/development/mutation_run.log",
+    "cycle_013/development/mutations/complex_input_zero/compiler.log",
+    "cycle_013/development/mutations/current_newest/compiler.log",
+    "cycle_013/development/mutations/delay_extra/compiler.log",
+    "cycle_013/development/mutations/drop_eta/compiler.log",
+    "cycle_013/development/mutations/drop_frequency_tau/compiler.log",
+    "cycle_013/development/mutations/phase_constant_zero/compiler.log",
+    "cycle_013/development/mutations/startup_one_early/compiler.log",
+    "cycle_013/development/mutations/younger_slot/compiler.log",
+    "cycle_014/development/baseline_compile/compiler.log",
+    "cycle_014/development/candidate_run.log",
+    "cycle_014/development/compiler_setup.log",
+    "cycle_014/development/final_compile/compiler.log",
+    "cycle_014/development/full_file_mutation_blocker/driver.log",
+    "cycle_014/development/full_file_mutation_blocker/mutations/keep_diagonal/compiler.log",
+    "cycle_014/development/full_file_mutation_blocker/mutations/omit_clipping/compiler.log",
+    "cycle_014/development/full_file_mutation_blocker/mutations/omit_symmetrisation/compiler.log",
+    "cycle_014/development/full_file_mutation_blocker/mutations/stale_weights/compiler.log",
+    "cycle_014/development/initial_compile/compiler.log",
+    "cycle_014/development/main_compile/Capacity.log",
+    "cycle_014/development/main_compile/EngineWitness.log",
+    "cycle_014/development/main_compile/GateMap.log",
+    "cycle_014/development/main_compile/K3.log",
+    "cycle_014/development/main_compile/MatrixForm.log",
+    "cycle_014/development/main_compile/RedTeam.log",
+    "cycle_014/development/main_compile_run.log",
+    "cycle_014/development/mathlib_setup.log",
+    "cycle_014/development/mutation_run.log",
+    "cycle_014/development/mutations/bypass_gate/compiler.log",
+    "cycle_014/development/mutations/capacity_without_link/compiler.log",
+    "cycle_014/development/mutations/drop_initial_invariant/compiler.log",
+    "cycle_014/development/mutations/keep_diagonal/compiler.log",
+    "cycle_014/development/mutations/next_capacity_clock/compiler.log",
+    "cycle_014/development/mutations/omit_clipping/compiler.log",
+    "cycle_014/development/mutations/omit_symmetrisation/compiler.log",
+    "cycle_014/development/mutations/positive_baselines/compiler.log",
+    "cycle_014/development/mutations/stale_weights/compiler.log",
+    "cycle_014/development/witness_compile/compiler.log",
+    "gate_foundations_checks.log"
+  ],
+  "mode": "Navigational workspace index only, no new packet/self-certification"
+}

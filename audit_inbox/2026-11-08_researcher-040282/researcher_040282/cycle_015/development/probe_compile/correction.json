@@ -1,0 +1,6 @@
+{
+  "reason": "Exact probe exponentials used I-left convention; ordered commutative simp/ring normalised them away from stock pi-exponential lemmas",
+  "fix": "Explicit left-I pi/2,-pi/2,-pi identities and raw-input matrix before rational EMA arithmetic",
+  "model_definitions_hypotheses_counterpoints_unchanged": true,
+  "failed_probe_draft_not_promoted_or_negative_credit": true
+}

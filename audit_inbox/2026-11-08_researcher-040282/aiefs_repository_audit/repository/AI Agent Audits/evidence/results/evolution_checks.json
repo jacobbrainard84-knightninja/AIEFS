@@ -1,0 +1,77 @@
+{
+ "_meta": {
+  "schema": "aiefs-audit-result/1",
+  "script": "evolution_checks.py",
+  "status": "ok",
+  "warnings": []
+ },
+ "defaults": {
+  "run": "5a9f093a2fe0",
+  "seed": "4619122171158768524",
+  "perturbation": 1e-08,
+  "future_steps": 32000,
+  "r_ema": 0.05713333333333142
+ },
+ "theta_restoration": {
+  "restore_state_restores_theta": false,
+  "max_theta_drift_at_column_start_forward": 0.27190638359573227,
+  "theta_drift_first_columns": [
+   0.015617992390432489,
+   0.031168265444504014,
+   0.046652239549015644
+  ]
+ },
+ "column_order": {
+  "max_abs_diff_forward_vs_reversed": 9896.478276025244,
+  "max_abs_entry": 10491.139388332793
+ },
+ "vs_corrected": {
+  "max_abs_diff_repo_vs_corrected": 10491.139388332793
+ },
+ "spectra": {
+  "repo_forward": {
+   "slowest_rates": [
+    -1068.2040736318568,
+    -541.7919832286906,
+    -38.26536697288439,
+    -9.576514296754354,
+    -3.659037244251131,
+    0.055106384320278985
+   ],
+   "rates_in_repo_gap_window": []
+  },
+  "repo_reversed": {
+   "slowest_rates": [
+    -997.8091590601375,
+    -334.5201252779271,
+    -9.443555253429421,
+    -3.6811253159734276,
+    0.05643087502260829,
+    0.05713232618160376
+   ],
+   "rates_in_repo_gap_window": []
+  },
+  "corrected": {
+   "slowest_rates": [
+    -9.570529737398823,
+    0.05713318181073376,
+    0.05713345952511205,
+    0.05713345952511205,
+    0.05713345952511205,
+    0.05713345952511205
+   ],
+   "rates_in_repo_gap_window": []
+  }
+ },
+ "nonclosure": {
+  "history[1] at K3 nodes": {
+   "perturbation": 1e-08,
+   "max_abs_change_in_next_18_vector_over_delta": 0.9999999994736442
+  },
+  "theta at K3 nodes": {
+   "perturbation": 1e-08,
+   "max_abs_change_in_next_18_vector_over_delta": 0.0005590111706865741
+  },
+  "check_start_18_vector_unchanged": true
+ }
+}

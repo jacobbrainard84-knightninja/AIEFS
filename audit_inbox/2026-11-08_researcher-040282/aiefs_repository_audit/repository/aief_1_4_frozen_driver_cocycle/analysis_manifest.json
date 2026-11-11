@@ -1,0 +1,131 @@
+{
+  "K3_edges": [
+    25,
+    29,
+    59
+  ],
+  "K3_identification": {
+    "all_K3_candidates": [
+      {
+        "edges": [
+          25,
+          29,
+          59
+        ],
+        "nodes": [
+          2,
+          7,
+          11
+        ],
+        "saturated_count": 1
+      }
+    ],
+    "candidate_count": 1,
+    "split_saturated_count": 1
+  },
+  "K3_nodes": [
+    2,
+    7,
+    11
+  ],
+  "amplitude_fractions": [
+    0.001,
+    0.01,
+    0.1
+  ],
+  "analysis": "AIEF-1.4 exceptional K3 frozen-driver finite-time cocycle",
+  "boundary_tolerance": 1e-09,
+  "command": [
+    "AIEF_1_4_frozen_driver_cocycle_analysis.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--seed",
+    "4619122171158768524",
+    "--boundary-tol",
+    "1e-9",
+    "--scale-epsilon",
+    "1e-12",
+    "--sample-stride",
+    "10",
+    "--amplitude-fractions",
+    "1e-3,1e-2,1e-1",
+    "--window-times",
+    "0.1,1,10,50",
+    "--window-start-stride",
+    "100",
+    "--directions",
+    "2",
+    "--output-dir",
+    "aief_1_4_frozen_driver_cocycle"
+  ],
+  "dependencies": {
+    "K3_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_exceptional_K3_transition_audit.py",
+      "sha256": "cbca075aa549b1bd9d12b6134c9afa63eab3cbbca5fdd83240d33f996f6dc2f6"
+    },
+    "branch_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_actual_admissibility_branch_audit.py",
+      "sha256": "0cde24499becfffcb9857ecfb359671534bfa6d85961483174d2811e2ce8101e"
+    },
+    "component_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_component_controller_audit.py",
+      "sha256": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e"
+    },
+    "stationarity": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "sha256": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc"
+    }
+  },
+  "direction_count": 2,
+  "dt": 0.01,
+  "final_replay_exact": true,
+  "final_replay_max_error": 0.0,
+  "future_steps": 32000,
+  "inputs": {
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "This is the frozen-driver weight subsystem with delta R set to zero.",
+    "Finite-time exponents are not asserted to be asymptotic Lyapunov exponents.",
+    "The base winner branch can remain fixed while finite-amplitude perturbed branches cross.",
+    "Low rank locates node-mediated coupling but does not bound its dynamical importance.",
+    "A failed frozen-driver comparison motivates, but does not itself identify, delayed-state feedback.",
+    "This is one deterministic frozen seed, not independent population evidence."
+  ],
+  "outputs": [
+    "frozen_cocycle_step_diagnostics.csv",
+    "frozen_cocycle_propagator.csv",
+    "frozen_cocycle_sliding_windows.csv",
+    "frozen_cocycle_nonlinear_comparison.csv",
+    "frozen_cocycle_nonlinear_summary.csv",
+    "frozen_cocycle_matrices.npz",
+    "frozen_driver_cocycle_report.txt"
+  ],
+  "sample_stride": 10,
+  "scale_epsilon": 1e-12,
+  "seed": "4619122171158768524",
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_frozen_driver_cocycle_analysis.py",
+    "sha256": "67be9224445b56d40d2f0e2cee7ad10fb3d2fcaf3fe134905231092b60d0fc82"
+  },
+  "split_classifier_active_K3_nodes": [
+    7
+  ],
+  "support_tolerance": 1e-14,
+  "window_start_stride": 100,
+  "window_times": [
+    0.1,
+    1.0,
+    10.0,
+    50.0
+  ]
+}

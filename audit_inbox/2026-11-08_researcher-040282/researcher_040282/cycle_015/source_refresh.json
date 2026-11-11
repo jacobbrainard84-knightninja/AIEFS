@@ -1,0 +1,30 @@
+{
+  "runtime_utc_observed": "2026-11-10T12:35:19.779819+00:00",
+  "heads": {
+    "arena/8aa39f3a-aiefs": "6f7471c86507daba193cf924f3fad98822a30f02",
+    "arena/d4a487cc-aiefs": "2af3859eefbec5ced8a434711cdd03ee6c2ade04",
+    "arena/eae4f5a6-aiefs": "bf0c62d985f2c5257eddb66d0207df8f7ba1deab",
+    "audit-inbox": "df5c28f162bfb0b23d5ffb872dc2a8c6258b4193",
+    "ci/check-sha256sums": "aababfe5178fd8f1ab4edf55c1647dec2f0f96ce",
+    "fix/040282-f4-f6-f7": "19f0786ca0a5ce1c1b93f230ec7605089f267ce4",
+    "fix/check-manifest-g1g2": "13a01d1222a5f76c3e6b0b3ba728c6b35539570b",
+    "fix/comparator-v4-from-main": "c0fc70bad9c75218526124496cedc07f4504f987",
+    "fix/comparator-v4-gates": "902abe8b2bdaabf13ee3060dce1e3e7da72ded18",
+    "fix/lint-claims-combined": "382ccdb9d19b2c7f1dd3c23aa0ff774f56c5a5a8",
+    "fix/manifest-nonempty": "92993ebc8b128d4f758083bcc8518e27a70a0b7f",
+    "fix/r026-cleanup": "9538706197ee49c44779a73b323377f3d72c77c0",
+    "fix/upload-new-f1f2": "9229817b451c6176b9bf856354a760f52adba8d0",
+    "fix/v41-followup-notes": "314daa3b2eaa944b1c3930e66ecbc4bb6e10067e",
+    "fix/v41-trust-anchor": "df01b346a785a1384d63029e258a3ba5e35f547d",
+    "fix/v41-trust-anchor-followup": "137c2a222495f702ea6bc6896de3324f107e8588",
+    "main": "3c5c0ef58c771b25c4b1eebd442e4073afa94b1f",
+    "research/aiefs-northstar-evaluation": "003522e2e9c5b10b94d7f2b0811c7986059a75c0",
+    "research/lean-gate-identities": "a1b54719d68151fa876f19c5f462da03b683f74c",
+    "research/lean-gate-p2": "c8a40ab3323530474f068b61d44c5eba074afe37",
+    "research/lean-gate-p3": "888f570065582e5b074a4886e112527f8805b4be",
+    "research/lean-gate-p4a": "767a5c5cf2109f351a14485b658b051a15d57df7",
+    "research/lean-gate-p4b": "7202e632a142e9cae04979d728f161cf5fe47273",
+    "research/rate-law-delta-sweep": "21870922dae696ec8ae5059d73f4f76ec5920013"
+  },
+  "scope": "Public currentmain/inbox and selected Lean/source/ERRATA, merged/openPRHTML separately read; no source execution"
+}

@@ -1,0 +1,7 @@
+{
+  "reason": "Whole-file held proofs for bad adapters caused downstream isDefEq heartbeat exhaustion; these cases were BLOCKED, not credited",
+  "refinement": "Keep exact implementation definitions, use focused concrete held probes plus already compiled baseline semantic counterexamples; avoid unrelated generic elaboration paths",
+  "mathematical_candidate_and_assumptions_unchanged": true,
+  "no_timeout_threshold_loosened": true,
+  "source_or_model_results_tuned": false
+}

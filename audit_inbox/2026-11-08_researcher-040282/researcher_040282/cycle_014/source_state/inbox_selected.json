@@ -1,0 +1,41 @@
+{
+  "branch": "audit-inbox",
+  "commit": "1b5ae52bfe5ae60092f1bacb4a61175f09fde211",
+  "files": [
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+      "bytes": 18284,
+      "blob": "35e3c5955ac69f867b584aa4e472dfc2dc1616ec"
+    },
+    {
+      "path": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes/TRIAGE_r040282.md",
+      "bytes": 21778,
+      "blob": "41f194cee485a4531e2ff41047b8da7b3527a5da"
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-09-04_researcher040282_006_v41-contract-review.md",
+      "bytes": 95188,
+      "blob": "9dc5f2b06b61dcf571858131882bf565242f098e"
+    },
+    {
+      "path": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/2026-11-08_researcher040282_005_review-response.md",
+      "bytes": 86231,
+      "blob": "2e9523b2d15f998f826d23a1af35758d6cd12b88"
+    },
+    {
+      "path": "audit_inbox/TRIAGE.md",
+      "bytes": 30242,
+      "blob": "87adf5fee4c2b93cb35cbc96b0acf95ffad2aa4f"
+    },
+    {
+      "path": "audit_inbox/briefing/OPEN_QUESTIONS.md",
+      "bytes": 9610,
+      "blob": "0526551f44d70f4f2e0c5f65e2f34d564b8b22b2"
+    },
+    {
+      "path": "audit_inbox/briefing/STATE.md",
+      "bytes": 9451,
+      "blob": "fe2421ca428888760206717a67f2afaf4e489f0f"
+    }
+  ]
+}

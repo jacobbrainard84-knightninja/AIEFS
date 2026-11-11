@@ -1,0 +1,15 @@
+{
+  "mutation": "stale_weights",
+  "runtime_utc_start": "2026-11-10T03:52:36.779915+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 73.62666596200006,
+  "setup_or_name_failure": false,
+  "baseline_semantic_witness": "dirty_not_structural_and_dirty_start_repaired",
+  "first_errors": [
+    "TrajectoryInvariants.lean:80:4: error: 'change' tactic failed, pattern",
+    "TrajectoryInvariants.lean:83:4: error: Type mismatch",
+    "TrajectoryInvariants.lean:84:4: error: Type mismatch",
+    "TrajectoryInvariants.lean:112:2: error: Type mismatch",
+    "TrajectoryInvariants.lean:224:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern"
+  ]
+}

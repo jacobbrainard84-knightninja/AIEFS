@@ -1,0 +1,12 @@
+{
+  "case": "alpha_gt_one_allowed",
+  "runtime_utc_start": "2026-11-11T02:03:22.841498+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 80.36772176500017,
+  "setup_name_or_timeout_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "alpha_gt_one_upper_refuted",
+  "first_errors": [
+    "Probe.lean:90:59: error: unsolved goals"
+  ]
+}

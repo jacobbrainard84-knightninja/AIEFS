@@ -1,0 +1,12 @@
+{
+  "case": "observable_shifted",
+  "runtime_utc_start": "2026-11-11T02:06:03.597651+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 51.36173532099997,
+  "setup_name_or_timeout_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "probe_half_drop",
+  "first_errors": [
+    "Probe.lean:90:32: error: unsolved goals"
+  ]
+}

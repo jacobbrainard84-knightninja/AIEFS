@@ -1,0 +1,109 @@
+{
+  "transport": "Read-only Git heads/tree, selected raw files; public PR HTML separately inspected",
+  "branch_count": 22,
+  "branches": [
+    {
+      "branch": "arena/8aa39f3a-aiefs",
+      "commit": "6f7471c86507daba193cf924f3fad98822a30f02"
+    },
+    {
+      "branch": "arena/d4a487cc-aiefs",
+      "commit": "2af3859eefbec5ced8a434711cdd03ee6c2ade04"
+    },
+    {
+      "branch": "arena/eae4f5a6-aiefs",
+      "commit": "bf0c62d985f2c5257eddb66d0207df8f7ba1deab"
+    },
+    {
+      "branch": "audit-inbox",
+      "commit": "b61f4340a4dfc9ae5b2732e51efeb49d0c10bd3d"
+    },
+    {
+      "branch": "ci/check-sha256sums",
+      "commit": "aababfe5178fd8f1ab4edf55c1647dec2f0f96ce"
+    },
+    {
+      "branch": "fix/040282-f4-f6-f7",
+      "commit": "19f0786ca0a5ce1c1b93f230ec7605089f267ce4"
+    },
+    {
+      "branch": "fix/check-manifest-g1g2",
+      "commit": "13a01d1222a5f76c3e6b0b3ba728c6b35539570b"
+    },
+    {
+      "branch": "fix/comparator-v4-from-main",
+      "commit": "c0fc70bad9c75218526124496cedc07f4504f987"
+    },
+    {
+      "branch": "fix/comparator-v4-gates",
+      "commit": "902abe8b2bdaabf13ee3060dce1e3e7da72ded18"
+    },
+    {
+      "branch": "fix/lint-claims-combined",
+      "commit": "382ccdb9d19b2c7f1dd3c23aa0ff774f56c5a5a8"
+    },
+    {
+      "branch": "fix/manifest-nonempty",
+      "commit": "92993ebc8b128d4f758083bcc8518e27a70a0b7f"
+    },
+    {
+      "branch": "fix/r026-cleanup",
+      "commit": "9538706197ee49c44779a73b323377f3d72c77c0"
+    },
+    {
+      "branch": "fix/upload-new-f1f2",
+      "commit": "9229817b451c6176b9bf856354a760f52adba8d0"
+    },
+    {
+      "branch": "fix/v41-followup-notes",
+      "commit": "314daa3b2eaa944b1c3930e66ecbc4bb6e10067e"
+    },
+    {
+      "branch": "fix/v41-trust-anchor",
+      "commit": "df01b346a785a1384d63029e258a3ba5e35f547d"
+    },
+    {
+      "branch": "fix/v41-trust-anchor-followup",
+      "commit": "137c2a222495f702ea6bc6896de3324f107e8588"
+    },
+    {
+      "branch": "main",
+      "commit": "543e7e1aaa11e4c810783806cb180eee36ec5313"
+    },
+    {
+      "branch": "research/aiefs-northstar-evaluation",
+      "commit": "003522e2e9c5b10b94d7f2b0811c7986059a75c0"
+    },
+    {
+      "branch": "research/lean-gate-identities",
+      "commit": "a1b54719d68151fa876f19c5f462da03b683f74c"
+    },
+    {
+      "branch": "research/lean-gate-p2",
+      "commit": "c8a40ab3323530474f068b61d44c5eba074afe37"
+    },
+    {
+      "branch": "research/lean-gate-p3",
+      "commit": "4c1b673f0a41e2752afdd373a7eaea5c1e9582de"
+    },
+    {
+      "branch": "research/rate-law-delta-sweep",
+      "commit": "21870922dae696ec8ae5059d73f4f76ec5920013"
+    }
+  ],
+  "candidate_name_matches": [],
+  "public_PR_HTML": {
+    "url": "https://github.com/jacobbrainard84-knightninja/AIEFS/pulls",
+    "open_count": 1,
+    "entries": [
+      {
+        "number": 24,
+        "title": "Lean P3: pinned CCtrl/vCtrl bridge + n-step branch persistence",
+        "relevance": "P3 active controller-fiber bridge/persistence with R frozen; PR body scope excludes phase/EMA closed-loop; not EMA-tracking result. Do not duplicate P1-P3."
+      }
+    ]
+  },
+  "scope": "Limited public navigation and current selected library, not exhaustive/private assurance",
+  "selected_library_keyword_scope": "Fresh42main texts incl GateCore P1/P2; no EMA trajectory/tracking implementation in selected current library; previous owned004 defines EMA and fixed/shared-input facts only;011 gives phasor increment/chord, no tracking bound",
+  "read_only_scope": "No contributed reproducer, mutation/checker, new-study or PR code executed; no source/current registry/lock edits"
+}

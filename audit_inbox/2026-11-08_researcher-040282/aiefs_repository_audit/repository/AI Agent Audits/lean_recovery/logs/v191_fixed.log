@@ -1,0 +1,325 @@
+===== v191_fixed.console =====
+check_lean.sh  project=AIEFProofs  utc=20261025T015459Z
+git HEAD: 60e60297e6dd34887348e6f858c32b3829d72f69  dirty_files: 12
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474
+WARN step 3: orphan files NOT checked by lake build: AIEFProofs.Smoke
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: 
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+PASS step 5: Build completed successfully (1237 jobs); warnings=0 (listed in 5_build_diagnostics.txt)
+PASS step 6: scanned 5 files, hits=0
+PASS step 7: AUDITED 43 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in <logs>/v191_fixed)
+EXIT=0
+
+===== v191_fixed/1_toolchain.log =====
+$ cat lean-toolchain
+leanprover/lean4:v4.33.1
+$ elan --version
+elan 4.2.4 (227caca13 2026-08-25)
+$ lake --version
+Lake version 5.0.0-src+819816b (Lean version 4.33.1)
+$ lean --version
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+
+===== v191_fixed/2_pins.log =====
+Cli                rev=6130a47896ce867c6a4a55373441e59e565bad0f inputRev=v4.33.0 inherited=True
+LeanSearchClient   rev=5f4d51b81cbd3f6b32b156bfad9056621a040404 inputRev=main inherited=True
+Qq                 rev=92c15be17b7caf78c2ad767ec40f89052d908d81 inputRev=master inherited=True
+aesop              rev=3448c0bcc5ce01b2d1546e483ec3620e32df3d0e inputRev=master inherited=True
+batteries          rev=4488d40d070b9700d4d5a6aa342f0d40c31b2a2d inputRev=main inherited=True
+importGraph        rev=16f02aa7642864af59f1ff0e384a015994db9118 inputRev=main inherited=True
+mathlib            rev=0df444a360eaa60ab8c11dca51a86af692955474 inputRev=v4.33.1 inherited=False
+plausible          rev=b7eb3304aeae834b12dda98993a37f6a41f6f0bb inputRev=main inherited=True
+proofwidgets       rev=4be2e3d5087eeb272cf5a8853b8f9dd025ef5957 inputRev=main inherited=True
+mathlib pin OK
+lean-toolchain: OK
+lake-manifest.json: OK
+lakefile.toml: OK
+
+===== v191_fixed/3_imports.log =====
+AIEFProofs imports AIEFProofs.Basic
+AIEFProofs imports AIEFProofs.ControllerFiber
+AIEFProofs imports AIEFProofs.ControllerFiberProjector
+AIEFProofs.ControllerFiberProjector imports AIEFProofs.ControllerFiber
+ORPHAN AIEFProofs.Smoke (not reachable from AIEFProofs.lean, so `lake build` does not check it)
+
+===== v191_fixed/3_reachable_modules.txt =====
+AIEFProofs
+AIEFProofs.Basic
+AIEFProofs.ControllerFiber
+AIEFProofs.ControllerFiberProjector
+
+===== v191_fixed/4_cache.log =====
+Current branch: HEAD
+Using cache from origin: (some leanprover-community/mathlib4)
+No files to download
+Already decompressed 8690 file(s)
+
+real	0m4.321s
+user	0m2.113s
+sys	0m1.874s
+
+===== v191_fixed/5_build.log =====
+✔ [1233/1237] Built AIEFProofs.Basic (726ms)
+✔ [1234/1237] Built AIEFProofs.ControllerFiber (2.3s)
+✔ [1235/1237] Built AIEFProofs.ControllerFiberProjector (1.7s)
+✔ [1236/1237] Built AIEFProofs (1.2s)
+Build completed successfully (1237 jobs).
+
+real	0m6.713s
+user	0m4.984s
+sys	0m2.854s
+
+===== v191_fixed/5_build_diagnostics.txt =====
+
+===== v191_fixed/6_markers.log =====
+scanned 5 files, hits=0
+
+===== v191_fixed/7_axioms.log =====
+AXIOMS AIEFProofs.ControllerFiber.PPerp_mulVec_PPar [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff_exists_smul [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_PPar [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_zero [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl.match_1 [AIEFProofs.ControllerFiber]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.range_PPar_iff_ker_CCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.id_eq_PPar_add_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_sq_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp [AIEFProofs.ControllerFiberProjector]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl.match_1 [AIEFProofs.ControllerFiber]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_two [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_ne_zero [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_00 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_coords_iff.match_1_1 [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_one [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_apply [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_sq_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_dot_vCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_vCtrl [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_02 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_coords_iff.match_1_3 [AIEFProofs.ControllerFiber]: [propext]
+AXIOMS AIEFProofs.ControllerFiber.PPar [AIEFProofs.ControllerFiberProjector]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_zero [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.univ_fin3 [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar.match_1 [AIEFProofs.ControllerFiberProjector]: []
+AXIOMS AIEFProofs.ControllerFiber.sum_fin3 [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp_mulVec [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_eq_zero_iff_locked_ratio [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_01 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPerp.eq_1 [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_11 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS hello [AIEFProofs.Basic]: []
+AXIOMS AIEFProofs.ControllerFiber.PPar_mulVec_PPerp [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.PPar_mulVec_vCtrl [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff [AIEFProofs.ControllerFiber]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_dot_smul [AIEFProofs.ControllerFiberProjector]: [propext,
+ Classical.choice,
+ Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_12 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.vCtrl_one [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_10 [AIEFProofs.ControllerFiber]: [propext, Quot.sound]
+AXIOMS AIEFProofs.ControllerFiber.CCtrl_coords_iff [AIEFProofs.ControllerFiber]: [propext, Classical.choice, Quot.sound]
+AUDITED 43 project declarations
+'AIEFProofs.ControllerFiber.CCtrl_00' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_01' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_02' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_10' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_11' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_12' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_zero' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_one' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_two' depends on axioms: [propext, Quot.sound]
+'AIEFProofs.ControllerFiber.univ_fin3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.sum_fin3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_coords_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_eq_zero_iff_locked_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff_exists_smul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_dot_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.vCtrl_dot_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_mulVec_vCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_sq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPar_mulVec_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_sq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.PPerp_mulVec_PPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.CCtrl_mulVec_PPar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.range_PPar_iff_ker_CCtrl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFProofs.ControllerFiber.id_eq_PPar_add_PPerp' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+===== v191_fixed/7_axioms_check.lean =====
+import AIEFProofs
+import AIEFProofs.Basic
+import AIEFProofs.ControllerFiber
+import AIEFProofs.ControllerFiberProjector
+open Lean Elab Command in
+/-- For every constant defined in a project module, collect its axioms and
+fail if any is outside the allowed set. Prints one line per declaration. -/
+elab "#aief_axiom_audit" : command => do
+  let env ← getEnv
+  let allowed : List Name := [``propext, ``Classical.choice, ``Quot.sound]
+  let mut bad : Array (Name × Array Name) := #[]
+  let mut count : Nat := 0
+  for (c, _) in env.constants.toList do
+    let some idx := env.getModuleIdxFor? c | continue
+    let modName := env.header.moduleNames[idx.toNat]!
+    unless (`AIEFProofs).isPrefixOf modName do continue
+    if c.isInternal then continue
+    count := count + 1
+    let axs ← liftCoreM (Lean.collectAxioms c)
+    let extra := axs.filter (fun a => !allowed.contains a)
+    logInfo m!"AXIOMS {c} [{modName}]: {axs.toList}"
+    unless extra.isEmpty do bad := bad.push (c, extra)
+  logInfo m!"AUDITED {count} project declarations"
+  unless bad.isEmpty do
+    throwError m!"DISALLOWED AXIOMS: {bad.toList}"
+
+#aief_axiom_audit
+#print axioms AIEFProofs.ControllerFiber.CCtrl_00
+#print axioms AIEFProofs.ControllerFiber.CCtrl_01
+#print axioms AIEFProofs.ControllerFiber.CCtrl_02
+#print axioms AIEFProofs.ControllerFiber.CCtrl_10
+#print axioms AIEFProofs.ControllerFiber.CCtrl_11
+#print axioms AIEFProofs.ControllerFiber.CCtrl_12
+#print axioms AIEFProofs.ControllerFiber.vCtrl_zero
+#print axioms AIEFProofs.ControllerFiber.vCtrl_one
+#print axioms AIEFProofs.ControllerFiber.vCtrl_two
+#print axioms AIEFProofs.ControllerFiber.univ_fin3
+#print axioms AIEFProofs.ControllerFiber.sum_fin3
+#print axioms AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_zero
+#print axioms AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_one
+#print axioms AIEFProofs.ControllerFiber.CCtrl_mulVec_vCtrl
+#print axioms AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff
+#print axioms AIEFProofs.ControllerFiber.CCtrl_coords_iff
+#print axioms AIEFProofs.ControllerFiber.CCtrl_eq_zero_iff_locked_ratio
+#print axioms AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff_exists_smul
+#print axioms AIEFProofs.ControllerFiber.vCtrl_ne_zero
+#print axioms AIEFProofs.ControllerFiber.PPar_apply
+#print axioms AIEFProofs.ControllerFiber.vCtrl_dot_vCtrl
+#print axioms AIEFProofs.ControllerFiber.vCtrl_dot_smul
+#print axioms AIEFProofs.ControllerFiber.PPar_mulVec
+#print axioms AIEFProofs.ControllerFiber.PPar_mulVec_vCtrl
+#print axioms AIEFProofs.ControllerFiber.PPerp_mulVec
+#print axioms AIEFProofs.ControllerFiber.PPar_sq_mulVec
+#print axioms AIEFProofs.ControllerFiber.PPar_mulVec_PPerp
+#print axioms AIEFProofs.ControllerFiber.PPerp_sq_mulVec
+#print axioms AIEFProofs.ControllerFiber.PPerp_mulVec_PPar
+#print axioms AIEFProofs.ControllerFiber.CCtrl_mulVec_PPar
+#print axioms AIEFProofs.ControllerFiber.range_PPar_iff_ker_CCtrl
+#print axioms AIEFProofs.ControllerFiber.id_eq_PPar_add_PPerp
+
+===== v191_fixed/7_axioms_summary.txt =====
+AIEFProofs.ControllerFiber.CCtrl_00: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_01: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_02: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_10: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_11: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_12: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.vCtrl_zero: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.vCtrl_one: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.vCtrl_two: ['Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.univ_fin3: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.sum_fin3: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_zero: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_mulVec_apply_one: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_mulVec_vCtrl: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_coords_iff: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_eq_zero_iff_locked_ratio: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_mulVec_eq_zero_iff_exists_smul: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.vCtrl_ne_zero: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPar_apply: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.vCtrl_dot_vCtrl: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.vCtrl_dot_smul: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPar_mulVec: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPar_mulVec_vCtrl: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPerp_mulVec: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPar_sq_mulVec: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPar_mulVec_PPerp: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPerp_sq_mulVec: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.PPerp_mulVec_PPar: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.CCtrl_mulVec_PPar: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.range_PPar_iff_ker_CCtrl: ['Classical.choice', 'Quot.sound', 'propext']
+AIEFProofs.ControllerFiber.id_eq_PPar_add_PPerp: ['Classical.choice', 'Quot.sound', 'propext']
+disallowed=0
+
+===== v191_fixed/source_sha256.txt =====
+3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71  lean-toolchain
+59df7f74d25059e734ef241a9e891c81077fb440726b1334864a9dd5a072e84b  lakefile.toml
+baa1bc12c21222b19b8436aaf1b7800b54b484b1cfe8065b6911ff3463271e08  lake-manifest.json
+5b696824caba90ecc29f506bc1039b5d59e9bd53fd36da49e7526ca0ba6d0a16  AIEFProofs.lean
+a88fef4d3efa63c9f9f5c948dd5ba1de3ea09d828ce8388ee83fa3d039e734a4  AIEFProofs/Basic.lean
+37c26f569ab24351c6482c1b8259adbee84d843506d54002699da54417eaf241  AIEFProofs/ControllerFiber.lean
+a020ecd979dff64412cac5efee89fcec5a06897b04b91942d568edd5d4445b98  AIEFProofs/ControllerFiberProjector.lean
+630ab328b8e6cbcebcb879fa8cf1d50099c92829166cca7b2fcab91632bf6bdf  AIEFProofs/Smoke.lean
+
+===== v191_fixed/summary.txt =====
+check_lean.sh  project=AIEFProofs  utc=20261025T015459Z
+git HEAD: 60e60297e6dd34887348e6f858c32b3829d72f69  dirty_files: 12
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474
+  AIEFProofs imports AIEFProofs.Basic
+  AIEFProofs imports AIEFProofs.ControllerFiber
+  AIEFProofs imports AIEFProofs.ControllerFiberProjector
+  AIEFProofs.ControllerFiberProjector imports AIEFProofs.ControllerFiber
+  ORPHAN AIEFProofs.Smoke (not reachable from AIEFProofs.lean, so `lake build` does not check it)
+WARN step 3: orphan files NOT checked by lake build: AIEFProofs.Smoke
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: 
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+PASS step 5: Build completed successfully (1237 jobs); warnings=0 (listed in 5_build_diagnostics.txt)
+PASS step 6: scanned 5 files, hits=0
+PASS step 7: AUDITED 43 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in <logs>/v191_fixed)

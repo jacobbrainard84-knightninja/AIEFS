@@ -1,0 +1,12 @@
+{
+  "change": "complex_mean_before_abs",
+  "runtime_utc_start": "2026-11-10T13:03:58.802525+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 145.1031774779999,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "C01=-I/2,C10=I/2,correctR=1/2",
+  "first_errors": [
+    "Probe.lean:194:63: error: unsolved goals"
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "main_file": "AIEFGateCore/GateMap.lean",
+    "runtime_utc_start": "2026-11-10T03:38:13.863028+00:00",
+    "returncode": 0,
+    "seconds": 40.16296704599995
+  },
+  {
+    "main_file": "AIEFGateCore/K3.lean",
+    "runtime_utc_start": "2026-11-10T03:38:54.037036+00:00",
+    "returncode": 0,
+    "seconds": 43.10211222199996
+  },
+  {
+    "main_file": "AIEFGateCore/RedTeam.lean",
+    "runtime_utc_start": "2026-11-10T03:39:37.146431+00:00",
+    "returncode": 0,
+    "seconds": 49.769958076999956
+  },
+  {
+    "main_file": "AIEFGateCore/EngineWitness.lean",
+    "runtime_utc_start": "2026-11-10T03:40:26.918238+00:00",
+    "returncode": 0,
+    "seconds": 42.965834115999996
+  },
+  {
+    "main_file": "AIEFGateCore/MatrixForm.lean",
+    "runtime_utc_start": "2026-11-10T03:41:09.888076+00:00",
+    "returncode": 0,
+    "seconds": 42.85149745199999
+  },
+  {
+    "main_file": "AIEFGateCore/Capacity.lean",
+    "runtime_utc_start": "2026-11-10T03:41:52.741683+00:00",
+    "returncode": 0,
+    "seconds": 43.803789094999956
+  }
+]

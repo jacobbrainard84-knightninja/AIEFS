@@ -1,0 +1,46 @@
+{
+  "authority_schema": "aief-frozen-authority-lock-v1",
+  "authority_id": "AIEF_1_4_FROZEN_5a9f093a2fe0",
+  "certification_design": {
+    "seed_count": 40,
+    "branch_count": 7,
+    "ordered_branch_namespace": [
+      "continue",
+      "reset_ema",
+      "reset_B",
+      "reset_B_ema",
+      "B_carrier_only",
+      "full_reset",
+      "future_shuffle"
+    ]
+  },
+  "frozen_artifacts": {
+    "manifest": {
+      "relative_path": "runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "branch_npz": {
+      "relative_path": "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    },
+    "scalar_csv": {
+      "relative_path": "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+      "sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda"
+    }
+  },
+  "legacy_sources": {
+    "engine_v1": {
+      "relative_path": "aief_experiment_engine_v1.py",
+      "sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede"
+    },
+    "twindow_driver_v1": {
+      "relative_path": "AIEF_1_4_Twindow_sensitivity.py",
+      "sha256": "633d1a21502598021d456bff7ff39b4065b5e5d05218c4411a4f36d53e0956ee"
+    },
+    "twindow_analysis_v3": {
+      "relative_path": "AIEF_1_4_Twindow_sensitivity_analysis_v3.py",
+      "sha256": "348093079c37697a1b84a250aca2d0fa74180b39a1b62e20893190a974ffd919"
+    }
+  },
+  "authentication_note": "This lock is authoritative only after independent source-control pinning, release signing, or equivalent evidence-lineage authentication. It must not be regenerated beside the artifacts during validation."
+}

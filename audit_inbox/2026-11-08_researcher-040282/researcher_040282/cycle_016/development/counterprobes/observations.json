@@ -1,0 +1,98 @@
+{
+  "basis": "UNMERGEDteamP5@54037ea,userapprovedbranchcomponentonly",
+  "positive_baselines": 7,
+  "positive_returncode": 0,
+  "rows": [
+    {
+      "case": "factor_two_dropped",
+      "runtime_utc_start": "2026-11-11T02:02:00.909458+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 81.92272426999989,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "factor_one_refuted",
+      "first_errors": [
+        "Probe.lean:90:59: error: unsolved goals"
+      ]
+    },
+    {
+      "case": "increase_envelope_for_abs",
+      "runtime_utc_start": "2026-11-11T02:02:00.909345+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 81.92515960800006,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "increase_only_abs_refuted",
+      "first_errors": [
+        "Probe.lean:90:80: error: unsolved goals"
+      ]
+    },
+    {
+      "case": "negative_alpha_allowed",
+      "runtime_utc_start": "2026-11-11T02:03:22.836308+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 80.3739575699999,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "negative_alpha_upper_refuted",
+      "first_errors": [
+        "Probe.lean:90:67: error: unsolved goals"
+      ]
+    },
+    {
+      "case": "alpha_gt_one_allowed",
+      "runtime_utc_start": "2026-11-11T02:03:22.841498+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 80.36772176500017,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "alpha_gt_one_upper_refuted",
+      "first_errors": [
+        "Probe.lean:90:59: error: unsolved goals"
+      ]
+    },
+    {
+      "case": "unitdisk_initial_omitted",
+      "runtime_utc_start": "2026-11-11T02:04:43.212284+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 80.39650500399989,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "nonunit_initial_refuted",
+      "first_errors": [
+        "Probe.lean:90:63: error: unsolved goals"
+      ]
+    },
+    {
+      "case": "two_steps_one_allowance",
+      "runtime_utc_start": "2026-11-11T02:04:43.212405+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 80.38218534900011,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "two_step_one_allowance_refuted",
+      "first_errors": [
+        "Probe.lean:90:63: error: unsolved goals"
+      ]
+    },
+    {
+      "case": "observable_shifted",
+      "runtime_utc_start": "2026-11-11T02:06:03.597651+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 51.36173532099997,
+      "setup_name_or_timeout_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "probe_half_drop",
+      "first_errors": [
+        "Probe.lean:90:32: error: unsolved goals"
+      ]
+    }
+  ],
+  "equivalence_control": {
+    "runtime_utc_start": "2026-11-11T02:06:54.974089+00:00",
+    "returncode": 0,
+    "seconds": 50.41592030700008,
+    "meaning": "Legitimate +0observable equivalence, seven fixed values held"
+  },
+  "scope": "Fixed exact value/false-claim probes, not a generic verifier or coupledmodel015test"
+}

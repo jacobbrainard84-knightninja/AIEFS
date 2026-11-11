@@ -1,0 +1,14 @@
+{
+  "mutation": "startup_one_early",
+  "runtime_utc_start": "2026-11-10T02:50:58.665894+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 104.069291497,
+  "setup_or_name_error": false,
+  "independent_baseline_refutation": "early_start_nonzero_and_probe_late_start",
+  "first_errors": [
+    "PhaseCoherenceBridge.lean:78:44: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:97:4: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:99:4: error: unsolved goals",
+    "PhaseCoherenceBridge.lean:255:68: error: unsolved goals"
+  ]
+}

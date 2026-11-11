@@ -1,0 +1,12 @@
+{
+  "case": "two_steps_one_allowance",
+  "runtime_utc_start": "2026-11-11T02:04:43.212405+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 80.38218534900011,
+  "setup_name_or_timeout_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "two_step_one_allowance_refuted",
+  "first_errors": [
+    "Probe.lean:90:63: error: unsolved goals"
+  ]
+}

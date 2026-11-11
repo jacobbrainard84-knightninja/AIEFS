@@ -1,0 +1,40 @@
+AIEF exceptional K3 augmented tangent cocycle analysis
+======================================================
+
+Identity and scope
+------------------
+Seed: 4619122171158768524
+Final base replay exact: True
+Final base replay maximum error: 0
+Maximum custom-step versus implemented-step error: 0
+* Analytic tangents include phase, delay history, complex EMA, R feedback, admissibility, and phase coupling.
+
+Augmented tangent versus coupled centered replay
+------------------------------------------------
+  direction=0, fraction=0.001, amplitude=2.2e-10, branch=True, max_chi=0.000945, resolved=165, last_time=21.6, median_K3_error=0.0326, median_full_B_error=0.0326, median_theta_error=0.000685, median_R_error=0.00199
+  direction=0, fraction=0.01, amplitude=2.2e-09, branch=True, max_chi=0.00945, resolved=418, last_time=42.9, median_K3_error=0.00181, median_full_B_error=0.00181, median_theta_error=0.000379, median_R_error=0.000514
+  direction=0, fraction=0.1, amplitude=2.2e-08, branch=True, max_chi=0.0945, resolved=545, last_time=54.6, median_K3_error=0.000531, median_full_B_error=0.000531, median_theta_error=2.12e-05, median_R_error=7.96e-05
+  direction=1, fraction=0.001, amplitude=3.12e-10, branch=True, max_chi=0.00177, resolved=1249, last_time=125, median_K3_error=0.00099, median_full_B_error=0.00099, median_theta_error=7.69e-06, median_R_error=0.000443
+  direction=1, fraction=0.01, amplitude=3.12e-09, branch=True, max_chi=0.0161, resolved=1658, last_time=166, median_K3_error=0.000495, median_full_B_error=0.000495, median_theta_error=1.43e-06, median_R_error=0.000144
+  direction=1, fraction=0.1, amplitude=3.12e-08, branch=True, max_chi=0.161, resolved=2051, last_time=205, median_K3_error=0.000126, median_full_B_error=0.000126, median_theta_error=4.65e-08, median_R_error=6.62e-05
+
+Overall median K3 augmented error: 0.000499809
+Overall maximum K3 augmented error: 0.0714015
+Overall median full-B augmented error: 0.000499809
+Overall median phase augmented error: 1.63506e-06
+Overall median R augmented error: 0.000176983
+Median analytic driver/weight output ratio: 0.000705959
+Maximum analytic nonadditive tie interaction ratio: 3.32067e-16
+
+Matched-horizon amplitude collapse
+----------------------------------
+  direction=0: common_last_time=21.6, common_samples=165, median_vector_spread=0.0342035, maximum_vector_spread=0.0578773, median_augmented_error=0.000867565
+  direction=1: common_last_time=124.8, common_samples=1249, median_vector_spread=0.00118449, maximum_vector_spread=0.0460262, median_augmented_error=7.44908e-05
+
+Interpretation constraints
+--------------------------
+* The map is directionally differentiated at endpoint and positivity ties; +h and -h tangents are propagated separately.
+* Centered analytic predictions use (D(+h)-D(-h))/2 and need not equal either one-sided tangent.
+* Amplitude collapse is evaluated only on the common numerically resolved horizon.
+* A safeguard-dominated normal mode remains part of the implemented discrete dynamics even if absent from an intended continuum limit.
+* Agreement is established for this seed, directions, amplitudes, and horizon only.

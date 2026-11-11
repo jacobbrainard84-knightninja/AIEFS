@@ -1,0 +1,30 @@
+{
+  "tested_main": "543e7e1aaa11e4c810783806cb180eee36ec5313",
+  "public_dependencies_fetched_and_verified": 4,
+  "python_sources": 1,
+  "metadata_files": 3,
+  "files": [
+    {
+      "path": "aief_experiment_engine_v1.py",
+      "freshly_fetched": true,
+      "verified": true
+    },
+    {
+      "path": "registry/artifacts.csv",
+      "freshly_fetched": true,
+      "verified": true
+    },
+    {
+      "path": "lean/AIEFProofs/lean-toolchain",
+      "freshly_fetched": true,
+      "verified": true
+    },
+    {
+      "path": "lean/AIEFProofs/lake-manifest.json",
+      "freshly_fetched": true,
+      "verified": true
+    }
+  ],
+  "source_executed_by_fetcher": false,
+  "raw_commit_author_metadata_requested": false
+}

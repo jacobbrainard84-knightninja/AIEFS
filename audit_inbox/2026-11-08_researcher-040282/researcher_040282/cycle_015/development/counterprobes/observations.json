@@ -1,0 +1,100 @@
+{
+  "method": "Exact fixed definition-prefix probes; same main imports, no source execution/security-verifier claim",
+  "positive_baselines": 7,
+  "positive_returncode": 0,
+  "repair_positive_returncode": 0,
+  "attempts_note": "Five completed initial probes plus2repaired/completed probes; blocked normalisation attempt not credited; original7positive baselines retained",
+  "rows": [
+    {
+      "change": "old_C_for_R",
+      "runtime_utc_start": "2026-11-10T13:03:58.803006+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 145.06027449499993,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "probe_C_matrix/probe_drive_matrix",
+      "first_errors": [
+        "Probe.lean:194:63: error: unsolved goals"
+      ],
+      "evidence_directory": "development/first_counterprobe_blocker/counterprobes/old_C_for_R"
+    },
+    {
+      "change": "complex_mean_before_abs",
+      "runtime_utc_start": "2026-11-10T13:03:58.802525+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 145.1031774779999,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "C01=-I/2,C10=I/2,correctR=1/2",
+      "first_errors": [
+        "Probe.lean:194:63: error: unsolved goals"
+      ],
+      "evidence_directory": "development/first_counterprobe_blocker/counterprobes/complex_mean_before_abs"
+    },
+    {
+      "change": "phase_uses_old_B",
+      "runtime_utc_start": "2026-11-10T13:06:23.869265+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 268.57786274499995,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "old_B_increment_zero",
+      "first_errors": [
+        "Probe.lean:211:82: error: unsolved goals"
+      ],
+      "evidence_directory": "development/first_counterprobe_blocker/counterprobes/phase_uses_old_B"
+    },
+    {
+      "change": "history_appends_old_theta",
+      "runtime_utc_start": "2026-11-10T13:10:52.457134+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 101.40037762200018,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "probe_theta_new/probe_history_newest",
+      "first_errors": [
+        "Probe.lean:211:104: error: unsolved goals"
+      ],
+      "evidence_directory": "development/first_counterprobe_blocker/counterprobes/history_appends_old_theta"
+    },
+    {
+      "change": "input_reads_newest",
+      "runtime_utc_start": "2026-11-10T13:10:52.458068+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 101.4155408509996,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "probe_oldest_input",
+      "first_errors": [
+        "Probe.lean:211:60: error: unsolved goals"
+      ],
+      "evidence_directory": "development/first_counterprobe_blocker/counterprobes/input_reads_newest"
+    },
+    {
+      "change": "phase_uses_unprojected_B",
+      "runtime_utc_start": "2026-11-10T13:15:23.527389+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 98.60188291299983,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "unprojected_increment_two",
+      "first_errors": [
+        "Probe.lean:211:82: error: unsolved goals"
+      ],
+      "evidence_directory": "development/counterprobes/phase_uses_unprojected_B"
+    },
+    {
+      "change": "input_drops_frequency_tau",
+      "runtime_utc_start": "2026-11-10T13:15:23.527937+00:00",
+      "raw_compiler_returncode": 1,
+      "seconds": 98.60880092800016,
+      "setup_or_name_failure": false,
+      "explicit_false_goal": true,
+      "baseline_semantic_witness": "probe_frequency_offset",
+      "first_errors": [
+        "Probe.lean:211:54: error: unsolved goals"
+      ],
+      "evidence_directory": "development/counterprobes/input_drops_frequency_tau"
+    }
+  ]
+}

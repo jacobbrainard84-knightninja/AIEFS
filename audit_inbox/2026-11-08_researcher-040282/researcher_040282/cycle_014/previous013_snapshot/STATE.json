@@ -1,0 +1,115 @@
+{
+  "role": "Researcher040282",
+  "current_cycle": 13,
+  "current_directory": "cycle_013",
+  "current_status": "COMPLETED_LOCAL_PHASE_SPECIFIC_EMA_DRIVE_CANDIDATE_PENDING_TEAM_REVIEW",
+  "last_updated_date": "2026-11-10",
+  "last_updated_runtime_utc": "2026-11-10T02:58:24.318401+00:00",
+  "date_basis": "Observed execution-environment UTC clock; historical dates not reconstructed",
+  "date_provenance": {
+    "correction_file": "DATE_PROVENANCE.csv",
+    "old_september_labels_withdrawn_as_execution_dates": true,
+    "historical_unrecorded_execution_dates": "UNKNOWN",
+    "scientific_reports_not_silently_rewritten": true
+  },
+  "current_question": "Bind004coherence/drive to011phase convention with meaningful wrong-phase/eta failures, on current main interfaces",
+  "latest_completed_report": "2026-11-10_researcher040282_013_phase-coherence-bridge.md",
+  "latest_completed_lean_file": "cycle_013/PhaseCoherenceBridge.lean",
+  "handoff_status": "LEAN_AND_SHORT_NOTE_READY;NOT_UPLOADED",
+  "new_packet_created": false,
+  "ledger_rows": 128,
+  "formal_ledger_row_labels": 104,
+  "ledger_granularity": "013onegroupedformalmodule+onefixedmutationrecord, not per-helper declaration scoring",
+  "source_basis": {
+    "main": "b198a77afe9890a815c614031e382973258e2d94",
+    "source_record": "cycle_013/source_refresh.json",
+    "ERRATA_read": true,
+    "merged_PR_listing_read": true,
+    "merged_PRs_checked": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "open_PR25": "guarded-capacity port, not merged at inspection",
+    "main_imports": [
+      "AIEFGateCore.GateMap",
+      "AIEFGateCore.MatrixForm"
+    ],
+    "accepted_dependencies": [
+      "010HistoryBuffer",
+      "011PhaseIncrement"
+    ],
+    "no_current_main_phase_state_definition": true
+  },
+  "proof_observation": {
+    "new_file": "cycle_013/PhaseCoherenceBridge.lean",
+    "direct_compiler_returncode": 0,
+    "public_named_footprint_prints": 29,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "no_main_warnings_errors_or_sorry": true,
+    "raw_log": "cycle_013/development/final_compile/compiler.log",
+    "not_whole_main_project_CI_or_independent_review": true
+  },
+  "mutation_observation": {
+    "fixed_cases": 8,
+    "compiler_rejections": 8,
+    "setup_or_name_failures_credited": 0,
+    "baseline_semantic_refutations_in_Lean": true,
+    "record": "cycle_013/development/mutations/observations.json",
+    "not_a_general_Lean_verifier": true
+  },
+  "scope_limits": [
+    "Explicit exact-real source-convention extension; not pre-existing main phase-state equivalence or Python/float FFI",
+    "No full coupled trajectory/locking or sharp future band; coarse row bound unchanged",
+    "No full004gate-floor/003port, production/S01/admission/oracle campaign",
+    "No implemented_by/extern/macro/elab hooks in new file; inspection is not arbitrary-source security"
+  ],
+  "team_feedback": {
+    "record": "cycle_013/team_review_updates.json",
+    "scope": "User-relayed adoption decisions, not blanket approval of own old harnesses",
+    "002": "adopt math, team port PR25open",
+    "003": "adopt candidate,nextteamport",
+    "004": "mathcorrect,notadoptableascompute_Rbeforethisfollowup",
+    "010": "adopt value history",
+    "011": "adopt buildingblock,not004closure",
+    "008": "doneE21,no local pinnedreplacement;team owns nits",
+    "009": "doneE24\u2013E26,withdraw ownweakerguard/no furtherwork",
+    "013": "newcandidate awaitingreview"
+  },
+  "review_status": "PENDING_TEAM_REVIEW",
+  "current_cycle_independent_review_received": false,
+  "latest_packet_owner_upload_confirmed": false,
+  "authority_boundary": {
+    "new_file_only": true,
+    "pinned_artifacts_or_main_edited": false,
+    "remote_changes": false,
+    "new_module_integrated": false,
+    "Python_engine_experiments_run": false
+  },
+  "cleanup": "cycle_013/development/cleanup.json",
+  "own_cache_removed": true,
+  "source_hook_review": "cycle_013/development/source_hook_review.json",
+  "legacy_deleted_Lua_remains_absent": true,
+  "previous_cycle": 12,
+  "previous_cycle_state": "cycle_013/previous012_snapshot/STATE.json",
+  "previous_ledger": "cycle_013/previous012_snapshot/CLAIM_LEDGER.csv",
+  "historical_science_preserved": true,
+  "team_review_metadata_updates_only_for_old_rows": true,
+  "in_progress": null,
+  "research_processes_running": [],
+  "next_cycle": 14,
+  "next_directory": "cycle_014",
+  "next_selected_work": "NOT_SELECTED;freshmain/ERRATA/mergedPR/feedback first, follow team priorities; no014work",
+  "remote_changes_by_this_agent": false,
+  "contacted_other_bots": false,
+  "automatic_work_between_turns": false
+}

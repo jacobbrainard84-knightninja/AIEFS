@@ -1,0 +1,5 @@
+{
+  "reason": "Negation placement -beta*(1+r) versus -(beta*(1+r)) is not definitional",
+  "fix": "Explicit neg_mul normalization in absolute-bound proof, no statements/hypotheses changed",
+  "not_negative_control_or_promoted_draft": true
+}

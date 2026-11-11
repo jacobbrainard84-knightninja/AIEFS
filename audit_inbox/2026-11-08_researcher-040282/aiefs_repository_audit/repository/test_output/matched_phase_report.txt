@@ -1,0 +1,300 @@
+======================================================================
+AIEF-1.4 Matched Phase Memory Ablation
+======================================================================
+
+PURPOSE:
+Correct the unmatched phase/history randomization in the original
+B_carrier_only vs full_reset comparison by constructing matched
+phase/history reset blocks.
+
+SCIENTIFIC ESTIMAND:
+For each frozen seed/graph, estimate the effect of preserving mature B,
+conditional on the same randomized phase vector, history deque,
+zeroed complex EMA state, omega, and future dynamics.
+
+----------------------------------------------------------------------
+RUN SUMMARY
+----------------------------------------------------------------------
+Total seeds: 40
+Seeds succeeded: 40
+Seeds failed: 0
+Initial matching passed: 80/80
+Anchor validation passed: 120/120
+Censoring horizon: 319.5100
+Run scope: full_cohort
+Freezeable: True
+
+----------------------------------------------------------------------
+CONTINUOUS OUTCOMES - Seed-level Average Contrasts
+Delta_bar_s(Y) = 0.5 * [Delta_{s,carrier}(Y) + Delta_{s,full}(Y)]
+with bootstrap 95% CI
+----------------------------------------------------------------------
+
+  P_mean_late:
+    mean = -0.0176095 [CI: -0.0267873, -0.00882897]
+    median = -0.0226069, std = 0.029556
+    n = 40, + = 12, 0 = 3, - = 25
+
+  Weighted_similarity_late:
+    mean = 0.0641537 [CI: 0.0405751, 0.0889752]
+    median = 0.0533283, std = 0.0780827
+    n = 40, + = 31, 0 = 0, - = 9
+
+  Weighted_similarity_final:
+    mean = 0.0638799 [CI: 0.0402338, 0.0887457]
+    median = 0.0533071, std = 0.0786846
+    n = 40, + = 31, 0 = 0, - = 9
+
+  Retention_selected_late:
+    mean = 0.00728708 [CI: -0.0168658, 0.0316646]
+    median = 0.000610839, std = 0.0761301
+    n = 40, + = 24, 0 = 5, - = 11
+
+  Emergence_unselected_late:
+    mean = -0.0270618 [CI: -0.03626, -0.0178676]
+    median = -0.0269769, std = 0.0321918
+    n = 40, + = 6, 0 = 11, - = 23
+
+  D_B_final:
+    mean = -0.0179924 [CI: -0.0274621, -0.00890152]
+    median = -0.0227273, std = 0.030578
+    n = 40, + = 7, 0 = 8, - = 25
+
+  Total_edge_weight:
+    mean = -0.0829795 [CI: -0.13534, -0.0293594]
+    median = -0.158333, std = 0.184053
+    n = 40, + = 17, 0 = 0, - = 23
+
+  Effective_edges:
+    mean = -0.826419 [CI: -1.45916, -0.206972]
+    median = -1.17301, std = 2.04911
+    n = 40, + = 15, 0 = 0, - = 25
+
+  Nonzero_edge_fraction:
+    mean = -0.0179924 [CI: -0.0272727, -0.00946496]
+    median = -0.0227273, std = 0.029798
+    n = 40, + = 7, 0 = 8, - = 25
+
+  Minimum_similarity:
+    mean = 0.100776 [CI: 0.080042, 0.119867]
+    median = 0.11923, std = 0.0653776
+    n = 40, + = 37, 0 = 0, - = 3
+
+  AUC_similarity_deficit_vs_continue:
+    mean = -31.7407 [CI: -38.8781, -25.0103]
+    median = -28.8697, std = 22.7023
+    n = 40, + = 2, 0 = 0, - = 38
+
+  Mean_similarity_deficit_vs_continue:
+    mean = -0.0993451 [CI: -0.121684, -0.0782796]
+    median = -0.090359, std = 0.0710556
+    n = 40, + = 2, 0 = 0, - = 38
+
+  AUC_density_deficit_vs_continue:
+    mean = -0.296733 [CI: -1.64105, 1.0472]
+    median = -1.13636, std = 4.3163
+    n = 40, + = 14, 0 = 0, - = 26
+
+  restricted_time_to_similarity_90:
+    mean = -154.412 [CI: -188.927, -121.143]
+    median = -176, std = 108.565
+    n = 40, + = 0, 0 = 0, - = 40
+
+  restricted_time_to_density_90:
+    mean = -86.8438 [CI: -117.125, -61.6853]
+    median = -50.25, std = 88.6504
+    n = 40, + = 0, 0 = 0, - = 40
+
+----------------------------------------------------------------------
+BINARY OUTCOMES - Recovery Probability by Reset Source
+----------------------------------------------------------------------
+
+  sustained_similarity_90_recovered:
+    Reset source: carrier_reset
+      B=preserved: p=0.8500 [CI: 0.7093, 0.9294], n=40
+      B=zero: p=0.6000 [CI: 0.4460, 0.7365], n=40
+      Discordant both: 22
+      Discordant only_preserved: 12
+      Discordant only_zero: 2
+      Discordant neither: 4
+      Paired probability difference: 0.2500
+    Reset source: full_reset
+      B=preserved: p=0.8500 [CI: 0.7093, 0.9294], n=40
+      B=zero: p=0.6250 [CI: 0.4703, 0.7578], n=40
+      Discordant both: 24
+      Discordant only_preserved: 10
+      Discordant only_zero: 1
+      Discordant neither: 5
+      Paired probability difference: 0.2250
+
+  sustained_density_90_recovered:
+    Reset source: carrier_reset
+      B=preserved: p=0.6750 [CI: 0.5202, 0.7992], n=40
+      B=zero: p=0.7250 [CI: 0.5717, 0.8389], n=40
+      Discordant both: 24
+      Discordant only_preserved: 3
+      Discordant only_zero: 5
+      Discordant neither: 8
+      Paired probability difference: -0.0500
+    Reset source: full_reset
+      B=preserved: p=0.7250 [CI: 0.5717, 0.8389], n=40
+      B=zero: p=0.8250 [CI: 0.6805, 0.9125], n=40
+      Discordant both: 29
+      Discordant only_preserved: 0
+      Discordant only_zero: 4
+      Discordant neither: 7
+      Paired probability difference: -0.1000
+
+  held_similarity_90_for_1Twindow_recovered:
+    Reset source: carrier_reset
+      B=preserved: p=0.8500 [CI: 0.7093, 0.9294], n=40
+      B=zero: p=0.6000 [CI: 0.4460, 0.7365], n=40
+      Discordant both: 22
+      Discordant only_preserved: 12
+      Discordant only_zero: 2
+      Discordant neither: 4
+      Paired probability difference: 0.2500
+    Reset source: full_reset
+      B=preserved: p=0.8750 [CI: 0.7389, 0.9454], n=40
+      B=zero: p=0.6250 [CI: 0.4703, 0.7578], n=40
+      Discordant both: 25
+      Discordant only_preserved: 10
+      Discordant only_zero: 0
+      Discordant neither: 5
+      Paired probability difference: 0.2500
+
+----------------------------------------------------------------------
+SEED-LEVEL TWO-BLOCK BINARY CONTRAST
+Delta^binary_s = 0.5 * [(I^B_{s,carrier} - I^0_{s,carrier}) + (I^B_{s,full} - I^0_{s,full})]
+Bootstrap CI across 40 seeds (values in {-1, -1/2, 0, 1/2, 1})
+----------------------------------------------------------------------
+
+  sustained_similarity_90_recovered:
+    mean = 0.2375 [CI: 0.1125, 0.375]
+    median = 0, std = 0.408052
+    n = 40, + = 17, 0 = 20, - = 3
+
+  sustained_density_90_recovered:
+    mean = -0.075 [CI: -0.15, 0]
+    median = 0, std = 0.241523
+    n = 40, + = 2, 0 = 30, - = 8
+
+  held_similarity_90_for_1Twindow_recovered:
+    mean = 0.25 [CI: 0.125, 0.375312]
+    median = 0, std = 0.392232
+    n = 40, + = 17, 0 = 21, - = 2
+
+----------------------------------------------------------------------
+CENSORED TIME OUTCOMES - Recovery over Horizon
+Horizon: 319.5100 (from continue branch sample_times[-1])
+All seeds included in denominators; unrecovered = horizon
+----------------------------------------------------------------------
+
+  time_to_similarity_90:
+    Reset source: carrier_reset
+      B=preserved: recovery_prob=1.0000, restricted_mean_time=0.0100
+      B=zero: recovery_prob=0.6000, restricted_mean_time=157.9350
+    Reset source: full_reset
+      B=preserved: recovery_prob=1.0000, restricted_mean_time=0.0100
+      B=zero: recovery_prob=0.6250, restricted_mean_time=150.9100
+
+  time_to_density_90:
+    Reset source: carrier_reset
+      B=preserved: recovery_prob=1.0000, restricted_mean_time=0.0100
+      B=zero: recovery_prob=0.8250, restricted_mean_time=83.5350
+    Reset source: full_reset
+      B=preserved: recovery_prob=1.0000, restricted_mean_time=0.0100
+      B=zero: recovery_prob=0.8500, restricted_mean_time=90.1725
+
+----------------------------------------------------------------------
+RESET-REALIZATION INTERACTION - I_s(Y) = Delta_{s,carrier} - Delta_{s,full}
+Quantifies sensitivity of B effect to reset realization
+----------------------------------------------------------------------
+
+  P_mean_late:
+    mean = -0.00259013 [CI: -0.0174614, 0.0116628]
+    median = 0, std = 0.0474496
+    n = 40, + = 18, 0 = 4, - = 18
+
+  Weighted_similarity_late:
+    mean = 0.00905696 [CI: -0.0221536, 0.0432124]
+    median = 6.55796e-06, std = 0.104895
+    n = 40, + = 20, 0 = 0, - = 20
+
+  Weighted_similarity_final:
+    mean = 0.00970767 [CI: -0.0220446, 0.0451179]
+    median = 2.01813e-10, std = 0.106514
+    n = 40, + = 20, 0 = 0, - = 20
+
+  Retention_selected_late:
+    mean = -0.00906109 [CI: -0.0549588, 0.037099]
+    median = 0.000201471, std = 0.147952
+    n = 40, + = 20, 0 = 5, - = 15
+
+  Emergence_unselected_late:
+    mean = -0.000269277 [CI: -0.0124115, 0.0136845]
+    median = 0, std = 0.0419482
+    n = 40, + = 10, 0 = 18, - = 12
+
+  D_B_final:
+    mean = -0.00189394 [CI: -0.0170549, 0.0128883]
+    median = 0, std = 0.0492686
+    n = 40, + = 14, 0 = 10, - = 16
+
+  Total_edge_weight:
+    mean = -0.0398742 [CI: -0.117244, 0.0354086]
+    median = -2.1973e-08, std = 0.248204
+    n = 40, + = 16, 0 = 0, - = 24
+
+  Effective_edges:
+    mean = -0.0497241 [CI: -1.01703, 0.938136]
+    median = -1.50363e-08, std = 3.16736
+    n = 40, + = 19, 0 = 0, - = 21
+
+  Nonzero_edge_fraction:
+    mean = -0.00189394 [CI: -0.0170455, 0.0128788]
+    median = 0, std = 0.0487883
+    n = 40, + = 14, 0 = 10, - = 16
+
+  Minimum_similarity:
+    mean = 0.0163262 [CI: -0.00631165, 0.0403827]
+    median = -0.00166276, std = 0.0720205
+    n = 40, + = 19, 0 = 0, - = 21
+
+  AUC_similarity_deficit_vs_continue:
+    mean = -2.76462 [CI: -11.8987, 5.81503]
+    median = 0.371016, std = 29.0681
+    n = 40, + = 21, 0 = 0, - = 19
+
+  Mean_similarity_deficit_vs_continue:
+    mean = -0.00865296 [CI: -0.0372418, 0.0182004]
+    median = 0.00116124, std = 0.09098
+    n = 40, + = 21, 0 = 0, - = 19
+
+  AUC_density_deficit_vs_continue:
+    mean = 1.89214 [CI: -1.30471, 5.01771]
+    median = 0.734848, std = 10.3772
+    n = 40, + = 24, 0 = 0, - = 16
+
+  restricted_time_to_similarity_90:
+    mean = -7.025 [CI: -54.0197, 40.7959]
+    median = 0, std = 155.361
+    n = 40, + = 15, 0 = 9, - = 16
+
+  restricted_time_to_density_90:
+    mean = 6.6375 [CI: -29.2631, 42.6031]
+    median = 0.5, std = 119.575
+    n = 40, + = 23, 0 = 7, - = 10
+
+----------------------------------------------------------------------
+INTERPRETATION CONSTRAINTS
+----------------------------------------------------------------------
+
+The experiment estimates the conditional effect of preserving mature B
+under matched randomized phase/history and reset EMA.
+
+This is a controlled counterfactual, NOT a test that B is the
+unique memory carrier.
+
+The seed/graph is the inferential unit (40 seeds).
+The 80 reset-block contrasts are NOT independent observations.

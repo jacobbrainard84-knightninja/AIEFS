@@ -1,0 +1,120 @@
+section Witnesses
+
+/-- Exact-real non-production witnesses; all have EngineGate except pB below. -/
+def pWide : Params := ⟨1, 1, 2, 1, 2, 1, 0⟩
+def pTight : Params := ⟨1, 1, 1, 1, 1, 1, 0⟩
+def pQuarter : Params := ⟨1, 1, 1/4, 1, 1/4, 1, 0⟩
+
+theorem pWide_engine : EngineGate pWide := by constructor <;> norm_num [pWide]
+theorem pTight_engine : EngineGate pTight := by constructor <;> norm_num [pTight]
+theorem pQuarter_engine : EngineGate pQuarter := by constructor <;> norm_num [pQuarter]
+
+abbrev X := Capacity.Xo
+
+def zeroB : Weights (Fin 2) := fun _ _ => 0
+def onesB : Weights (Fin 2) := fun _ _ => 1
+def dirtyB : Weights (Fin 2) := fun i j => if i = j then -1 else 1
+
+def asymDrive : Weights (Fin 2) := fun i j => if i = 0 ∧ j = 1 then 2 else 0
+
+theorem dirty_not_structural : ¬ Structural dirtyB := by
+  intro h
+  have hd := h.2.2 (0 : Fin 2)
+  norm_num [dirtyB] at hd
+
+/-- Main's gamma*dt=1 reset ignores the old B, not a hypothesis of the general proof. -/
+private theorem wide_pre (D B : Weights (Fin 2)) : preM pWide D B = D := by
+  funext i j
+  simp [preM, pWide]
+
+private theorem wide_sym_zero (B : Weights (Fin 2)) : symM pWide (X 0) B = X 0 := by
+  funext i j
+  fin_cases i <;> fin_cases j <;> simp [symM, clipM, wide_pre, Capacity.Xo]
+
+private theorem wide_sym_one (B : Weights (Fin 2)) : symM pWide (X 1) B = X 1 := by
+  funext i j
+  fin_cases i <;> fin_cases j <;> simp [symM, clipM, wide_pre, Capacity.Xo]
+
+theorem wide_resets_zero (B : Weights (Fin 2)) : weightUpdate pWide (X 0) B = X 0 := by
+  unfold weightUpdate
+  rw [Capacity.stepM_eq_gateM, wide_sym_zero]
+  exact Capacity.gateM_fixes_feasible pWide pWide_engine _ (by intro i; rw [Capacity.rowS_Xo]; norm_num [pWide])
+
+theorem wide_resets_one (B : Weights (Fin 2)) : weightUpdate pWide (X 1) B = X 1 := by
+  unfold weightUpdate
+  rw [Capacity.stepM_eq_gateM, wide_sym_one]
+  exact Capacity.gateM_fixes_feasible pWide pWide_engine _ (by intro i; rw [Capacity.rowS_Xo]; norm_num [pWide])
+
+theorem dirty_start_repaired : weightUpdate pWide (X 1) dirtyB = X 1 := wide_resets_one dirtyB
+
+/-- Genuine B-feedback: the drive flips when the previous edge is positive. -/
+open Classical in
+def flipDrive (_ : ℕ) (_ : Unit) (B : Weights (Fin 2)) : Weights (Fin 2) :=
+  X (if B 0 1 ≤ 0 then 1 else 0)
+
+def keepAux (_ : ℕ) (_ : Unit) (_ _ : Weights (Fin 2)) : Unit := ()
+
+theorem feedback_three_steps :
+    weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 1 = X 1 ∧
+    weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 2 = X 0 ∧
+    weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 3 = X 1 := by
+  have h1 : weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 1 = X 1 := by
+    rw [weightsTrace_succ]
+    simpa [weightsTrace, trajectory, flipDrive, zeroB] using wide_resets_one zeroB
+  have h2 : weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 2 = X 0 := by
+    rw [weightsTrace_succ, h1]
+    simp only [flipDrive, Capacity.Xo]
+    norm_num
+    exact wide_resets_zero (X 1)
+  have h3 : weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 3 = X 1 := by
+    rw [weightsTrace_succ, h2]
+    simp only [flipDrive, Capacity.Xo]
+    norm_num
+    exact wide_resets_one (X 0)
+  exact ⟨h1,h2,h3⟩
+
+/-- Exact bad-component values, independent of a failed kept proof. -/
+theorem noClip_negative : Counterfactual.noClip pWide (X (-1)) zeroB 0 1 = -1 := by
+  norm_num [Counterfactual.noClip, Capacity.gateM, Capacity.GateOnX, Capacity.rowS,
+    preM, pWide, zeroB, Capacity.Xo, Fin.sum_univ_two, Fin.exists_fin_two]
+
+theorem noSym_asymmetric :
+    Counterfactual.noSym pWide asymDrive zeroB 0 1 = 2 ∧
+    Counterfactual.noSym pWide asymDrive zeroB 1 0 = 0 := by
+  norm_num [Counterfactual.noSym, Capacity.gateM, Capacity.GateOnX, Capacity.rowS,
+    clipM, preM, pWide, zeroB, asymDrive, Fin.sum_univ_two, Fin.exists_fin_two]
+
+theorem noDiag_nonzero : Counterfactual.noDiag pWide onesB zeroB 0 0 = 1 := by
+  norm_num [Counterfactual.noDiag, Capacity.gateM, Capacity.GateOnX, Capacity.rowS,
+    clipM, preM, pWide, zeroB, onesB, Fin.sum_univ_two, Fin.exists_fin_two]
+
+theorem noGate_over_capacity :
+    Capacity.rowS (Counterfactual.noGate pTight (X 3) zeroB) 0 = 3 := by
+  norm_num [Counterfactual.noGate, Capacity.rowS, symM, clipM, preM,
+    pTight, zeroB, Capacity.Xo, Fin.sum_univ_two]
+
+/-- Current versus next capacity: shrinking a future parameter cannot retroactively
+bound a state produced by the preceding transition. -/
+def capSchedule (n : ℕ) : Params := if n = 0 then pWide else pQuarter
+
+def oneDrive (_ : ℕ) (_ : Unit) (_ : Weights (Fin 2)) : Weights (Fin 2) := X 1
+
+theorem capacity_clock_refuted :
+    ¬ Capacity.rowS (weightsTrace capSchedule oneDrive keepAux ((),zeroB) 1) 0 ≤ (capSchedule 1).cap := by
+  have h : weightsTrace capSchedule oneDrive keepAux ((),zeroB) 1 = X 1 := by
+    rw [weightsTrace_succ]
+    simpa [capSchedule, oneDrive, weightsTrace, trajectory] using wide_resets_one zeroB
+  rw [h, Capacity.rowS_Xo]
+  norm_num [capSchedule, pQuarter]
+
+/-- Reuse main's independent guard-link counterexample; no duplicate gate audit. -/
+theorem broken_link_refuted :
+    ¬ Capacity.rowS (weightUpdate Capacity.pB (X 75) zeroB) 0 ≤ Capacity.pB.cap :=
+  Capacity.false_stepM_row_no_link
+
+/-- A universal all-times safety claim without initial structure is false at time0. -/
+theorem initial_time_refuted :
+    ¬ Structural (weightsTrace (fun _ => pWide) oneDrive keepAux ((),dirtyB) 0) := by
+  exact dirty_not_structural
+
+end Witnesses

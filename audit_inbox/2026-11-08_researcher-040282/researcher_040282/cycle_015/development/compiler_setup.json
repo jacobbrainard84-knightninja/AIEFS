@@ -1,0 +1,16 @@
+{
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "compiler_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "public_asset_verified": true,
+  "download_bytes": 570405234,
+  "complete_runtime_extracted_members": 18130,
+  "complete_runtime_extracted_bytes": 3037354159,
+  "compiler_binary": "/home/user/.cache/researcher040282-cycle015/lean-4.33.1-linux/bin/lean",
+  "cache": "/home/user/.cache/researcher040282-cycle015",
+  "Mathlib_installed": false,
+  "global_toolchain_changed": false,
+  "decoder_installed_into_disposable_target": true,
+  "decoder_version": "0.25.0",
+  "cache_ephemeral_until_direct_checks_complete": true,
+  "elapsed_seconds": 21.782132381999986
+}

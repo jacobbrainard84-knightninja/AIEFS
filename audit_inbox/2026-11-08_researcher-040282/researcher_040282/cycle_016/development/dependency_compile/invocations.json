@@ -1,0 +1,37 @@
+[
+  {
+    "branch_file": "AIEFGateCore/GateMap.lean",
+    "basis": "UNMERGEDteamP5@54037ea",
+    "runtime_utc_start": "2026-11-11T01:51:41.232473+00:00",
+    "returncode": 0,
+    "seconds": 40.08580829699997
+  },
+  {
+    "branch_file": "AIEFGateCore/MatrixForm.lean",
+    "basis": "UNMERGEDteamP5@54037ea",
+    "runtime_utc_start": "2026-11-11T01:52:21.322908+00:00",
+    "returncode": 0,
+    "seconds": 42.70530590100003
+  },
+  {
+    "branch_file": "AIEFGateCore/HistoryBuffer.lean",
+    "basis": "UNMERGEDteamP5@54037ea",
+    "runtime_utc_start": "2026-11-11T01:53:04.031248+00:00",
+    "returncode": 0,
+    "seconds": 0.9160904999999957
+  },
+  {
+    "branch_file": "AIEFGateCore/PhaseIncrement.lean",
+    "basis": "UNMERGEDteamP5@54037ea",
+    "runtime_utc_start": "2026-11-11T01:53:04.948018+00:00",
+    "returncode": 0,
+    "seconds": 51.28487657599999
+  },
+  {
+    "branch_file": "AIEFGateCore/PhaseCoherence.lean",
+    "basis": "UNMERGEDteamP5@54037ea",
+    "runtime_utc_start": "2026-11-11T01:53:56.235062+00:00",
+    "returncode": 0,
+    "seconds": 52.84555636599998
+  }
+]

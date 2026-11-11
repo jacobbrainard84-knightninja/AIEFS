@@ -1,0 +1,116 @@
+{
+  "revision": "54037ea1fabbeaed1eab44636971051000ac1673",
+  "scope": "UNMERGED TEAM BRANCH API READ ONLY; NOT MAIN",
+  "files": [
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "bytes": 605,
+      "blob": "c9a3d1068f40d12a17c7b5f232132b0c3b1482ce"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Bridge.lean",
+      "bytes": 13034,
+      "blob": "d815d4a7242761decaa2578e2ebb287cd8adabc2"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Capacity.lean",
+      "bytes": 22634,
+      "blob": "fcf687382af503c7535b1cb798a6cf69961dfff5"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/EngineRedTeam.lean",
+      "bytes": 12046,
+      "blob": "2ffdb66f0880cf36e4bf8f8ce74e90b1862d485d"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/EngineWitness.lean",
+      "bytes": 12151,
+      "blob": "6abfdc73f1567d99fe91f41c9c1c109c81fe5e12"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/GateMap.lean",
+      "bytes": 26939,
+      "blob": "befc13a0b961cc81391e246ab726d5f0ceaf88ba"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/HistoryBuffer.lean",
+      "bytes": 3126,
+      "blob": "09ce8458b7a70f14097da05513e271e28e412b86"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/K3.lean",
+      "bytes": 18898,
+      "blob": "9f4e59ed2fdb11ed40ab8a159ead4d51c6738457"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/MatrixForm.lean",
+      "bytes": 9341,
+      "blob": "b527fa6a96adb413df8fcefa1f1342aa05c49996"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Persistence.lean",
+      "bytes": 4861,
+      "blob": "d20d3166030e51cbf5fb1dcf69ca5c3a35d27bee"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PersistenceWitness.lean",
+      "bytes": 11055,
+      "blob": "48c271865e4aa1f3473ab6c7ffec5662c9255da9"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PhaseCoherence.lean",
+      "bytes": 25875,
+      "blob": "56ef6ed7888ee62a967f16268c9b3760ef7f39d2"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PhaseIncrement.lean",
+      "bytes": 6892,
+      "blob": "82d4104b21510ca0c15592820d1a7da08a3c6730"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/CompleteGraphIncidence.lean",
+      "bytes": 7663,
+      "blob": "13a992b130fca37c88096f5e8a825892a079d8f2"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiber.lean",
+      "bytes": 4202,
+      "blob": "f86f44b54ca44395513b306f1aa589e4e2449220"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberProjector.lean",
+      "bytes": 9369,
+      "blob": "ec4d14e854396cc80401b74ed5430c69b41511d6"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberQuotient.lean",
+      "bytes": 2779,
+      "blob": "78dc0c2248e16353897a1cc4e3fc39faa309b232"
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/RedTeam.lean",
+      "bytes": 34238,
+      "blob": "7c2266c7d460a27a50ce0ee96d6280639b099d53"
+    },
+    {
+      "path": "lean/AIEFGateCore/README.md",
+      "bytes": 9868,
+      "blob": "d34ce9c968dfa0088044c77584845cf78cb30c0a"
+    },
+    {
+      "path": "lean/AIEFGateCore/lake-manifest.json",
+      "bytes": 3146,
+      "blob": "89601b20d9e52cca983308bca517881cb79d47ab"
+    },
+    {
+      "path": "lean/AIEFGateCore/lakefile.toml",
+      "bytes": 365,
+      "blob": "359e52cab97083cf195c090542b671b80d0e24f7"
+    },
+    {
+      "path": "lean/AIEFGateCore/lean-toolchain",
+      "bytes": 25,
+      "blob": "a8afa7d1b02d96f0671eba854a8dc4b416beb473"
+    }
+  ]
+}

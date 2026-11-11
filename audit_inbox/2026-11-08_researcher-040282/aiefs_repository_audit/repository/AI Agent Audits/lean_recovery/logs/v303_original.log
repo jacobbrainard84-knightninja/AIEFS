@@ -1,0 +1,283 @@
+===== v303_original.console =====
+check_lean.sh  project=AIEFProofs  utc=20261025T015239Z
+git HEAD: 60e60297e6dd34887348e6f858c32b3829d72f69  dirty_files: 1
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474
+WARN step 3: orphan files NOT checked by lake build: AIEFProofs.Smoke
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: Completed successfully in 12872 ms!
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+FAIL step 5: lake build exit 1: error: AIEFProofs/ControllerFiberProjector.lean:60:61: unsolved goals error: AIEFProofs/ControllerFiberProjector.lean:85:2: No goals to be solved error: AIEFProofs/ControllerFiberProjector.lean:120:65: unsolved goals 
+RESULT: FAIL (logs in <logs>/v303_original)
+EXIT=5
+
+===== v303_original/1_toolchain.log =====
+$ cat lean-toolchain
+leanprover/lean4:v4.33.1
+$ elan --version
+elan 4.2.4 (227caca13 2026-08-25)
+$ lake --version
+Lake version 5.0.0-src+819816b (Lean version 4.33.1)
+$ lean --version
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+
+===== v303_original/2_pins.log =====
+Cli                rev=6130a47896ce867c6a4a55373441e59e565bad0f inputRev=v4.33.0 inherited=True
+LeanSearchClient   rev=5f4d51b81cbd3f6b32b156bfad9056621a040404 inputRev=main inherited=True
+Qq                 rev=92c15be17b7caf78c2ad767ec40f89052d908d81 inputRev=master inherited=True
+aesop              rev=3448c0bcc5ce01b2d1546e483ec3620e32df3d0e inputRev=master inherited=True
+batteries          rev=4488d40d070b9700d4d5a6aa342f0d40c31b2a2d inputRev=main inherited=True
+importGraph        rev=16f02aa7642864af59f1ff0e384a015994db9118 inputRev=main inherited=True
+mathlib            rev=0df444a360eaa60ab8c11dca51a86af692955474 inputRev=v4.33.1 inherited=False
+plausible          rev=b7eb3304aeae834b12dda98993a37f6a41f6f0bb inputRev=main inherited=True
+proofwidgets       rev=4be2e3d5087eeb272cf5a8853b8f9dd025ef5957 inputRev=main inherited=True
+mathlib pin OK
+lean-toolchain: OK
+lake-manifest.json: OK
+lakefile.toml: OK
+
+===== v303_original/3_imports.log =====
+AIEFProofs imports AIEFProofs.Basic
+AIEFProofs imports AIEFProofs.ControllerFiber
+AIEFProofs imports AIEFProofs.ControllerFiberProjector
+AIEFProofs.ControllerFiberProjector imports AIEFProofs.ControllerFiber
+ORPHAN AIEFProofs.Smoke (not reachable from AIEFProofs.lean, so `lake build` does not check it)
+
+===== v303_original/3_reachable_modules.txt =====
+AIEFProofs
+AIEFProofs.Basic
+AIEFProofs.ControllerFiber
+AIEFProofs.ControllerFiberProjector
+
+===== v303_original/4_cache.log =====
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+info: mathlib: checking out revision '0df444a360eaa60ab8c11dca51a86af692955474'
+info: plausible: cloning https://github.com/leanprover-community/plausible
+info: plausible: checking out revision 'b7eb3304aeae834b12dda98993a37f6a41f6f0bb'
+info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+info: LeanSearchClient: checking out revision '5f4d51b81cbd3f6b32b156bfad9056621a040404'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph
+info: importGraph: checking out revision '16f02aa7642864af59f1ff0e384a015994db9118'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+info: proofwidgets: checking out revision '4be2e3d5087eeb272cf5a8853b8f9dd025ef5957'
+info: aesop: cloning https://github.com/leanprover-community/aesop
+info: aesop: checking out revision '3448c0bcc5ce01b2d1546e483ec3620e32df3d0e'
+info: Qq: cloning https://github.com/leanprover-community/quote4
+info: Qq: checking out revision '92c15be17b7caf78c2ad767ec40f89052d908d81'
+info: batteries: cloning https://github.com/leanprover-community/batteries
+info: batteries: checking out revision '4488d40d070b9700d4d5a6aa342f0d40c31b2a2d'
+info: Cli: cloning https://github.com/leanprover/lean4-cli
+info: Cli: checking out revision '6130a47896ce867c6a4a55373441e59e565bad0f'
+✔ [5/27] Built Cache.Cli (388ms)
+✔ [6/27] Built Cache.Lean (452ms)
+✔ [7/27] Built Cache.Infra (417ms)
+✔ [8/27] Built Cache.Cli:c.o (144ms)
+✔ [9/27] Built Cache.Lean:c.o (123ms)
+✔ [10/27] Built Cache.Infra:c.o (160ms)
+✔ [11/27] Built Batteries.Tactic.OpenPrivate (810ms)
+✔ [12/27] Built Batteries.Tactic.OpenPrivate:c.o (946ms)
+✔ [13/27] Built Cache.IO (1.1s)
+✔ [14/27] Built Cache.Hashing (799ms)
+✔ [15/27] Built Cache.Hashing:c.o (353ms)
+✔ [16/27] Built Cache.IO:c.o (1.2s)
+✔ [17/27] Built Cache.Requests (1.6s)
+✔ [18/27] Built Cache.Marker (869ms)
+✔ [19/27] Built Cache.Marker:c.o (90ms)
+✔ [20/27] Built Cache.Query (530ms)
+✔ [21/27] Built Cache.Query:c.o (225ms)
+✔ [22/27] Built Cache.Warning (495ms)
+✔ [23/27] Built Cache.Warning:c.o (193ms)
+✔ [24/27] Built Cache.Requests:c.o (2.3s)
+✔ [25/27] Built Cache.Main (1.3s)
+✔ [26/27] Built Cache.Main:c.o (738ms)
+✔ [27/27] Built cache:exe (915ms)
+Current branch: HEAD
+Using cache from origin: (some leanprover-community/mathlib4)
+Decompressing 8689 already-cached file(s) (1 already decompressed)
+No files to download
+Decompressed 8689 already-cached file(s)
+Completed successfully in 12872 ms!
+
+real	0m54.605s
+user	1m46.771s
+sys	0m39.451s
+
+===== v303_original/5_build.log =====
+✔ [917/1236] Built AIEFProofs.Basic (250ms)
+✔ [1233/1236] Built AIEFProofs.ControllerFiber (1.8s)
+✖ [1234/1236] Building AIEFProofs.ControllerFiberProjector (1.7s)
+trace: .> LEAN_PATH=<repo-clone>/lean/AIEFProofs/.lake/packages/Cli/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/batteries/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/Qq/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/aesop/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/proofwidgets/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/importGraph/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/LeanSearchClient/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/plausible/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/packages/mathlib/.lake/build/lib/lean:<repo-clone>/lean/AIEFProofs/.lake/build/lib/lean <home>/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean <repo-clone>/lean/AIEFProofs/AIEFProofs/ControllerFiberProjector.lean -o <repo-clone>/lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiberProjector.olean -i <repo-clone>/lean/AIEFProofs/.lake/build/lib/lean/AIEFProofs/ControllerFiberProjector.ilean -c <repo-clone>/lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiberProjector.c --setup <repo-clone>/lean/AIEFProofs/.lake/build/ir/AIEFProofs/ControllerFiberProjector.setup.json --json
+error: AIEFProofs/ControllerFiberProjector.lean:60:61: unsolved goals
+i j : Fin 3
+⊢ 3⁻¹ * vCtrl i * vCtrl j = vCtrl i * (3⁻¹ * vCtrl j)
+error: AIEFProofs/ControllerFiberProjector.lean:85:2: No goals to be solved
+error: AIEFProofs/ControllerFiberProjector.lean:120:65: unsolved goals
+i j : Fin 3
+⊢ 3⁻¹ * vCtrl i * vCtrl j = 3⁻¹ * vCtrl j * vCtrl i
+warning: AIEFProofs/ControllerFiberProjector.lean:121:15: This simp argument is unused:
+  PPar_apply_comm i j
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [PPerp, eq_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: AIEFProofs/ControllerFiberProjector.lean:141:2: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+error: AIEFProofs/ControllerFiberProjector.lean:131:39: unsolved goals
+x : Fin 3 → ℚ
+hS : ∑ j, vCtrl j * ((1 / 3 * ∑ k, vCtrl k * x k) * vCtrl j) = ∑ k, vCtrl k * x k
+i : Fin 3
+⊢ ∑ x_1, (vCtrl x_1 ^ 2 * ∑ x_2, vCtrl x_2 * x x_2) * (1 / 3) = ∑ x_1, vCtrl x_1 * x x_1 ∨ vCtrl i = 0
+warning: AIEFProofs/ControllerFiberProjector.lean:140:23: This simp argument is unused:
+  hS
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Pi.smul_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: AIEFProofs/ControllerFiberProjector.lean:153:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+error: AIEFProofs/ControllerFiberProjector.lean:148:50: unsolved goals
+x : Fin 3 → ℚ
+hPx : PPar *ᵥ x = (1 / 3 * ∑ k, vCtrl k * x k) • vCtrl
+⊢ x 0 - ∑ x_1, vCtrl x_1 * x x_1 - x 1 - x 2 = 0
+error: AIEFProofs/ControllerFiberProjector.lean:145:32: unsolved goals
+x : Fin 3 → ℚ
+hdiff : ∑ j, vCtrl j * (x j - (PPar *ᵥ x) j) = 0
+i : Fin 3
+⊢ ∑ x_1, vCtrl x_1 * (x x_1 - (3⁻¹ * ∑ j, vCtrl j * x j) * vCtrl x_1) = 0 ∨ vCtrl i = 0
+warning: AIEFProofs/ControllerFiberProjector.lean:155:23: This simp argument is unused:
+  hdiff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Pi.smul_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: AIEFProofs/ControllerFiberProjector.lean:194:12: Tactic `simp` failed with a nested error:
+maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+error: AIEFProofs/ControllerFiberProjector.lean:195:38: unsolved goals
+x y : Fin 3 → ℚ
+hy : PPerp *ᵥ y = fun i ↦ y i - (PPar *ᵥ y) i
+h1 : ∑ i, (PPar *ᵥ x) i * (y i - (PPar *ᵥ y) i) = ∑ i, (PPar *ᵥ x) i * y i - ∑ i, (PPar *ᵥ x) i * (PPar *ᵥ y) i
+hx : PPar *ᵥ x = PPar *ᵥ PPar *ᵥ x
+⊢ ∑ x_1, ((PPar * PPar) *ᵥ x) x_1 * y x_1 = ∑ i, (PPar *ᵥ x) i * y i
+warning: AIEFProofs/ControllerFiberProjector.lean:196:18: This simp argument is unused:
+  PPar_sq_mulVec
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AIEFProofs/ControllerFiberProjector.lean:213:8: This simp argument is unused:
+  CCtrl_mulVec_apply_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.mulVec, dotProduct, sum_fin3, Pi.smul_apply, CCtrl_mulVec_apply_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AIEFProofs/ControllerFiberProjector.lean:213:33: This simp argument is unused:
+  CCtrl_mulVec_apply_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.mulVec, dotProduct, sum_fin3, Pi.smul_apply, CCtrl_mulVec_apply_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AIEFProofs/ControllerFiberProjector.lean:214:6: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: AIEFProofs/ControllerFiberProjector.lean:214:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+error: AIEFProofs/ControllerFiberProjector.lean:243:25: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ i, vCtrl i * (?a * vCtrl i)
+in the target expression
+  (1 / 3 * ∑ j, vCtrl j * (a • vCtrl) j) • vCtrl = a • vCtrl
+
+case mpr
+x : Fin 3 → ℚ
+hx : CCtrl *ᵥ x = 0
+a : ℚ
+ha : x = a • vCtrl
+⊢ (1 / 3 * ∑ j, vCtrl j * (a • vCtrl) j) • vCtrl = a • vCtrl
+error: AIEFProofs/ControllerFiberProjector.lean:253:2: No goals to be solved
+error: Lean exited with code 1
+Some required targets logged failures:
+- AIEFProofs.ControllerFiberProjector
+error: build failed
+
+real	0m4.469s
+user	0m5.338s
+sys	0m1.789s
+
+===== v303_original/5_build_diagnostics.txt =====
+error: AIEFProofs/ControllerFiberProjector.lean:60:61: unsolved goals
+error: AIEFProofs/ControllerFiberProjector.lean:85:2: No goals to be solved
+error: AIEFProofs/ControllerFiberProjector.lean:120:65: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:121:15: This simp argument is unused:
+error: AIEFProofs/ControllerFiberProjector.lean:131:39: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:140:23: This simp argument is unused:
+error: AIEFProofs/ControllerFiberProjector.lean:148:50: unsolved goals
+error: AIEFProofs/ControllerFiberProjector.lean:145:32: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:155:23: This simp argument is unused:
+error: AIEFProofs/ControllerFiberProjector.lean:194:12: Tactic `simp` failed with a nested error:
+error: AIEFProofs/ControllerFiberProjector.lean:195:38: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:196:18: This simp argument is unused:
+warning: AIEFProofs/ControllerFiberProjector.lean:213:8: This simp argument is unused:
+warning: AIEFProofs/ControllerFiberProjector.lean:213:33: This simp argument is unused:
+warning: AIEFProofs/ControllerFiberProjector.lean:214:6: Unused tactic linter: `ring` does nothing
+warning: AIEFProofs/ControllerFiberProjector.lean:214:6: this tactic is never executed
+error: AIEFProofs/ControllerFiberProjector.lean:243:25: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+error: AIEFProofs/ControllerFiberProjector.lean:253:2: No goals to be solved
+error: Lean exited with code 1
+error: build failed
+
+===== v303_original/diag_lines.txt =====
+error: AIEFProofs/ControllerFiberProjector.lean:60:61: unsolved goals
+error: AIEFProofs/ControllerFiberProjector.lean:85:2: No goals to be solved
+error: AIEFProofs/ControllerFiberProjector.lean:120:65: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:121:15: This simp argument is unused:
+info: AIEFProofs/ControllerFiberProjector.lean:141:2: Try this:
+error: AIEFProofs/ControllerFiberProjector.lean:131:39: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:140:23: This simp argument is unused:
+info: AIEFProofs/ControllerFiberProjector.lean:153:4: Try this:
+error: AIEFProofs/ControllerFiberProjector.lean:148:50: unsolved goals
+error: AIEFProofs/ControllerFiberProjector.lean:145:32: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:155:23: This simp argument is unused:
+error: AIEFProofs/ControllerFiberProjector.lean:194:12: Tactic `simp` failed with a nested error:
+error: AIEFProofs/ControllerFiberProjector.lean:195:38: unsolved goals
+warning: AIEFProofs/ControllerFiberProjector.lean:196:18: This simp argument is unused:
+warning: AIEFProofs/ControllerFiberProjector.lean:213:8: This simp argument is unused:
+warning: AIEFProofs/ControllerFiberProjector.lean:213:33: This simp argument is unused:
+warning: AIEFProofs/ControllerFiberProjector.lean:214:6: Unused tactic linter: `ring` does nothing
+warning: AIEFProofs/ControllerFiberProjector.lean:214:6: this tactic is never executed
+error: AIEFProofs/ControllerFiberProjector.lean:243:25: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+error: AIEFProofs/ControllerFiberProjector.lean:253:2: No goals to be solved
+error: Lean exited with code 1
+error: build failed
+
+===== v303_original/summary.txt =====
+check_lean.sh  project=AIEFProofs  utc=20261025T015239Z
+git HEAD: 60e60297e6dd34887348e6f858c32b3829d72f69  dirty_files: 1
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474
+  AIEFProofs imports AIEFProofs.Basic
+  AIEFProofs imports AIEFProofs.ControllerFiber
+  AIEFProofs imports AIEFProofs.ControllerFiberProjector
+  AIEFProofs.ControllerFiberProjector imports AIEFProofs.ControllerFiber
+  ORPHAN AIEFProofs.Smoke (not reachable from AIEFProofs.lean, so `lake build` does not check it)
+WARN step 3: orphan files NOT checked by lake build: AIEFProofs.Smoke
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: Completed successfully in 12872 ms!
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+FAIL step 5: lake build exit 1: error: AIEFProofs/ControllerFiberProjector.lean:60:61: unsolved goals error: AIEFProofs/ControllerFiberProjector.lean:85:2: No goals to be solved error: AIEFProofs/ControllerFiberProjector.lean:120:65: unsolved goals 
+RESULT: FAIL (logs in <logs>/v303_original)

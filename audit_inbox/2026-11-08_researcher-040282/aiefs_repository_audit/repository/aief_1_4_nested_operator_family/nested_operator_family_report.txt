@@ -1,0 +1,73 @@
+AIEF nested K3 operator-family audit
+====================================
+
+EMA rate: 0.0571333333
+
+Key-time residuals
+------------------
+  t=100: sparse=0, right=5.6e-09, biorth=0.00199, symmetric=0.0023, rR=6.85e-09, rL=0.00244, left/sym=1.06066, left/bi=1.22474
+  t=150: sparse=0, right=3.43e-10, biorth=0.000115, symmetric=0.000133, rR=4.2e-10, rL=0.000141, left/sym=1.06066, left/bi=1.22474
+  t=200: sparse=0, right=1.99e-11, biorth=6.63e-06, symmetric=7.65e-06, rR=2.43e-11, rL=8.12e-06, left/sym=1.06066, left/bi=1.22474
+  t=250: sparse=0, right=1.14e-12, biorth=3.81e-07, symmetric=4.4e-07, rR=1.4e-12, rL=4.66e-07, left/sym=1.06066, left/bi=1.22474
+  t=319.99: sparse=0, right=2.1e-14, biorth=6.98e-09, symmetric=8.06e-09, rR=2.57e-14, rL=8.55e-09, left/sym=1.06066, left/bi=1.22474
+
+Decay fits
+----------
+  metric=distance_sparse, window=[100,150): rate=nan, R2=nan, rate-EMA=nan, upward_fraction=nan
+  metric=distance_right, window=[100,150): rate=0.0559039, R2=0.999967, rate-EMA=-0.00123, upward_fraction=0
+  metric=distance_biorthogonal, window=[100,150): rate=0.0569976, R2=1, rate-EMA=-0.000136, upward_fraction=0
+  metric=distance_symmetric, window=[100,150): rate=0.0569976, R2=1, rate-EMA=-0.000136, upward_fraction=0
+  metric=analytic_right_residual, window=[100,150): rate=0.0559039, R2=0.999967, rate-EMA=-0.00123, upward_fraction=0
+  metric=analytic_left_residual, window=[100,150): rate=0.0569976, R2=1, rate-EMA=-0.000136, upward_fraction=0
+  metric=numeric_left_difference, window=[100,150): rate=0.0569977, R2=1, rate-EMA=-0.000136, upward_fraction=0
+  metric=distance_sparse, window=[150,200): rate=nan, R2=nan, rate-EMA=nan, upward_fraction=nan
+  metric=distance_right, window=[150,200): rate=0.0569907, R2=0.999999, rate-EMA=-0.000143, upward_fraction=0
+  metric=distance_biorthogonal, window=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, upward_fraction=0
+  metric=distance_symmetric, window=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, upward_fraction=0
+  metric=analytic_right_residual, window=[150,200): rate=0.0569907, R2=0.999999, rate-EMA=-0.000143, upward_fraction=0
+  metric=analytic_left_residual, window=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, upward_fraction=0
+  metric=numeric_left_difference, window=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, upward_fraction=0
+  metric=distance_sparse, window=[200,250): rate=nan, R2=nan, rate-EMA=nan, upward_fraction=nan
+  metric=distance_right, window=[200,250): rate=0.0571194, R2=1, rate-EMA=-1.39e-05, upward_fraction=0
+  metric=distance_biorthogonal, window=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, upward_fraction=0
+  metric=distance_symmetric, window=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, upward_fraction=0
+  metric=analytic_right_residual, window=[200,250): rate=0.0571199, R2=1, rate-EMA=-1.34e-05, upward_fraction=0
+  metric=analytic_left_residual, window=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, upward_fraction=0
+  metric=numeric_left_difference, window=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, upward_fraction=0
+  metric=distance_sparse, window=[250,320): rate=nan, R2=nan, rate-EMA=nan, upward_fraction=nan
+  metric=distance_right, window=[250,320): rate=0.0571245, R2=0.999999, rate-EMA=-8.87e-06, upward_fraction=0.0708
+  metric=distance_biorthogonal, window=[250,320): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, upward_fraction=0
+  metric=distance_symmetric, window=[250,320): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, upward_fraction=0
+  metric=analytic_right_residual, window=[250,320): rate=0.0571518, R2=0.999999, rate-EMA=1.85e-05, upward_fraction=0.0962
+  metric=analytic_left_residual, window=[250,320): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, upward_fraction=0
+  metric=numeric_left_difference, window=[250,320): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, upward_fraction=0
+  metric=distance_sparse, window=[100,319.99): rate=nan, R2=nan, rate-EMA=nan, upward_fraction=nan
+  metric=distance_right, window=[100,319.99): rate=0.0569624, R2=0.999991, rate-EMA=-0.000171, upward_fraction=1.42e-05
+  metric=distance_biorthogonal, window=[100,319.99): rate=0.0571117, R2=1, rate-EMA=-2.16e-05, upward_fraction=0
+  metric=distance_symmetric, window=[100,319.99): rate=0.0571117, R2=1, rate-EMA=-2.16e-05, upward_fraction=0
+  metric=analytic_right_residual, window=[100,319.99): rate=0.0569666, R2=0.999991, rate-EMA=-0.000167, upward_fraction=1.93e-05
+  metric=analytic_left_residual, window=[100,319.99): rate=0.0571117, R2=1, rate-EMA=-2.16e-05, upward_fraction=0
+  metric=numeric_left_difference, window=[100,319.99): rate=0.0571117, R2=1, rate-EMA=-2.16e-05, upward_fraction=0
+
+Defect POD
+----------
+  family=right, interval=[100,150): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=0.646892 deg
+  family=right, interval=[150,200): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=0.64601 deg
+  family=right, interval=[200,250): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=0.63058 deg
+  family=right, interval=[250,320): samples=7000, weighted_E1=0.999996, unit_E1=0.999838, angle_to_final=1.20742e-06 deg
+  family=biorthogonal, interval=[100,150): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=4.59771e-06 deg
+  family=biorthogonal, interval=[150,200): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=8.53774e-07 deg
+  family=biorthogonal, interval=[200,250): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=0 deg
+  family=biorthogonal, interval=[250,320): samples=7000, weighted_E1=1, unit_E1=1, angle_to_final=0 deg
+  family=symmetric, interval=[100,150): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=5.05099e-06 deg
+  family=symmetric, interval=[150,200): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=0 deg
+  family=symmetric, interval=[200,250): samples=5000, weighted_E1=1, unit_E1=1, angle_to_final=8.53774e-07 deg
+  family=symmetric, interval=[250,320): samples=7000, weighted_E1=1, unit_E1=1, angle_to_final=8.53774e-07 deg
+
+Interpretation constraints
+--------------------------
+* The families are nested linear least-squares projections in the selected 3x3 edge coordinates.
+* Distance to the symmetric family is stronger than the distance required for the analytic biorthogonal pair.
+* Exponential fits establish replay regularities, not causal control by EMA memory.
+* A rank-one normalized defect POD supports a fixed defect shape but does not prove asymptotic continuation beyond the horizon.
+* Results remain conditional on one replay and one fixed winner branch.

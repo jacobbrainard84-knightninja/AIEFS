@@ -1,0 +1,12 @@
+{
+  "change": "phase_uses_unprojected_B",
+  "runtime_utc_start": "2026-11-10T13:06:23.984795+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 268.4698908990001,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": false,
+  "baseline_semantic_witness": "unprojected_increment_two",
+  "first_errors": [
+    "Probe.lean:211:82: error: unsolved goals"
+  ]
+}

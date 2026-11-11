@@ -1,0 +1,13 @@
+{
+  "mutation": "capacity_without_link",
+  "runtime_utc_start": "2026-11-10T04:07:03.105860+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 156.07301869000003,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "main_Capacity.false_stepM_row_no_link",
+  "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+  "first_errors": [
+    "Probe.lean:90:87: error: unsolved goals"
+  ]
+}

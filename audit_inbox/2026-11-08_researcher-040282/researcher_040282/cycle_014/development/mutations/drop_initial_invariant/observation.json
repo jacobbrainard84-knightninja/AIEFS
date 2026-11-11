@@ -1,0 +1,13 @@
+{
+  "mutation": "drop_initial_invariant",
+  "runtime_utc_start": "2026-11-10T04:07:01.370952+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 150.34127003100002,
+  "setup_or_name_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "initial_time_refuted",
+  "scope": "Focused exact candidate definitions; held concrete property/known-false claim",
+  "first_errors": [
+    "Probe.lean:90:87: error: unsolved goals"
+  ]
+}

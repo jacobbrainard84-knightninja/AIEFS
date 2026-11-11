@@ -1,0 +1,134 @@
+{
+  "K3_edges": [
+    25,
+    29,
+    59
+  ],
+  "K3_nodes": [
+    2,
+    7,
+    11
+  ],
+  "ablations": {
+    "full": {},
+    "no_R_to_weight": {
+      "use_R_to_weight": false
+    },
+    "no_current_phase": {
+      "use_current_phase": false
+    },
+    "no_delayed_history": {
+      "use_delayed_history": false
+    },
+    "no_ema_memory": {
+      "use_ema_memory": false
+    },
+    "no_fresh_phase": {
+      "use_fresh_phase": false
+    }
+  },
+  "analysis": "AIEF-1.4 augmented Duhamel feedback and tangent ablations",
+  "boundary_tolerance": 1e-09,
+  "command": [
+    "AIEF_1_4_augmented_duhamel_feedback_analysis.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--cocycle-npz",
+    "aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+    "--seed",
+    "4619122171158768524",
+    "--boundary-tol",
+    "1e-9",
+    "--scale-epsilon",
+    "1e-12",
+    "--magnitude-tol",
+    "1e-14",
+    "--sample-stride",
+    "10",
+    "--time-bins",
+    "0,0.1,1,10,50,100,150,200,250,320",
+    "--target-times",
+    "10,50,100,150,200,250,320",
+    "--output-dir",
+    "aief_1_4_augmented_duhamel_feedback"
+  ],
+  "dependencies": {
+    "augmented_tangent": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_augmented_tangent_cocycle_analysis.py",
+      "sha256": "0192656f21b5c4b3d09adebb15d0554ead0fca755860bb85f9fa03f75452e964"
+    },
+    "component_audit": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_component_controller_audit.py",
+      "sha256": "67444a76c5d16cb48712cca8ea98ddc82b9f4de83b8923d94fbd9074875d2f4e"
+    },
+    "stationarity": {
+      "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_stationarity_perturbation_analysis_updated.py",
+      "sha256": "5e01f14696e2c9a7f5d9d10061ecbd2da2bf4b792391b231c77bffbf4c9332fc"
+    }
+  },
+  "dt": 0.01,
+  "final_replay_exact": true,
+  "final_replay_max_error": 0.0,
+  "future_steps": 32000,
+  "inputs": {
+    "cocycle_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+      "sha256": "c3aa9683fefbfb1d80b426833b4312fb5b3532ba449af9889138b0d603e39e58"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "Weight-block forcing is endogenous to the full closed augmented tangent system.",
+    "Residual forcing gives an exact direction-wise Duhamel identity.",
+    "Time-bin contribution norms are not additive because vectors can cancel.",
+    "Tangent ablations are recursive counterfactuals, not additive causal fractions.",
+    "Results are conditional on one seed and two initial directions."
+  ],
+  "magnitude_tolerance": 1e-14,
+  "outputs": [
+    "duhamel_trajectory.csv",
+    "forcing_time_bin_attribution.csv",
+    "forcing_contribution_to_final.csv",
+    "tangent_ablation_trajectory.csv",
+    "tangent_ablation_summary.csv",
+    "duhamel_vectors.npz",
+    "augmented_duhamel_feedback_report.txt"
+  ],
+  "sample_stride": 10,
+  "scale_epsilon": 1e-12,
+  "seed": "4619122171158768524",
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_augmented_duhamel_feedback_analysis.py",
+    "sha256": "c562b7d1c3c0ed73814c74ed381166642799d699594e6608e4585f05f65a706d"
+  },
+  "target_times": [
+    10.0,
+    50.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "time_bins": [
+    0.0,
+    0.1,
+    1.0,
+    10.0,
+    50.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ]
+}

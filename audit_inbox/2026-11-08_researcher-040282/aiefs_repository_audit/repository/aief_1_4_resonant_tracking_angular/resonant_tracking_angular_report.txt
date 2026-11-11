@@ -1,0 +1,53 @@
+AIEF resonant tracking and angular-freezing analysis
+====================================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+Final replay exact: True
+
+Resonant tracking fits
+----------------------
+  channel=forward, interval=[0,99.99): Y_affine_R2=0.996969, Y_RMSE=0.0145, B=-5.09897e-05+7.34952e-05i, Q_match=0.207, limit_spread=0.013, median_n_forcing_ratio=873.04
+  channel=forward, interval=[100,149.99): Y_affine_R2=0.999999, Y_RMSE=7.38e-05, B=-5.23459e-05+7.6136e-05i, Q_match=0.00195, limit_spread=2.89e-07, median_n_forcing_ratio=1271.38
+  channel=forward, interval=[150,199.99): Y_affine_R2=1, Y_RMSE=1.45e-05, B=-5.25568e-05+7.64467e-05i, Q_match=0.000515, limit_spread=4.52e-09, median_n_forcing_ratio=1393.44
+  channel=forward, interval=[200,249.99): Y_affine_R2=1, Y_RMSE=1.56e-06, B=-5.25963e-05+7.65055e-05i, Q_match=6.91e-05, limit_spread=3.5e-11, median_n_forcing_ratio=1465.62
+  channel=forward, interval=[250,319.99): Y_affine_R2=1, Y_RMSE=1.84e-07, B=-5.26012e-05+7.65127e-05i, Q_match=0.000153, limit_spread=2.64e-13, median_n_forcing_ratio=1521.18
+  channel=reverse, interval=[0,99.99): Y_affine_R2=0.997357, Y_RMSE=0.0132, B=-4.77637e-05+-6.5779e-05i, Q_match=0.202, limit_spread=0.0164, median_n_forcing_ratio=847.645
+  channel=reverse, interval=[100,149.99): Y_affine_R2=0.999999, Y_RMSE=7e-05, B=-4.76383e-05+-6.82087e-05i, Q_match=0.00187, limit_spread=3.65e-07, median_n_forcing_ratio=1255.61
+  channel=reverse, interval=[150,199.99): Y_affine_R2=1, Y_RMSE=1.41e-05, B=-4.78149e-05+-6.84847e-05i, Q_match=0.000503, limit_spread=5.84e-09, median_n_forcing_ratio=1382.95
+  channel=reverse, interval=[200,249.99): Y_affine_R2=1, Y_RMSE=1.52e-06, B=-4.78502e-05+-6.85361e-05i, Q_match=6.77e-05, limit_spread=4.53e-11, median_n_forcing_ratio=1458.35
+  channel=reverse, interval=[250,319.99): Y_affine_R2=1, Y_RMSE=1.77e-07, B=-4.78546e-05+-6.85424e-05i, Q_match=0.000162, limit_spread=3.32e-13, median_n_forcing_ratio=1516.22
+
+Alignment-component asymptotics
+-------------------------------
+  channel=forward, interval=[0,99.99): median_T1/T2=-0.96324402, p95_|ratio+1|=0.283, T1_rate=0.048228, T2_rate=0.0512767, scaled_affine_R2_T1=0.986457, scaled_affine_R2_T2=0.998789
+  channel=forward, interval=[100,149.99): median_T1/T2=-0.998914496, p95_|ratio+1|=0.00324, T1_rate=0.0531434, T2_rate=0.0532048, scaled_affine_R2_T1=0.999988, scaled_affine_R2_T2=1
+  channel=forward, interval=[150,199.99): median_T1/T2=-0.999911862, p95_|ratio+1|=0.000276, T1_rate=0.053838, T2_rate=0.0538432, scaled_affine_R2_T1=1, scaled_affine_R2_T2=1
+  channel=forward, interval=[200,249.99): median_T1/T2=-0.999993372, p95_|ratio+1|=2.14e-05, T1_rate=0.0543064, T2_rate=0.0543068, scaled_affine_R2_T1=1, scaled_affine_R2_T2=1
+  channel=forward, interval=[250,319.99): median_T1/T2=-0.999999722, p95_|ratio+1|=1.48e-06, T1_rate=0.0547151, T2_rate=0.0547151, scaled_affine_R2_T1=1, scaled_affine_R2_T2=1
+  channel=reverse, interval=[0,99.99): median_T1/T2=-0.963543625, p95_|ratio+1|=0.285, T1_rate=0.0511048, T2_rate=0.0541839, scaled_affine_R2_T1=0.933562, scaled_affine_R2_T2=0.995354
+  channel=reverse, interval=[100,149.99): median_T1/T2=-0.998951228, p95_|ratio+1|=0.00313, T1_rate=0.0550504, T2_rate=0.0551097, scaled_affine_R2_T1=0.999932, scaled_affine_R2_T2=1
+  channel=reverse, interval=[150,199.99): median_T1/T2=-0.999913876, p95_|ratio+1|=0.000268, T1_rate=0.0552897, T2_rate=0.0552948, scaled_affine_R2_T1=1, scaled_affine_R2_T2=1
+  channel=reverse, interval=[200,249.99): median_T1/T2=-0.999993404, p95_|ratio+1|=2.11e-05, T1_rate=0.0554484, T2_rate=0.0554488, scaled_affine_R2_T1=1, scaled_affine_R2_T2=1
+  channel=reverse, interval=[250,319.99): median_T1/T2=-0.999999717, p95_|ratio+1|=1.49e-06, T1_rate=0.0556029, T2_rate=0.0556029, scaled_affine_R2_T1=1, scaled_affine_R2_T2=1
+
+Angular and radial freezing
+---------------------------
+  channel=forward, interval=[0,99.99): memory_phase_increment=2.63e-05, source_phase_increment=5.12e-06, source-memory_phase_gap=0.0447, radius_rate=0.052955, radius_R2=0.997865
+  channel=forward, interval=[100,149.99): memory_phase_increment=6.35e-07, source_phase_increment=6.89e-08, source-memory_phase_gap=0.00111, radius_rate=0.0570006, radius_R2=1
+  channel=forward, interval=[150,199.99): memory_phase_increment=4.78e-08, source_phase_increment=3.97e-09, source-memory_phase_gap=8.37e-05, radius_rate=0.0571197, radius_R2=1
+  channel=forward, interval=[200,249.99): memory_phase_increment=3.4e-09, source_phase_increment=2.28e-10, source-memory_phase_gap=5.95e-06, radius_rate=0.0571321, radius_R2=1
+  channel=forward, interval=[250,319.99): memory_phase_increment=1.36e-10, source_phase_increment=7.41e-12, source-memory_phase_gap=2.38e-07, radius_rate=0.0571333, radius_R2=1
+  channel=reverse, interval=[0,99.99): memory_phase_increment=2.71e-05, source_phase_increment=4.96e-06, source-memory_phase_gap=0.0465, radius_rate=0.0533057, radius_R2=0.997977
+  channel=reverse, interval=[100,149.99): memory_phase_increment=6.43e-07, source_phase_increment=6.68e-08, source-memory_phase_gap=0.00113, radius_rate=0.0570409, radius_R2=1
+  channel=reverse, interval=[150,199.99): memory_phase_increment=4.79e-08, source_phase_increment=3.85e-09, source-memory_phase_gap=8.39e-05, radius_rate=0.0571245, radius_R2=1
+  channel=reverse, interval=[200,249.99): memory_phase_increment=3.39e-09, source_phase_increment=2.22e-10, source-memory_phase_gap=5.93e-06, radius_rate=0.0571326, radius_R2=1
+  channel=reverse, interval=[250,319.99): memory_phase_increment=1.35e-10, source_phase_increment=7.19e-12, source-memory_phase_gap=2.36e-07, radius_rate=0.0571333, radius_R2=1
+
+Interpretation constraints
+--------------------------
+* The resonant form is tested in complex coordinates; norm-only fits are insufficient.
+* A good affine Y=E/alpha^n fit and Q=S/alpha^(n+1) match support resonant forcing but remain finite-horizon evidence.
+* T1/T2 -> -1 establishes cancellation; it does not imply either term is independently negligible.
+* Phase separations are unwrapped replay observables, not invariant-manifold proofs.
+* Results remain conditional on one replay and fixed branch.

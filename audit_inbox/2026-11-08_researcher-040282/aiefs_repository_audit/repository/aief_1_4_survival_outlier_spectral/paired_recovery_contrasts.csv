@@ -1,0 +1,11 @@
+endpoint,left_branch,right_branch,contrast_role,difference_definition,n_pairs,restricted_time_difference_mean,restricted_time_difference_ci95_low,restricted_time_difference_ci95_high,recovery_probability_difference,recovery_probability_difference_ci95_low,recovery_probability_difference_ci95_high,fraction_left_faster,fraction_equal_restricted_time
+similarity90,continue,reset_B,primary,left_minus_right,40,-4.7625,-5.1375,-4.275,0.0,0.0,0.0,0.925,0.075
+similarity90,continue,reset_ema,primary,left_minus_right,40,-21.34975,-36.77425,-13.5375,0.025,0.0,0.075,1.0,0.0
+similarity90,reset_B,reset_B_ema,primary,left_minus_right,40,-40.5995,-62.973749999999995,-25.1625,0.05,0.0,0.125,1.0,0.0
+similarity90,continue,future_shuffle,primary_driver_control,left_minus_right,40,-319.99,-319.99,-319.99,1.0,1.0,1.0,1.0,0.0
+similarity90,B_carrier_only,full_reset,exploratory_unmatched_phase_reset,left_minus_right,40,-88.19775,-136.07224999999997,-38.762237500000005,0.225,0.05,0.4,0.825,0.075
+density90,continue,reset_B,primary,left_minus_right,40,-3.55,-3.65,-3.5,0.0,0.0,0.0,1.0,0.0
+density90,continue,reset_ema,primary,left_minus_right,40,-35.56225,-56.64925000000001,-21.875,0.025,0.0,0.075,1.0,0.0
+density90,reset_B,reset_B_ema,primary,left_minus_right,40,-33.21225,-55.37425,-18.5,0.025,0.0,0.075,1.0,0.0
+density90,continue,future_shuffle,primary_driver_control,left_minus_right,40,-319.99,-319.99,-319.99,1.0,1.0,1.0,1.0,0.0
+density90,B_carrier_only,full_reset,exploratory_unmatched_phase_reset,left_minus_right,40,31.086000000000002,-10.825312499999994,72.80981249999998,-0.15,-0.325,0.025,0.45,0.1

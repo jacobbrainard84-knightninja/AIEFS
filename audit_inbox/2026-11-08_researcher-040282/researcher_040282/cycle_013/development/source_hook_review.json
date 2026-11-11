@@ -1,0 +1,7 @@
+{
+  "observed_runtime_utc": "2026-11-10T02:45:45.323915+00:00",
+  "fixed_new_file_only": "PhaseCoherenceBridge.lean",
+  "listed_execution_hooks_or_proof_holes_found": [],
+  "not_a_complete_arbitrary_Lean_verifier": true,
+  "not_using_check_cycle_py_as_security_boundary": true
+}

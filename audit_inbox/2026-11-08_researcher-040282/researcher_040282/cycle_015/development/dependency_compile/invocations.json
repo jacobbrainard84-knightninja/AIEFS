@@ -1,0 +1,62 @@
+[
+  {
+    "file": "AIEFGateCore/GateMap.lean",
+    "runtime_utc_start": "2026-11-10T12:43:38.219254+00:00",
+    "returncode": 0,
+    "seconds": 39.3973558319999
+  },
+  {
+    "file": "AIEFGateCore/K3.lean",
+    "runtime_utc_start": "2026-11-10T12:44:17.621381+00:00",
+    "returncode": 0,
+    "seconds": 42.501904821999915
+  },
+  {
+    "file": "AIEFGateCore/RedTeam.lean",
+    "runtime_utc_start": "2026-11-10T12:45:00.133164+00:00",
+    "returncode": 0,
+    "seconds": 51.21712866799999
+  },
+  {
+    "file": "AIEFGateCore/EngineWitness.lean",
+    "runtime_utc_start": "2026-11-10T12:45:51.378551+00:00",
+    "returncode": 0,
+    "seconds": 43.15641396000001
+  },
+  {
+    "file": "AIEFGateCore/MatrixForm.lean",
+    "runtime_utc_start": "2026-11-10T12:46:34.538260+00:00",
+    "returncode": 0,
+    "seconds": 43.177443536000055
+  },
+  {
+    "file": "AIEFGateCore/Capacity.lean",
+    "runtime_utc_start": "2026-11-10T12:47:17.729467+00:00",
+    "returncode": 0,
+    "seconds": 45.76282296099998
+  },
+  {
+    "file": "HistoryBuffer.lean",
+    "runtime_utc_start": "2026-11-10T12:48:03.507420+00:00",
+    "returncode": 0,
+    "seconds": 3.8681674739999607
+  },
+  {
+    "file": "PhaseIncrement.lean",
+    "runtime_utc_start": "2026-11-10T12:48:07.376737+00:00",
+    "returncode": 0,
+    "seconds": 70.59305709199998
+  },
+  {
+    "file": "PhaseCoherenceBridge.lean",
+    "runtime_utc_start": "2026-11-10T12:49:17.981082+00:00",
+    "returncode": 0,
+    "seconds": 65.71790152199992
+  },
+  {
+    "file": "TrajectoryInvariants.lean",
+    "runtime_utc_start": "2026-11-10T12:50:23.712315+00:00",
+    "returncode": 0,
+    "seconds": 47.61830328600013
+  }
+]

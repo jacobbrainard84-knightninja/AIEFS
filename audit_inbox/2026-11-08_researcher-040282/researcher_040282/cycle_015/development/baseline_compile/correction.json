@@ -1,0 +1,5 @@
+{
+  "reason": "Negative half-pi exponent proof had an equivalent but non-definitional placement of negation/division; stock lemma shape differed",
+  "fix": "Use exp_neg of the already proved positive left-half identity, preserving source model and expected values",
+  "not_a_mathematical_negative_control_or_source_repair": true
+}

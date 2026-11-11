@@ -1,0 +1,12 @@
+{
+  "case": "factor_two_dropped",
+  "runtime_utc_start": "2026-11-11T02:02:00.909458+00:00",
+  "raw_compiler_returncode": 1,
+  "seconds": 81.92272426999989,
+  "setup_name_or_timeout_failure": false,
+  "explicit_false_goal": true,
+  "baseline_semantic_witness": "factor_one_refuted",
+  "first_errors": [
+    "Probe.lean:90:59: error: unsolved goals"
+  ]
+}

@@ -1,0 +1,3 @@
+== omega_multistab: python AI Agent Audits/evidence/scripts/omega_multistab.py 
+random omega: mean pairwise Jaccard between 4 seeds (baseline)=0.514  distinct topologies per omega (of 4): [4, 2, 3, 4, 2, 4, 1, 4, 4, 4]  Jaccard(baseline,no_delay)=0.516
+exit 0

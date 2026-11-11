@@ -1,0 +1,2173 @@
+{
+  "ledger_rows": 126,
+  "completed004_rows": 108,
+  "completed005_rows": 109,
+  "completed006_rows": 111,
+  "completed007_rows": 112,
+  "completed008_rows": 113,
+  "completed009_rows": 114,
+  "completed010_rows": 118,
+  "completed011_rows": 122,
+  "unique_ledger_references": 166,
+  "all_ledger_references_unpacked": true,
+  "archive_only_ledger_references": 0,
+  "unpacked_log_count": 367,
+  "log_packet_members": [
+    "researcher_040282/cycle_002/checks/extra_axiom_payload.log",
+    "researcher_040282/cycle_002/checks/false_unconditional_idempotence.log",
+    "researcher_040282/cycle_002/checks/false_unrestricted_epsilon.log",
+    "researcher_040282/cycle_002/checks/missing_footprint.log",
+    "researcher_040282/cycle_002/checks/positive.log",
+    "researcher_040282/cycle_002/checks/sorry_payload.log",
+    "researcher_040282/cycle_002/cycle_checks.log",
+    "researcher_040282/cycle_002/cycle_checks_first_run.log",
+    "researcher_040282/cycle_002/lean_compile.log",
+    "researcher_040282/cycle_002/lean_compile_initial.log",
+    "researcher_040282/cycle_002/lean_setup.log",
+    "researcher_040282/cycle_002/mathlib_extra_import.log",
+    "researcher_040282/cycle_002/mathlib_setup.log",
+    "researcher_040282/cycle_002/standalone_checks/extra_axiom_payload.log",
+    "researcher_040282/cycle_002/standalone_checks/false_unconditional_idempotence.log",
+    "researcher_040282/cycle_002/standalone_checks/false_unrestricted_epsilon.log",
+    "researcher_040282/cycle_002/standalone_checks/missing_footprint.log",
+    "researcher_040282/cycle_002/standalone_checks/positive.log",
+    "researcher_040282/cycle_002/standalone_checks/sorry_payload.log",
+    "researcher_040282/cycle_002/standalone_reproduction.log",
+    "researcher_040282/cycle_003/checks/FreezeCore.log",
+    "researcher_040282/cycle_003/checks/GateFoundations.log",
+    "researcher_040282/cycle_003/checks/extra_axiom_payload.log",
+    "researcher_040282/cycle_003/checks/false_candidate_equals_applied.log",
+    "researcher_040282/cycle_003/checks/false_previous_row_bound.log",
+    "researcher_040282/cycle_003/checks/false_without_h_lower.log",
+    "researcher_040282/cycle_003/checks/false_without_h_upper.log",
+    "researcher_040282/cycle_003/checks/false_zero_row_ratio.log",
+    "researcher_040282/cycle_003/checks/missing_footprint.log",
+    "researcher_040282/cycle_003/checks/positive.log",
+    "researcher_040282/cycle_003/checks/sorry_payload.log",
+    "researcher_040282/cycle_003/cycle_checks.log",
+    "researcher_040282/cycle_003/exact_checks.log",
+    "researcher_040282/cycle_003/lean_setup.log",
+    "researcher_040282/cycle_003/mathlib_setup.log",
+    "researcher_040282/cycle_003/pilot/FreezeCore.log",
+    "researcher_040282/cycle_003/pilot/GateFoundations.log",
+    "researcher_040282/cycle_003/pilot/GateProposalBridge.log",
+    "researcher_040282/cycle_003/pilot_compile.log",
+    "researcher_040282/cycle_003/pilot_compile_initial.log",
+    "researcher_040282/cycle_003/pilot_initial/FreezeCore.log",
+    "researcher_040282/cycle_003/pilot_initial/GateFoundations.log",
+    "researcher_040282/cycle_003/pilot_initial/GateProposalBridge.log",
+    "researcher_040282/cycle_003/source_comparison.log",
+    "researcher_040282/cycle_003/source_comparison_initial.log",
+    "researcher_040282/cycle_003/standalone_checks/FreezeCore.log",
+    "researcher_040282/cycle_003/standalone_checks/GateFoundations.log",
+    "researcher_040282/cycle_003/standalone_checks/extra_axiom_payload.log",
+    "researcher_040282/cycle_003/standalone_checks/false_candidate_equals_applied.log",
+    "researcher_040282/cycle_003/standalone_checks/false_previous_row_bound.log",
+    "researcher_040282/cycle_003/standalone_checks/false_without_h_lower.log",
+    "researcher_040282/cycle_003/standalone_checks/false_without_h_upper.log",
+    "researcher_040282/cycle_003/standalone_checks/false_zero_row_ratio.log",
+    "researcher_040282/cycle_003/standalone_checks/missing_footprint.log",
+    "researcher_040282/cycle_003/standalone_checks/positive.log",
+    "researcher_040282/cycle_003/standalone_checks/sorry_payload.log",
+    "researcher_040282/cycle_003/standalone_reproduction.log",
+    "researcher_040282/cycle_003/standalone_source.log",
+    "researcher_040282/cycle_004/checks/CoherenceDriveBridge.log",
+    "researcher_040282/cycle_004/checks/CoherenceEMA.log",
+    "researcher_040282/cycle_004/checks/FreezeCore.log",
+    "researcher_040282/cycle_004/checks/GateFoundations.log",
+    "researcher_040282/cycle_004/checks/GateProposalBridge.log",
+    "researcher_040282/cycle_004/checks/extra_axiom_payload.log",
+    "researcher_040282/cycle_004/checks/false_coherence_equals_cosine.log",
+    "researcher_040282/cycle_004/checks/false_complex_average_readout.log",
+    "researcher_040282/cycle_004/checks/false_complex_zero_diagonal.log",
+    "researcher_040282/cycle_004/checks/false_disk_without_alpha_lower.log",
+    "researcher_040282/cycle_004/checks/false_disk_without_alpha_upper.log",
+    "researcher_040282/cycle_004/checks/false_disk_without_input_bound.log",
+    "researcher_040282/cycle_004/checks/false_strict_decay_at_alpha_one.log",
+    "researcher_040282/cycle_004/checks/false_unforced_difference.log",
+    "researcher_040282/cycle_004/checks/missing_footprint.log",
+    "researcher_040282/cycle_004/checks/sorry_payload.log",
+    "researcher_040282/cycle_004/cycle_checks.log",
+    "researcher_040282/cycle_004/exact_checks.log",
+    "researcher_040282/cycle_004/lean_setup.log",
+    "researcher_040282/cycle_004/mathlib_setup.log",
+    "researcher_040282/cycle_004/pilot/CoherenceDriveBridge.log",
+    "researcher_040282/cycle_004/pilot/CoherenceEMA.log",
+    "researcher_040282/cycle_004/pilot/FreezeCore.log",
+    "researcher_040282/cycle_004/pilot/GateFoundations.log",
+    "researcher_040282/cycle_004/pilot/GateProposalBridge.log",
+    "researcher_040282/cycle_004/pilot_compile.log",
+    "researcher_040282/cycle_004/pilot_compile_initial.log",
+    "researcher_040282/cycle_004/pilot_initial/CoherenceEMA.log",
+    "researcher_040282/cycle_004/pilot_initial/FreezeCore.log",
+    "researcher_040282/cycle_004/pilot_initial/GateFoundations.log",
+    "researcher_040282/cycle_004/pilot_initial/GateProposalBridge.log",
+    "researcher_040282/cycle_004/source_comparison.log",
+    "researcher_040282/cycle_004/source_comparison_initial.log",
+    "researcher_040282/cycle_004/source_refresh.log",
+    "researcher_040282/cycle_004/source_refresh_initial.log",
+    "researcher_040282/cycle_004/standalone_checks/CoherenceDriveBridge.log",
+    "researcher_040282/cycle_004/standalone_checks/CoherenceEMA.log",
+    "researcher_040282/cycle_004/standalone_checks/FreezeCore.log",
+    "researcher_040282/cycle_004/standalone_checks/GateFoundations.log",
+    "researcher_040282/cycle_004/standalone_checks/GateProposalBridge.log",
+    "researcher_040282/cycle_004/standalone_checks/extra_axiom_payload.log",
+    "researcher_040282/cycle_004/standalone_checks/false_coherence_equals_cosine.log",
+    "researcher_040282/cycle_004/standalone_checks/false_complex_average_readout.log",
+    "researcher_040282/cycle_004/standalone_checks/false_complex_zero_diagonal.log",
+    "researcher_040282/cycle_004/standalone_checks/false_disk_without_alpha_lower.log",
+    "researcher_040282/cycle_004/standalone_checks/false_disk_without_alpha_upper.log",
+    "researcher_040282/cycle_004/standalone_checks/false_disk_without_input_bound.log",
+    "researcher_040282/cycle_004/standalone_checks/false_strict_decay_at_alpha_one.log",
+    "researcher_040282/cycle_004/standalone_checks/false_unforced_difference.log",
+    "researcher_040282/cycle_004/standalone_checks/missing_footprint.log",
+    "researcher_040282/cycle_004/standalone_checks/sorry_payload.log",
+    "researcher_040282/cycle_004/standalone_reproduction.log",
+    "researcher_040282/cycle_004/standalone_source.log",
+    "researcher_040282/cycle_005/checks/green_candidate.log",
+    "researcher_040282/cycle_005/checks/green_candidate_optimized.log",
+    "researcher_040282/cycle_005/checks/red_legacy.log",
+    "researcher_040282/cycle_005/checks_run.log",
+    "researcher_040282/cycle_005/dependency_acquisition.log",
+    "researcher_040282/cycle_005/development_20test_checks/green_candidate.log",
+    "researcher_040282/cycle_005/development_20test_checks/green_candidate_optimized.log",
+    "researcher_040282/cycle_005/development_20test_checks/red_legacy.log",
+    "researcher_040282/cycle_005/development_20test_checks_run.log",
+    "researcher_040282/cycle_005/development_21test_checks/green_candidate.log",
+    "researcher_040282/cycle_005/development_21test_checks/green_candidate_optimized.log",
+    "researcher_040282/cycle_005/development_21test_checks/red_legacy.log",
+    "researcher_040282/cycle_005/development_21test_checks_run.log",
+    "researcher_040282/cycle_005/development_21test_standalone/checks/green_candidate.log",
+    "researcher_040282/cycle_005/development_21test_standalone/checks/green_candidate_optimized.log",
+    "researcher_040282/cycle_005/development_21test_standalone/checks/red_legacy.log",
+    "researcher_040282/cycle_005/development_21test_standalone/extraction.log",
+    "researcher_040282/cycle_005/development_21test_standalone/public_fetch.log",
+    "researcher_040282/cycle_005/development_21test_standalone/reproduction.log",
+    "researcher_040282/cycle_005/input_mutation_red.log",
+    "researcher_040282/cycle_005/pilot_tests.log",
+    "researcher_040282/cycle_005/privacy_sanitization.log",
+    "researcher_040282/cycle_005/source_refresh.log",
+    "researcher_040282/cycle_005/standalone/checks/green_candidate.log",
+    "researcher_040282/cycle_005/standalone/checks/green_candidate_optimized.log",
+    "researcher_040282/cycle_005/standalone/checks/red_legacy.log",
+    "researcher_040282/cycle_005/standalone/extraction.log",
+    "researcher_040282/cycle_005/standalone/public_fetch.log",
+    "researcher_040282/cycle_005/standalone/reproduction.log",
+    "researcher_040282/cycle_006/audit_run.log",
+    "researcher_040282/cycle_006/dependency_acquisition.log",
+    "researcher_040282/cycle_006/extraction.log",
+    "researcher_040282/cycle_006/optimized_audit_run.log",
+    "researcher_040282/cycle_006/source_refresh.log",
+    "researcher_040282/cycle_006/standalone/normal_run.log",
+    "researcher_040282/cycle_006/standalone/optimized_run.log",
+    "researcher_040282/cycle_006/standalone/public_fetch.log",
+    "researcher_040282/cycle_006/standalone/reproduction.log",
+    "researcher_040282/cycle_007/checks/baseline_normal.log",
+    "researcher_040282/cycle_007/checks/baseline_optimized.log",
+    "researcher_040282/cycle_007/checks/candidate-engine_normal.log",
+    "researcher_040282/cycle_007/checks/candidate-engine_optimized.log",
+    "researcher_040282/cycle_007/checks/candidate-leaf_normal.log",
+    "researcher_040282/cycle_007/checks/candidate-leaf_optimized.log",
+    "researcher_040282/cycle_007/checks/modular-extracted_normal.log",
+    "researcher_040282/cycle_007/checks/modular-extracted_optimized.log",
+    "researcher_040282/cycle_007/checks/mutants_normal.log",
+    "researcher_040282/cycle_007/checks/mutants_optimized.log",
+    "researcher_040282/cycle_007/checks_run.log",
+    "researcher_040282/cycle_007/extraction.log",
+    "researcher_040282/cycle_007/historical_restoration.log",
+    "researcher_040282/cycle_007/source_refresh.log",
+    "researcher_040282/cycle_007/standalone/checks/baseline_normal.log",
+    "researcher_040282/cycle_007/standalone/checks/baseline_optimized.log",
+    "researcher_040282/cycle_007/standalone/checks/candidate-engine_normal.log",
+    "researcher_040282/cycle_007/standalone/checks/candidate-engine_optimized.log",
+    "researcher_040282/cycle_007/standalone/checks/candidate-leaf_normal.log",
+    "researcher_040282/cycle_007/standalone/checks/candidate-leaf_optimized.log",
+    "researcher_040282/cycle_007/standalone/checks/modular-extracted_normal.log",
+    "researcher_040282/cycle_007/standalone/checks/modular-extracted_optimized.log",
+    "researcher_040282/cycle_007/standalone/checks/mutants_normal.log",
+    "researcher_040282/cycle_007/standalone/checks/mutants_optimized.log",
+    "researcher_040282/cycle_007/standalone/public_fetch.log",
+    "researcher_040282/cycle_007/standalone/reproduction.log",
+    "researcher_040282/cycle_008/checks/baseline_normal.log",
+    "researcher_040282/cycle_008/checks/baseline_optimized.log",
+    "researcher_040282/cycle_008/checks/candidate_normal.log",
+    "researcher_040282/cycle_008/checks/candidate_optimized.log",
+    "researcher_040282/cycle_008/checks/mutants_normal.log",
+    "researcher_040282/cycle_008/checks/mutants_optimized.log",
+    "researcher_040282/cycle_008/checks_run.log",
+    "researcher_040282/cycle_008/dependency_acquisition.log",
+    "researcher_040282/cycle_008/historical_restoration.log",
+    "researcher_040282/cycle_008/source_refresh.log",
+    "researcher_040282/cycle_008/standalone/checks/baseline_normal.log",
+    "researcher_040282/cycle_008/standalone/checks/baseline_optimized.log",
+    "researcher_040282/cycle_008/standalone/checks/candidate_normal.log",
+    "researcher_040282/cycle_008/standalone/checks/candidate_optimized.log",
+    "researcher_040282/cycle_008/standalone/checks/mutants_normal.log",
+    "researcher_040282/cycle_008/standalone/checks/mutants_optimized.log",
+    "researcher_040282/cycle_008/standalone/reproduction.log",
+    "researcher_040282/cycle_008/standalone_reproduction_run.log",
+    "researcher_040282/cycle_009/checks/baseline_normal.log",
+    "researcher_040282/cycle_009/checks/baseline_optimized.log",
+    "researcher_040282/cycle_009/checks/candidate_normal.log",
+    "researcher_040282/cycle_009/checks/candidate_optimized.log",
+    "researcher_040282/cycle_009/checks/mutants_normal.log",
+    "researcher_040282/cycle_009/checks/mutants_optimized.log",
+    "researcher_040282/cycle_009/checks_run.log",
+    "researcher_040282/cycle_009/dependency_acquisition.log",
+    "researcher_040282/cycle_009/historical_restoration.log",
+    "researcher_040282/cycle_009/source_refresh.log",
+    "researcher_040282/cycle_009/standalone/checks/baseline_normal.log",
+    "researcher_040282/cycle_009/standalone/checks/baseline_optimized.log",
+    "researcher_040282/cycle_009/standalone/checks/candidate_normal.log",
+    "researcher_040282/cycle_009/standalone/checks/candidate_optimized.log",
+    "researcher_040282/cycle_009/standalone/checks/mutants_normal.log",
+    "researcher_040282/cycle_009/standalone/checks/mutants_optimized.log",
+    "researcher_040282/cycle_009/standalone/reproduction.log",
+    "researcher_040282/cycle_009/standalone_reproduction_run.log",
+    "researcher_040282/cycle_010/checks/common_normal.log",
+    "researcher_040282/cycle_010/checks/common_optimized.log",
+    "researcher_040282/cycle_010/checks/proof.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/false_append_old.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/false_extra_delay.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/false_youngest_read.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/positive_abstract_D0.log",
+    "researcher_040282/cycle_010/checks/proof/compiler_logs/positive_nonzero.log",
+    "researcher_040282/cycle_010/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_010/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_010/checks_run.log",
+    "researcher_040282/cycle_010/compiler_setup.log",
+    "researcher_040282/cycle_010/development/initial_proof/compiler.log",
+    "researcher_040282/cycle_010/development/projection_explicit/compiler.log",
+    "researcher_040282/cycle_010/historical_restoration.log",
+    "researcher_040282/cycle_010/source_refresh.log",
+    "researcher_040282/cycle_010/standalone/checks/common_normal.log",
+    "researcher_040282/cycle_010/standalone/checks/common_optimized.log",
+    "researcher_040282/cycle_010/standalone/checks/proof.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_append_old.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_extra_delay.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_youngest_read.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/positive_abstract_D0.log",
+    "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/positive_nonzero.log",
+    "researcher_040282/cycle_010/standalone/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_010/standalone/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_010/standalone/reproduction.log",
+    "researcher_040282/cycle_010/standalone_reproduction_run.log",
+    "researcher_040282/cycle_011/checks/common_normal.log",
+    "researcher_040282/cycle_011/checks/common_optimized.log",
+    "researcher_040282/cycle_011/checks/proof.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/PhaseIncrement.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/false_no_wrap.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/positive_live_nonzero.log",
+    "researcher_040282/cycle_011/checks/proof/compiler_logs/positive_startup_nonzero.log",
+    "researcher_040282/cycle_011/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_011/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_011/checks_run.log",
+    "researcher_040282/cycle_011/compiler_setup.log",
+    "researcher_040282/cycle_011/development/control_fixture_direct_startup/positive_live_nonzero.log",
+    "researcher_040282/cycle_011/development/control_fixture_direct_startup/positive_startup_nonzero.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/common_normal.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/common_optimized.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/proof.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/PhaseIncrement.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_no_wrap.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_live_nonzero.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_startup_nonzero.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_011/development/first_full_runner_control_blocker/checks_run.log",
+    "researcher_040282/cycle_011/development/packaging_capture_correction/first_validation_stdout.log",
+    "researcher_040282/cycle_011/development/phase_pilot_01/HistoryBuffer.log",
+    "researcher_040282/cycle_011/development/phase_pilot_01/PhaseIncrement.log",
+    "researcher_040282/cycle_011/development/phase_pilot_02/PhaseIncrement.log",
+    "researcher_040282/cycle_011/development/phase_pilot_03/PhaseIncrement.log",
+    "researcher_040282/cycle_011/development/source_refresh_api403.log",
+    "researcher_040282/cycle_011/mathlib_setup.log",
+    "researcher_040282/cycle_011/source_refresh.log",
+    "researcher_040282/cycle_011/standalone/checks/common_normal.log",
+    "researcher_040282/cycle_011/standalone/checks/common_optimized.log",
+    "researcher_040282/cycle_011/standalone/checks/proof.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_no_wrap.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/positive_live_nonzero.log",
+    "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/positive_startup_nonzero.log",
+    "researcher_040282/cycle_011/standalone/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_011/standalone/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_011/standalone/reproduction.log",
+    "researcher_040282/cycle_011/standalone_reproduction_run.log",
+    "researcher_040282/cycle_012/checks/common_normal.log",
+    "researcher_040282/cycle_012/checks/common_optimized.log",
+    "researcher_040282/cycle_012/checks/proof.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/CoherenceEMA.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/EMATracking.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/PhaseIncrement.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/false_reverse_weights.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+    "researcher_040282/cycle_012/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+    "researcher_040282/cycle_012/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_012/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_012/checks_run.log",
+    "researcher_040282/cycle_012/compiler_setup.log",
+    "researcher_040282/cycle_012/development/corrected_proof_driver.log",
+    "researcher_040282/cycle_012/development/explicit_additions/EMATracking.log",
+    "researcher_040282/cycle_012/development/explicit_norm_control/false_reverse_weights.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/common_normal.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/common_optimized.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/CoherenceEMA.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/EMATracking.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/PhaseIncrement.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/false_reverse_weights.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_012/development/first_full_runner_control_blocker/checks_run.log",
+    "researcher_040282/cycle_012/development/initial_proof/CoherenceEMA.log",
+    "researcher_040282/cycle_012/development/initial_proof/EMATracking.log",
+    "researcher_040282/cycle_012/development/initial_proof/HistoryBuffer.log",
+    "researcher_040282/cycle_012/development/initial_proof/PhaseIncrement.log",
+    "researcher_040282/cycle_012/development/initial_proof/driver.log",
+    "researcher_040282/cycle_012/mathlib_setup.log",
+    "researcher_040282/cycle_012/source_refresh.log",
+    "researcher_040282/cycle_012/standalone/checks/common_normal.log",
+    "researcher_040282/cycle_012/standalone/checks/common_optimized.log",
+    "researcher_040282/cycle_012/standalone/checks/proof.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/CoherenceEMA.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/EMATracking.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_reverse_weights.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+    "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+    "researcher_040282/cycle_012/standalone/checks/wrong_models_normal.log",
+    "researcher_040282/cycle_012/standalone/checks/wrong_models_optimized.log",
+    "researcher_040282/cycle_012/standalone/reproduction.log",
+    "researcher_040282/cycle_012/standalone_reproduction_run.log",
+    "researcher_040282/gate_foundations_checks.log"
+  ],
+  "ledger_evidence": [
+    {
+      "referenced_as": "2026-11-07_researcher040282_gate-foundations.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/2026-11-07_researcher040282_gate-foundations.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/GateFoundations.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_002/GateFoundations.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/check_cycle.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_002/check_cycle.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/checks/",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_002/checks/extra_axiom_payload.log",
+        "researcher_040282/cycle_002/checks/false_unconditional_idempotence.log",
+        "researcher_040282/cycle_002/checks/false_unrestricted_epsilon.log",
+        "researcher_040282/cycle_002/checks/missing_footprint.log",
+        "researcher_040282/cycle_002/checks/positive.log",
+        "researcher_040282/cycle_002/checks/sorry_payload.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/checks/positive.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_002/checks/positive.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/cycle_checks.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_002/cycle_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_002/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_002/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/GateProposalBridge.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/GateProposalBridge.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/SOURCE_COMPARISON_PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/SOURCE_COMPARISON_PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/check_cycle.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/check_cycle.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/checks/",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/checks/FreezeCore.log",
+        "researcher_040282/cycle_003/checks/GateFoundations.log",
+        "researcher_040282/cycle_003/checks/extra_axiom_payload.log",
+        "researcher_040282/cycle_003/checks/false_candidate_equals_applied.log",
+        "researcher_040282/cycle_003/checks/false_previous_row_bound.log",
+        "researcher_040282/cycle_003/checks/false_without_h_lower.log",
+        "researcher_040282/cycle_003/checks/false_without_h_upper.log",
+        "researcher_040282/cycle_003/checks/false_zero_row_ratio.log",
+        "researcher_040282/cycle_003/checks/missing_footprint.log",
+        "researcher_040282/cycle_003/checks/positive.log",
+        "researcher_040282/cycle_003/checks/sorry_payload.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/checks/positive.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/checks/positive.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/compare_source.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/compare_source.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/cycle_checks.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/cycle_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/source_comparison.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/source_comparison.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/source_comparison_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/source_comparison_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/standalone_manifest.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/standalone_manifest.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/standalone_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/standalone_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_003/standalone_source_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_003/standalone_source_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/CoherenceDriveBridge.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/CoherenceDriveBridge.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/CoherenceEMA.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/CoherenceEMA.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/SOURCE_COMPARISON_PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/SOURCE_COMPARISON_PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/check_cycle.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/check_cycle.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/checks/",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/checks/CoherenceDriveBridge.log",
+        "researcher_040282/cycle_004/checks/CoherenceEMA.log",
+        "researcher_040282/cycle_004/checks/FreezeCore.log",
+        "researcher_040282/cycle_004/checks/GateFoundations.log",
+        "researcher_040282/cycle_004/checks/GateProposalBridge.log",
+        "researcher_040282/cycle_004/checks/extra_axiom_payload.log",
+        "researcher_040282/cycle_004/checks/false_coherence_equals_cosine.log",
+        "researcher_040282/cycle_004/checks/false_complex_average_readout.log",
+        "researcher_040282/cycle_004/checks/false_complex_zero_diagonal.log",
+        "researcher_040282/cycle_004/checks/false_disk_without_alpha_lower.log",
+        "researcher_040282/cycle_004/checks/false_disk_without_alpha_upper.log",
+        "researcher_040282/cycle_004/checks/false_disk_without_input_bound.log",
+        "researcher_040282/cycle_004/checks/false_strict_decay_at_alpha_one.log",
+        "researcher_040282/cycle_004/checks/false_unforced_difference.log",
+        "researcher_040282/cycle_004/checks/missing_footprint.log",
+        "researcher_040282/cycle_004/checks/sorry_payload.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/checks/CoherenceDriveBridge.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/checks/CoherenceDriveBridge.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/checks/CoherenceEMA.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/checks/CoherenceEMA.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/compare_source.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/compare_source.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/cycle_checks.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/cycle_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/source_comparison.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/source_comparison.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/source_comparison_initial.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/source_comparison_initial.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/source_comparison_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/source_comparison_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/standalone_manifest.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/standalone_manifest.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/standalone_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/standalone_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_004/standalone_source_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_004/standalone_source_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/green_candidate.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/checks/green_candidate.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/green_candidate_optimized.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/checks/green_candidate_optimized.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/checks/red_legacy.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/checks/red_legacy.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/AIEF_1_4_proposal_equalization_branch_selftest_r040282.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/proposal/AIEF_1_4_proposal_equalization_branch_selftest_r040282.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/run_checks.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/proposal/run_checks.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/source_modules.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/proposal/source_modules.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/proposal/test_proposal_equalization_branch_selftest_r040282.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/proposal/test_proposal_equalization_branch_selftest_r040282.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/standalone/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/standalone/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_005/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_005/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/PLAN_PREREGISTERED_BEFORE_ADMIN_NOTICE.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/PLAN_PREREGISTERED_BEFORE_ADMIN_NOTICE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/audit_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/audit_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/bootstrap_diagnostics.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/bootstrap_diagnostics.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/bootstrap_pointwise_summary.csv",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/bootstrap_pointwise_summary.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/mutation_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/mutation_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/policy_boundary_cases.csv",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/policy_boundary_cases.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/semantic_witnesses.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/semantic_witnesses.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_auc.csv",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/synthetic_auc.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_cohort_summary.csv",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/synthetic_cohort_summary.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_event_interactions.csv",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/synthetic_event_interactions.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/checks/synthetic_events.csv",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/checks/synthetic_events.csv"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/optimized_audit_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/optimized_audit_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/optimized_checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/optimized_checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/prior_context/pasted_source_AUDIT-REPORT.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/prior_context/pasted_source_AUDIT-REPORT.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/ESTIMAND_CONTRACT.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/programs/ESTIMAND_CONTRACT.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/audit_v41.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/programs/audit_v41.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/load_upstream.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/programs/load_upstream.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/reference_contract.py",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/programs/reference_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/programs/source_modules.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/programs/source_modules.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone/checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/standalone/checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone/optimized_checks/cycle_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/standalone/optimized_checks/cycle_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_006/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_006/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/checks/baseline_normal.log",
+        "researcher_040282/cycle_007/checks/baseline_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/baseline_normal/result.json",
+        "researcher_040282/cycle_007/checks/baseline_optimized.log",
+        "researcher_040282/cycle_007/checks/baseline_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/baseline_optimized/result.json",
+        "researcher_040282/cycle_007/checks/candidate-engine_normal.log",
+        "researcher_040282/cycle_007/checks/candidate-engine_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/candidate-engine_normal/result.json",
+        "researcher_040282/cycle_007/checks/candidate-engine_optimized.log",
+        "researcher_040282/cycle_007/checks/candidate-engine_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/candidate-engine_optimized/result.json",
+        "researcher_040282/cycle_007/checks/candidate-leaf_normal.log",
+        "researcher_040282/cycle_007/checks/candidate-leaf_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/candidate-leaf_normal/result.json",
+        "researcher_040282/cycle_007/checks/candidate-leaf_optimized.log",
+        "researcher_040282/cycle_007/checks/candidate-leaf_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/candidate-leaf_optimized/result.json",
+        "researcher_040282/cycle_007/checks/cycle_results.json",
+        "researcher_040282/cycle_007/checks/modular-extracted_normal.log",
+        "researcher_040282/cycle_007/checks/modular-extracted_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/modular-extracted_normal/result.json",
+        "researcher_040282/cycle_007/checks/modular-extracted_optimized.log",
+        "researcher_040282/cycle_007/checks/modular-extracted_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/checks/modular-extracted_optimized/result.json",
+        "researcher_040282/cycle_007/checks/mutants_normal.log",
+        "researcher_040282/cycle_007/checks/mutants_normal/result.json",
+        "researcher_040282/cycle_007/checks/mutants_optimized.log",
+        "researcher_040282/cycle_007/checks/mutants_optimized/result.json",
+        "researcher_040282/cycle_007/checks/science_summary.json",
+        "researcher_040282/cycle_007/checks/target_runs.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/checks_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/proposal",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/proposal/INTEGRATION_NOTE.md",
+        "researcher_040282/cycle_007/proposal/comparison_contract.py",
+        "researcher_040282/cycle_007/proposal/componentwise_exact.py",
+        "researcher_040282/cycle_007/proposal/extract_from_report.py",
+        "researcher_040282/cycle_007/proposal/fetch_public_dependencies.py",
+        "researcher_040282/cycle_007/proposal/load_reviewed.py",
+        "researcher_040282/cycle_007/proposal/run_checks.py",
+        "researcher_040282/cycle_007/proposal/source_modules.json",
+        "researcher_040282/cycle_007/proposal/test_comparison_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/standalone/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/standalone/checks/baseline_normal.log",
+        "researcher_040282/cycle_007/standalone/checks/baseline_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/baseline_normal/result.json",
+        "researcher_040282/cycle_007/standalone/checks/baseline_optimized.log",
+        "researcher_040282/cycle_007/standalone/checks/baseline_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/baseline_optimized/result.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-engine_normal.log",
+        "researcher_040282/cycle_007/standalone/checks/candidate-engine_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-engine_normal/result.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-engine_optimized.log",
+        "researcher_040282/cycle_007/standalone/checks/candidate-engine_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-engine_optimized/result.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-leaf_normal.log",
+        "researcher_040282/cycle_007/standalone/checks/candidate-leaf_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-leaf_normal/result.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-leaf_optimized.log",
+        "researcher_040282/cycle_007/standalone/checks/candidate-leaf_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/candidate-leaf_optimized/result.json",
+        "researcher_040282/cycle_007/standalone/checks/cycle_results.json",
+        "researcher_040282/cycle_007/standalone/checks/modular-extracted_normal.log",
+        "researcher_040282/cycle_007/standalone/checks/modular-extracted_normal/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/modular-extracted_normal/result.json",
+        "researcher_040282/cycle_007/standalone/checks/modular-extracted_optimized.log",
+        "researcher_040282/cycle_007/standalone/checks/modular-extracted_optimized/reduced_alphabet_mismatches.json",
+        "researcher_040282/cycle_007/standalone/checks/modular-extracted_optimized/result.json",
+        "researcher_040282/cycle_007/standalone/checks/mutants_normal.log",
+        "researcher_040282/cycle_007/standalone/checks/mutants_normal/result.json",
+        "researcher_040282/cycle_007/standalone/checks/mutants_optimized.log",
+        "researcher_040282/cycle_007/standalone/checks/mutants_optimized/result.json",
+        "researcher_040282/cycle_007/standalone/checks/science_summary.json",
+        "researcher_040282/cycle_007/standalone/checks/target_runs.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_007/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_007/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/candidate_boundary.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/candidate_boundary.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/checks/baseline_normal.log",
+        "researcher_040282/cycle_008/checks/baseline_normal/census_mismatches.json",
+        "researcher_040282/cycle_008/checks/baseline_normal/result.json",
+        "researcher_040282/cycle_008/checks/baseline_normal/sequence_definitions.json",
+        "researcher_040282/cycle_008/checks/baseline_normal/table_census.json",
+        "researcher_040282/cycle_008/checks/baseline_optimized.log",
+        "researcher_040282/cycle_008/checks/baseline_optimized/census_mismatches.json",
+        "researcher_040282/cycle_008/checks/baseline_optimized/result.json",
+        "researcher_040282/cycle_008/checks/baseline_optimized/sequence_definitions.json",
+        "researcher_040282/cycle_008/checks/baseline_optimized/table_census.json",
+        "researcher_040282/cycle_008/checks/candidate_normal.log",
+        "researcher_040282/cycle_008/checks/candidate_normal/census_mismatches.json",
+        "researcher_040282/cycle_008/checks/candidate_normal/invalid_key_results.json",
+        "researcher_040282/cycle_008/checks/candidate_normal/result.json",
+        "researcher_040282/cycle_008/checks/candidate_normal/sequence_definitions.json",
+        "researcher_040282/cycle_008/checks/candidate_normal/table_census.json",
+        "researcher_040282/cycle_008/checks/candidate_optimized.log",
+        "researcher_040282/cycle_008/checks/candidate_optimized/census_mismatches.json",
+        "researcher_040282/cycle_008/checks/candidate_optimized/invalid_key_results.json",
+        "researcher_040282/cycle_008/checks/candidate_optimized/result.json",
+        "researcher_040282/cycle_008/checks/candidate_optimized/sequence_definitions.json",
+        "researcher_040282/cycle_008/checks/candidate_optimized/table_census.json",
+        "researcher_040282/cycle_008/checks/cycle_results.json",
+        "researcher_040282/cycle_008/checks/mutants_normal.log",
+        "researcher_040282/cycle_008/checks/mutants_normal/result.json",
+        "researcher_040282/cycle_008/checks/mutants_optimized.log",
+        "researcher_040282/cycle_008/checks/mutants_optimized/result.json",
+        "researcher_040282/cycle_008/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/checks_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/proposal",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/proposal/INTEGRATION_NOTE.md",
+        "researcher_040282/cycle_008/proposal/extract_from_report.py",
+        "researcher_040282/cycle_008/proposal/fetch_public_dependencies.py",
+        "researcher_040282/cycle_008/proposal/load_reviewed.py",
+        "researcher_040282/cycle_008/proposal/oracle_candidate.py",
+        "researcher_040282/cycle_008/proposal/run_checks.py",
+        "researcher_040282/cycle_008/proposal/source_modules.json",
+        "researcher_040282/cycle_008/proposal/status_contract.py",
+        "researcher_040282/cycle_008/proposal/test_status_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/standalone/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/standalone/checks/baseline_normal.log",
+        "researcher_040282/cycle_008/standalone/checks/baseline_normal/census_mismatches.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_normal/result.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_normal/sequence_definitions.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_normal/table_census.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_optimized.log",
+        "researcher_040282/cycle_008/standalone/checks/baseline_optimized/census_mismatches.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_optimized/result.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_optimized/sequence_definitions.json",
+        "researcher_040282/cycle_008/standalone/checks/baseline_optimized/table_census.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_normal.log",
+        "researcher_040282/cycle_008/standalone/checks/candidate_normal/census_mismatches.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_normal/invalid_key_results.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_normal/result.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_normal/sequence_definitions.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_normal/table_census.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_optimized.log",
+        "researcher_040282/cycle_008/standalone/checks/candidate_optimized/census_mismatches.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_optimized/invalid_key_results.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_optimized/result.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_optimized/sequence_definitions.json",
+        "researcher_040282/cycle_008/standalone/checks/candidate_optimized/table_census.json",
+        "researcher_040282/cycle_008/standalone/checks/cycle_results.json",
+        "researcher_040282/cycle_008/standalone/checks/mutants_normal.log",
+        "researcher_040282/cycle_008/standalone/checks/mutants_normal/result.json",
+        "researcher_040282/cycle_008/standalone/checks/mutants_optimized.log",
+        "researcher_040282/cycle_008/standalone/checks/mutants_optimized/result.json",
+        "researcher_040282/cycle_008/standalone/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_008/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_008/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/checks/baseline_normal.log",
+        "researcher_040282/cycle_009/checks/baseline_normal/admission_observations.json",
+        "researcher_040282/cycle_009/checks/baseline_normal/result.json",
+        "researcher_040282/cycle_009/checks/baseline_normal/verdict_mismatches.json",
+        "researcher_040282/cycle_009/checks/baseline_optimized.log",
+        "researcher_040282/cycle_009/checks/baseline_optimized/admission_observations.json",
+        "researcher_040282/cycle_009/checks/baseline_optimized/result.json",
+        "researcher_040282/cycle_009/checks/baseline_optimized/verdict_mismatches.json",
+        "researcher_040282/cycle_009/checks/candidate_normal.log",
+        "researcher_040282/cycle_009/checks/candidate_normal/admission_observations.json",
+        "researcher_040282/cycle_009/checks/candidate_normal/configuration_results.json",
+        "researcher_040282/cycle_009/checks/candidate_normal/metadata_only_anchor.json",
+        "researcher_040282/cycle_009/checks/candidate_normal/result.json",
+        "researcher_040282/cycle_009/checks/candidate_normal/verdict_mismatches.json",
+        "researcher_040282/cycle_009/checks/candidate_optimized.log",
+        "researcher_040282/cycle_009/checks/candidate_optimized/admission_observations.json",
+        "researcher_040282/cycle_009/checks/candidate_optimized/configuration_results.json",
+        "researcher_040282/cycle_009/checks/candidate_optimized/metadata_only_anchor.json",
+        "researcher_040282/cycle_009/checks/candidate_optimized/result.json",
+        "researcher_040282/cycle_009/checks/candidate_optimized/verdict_mismatches.json",
+        "researcher_040282/cycle_009/checks/cycle_results.json",
+        "researcher_040282/cycle_009/checks/mutants_normal.log",
+        "researcher_040282/cycle_009/checks/mutants_normal/result.json",
+        "researcher_040282/cycle_009/checks/mutants_optimized.log",
+        "researcher_040282/cycle_009/checks/mutants_optimized/result.json",
+        "researcher_040282/cycle_009/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/checks_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/proposal",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/proposal/INTEGRATION_NOTE.md",
+        "researcher_040282/cycle_009/proposal/admission_contract.py",
+        "researcher_040282/cycle_009/proposal/anchored_admission.py",
+        "researcher_040282/cycle_009/proposal/extract_from_report.py",
+        "researcher_040282/cycle_009/proposal/fetch_public_dependencies.py",
+        "researcher_040282/cycle_009/proposal/load_reviewed.py",
+        "researcher_040282/cycle_009/proposal/run_checks.py",
+        "researcher_040282/cycle_009/proposal/source_modules.json",
+        "researcher_040282/cycle_009/proposal/synthetic_cohort.py",
+        "researcher_040282/cycle_009/proposal/test_admission.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/standalone/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/standalone/checks/baseline_normal.log",
+        "researcher_040282/cycle_009/standalone/checks/baseline_normal/admission_observations.json",
+        "researcher_040282/cycle_009/standalone/checks/baseline_normal/result.json",
+        "researcher_040282/cycle_009/standalone/checks/baseline_normal/verdict_mismatches.json",
+        "researcher_040282/cycle_009/standalone/checks/baseline_optimized.log",
+        "researcher_040282/cycle_009/standalone/checks/baseline_optimized/admission_observations.json",
+        "researcher_040282/cycle_009/standalone/checks/baseline_optimized/result.json",
+        "researcher_040282/cycle_009/standalone/checks/baseline_optimized/verdict_mismatches.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_normal.log",
+        "researcher_040282/cycle_009/standalone/checks/candidate_normal/admission_observations.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_normal/configuration_results.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_normal/metadata_only_anchor.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_normal/result.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_normal/verdict_mismatches.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_optimized.log",
+        "researcher_040282/cycle_009/standalone/checks/candidate_optimized/admission_observations.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_optimized/configuration_results.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_optimized/metadata_only_anchor.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_optimized/result.json",
+        "researcher_040282/cycle_009/standalone/checks/candidate_optimized/verdict_mismatches.json",
+        "researcher_040282/cycle_009/standalone/checks/cycle_results.json",
+        "researcher_040282/cycle_009/standalone/checks/mutants_normal.log",
+        "researcher_040282/cycle_009/standalone/checks/mutants_normal/result.json",
+        "researcher_040282/cycle_009/standalone/checks/mutants_optimized.log",
+        "researcher_040282/cycle_009/standalone/checks/mutants_optimized/result.json",
+        "researcher_040282/cycle_009/standalone/checks/worker_results.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_009/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_009/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/SOURCE_CORRESPONDENCE.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/SOURCE_CORRESPONDENCE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/checks/common_normal.log",
+        "researcher_040282/cycle_010/checks/common_normal/advance_observations.json",
+        "researcher_040282/cycle_010/checks/common_normal/domain_checks.json",
+        "researcher_040282/cycle_010/checks/common_normal/result.json",
+        "researcher_040282/cycle_010/checks/common_optimized.log",
+        "researcher_040282/cycle_010/checks/common_optimized/advance_observations.json",
+        "researcher_040282/cycle_010/checks/common_optimized/domain_checks.json",
+        "researcher_040282/cycle_010/checks/common_optimized/result.json",
+        "researcher_040282/cycle_010/checks/cycle_results.json",
+        "researcher_040282/cycle_010/checks/proof.log",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/false_append_old.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/false_extra_delay.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/false_youngest_read.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/positive_nonzero.lean",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/false_append_old.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/false_extra_delay.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/false_youngest_read.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/positive_nonzero.log",
+        "researcher_040282/cycle_010/checks/proof/result.json",
+        "researcher_040282/cycle_010/checks/worker_results.json",
+        "researcher_040282/cycle_010/checks/wrong_models_normal.log",
+        "researcher_040282/cycle_010/checks/wrong_models_normal/result.json",
+        "researcher_040282/cycle_010/checks/wrong_models_normal/wrong_models.json",
+        "researcher_040282/cycle_010/checks/wrong_models_optimized.log",
+        "researcher_040282/cycle_010/checks/wrong_models_optimized/result.json",
+        "researcher_040282/cycle_010/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/checks/proof",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/false_append_old.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/false_extra_delay.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/false_youngest_read.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "researcher_040282/cycle_010/checks/proof/compiled_sources/positive_nonzero.lean",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/false_append_old.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/false_extra_delay.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/false_youngest_read.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "researcher_040282/cycle_010/checks/proof/compiler_logs/positive_nonzero.log",
+        "researcher_040282/cycle_010/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/checks_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/compiler_cleanup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/compiler_cleanup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/compiler_setup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/compiler_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/preexecution_case_design.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/preexecution_case_design.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/proposal",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/proposal/HistoryBuffer.lean",
+        "researcher_040282/cycle_010/proposal/INTEGRATION_NOTE.md",
+        "researcher_040282/cycle_010/proposal/check_engine.py",
+        "researcher_040282/cycle_010/proposal/check_lean.py",
+        "researcher_040282/cycle_010/proposal/extract_from_report.py",
+        "researcher_040282/cycle_010/proposal/fetch_public_dependencies.py",
+        "researcher_040282/cycle_010/proposal/load_reviewed.py",
+        "researcher_040282/cycle_010/proposal/prepare_lean.py",
+        "researcher_040282/cycle_010/proposal/run_checks.py",
+        "researcher_040282/cycle_010/proposal/source_modules.json",
+        "researcher_040282/cycle_010/proposal/step_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/proposal/HistoryBuffer.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/proposal/HistoryBuffer.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/source_state/inbox_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/source_state/inbox_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/standalone/checks/common_normal.log",
+        "researcher_040282/cycle_010/standalone/checks/common_normal/advance_observations.json",
+        "researcher_040282/cycle_010/standalone/checks/common_normal/domain_checks.json",
+        "researcher_040282/cycle_010/standalone/checks/common_normal/result.json",
+        "researcher_040282/cycle_010/standalone/checks/common_optimized.log",
+        "researcher_040282/cycle_010/standalone/checks/common_optimized/advance_observations.json",
+        "researcher_040282/cycle_010/standalone/checks/common_optimized/domain_checks.json",
+        "researcher_040282/cycle_010/standalone/checks/common_optimized/result.json",
+        "researcher_040282/cycle_010/standalone/checks/cycle_results.json",
+        "researcher_040282/cycle_010/standalone/checks/proof.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/false_append_old.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/false_extra_delay.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/false_youngest_read.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/positive_nonzero.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_append_old.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_extra_delay.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_youngest_read.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/positive_nonzero.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/result.json",
+        "researcher_040282/cycle_010/standalone/checks/worker_results.json",
+        "researcher_040282/cycle_010/standalone/checks/wrong_models_normal.log",
+        "researcher_040282/cycle_010/standalone/checks/wrong_models_normal/result.json",
+        "researcher_040282/cycle_010/standalone/checks/wrong_models_normal/wrong_models.json",
+        "researcher_040282/cycle_010/standalone/checks/wrong_models_optimized.log",
+        "researcher_040282/cycle_010/standalone/checks/wrong_models_optimized/result.json",
+        "researcher_040282/cycle_010/standalone/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone/checks/proof",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/false_append_old.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/false_extra_delay.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/false_youngest_read.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/positive_abstract_D0.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiled_sources/positive_nonzero.lean",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_append_old.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_extra_delay.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/false_youngest_read.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/positive_abstract_D0.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/compiler_logs/positive_nonzero.log",
+        "researcher_040282/cycle_010/standalone/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_010/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_010/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/SOURCE_CORRESPONDENCE.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/SOURCE_CORRESPONDENCE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/checks/common_normal.log",
+        "researcher_040282/cycle_011/checks/common_normal/advance_observations.json",
+        "researcher_040282/cycle_011/checks/common_normal/input_ratio_observations.json",
+        "researcher_040282/cycle_011/checks/common_normal/preexecution_design.json",
+        "researcher_040282/cycle_011/checks/common_normal/result.json",
+        "researcher_040282/cycle_011/checks/common_optimized.log",
+        "researcher_040282/cycle_011/checks/common_optimized/advance_observations.json",
+        "researcher_040282/cycle_011/checks/common_optimized/input_ratio_observations.json",
+        "researcher_040282/cycle_011/checks/common_optimized/preexecution_design.json",
+        "researcher_040282/cycle_011/checks/common_optimized/result.json",
+        "researcher_040282/cycle_011/checks/cycle_results.json",
+        "researcher_040282/cycle_011/checks/proof.log",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/false_no_wrap.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/false_no_wrap.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "researcher_040282/cycle_011/checks/proof/result.json",
+        "researcher_040282/cycle_011/checks/worker_results.json",
+        "researcher_040282/cycle_011/checks/wrong_models_normal.log",
+        "researcher_040282/cycle_011/checks/wrong_models_normal/preexecution_design.json",
+        "researcher_040282/cycle_011/checks/wrong_models_normal/result.json",
+        "researcher_040282/cycle_011/checks/wrong_models_normal/wrong_models.json",
+        "researcher_040282/cycle_011/checks/wrong_models_optimized.log",
+        "researcher_040282/cycle_011/checks/wrong_models_optimized/preexecution_design.json",
+        "researcher_040282/cycle_011/checks/wrong_models_optimized/result.json",
+        "researcher_040282/cycle_011/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/checks/proof",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/false_no_wrap.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "researcher_040282/cycle_011/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/false_no_wrap.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "researcher_040282/cycle_011/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "researcher_040282/cycle_011/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/checks_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/compiler_cleanup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/compiler_cleanup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/compiler_setup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/compiler_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/mathlib_setup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/mathlib_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/preexecution_case_design.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/preexecution_case_design.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/proposal",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/proposal/HistoryBuffer.lean",
+        "researcher_040282/cycle_011/proposal/INTEGRATION_NOTE.md",
+        "researcher_040282/cycle_011/proposal/PhaseIncrement.lean",
+        "researcher_040282/cycle_011/proposal/check_engine.py",
+        "researcher_040282/cycle_011/proposal/check_lean.py",
+        "researcher_040282/cycle_011/proposal/extract_from_report.py",
+        "researcher_040282/cycle_011/proposal/fetch_public_dependencies.py",
+        "researcher_040282/cycle_011/proposal/load_reviewed.py",
+        "researcher_040282/cycle_011/proposal/phase_contract.py",
+        "researcher_040282/cycle_011/proposal/prepare_lean.py",
+        "researcher_040282/cycle_011/proposal/prepare_mathlib.py",
+        "researcher_040282/cycle_011/proposal/run_checks.py",
+        "researcher_040282/cycle_011/proposal/source_modules.json",
+        "researcher_040282/cycle_011/proposal/step_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/proposal/HistoryBuffer.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/proposal/HistoryBuffer.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/proposal/PhaseIncrement.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/proposal/PhaseIncrement.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/review_intake.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/review_intake.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/source_state/inbox_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/source_state/inbox_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/standalone/checks/common_normal.log",
+        "researcher_040282/cycle_011/standalone/checks/common_normal/advance_observations.json",
+        "researcher_040282/cycle_011/standalone/checks/common_normal/input_ratio_observations.json",
+        "researcher_040282/cycle_011/standalone/checks/common_normal/preexecution_design.json",
+        "researcher_040282/cycle_011/standalone/checks/common_normal/result.json",
+        "researcher_040282/cycle_011/standalone/checks/common_optimized.log",
+        "researcher_040282/cycle_011/standalone/checks/common_optimized/advance_observations.json",
+        "researcher_040282/cycle_011/standalone/checks/common_optimized/input_ratio_observations.json",
+        "researcher_040282/cycle_011/standalone/checks/common_optimized/preexecution_design.json",
+        "researcher_040282/cycle_011/standalone/checks/common_optimized/result.json",
+        "researcher_040282/cycle_011/standalone/checks/cycle_results.json",
+        "researcher_040282/cycle_011/standalone/checks/proof.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/false_no_wrap.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_no_wrap.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/result.json",
+        "researcher_040282/cycle_011/standalone/checks/worker_results.json",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_normal.log",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_normal/preexecution_design.json",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_normal/result.json",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_normal/wrong_models.json",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_optimized.log",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_optimized/preexecution_design.json",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_optimized/result.json",
+        "researcher_040282/cycle_011/standalone/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone/checks/proof",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/false_current_instead_of_aged.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/false_no_wrap.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/false_startup_delayed_increment.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/positive_live_nonzero.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiled_sources/positive_startup_nonzero.lean",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_current_instead_of_aged.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_no_wrap.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/false_startup_delayed_increment.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/positive_live_nonzero.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/compiler_logs/positive_startup_nonzero.log",
+        "researcher_040282/cycle_011/standalone/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_011/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_011/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/PLAN.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/PLAN.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/SOURCE_CORRESPONDENCE.md",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/SOURCE_CORRESPONDENCE.md"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/checks/common_normal.log",
+        "researcher_040282/cycle_012/checks/common_normal/advance_observations.json",
+        "researcher_040282/cycle_012/checks/common_normal/preexecution_design.json",
+        "researcher_040282/cycle_012/checks/common_normal/result.json",
+        "researcher_040282/cycle_012/checks/common_normal/tracking_observations.json",
+        "researcher_040282/cycle_012/checks/common_optimized.log",
+        "researcher_040282/cycle_012/checks/common_optimized/advance_observations.json",
+        "researcher_040282/cycle_012/checks/common_optimized/preexecution_design.json",
+        "researcher_040282/cycle_012/checks/common_optimized/result.json",
+        "researcher_040282/cycle_012/checks/common_optimized/tracking_observations.json",
+        "researcher_040282/cycle_012/checks/cycle_results.json",
+        "researcher_040282/cycle_012/checks/proof.log",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/EMATracking.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/CoherenceEMA.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/EMATracking.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/false_reverse_weights.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "researcher_040282/cycle_012/checks/proof/result.json",
+        "researcher_040282/cycle_012/checks/worker_results.json",
+        "researcher_040282/cycle_012/checks/wrong_models_normal.log",
+        "researcher_040282/cycle_012/checks/wrong_models_normal/preexecution_design.json",
+        "researcher_040282/cycle_012/checks/wrong_models_normal/result.json",
+        "researcher_040282/cycle_012/checks/wrong_models_normal/wrong_models.json",
+        "researcher_040282/cycle_012/checks/wrong_models_optimized.log",
+        "researcher_040282/cycle_012/checks/wrong_models_optimized/preexecution_design.json",
+        "researcher_040282/cycle_012/checks/wrong_models_optimized/result.json",
+        "researcher_040282/cycle_012/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/checks/proof",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/EMATracking.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "researcher_040282/cycle_012/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/CoherenceEMA.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/EMATracking.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/false_reverse_weights.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "researcher_040282/cycle_012/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "researcher_040282/cycle_012/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/checks_run.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/checks_run.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/compiler_cleanup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/compiler_cleanup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/compiler_setup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/compiler_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/mathlib_setup.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/mathlib_setup.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/nonduplication_check.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/nonduplication_check.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/preexecution_case_design.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/preexecution_case_design.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/proposal/CoherenceEMA.lean",
+        "researcher_040282/cycle_012/proposal/EMATracking.lean",
+        "researcher_040282/cycle_012/proposal/HistoryBuffer.lean",
+        "researcher_040282/cycle_012/proposal/INTEGRATION_NOTE.md",
+        "researcher_040282/cycle_012/proposal/PhaseIncrement.lean",
+        "researcher_040282/cycle_012/proposal/check_engine.py",
+        "researcher_040282/cycle_012/proposal/check_lean.py",
+        "researcher_040282/cycle_012/proposal/extract_from_report.py",
+        "researcher_040282/cycle_012/proposal/fetch_public_dependencies.py",
+        "researcher_040282/cycle_012/proposal/load_reviewed.py",
+        "researcher_040282/cycle_012/proposal/phase_contract.py",
+        "researcher_040282/cycle_012/proposal/prepare_lean.py",
+        "researcher_040282/cycle_012/proposal/prepare_mathlib.py",
+        "researcher_040282/cycle_012/proposal/run_checks.py",
+        "researcher_040282/cycle_012/proposal/source_modules.json",
+        "researcher_040282/cycle_012/proposal/step_contract.py",
+        "researcher_040282/cycle_012/proposal/tracking_contract.py"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/CoherenceEMA.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/proposal/CoherenceEMA.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/EMATracking.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/proposal/EMATracking.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/HistoryBuffer.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/proposal/HistoryBuffer.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/proposal/PhaseIncrement.lean",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/proposal/PhaseIncrement.lean"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/review_decision.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/review_decision.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/review_intake.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/review_intake.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/selection_refinement.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/selection_refinement.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/source_state/inbox_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/source_state/inbox_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/source_state/main_selected.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/source_state/main_selected.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone/checks",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/standalone/checks/common_normal.log",
+        "researcher_040282/cycle_012/standalone/checks/common_normal/advance_observations.json",
+        "researcher_040282/cycle_012/standalone/checks/common_normal/preexecution_design.json",
+        "researcher_040282/cycle_012/standalone/checks/common_normal/result.json",
+        "researcher_040282/cycle_012/standalone/checks/common_normal/tracking_observations.json",
+        "researcher_040282/cycle_012/standalone/checks/common_optimized.log",
+        "researcher_040282/cycle_012/standalone/checks/common_optimized/advance_observations.json",
+        "researcher_040282/cycle_012/standalone/checks/common_optimized/preexecution_design.json",
+        "researcher_040282/cycle_012/standalone/checks/common_optimized/result.json",
+        "researcher_040282/cycle_012/standalone/checks/common_optimized/tracking_observations.json",
+        "researcher_040282/cycle_012/standalone/checks/cycle_results.json",
+        "researcher_040282/cycle_012/standalone/checks/proof.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/EMATracking.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/CoherenceEMA.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/EMATracking.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_reverse_weights.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/result.json",
+        "researcher_040282/cycle_012/standalone/checks/worker_results.json",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_normal.log",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_normal/preexecution_design.json",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_normal/result.json",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_normal/wrong_models.json",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_optimized.log",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_optimized/preexecution_design.json",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_optimized/result.json",
+        "researcher_040282/cycle_012/standalone/checks/wrong_models_optimized/wrong_models.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone/checks/proof",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/CoherenceEMA.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/EMATracking.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/HistoryBuffer.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/PhaseIncrement.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/compiling_extra_axiom.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/compiling_sorry.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/false_beta_scaled_drift.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/false_drop_nonnegative_alpha.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/false_reverse_weights.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/omitted_axiom_print.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/positive_alpha0_nonzero.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiled_sources/positive_alpha1_nonzero.lean",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/CoherenceEMA.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/EMATracking.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/HistoryBuffer.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/PhaseIncrement.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/compiling_extra_axiom.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/compiling_sorry.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_beta_scaled_drift.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_drop_nonnegative_alpha.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/false_reverse_weights.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/omitted_axiom_print.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/positive_alpha0_nonzero.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/compiler_logs/positive_alpha1_nonzero.log",
+        "researcher_040282/cycle_012/standalone/checks/proof/result.json"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone/reproduction.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/standalone/reproduction.log"
+      ]
+    },
+    {
+      "referenced_as": "cycle_012/standalone_reproduction.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/cycle_012/standalone_reproduction.json"
+      ]
+    },
+    {
+      "referenced_as": "gate_foundations_checks.log",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/gate_foundations_checks.log"
+      ]
+    },
+    {
+      "referenced_as": "gate_foundations_results.json",
+      "availability": "UNPACKED",
+      "packet_members": [
+        "researcher_040282/gate_foundations_results.json"
+      ]
+    }
+  ],
+  "note": "Historical ZIPs are not nested; cited logs remain unchanged and unpacked. Historical closure receipts concern their own frozen cycle, not current live root."
+}

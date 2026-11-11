@@ -1,0 +1,6 @@
+{
+  "reason": "UnprojectedB witness normaliser unfolded config/aux before its exact unprojected equality could match, leaving an unreduced term; NOT credited",
+  "fix": "Simplify usedIncrement and probe_unprojected before broad numeric expansion; no candidate/model/expected-value change",
+  "five_completed_explicit_false_probes_retained": true,
+  "seventh_frequency_probe_was_cancelled_not_claimed": true
+}

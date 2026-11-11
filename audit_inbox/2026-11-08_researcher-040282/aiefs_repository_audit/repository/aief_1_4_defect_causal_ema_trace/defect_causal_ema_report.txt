@@ -1,0 +1,56 @@
+AIEF K3 defect causal EMA trace
+================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+Final replay exact: True
+
+Exact identity errors
+---------------------
+  directed_complex_EMA_forward: max_abs=3.14018e-16, median_abs=9.71445e-17
+  directed_complex_EMA_reverse: max_abs=3.51083e-16, median_abs=7.85046e-17
+  proposal_difference: max_abs=5.55112e-17, median_abs=1.60927e-17
+  operator_delta_from_proposal: max_abs=2.05565e-16, median_abs=3.55181e-17
+  projected_B_difference: max_abs=5.55112e-17, median_abs=1.55169e-17
+  R_from_directed_magnitudes: max_abs=3.88578e-16, median_abs=5.55112e-17
+
+Interval dynamics
+-----------------
+  object=delta_operator, interval=[0,100): rate=0.0520963, R2=0.994522, rate-EMA=-0.00504, median_multiplier=0.999445416923, EMA_error=1.66e-05, source_ratio=nan
+  object=delta_x, interval=[0,100): rate=0.0520914, R2=0.994514, rate-EMA=-0.00504, median_multiplier=0.999445447548, EMA_error=1.66e-05, source_ratio=nan
+  object=delta_B, interval=[0,100): rate=0.0520906, R2=0.994511, rate-EMA=-0.00504, median_multiplier=0.99944544261, EMA_error=1.66e-05, source_ratio=nan
+  object=delta_R, interval=[0,100): rate=0.0531227, R2=0.997923, rate-EMA=-0.00401, median_multiplier=0.999452709571, EMA_error=2.39e-05, source_ratio=nan
+  object=complex_memory_norm, interval=[0,100): rate=0.00491806, R2=0.785849, rate-EMA=-0.0522, median_multiplier=0.999967673778, EMA_error=0.000539, source_ratio=0.00054
+  object=phase_source_norm, interval=[0,100): rate=0.00130531, R2=0.783453, rate-EMA=-0.0558, median_multiplier=0.999992098449, EMA_error=0.000563, source_ratio=0.00054
+  object=delta_operator, interval=[100,150): rate=0.0569977, R2=1, rate-EMA=-0.000136, median_multiplier=0.999430115404, EMA_error=1.29e-06, source_ratio=nan
+  object=delta_x, interval=[100,150): rate=0.0569977, R2=1, rate-EMA=-0.000136, median_multiplier=0.999430115869, EMA_error=1.29e-06, source_ratio=nan
+  object=delta_B, interval=[100,150): rate=0.0569976, R2=1, rate-EMA=-0.000136, median_multiplier=0.999430116061, EMA_error=1.29e-06, source_ratio=nan
+  object=delta_R, interval=[100,150): rate=0.0570195, R2=1, rate-EMA=-0.000114, median_multiplier=0.999429839496, EMA_error=1.01e-06, source_ratio=nan
+  object=complex_memory_norm, interval=[100,150): rate=0.000105024, R2=0.909108, rate-EMA=-0.057, median_multiplier=0.999999097191, EMA_error=0.00057, source_ratio=0.000571
+  object=phase_source_norm, interval=[100,150): rate=1.31435e-05, R2=0.88647, rate-EMA=-0.0571, median_multiplier=0.999999892123, EMA_error=0.000571, source_ratio=0.000571
+  object=delta_operator, interval=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, median_multiplier=0.999429026988, EMA_error=1.97e-07, source_ratio=nan
+  object=delta_x, interval=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, median_multiplier=0.999429027014, EMA_error=1.97e-07, source_ratio=nan
+  object=delta_B, interval=[150,200): rate=0.0571116, R2=1, rate-EMA=-2.17e-05, median_multiplier=0.999429027082, EMA_error=1.97e-07, source_ratio=nan
+  object=delta_R, interval=[150,200): rate=0.057122, R2=1, rate-EMA=-1.14e-05, median_multiplier=0.999428929002, EMA_error=9.92e-08, source_ratio=nan
+  object=complex_memory_norm, interval=[150,200): rate=8.20388e-06, R2=0.903201, rate-EMA=-0.0571, median_multiplier=0.999999930337, EMA_error=0.000571, source_ratio=0.000571
+  object=phase_source_norm, interval=[150,200): rate=7.58981e-07, R2=0.886084, rate-EMA=-0.0571, median_multiplier=0.999999993776, EMA_error=0.000571, source_ratio=0.000571
+  object=delta_operator, interval=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, median_multiplier=0.999428852148, EMA_error=2.23e-08, source_ratio=nan
+  object=delta_x, interval=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, median_multiplier=0.999428852147, EMA_error=2.23e-08, source_ratio=nan
+  object=delta_B, interval=[200,250): rate=0.0571308, R2=1, rate-EMA=-2.52e-06, median_multiplier=0.999428852154, EMA_error=2.23e-08, source_ratio=nan
+  object=delta_R, interval=[200,250): rate=0.0571323, R2=1, rate-EMA=-1.01e-06, median_multiplier=0.999428838528, EMA_error=8.68e-09, source_ratio=nan
+  object=complex_memory_norm, interval=[200,250): rate=5.96136e-07, R2=0.899679, rate-EMA=-0.0571, median_multiplier=0.999999994974, EMA_error=0.000571, source_ratio=0.000571
+  object=phase_source_norm, interval=[200,250): rate=4.3654e-08, R2=0.885965, rate-EMA=-0.0571, median_multiplier=0.999999999642, EMA_error=0.000571, source_ratio=0.000571
+  object=delta_operator, interval=[250,319.99): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, median_multiplier=0.999428832118, EMA_error=2.67e-09, source_ratio=nan
+  object=delta_x, interval=[250,319.99): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, median_multiplier=0.999428831949, EMA_error=2.36e-09, source_ratio=nan
+  object=delta_B, interval=[250,319.99): rate=0.0571332, R2=1, rate-EMA=-1.75e-07, median_multiplier=0.999428831954, EMA_error=2.4e-09, source_ratio=nan
+  object=delta_R, interval=[250,319.99): rate=0.0571333, R2=1, rate-EMA=-5.9e-08, median_multiplier=0.99942883112, EMA_error=2.4e-09, source_ratio=nan
+  object=complex_memory_norm, interval=[250,319.99): rate=2.84408e-08, R2=0.822857, rate-EMA=-0.0571, median_multiplier=0.999999999797, EMA_error=0.000571, source_ratio=0.000571
+  object=phase_source_norm, interval=[250,319.99): rate=1.69824e-09, R2=0.806062, rate-EMA=-0.0571, median_multiplier=0.999999999988, EMA_error=0.000571, source_ratio=0.000571
+
+Interpretation constraints
+--------------------------
+* Complex EMA identities are checked in both directed orientations before R symmetrization.
+* A small phase-source ratio supports homogeneous EMA relaxation but does not prove why the source vanishes.
+* Magnitude linearization is a late small-difference approximation; its error is reported.
+* Shared decay rates on one replay are not universal causal evidence.
+* Results remain conditional on the fixed K3 branch and support.
