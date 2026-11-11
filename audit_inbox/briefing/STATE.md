@@ -39,7 +39,6 @@ On 2026-11-11 the owner approved deleting 20 remote branches that were fully mer
 | 013 | PhaseCoherenceBridge | P5 branch | ADOPT WITH NOTES (two node-uniform probe survivors) |
 | 014 | TrajectoryInvariants | `research/lean-gate-c014` | ADOPT WITH NOTES (pWide witnesses use a full-reset step; not about engine params) |
 | 015 | ClosedLoopCore | audit-inbox `cycle_015/` (not ported) | ADOPT WITH NOTES: delayed read in the phase coupling and dt are unpinned by its probes (F1/F2); fix in the port. See `audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews/`. |
-
 | 012 | EMATracking | audit-inbox `cycle_012/` | ADOPT WITH NOTES (textbook tracking bound; low priority) |
 | 016 | CoherenceMotion | audit-inbox `cycle_016/` (imports P5 @ 54037ea) | ADOPT WITH NOTES: R moves at most 2(1−α) ≈ 0.00114 per step at engine α |
 
