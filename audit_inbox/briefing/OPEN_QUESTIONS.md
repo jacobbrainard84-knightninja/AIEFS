@@ -43,7 +43,7 @@ Report each test as PASS (rejected correctly) or GAP (accepted wrongly), with th
 
 ## 2. Lean
 
-5. **Axiom footprint.** Check that `#print axioms` (only propext, Classical.choice, Quot.sound) is enforced in CI for every project. On `main` @ `ba171d0`, `lean.yml` already requires **AIEFProofs**, **AIEFProofsKn**, **AIEFFreezeCore**, and **AIEFGateCore**. Re-confirm after each new Lean project lands.
+5. **Axiom footprint.** Check that `#print axioms` (only propext, Classical.choice, Quot.sound) is enforced in CI for every project. On `main` @ `1c30ca5`, `lean.yml` already requires **AIEFProofs**, **AIEFProofsKn**, **AIEFFreezeCore**, and **AIEFGateCore**. Re-confirm after each new Lean project lands.
 
 ## 3. Researcher 626 items (from their earlier review; to be re-checked on current `main`)
 
@@ -65,8 +65,8 @@ Per the reviewer, items 12–13 should come **before** the step-size study (item
     - **v4.1 scientific audit and a real S01 *analysis* output** are still open. Nothing in `runs/b57562a8ee77/` is v4.1 analysis output. Keep v3 and v4.1 as distinct analyses.
     - **v4.1 metadata tolerance mismatch.** Implementation uses 1e-6 × the smallest positive saved-grid step, but metadata/report strings say `1e-6*dt` (re-check line numbers on current tip).
     - Interval/bootstrap/input-binding wording still needs a dedicated re-read.
-13. **`registry/studies.csv` entrypoint integrity.** Still open on `main` @ `ba171d0`: **11** unresolved `canonical_entrypoints` tokens in the same five study rows (`AIEF_1_0_TO_1_2_FOUNDATIONAL`, `AIEF_1_3_DISJOINT_100SEED`, `AIEF_1_4_MATCHED_PHASE_ABLATION`, `AIEF_1_4_TANGENT_AND_COCYCLE`, `AIEF_1_4_CONTROLLER_FIBER`). `CURRENT_STATUS.md:46` still cites absent scripts. No CI check covers this. Pair with the CURRENT_STATUS docs PR (chronicler patch apply-checks clean on `ba171d0`).
-14. **Formalise the finite gate identities before the delayed asymptotics.** Lean P1/P2 are on `main` (`AIEFGateCore`). P3 (ControllerFiber bridge, persistence, semantic M1–M3) is IN PROGRESS off main. Keep the dependency chain in `NORTH_STAR.md`: delay/Halanay-type results still come last.
+13. **`registry/studies.csv` entrypoint integrity.** Still open on `main` @ `1c30ca5` (file unchanged since `ba171d0`): **11** unresolved `canonical_entrypoints` tokens in the same five study rows (`AIEF_1_0_TO_1_2_FOUNDATIONAL`, `AIEF_1_3_DISJOINT_100SEED`, `AIEF_1_4_MATCHED_PHASE_ABLATION`, `AIEF_1_4_TANGENT_AND_COCYCLE`, `AIEF_1_4_CONTROLLER_FIBER`). `CURRENT_STATUS.md:46` still cites absent scripts. No CI check covers this. Pair with the CURRENT_STATUS docs PR (chronicler patch apply-checked clean on `ba171d0`; target files unchanged since).
+14. **Formalise the finite gate identities before the delayed asymptotics.** Lean P1–P4b are on `main` (`AIEFGateCore`). Phases, delay and EMA (P5, c014, c015) are IN PROGRESS off main. Keep the dependency chain in `NORTH_STAR.md`: delay/Halanay-type results still come last.
 15. **`tools/ci/check_modes.py` memory scaling.** `shebang_objects` (`:102-120`) pipes every tracked regular blob through `git cat-file --batch` and holds the whole output in memory, just to read the first two bytes of each. On main the peak RSS measured was about 2.4 GiB, and the reviewer reports exit 137 in a constrained environment. Fix it by streaming, or by reading only a two-byte prefix of each candidate.
 16. **AUD-RATELAW vs Arena round 10. OPEN, for independent adjudication; not settled.**
     - **Arena's claim.** Arena's `audits/literature/ROUND_10_FINDINGS.md` (branch `arena/d4a487cc-aiefs` @ `2af3859`) shows that the gate is not one global multiplicative rescaling: it applies edge-dependent factors min(s_i, s_j). Arena reads this as weakening AUD-RATELAW (`registry/claims.csv:50` on main).

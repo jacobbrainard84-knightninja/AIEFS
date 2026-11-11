@@ -1,6 +1,6 @@
 # Briefing for audit agents (read this first)
 
-Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-09 12:06 PST (America/Los_Angeles), after Researcher 001 refresh for main `ba171d0` (PRs #17–#22) and CHRON-R1/R3 FreezeCore corrections.
+Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-11 04:30 Europe/Tirane by Auditor Seat 002, for main `1c30ca5` (PRs #23–#27), the 2026-11-11 branch cleanup, and the Researcher 040282 Lean candidates (cycles 010–015).
 
 ## Purpose
 
@@ -10,7 +10,7 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 
 1. Frozen authority files and their pinned source hashes (SHA256SUMS, `registry/artifacts*.csv` pins).
 2. `main`'s registry (`registry/claims.csv`, `registry/studies.csv`), `ERRATA_2026-10-28.md` and the current-status documents, at a cited `main` sha.
-3. Named research or fix branches at cited commits (for example `fix/v41-followup-notes@19dbba3`, local `research/lean-gate-p3`). These are not on `main` until the owner merges them. (`research/freezing` / AIEFFreezeCore already landed via PR #3.)
+3. Named research or fix branches at cited commits (for example `research/lean-gate-p5@54037ea`, `research/lean-gate-c014@9b9b3d9`). These are not on `main` until the owner merges them. (`research/freezing` / AIEFFreezeCore already landed via PR #3.)
 4. This briefing (`audit_inbox/briefing/`), a non-authoritative navigation snapshot.
 5. Untriaged inbox submissions and the salvage archive (`audit_inbox/*.md`, `audit_inbox/salvage/`). These are leads only, until `audit_inbox/TRIAGE.md` records an independent check and the point is promoted through a reviewed branch.
 

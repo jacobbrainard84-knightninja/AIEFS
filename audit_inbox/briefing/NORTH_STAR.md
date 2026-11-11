@@ -42,7 +42,7 @@ What separates an interesting proving ground from a useful library comes down to
 - how **tightly the hypotheses** are stated;
 - whether verification stays **as careful as the numerical audits**.
 
-## Where we are now (checked 2026-11-09 against `origin/main` `ba171d0`)
+## Where we are now (checked 2026-11-11 against `origin/main` `1c30ca5`)
 
 The premise that "the Lean part is only a 2×3 kernel identity" is **out of date**.
 
@@ -60,15 +60,18 @@ The premise that "the Lean part is only a 2×3 kernel identity" is **out of date
     - Do not quote these results without the field hypothesis.
   - For complete graphs, `finrank_ker_inc_eq_half`: dim ker = n(n−3)/2 for all n ≥ 3. It is checked against K12 (54).
   - Right inverses via the J-matrix, and characteristic-2 / K2 counterexamples showing that the hypotheses are needed.
-  - **Docs debt:** `lean/AIEFProofsKn/README.md` still says this project is not in CI; that is false on `ba171d0` (required row).
+  - **Docs debt:** `lean/AIEFProofsKn/README.md` still says this project is not in CI; that is false on `1c30ca5` (required row).
 - **On `main` (`lean/AIEFFreezeCore`, landed via PR #3 merge `2e55eb5`):**
   - The scalar core of the conditional freezing theorem: `upper_geom`, `eventually_off` / `eventually_on`, and per-edge `edge_eventually_off` / `edge_eventually_on` for B_{n+1} = λ_n·max(0, (1−h)B_n + h u_n).
   - The conclusions are existential (∃N). The gate λ_n and drive u_n are abstract sequences under band hypotheses.
   - It does not cover phases, delay, the EMA, Lemma 1, Theorem 3 or Corollary 4.
-- **On `main` (`lean/AIEFGateCore`, PRs #19 / #21):**
-  - Lean P1/P2 gate identities used by the AUD-RATELAW estimator path (one-step real arithmetic, R fixed). Does **not** explain the E22 residual; AUD-RATELAW stays UNEXPLAINED.
+- **On `main` (`lean/AIEFGateCore`, PRs #19, #21, #24–#27):**
+  - P1/P2 gate identities used by the AUD-RATELAW estimator path (one-step real arithmetic, R fixed). Does **not** explain the E22 residual; AUD-RATELAW stays UNEXPLAINED.
+  - P3: bridge to pinned `CCtrl`/`vCtrl`, n-step branch persistence with R frozen.
+  - P4a: guarded capacity (row sums ≤ cap, idempotence). P4b: Lemma 1 row sandwich, trajectory invariants and per-edge ∃N OFF/ON on the real matrix step `stepM`; the ON certificate provably cannot fire at N = 12 with engine parameters (`onGap_N12_fails`).
+  - The mutation check and `research/lean_gate/tests` run in CI (PR #27).
   - See `lean/AIEFGateCore/README.md` and `research/lean_gate/SPEC_P1_gate_identities.md`.
-- **IN PROGRESS (not on `main`):** Lean P3 on local `research/lean-gate-p3` (bridge to pinned `ControllerFiber` `CCtrl`/`vCtrl`, branch persistence, engine-shaped negations, semantic M1–M3). Not pushed / not audited.
+- **IN PROGRESS (not on `main`):** P5 (history buffer, wrapped phase increment, phase→coherence EMA bridge; 040282 cycles 010/011/013), `research/lean-gate-c014` (B safety along any trajectory), and the owner-held 040282 cycle 015 closed-loop model (phase → C → R → B → phase as one recursion). See `STATE.md`.
 - **CI:** `main`'s `.github/workflows/lean.yml` runs **AIEFProofs**, **AIEFProofsKn**, **AIEFFreezeCore**, and **AIEFGateCore** as `required: true` jobs, with forbidden-marker and axiom-audit steps.
 
 ## Living checklist
@@ -77,14 +80,14 @@ Status values: **not started** / **partial** / **done**. A status refers to `mai
 
 | # | Component | Status | Notes |
 |---|---|---|---|
-| 1 | Delayed Kuramoto evolution | not started | No phase dynamics in Lean. The `kuramoto-lean` Euler/contraction results are a possible template. |
-| 2 | Coherence / EMA update | not started | |
-| 3 | Hebbian weight dynamics | partial | On `main`: per-edge scalar recurrence with abstract gate and drive (`AIEFFreezeCore`). It is not coupled to R. |
-| 4 | Capacity gate | partial | On `main`: Lean P1/P2 one-step identities in `AIEFGateCore` (engine-shaped forms, K3 rays, matrix form). Lemma 1 (row-sum sandwich) is not formalized. P3 (bridge / persistence / semantic M1–M3) is IN PROGRESS off main. |
+| 1 | Delayed Kuramoto evolution | not started (PENDING partial) | Nothing on `main`. PENDING: history buffer and wrapped increment (P5), one-step closed-loop recursion (040282 c015, not deposited). No stability or locking result. |
+| 2 | Coherence / EMA update | not started (PENDING partial) | PENDING on P5: phase → complex EMA → R bridge matching engine `compute_R`, with unit-disk bound. |
+| 3 | Hebbian weight dynamics | partial | On `main`: per-edge scalar recurrence with abstract gate and drive (`AIEFFreezeCore`). On `main` since PR #26: the same on the real matrix step `stepM` with trajectory invariants. It is not coupled to R on `main` (PENDING: c014 / c015). |
+| 4 | Capacity gate | partial | On `main`: Lean P1/P2 one-step identities in `AIEFGateCore` (engine-shaped forms, K3 rays, matrix form). P3 bridge/persistence (#24), guarded capacity (#25) and Lemma 1 row sandwich (#26) are on `main`. |
 | 5 | Conditional rate-law relations | partial | Algebraic one-step identities for the estimator are in `AIEFGateCore`. Thresholds (0.454286, 3/7) remain paper-level for the **ungated** scalar recurrence (see STATE.md). AUD-RATELAW residual stays **UNEXPLAINED** after E22. |
-| 6 | Fiber / kernel properties | partial | Linear-algebra layer done (controller fiber, projectors, K_n kernel dimension). Dynamics link and P3 bridge to pinned `CCtrl`/`vCtrl` not yet on main. |
+| 6 | Fiber / kernel properties | partial | Linear-algebra layer done (controller fiber, projectors, K_n kernel dimension). P3 bridge to pinned `CCtrl`/`vCtrl` on `main` (#24). |
 | 7 | Convergence / stability (restricted) | partial | On `main`: eventual OFF/ON per edge (∃N) in `AIEFFreezeCore`. No phase-locking (O1), no convergence of B, no explicit N. |
-| — | Infrastructure: no `sorry`, standard axioms, CI per project | done for AIEFProofs, AIEFProofsKn, AIEFFreezeCore, AIEFGateCore | All four are `required: true` on `main` @ `ba171d0`. |
+| — | Infrastructure: no `sorry`, standard axioms, CI per project | done for AIEFProofs, AIEFProofsKn, AIEFFreezeCore, AIEFGateCore | All four are `required: true` on `main` @ `1c30ca5`; AIEFGateCore also runs its mutation check in CI. |
 
 ### Theorem-level dependency chain (suggested by Researcher 026; adopted as the build order)
 
