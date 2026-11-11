@@ -1,5 +1,0 @@
-'AIEFFreeze.upper_geom' depends on axioms: [propext, Classical.choice, Quot.sound]
-'AIEFFreeze.eventually_off' depends on axioms: [propext, Classical.choice, Quot.sound]
-'AIEFFreeze.eventually_on' depends on axioms: [propext, Classical.choice, Quot.sound]
-'AIEFFreeze.edge_eventually_off' depends on axioms: [propext, Classical.choice, Quot.sound]
-'AIEFFreeze.edge_eventually_on' depends on axioms: [propext, Classical.choice, Quot.sound]

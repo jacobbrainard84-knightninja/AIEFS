@@ -1,6 +1,0 @@
-AIEFFreeze.upper_geom: ['Classical.choice', 'Quot.sound', 'propext']
-AIEFFreeze.eventually_off: ['Classical.choice', 'Quot.sound', 'propext']
-AIEFFreeze.eventually_on: ['Classical.choice', 'Quot.sound', 'propext']
-AIEFFreeze.edge_eventually_off: ['Classical.choice', 'Quot.sound', 'propext']
-AIEFFreeze.edge_eventually_on: ['Classical.choice', 'Quot.sound', 'propext']
-disallowed=0

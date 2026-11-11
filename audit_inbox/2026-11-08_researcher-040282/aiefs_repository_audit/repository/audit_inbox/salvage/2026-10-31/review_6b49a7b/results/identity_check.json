@@ -1,5 +1,0 @@
-{
- "random_trials": 200000,
- "worst_relative_error": 1.012434558119161e-13,
- "conclusion": "e == T1+T2 holds for arbitrary complex inputs (algebra), so it is not evidence of AIEF dynamics."
-}

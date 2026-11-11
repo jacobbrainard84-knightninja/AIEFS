@@ -1,1 +1,0 @@
-warning: AIEFProofs/NegTest.lean:2:8: declaration uses `sorry`

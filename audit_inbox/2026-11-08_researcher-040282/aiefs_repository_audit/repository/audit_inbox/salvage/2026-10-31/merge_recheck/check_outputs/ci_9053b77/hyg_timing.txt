@@ -1,4 +1,0 @@
-default args=[] exit=0 seconds=21.7
-pii args=['--pii'] exit=0 seconds=28.2
-pii_big args=['--pii', '--max-scan-mb', '1000'] exit=0 seconds=168.2
-max child RSS MiB 15

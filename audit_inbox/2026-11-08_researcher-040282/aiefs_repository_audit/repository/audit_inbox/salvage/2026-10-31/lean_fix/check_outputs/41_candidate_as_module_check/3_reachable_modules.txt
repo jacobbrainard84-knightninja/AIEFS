@@ -1,4 +1,0 @@
-AIEFProofs
-AIEFProofs.Basic
-AIEFProofs.ControllerFiber
-AIEFProofs.ControllerFiberProjector
