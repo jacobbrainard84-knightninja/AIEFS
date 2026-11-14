@@ -1,0 +1,51 @@
+check_lean_gate.sh  project=AIEFGateCore  utc=20261113T032349Z
+PASS step 1: toolchain leanprover/lean4:v4.33.1
+PASS step 2: mathlib rev 0df444a360eaa60ab8c11dca51a86af692955474; AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt verified (24 files)
+PASS step 2: pinned restatement: == result: 4 pinned module(s), 0 error(s) -> PASS
+  AIEFGateCore imports AIEFGateCore.GateMap
+  AIEFGateCore imports AIEFGateCore.K3
+  AIEFGateCore imports AIEFGateCore.RedTeam
+  AIEFGateCore imports AIEFGateCore.EngineWitness
+  AIEFGateCore imports AIEFGateCore.MatrixForm
+  AIEFGateCore imports AIEFGateCore.Pinned.ControllerFiber
+  AIEFGateCore imports AIEFGateCore.Pinned.ControllerFiberProjector
+  AIEFGateCore imports AIEFGateCore.Pinned.ControllerFiberQuotient
+  AIEFGateCore imports AIEFGateCore.Pinned.CompleteGraphIncidence
+  AIEFGateCore imports AIEFGateCore.Bridge
+  AIEFGateCore imports AIEFGateCore.Persistence
+  AIEFGateCore imports AIEFGateCore.PersistenceWitness
+  AIEFGateCore imports AIEFGateCore.EngineRedTeam
+  AIEFGateCore imports AIEFGateCore.Capacity
+  AIEFGateCore imports AIEFGateCore.HistoryBuffer
+  AIEFGateCore imports AIEFGateCore.PhaseIncrement
+  AIEFGateCore imports AIEFGateCore.PhaseCoherence
+  AIEFGateCore imports AIEFGateCore.Freeze
+  AIEFGateCore imports AIEFGateCore.WeightUpdate
+  AIEFGateCore.WeightUpdate imports AIEFGateCore.Capacity
+  AIEFGateCore.WeightUpdate imports AIEFGateCore.Freeze
+  AIEFGateCore.Capacity imports AIEFGateCore.EngineWitness
+  AIEFGateCore.Capacity imports AIEFGateCore.MatrixForm
+  AIEFGateCore.MatrixForm imports AIEFGateCore.GateMap
+  AIEFGateCore.EngineWitness imports AIEFGateCore.RedTeam
+  AIEFGateCore.RedTeam imports AIEFGateCore.K3
+  AIEFGateCore.K3 imports AIEFGateCore.GateMap
+  AIEFGateCore.PhaseCoherence imports AIEFGateCore.MatrixForm
+  AIEFGateCore.PhaseCoherence imports AIEFGateCore.PhaseIncrement
+  AIEFGateCore.PhaseIncrement imports AIEFGateCore.HistoryBuffer
+  AIEFGateCore.EngineRedTeam imports AIEFGateCore.EngineWitness
+  AIEFGateCore.PersistenceWitness imports AIEFGateCore.Persistence
+  AIEFGateCore.PersistenceWitness imports AIEFGateCore.EngineWitness
+  AIEFGateCore.Persistence imports AIEFGateCore.GateMap
+  AIEFGateCore.Bridge imports AIEFGateCore.RedTeam
+  AIEFGateCore.Bridge imports AIEFGateCore.Pinned.ControllerFiberQuotient
+  AIEFGateCore.Bridge imports AIEFGateCore.Pinned.CompleteGraphIncidence
+  AIEFGateCore.Pinned.CompleteGraphIncidence imports AIEFGateCore.Pinned.ControllerFiber
+  AIEFGateCore.Pinned.ControllerFiberQuotient imports AIEFGateCore.Pinned.ControllerFiberProjector
+  AIEFGateCore.Pinned.ControllerFiberProjector imports AIEFGateCore.Pinned.ControllerFiber
+PASS step 3: all root imports resolve
+PASS step 4: mathlib cache: Completed successfully in 49745 ms!
+INFO step 5: removed project build outputs (.lake/build); recompiling project modules from source
+PASS step 5: Build completed successfully (2299 jobs); warnings=0
+PASS step 6: scanned 20 files, hits=0
+PASS step 7: AUDITED 707 project declarations; allowed: propext Classical.choice Quot.sound
+RESULT: PASS (logs in /var/tmp/c1_logs)

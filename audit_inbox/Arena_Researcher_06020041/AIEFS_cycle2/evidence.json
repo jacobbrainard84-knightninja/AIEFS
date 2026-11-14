@@ -1,0 +1,65 @@
+{
+  "cycle": "cycle-2 (c016 port)",
+  "base_main_commit": "a559e0d30458bb01989ac47225675d6baec518b8",
+  "base_cycle1_patch_sha256": "63db39910796b363913b7ccf222d90a4da84c20eafd8b6df2cdaff38aa6bf810",
+  "c016_deposit": "audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_016/CoherenceMotion.lean @ 0f189d0, md5 079a72f3...",
+  "patch_sha256": "7f3f1cdf4a6b9217462ecdbd87e13d14aeb9cd958f7cfa201ab57145ca2e5105",
+  "patch_lines": 534,
+  "files": [
+    {
+      "path": "research/lean_gate/SPEC_P1_gate_identities.md",
+      "sha256": "043b63cb1ef0cf417edbe87b14e766391a5d3f44d07d19d7038e4dd910652a8d",
+      "size_bytes": 96747
+    },
+    {
+      "path": "research/lean_gate/lean_mutation_check.py",
+      "sha256": "eb10503a0f42d2052c63a648117633cb4f8831af85b2045b9cbd03d68b411f08",
+      "size_bytes": 50392
+    },
+    {
+      "path": "research/lean_gate/tests/test_lean_gate_p4b.py",
+      "sha256": "8b849fb0a75c51c971bc413271b26a74f7bb2be3029bc9d8b6e702847e8a4dd8",
+      "size_bytes": 5821
+    },
+    {
+      "path": "research/lean_gate/tests/test_lean_gate_p5.py",
+      "sha256": "695a115d005452540b96d73a7f118758e8c63d4df418be06ce3f41a642337af4",
+      "size_bytes": 22091
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "sha256": "6052c5384807774929d3b16b35de755a9ce6a4e3338aaf932dc62fb960de53fa",
+      "size_bytes": 701
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt",
+      "sha256": "3ebb5087cffdbf5dcb43e95505cdf3f522272e3366a615951b32a3bd96336de1",
+      "size_bytes": 2396
+    },
+    {
+      "path": "lean/AIEFGateCore/README.md",
+      "sha256": "7f0c753b2ca4513249f5669e71e52aa3dff23473a22e5dc35c3dc409bc74bc7f",
+      "size_bytes": 11637
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/CoherenceMotion.lean",
+      "sha256": "32bbf6c80412e8d36880067338af3b6610a9aa9d2419859149949059b9a29cee",
+      "size_bytes": 15645
+    }
+  ],
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "mutants": {
+    "statement": 39,
+    "definition": 20,
+    "total": 59,
+    "new": "M59_coherence_motion_half_bound"
+  },
+  "verification": {
+    "lean_gate": "PASS 7/7 (2300 jobs, 0 warnings, 21 files, 739 declarations, standard axioms)",
+    "m59_isolated": "PASS (build rejection, proved negation, term-specificity, standard axioms)",
+    "full_mutation_suite": "NOT COMPLETED locally (runtime); CI/owner step",
+    "pytest_research_lean_gate_tests": "70 passed",
+    "git_apply_check": "OK"
+  }
+}

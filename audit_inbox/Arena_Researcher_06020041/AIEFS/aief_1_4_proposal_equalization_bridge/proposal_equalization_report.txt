@@ -1,0 +1,52 @@
+AIEF K3 proposal-equalization bridge analysis
+=============================================
+
+final replay exact: True
+alpha_EMA: 0.999428829846
+c0=1-gamma*dt: 0.99985
+trajectory rows: 64000
+
+Exact identity errors
+---------------------
+  pair=fixed_left, identity=proposal_difference: max=5.55112e-17, median=1.60927e-17
+  pair=fixed_left, identity=projected_weight_difference: max=5.55112e-17, median=1.55169e-17
+  pair=fixed_left, identity=proposal_recurrence: max=1.05094e-16, median=2.22412e-17
+  pair=fixed_left, identity=symmetrized_R: max=3.88578e-16, median=5.55112e-17
+  pair=fixed_left, identity=radial_forward: max=6.79144e-16, median=1.24246e-16
+  pair=fixed_left, identity=radial_reverse: max=7.07767e-16, median=1.26982e-16
+  pair=fixed_left, identity=magnitude_quotient_forward: max=8.32667e-17, median=1.56626e-17
+  pair=fixed_left, identity=magnitude_quotient_reverse: max=8.32667e-17, median=1.56737e-17
+  pair=right_mode, identity=proposal_difference: max=5.53807e-17, median=1.54807e-17
+  pair=right_mode, identity=projected_weight_difference: max=1.31507e-16, median=2.5649e-17
+  pair=right_mode, identity=proposal_recurrence: max=1.64375e-16, median=2.92127e-17
+  pair=right_mode, identity=symmetrized_R: max=3.88578e-16, median=5.55112e-17
+  pair=right_mode, identity=radial_forward: max=7.03891e-16, median=1.23509e-16
+  pair=right_mode, identity=radial_reverse: max=7.28568e-16, median=1.27241e-16
+  pair=right_mode, identity=magnitude_quotient_forward: max=7.26144e-17, median=1.43551e-17
+  pair=right_mode, identity=magnitude_quotient_reverse: max=7.06358e-17, median=1.42356e-17
+
+Branch checks
+-------------
+  fixed_left: gate_all=True, positive_all=True, controllers_clipped_all=True, winner_map_all=True, isolation_max=0, min_winner_margin=4.44e-14, max_lambda=0.999018123051
+  right_mode: gate_all=True, positive_all=True, controllers_clipped_all=True, winner_map_all=True, isolation_max=0, min_winner_margin=4.44e-14, max_lambda=0.668129340534
+
+Interval dynamics
+-----------------
+  pair=fixed_left, interval=[0,100): dx_rate=0.0520914, dR_rate=0.0531227, align_f_rate=0.0964478, align_r_rate=0.0998865, dx_R2=0.994514, dR_R2=0.997923, median_lambda=0.998766221808, min_denominator=1.73473
+  pair=fixed_left, interval=[100,150): dx_rate=0.0569977, dR_rate=0.0570195, align_f_rate=0.102382, align_r_rate=0.104212, dx_R2=1, dR_R2=1, median_lambda=0.998738654519, min_denominator=1.99837
+  pair=fixed_left, interval=[150,200): dx_rate=0.0571116, dR_rate=0.057122, align_f_rate=0.104921, align_r_rate=0.106052, dx_R2=1, dR_R2=1, median_lambda=0.998738270121, min_denominator=1.99991
+  pair=fixed_left, interval=[200,250): dx_rate=0.0571308, dR_rate=0.0571323, align_f_rate=0.106626, align_r_rate=0.107379, dx_R2=1, dR_R2=1, median_lambda=0.998738247986, min_denominator=1.99999
+  pair=fixed_left, interval=[250,320): dx_rate=0.0571332, dR_rate=0.0571333, align_f_rate=0.108106, align_r_rate=0.108483, dx_R2=1, dR_R2=1, median_lambda=0.99873824668, min_denominator=2
+  pair=right_mode, interval=[0,100): dx_rate=0.0384167, dR_rate=0.0346846, align_f_rate=0.0622669, align_r_rate=0.063822, dx_R2=0.979843, dR_R2=0.95671, median_lambda=0.519887193437, min_denominator=1.47003
+  pair=right_mode, interval=[100,150): dx_rate=0.0559039, dR_rate=0.0558636, align_f_rate=0.0975197, align_r_rate=0.0983449, dx_R2=0.999967, dR_R2=0.999964, median_lambda=0.499662666546, min_denominator=1.99673
+  pair=right_mode, interval=[150,200): dx_rate=0.0569907, dR_rate=0.0569884, align_f_rate=0.102515, align_r_rate=0.103008, dx_R2=0.999999, dR_R2=0.999999, median_lambda=0.499386041005, min_denominator=1.99981
+  pair=right_mode, interval=[200,250): dx_rate=0.0571194, dR_rate=0.0571193, align_f_rate=0.105211, align_r_rate=0.105534, dx_R2=1, dR_R2=1, median_lambda=0.499370095806, min_denominator=1.99999
+  pair=right_mode, interval=[250,320): dx_rate=0.0571338, dR_rate=0.0571324, align_f_rate=0.106136, align_r_rate=0.10614, dx_R2=1, dR_R2=1, median_lambda=0.499369154879, min_denominator=2
+
+Interpretation constraints
+--------------------------
+* Proposal, projection, recurrence, radial, magnitude-quotient, and symmetrization identities are exact implementation checks.
+* The two edge pairs carry different operator defects and are not interchangeable.
+* Stable downstream recurrences prove proposal equalization only if the corresponding resonance differences converge to zero.
+* Alignment-residual and rate fits are finite-horizon replay evidence, not infinite-time limits.
+* Branch checks over the saved replay do not prove future branch persistence.

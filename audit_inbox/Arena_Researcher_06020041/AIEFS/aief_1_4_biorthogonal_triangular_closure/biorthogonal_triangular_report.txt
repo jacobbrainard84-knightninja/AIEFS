@@ -1,0 +1,84 @@
+AIEF biorthogonal triangular closure analysis
+==============================================
+
+alpha_EMA: 0.999428829846
+EMA rate: 0.0571333333
+
+Coordinate conditioning
+-----------------------
+  coordinate=POD_Euclidean: condition=1, left_residual=0.377977, u_norm=1, pairing=1
+  coordinate=geometric_Euclidean: condition=1, left_residual=0.377964, u_norm=1, pairing=1
+  coordinate=left_t200: condition=1.22474, left_residual=7.85187e-06, u_norm=1.22474, pairing=1
+  coordinate=left_t250: condition=1.22474, left_residual=4.3705e-07, u_norm=1.22474, pairing=1
+  coordinate=left_t319p99: condition=1.22474, left_residual=2.54917e-07, u_norm=1.22474, pairing=1
+  coordinate=left_late_average: condition=1.22474, left_residual=1.48962e-07, u_norm=1.22474, pairing=1
+  coordinate=adjoint_bundle: condition=1.29265, left_residual=8.96855e-17, u_norm=1.22474, pairing=1
+
+One-step closure
+----------------
+  coordinate=POD_Euclidean, direction=0: median_a_residual=0.000521296, max_a_residual=0.000521654, median_g_residual=5.83889e-09, max_g_residual=1.33796e-07
+  coordinate=POD_Euclidean, direction=1: median_a_residual=1.07922e-09, max_a_residual=6.35241e-09, median_g_residual=9.34216e-09, max_g_residual=2.13173e-07
+  coordinate=geometric_Euclidean, direction=0: median_a_residual=0.00052927, max_a_residual=0.000529628, median_g_residual=5.83889e-09, max_g_residual=1.33796e-07
+  coordinate=geometric_Euclidean, direction=1: median_a_residual=7.99866e-06, max_a_residual=8.00576e-06, median_g_residual=9.34216e-09, max_g_residual=2.13173e-07
+  coordinate=left_t200, direction=0: median_a_residual=1.41332e-16, max_a_residual=6.61127e-16, median_g_residual=6.28441e-09, max_g_residual=1.38642e-07
+  coordinate=left_t200, direction=1: median_a_residual=1.42841e-16, max_a_residual=7.30359e-16, median_g_residual=9.31032e-09, max_g_residual=2.12672e-07
+  coordinate=left_t250, direction=0: median_a_residual=1.15892e-16, max_a_residual=5.66808e-16, median_g_residual=6.28441e-09, max_g_residual=1.38642e-07
+  coordinate=left_t250, direction=1: median_a_residual=1.16778e-16, max_a_residual=5.94309e-16, median_g_residual=9.31032e-09, max_g_residual=2.12672e-07
+  coordinate=left_t319p99, direction=0: median_a_residual=1.22102e-16, max_a_residual=6.35434e-16, median_g_residual=6.28441e-09, max_g_residual=1.38642e-07
+  coordinate=left_t319p99, direction=1: median_a_residual=1.20651e-16, max_a_residual=6.41227e-16, median_g_residual=9.31032e-09, max_g_residual=2.12672e-07
+  coordinate=left_late_average, direction=0: median_a_residual=1.4242e-16, max_a_residual=6.46694e-16, median_g_residual=6.28441e-09, max_g_residual=1.38642e-07
+  coordinate=left_late_average, direction=1: median_a_residual=1.44318e-16, max_a_residual=6.30779e-16, median_g_residual=9.31032e-09, max_g_residual=2.12672e-07
+  coordinate=adjoint_bundle, direction=0: median_a_residual=1.13365e-16, max_a_residual=6.46193e-16, median_g_residual=6.28441e-09, max_g_residual=1.38642e-07
+  coordinate=adjoint_bundle, direction=1: median_a_residual=1.13589e-16, max_a_residual=5.68494e-16, median_g_residual=9.31032e-09, max_g_residual=2.12672e-07
+
+Free rollouts
+-------------
+  coordinate=POD_Euclidean, direction=0, start=150: a_RMSE=0.342184, g_RMSE=0.00129487, final_a_error=0.740256, final_g_error=0.00337922, actual_rate=0.0570967, predicted_rate=0.0559068
+  coordinate=POD_Euclidean, direction=0, start=200: a_RMSE=0.341246, g_RMSE=9.95154e-05, final_a_error=0.745544, final_g_error=0.000256776, actual_rate=0.057128, predicted_rate=0.0548882
+  coordinate=POD_Euclidean, direction=0, start=250: a_RMSE=0.340942, g_RMSE=7.29357e-06, final_a_error=0.740543, final_g_error=1.82666e-05, actual_rate=0.0571325, predicted_rate=0.0518174
+  coordinate=POD_Euclidean, direction=1, start=150: a_RMSE=0.00103148, g_RMSE=0.00205993, final_a_error=0.0053719, final_g_error=0.00537244, actual_rate=0.0570796, predicted_rate=0.0571064
+  coordinate=POD_Euclidean, direction=1, start=200: a_RMSE=7.91789e-05, g_RMSE=0.000158634, final_a_error=0.000409231, final_g_error=0.00040961, actual_rate=0.0571253, predicted_rate=0.0571287
+  coordinate=POD_Euclidean, direction=1, start=250: a_RMSE=6.43598e-06, g_RMSE=1.16675e-05, final_a_error=2.92569e-05, final_g_error=2.92412e-05, actual_rate=0.057132, predicted_rate=0.0571325
+  coordinate=geometric_Euclidean, direction=0, start=150: a_RMSE=0.349267, g_RMSE=0.00129487, final_a_error=0.760379, final_g_error=0.00337923, actual_rate=0.0570967, predicted_rate=0.0558734
+  coordinate=geometric_Euclidean, direction=0, start=200: a_RMSE=0.348321, g_RMSE=9.95155e-05, final_a_error=0.765708, final_g_error=0.000256777, actual_rate=0.057128, predicted_rate=0.0548289
+  coordinate=geometric_Euclidean, direction=0, start=250: a_RMSE=0.348008, g_RMSE=7.29358e-06, final_a_error=0.760252, final_g_error=1.82666e-05, actual_rate=0.0571325, predicted_rate=0.0516905
+  coordinate=geometric_Euclidean, direction=1, start=150: a_RMSE=0.00436538, g_RMSE=0.00205993, final_a_error=0.00614294, final_g_error=0.00537244, actual_rate=0.0570796, predicted_rate=0.0570777
+  coordinate=geometric_Euclidean, direction=1, start=200: a_RMSE=0.00519008, g_RMSE=0.000158634, final_a_error=0.0111603, final_g_error=0.00040961, actual_rate=0.0571253, predicted_rate=0.0570762
+  coordinate=geometric_Euclidean, direction=1, start=250: a_RMSE=0.00525129, g_RMSE=1.16675e-05, final_a_error=0.0114558, final_g_error=2.92412e-05, actual_rate=0.057132, predicted_rate=0.0570108
+  coordinate=left_t200, direction=0, start=150: a_RMSE=0.000663218, g_RMSE=0.00130165, final_a_error=0.00342445, final_g_error=0.00342595, actual_rate=0.0570966, predicted_rate=0.0571136
+  coordinate=left_t200, direction=0, start=200: a_RMSE=5.25114e-05, g_RMSE=0.000103647, final_a_error=0.000267993, final_g_error=0.000269391, actual_rate=0.057128, predicted_rate=0.0571302
+  coordinate=left_t200, direction=0, start=250: a_RMSE=3.95703e-06, g_RMSE=7.83854e-06, final_a_error=1.86212e-05, final_g_error=1.97399e-05, actual_rate=0.0571325, predicted_rate=0.0571327
+  coordinate=left_t200, direction=1, start=150: a_RMSE=0.00105023, g_RMSE=0.0020572, final_a_error=0.00536156, final_g_error=0.00536377, actual_rate=0.0570796, predicted_rate=0.0571061
+  coordinate=left_t200, direction=1, start=200: a_RMSE=8.01678e-05, g_RMSE=0.000158237, final_a_error=0.000406451, final_g_error=0.000408503, actual_rate=0.0571253, predicted_rate=0.0571287
+  coordinate=left_t200, direction=1, start=250: a_RMSE=5.86917e-06, g_RMSE=1.16283e-05, final_a_error=2.75075e-05, final_g_error=2.9139e-05, actual_rate=0.057132, predicted_rate=0.0571324
+  coordinate=left_t250, direction=0, start=150: a_RMSE=0.000663218, g_RMSE=0.00130165, final_a_error=0.00342445, final_g_error=0.00342595, actual_rate=0.0570966, predicted_rate=0.0571136
+  coordinate=left_t250, direction=0, start=200: a_RMSE=5.25114e-05, g_RMSE=0.000103647, final_a_error=0.000267993, final_g_error=0.000269391, actual_rate=0.057128, predicted_rate=0.0571302
+  coordinate=left_t250, direction=0, start=250: a_RMSE=3.95703e-06, g_RMSE=7.83854e-06, final_a_error=1.86212e-05, final_g_error=1.97399e-05, actual_rate=0.0571325, predicted_rate=0.0571327
+  coordinate=left_t250, direction=1, start=150: a_RMSE=0.00105023, g_RMSE=0.0020572, final_a_error=0.00536156, final_g_error=0.00536377, actual_rate=0.0570796, predicted_rate=0.0571061
+  coordinate=left_t250, direction=1, start=200: a_RMSE=8.01678e-05, g_RMSE=0.000158237, final_a_error=0.000406451, final_g_error=0.000408503, actual_rate=0.0571253, predicted_rate=0.0571287
+  coordinate=left_t250, direction=1, start=250: a_RMSE=5.86917e-06, g_RMSE=1.16283e-05, final_a_error=2.75075e-05, final_g_error=2.9139e-05, actual_rate=0.057132, predicted_rate=0.0571324
+  coordinate=left_t319p99, direction=0, start=150: a_RMSE=0.000663218, g_RMSE=0.00130165, final_a_error=0.00342445, final_g_error=0.00342595, actual_rate=0.0570966, predicted_rate=0.0571136
+  coordinate=left_t319p99, direction=0, start=200: a_RMSE=5.25114e-05, g_RMSE=0.000103647, final_a_error=0.000267993, final_g_error=0.000269391, actual_rate=0.057128, predicted_rate=0.0571302
+  coordinate=left_t319p99, direction=0, start=250: a_RMSE=3.95703e-06, g_RMSE=7.83854e-06, final_a_error=1.86212e-05, final_g_error=1.97399e-05, actual_rate=0.0571325, predicted_rate=0.0571327
+  coordinate=left_t319p99, direction=1, start=150: a_RMSE=0.00105023, g_RMSE=0.0020572, final_a_error=0.00536156, final_g_error=0.00536377, actual_rate=0.0570796, predicted_rate=0.0571061
+  coordinate=left_t319p99, direction=1, start=200: a_RMSE=8.01678e-05, g_RMSE=0.000158237, final_a_error=0.000406451, final_g_error=0.000408503, actual_rate=0.0571253, predicted_rate=0.0571287
+  coordinate=left_t319p99, direction=1, start=250: a_RMSE=5.86917e-06, g_RMSE=1.16283e-05, final_a_error=2.75075e-05, final_g_error=2.9139e-05, actual_rate=0.057132, predicted_rate=0.0571324
+  coordinate=left_late_average, direction=0, start=150: a_RMSE=0.000663218, g_RMSE=0.00130165, final_a_error=0.00342445, final_g_error=0.00342595, actual_rate=0.0570966, predicted_rate=0.0571136
+  coordinate=left_late_average, direction=0, start=200: a_RMSE=5.25114e-05, g_RMSE=0.000103647, final_a_error=0.000267993, final_g_error=0.000269391, actual_rate=0.057128, predicted_rate=0.0571302
+  coordinate=left_late_average, direction=0, start=250: a_RMSE=3.95703e-06, g_RMSE=7.83854e-06, final_a_error=1.86212e-05, final_g_error=1.97399e-05, actual_rate=0.0571325, predicted_rate=0.0571327
+  coordinate=left_late_average, direction=1, start=150: a_RMSE=0.00105023, g_RMSE=0.0020572, final_a_error=0.00536156, final_g_error=0.00536377, actual_rate=0.0570796, predicted_rate=0.0571061
+  coordinate=left_late_average, direction=1, start=200: a_RMSE=8.01678e-05, g_RMSE=0.000158237, final_a_error=0.000406451, final_g_error=0.000408503, actual_rate=0.0571253, predicted_rate=0.0571287
+  coordinate=left_late_average, direction=1, start=250: a_RMSE=5.86917e-06, g_RMSE=1.16283e-05, final_a_error=2.75075e-05, final_g_error=2.9139e-05, actual_rate=0.057132, predicted_rate=0.0571324
+  coordinate=adjoint_bundle, direction=0, start=150: a_RMSE=0.000663218, g_RMSE=0.00130165, final_a_error=0.00342445, final_g_error=0.00342595, actual_rate=0.0570966, predicted_rate=0.0571136
+  coordinate=adjoint_bundle, direction=0, start=200: a_RMSE=5.25114e-05, g_RMSE=0.000103647, final_a_error=0.000267993, final_g_error=0.000269391, actual_rate=0.057128, predicted_rate=0.0571302
+  coordinate=adjoint_bundle, direction=0, start=250: a_RMSE=3.95703e-06, g_RMSE=7.83854e-06, final_a_error=1.86212e-05, final_g_error=1.97399e-05, actual_rate=0.0571325, predicted_rate=0.0571327
+  coordinate=adjoint_bundle, direction=1, start=150: a_RMSE=0.00105023, g_RMSE=0.0020572, final_a_error=0.00536156, final_g_error=0.00536377, actual_rate=0.0570796, predicted_rate=0.0571061
+  coordinate=adjoint_bundle, direction=1, start=200: a_RMSE=8.01678e-05, g_RMSE=0.000158237, final_a_error=0.000406451, final_g_error=0.000408503, actual_rate=0.0571253, predicted_rate=0.0571287
+  coordinate=adjoint_bundle, direction=1, start=250: a_RMSE=5.86917e-06, g_RMSE=1.16283e-05, final_a_error=2.75075e-05, final_g_error=2.9139e-05, actual_rate=0.057132, predicted_rate=0.0571324
+
+Interpretation constraints
+--------------------------
+* Fixed left covectors are late reference modes, not exact covariant bundles over the full transient.
+* The backward adjoint coordinate makes the a-recurrence exact by construction; its nontrivial test is the EMA law for projected forcing and free rollout.
+* Large left/right condition indicates sensitivity even if scalar closure improves.
+* A successful result remains conditional on this replay and tested directions.

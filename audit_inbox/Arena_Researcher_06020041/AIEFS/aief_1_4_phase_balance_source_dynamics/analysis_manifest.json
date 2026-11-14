@@ -1,0 +1,63 @@
+{
+  "alpha_EMA": 0.9994288298464774,
+  "analysis": "AIEF-1.4 delayed phase-balance and source-dynamics decomposition",
+  "command": [
+    "AIEF_1_4_phase_balance_source_dynamics.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--seed",
+    "4619122171158768524",
+    "--dt",
+    "0.01",
+    "--scale-epsilon",
+    "1e-12",
+    "--intervals",
+    "0,100,150,200,250,320",
+    "--signal-floor",
+    "1e-15",
+    "--output-dir",
+    "aief_1_4_phase_balance_source_dynamics"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "final_replay_exact": true,
+  "inputs": {
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "Phase increments are evaluated modulo 2pi through complex source factors and unwrapped for trajectory summaries.",
+    "Intrinsic, coupling, and history contributions can be individually large and cancel.",
+    "First-order source-increment formulas are approximations and are audited against exact exponentials.",
+    "Results remain conditional on one seed and fixed branch."
+  ],
+  "intervals": [
+    0.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "outputs": [
+    "phase_balance_trajectory.csv",
+    "phase_balance_interval_summary.csv",
+    "phase_balance_identity_checks.csv",
+    "phase_balance_source_report.txt"
+  ],
+  "scale_epsilon": 1e-12,
+  "seed": "4619122171158768524",
+  "signal_floor": 1e-15,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_phase_balance_source_dynamics.py",
+    "sha256": "99d70ca53ec5532b2a05942d7e820cb8b2c678e38e5c3faf46d08a3af9d7c39a"
+  }
+}

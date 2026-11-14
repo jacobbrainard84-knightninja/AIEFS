@@ -1,0 +1,66 @@
+AIEF exceptional K3 frozen-driver cocycle analysis
+===================================================
+
+Identity and scope
+------------------
+Seed: 4619122171158768524
+K3 nodes: [2, 7, 11]
+K3 edges: [25, 29, 59]
+Split classifier-active K3 nodes: [7]
+Cocycle steps: 32000
+Final base replay exact: True
+Final base replay maximum error: 0
+* This is the frozen-driver weight subsystem: delta R is set to zero.
+
+Local matrix sequence
+---------------------
+All selected classical Jacobians available: True
+Winner-signature changes: 0
+Maximum ||K[n+1]-K[n]||: 0.000104029
+Median adjacent commutator relative norm: 3.71705e-08
+Maximum adjacent commutator relative norm: 6.60414e-05
+Maximum instantaneous operator norm: 1.08629
+Maximum instantaneous nonnormality relative: 0.435734
+
+From-split propagator
+---------------------
+Final time: 320
+Final amplification sigma_max: 7.23891e-18
+Peak from-split amplification: 1.27097
+Peak amplification time: 0.1
+Final condition number: inf
+Maximum sampled condition number: inf
+Final principal finite-time exponent: -0.123335
+Final minimum finite-time exponent: -2.21374
+Final split-lineality restricted amplification: 6.85866e-18
+Peak split-lineality restricted amplification: 1.20563
+Final restricted condition number: inf
+Final restricted principal finite-time exponent: -0.123503
+
+Sliding-window amplification
+----------------------------
+  window=0.1: peak G=1.27097, start=0, end=0.1, peak condition=1.93266e+19
+  window=1: peak G=1.1715, start=0, end=1, peak condition=inf
+  window=10: peak G=0.469457, start=0, end=10, peak condition=inf
+  window=50: peak G=0.00438977, start=0, end=50, peak condition=inf
+
+Centered nonlinear frozen-driver comparisons
+--------------------------------------------
+  direction=0, fraction=0.001, amplitude=2.2e-10, all_branch_preserved=True, max_chi=0.000945, resolved=3, last_resolved_time=0.2, median_error=2.94e-07, last_resolved_error=0.000273
+  direction=0, fraction=0.01, amplitude=2.2e-09, all_branch_preserved=True, max_chi=0.00945, resolved=4, last_resolved_time=0.3, median_error=1.59e-05, last_resolved_error=0.00107
+  direction=0, fraction=0.1, amplitude=2.2e-08, all_branch_preserved=True, max_chi=0.0945, resolved=4, last_resolved_time=0.3, median_error=2.41e-06, last_resolved_error=0.000307
+  direction=1, fraction=0.001, amplitude=3.12e-10, all_branch_preserved=True, max_chi=0.00161, resolved=880, last_resolved_time=87.9, median_error=8.66e-05, last_resolved_error=0.0113
+  direction=1, fraction=0.01, amplitude=3.12e-09, all_branch_preserved=True, max_chi=0.0161, resolved=1064, last_resolved_time=106, median_error=1.97e-05, last_resolved_error=0.00681
+  direction=1, fraction=0.1, amplitude=3.12e-08, all_branch_preserved=True, max_chi=0.161, resolved=1245, last_resolved_time=124, median_error=2.11e-05, last_resolved_error=0.0121
+
+Overall resolved comparison median relative error: 3.69895e-05
+Overall resolved comparison maximum relative error: 0.0314304
+
+Interpretation constraints
+--------------------------
+* Finite-time exponents are not asserted to be asymptotic Oseledets exponents.
+* From-split amplification can miss bursts that begin later; sampled sliding windows are also reported.
+* Low rank identifies where admissibility coupling lives; it does not imply weak dynamical effect.
+* Branch preservation is monitored dynamically for both centered perturbations.
+* The base winner branch can be fixed while finite-amplitude perturbed branches cross.
+* Failure of the frozen-driver cocycle would motivate the full phase/history/EMA tangent system.

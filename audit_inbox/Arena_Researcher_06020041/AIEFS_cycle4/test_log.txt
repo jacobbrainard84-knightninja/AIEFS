@@ -1,0 +1,8 @@
+test_geometric_error_after_lock (__main__.Tests.test_geometric_error_after_lock) ... ok
+test_n_zero_special_case (__main__.Tests.test_n_zero_special_case) ... ok
+test_sharp_boundary_family (__main__.Tests.test_sharp_boundary_family) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+OK

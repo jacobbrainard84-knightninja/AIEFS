@@ -1,0 +1,69 @@
+======================================================================
+AIEF-1.4 Augmented Spectral Audit (v2 — Fundamental-State Restriction)
+======================================================================
+
+r_EMA:     0.057133
+mu_phase:  0.689918
+alpha:     0.999428829846
+dt:        0.01
+perturb:   1.0e-08
+dimension: 18 (fundamental: h_old, B, C only)
+
+theta_i is NOT independently perturbed — it is derived.
+The 18 variables parameterize the true K3 state manifold.
+
+Gap interval: (0.057705, 0.689918)
+  discrete:  [0.993125, 0.999423]
+
+----------------------------------------------------------------------
+Eigenvalues in the gap: 0
+Eigenvalues near r_EMA (within 10%): 7
+----------------------------------------------------------------------
+
+  VERDICT: SUPPORTED.
+  No eigenvalues in the gap (0.0577, 0.6899)
+  and 7 eigenvalue(s) in the EMA cluster.
+  Gap lower bound set at r_EMA * 1.01 to account for
+  ~1% finite-difference precision.
+  The EMA pole alpha IS the unique slow pole of the
+  true augmented dynamics on this replay.
+
+----------------------------------------------------------------------
+All Relevant Eigenvalues (sorted by rate, slowest first):
+----------------------------------------------------------------------
+        rate          |λ|           real           imag   gap?
+  ---------- ------------ -------------- -------------- ------
+  -1068.204074 4.356637e+04   4.356637e+04   0.000000e+00  False
+  -541.791983 2.254097e+02   2.254097e+02   0.000000e+00  False
+  -38.265367 1.466170e+00   1.466170e+00   0.000000e+00  False
+   -9.576514 1.100501e+00   1.100501e+00   0.000000e+00  False
+   -3.659037 1.037268e+00   1.037268e+00   0.000000e+00  False
+    0.055106 9.994491e-01   9.994491e-01   0.000000e+00  False
+    0.057129 9.994289e-01   9.994289e-01   0.000000e+00  False  EMA
+    0.057132 9.994288e-01   9.994288e-01   0.000000e+00  False  EMA
+    0.057134 9.994288e-01   9.994288e-01   0.000000e+00  False  EMA
+    0.057134 9.994288e-01   9.994288e-01   3.287959e-09  False  EMA
+    0.057134 9.994288e-01   9.994288e-01  -3.287959e-09  False  EMA
+    0.057135 9.994288e-01   9.994288e-01   0.000000e+00  False  EMA
+    0.057170 9.994285e-01   9.994285e-01   0.000000e+00  False  EMA
+   31.713533 7.282322e-01   7.282322e-01   0.000000e+00  False
+
+----------------------------------------------------------------------
+Reference rates:
+----------------------------------------------------------------------
+  Phase transverse (slowest):  0.689918
+  Weight cocycle lambda_L:     0.126280
+  Weight cocycle lambda_R:     69.440998
+  EMA (alpha):                 0.057133
+
+What this establishes:
+  - Whether any linear mode exists between phase sync and EMA.
+  - Whether alpha is the unique slow pole of the true dynamics.
+
+What this does NOT establish:
+  - The nonlinear basin of attraction.
+  - Generality across seeds or branches.
+  - The dynamical mechanism producing each eigenvalue.
+
+Evidence class: diagnostic mechanism exploration.
+No interpretation is forced.  The eigenvalues speak.

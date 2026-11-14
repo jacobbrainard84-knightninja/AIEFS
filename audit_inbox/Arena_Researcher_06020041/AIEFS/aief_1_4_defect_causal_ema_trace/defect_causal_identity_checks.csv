@@ -1,0 +1,7 @@
+identity,maximum_absolute_error,median_absolute_error
+directed_complex_EMA_forward,3.1401849173675503e-16,9.71445146547012e-17
+directed_complex_EMA_reverse,3.510833468576701e-16,7.850462293418876e-17
+proposal_difference,5.551115123125783e-17,1.609267804884972e-17
+operator_delta_from_proposal,2.0556473190325164e-16,3.551807671184294e-17
+projected_B_difference,5.551115123125783e-17,1.5516882587535233e-17
+R_from_directed_magnitudes,3.885780586188048e-16,5.551115123125783e-17

@@ -1,0 +1,3 @@
+# Hash-pinned files with CRLF bytes: never normalize line endings
+audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_CONTROLLER_FIBER_CLAIM_REGISTRY.csv -text
+audits/github_reconciliation/recovered_from_workspace_019ff402/zip_only_files/AIEF_1_4_analysis_lineage.csv -text

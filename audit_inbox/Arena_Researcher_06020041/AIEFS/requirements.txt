@@ -1,0 +1,16 @@
+# Python dependencies for the AIEFS analysis scripts, modular platform tests and audit evidence.
+# These exact pins were installed and used on 2026-10-28 (Python 3.13.5, Linux x86_64) to re-run:
+#   - AI Agent Audits/evidence/verify_manifest.py (OK)
+#   - AIEF_1_3_paired_statistics_updated.py with --cohort (matches the documented numbers)
+#   - AIEF_Experiments/aief_modular_platform_v1_analysis_v4/tests_modular (41 passed, 1 skipped)
+#   - AIEF_1_4_Twindow_sensitivity_analysis_v4.py (analysis identity and all 15 output hashes match
+#     audits/scientific/revalidated_summaries/twindow_v4_analysis_manifest.json)
+# Other versions may work but were not checked. The audit environment record
+# (AI Agent Audits/evidence/ENVIRONMENT.md) lists pytest 9.1.1 (audit); 9.2.0 was used here (verified).
+# The b2a95dfbfbe3 reproduction log (AI Agent Audits/evidence/reproductions/compare_b2a95dfbfbe3.log)
+# records numpy 2.5.4 and pandas 3.0.6 (python 3.13.5); the pins below were not used for that run.
+numpy==2.5.1
+scipy==1.18.1
+pandas==3.1.0
+matplotlib==3.11.2
+pytest==9.2.0

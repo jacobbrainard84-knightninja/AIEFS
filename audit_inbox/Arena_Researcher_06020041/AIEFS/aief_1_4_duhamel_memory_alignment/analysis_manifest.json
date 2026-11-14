@@ -1,0 +1,67 @@
+{
+  "analysis": "AIEF-1.4 Duhamel memory and alignment post-processing",
+  "command": [
+    "AIEF_1_4_duhamel_memory_alignment_analysis.py",
+    "--duhamel-npz",
+    "aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+    "--ablation-csv",
+    "aief_1_4_augmented_duhamel_feedback/tangent_ablation_trajectory.csv",
+    "--dt",
+    "0.01",
+    "--sample-stride",
+    "10",
+    "--memory-thresholds",
+    "0.5,0.1,0.01",
+    "--target-times",
+    "0.4,1,10,50,72.9,100,150,200,250,320",
+    "--output-dir",
+    "aief_1_4_duhamel_memory_alignment"
+  ],
+  "dt": 0.01,
+  "inputs": {
+    "ablation_csv": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/tangent_ablation_trajectory.csv",
+      "sha256": "7f989f419fd4768cc2dfcbb824e20cd0b90215105f6734fc4d101f3d53d34f49"
+    },
+    "duhamel_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+      "sha256": "08285f872f9d103f487f6de1328d163a678dec3fa8eed88be626c80569275871"
+    }
+  },
+  "interpretation_constraints": [
+    "Propagated influence is not called gain unless it exceeds one.",
+    "Principal future alignment is omitted when the leading singular value is degenerate.",
+    "Recent-memory curves include vector cancellation.",
+    "Ablation ratios near zeros of the full tangent require absolute-norm inspection."
+  ],
+  "memory_thresholds": [
+    0.01,
+    0.1,
+    0.5
+  ],
+  "outputs": [
+    "exact_crossover_and_angles.csv",
+    "forcing_alignment_and_final_influence.csv",
+    "recent_forcing_memory_curve.csv",
+    "duhamel_mechanism_summary.csv",
+    "selected_ablation_states.csv",
+    "duhamel_memory_alignment_report.txt"
+  ],
+  "sample_stride": 10,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_duhamel_memory_alignment_analysis.py",
+    "sha256": "a2cf9bc24a0a75b05c113ca740355155da309d2127899d0d4122ceb913b2d9a3"
+  },
+  "target_times": [
+    0.4,
+    1.0,
+    10.0,
+    50.0,
+    72.9,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ]
+}

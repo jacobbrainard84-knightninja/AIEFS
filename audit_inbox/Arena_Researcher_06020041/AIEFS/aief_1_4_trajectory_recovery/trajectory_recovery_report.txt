@@ -1,0 +1,89 @@
+AIEF-1.4 trajectory, sustained-recovery, and equivalence analysis
+=================================================================
+
+Similarity NaNs caused by an exactly zero edge-weight vector are mapped to zero only for recovery/loss calculations.
+Equivalence margins are exploratory and post-outcome; they are not preregistered confirmatory bounds.
+
+Key branch dynamics
+-------------------
+continue
+  minimum_similarity: mean=0.999471, median=1, 95% CI=[0.998413, 1], valid=40/40
+  sustained_similarity_90_rest: mean=0.01, median=0.01, 95% CI=[0.01, 0.01], valid=40/40
+  sustained_density_90_rest: mean=0.01, median=0.01, 95% CI=[0.01, 0.01], valid=40/40
+  Mean_similarity_deficit_vs_continue: mean=0, median=0, 95% CI=[0, 0], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0, median=0, 95% CI=[0, 0], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.999979, median=1, 95% CI=[0.999937, 1], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.999625, median=1, 95% CI=[0.998875, 1], valid=40/40
+  sampled_similarity_mean_late: mean=0.999472, median=1, 95% CI=[0.998416, 1], valid=40/40
+reset_ema
+  minimum_similarity: mean=0.837815, median=0.852224, 95% CI=[0.828044, 0.84611], valid=40/40
+  sustained_similarity_90_rest: mean=13.7023, median=13.51, 95% CI=[13.4972, 13.8946], valid=39/40
+  sustained_density_90_rest: mean=28.2792, median=22.01, 95% CI=[21.8562, 41.0228], valid=39/40
+  Mean_similarity_deficit_vs_continue: mean=0.0118898, median=0.00475957, 95% CI=[0.0049691, 0.0249576], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0.0199033, median=0.0152938, 95% CI=[0.0160709, 0.0266805], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.909371, median=0.915467, 95% CI=[0.90411, 0.914195], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.991821, median=0.999409, 95% CI=[0.978323, 0.999354], valid=40/40
+  sampled_similarity_mean_late: mean=0.992413, median=1, 95% CI=[0.978228, 1], valid=40/40
+reset_B
+  minimum_similarity: mean=0.843832, median=0.822851, 95% CI=[0.833109, 0.856835], valid=40/40
+  sustained_similarity_90_rest: mean=4.7725, median=5.01, 95% CI=[4.2975, 5.1475], valid=40/40
+  sustained_density_90_rest: mean=3.56, median=3.51, 95% CI=[3.51, 3.66], valid=40/40
+  Mean_similarity_deficit_vs_continue: mean=0.00331514, median=0.00363895, 95% CI=[0.00304062, 0.00352904], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0.00306794, median=0.00292834, 95% CI=[0.00299088, 0.00314975], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.937257, median=0.931039, 95% CI=[0.933162, 0.942365], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.99968, median=0.999999, 95% CI=[0.99905, 0.999997], valid=40/40
+  sampled_similarity_mean_late: mean=0.999473, median=1, 95% CI=[0.99842, 1], valid=40/40
+reset_B_ema
+  minimum_similarity: mean=0, median=0, 95% CI=[0, 0], valid=40/40
+  sustained_similarity_90_rest: mean=30.9179, median=29.01, 95% CI=[29.3258, 32.5758], valid=38/40
+  sustained_density_90_rest: mean=29.51, median=22.01, 95% CI=[22.01, 44.51], valid=39/40
+  Mean_similarity_deficit_vs_continue: mean=0.092276, median=0.0844111, 95% CI=[0.0745116, 0.112815], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0.0224813, median=0.0195974, 95% CI=[0.0201647, 0.0260765], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.33907, median=0.329101, 95% CI=[0.334114, 0.344348], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.924289, median=0.933406, 95% CI=[0.905127, 0.940774], valid=40/40
+  sampled_similarity_mean_late: mean=0.943978, median=0.949471, 95% CI=[0.921518, 0.963533], valid=40/40
+B_carrier_only
+  minimum_similarity: mean=0.813042, median=0.839769, 95% CI=[0.795804, 0.827843], valid=40/40
+  sustained_similarity_90_rest: mean=24.1424, median=14.51, 95% CI=[16.7747, 33.51], valid=34/40
+  sustained_density_90_rest: mean=71.1026, median=75.01, 95% CI=[63.8429, 78.0285], valid=27/40
+  Mean_similarity_deficit_vs_continue: mean=0.057112, median=0.0115051, 95% CI=[0.0368591, 0.0802916], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0.048139, median=0.0344881, 95% CI=[0.0393702, 0.0578968], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.896329, median=0.906513, 95% CI=[0.888327, 0.903362], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.936719, median=0.971929, 95% CI=[0.913818, 0.957381], valid=40/40
+  sampled_similarity_mean_late: mean=0.947675, median=0.99999, 95% CI=[0.923025, 0.969446], valid=40/40
+full_reset
+  minimum_similarity: mean=0, median=0, 95% CI=[0, 0], valid=40/40
+  sustained_similarity_90_rest: mean=58.75, median=55.51, 95% CI=[51.07, 68.83], valid=25/40
+  sustained_density_90_rest: mean=78.6767, median=82.51, 95% CI=[73.8736, 83.4191], valid=33/40
+  Mean_similarity_deficit_vs_continue: mean=0.154756, median=0.138994, 95% CI=[0.130253, 0.180571], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0.0447328, median=0.0371556, 95% CI=[0.0376137, 0.0532618], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.336211, median=0.327002, 95% CI=[0.331509, 0.341286], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.841023, median=0.848322, 95% CI=[0.818825, 0.862774], valid=40/40
+  sampled_similarity_mean_late: mean=0.88332, median=0.909828, 95% CI=[0.854037, 0.911367], valid=40/40
+future_shuffle
+  minimum_similarity: mean=0.126602, median=0.114082, 95% CI=[0.110914, 0.152507], valid=40/40
+  sustained_similarity_90_rest: mean=nan, median=nan, 95% CI=[nan, nan], valid=0/40
+  sustained_density_90_rest: mean=nan, median=nan, 95% CI=[nan, nan], valid=0/40
+  Mean_similarity_deficit_vs_continue: mean=0.558397, median=0.575796, 95% CI=[0.542866, 0.570344], valid=40/40
+  Mean_density_deficit_vs_continue: mean=0.292923, median=0.281109, 95% CI=[0.285737, 0.300577], valid=40/40
+  sampled_similarity_mean_immediate: mean=0.988158, median=0.985008, 95% CI=[0.98629, 0.990108], valid=40/40
+  sampled_similarity_mean_recovery: mean=0.716414, median=0.704324, 95% CI=[0.691957, 0.740016], valid=40/40
+  sampled_similarity_mean_late: mean=0.317534, median=0.298825, 95% CI=[0.305231, 0.335913], valid=40/40
+
+Exploratory equivalence
+-----------------------
+  continue vs reset_B / Weighted_similarity_late: mean=-1.25453e-06, margin=0.01, 90% CI=[-3.7638e-06, 2.07636e-10], equivalent90=True, within_margin=1.000
+  continue vs reset_B / Retention_contrast_late: mean=0, margin=0.0151515, 90% CI=[0, 0], equivalent90=True, within_margin=1.000
+  continue vs reset_B / P_mean_late: mean=0, margin=0.0151515, 90% CI=[0, 0], equivalent90=True, within_margin=1.000
+  continue vs reset_ema / Weighted_similarity_late: mean=0.0068217, margin=0.01, 90% CI=[9.50368e-10, 0.019992], equivalent90=False, within_margin=0.975
+  continue vs reset_ema / Retention_contrast_late: mean=0.0099674, margin=0.0151515, 90% CI=[0, 0.0259674], equivalent90=False, within_margin=0.950
+  continue vs reset_ema / P_mean_late: mean=0.00359668, margin=0.0151515, 90% CI=[0, 0.00965728], equivalent90=True, within_margin=0.950
+  reset_B vs continue / normalized_late_mean_frobenius_distance: mean=9.16382e-06, margin=0.01, 90% CI=[6.35225e-07, 2.1142e-05], equivalent90=True, within_margin=1.000
+  reset_ema vs continue / normalized_late_mean_frobenius_distance: mean=0.0341763, margin=0.01, 90% CI=[1.66619e-05, 0.079864], equivalent90=False, within_margin=0.950
+
+Interpretation constraints
+--------------------------
+* First crossing and sustained recovery are different estimands.
+* Late convergence does not imply that an intervention caused no transient loss.
+* Density recovery does not imply recovery of edge identity.
+* B_carrier_only/full_reset remains exploratory because r2 used unmatched phase resets.

@@ -1,0 +1,96 @@
+{
+  "age_mins": [
+    0.0,
+    10.0
+  ],
+  "analysis": "AIEF-1.4 propagation-gap and geometric-direction controls",
+  "command": [
+    "AIEF_1_4_propagation_gap_geometric_control.py",
+    "--duhamel-npz",
+    "aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+    "--memory-fits",
+    "aief_1_4_feedback_rank_memory_reduction/target_time_memory_fits.csv",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--target-times",
+    "150,200,250,320",
+    "--lookback",
+    "66.6",
+    "--age-mins",
+    "0,10",
+    "--pod-start",
+    "250",
+    "--late-start",
+    "200",
+    "--ident-window-length",
+    "60",
+    "--ident-window-starts",
+    "150,175,200,225",
+    "--scalar-tol",
+    "1e-30",
+    "--output-dir",
+    "aief_1_4_propagation_gap_geometric_control"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "geometric_direction": [
+    0.5773502691896258,
+    -0.5773502691896258,
+    -0.5773502691896258
+  ],
+  "ident_window_length": 60.0,
+  "ident_window_starts": [
+    150.0,
+    175.0,
+    200.0,
+    225.0
+  ],
+  "inputs": {
+    "duhamel_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_augmented_duhamel_feedback/duhamel_vectors.npz",
+      "sha256": "08285f872f9d103f487f6de1328d163a678dec3fa8eed88be626c80569275871"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "memory_fits": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_feedback_rank_memory_reduction/target_time_memory_fits.csv",
+      "sha256": "22ab9bb774dd494e6fef7bbec05be38d2185f1546704e628f72210a99dce28df"
+    }
+  },
+  "interpretation_constraints": [
+    "POD and geometric directions are tested separately.",
+    "Propagation rates are fitted from the actual forcing ensemble and need not equal Rayleigh/eigen/singular rates.",
+    "Excellent forcing-state R2 with a large condition number does not identify unique rho and chi coefficients.",
+    "All conclusions remain conditional on one replay and two initial directions."
+  ],
+  "late_start": 200.0,
+  "lookback": 66.6,
+  "outputs": [
+    "geometric_vs_POD_direction_control.csv",
+    "direct_propagation_gap_tests.csv",
+    "propagated_contribution_envelopes.csv",
+    "forcing_state_identifiability.csv",
+    "propagation_gap_geometric_report.txt"
+  ],
+  "pod_direction": [
+    0.5773410255782927,
+    -0.5773687559683237,
+    -0.5773410255782931
+  ],
+  "pod_start": 250.0,
+  "scalar_tolerance": 1e-30,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_propagation_gap_geometric_control.py",
+    "sha256": "e45327671327dae32e3629532795742e1d0d9be9636eda4d74c2e3d2e281d663"
+  },
+  "target_times": [
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ]
+}

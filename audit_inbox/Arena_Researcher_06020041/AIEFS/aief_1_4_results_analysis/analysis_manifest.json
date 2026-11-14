@@ -1,0 +1,92 @@
+{
+  "analysis": "AIEF-1.4 seed-level memory-ablation results",
+  "analysis_seed": 20260715,
+  "bootstrap_repetitions": 20000,
+  "branch_families": {
+    "B_carrier_only": "memory_ablation",
+    "continue": "reference",
+    "full_reset": "memory_ablation",
+    "future_shuffle": "future_driver_control",
+    "reset_B": "memory_ablation",
+    "reset_B_ema": "memory_ablation",
+    "reset_ema": "memory_ablation"
+  },
+  "branches": [
+    "continue",
+    "reset_ema",
+    "reset_B",
+    "reset_B_ema",
+    "B_carrier_only",
+    "full_reset",
+    "future_shuffle"
+  ],
+  "contrasts": [
+    [
+      "continue",
+      "reset_B",
+      "primary"
+    ],
+    [
+      "continue",
+      "reset_ema",
+      "primary"
+    ],
+    [
+      "reset_B",
+      "reset_B_ema",
+      "primary"
+    ],
+    [
+      "continue",
+      "future_shuffle",
+      "primary_driver_control"
+    ],
+    [
+      "B_carrier_only",
+      "full_reset",
+      "exploratory_unmatched_phase_reset"
+    ],
+    [
+      "continue",
+      "reset_B_ema",
+      "secondary"
+    ],
+    [
+      "continue",
+      "B_carrier_only",
+      "secondary"
+    ],
+    [
+      "continue",
+      "full_reset",
+      "secondary"
+    ],
+    [
+      "reset_B_ema",
+      "full_reset",
+      "secondary_phase_history"
+    ]
+  ],
+  "interaction": "continue-reset_ema-reset_B+reset_B_ema",
+  "npz_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+  "npz_sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f",
+  "plots": [
+    "/home/deck/AI_Programs/SSRH/aief_1_4_results_analysis/density_trajectories.png",
+    "/home/deck/AI_Programs/SSRH/aief_1_4_results_analysis/similarity_trajectories.png"
+  ],
+  "primary_outcomes": [
+    "Weighted_similarity_late",
+    "Retention_contrast_late",
+    "P_mean_late"
+  ],
+  "scalar_path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_scalar_summary.csv",
+  "scalar_sha256": "f4bcdd1403796f0e2fa4f6fbedaee9d79fd5c970b4c33d49ac995b1f0c3bffda",
+  "seed_count": 40,
+  "sign_flip_repetitions": 100000,
+  "trajectory_intervals": "empirical seed quantiles, not confidence intervals",
+  "warnings": [
+    "B_carrier_only and full_reset used unmatched randomized phase resets in r2.",
+    "Sign-flip p-values are supporting symmetry-based tests.",
+    "Late reconstruction is not equivalent to immediate memory retention."
+  ]
+}

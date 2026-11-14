@@ -1,0 +1,11 @@
+cohort,condition,scalar_seed_count,expected_seed_count,scalar_count_ok,scalar_seed_set_matches_baseline,scalar_missing_vs_baseline,scalar_extra_vs_baseline,npz_P_future_count,npz_count_ok,npz_seed_set_matches_scalar,npz_missing_vs_scalar,npz_extra_vs_scalar,coverage_complete
+validation_A,baseline,50,50,True,True,0,0,50,True,True,0,0,True
+validation_A,shuffle_R,50,50,True,True,0,0,50,True,True,0,0,True
+validation_A,no_delay,50,50,True,True,0,0,50,True,True,0,0,True
+validation_A,no_mu,50,50,True,True,0,0,50,True,True,0,0,True
+validation_A,no_gap,50,50,True,True,0,0,50,True,True,0,0,True
+validation_B,baseline,50,50,True,True,0,0,50,True,True,0,0,True
+validation_B,shuffle_R,50,50,True,True,0,0,50,True,True,0,0,True
+validation_B,no_delay,50,50,True,True,0,0,50,True,True,0,0,True
+validation_B,no_mu,50,50,True,True,0,0,50,True,True,0,0,True
+validation_B,no_gap,50,50,True,True,0,0,50,True,True,0,0,True

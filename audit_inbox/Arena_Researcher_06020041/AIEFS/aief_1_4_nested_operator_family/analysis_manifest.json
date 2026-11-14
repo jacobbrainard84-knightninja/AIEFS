@@ -1,0 +1,105 @@
+{
+  "analysis": "AIEF-1.4 nested K3 operator-family and defect-mode audit",
+  "command": [
+    "AIEF_1_4_nested_operator_family_audit.py",
+    "--cocycle-npz",
+    "aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--dt",
+    "0.01",
+    "--late-start",
+    "100",
+    "--intervals",
+    "100,150,200,250,320",
+    "--key-times",
+    "100,150,200,250,319.99",
+    "--norm-tol",
+    "1e-16",
+    "--output-dir",
+    "aief_1_4_nested_operator_family"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "families": {
+    "biorthogonal": [
+      "p",
+      "q",
+      "r"
+    ],
+    "right": [
+      "q",
+      "r",
+      "t",
+      "lambda"
+    ],
+    "sparse": [
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u"
+    ],
+    "symmetric": [
+      "d",
+      "q"
+    ]
+  },
+  "inputs": {
+    "cocycle_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+      "sha256": "c3aa9683fefbfb1d80b426833b4312fb5b3532ba449af9889138b0d603e39e58"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    }
+  },
+  "interpretation_constraints": [
+    "Right, biorthogonal, and symmetric operator families are nested but impose different algebraic requirements.",
+    "The symmetric family is sufficient but not necessary for the analytic left/right pair.",
+    "Exponential replay fits do not establish causal control by EMA memory.",
+    "Defect POD rank is finite-horizon numerical evidence, not an asymptotic proof.",
+    "Results remain conditional on one fixed winner branch and replay."
+  ],
+  "intervals": [
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "key_times": [
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    319.99
+  ],
+  "late_start": 100.0,
+  "left_covector": [
+    0.8660254037844386,
+    0.0,
+    -0.8660254037844386
+  ],
+  "norm_tolerance": 1e-16,
+  "outputs": [
+    "nested_family_trajectory.csv",
+    "nested_family_key_times.csv",
+    "nested_family_decay_fits.csv",
+    "nested_family_defect_pod.csv",
+    "nested_family_parameters.csv",
+    "nested_family_arrays.npz",
+    "nested_operator_family_report.txt"
+  ],
+  "right_direction": [
+    0.5773502691896258,
+    -0.5773502691896258,
+    -0.5773502691896258
+  ],
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_nested_operator_family_audit.py",
+    "sha256": "c51b05d055b6689aadbdc30ee9203723b8ada6a04e2b05f9f8573e93cce23527"
+  }
+}

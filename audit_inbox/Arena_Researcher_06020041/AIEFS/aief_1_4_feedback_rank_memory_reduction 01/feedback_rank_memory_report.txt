@@ -1,0 +1,78 @@
+AIEF feedback rank and target-time memory reduction
+===================================================
+
+Base EMA decay rate 1/T_window: 0.0571333
+
+Target-time memory fits
+-----------------------
+  direction=0, target=10: kappa=0.498107, tau=2.0076, R2=0.895185, monotonic_violations=0, h(error<=0.01)=8.89, h(error<=0.1)=7.19, h(error<=0.5)=3.73
+  direction=0, target=50: kappa=0.236742, tau=4.22401, R2=0.84025, monotonic_violations=1300, h(error<=0.01)=48.52, h(error<=0.1)=46.09, h(error<=0.5)=39.74
+  direction=0, target=72.86: kappa=0.0146047, tau=68.4712, R2=0.137196, monotonic_violations=2154, h(error<=0.01)=14.06, h(error<=0.1)=11.84, h(error<=0.5)=5.18
+  direction=0, target=100: kappa=0.0427616, tau=23.3855, R2=0.761821, monotonic_violations=2154, h(error<=0.01)=38.71, h(error<=0.1)=26.13, h(error<=0.5)=8.8
+  direction=0, target=150: kappa=0.0729118, tau=13.7152, R2=0.999566, monotonic_violations=2154, h(error<=0.01)=62.75, h(error<=0.1)=32.64, h(error<=0.5)=9.91
+  direction=0, target=200: kappa=0.0694548, tau=14.3979, R2=0.999997, monotonic_violations=2154, h(error<=0.01)=66.26, h(error<=0.1)=33.24, h(error<=0.5)=10.01
+  direction=0, target=250: kappa=0.06915, tau=14.4613, R2=1, monotonic_violations=2148, h(error<=0.01)=66.58, h(error<=0.1)=33.3, h(error<=0.5)=10.02
+  direction=0, target=320: kappa=0.0691225, tau=14.4671, R2=1, monotonic_violations=1571, h(error<=0.01)=66.61, h(error<=0.1)=33.3, h(error<=0.5)=10.02
+  direction=1, target=10: kappa=0.541749, tau=1.84587, R2=0.939431, monotonic_violations=0, h(error<=0.01)=8.24, h(error<=0.1)=6.13, h(error<=0.5)=2.69
+  direction=1, target=50: kappa=0.128687, tau=7.77081, R2=0.872917, monotonic_violations=495, h(error<=0.01)=46.41, h(error<=0.1)=40.91, h(error<=0.5)=28.29
+  direction=1, target=72.86: kappa=0.0227673, tau=43.9226, R2=0.23678, monotonic_violations=1848, h(error<=0.01)=9.2, h(error<=0.1)=7.95, h(error<=0.5)=3.72
+  direction=1, target=100: kappa=0.0452022, tau=22.1228, R2=0.753, monotonic_violations=1848, h(error<=0.01)=34.37, h(error<=0.1)=23.93, h(error<=0.5)=8.3
+  direction=1, target=150: kappa=0.0746451, tau=13.3967, R2=0.99919, monotonic_violations=1848, h(error<=0.01)=61.19, h(error<=0.1)=32.3, h(error<=0.5)=9.87
+  direction=1, target=200: kappa=0.0696454, tau=14.3584, R2=0.999992, monotonic_violations=1848, h(error<=0.01)=66.08, h(error<=0.1)=33.23, h(error<=0.5)=10.02
+  direction=1, target=250: kappa=0.0691663, tau=14.4579, R2=1, monotonic_violations=1844, h(error<=0.01)=66.58, h(error<=0.1)=33.31, h(error<=0.5)=10.03
+  direction=1, target=320: kappa=0.0691229, tau=14.467, R2=1, monotonic_violations=1437, h(error<=0.01)=66.63, h(error<=0.1)=33.32, h(error<=0.5)=10.03
+
+POD rank by interval
+--------------------
+  object=total_weight_tangent, interval=[0,10), samples=2000, weighted_E1=0.997175, unit_E1=0.9835, angle_to_final=0.0778315 deg
+  object=total_weight_tangent, interval=[10,50), samples=8000, weighted_E1=1, unit_E1=1, angle_to_final=0.0014016 deg
+  object=total_weight_tangent, interval=[50,100), samples=10000, weighted_E1=1, unit_E1=0.99933, angle_to_final=0.00025435 deg
+  object=total_weight_tangent, interval=[100,150), samples=10000, weighted_E1=1, unit_E1=0.999999, angle_to_final=9.01368e-05 deg
+  object=total_weight_tangent, interval=[150,200), samples=10000, weighted_E1=1, unit_E1=0.999999, angle_to_final=9.58359e-06 deg
+  object=total_weight_tangent, interval=[200,250), samples=10000, weighted_E1=1, unit_E1=0.999999, angle_to_final=0 deg
+  object=total_weight_tangent, interval=[250,320), samples=14000, weighted_E1=1, unit_E1=0.999999, angle_to_final=0 deg
+  object=feedback_weight_tangent, interval=[0,10), samples=1997, weighted_E1=1, unit_E1=0.989809, angle_to_final=0.00131019 deg
+  object=feedback_weight_tangent, interval=[10,50), samples=8000, weighted_E1=1, unit_E1=1, angle_to_final=0.000498681 deg
+  object=feedback_weight_tangent, interval=[50,100), samples=10000, weighted_E1=1, unit_E1=0.999328, angle_to_final=0.00208325 deg
+  object=feedback_weight_tangent, interval=[100,150), samples=10000, weighted_E1=1, unit_E1=0.999999, angle_to_final=0.000139837 deg
+  object=feedback_weight_tangent, interval=[150,200), samples=10000, weighted_E1=1, unit_E1=0.999999, angle_to_final=1.09336e-05 deg
+  object=feedback_weight_tangent, interval=[200,250), samples=10000, weighted_E1=1, unit_E1=0.999999, angle_to_final=1.20742e-06 deg
+  object=feedback_weight_tangent, interval=[250,320), samples=14000, weighted_E1=1, unit_E1=0.999999, angle_to_final=0 deg
+  object=instant_forcing, interval=[0,10), samples=1999, weighted_E1=0.999983, unit_E1=0.908315, angle_to_final=0.630481 deg
+  object=instant_forcing, interval=[10,50), samples=8000, weighted_E1=0.999998, unit_E1=0.92784, angle_to_final=0.604197 deg
+  object=instant_forcing, interval=[50,100), samples=10000, weighted_E1=0.99999, unit_E1=0.931931, angle_to_final=0.15521 deg
+  object=instant_forcing, interval=[100,150), samples=10000, weighted_E1=0.999998, unit_E1=0.93022, angle_to_final=0.000918697 deg
+  object=instant_forcing, interval=[150,200), samples=10000, weighted_E1=0.999998, unit_E1=0.930192, angle_to_final=0.000521339 deg
+  object=instant_forcing, interval=[200,250), samples=10000, weighted_E1=0.999998, unit_E1=0.930197, angle_to_final=5.7786e-05 deg
+  object=instant_forcing, interval=[250,320), samples=14000, weighted_E1=0.999998, unit_E1=0.930198, angle_to_final=0 deg
+
+Propagated forcing rank
+-----------------------
+  direction=0, target=10: weighted_E1=0.998222, unit_E1=0.999499, leading_alignment_with_feedback=0.999999
+  direction=0, target=50: weighted_E1=0.999151, unit_E1=0.999908, leading_alignment_with_feedback=0.999994
+  direction=0, target=72.86: weighted_E1=0.997614, unit_E1=0.999935, leading_alignment_with_feedback=0.999997
+  direction=0, target=100: weighted_E1=0.997782, unit_E1=0.999952, leading_alignment_with_feedback=0.999995
+  direction=0, target=150: weighted_E1=0.997855, unit_E1=0.999968, leading_alignment_with_feedback=0.999995
+  direction=0, target=200: weighted_E1=0.997863, unit_E1=0.999976, leading_alignment_with_feedback=0.999995
+  direction=0, target=250: weighted_E1=0.997863, unit_E1=0.999977, leading_alignment_with_feedback=0.999995
+  direction=0, target=320: weighted_E1=0.997863, unit_E1=0.999969, leading_alignment_with_feedback=0.999995
+  direction=1, target=10: weighted_E1=1, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=50: weighted_E1=1, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=72.86: weighted_E1=0.999999, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=100: weighted_E1=0.999999, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=150: weighted_E1=1, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=200: weighted_E1=1, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=250: weighted_E1=1, unit_E1=1, leading_alignment_with_feedback=1
+  direction=1, target=320: weighted_E1=1, unit_E1=1, leading_alignment_with_feedback=1
+
+High-quality fit median kappa: 0.0693105
+High-quality fit kappa range: [0.0691225, 0.0746451]
+Median kappa minus EMA rate: 0.0121772
+
+Interpretation constraints
+--------------------------
+* Exponential fits describe operational recent-forcing reconstruction curves, not automatically an intrinsic memory kernel.
+* Weighted POD can be dominated by large early vectors; unit-vector POD measures directional collapse separately.
+* A high first POD fraction directly supports low rank but does not prove a universal invariant one-dimensional manifold.
+* Target-time robustness is required before identifying kappa with any model parameter.
+* This analysis uses one seed and two initial directions.

@@ -1,0 +1,7 @@
+# Audit inbox draft — conditional locked-phase EMA composition
+
+**Unverified external research input; request independent review.** No push or claim promotion.
+
+`LockedCoherence.lean` formally composes the Cycle 3 delayed-input adjacent equality with its constant-input EMA identity. Under `u n i = 0` for every node from N, it proves the input equals its N+d value throughout the tail and the directed EMA error relative to that input equals α^k times its error at N+d. α is any real; contraction requires an additional hypothesis. Locking is assumed, not derived. This is not a result about reported R, a semantic counterexample, Python equivalence, or closed-loop dynamics.
+
+A targeted Lean 4.33.1 build passed with 2220 jobs and no logged warnings. Axiom reports for both declarations are `propext`, `Classical.choice`, `Quot.sound`. Evidence and exact source hashes: workspace `AIEFS_cycle5/build.log`, `axioms.log`, `SHA256SUMS.txt`; compile command `lake build AIEFGateCore.LockedCoherence` from `lean/AIEFGateCore`, after adding the supplied file and the final Cycle 3 `PhaseLockCoherence.lean` to P5 at `ab18b068e1560b7d6d8005f42ed4d22c7097c8c2`. This targeted proof depends on P5 and the Cycle 3 module, not the Cycle 2 c016 module. It does not validate the proposed full stack. Full gate, mutation suite, regenerated inventory, and independent review remain outstanding. Please assess before any integration; owner controls GitHub actions.

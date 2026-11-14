@@ -1,0 +1,44 @@
+{
+  "cycle": "cycle-3 (phase/delay coherence)",
+  "base_cycle2_patch_sha256": "7f3f1cdf4a6b9217462ecdbd87e13d14aeb9cd958f7cfa201ab57145ca2e5105",
+  "main_commit": "a559e0d30458bb01989ac47225675d6baec518b8",
+  "patch_sha256": "a61b21276a944ff4302ead94272027524513050a88a97139136f87199ee5a519",
+  "patch_lines": 216,
+  "files": [
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PhaseLockCoherence.lean",
+      "sha256": "a5e9aa0b0615c1d2d37dd1bf7d1609544b507c64f03b227d1cbc7a748a0ef99c",
+      "size_bytes": 6427
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "sha256": "696c464aeba1730e796e1ccc6611a12150bc168bcba1e40d984d2728b723e701",
+      "size_bytes": 740
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt",
+      "sha256": "8217a5cad4eaae88739bb18fdff81a30c9e4cd6e7682d146040adc8be0a8fa55",
+      "size_bytes": 2499
+    },
+    {
+      "path": "lean/AIEFGateCore/README.md",
+      "sha256": "8aceeda28a1c9283f95009e6e8a3c7a5ff0ce6625e2fca3be86ea4f1742aa965",
+      "size_bytes": 12266
+    },
+    {
+      "path": "research/lean_gate/SPEC_P1_gate_identities.md",
+      "sha256": "cbed8e1787411e68f87a74d7d5b30f37dc78109bec332cbe08cb3566a8b8dab5",
+      "size_bytes": 98622
+    }
+  ],
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "new_declarations": 3,
+  "verification": {
+    "gate": "PASS on pre-clarification source; final changes comment-only, not rerun",
+    "axioms": "three theorems, standard axioms",
+    "pytest": "70 passed",
+    "mutation": "proof failure only, no semantic counterexample",
+    "patch_apply": "minimal cycle-2 baseline only"
+  }
+}

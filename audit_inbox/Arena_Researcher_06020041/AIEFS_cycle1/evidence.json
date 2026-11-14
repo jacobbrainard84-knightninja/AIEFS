@@ -1,0 +1,95 @@
+{
+  "cycle": "cycle-1",
+  "base_commit": "75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+  "main_commit": "a559e0d30458bb01989ac47225675d6baec518b8",
+  "p5_commit": "ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+  "audit_inbox_commit": "69221804302921302ca1500ed79d5400cc3663ac",
+  "patch_sha256": "63db39910796b363913b7ccf222d90a4da84c20eafd8b6df2cdaff38aa6bf810",
+  "patch_lines": 2036,
+  "files": [
+    {
+      "path": "research/lean_gate/SPEC_P1_gate_identities.md",
+      "status": "modified",
+      "sha256": "b56555848db24cb251cbf6c256f4bb32ed97d48c9ab82c2268a79e73364f135c",
+      "size_bytes": 93993
+    },
+    {
+      "path": "research/lean_gate/lean_mutation_check.py",
+      "status": "modified",
+      "sha256": "4e23addd72ca311b8c90706a24a4665980d1491bed03076c1927114295cd4875",
+      "size_bytes": 49884
+    },
+    {
+      "path": "research/lean_gate/tests/test_engine_production_delay.py",
+      "status": "added",
+      "sha256": "52ba93b095591491a281ce4491a7e65a3ffe6b853189b666428d03d01e1e0691",
+      "size_bytes": 8069
+    },
+    {
+      "path": "research/lean_gate/tests/test_lean_gate_p4b.py",
+      "status": "modified",
+      "sha256": "0cdb775a194fb9096e28b640f59617d541db37a7813f273bb487276d8f0c2a71",
+      "size_bytes": 5725
+    },
+    {
+      "path": "research/lean_gate/tests/test_lean_gate_p5.py",
+      "status": "added",
+      "sha256": "9092e14b6f988314696edcfa02a5dec82389186afcb22be5ac5983b8d6c7eb6a",
+      "size_bytes": 22060
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "status": "modified",
+      "sha256": "ee3b035a84a0be00d3c1d7076097d89187b1390d896c65ade562e3ca33cf58b1",
+      "size_bytes": 665
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt",
+      "status": "modified",
+      "sha256": "a591e2fec97e530c76864218d7913c772bae87819da24f03c50a6c63a64c2dd1",
+      "size_bytes": 2296
+    },
+    {
+      "path": "lean/AIEFGateCore/README.md",
+      "status": "modified",
+      "sha256": "2a507b05ea2bc073d54cbbcf460946e6a66f821d5952db7a33dac8344a99a199",
+      "size_bytes": 11245
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/HistoryBuffer.lean",
+      "status": "added",
+      "sha256": "ee137ab62ed00c7724267c8b6733602e45e8509ddfb5e58c94978007eb7b65d5",
+      "size_bytes": 3126
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PhaseCoherence.lean",
+      "status": "added",
+      "sha256": "e78c3580f3271468997c5e4e5ad84ede80c9580236172540ba43e02c7f588d3f",
+      "size_bytes": 26662
+    },
+    {
+      "path": "lean/AIEFGateCore/AIEFGateCore/PhaseIncrement.lean",
+      "status": "added",
+      "sha256": "ece99276501624c13bc9eb1a4e66c806357a039b5ccd248a7ba4224c4ea7f10b",
+      "size_bytes": 8370
+    }
+  ],
+  "engine_source_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+  "lean_gate": {
+    "result": "PASS",
+    "steps_passed": "7/7",
+    "jobs": 2299,
+    "warnings": 0,
+    "files_scanned": 20,
+    "marker_hits": 0,
+    "declarations_audited": 707,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "summary_sha256": "22b8d7921ca56273fb884cf8c44d4de42a859d4cf5fdd3eb7a1a9a35ab8aaeb8"
+  }
+}

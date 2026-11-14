@@ -1,0 +1,62 @@
+AIEF-1.4 seed-level results analysis
+====================================
+
+Seeds: 40
+Differences are left branch minus right branch.
+Bootstrap CIs are primary; sign-flip p-values are supporting.
+B_carrier_only vs full_reset is exploratory because r2 used unmatched phase resets.
+
+Primary contrasts
+-----------------
+  continue - reset_B / Weighted_similarity_late: n=40, delta=-0.000001, 95% CI=[-0.000004, 0.000000], dz=-0.158, positive=0.975, p_sign=1.000000
+  continue - reset_B / Retention_contrast_late: n=40, delta=0.000000, 95% CI=[0.000000, 0.000000], dz=0.000, positive=0.000, p_sign=1.000000
+  continue - reset_B / P_mean_late: n=40, delta=0.000000, 95% CI=[0.000000, 0.000000], dz=0.000, positive=0.000, p_sign=1.000000
+  continue - reset_ema / Weighted_similarity_late: n=40, delta=0.006822, 95% CI=[0.000000, 0.020229], dz=0.164, positive=1.000, p_sign=0.000010
+  continue - reset_ema / Retention_contrast_late: n=40, delta=0.009967, 95% CI=[0.000000, 0.027935], dz=0.192, positive=0.050, p_sign=0.497435
+  continue - reset_ema / P_mean_late: n=40, delta=0.003597, 95% CI=[0.000000, 0.010224], dz=0.185, positive=0.050, p_sign=0.500905
+  reset_B - reset_B_ema / Weighted_similarity_late: n=40, delta=0.055442, 95% CI=[0.035902, 0.077989], dz=0.803, positive=1.000, p_sign=0.000010
+  reset_B - reset_B_ema / Retention_contrast_late: n=40, delta=0.051058, 95% CI=[0.030634, 0.078210], dz=0.657, positive=0.550, p_sign=0.000010
+  reset_B - reset_B_ema / P_mean_late: n=40, delta=-0.022390, 95% CI=[-0.031061, -0.013760], dz=-0.788, positive=0.050, p_sign=0.000010
+  continue - future_shuffle / Weighted_similarity_late: n=40, delta=0.524231, 95% CI=[0.508577, 0.538389], dz=10.688, positive=1.000, p_sign=0.000010
+  continue - future_shuffle / Retention_contrast_late: n=40, delta=1.000000, 95% CI=[1.000000, 1.000000], dz=nan, positive=1.000, p_sign=0.000010
+  continue - future_shuffle / P_mean_late: n=40, delta=0.301136, 95% CI=[0.293561, 0.309470], dz=11.709, positive=1.000, p_sign=0.000010
+
+B x EMA interactions
+--------------------
+  Weighted_similarity_late: delta=-0.048620, 95% CI=[-0.065108, -0.033374], dz=-0.941
+  Retention_contrast_late: delta=-0.041091, 95% CI=[-0.055933, -0.027797], dz=-0.893
+  P_mean_late: delta=0.025986, 95% CI=[0.017803, 0.034091], dz=0.980
+
+Exploratory matched-state warning
+---------------------------------
+  Weighted_similarity_late: delta=0.063897, 95% CI=[0.031269, 0.096811] (unmatched phase reset)
+  Retention_contrast_late: delta=0.019214, 95% CI=[-0.031742, 0.070150] (unmatched phase reset)
+  P_mean_late: delta=-0.025848, 95% CI=[-0.043921, -0.007773] (unmatched phase reset)
+
+Magnitude-sensitive distances
+-----------------------------
+  B_carrier_only: normalized distance=0.218660, 95% CI=[0.137735, 0.304645]
+  continue: normalized distance=0.000000, 95% CI=[0.000000, 0.000000]
+  full_reset: normalized distance=0.416138, 95% CI=[0.334866, 0.496053]
+  future_shuffle: normalized distance=0.991166, 95% CI=[0.980925, 0.996350]
+  reset_B: normalized distance=0.000009, 95% CI=[0.000000, 0.000024]
+  reset_B_ema: normalized distance=0.250321, 95% CI=[0.175786, 0.328314]
+  reset_ema: normalized distance=0.034176, 95% CI=[0.000010, 0.091183]
+
+Projection-relative-to-update
+-----------------------------
+  continue: mean=0.999994, median=1.000000, max=1.000000
+  reset_ema: mean=0.998348, median=0.998658, max=0.998697
+  reset_B: mean=0.997836, median=0.997651, max=0.999395
+  reset_B_ema: mean=0.996004, median=0.996434, max=0.996449
+  B_carrier_only: mean=0.994086, median=0.994885, max=0.998069
+  full_reset: mean=0.988555, median=0.988376, max=0.995329
+  future_shuffle: mean=0.290046, median=0.277842, max=0.448881
+
+Interpretation constraints
+--------------------------
+* Late reconstruction is not equivalent to immediate memory retention.
+* Future shuffle is a driver-identity intervention, not a memory-state ablation.
+* Similarity quantifies orientation; normalized Frobenius distance also captures magnitude.
+* Full reset preserves the model, node identities, frequencies, and adaptation law.
+* The r2 B_carrier_only/full_reset comparison must remain exploratory until phase resets are matched.

@@ -1,0 +1,3 @@
+import AIEFGateCore.LockedCoherence
+#print axioms AIEFGate.LockedCoherence.input_eq_at_lock_delay
+#print axioms AIEFGate.LockedCoherence.geometric_after_phase_lock

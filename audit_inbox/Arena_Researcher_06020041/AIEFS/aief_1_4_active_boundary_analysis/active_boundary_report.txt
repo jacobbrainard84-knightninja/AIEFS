@@ -1,0 +1,69 @@
+AIEF active-boundary directional-field analysis
+================================================
+
+The analytic field is derived for the ideal map without the fixed denominator safeguard.
+
+Ideal boundary-field finite-difference verification
+----------------------------------------------------
+  outward_probe: median field norm=1.83523, stationary=0/5, median rate-error order=1.02412, median increment-error order=2.02412
+  physical_field: median field norm=6.26744e-13, stationary=5/5, order not estimable above numerical floor
+  random_probe: median field norm=1.06298, stationary=0/5, median rate-error order=0.868498, median increment-error order=1.8685
+  median maximum capacity snap: 5.52136e-12
+
+Active-stratified coordinate orders
+-----------------------------------
+  coordinate_equivalent_dual vs mirror_beta_0.1 / capacity_active: median order=3.6298, valid=1
+  coordinate_equivalent_dual vs mirror_beta_0.1 / capacity_and_positivity_active: median order=3.20321, valid=19
+  coordinate_equivalent_dual vs mirror_beta_0.1 / interior_inactive: median order=0.994445, valid=45
+  coordinate_equivalent_dual vs mirror_beta_0.1 / positivity_active: no valid orders
+  coordinate_equivalent_dual vs mirror_beta_1 / capacity_active: median order=3.6288, valid=1
+  coordinate_equivalent_dual vs mirror_beta_1 / capacity_and_positivity_active: median order=3.20323, valid=19
+  coordinate_equivalent_dual vs mirror_beta_1 / interior_inactive: median order=0.994427, valid=45
+  coordinate_equivalent_dual vs mirror_beta_1 / positivity_active: no valid orders
+  coordinate_equivalent_dual vs mirror_beta_10 / capacity_active: median order=3.6287, valid=1
+  coordinate_equivalent_dual vs mirror_beta_10 / capacity_and_positivity_active: median order=3.20323, valid=19
+  coordinate_equivalent_dual vs mirror_beta_10 / interior_inactive: median order=0.994425, valid=45
+  coordinate_equivalent_dual vs mirror_beta_10 / positivity_active: no valid orders
+  current_admissibility vs coordinate_equivalent_dual / capacity_active: median order=4.95828, valid=1
+  current_admissibility vs coordinate_equivalent_dual / capacity_and_positivity_active: median order=3.15732, valid=19
+  current_admissibility vs coordinate_equivalent_dual / interior_inactive: median order=2.00971, valid=45
+  current_admissibility vs coordinate_equivalent_dual / positivity_active: no valid orders
+  current_admissibility vs mirror_beta_0.1 / capacity_active: median order=0.99213, valid=4
+  current_admissibility vs mirror_beta_0.1 / capacity_and_positivity_active: median order=0.117115, valid=29
+  current_admissibility vs mirror_beta_0.1 / interior_inactive: median order=1, valid=45
+  current_admissibility vs mirror_beta_0.1 / positivity_active: no valid orders
+  current_admissibility vs mirror_beta_1 / capacity_active: median order=0.992157, valid=4
+  current_admissibility vs mirror_beta_1 / capacity_and_positivity_active: median order=0.117813, valid=29
+  current_admissibility vs mirror_beta_1 / interior_inactive: median order=1, valid=45
+  current_admissibility vs mirror_beta_1 / positivity_active: no valid orders
+  current_admissibility vs mirror_beta_10 / capacity_active: median order=0.99216, valid=4
+  current_admissibility vs mirror_beta_10 / capacity_and_positivity_active: median order=0.117882, valid=29
+  current_admissibility vs mirror_beta_10 / interior_inactive: median order=1, valid=45
+  current_admissibility vs mirror_beta_10 / positivity_active: no valid orders
+
+Optimal mirror scaling
+----------------------
+  edge_eps=1e-06, margin_eps=1e-06: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=1e-06, margin_eps=1e-05: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=1e-06, margin_eps=0.0001: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=1e-05, margin_eps=1e-06: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=1e-05, margin_eps=1e-05: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=1e-05, margin_eps=0.0001: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=0.0001, margin_eps=1e-06: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=0.0001, margin_eps=1e-05: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+  edge_eps=0.0001, margin_eps=0.0001: stationary boundary fields=5/5, median beta*=not-defined, median directional residual=not-defined, median cosine=not-defined
+
+Coupled epsilon/dt paths
+------------------------
+  paths with >=2 timesteps: 431
+  median increment order: 0.999866
+  median active-capacity fraction: 0
+
+Interpretation constraints
+--------------------------
+* The analytic field is a candidate Hadamard/Bouligand directional derivative of the ideal map.
+* The fixed denominator safeguard has a different formal dt->0 limit.
+* Interior p≈2 results do not establish active-boundary equivalence.
+* beta* removes scalar speed mismatch but not directional disagreement.
+* Hessian eigenspaces depend strongly on interiorization epsilon.
+* Coupled epsilon/dt path dependence remains an open singular-limit question.

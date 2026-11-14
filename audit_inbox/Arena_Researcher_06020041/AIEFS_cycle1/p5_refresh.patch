@@ -1,0 +1,2036 @@
+diff --git a/lean/AIEFGateCore/AIEFGateCore.lean b/lean/AIEFGateCore/AIEFGateCore.lean
+index b6c004e..2a80c00 100644
+--- a/lean/AIEFGateCore/AIEFGateCore.lean
++++ b/lean/AIEFGateCore/AIEFGateCore.lean
+@@ -12,5 +12,8 @@ import AIEFGateCore.Persistence
+ import AIEFGateCore.PersistenceWitness
+ import AIEFGateCore.EngineRedTeam
+ import AIEFGateCore.Capacity
++import AIEFGateCore.HistoryBuffer
++import AIEFGateCore.PhaseIncrement
++import AIEFGateCore.PhaseCoherence
+ import AIEFGateCore.Freeze
+ import AIEFGateCore.WeightUpdate
+diff --git a/lean/AIEFGateCore/AIEFGateCore/HistoryBuffer.lean b/lean/AIEFGateCore/AIEFGateCore/HistoryBuffer.lean
+new file mode 100644
+index 0000000..09ce845
+--- /dev/null
++++ b/lean/AIEFGateCore/AIEFGateCore/HistoryBuffer.lean
+@@ -0,0 +1,79 @@
++/-
++Copyright (c) 2026 Jacob Brainard and AIEF contributors. All rights reserved.
++Released under Apache 2.0 license as described in the file LICENSE.
++Authors: AIEF / SSRH
++-/
++-- SPDX-License-Identifier: Apache-2.0
++
++/-!
++# (P5) Constant-prehistory delay queue, restated inside `AIEFGateCore`
++
++Statements and proofs of `HistoryBuffer.lean` of cycle 010 (and the identical copy in cycle 011)
++of Researcher 040282 (handle only;
++`audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_010/proposal/HistoryBuffer.lean`
++on branch `audit-inbox`, commit `1b5ae52`, md5 `fe47db36…`), moved into this project's namespace
++`AIEFGate.History`. Nothing is imported from the deposit. Audited by Auditor Seat 002 (3 theorems,
++standard axioms, statements honest). Differences from the source: namespace and docstrings only
++(`research/lean_gate/tests/test_lean_gate_p5.py` checks the three statements textually against the
++deposit text recorded there).
++
++A queue of `D + 1` snapshots with constant prehistory (`x 0` before time 0): slot `i` at read
++time `n` holds
++`x (n + i - D)` (natural subtraction). The oldest slot is `x (n - D)`, the newest `x n`.
++
++Scope: pure value/index statements, independent of how the appended trace is generated. Nothing
++is claimed about Python aliasing (`aief_experiment_engine_v1.py` history buffer), floating
++trigonometry or phase locking.
++-/
++
++set_option autoImplicit false
++
++universe u
++
++namespace AIEFGate
++namespace History
++
++abbrev Hist (d : Nat) (A : Type u) := Fin (d + 1) → A
++
++def shiftAppend {A : Type u} (d : Nat) (h : Hist d A) (fresh : A) : Hist d A :=
++  fun i => if hi : i.val < d then h ⟨i.val + 1, Nat.succ_lt_succ hi⟩ else fresh
++
++def historyTrace {A : Type u} (d : Nat) (x : Nat → A) : Nat → Hist d A
++  | 0 => fun _ => x 0
++  | n + 1 => shiftAppend d (historyTrace d x n) (x (n + 1))
++
++/-- Every queue position, including startup with constant prehistory. -/
++theorem historyTrace_index {A : Type u} (d : Nat) (x : Nat → A) :
++    ∀ n (i : Fin (d + 1)), historyTrace d x n i = x (n + i.val - d) := by
++  intro n
++  induction n with
++  | zero =>
++      intro i
++      have hzero : 0 + i.val - d = 0 := by omega
++      simp only [historyTrace, hzero]
++  | succ n ih =>
++      intro i
++      simp only [historyTrace, shiftAppend]
++      split
++      · rename_i hi
++        rw [ih]
++        congr 1
++        change n + (i.val + 1) - d = n + 1 + i.val - d
++        omega
++      · rename_i hi
++        have heq : i.val = d := by omega
++        congr 1
++        omega
++
++/-- At read time n the oldest phase is n-D, not n-(D+1) or n-D+1. -/
++theorem historyTrace_oldest {A : Type u} (d : Nat) (x : Nat → A) (n : Nat) :
++    historyTrace d x n ⟨0, Nat.zero_lt_succ d⟩ = x (n - d) := by
++  simpa only [Nat.add_zero] using historyTrace_index d x n ⟨0, Nat.zero_lt_succ d⟩
++
++/-- The newest snapshot agrees with the current appended trace value. -/
++theorem historyTrace_newest {A : Type u} (d : Nat) (x : Nat → A) (n : Nat) :
++    historyTrace d x n ⟨d, Nat.lt_succ_self d⟩ = x n := by
++  simpa only [Nat.add_sub_cancel] using historyTrace_index d x n ⟨d, Nat.lt_succ_self d⟩
++
++end History
++end AIEFGate
+diff --git a/lean/AIEFGateCore/AIEFGateCore/PhaseCoherence.lean b/lean/AIEFGateCore/AIEFGateCore/PhaseCoherence.lean
+new file mode 100644
+index 0000000..20b46f1
+--- /dev/null
++++ b/lean/AIEFGateCore/AIEFGateCore/PhaseCoherence.lean
+@@ -0,0 +1,561 @@
++/-
++Copyright (c) 2026 Jacob Brainard and AIEF contributors. All rights reserved.
++Released under Apache 2.0 license as described in the file LICENSE.
++Authors: AIEF / SSRH
++-/
++-- SPDX-License-Identifier: Apache-2.0
++import AIEFGateCore.MatrixForm
++import AIEFGateCore.PhaseIncrement
++
++/-!
++# (P5) Phase-specific coherence EMA and drive on `Params` / `preM` / `stepM`
++
++Port of `PhaseCoherenceBridge.lean` of cycle 013 of Researcher 040282 (handle only; the file was
++supplied by the owner and is **not** on branch `audit-inbox`, md5
++`410275adc4ea837a6384cefe2d545c2d`; its inputs, cycles 010 and 011, are on `audit-inbox` at
++commit `1b5ae52`, see `HistoryBuffer.lean` and `PhaseIncrement.lean`). The definitions and
++statements of the source are restated here on top of `AIEFGate.Phase.inputPhasor` and `main`'s
++`Params`/`MatrixForm.preM`/`MatrixForm.stepM`; the proofs are those of the source, adapted.
++Audited by Auditor Seat 002 (ADOPT WITH NOTES); the notes N1-N3 and N5 are applied here:
++
++* N1: `reported_symm`, `reported_offdiag` and the asymmetric, node-dependent probe
++  (`probe_asym_*`): with delay `D = 1`, increments `π/2` on node 0 and `0` on node 1 and zero
++  initial coherence, `‖C 0 1‖ = √5/4 ≠ 3/4 = ‖C 1 0‖`, and the reported value is the average
++  `(3 + √5)/8`, so the one-sided `‖C i j‖` is refuted.
++* N2: `reported_diag` (`reported C i i = 0`) and `sourceDrive_diag`.
++* N3: the former `wrong_*_refuted` lemmas are renamed `inputPhasor_*_differs`; they are facts about
++  the function `Phase.inputPhasor` at other `d`/`τ`, **not** mutation evidence. The mutation
++  evidence is in `research/lean_gate/lean_mutation_check.py` (M37 ff.), where a mutated
++  *definition* of this file is elaborated and the pinned theorems must fail.
++* N5: the asymmetric probe starts from `C0 = 0`, like the engine (`coherence_acc` is
++  zero-initialised).
++
++**Transcription is hand-checked, not proved against Python.** `coherenceInput` is read off
++`aief_experiment_engine_v1.py` `compute_R` (about lines 735-751: `dphi = theta_i - delayed_j -
++mean(omega) tau`, EMA `alpha C + (1 - alpha) z`, `abs`, symmetrisation `0.5 (R + R^T)`, zero
++diagonal) and `reported`/`sourceDrive` off the `advance_state` drive (about lines 790-794:
++`B + dt ((eta + mu) R - mu - gamma B)`). Main has no phase state; `input_engine_convention` is a
++source-convention statement, not a proof about the Python code or float64.
++
++Scope: exact reals. Not covered: the trajectory of `B` itself, phase locking, the clip/projection
++(`np.maximum`, symmetrisation of `B`) and `shuffle_driver`.
++-/
++
++set_option autoImplicit false
++
++namespace AIEFGate
++namespace PhaseCoherence
++
++open Complex
++open AIEFGate.Phase AIEFGate.History
++open scoped BigOperators
++
++variable {V : Type*}
++
++noncomputable section
++
++/-- IMPLEMENTATION: the only input accepted by this coherence component. -/
++def coherenceInput (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ)
++    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=
++  inputPhasor d x0 u omega tau n i j
++
++/-- Source clock: old read changes first on transition n=D to n=D+1. -/
++def lateSource (d : ℕ) (u : ℕ → V → ℝ) (n : ℕ) (j : V) : ℝ :=
++  if n < d then 0 else u (n - d) j
++
++/-- Complex EMA updated BEFORE reported R, B and the phase step. -/
++def coherenceStep (alpha : ℝ) (C : V → V → ℂ) (d : ℕ) (x0 : V → ℝ)
++    (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=
++  (alpha : ℂ) * C i j + ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j
++
++def coherenceTrace (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ)
++    (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) : ℕ → V → V → ℂ
++  | 0 => C0
++  | n + 1 => coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau n
++
++open Classical in
++def reported (C : V → V → ℂ) (i j : V) : ℝ :=
++  if i = j then 0 else (‖C i j‖ + ‖C j i‖) / 2
++
++/-- IMPLEMENTATION: unnormalised drive accepted by main's preM/stepM. -/
++def sourceDrive (eta mu : ℝ) (C : V → V → ℂ) (i j : V) : ℝ :=
++  (eta + mu) * reported C i j - mu
++
++/-- Exact source expression exp(i*dphi), with independent read-time n-D RHS.
++Main has no phase state yet; this is an explicit source-convention extension,
++not an assertion that an existing main phase model or Python FFI was proved. -/
++theorem input_engine_convention (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ)
++    (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) :
++    coherenceInput d x0 u omega tau n i j =
++      Complex.exp (Complex.I * ((phaseTrace x0 u n i - phaseTrace x0 u (n - d) j -
++        ((omega i + omega j) / 2) * tau : ℝ) : ℂ)) := by
++  simp only [coherenceInput, inputPhasor, historyTrace_oldest, phasor]
++  rw [mul_comm]
++
++theorem input_norm (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ)
++    (tau : ℝ) (n : ℕ) (i j : V) : ‖coherenceInput d x0 u omega tau n i j‖ = 1 := by
++  rw [input_engine_convention]
++  exact Complex.norm_exp_I_mul_ofReal _
++
++/-- Absolute complex innovation, not just a magnitude or arbitrary-phase bound. -/
++theorem innovation_engine_convention (alpha : ℝ) (C : V → V → ℂ)
++    (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ)
++    (tau : ℝ) (n : ℕ) (i j : V) :
++    coherenceStep alpha C d x0 u omega tau n i j - (alpha : ℂ) * C i j =
++      ((1 - alpha : ℝ) : ℂ) * Complex.exp (Complex.I *
++        ((phaseTrace x0 u n i - phaseTrace x0 u (n - d) j -
++          ((omega i + omega j) / 2) * tau : ℝ) : ℂ)) := by
++  rw [coherenceStep, input_engine_convention]
++  ring
++
++theorem lateSource_startup (d : ℕ) (u : ℕ → V → ℝ) (n : ℕ) (j : V)
++    (h : n < d) : lateSource d u n j = 0 := by simp [lateSource, h]
++
++/-- Temporal transport of actual source-specific EMA innovations. -/
++theorem innovation_transport (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
++    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) :
++    coherenceTrace alpha C0 d x0 u omega tau (n + 2) i j -
++        (alpha : ℂ) * coherenceTrace alpha C0 d x0 u omega tau (n + 1) i j =
++      (coherenceTrace alpha C0 d x0 u omega tau (n + 1) i j -
++        (alpha : ℂ) * coherenceTrace alpha C0 d x0 u omega tau n i j) *
++          phasor (u n i - lateSource d u n j) := by
++  have hi (k : ℕ) :
++      coherenceTrace alpha C0 d x0 u omega tau (k + 1) i j -
++        (alpha : ℂ) * coherenceTrace alpha C0 d x0 u omega tau k i j =
++          ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau k i j := by
++    change coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau k) d x0 u omega tau k
++      i j - _ = _
++    unfold coherenceStep
++    ring
++  have hl : lateSource d u n j = delayedIncrement d u n j := by
++    by_cases h : d ≤ n
++    · have hn : ¬n < d := by omega
++      simp [lateSource, delayedIncrement, h, hn]
++    · have hn : n < d := by omega
++      simp [lateSource, delayedIncrement, h, hn]
++  rw [show n + 2 = (n + 1) + 1 by omega, hi, hi, hl]
++  simp only [coherenceInput, delayed_input_step]
++  ring
++
++theorem coherenceTrace_unitDisk (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
++    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ)
++    (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (hC : ∀ i j, ‖C0 i j‖ ≤ 1) :
++    ∀ n i j, ‖coherenceTrace alpha C0 d x0 u omega tau n i j‖ ≤ 1 := by
++  intro n
++  induction n with
++  | zero => exact hC
++  | succ n ih =>
++      intro i j
++      change ‖coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau
++        n i j‖ ≤ 1
++      calc
++        _ ≤ ‖(alpha : ℂ) * coherenceTrace alpha C0 d x0 u omega tau n i j‖ +
++              ‖((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j‖ :=
++          norm_add_le _ _
++        _ = alpha * ‖coherenceTrace alpha C0 d x0 u omega tau n i j‖ + (1 - alpha) := by
++          rw [norm_mul, norm_mul, Complex.norm_of_nonneg ha0,
++            Complex.norm_of_nonneg (sub_nonneg.mpr ha1), input_norm, mul_one]
++        _ ≤ alpha * 1 + (1 - alpha) := add_le_add (mul_le_mul_of_nonneg_left (ih i j) ha0) le_rfl
++        _ = 1 := by ring
++
++theorem reported_bounds (C : V → V → ℂ) (hC : ∀ i j, ‖C i j‖ ≤ 1) (i j : V) :
++    0 ≤ reported C i j ∧ reported C i j ≤ 1 := by
++  classical
++  unfold reported
++  split_ifs
++  · norm_num
++  · constructor
++    · positivity
++    · have := hC i j
++      have := hC j i
++      linarith
++
++theorem phase_drive_bounds (eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
++    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ)
++    (heta : 0 ≤ eta) (hmu : 0 ≤ mu) (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1)
++    (hC : ∀ i j, ‖C0 i j‖ ≤ 1) (n : ℕ) (i j : V) :
++    -mu ≤ sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j ∧
++      sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j ≤ eta := by
++  have hb := reported_bounds _
++    (coherenceTrace_unitDisk alpha C0 d x0 u omega tau ha0 ha1 hC (n + 1)) i j
++  unfold sourceDrive
++  constructor <;> nlinarith [mul_nonneg (add_nonneg heta hmu) hb.1,
++    mul_le_mul_of_nonneg_left hb.2 (add_nonneg heta hmu)]
++
++/-- Normalised004drive range on the actual phase-specific trajectory. -/
++theorem phase_normalized_drive_bounds (p : AIEFGate.Params) (eta mu alpha : ℝ)
++    (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ)
++    (omega : V → ℝ) (tau : ℝ) (heta : 0 ≤ eta) (hmu : 0 ≤ mu)
++    (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (hC : ∀ i j, ‖C0 i j‖ ≤ 1)
++    (hg : 0 < p.γ) (n : ℕ) (i j : V) :
++    -mu / p.γ ≤
++        sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j / p.γ ∧
++      sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j / p.γ ≤
++        eta / p.γ := by
++  have h := phase_drive_bounds eta mu alpha C0 d x0 u omega tau heta hmu ha0 ha1 hC n i j
++  exact ⟨(div_le_div_iff_of_pos_right hg).2 h.1, (div_le_div_iff_of_pos_right hg).2 h.2⟩
++
++/-- The old coarse degree envelope, now on the specified phase input.
++This does NOT sharpen the N=12 future-band hypothesis. -/
++theorem phase_positiveRow_bound [Fintype V] [DecidableEq V]
++    (p : AIEFGate.Params) (eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
++    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ)
++    (heta : 0 ≤ eta) (hmu : 0 ≤ mu) (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1)
++    (hC : ∀ i j, ‖C0 i j‖ ≤ 1) (hg : 0 < p.γ) (n : ℕ) (i : V) :
++    (∑ j ∈ (Finset.univ : Finset V).erase i,
++      max 0 (sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j / p.γ)) ≤
++      ((Fintype.card V - 1 : ℕ) : ℝ) * (eta / p.γ) := by
++  calc
++    _ ≤ ∑ _j ∈ (Finset.univ : Finset V).erase i, eta / p.γ := by
++      apply Finset.sum_le_sum
++      intro j _
++      exact max_le (div_nonneg heta hg.le)
++        (phase_normalized_drive_bounds p eta mu alpha C0 d x0 u omega tau heta hmu ha0 ha1 hC hg
++          n i j).2
++    _ = _ := by simp
++
++/-- Missing eta cannot survive this exact response, even if loose bounds survive. -/
++theorem drive_eta_response (eta mu delta : ℝ) (C : V → V → ℂ) (i j : V) :
++    sourceDrive (eta + delta) mu C i j - sourceDrive eta mu C i j = delta * reported C i j := by
++  unfold sourceDrive
++  ring
++
++/-- (N2) The reported coherence has a zero diagonal (engine `fill_diagonal(R, 0)`). -/
++theorem reported_diag (C : V → V → ℂ) (i : V) : reported C i i = 0 := by
++  simp [reported]
++
++/-- (N1) Off the diagonal the reported value is the average of the two directed magnitudes. -/
++theorem reported_offdiag (C : V → V → ℂ) {i j : V} (h : i ≠ j) :
++    reported C i j = (‖C i j‖ + ‖C j i‖) / 2 := by
++  simp [reported, h]
++
++/-- (N1) The reported coherence is symmetric (engine `0.5 * (R + R.T)`), although `C` need not
++be. -/
++theorem reported_symm (C : V → V → ℂ) (i j : V) : reported C i j = reported C j i := by
++  by_cases h : i = j
++  · subst h; rfl
++  · rw [reported_offdiag C h, reported_offdiag C (Ne.symm h), add_comm]
++
++theorem sourceDrive_diag (eta mu : ℝ) (C : V → V → ℂ) (i : V) : sourceDrive eta mu C i i = -mu := by
++  simp [sourceDrive, reported_diag]
++
++theorem sourceDrive_symm (eta mu : ℝ) (C : V → V → ℂ) (i j : V) :
++    sourceDrive eta mu C i j = sourceDrive eta mu C j i := by
++  simp only [sourceDrive, reported_symm C i j]
++
++section MainInterface
++
++/-- Actual current-main preM, not an old/private gate implementation. -/
++theorem main_preM_source_formula (p : AIEFGate.Params) (eta mu : ℝ)
++    (C : V → V → ℂ) (B : V → V → ℝ) (i j : V) :
++    AIEFGate.MatrixForm.preM p (sourceDrive eta mu C) B i j =
++      B i j + p.dt * ((eta + mu) * reported C i j - mu - p.γ * B i j) := by
++  rfl
++/-- After-coherence main interface, with no arbitrary phase/input parameter. -/
++theorem main_phase_preM (p : AIEFGate.Params) (eta mu alpha : ℝ)
++    (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ)
++    (omega : V → ℝ) (tau : ℝ) (n : ℕ) (B : V → V → ℝ) (i j : V) :
++    AIEFGate.MatrixForm.preM p
++      (sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1))) B i j =
++      B i j + p.dt * ((eta + mu) *
++        reported (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j - mu - p.γ * B i j) := by
++  rfl
++
++/-- The phase drive satisfies the symmetry hypothesis of `main`'s `stepM_eq_stepB`: the matrix
++step with the phase-specific drive equals the edge-vector step. -/
++theorem main_phase_stepM_eq_stepB [Fintype V] [LinearOrder V] (p : AIEFGate.Params)
++    (eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ)
++    (omega : V → ℝ) (tau : ℝ) (n : ℕ) (B : V → V → ℝ) (hB : ∀ i j, B i j = B j i)
++    (e : AIEFGate.MatrixForm.CE V) :
++    AIEFGate.MatrixForm.stepM p
++        (sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1))) B e.1.1 e.1.2 =
++      AIEFGate.stepB p (AIEFGate.MatrixForm.KG V)
++        (AIEFGate.MatrixForm.toEdge
++          (sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1))))
++        (AIEFGate.MatrixForm.toEdge B) e :=
++  AIEFGate.MatrixForm.stepM_eq_stepB p _ B (sourceDrive_symm _ _ _) hB e
++
++end MainInterface
++
++/-! Nonzero held probes (node-uniform, `C0 = 1`), with the source phase convention in their
++conclusions. -/
++def probeX (_ : Fin 2) : ℝ := 0
++def probeU (_ : ℕ) (_ : Fin 2) : ℝ := Real.pi / 2
++def probeOmega (_ : Fin 2) : ℝ := 1
++def probeC0 (_ _ : Fin 2) : ℂ := 1
++
++private theorem reference_zero (d : ℕ) (i j : Fin 2) :
++    inputPhasor d probeX probeU probeOmega Real.pi 0 i j = -1 := by
++  simp [inputPhasor, historyTrace, phaseTrace, probeX, probeOmega, phasor]
++
++private theorem reference_step (d n : ℕ) (i j : Fin 2) :
++    inputPhasor d probeX probeU probeOmega Real.pi (n + 1) i j =
++      inputPhasor d probeX probeU probeOmega Real.pi n i j *
++        (if n < d then Complex.I else 1) := by
++  rw [delayed_input_step]
++  by_cases h : n < d
++  · have hn : ¬d ≤ n := by omega
++    simp [delayedIncrement, hn, h, probeU, phasor]
++  · have hn : d ≤ n := by omega
++    simp [delayedIncrement, hn, h, probeU, phasor]
++
++private theorem reference_values (i j : Fin 2) :
++    inputPhasor 2 probeX probeU probeOmega Real.pi 0 i j = -1 ∧
++    inputPhasor 2 probeX probeU probeOmega Real.pi 1 i j = -Complex.I ∧
++    inputPhasor 2 probeX probeU probeOmega Real.pi 2 i j = 1 ∧
++    inputPhasor 2 probeX probeU probeOmega Real.pi 3 i j = 1 := by
++  have h0 := reference_zero 2 i j
++  have h1 := reference_step 2 0 i j
++  have h2 := reference_step 2 1 i j
++  have h3 := reference_step 2 2 i j
++  norm_num at h1 h2 h3
++  constructor
++  · exact h0
++  constructor
++  · rw [h0] at h1; simpa using h1
++  constructor
++  · rw [h0] at h1
++    rw [h1] at h2
++    simpa using h2
++  · rw [h0] at h1
++    rw [h1] at h2
++    norm_num at h2
++    rw [h2] at h3
++    simpa using h3
++
++theorem probe_coherence_values (i j : Fin 2) :
++    coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 1 i j = 0 ∧
++    coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2 i j = -Complex.I/2 ∧
++    coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 3 i j = 1/2-Complex.I/4 ∧
++    coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 4 i j = 3/4-Complex.I/8 := by
++  obtain ⟨h0,h1,h2,h3⟩ := reference_values i j
++  refine ⟨?_, ?_, ?_, ?_⟩ <;>
++    norm_num [coherenceTrace, coherenceStep, coherenceInput, probeC0, h0, h1, h2, h3] <;> ring
++
++/-- Value of the input at read time `0` with `ω = 1`, `τ = π` (nonzero offset
++`(ω_i+ω_j)/2 · τ = π`): `exp(i (0 − 0 − π)) = −1`; with the offset dropped it would be `1`. -/
++theorem probe_input_offset_value :
++    coherenceInput 2 probeX probeU probeOmega Real.pi 0 0 1 = -1 := by
++  simp [coherenceInput, inputPhasor, historyTrace, phaseTrace, probeX, probeOmega, phasor]
++
++/-- (N2) Asymmetric-`ω` value of the coherence input: `ω = (1, 0)`, `τ = π`, no increments, read
++time `0`; the offset is the mean `1/2 · π`, so `exp(−i π/2) = −i` for both `(0,1)` and `(1,0)`.
++`ω_i` alone (`−1` at `(0,1)`), `ω_j` alone (`1`) or a node-uniform `ω` all differ. -/
++theorem probe_coherence_input_asym_omega :
++    coherenceInput 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
++      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 0 1 = -Complex.I ∧
++    coherenceInput 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
++      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 1 0 = -Complex.I := by
++  obtain ⟨-, h01, h10, -⟩ := AIEFGate.Phase.probe_input_asym_omega_value
++  simpa [coherenceInput] using And.intro h01 h10
++
++theorem probe_late_start : lateSource 2 probeU 1 (0 : Fin 2) = 0 := by
++  norm_num [lateSource]
++
++theorem probe_reported_second :
++    reported (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2) (0 : Fin 2) 1 =
++      1/2 := by
++  have h := fun i j => (probe_coherence_values i j).2.1
++  norm_num [reported, h, Complex.norm_def, Complex.normSq]
++
++theorem probe_drive_second :
++    sourceDrive 2 1 (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2) (0 : Fin 2)
++      1 = 1/2 := by
++  rw [sourceDrive, probe_reported_second]
++  norm_num
++
++/-! Facts about `Phase.inputPhasor` at other `d`/`τ` (and two arithmetic comparisons), compared
++with the `d = 2` input of the held probe. They are facts about the function from cycle 011, NOT
++evidence that a mutated implementation of this file is caught (see the mutation check, M37 ff.). -/
++theorem inputPhasor_delay_three_value :
++    inputPhasor 3 probeX probeU probeOmega Real.pi 3 (0 : Fin 2) 1 = Complex.I := by
++  have h0 := reference_zero 3 (0 : Fin 2) 1
++  have h1 := reference_step 3 0 (0 : Fin 2) 1
++  have h2 := reference_step 3 1 (0 : Fin 2) 1
++  have h3 := reference_step 3 2 (0 : Fin 2) 1
++  norm_num at h1 h2 h3
++  rw [h0] at h1
++  rw [h1] at h2
++  norm_num at h2
++  rw [h2] at h3
++  simpa using h3
++
++theorem inputPhasor_delay_one_value :
++    inputPhasor 1 probeX probeU probeOmega Real.pi 2 (0 : Fin 2) 1 = -Complex.I := by
++  have h0 := reference_zero 1 (0 : Fin 2) 1
++  have h1 := reference_step 1 0 (0 : Fin 2) 1
++  have h2 := reference_step 1 1 (0 : Fin 2) 1
++  norm_num at h1 h2
++  rw [h0] at h1
++  rw [h1] at h2
++  simpa using h2
++
++theorem inputPhasor_delay_zero_value :
++    inputPhasor 0 probeX probeU probeOmega Real.pi 1 (0 : Fin 2) 1 = -1 := by
++  have h := reference_step 0 0 (0 : Fin 2) 1
++  simpa [reference_zero] using h
++
++theorem inputPhasor_no_offset_value :
++    inputPhasor 2 probeX probeU probeOmega 0 0 (0 : Fin 2) 1 = 1 := by
++  simp [inputPhasor, historyTrace, phaseTrace, probeX, phasor]
++
++theorem early_start_nonzero : probeU 0 (0 : Fin 2) ≠ 0 := by
++  unfold probeU
++  exact div_ne_zero Real.pi_ne_zero (by norm_num)
++
++/-- Current-main parameter record for a nonzero pre-clip witness. -/
++def probeParams : AIEFGate.Params where
++  dt := Real.pi / 2
++  γ := 1
++  cap := 0
++  ε := (10 ^ 12 : ℝ)⁻¹
++  gapA := 1
++  gapQ := 1
++  gapDelta := 1
++
++theorem probe_main_preM :
++    AIEFGate.MatrixForm.preM probeParams
++      (sourceDrive 2 1 (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2))
++      (fun _ _ => 0) (0 : Fin 2) 1 = Real.pi / 4 := by
++  simp only [AIEFGate.MatrixForm.preM, probe_drive_second, probeParams]
++  ring
++
++theorem inputPhasor_delay_three_differs :
++    inputPhasor 3 probeX probeU probeOmega Real.pi 3 (0 : Fin 2) 1 ≠
++      coherenceInput 2 probeX probeU probeOmega Real.pi 3 0 1 := by
++  rw [inputPhasor_delay_three_value]
++  have h := (reference_values (0 : Fin 2) 1).2.2.2
++  rw [coherenceInput, h]
++  norm_num [Complex.ext_iff]
++
++theorem inputPhasor_delay_one_differs :
++    inputPhasor 1 probeX probeU probeOmega Real.pi 2 (0 : Fin 2) 1 ≠
++      coherenceInput 2 probeX probeU probeOmega Real.pi 2 0 1 := by
++  rw [inputPhasor_delay_one_value]
++  have h := (reference_values (0 : Fin 2) 1).2.2.1
++  rw [coherenceInput, h]
++  norm_num [Complex.ext_iff]
++
++theorem inputPhasor_delay_zero_differs :
++    inputPhasor 0 probeX probeU probeOmega Real.pi 1 (0 : Fin 2) 1 ≠
++      coherenceInput 2 probeX probeU probeOmega Real.pi 1 0 1 := by
++  rw [inputPhasor_delay_zero_value]
++  have h := (reference_values (0 : Fin 2) 1).2.1
++  rw [coherenceInput, h]
++  norm_num [Complex.ext_iff]
++
++theorem inputPhasor_no_offset_differs :
++    inputPhasor 2 probeX probeU probeOmega 0 0 (0 : Fin 2) 1 ≠
++      coherenceInput 2 probeX probeU probeOmega Real.pi 0 0 1 := by
++  rw [inputPhasor_no_offset_value, coherenceInput, reference_zero]
++  norm_num
++
++theorem constant_input_differs :
++    (1 / 2 : ℂ) * probeC0 0 1 + ((1 - 1/2 : ℝ) : ℂ) * Complex.exp 0 ≠
++      coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 1 0 1 := by
++  rw [(probe_coherence_values (0 : Fin 2) 1).1]
++  norm_num [probeC0]
++
++theorem drive_without_eta_differs :
++    (1 : ℝ) * reported (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2)
++        (0 : Fin 2) 1 - 1 ≠
++      sourceDrive 2 1 (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2) 0 1 := by
++  rw [probe_reported_second, probe_drive_second]
++  norm_num
++
++/-! (N1, N5) Asymmetric, node-dependent probe with the engine's zero initial coherence.
++`D = 1`, `x0 = 0`, `ω = 0`, `τ = 0`; node 0 advances by `π/2` per step, node 1 not at all, `C0 = 0`,
++`α = 1/2`. Then `C₁ = 1/2` everywhere and `C₂ 0 j = 1/4 + i/2`, `C₂ 1 j = 3/4`, so the directed
++magnitudes differ and the reported value must be their average. -/
++
++def probeU2 (_ : ℕ) (i : Fin 2) : ℝ := if i = 0 then Real.pi / 2 else 0
++def probeOmega0 (_ : Fin 2) : ℝ := 0
++def probeC00 (_ _ : Fin 2) : ℂ := 0
++
++private theorem asym_input_zero (i j : Fin 2) :
++    inputPhasor 1 probeX probeU2 probeOmega0 0 0 i j = 1 := by
++  simp [inputPhasor, historyTrace, phaseTrace, probeX, probeOmega0, phasor]
++
++private theorem asym_input_one (i j : Fin 2) :
++    inputPhasor 1 probeX probeU2 probeOmega0 0 1 i j = if i = 0 then Complex.I else 1 := by
++  rw [delayed_input_step, asym_input_zero]
++  fin_cases i <;> simp [delayedIncrement, probeU2, phasor]
++
++theorem probe_asym_coherence_values (j : Fin 2) :
++    (∀ i, coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 1 i j = 1/2) ∧
++    coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2 0 j = 1/4 + Complex.I/2 ∧
++    coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2 1 j = 3/4 := by
++  have h1 := asym_input_one
++  have h0 := asym_input_zero
++  refine ⟨fun i => ?_, ?_, ?_⟩ <;>
++    (norm_num [coherenceTrace, coherenceStep, coherenceInput, probeC00, h0, h1]; try ring)
++
++/-- The two directed magnitudes differ on the asymmetric probe: `√5/4` against `3/4`. -/
++theorem probe_asym_directed_magnitudes :
++    ‖coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2 0 1‖ = Real.sqrt 5 / 4 ∧
++    ‖coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2 1 0‖ = 3 / 4 := by
++  obtain ⟨-, h01, h10⟩ := probe_asym_coherence_values 1
++  obtain ⟨-, -, h10'⟩ := probe_asym_coherence_values 0
++  rw [h01]
++  rw [h10']
++  constructor
++  · rw [Complex.norm_def]
++    have : Complex.normSq (1 / 4 + Complex.I / 2) = (Real.sqrt 5 / 4) ^ 2 := by
++      rw [div_pow, Real.sq_sqrt (by norm_num)]
++      simp [Complex.normSq_apply]
++      norm_num
++    rw [this, Real.sqrt_sq (by positivity)]
++  · norm_num [Complex.norm_def, Complex.normSq]
++
++theorem probe_asym_directed_ne :
++    ‖coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2 0 1‖ ≠
++      ‖coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2 1 0‖ := by
++  rw [probe_asym_directed_magnitudes.1, probe_asym_directed_magnitudes.2]
++  intro h
++  have h5 : Real.sqrt 5 = 3 := by linarith
++  have : (5 : ℝ) = 9 := by
++    calc (5 : ℝ) = Real.sqrt 5 ^ 2 := (Real.sq_sqrt (by norm_num)).symm
++      _ = 9 := by rw [h5]; norm_num
++  norm_num at this
++
++/-- (N1) The reported value is the symmetrised average `(3 + √5)/8`, strictly between the two
++directed magnitudes; the one-sided `‖C i j‖` (`√5/4`) or `‖C j i‖` (`3/4`) is not it. Proved
++directly from the definition of `reported` (not through `reported_offdiag`), so that a mutated
++`reported` fails here as well. -/
++theorem probe_asym_reported :
++    reported (coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2) (0 : Fin 2) 1 =
++      (3 + Real.sqrt 5) / 8 := by
++  unfold reported
++  rw [if_neg (by decide), probe_asym_directed_magnitudes.1, probe_asym_directed_magnitudes.2]
++  ring
++
++theorem probe_asym_reported_swapped :
++    reported (coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2) (1 : Fin 2) 0 =
++      (3 + Real.sqrt 5) / 8 := by
++  unfold reported
++  rw [if_neg (by decide), probe_asym_directed_magnitudes.1, probe_asym_directed_magnitudes.2]
++  ring
++
++theorem probe_asym_drive :
++    sourceDrive 2 1 (coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2) (0 : Fin 2)
++      1 = 3 * ((3 + Real.sqrt 5) / 8) - 1 := by
++  rw [sourceDrive, probe_asym_reported]
++  ring
++
++/-- The diagonal of the same trajectory is reported as `0`, although `C₂ 0 0 = 1/4 + i/2`. -/
++theorem probe_asym_reported_diag :
++    reported (coherenceTrace (1/2) probeC00 1 probeX probeU2 probeOmega0 0 2) (0 : Fin 2) 0 =
++      0 := by
++  unfold reported
++  rw [if_pos rfl]
++
++/-- `α = 1/2` is self-dual (`α = 1 - α`), so the probes above cannot see an `α ↔ 1 - α` swap;
++with `α = 1/4` and `C0 = 0`, `C₁ = (1 - α) z₀ = 3/4` (a swap would give `1/4`). -/
++theorem probe_alpha_quarter (i j : Fin 2) :
++    coherenceTrace (1/4) probeC00 1 probeX probeU2 probeOmega0 0 1 i j = 3/4 := by
++  have h0 := asym_input_zero
++  norm_num [coherenceTrace, coherenceStep, coherenceInput, probeC00, h0]
++
++end
++end PhaseCoherence
++end AIEFGate
+diff --git a/lean/AIEFGateCore/AIEFGateCore/PhaseIncrement.lean b/lean/AIEFGateCore/AIEFGateCore/PhaseIncrement.lean
+new file mode 100644
+index 0000000..35e442f
+--- /dev/null
++++ b/lean/AIEFGateCore/AIEFGateCore/PhaseIncrement.lean
+@@ -0,0 +1,167 @@
++/-
++Copyright (c) 2026 Jacob Brainard and AIEF contributors. All rights reserved.
++Released under Apache 2.0 license as described in the file LICENSE.
++Authors: AIEF / SSRH
++-/
++-- SPDX-License-Identifier: Apache-2.0
++import AIEFGateCore.HistoryBuffer
++import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
++import Mathlib.Algebra.Order.Archimedean.Real.Basic
++import Mathlib.Tactic.Ring
++import Mathlib.Tactic.FieldSimp
++import Mathlib.Tactic.NormNum
++import Mathlib.Tactic.Linarith
++
++/-!
++# (P5) Modulo-safe coherence-input motion for a delay queue, restated inside `AIEFGateCore`
++
++Statements and proofs of `PhaseIncrement.lean` of cycle 011 of Researcher 040282 (handle only;
++`audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_011/proposal/PhaseIncrement.lean`
++on branch `audit-inbox`, commit `1b5ae52`, md5 `b26f225f…`), moved into the namespace
++`AIEFGate.Phase` on top of `AIEFGate.History` (`HistoryBuffer.lean`). Differences from the source:
++namespace, the `History` import, docstrings; the three statements are checked textually by
++`research/lean_gate/tests/test_lean_gate_p5.py`. Audited by Auditor Seat 002 (statements honest,
++standard axioms).
++
++* `phasor_wrap`: floor-based wrapping changes an angle only by a multiple of `2π`.
++* `delayed_input_step`: `z_{n+1} = z_n · exp(i (u_n i − L_n j))` with `L_n = 0` for `n < D`,
++  `u_{n−D}` for `n ≥ D`. Because the step is a ratio, the static offset `(ω_i + ω_j)/2 · τ`
++  cancels: **these three theorems say nothing about the offset** (dropping it survives in this
++  file; `PhaseCoherence.input_engine_convention` pins it).
++* `delayed_input_chord_bound`: circular chord bound.
++
++Scope: exact reals (no floating remainder, no allocation); arbitrary increments (possibly
++feedback-generated); not the C/R/B evolution and not phase locking.
++-/
++
++set_option autoImplicit false
++
++namespace AIEFGate
++namespace Phase
++
++
++variable {ι : Type*}
++
++noncomputable def phasor (t : ℝ) : ℂ := Complex.exp ((t : ℂ) * Complex.I)
++
++noncomputable def wrapPhase (t : ℝ) : ℝ :=
++  t - (Int.floor (t / (2 * Real.pi)) : ℝ) * (2 * Real.pi)
++
++noncomputable def phaseTrace (x0 : ι → ℝ) (u : ℕ → ι → ℝ) : ℕ → ι → ℝ
++  | 0 => x0
++  | n + 1 => fun i => wrapPhase (phaseTrace x0 u n i + u n i)
++
++noncomputable def inputPhasor (d : ℕ) (x0 : ι → ℝ) (u : ℕ → ι → ℝ)
++    (omega : ι → ℝ) (tau : ℝ) (n : ℕ) (i j : ι) : ℂ :=
++  phasor (phaseTrace x0 u n i -
++    AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -
++    ((omega i + omega j) / 2) * tau)
++
++noncomputable def delayedIncrement (d : ℕ) (u : ℕ → ι → ℝ) (n : ℕ) (j : ι) : ℝ :=
++  if d ≤ n then u (n - d) j else 0
++
++/-- Floor-based wrapping changes an angle only by an integer period. -/
++theorem phasor_wrap (t : ℝ) : phasor (wrapPhase t) = phasor t := by
++  unfold phasor wrapPhase
++  push_cast
++  rw [sub_mul, Complex.exp_sub, mul_assoc]
++  simp only [Complex.exp_int_mul_two_pi_mul_I, div_one]
++
++/-- Startup has zero delayed increment; the first live delayed increment is n=D. -/
++theorem delayed_input_step (d : ℕ) (x0 : ι → ℝ) (u : ℕ → ι → ℝ)
++    (omega : ι → ℝ) (tau : ℝ) (n : ℕ) (i j : ι) :
++    inputPhasor d x0 u omega tau (n + 1) i j =
++      inputPhasor d x0 u omega tau n i j *
++        phasor (u n i - delayedIncrement d u n j) := by
++  have hadd (a b : ℝ) : phasor (a + b) = phasor a * phasor b := by
++    simp only [phasor, Complex.ofReal_add, add_mul, Complex.exp_add]
++  have hsub (a b : ℝ) : phasor (a - b) = phasor a / phasor b := by
++    simp only [phasor, Complex.ofReal_sub, sub_mul, Complex.exp_sub]
++  have hstep (k : ℕ) (r : ι) :
++      phasor (phaseTrace x0 u (k + 1) r) = phasor (phaseTrace x0 u k r) * phasor (u k r) := by
++    change phasor (wrapPhase (phaseTrace x0 u k r + u k r)) = _
++    rw [phasor_wrap, hadd]
++  have hz : phasor 0 = 1 := by simp [phasor]
++  simp only [inputPhasor, AIEFGate.History.historyTrace_oldest, hsub]
++  by_cases hd : d ≤ n
++  · have hs : n + 1 - d = (n - d) + 1 := by omega
++    rw [hs, hstep, hstep]
++    simp only [delayedIncrement, if_pos hd]
++    field_simp [phasor, Complex.exp_ne_zero]
++  · have h0 : n - d = 0 := by omega
++    have h1 : n + 1 - d = 0 := by omega
++    simp only [h0, h1, hstep, delayedIncrement, if_neg hd, hz, div_one]
++    field_simp [phasor, Complex.exp_ne_zero]
++
++/-- Circular chord bound, NOT a Euclidean difference of stored representatives. -/
++theorem delayed_input_chord_bound (d : ℕ) (x0 : ι → ℝ) (u : ℕ → ι → ℝ)
++    (omega : ι → ℝ) (tau : ℝ) (n : ℕ) (i j : ι) :
++    ‖inputPhasor d x0 u omega tau (n + 1) i j - inputPhasor d x0 u omega tau n i j‖ ≤
++      |u n i - delayedIncrement d u n j| := by
++  rw [delayed_input_step]
++  have heq : inputPhasor d x0 u omega tau n i j * phasor (u n i - delayedIncrement d u n j) -
++      inputPhasor d x0 u omega tau n i j =
++      inputPhasor d x0 u omega tau n i j *
++        (phasor (u n i - delayedIncrement d u n j) - 1) := by ring
++  rw [heq, norm_mul]
++  have hnorm : ‖inputPhasor d x0 u omega tau n i j‖ = 1 := by
++    unfold inputPhasor phasor
++    exact Complex.norm_exp_ofReal_mul_I _
++  rw [hnorm, one_mul]
++  simpa only [phasor, mul_comm, Real.norm_eq_abs] using
++    (Real.norm_exp_I_mul_ofReal_sub_one_le (x := u n i - delayedIncrement d u n j))
++
++/-! (P5, audit fix) Closed-form VALUE probes of the two definitions the theorems above are about.
++They are proved from the definitions (not through `delayed_input_step`), so that a mutated
++definition fails here by its value, not only through a rewrite lemma. -/
++
++/-- `delayedIncrement 2` of the increment sequence `u n = n + 1`: `0, 0, u 0, u 1`. -/
++theorem probe_delayed_increment_values :
++    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 0 () = 0 ∧
++    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 1 () = 0 ∧
++    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 2 () = 1 ∧
++    delayedIncrement 2 (fun (n : ℕ) (_ : Unit) => (n : ℝ) + 1) 3 () = 2 := by
++  refine ⟨?_, ?_, ?_, ?_⟩ <;> norm_num [delayedIncrement]
++
++/-- One-step value of the input phasor with delay `D = 1`: node 0 advances by `π/2`, so
++`z₁ 0 0 = exp(i (θ₁ 0 − θ₀ 0)) = i`; reading the newest slot would give `1`. -/
++theorem probe_input_delay_values :
++    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ i => if i = 0 then Real.pi / 2 else 0)
++      (fun _ => (0 : ℝ)) 0 1 0 0 = Complex.I := by
++  have hw : wrapPhase (Real.pi / 2) = Real.pi / 2 := by
++    unfold wrapPhase
++    have h : Int.floor (Real.pi / 2 / (2 * Real.pi)) = 0 := by
++      rw [Int.floor_eq_zero_iff, Set.mem_Ico]
++      constructor
++      · positivity
++      · rw [div_lt_one (by positivity)]
++        linarith [Real.pi_pos]
++    rw [h]
++    simp
++  unfold inputPhasor
++  rw [AIEFGate.History.historyTrace_oldest]
++  simp [phaseTrace, hw, phasor]
++
++/-- (N2) Asymmetric-`ω` value probe of the static offset `(ω_i + ω_j)/2 · τ`: `D = 1`, `x0 = 0`, no
++increments, `τ = π`, `ω = (1, 0)` (the two nodes differ). The offset is the MEAN of the two natural
++frequencies, so the input is `exp(−i π) = −1` for `(0,0)`, `exp(−i π/2) = −i` for both `(0,1)`
++and `(1,0)`, and `1` for `(1,1)`. Using `ω_i` only, `ω_j` only, a node-uniform `ω`, or no offset
++changes at least one of the four values. -/
++theorem probe_input_asym_omega_value :
++    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
++      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 0 0 = -1 ∧
++    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
++      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 0 1 = -Complex.I ∧
++    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
++      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 1 0 = -Complex.I ∧
++    inputPhasor 1 (fun _ : Fin 2 => (0 : ℝ)) (fun _ _ => (0 : ℝ))
++      (fun i : Fin 2 => if i = 0 then (1 : ℝ) else 0) Real.pi 0 1 1 = 1 := by
++  have hI : Complex.exp (2⁻¹ * (Real.pi : ℂ) * Complex.I) = Complex.I := by
++    rw [show 2⁻¹ * (Real.pi : ℂ) * Complex.I = (Real.pi : ℂ) / 2 * Complex.I by ring]
++    exact Complex.exp_pi_div_two_mul_I
++  refine ⟨?_, ?_, ?_, ?_⟩ <;>
++    (unfold inputPhasor; rw [AIEFGate.History.historyTrace_oldest];
++     simp [phaseTrace, phasor, Complex.exp_neg, hI])
++
++end Phase
++end AIEFGate
+diff --git a/lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt b/lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt
+index f72134f..205d2f7 100644
+--- a/lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt
++++ b/lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt
+@@ -1,17 +1,20 @@
+ 3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71  lean-toolchain
+ 40f8df690288bfc789e0455dea403d94e09fd62663fdc1779b7dd7da21d4060e  lakefile.toml
+ 94599bf6f8550e9d15ee4f674b6d7771e93ccf83fc3fd1f74978a50fe2b5da67  lake-manifest.json
+-6da6e398d1c302350fd7625113cc092e5973657f805d369bf7632be6a84698d9  AIEFGateCore.lean
++ee3b035a84a0be00d3c1d7076097d89187b1390d896c65ade562e3ca33cf58b1  AIEFGateCore.lean
+ 3da9d4f814e8d57001d8dd9f9065ae40acb732a8d6ea57dc9540981d0848011f  AIEFGateCore/Bridge.lean
+ 6a63028c91eb38661e1f5281dd547d7a355827b95a5c6554f502e5f1c70a3e74  AIEFGateCore/Capacity.lean
+ 22b80647ca2e7e4ce185f5874f04858b98a46f08cf9ce3903eb52530153602d9  AIEFGateCore/EngineRedTeam.lean
+ 96d76c07107180c32b2dc3a39cd9a0870dd6adf57f689f6987bcf380694f29c5  AIEFGateCore/EngineWitness.lean
+ efdc63085c553d77724e7236427aca43c2b650b5d0c05352994c0d751c6d0cb9  AIEFGateCore/Freeze.lean
+ 46bc1e07ffb4b33463ee1e30554a74e39524e01169ea3d2ffff613b5349a81b9  AIEFGateCore/GateMap.lean
++ee137ab62ed00c7724267c8b6733602e45e8509ddfb5e58c94978007eb7b65d5  AIEFGateCore/HistoryBuffer.lean
+ 6a4ee8b9243af5bd4b8d25166ad0b8d117ec68dcb7976897feba0b85cdbf52fd  AIEFGateCore/K3.lean
+ daa75dc828c0e621767c432ef82ef179a092a0e2e2f7ed13fc2364fc4d8c8798  AIEFGateCore/MatrixForm.lean
+ b4e1828d243310a160c407bea886c7170a22daff9d35b39dd46cec362735f9f0  AIEFGateCore/Persistence.lean
+ c5a7280ae307a94a730a2bb0499205d6c079c115cbe6b3bbd6392486b17ea94a  AIEFGateCore/PersistenceWitness.lean
++e78c3580f3271468997c5e4e5ad84ede80c9580236172540ba43e02c7f588d3f  AIEFGateCore/PhaseCoherence.lean
++ece99276501624c13bc9eb1a4e66c806357a039b5ccd248a7ba4224c4ea7f10b  AIEFGateCore/PhaseIncrement.lean
+ 08f6fb5b472a6d3c31984a7096077aa5e4285697dae50e6f758c05aa0281541c  AIEFGateCore/Pinned/CompleteGraphIncidence.lean
+ 7511feb4e52a63c33c39480d368b6f9a906570076f684f030c6dcc79112b9302  AIEFGateCore/Pinned/ControllerFiber.lean
+ 2b29268378599f6acce6b71b9fee6f25752a87642057c5f7e6b7706f590fb8cd  AIEFGateCore/Pinned/ControllerFiberProjector.lean
+diff --git a/lean/AIEFGateCore/README.md b/lean/AIEFGateCore/README.md
+index c2726f4..7210331 100644
+--- a/lean/AIEFGateCore/README.md
++++ b/lean/AIEFGateCore/README.md
+@@ -1,6 +1,6 @@
+ # AIEFGateCore (Lean 4 + Mathlib)
+ 
+-Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8), P4a (SPEC §9, `Capacity.lean`) and P4b (SPEC §10, `Freeze.lean`, `WeightUpdate.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
++Lean work packages P1, P2 (SPEC §7), P3 (SPEC §8), P4a (SPEC §9, `Capacity.lean`), P4b (SPEC §10, `Freeze.lean`, `WeightUpdate.lean`) and P5 (SPEC §11, `HistoryBuffer.lean`, `PhaseIncrement.lean`, `PhaseCoherence.lean`): branch-conditional identities of the engine-v1 capacity gate along controller-kernel
+ directions, which the rate-law audit (`AUD-RATELAW`; ERRATA E5, and E22 on
+ `main` (landed via PR #18)) relies on. **AUD-RATELAW stays UNEXPLAINED**: this package
+ proves one-step real-arithmetic algebra used by the audit's estimator; it does not explain the rate law. Spec, code mapping and scope:
+@@ -32,6 +32,7 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched
+ | `EngineRedTeam.engine_false_{drop_ker,drop_hc1,drop_clip,main_no_gamma,multiplier_no_gamma}` | (P3) the same negations at engine-shaped parameters (`ε = 10⁻¹² > 0`, `EngineGate`) |
+ | `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex` (affine, not convex unless `0 ≤ γdt ≤ 1`: `convex_weights_iff`), `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |
+ | `WeightUpdate.rowM_le_upper`, `stepM_factor_lower`, `stepM_scalar_recurrence`, `trajectory_symmetric`, `trajectory_good_of_start`, `edge_eventually_off/on(_from)`, `onGap_iff`, `onGap_N12_fails`, `false_*`, `witness_*` | (P4b) weight-update bridge of the cycle-003 deposit on `Params`/`stepM`: Lemma 1 row sandwich, gate-factor floor, scalar recurrence, trajectory invariants (B stays symmetric, nonnegative, zero-diagonal, feasible), per-edge ∃N OFF/ON freezing (`Freeze.lean` restates the scalar core), and the exact ON-certificate threshold `S < 18999999991/90000000000` at `pE`, `B_c = 3/25` (fails at the N = 12 coarse envelope) |
++| `History.historyTrace_{index,oldest,newest}`, `Phase.{phasor_wrap,delayed_input_step,delayed_input_chord_bound}`, `PhaseCoherence.{input_engine_convention,innovation_*,coherenceTrace_unitDisk,phase_*_bounds,drive_eta_response,main_preM_source_formula,main_phase_preM,reported_{diag,offdiag,symm},sourceDrive_{diag,symm},main_phase_stepM_eq_stepB,probe_*}` | (P5) phase-specific coherence EMA and drive on `Params`/`preM`/`stepM`, ported from cycles 010, 011 and 013 of Researcher 040282 (handle only; cycles 010/011 on `audit-inbox` commit `1b5ae52`, cycle 013 supplied by the owner, md5 `410275ad…`, see SPEC §11): the delayed read is `n − D`, the input is `exp(i(θ_n,i − θ_{n−D},j − (ω_i+ω_j)τ/2))`, the EMA/reported/drive follow the engine convention (`compute_R`, `advance_state`, **hand-checked, not proved against Python**); node-uniform and asymmetric zero-init probes pin delay, offset, EMA weight, symmetrised average and zero diagonal. Out of scope: trajectory of `B`, locking, clip/projection, `shuffle_driver` |
+ 
+ **Scope.** Reals, not float64; edge-vector form, not the symmetric matrix; one step with `R` fixed (ERRATA E5);
+ exact controller order (no `TIE_TOL`). Persistence (P3) is conditional on staying in the branch, with `R` frozen;
+@@ -39,7 +40,7 @@ its witness is the tied K3 `+vCtrl` side only. P1's `IsCtrl`/`InCtrlKer` quantif
+ need them only on edges with `x_e ≠ 0` or `h_e ≠ 0` (SPEC §7.1). Matrix vs edge-vector form: proved for symmetric
+ `B` and drive (P2, SPEC §7.4).
+ Not formalised: the closed-form clique multiplier `λ_k`, finite-time
+-departure from the locked state, persistence with moving `R` or non-uniform scales, phases, delay, EMA, K12 (`lean/AIEFProofsKn`).
++departure from the locked state, persistence with moving `R` or non-uniform scales, locking, the `B` trajectory with phases, K12 (`lean/AIEFProofsKn`). (Delay, phase input and EMA are modelled by P5 only as the coherence component, SPEC §11.)
+ 
+ **Check** (from this directory): `./check_lean_gate.sh` (or `SKIP_CACHE=1 ./check_lean_gate.sh` offline). Seven
+ steps as in `lean/AIEFFreezeCore/check_lean_freeze.sh`: toolchain, pins (`AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt`),
+@@ -48,14 +49,11 @@ build with 0 warnings, forbidden markers, axiom audit (only propext, Classical.c
+ 2026-11-09 (P3, `SKIP_CACHE=1`): PASS, 2149 jobs, 0 warnings, 14 source files, 439 declarations audited, 239
+ theorems printed with `#print axioms`, 0 disallowed.
+ Cross-check against the pinned engine: `research/lean_gate/lean_gate_crosscheck_v1.py`; mutation check:
+-`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4, §9.3, §10.4): 36 mutants (M1–M36), run in CI on the required `lean (AIEFGateCore)` job since PR #27, each must (a) fail to build with the kept
+-proof by a real proof failure (since P3 a failure made only of `Unknown identifier`/`unknown constant` errors does
+-not count; a classifier negative control checks this), (b) be refuted by a proved negation theorem (no `sorry`,
+-standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` refutation are rejected as negative
+-controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated
+-statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as
+-dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,
+-weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. M24–M36 (P4b): the same for `WeightUpdate.lean`.
++`research/lean_gate/lean_mutation_check.py`. On `main` the suite has 36 statement mutants (M1–M36); on this P5 branch it has **58 mutants**: 38 statement mutants (M1–M36 plus M57–M58, the PR #27 `Capacity` follow-ups) and 20 definition mutants (M37–M56). The mutation check has run in CI on the required `lean (AIEFGateCore)` job since PR #27 (`.github/workflows/lean.yml`, step "Lean-gate mutation check (AIEFGateCore only)"); the older P5 wording in SPEC §11.4/§11.6 that says otherwise is stale and is corrected by this refresh.
++
++Statement mutants must (a) fail to build with the kept proof by a real proof failure (since P3 a failure made only of `Unknown identifier`/`unknown constant` errors does not count; a classifier negative control checks this), (b) be refuted by a proved negation theorem (no `sorry`, standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` refutation are rejected as negative controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector, weakened controller set, persistence without decay. M14–M23 (P4a): `Capacity.lean`; M24–M36 (P4b): `WeightUpdate.lean`; M57–M58: `Capacity.preM_between` / `convex_weights_iff`.
++
++Definition mutants M37–M56 (`DEF_MUTANTS`) are killed iff the mutated file fails to build with no name-reference or parse error line anywhere AND a pre-declared closed-form VALUE probe fails (rewrite lemmas earn no credit; SPEC §11.3). There are 10 equivalence controls (must not be killed), 3 typo controls (must be flagged invalid) and 2 statement controls; `KNOWN_SURVIVORS` is empty (the former S1 is now killed by `probe_input_asym_omega_value`, SPEC §11.7 N2). Local P5 result (SPEC §11.7): 38/38 statement mutants rejected, 20/20 definition mutants killed, 58/58 total, RESULT PASS.
+ 
+ `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the
+ cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`.
+diff --git a/research/lean_gate/SPEC_P1_gate_identities.md b/research/lean_gate/SPEC_P1_gate_identities.md
+index e258fb3..6e697c6 100644
+--- a/research/lean_gate/SPEC_P1_gate_identities.md
++++ b/research/lean_gate/SPEC_P1_gate_identities.md
+@@ -880,3 +880,214 @@ P4a test now asserts `>= 23`.
+ * `γ = 0` and `γ dt ≥ 1` (engine-legal) are outside the edge theorems; float64, phases, delay and the EMA are not modelled.
+ * No Lean-side statement pin (Lea-style statement hash) in CI yet.
+ * **AUD-RATELAW stays UNEXPLAINED.**
++
++
++## 11. P5 (branch `research/lean-gate-p5`, written from `main` `3c5c0ef`, which contains P4a; merge-refreshed on 2026-11-11 onto `main` `1c30ca5`, which contains P4b (PR #26) and the #27 follow-ups, see §11.7)
++
++Port of Researcher 040282's cycles 010 (`HistoryBuffer`), 011 (`PhaseIncrement`) and 013 (`PhaseCoherenceBridge`) into
++`lean/AIEFGateCore/AIEFGateCore/{HistoryBuffer,PhaseIncrement,PhaseCoherence}.lean` (namespaces `AIEFGate.History`,
++`AIEFGate.Phase`, `AIEFGate.PhaseCoherence`), with the fixes required by Auditor Seat 002. Nothing under `Pinned/`,
++`lean/AIEFProofs*`, `lean/AIEFFreezeCore`, `Capacity.lean`, `.github/` or any other hash-pinned artifact is edited;
++`registry/claims.csv`, `audit_inbox/TRIAGE.md` and the ERRATA are not edited. **AUD-RATELAW stays UNEXPLAINED**; this
++package does not touch it.
++
++**Credit.** Statements and proofs come from Researcher 040282 (handle only). Cycles 010/011: `audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_010/proposal/HistoryBuffer.lean`
++(md5 `fe47db36…`, identical copy in cycle 011) and `cycle_011/proposal/PhaseIncrement.lean` (md5 `b26f225f…`) on branch `audit-inbox`, commit
++`1b5ae52`. Cycle 013: `PhaseCoherenceBridge.lean`, md5 `410275adc4ea837a6384cefe2d545c2d`; **this file is not on `audit-inbox`** (the owner
++supplied it; the auditor's built copy is the reference). The deposit sources are not imported: `AIEFGateCore` may have no path dependency
++(step 2 of `check_lean_gate.sh`) and the files import `HistoryBuffer`/`PhaseIncrement` by bare module name, so the three files are restated inside
++the project (namespace, imports and docstrings changed; statements and proofs otherwise as deposited). Because the deposit is not on `main`, there
++is nothing to compare textually against in the repository (unlike P4b's `FreezeCore.lean`): `test_lean_gate_p5.py` records the whitespace-normalised
++deposit statements (6 for 010/011, 17 for 013) with the md5s above and checks that the restated statements agree. Audited by Auditor Seat 002
++(010 ADOPT, 011 ADOPT AS BUILDING BLOCK, 013 ADOPT WITH NOTES); the selection and the fixes follow that audit.
++
++**Overlap with `main`'s definitions.** `coherenceTrace`/`reported`/`sourceDrive` feed `main`'s `MatrixForm.preM`/`stepM` (`main_preM_source_formula`,
++`main_phase_preM` are `rfl`); new: `sourceDrive_symm` and `main_phase_stepM_eq_stepB` discharge the symmetric-drive hypothesis of
++`MatrixForm.stepM_eq_stepB` for the phase-specific drive, so the matrix step with that drive equals the edge-vector step `stepB`.
++`History`/`Phase` overlap nothing in `main` (no phase or delay state yet); the engine convention is a source-convention extension.
++
++### 11.1 What is proved
++
++| Theorem | Hypotheses (exactly as proved) | Content |
++|---|---|---|
++| `History.historyTrace_index`, `_oldest`, `_newest` | none | slot `i` at read `n` holds `x (n + i - D)` (constant prehistory); oldest `x (n - D)`; newest `x n` |
++| `Phase.phasor_wrap` | none | `phasor (wrapPhase t) = phasor t` |
++| `Phase.delayed_input_step` | none | `z_{n+1} = z_n · phasor (u n i − delayedIncrement d u n j)`; `delayedIncrement = 0` for `n < D`, `u (n−D) j` else. The offset `(ω_i+ω_j)/2·τ` **cancels**: this theorem does not pin it |
++| `Phase.delayed_input_chord_bound` | none | `‖z_{n+1} − z_n‖ ≤ |u n i − delayedIncrement d u n j|` (circular chord) |
++| `PhaseCoherence.input_engine_convention` | none | `coherenceInput = exp(i (θ_n,i − θ_{n−D},j − (ω_i+ω_j)/2 · τ))` with the **read-time `n − D`** index; this is what pins the offset and the delay index |
++| `input_norm`, `innovation_engine_convention`, `lateSource_startup`, `innovation_transport` | none | unit modulus; `C_{n+1} − αC_n = (1−α) exp(i dphi)`; startup clock; transport of the innovations by `phasor (u n i − lateSource d u n j)` |
++| `coherenceTrace_unitDisk` | `0 ≤ α ≤ 1`, `‖C0‖ ≤ 1` | `‖C_n i j‖ ≤ 1` |
++| `reported_bounds`, `phase_drive_bounds`, `phase_normalized_drive_bounds`, `phase_positiveRow_bound` | `‖C‖ ≤ 1`; `0 ≤ η, μ`, `0 ≤ α ≤ 1`, `‖C0‖ ≤ 1`; `0 < γ` for the normalised/row forms | generic bounds: `0 ≤ reported ≤ 1`, drive in `[−μ, η]`, positive-row envelope `(N−1) η/γ` (survive phase mutants by nature; auditor note N4) |
++| `drive_eta_response` | none | `sourceDrive (η+δ) μ C − sourceDrive η μ C = δ · reported C` |
++| `main_preM_source_formula`, `main_phase_preM` | none | `preM p (sourceDrive …) B = B + dt ((η+μ) reported − μ − γ B)` on `main`'s `Params` |
++| **new** `reported_diag`, `sourceDrive_diag` | none | `reported C i i = 0`, `sourceDrive C i i = −μ` (N2) |
++| **new** `reported_offdiag`, `reported_symm`, `sourceDrive_symm` | `i ≠ j` for `_offdiag` | `reported = (‖C i j‖ + ‖C j i‖)/2` and symmetric although `C` need not be (N1) |
++| **new** `main_phase_stepM_eq_stepB` | `B` symmetric, `Fintype V`, `LinearOrder V` | link to `MatrixForm.stepM_eq_stepB` for the phase drive |
++| probes (`probe_coherence_values`, `probe_reported_second`, `probe_drive_second`, `probe_main_preM`, …) | none | node-uniform probe, `D = 2`, `x0 = 0`, `u = π/2`, `ω = 1`, `τ = π`, `α = 1/2`, `C0 = 1` (as deposited) |
++| **new** `probe_asym_coherence_values`, `probe_asym_directed_magnitudes`, `probe_asym_directed_ne` | none | (N1, N5) `D = 1`, `x0 = 0`, `ω = 0`, `τ = 0`, node 0 advances `π/2` per step, node 1 not, `α = 1/2`, **`C0 = 0` (engine zero init)**: `C₂ 0 j = 1/4 + i/2`, `C₂ 1 j = 3/4`; `‖C₂ 0 1‖ = √5/4 ≠ 3/4 = ‖C₂ 1 0‖` |
++| **new** `probe_asym_reported`, `_swapped`, `probe_asym_drive`, `probe_asym_reported_diag` | none | reported `= (3 + √5)/8` in both directions (proved by unfolding `reported`, **not** through `reported_offdiag`), drive `= 3 (3+√5)/8 − 1` at `η = 2, μ = 1`; diagonal `0` |
++| **new** `probe_alpha_quarter` | none | `α = 1/2` is self-dual so the older probes cannot see an `α ↔ 1−α` swap; with `α = 1/4`, `C₁ = 3/4` |
++| **new (audit fix)** `Phase.probe_delayed_increment_values`, `Phase.probe_input_delay_values`, `probe_input_offset_value` | none | closed-form value probes of the definitions (`delayedIncrement 2` of `u n = n+1` is `0, 0, 1, 2`; `D = 1` input `z₁ 0 0 = i`; input at read time 0 with `ω = 1, τ = π` is `−1`); the only credit-bearing pins of M37–M39 and M43 |
++
++**Fix list from the audit.** (a) the asymmetric node-dependent probe above pins the symmetrised average (the "reported = `‖C i j‖` only" mutant is now
++killed, M51); (b) `reported_diag` and the direct `probe_asym_reported_diag` pin the zero diagonal (M52); (c) the `wrong_*_refuted` lemmas are renamed
++`inputPhasor_delay_{three,one,zero}_differs`, `inputPhasor_no_offset_differs`, `constant_input_differs`, `drive_without_eta_differs` and their
++docstring says they are facts about the function `Phase.inputPhasor` (and two arithmetic comparisons), not mutation evidence; the mutation evidence is
++the check in `lean_mutation_check.py` (§11.3); (d) the C0 = 0 probe (zero initial coherence, as the engine's `coherence_acc`).
++
++**Transcription is hand-checked, not proved against Python.** `coherenceInput` is read off `aief_experiment_engine_v1.py` `compute_R` (about
++lines 735-751: `dphi = theta_i − delayed_j − mean(omega) tau`, EMA `alpha C + (1 − alpha) z`, `abs`, `0.5 (R + R^T)`, zero diagonal; the engine
++initialises `coherence_acc` to zeros) and `reported`/`sourceDrive` off the `advance_state` drive (about lines 790-794: `B + dt ((eta+mu) R − mu − gamma B)`);
++Auditor Seat 002 and Researcher 001 each compared these lines by hand. `test_lean_gate_p5.py` additionally checks the Lean values against an independent
++floating-point simulation of the same convention (also hand-written from the same lines). No theorem relates this Lean model to the Python code.
++
++**Scope (not covered).** The trajectory of `B` itself, phase locking, the clip/projection (`np.maximum`, symmetrisation of `B`) and `shuffle_driver` (the
++driver `R` used in `advance_state` may be shuffled); float64 and the `fmod`/remainder of the Python phase wrap (`wrapPhase` is the exact-real floor wrap);
++`D = 0` and `τ`, `ω` arbitrary reals are covered by the general statements but only `D ∈ {1, 2}` is probed.
++
++### 11.2 Numbering of the mutants
++
++`MUTANTS` holds the statement mutants: M1–M23 (P1–P4a) and M24–M36 (P4b, on `main` since PR #26); the #27 follow-ups add M57–M58 (§11.7). The P5 mutants are
++definition mutants (a second kind, see below), numbered **M37–M52** as ported plus **M53–M56** added for the auditor's note N2 (§11.7), and live in a separate list
++`DEF_MUTANTS` (20 entries, M37–M56). Exact pin: `test_lean_gate_p5.py` (`TOTAL_MUTANTS` = 38 statement + 20 definition = **58**; the P4b test pins `len(MUTANTS) == 38`;
++before the 2026-11-11 refresh the pin was 23 + 16 = 39 on the branch and 36 + 16 = 52 expected after P4b, 52 + 4 definition + 2 statement mutants = 58 now).
++
++### 11.3 Mutation check: M37–M52 (16 definition mutants)
++
++Why a new kind. M1–M36 change a theorem *statement* and are refuted by a proved negation theorem. The survivors reported for cycle 004 and cycle 013 are wrong
++*implementations* (a different delay index, a swapped `i j`, a one-sided `reported`, …): a mutated definition has no statement to refute, so steps (b)/(c) of
++the original rule cannot apply.
++
++**Rule change after the audit of `64f39eb` (written reason).** The first version of the definition-mutant rule was: the mutated file fails to build with a "REAL PROOF
++FAILURE" and one of the pin *theorems* fails. Auditor Seat 002 showed it scores semantically **equivalent** rewrites as killed (`inputPhasor … * 1`, `(… + 0)`, `id (…)`
++in `coherenceInput`: `input_engine_convention` fails with unsolved goals) and even a **misspelled identifier** (one "Unknown identifier" plus cascading unsolved goals
++classified as real). So 16/16 measured the brittleness of rewrite lemmas, not detection. The rule is now stricter (nothing is relaxed): a definition mutant is **KILLED
++iff** (1) the mutated file fails to build; (2) **no error line anywhere is a name-reference error (Unknown identifier/constant/namespace) or a parse error** (otherwise the
++mutant is INVALID, which fails the run); (3) at least one of the **value probes** declared for that mutant fails. Value probes (`VALUE_PROBES`) are the closed-form
++equalities `f (concrete data) = concrete value` proved from the definitions (`probe_*`); rewrite lemmas (`input_engine_convention`, `delayed_input_step`,
++`innovation_*`, `reported_symm`, `reported_diag`, …) give **no credit**, because they fail under equivalent rewrites too. New value probes added for this:
++`probe_delayed_increment_values` (`delayedIncrement 2` of `u n = n+1`: `0, 0, 1, 2`), `probe_input_delay_values` (D = 1, node 0 advancing `π/2`: `z₁ 0 0 = i`, newest slot
++would give `1`; proved from the definitions, not through `delayed_input_step`) in `PhaseIncrement.lean`, and `probe_input_offset_value` (`ω = 1, τ = π`: input at read time 0
++is `−1`, proved by `simp` from the definitions) in `PhaseCoherence.lean`.
++
++**What "KILLED" means (auditor note N1, added in the 2026-11-11 refresh).** For a *definition* mutant, KILLED means exactly this: the mutated file fails to build, no error
++line is a name-reference or parse error, and **a declared closed-number value probe fails to build** (the probe is a theorem `f (concrete data) = concrete number` whose proof no
++longer elaborates). It does **not** mean that the mutant "computes a different value": the harness never evaluates the mutated definition and never compares two values; it only observes
++which probe declarations stop elaborating. A probe can in principle also fail for a reason other than a changed value (a brittle proof script); the equivalence controls below bound that.
++
++**Negative controls (the run FAILS if any is not as expected):**
++
++* *Equivalence controls* (10 since the refresh, 9 before; must NOT be killed, i.e. no declared value probe of the file fails): E1 `* 1`, E2 `+ 0`, E3 `id (…)` on `coherenceInput`; E4 `¬ n < d` for `d ≤ n`,
++  E5 `u (n − d + 0)` and E6 another proof term for the oldest slot on the 011 delayed read / input read; E7 reordered EMA sum; E8 commuted `‖C i j‖ + ‖C j i‖` in `reported`;
++  E9 `(μ + η)` for `(η + μ)` in the drive, E10 `(ω_j + ω_i)/2` for `(ω_i + ω_j)/2` in the static offset of `inputPhasor` (added with N2; its first version of the probe was killed
++  by E10 and by E1/E2 on the new coherence probe, see §11.7). (A first version of `probe_input_offset_value` closed its goal with `exact reference_zero …` and was killed by E1/E2, i.e. it
++  was itself brittle; it was re-proved by `simp` from the definitions, after which E1/E2 are not killed. This was caught by the controls, which is their purpose.)
++* *Typo controls* (3; must be classified INVALID and not killed): T1 `inputPhasorXX`, T2 an unbalanced parenthesis (parse error), T3 `delayedIncrementXX`.
++* *Statement-level controls* (2, on M4's statement): SE1 an equivalent rewrite `(1 − dt·γ)` and ST1 a typo `branchScaleXX` must NOT be rejected.
++* Known survivor S1 was documented here before the refresh; since N2 it is the counted mutant M55 and `KNOWN_SURVIVORS` is empty (§11.7). Mutants in `KNOWN_SURVIVORS` would be run and reported but not counted; a survivor that starts being detected fails the run (stale list).
++
++**Re-check of the 23 statement mutants (M1–M23).** They are protected by step (b), which the definition mutants lacked: the mutated statement must be refuted by a *proved
++negation theorem* (standard axioms, no `sorry`), and an equivalent statement is true so no negation applies, while a misspelled statement does not elaborate in the refutation
++file at all. The two statement-level controls above test exactly that. Their build step (a) keeps the P3 classifier (name-reference-only failures give no credit, mixed
++ones do); the run now **flags** any statement mutant whose build output also contains a name-reference/parse error line (information only; result below). The classifier itself
++is not changed: M1–M23 were designed so that the kept proof fails on the type, and tightening it would change P3's recorded rule without a demonstrated weakness (the
++verdict of every statement mutant also needs (b) and (c)).
++
++| # | Mutant (definition changed, proofs kept) | File | Value probe(s) declared and observed failing |
++|---|---|---|---|
++| M37 | `delayedIncrement`: `d ≤ n` → `d < n` (011 auditor mutant) | PhaseIncrement | `probe_delayed_increment_values` |
++| M38 | `delayedIncrement`: `u (n−d)` → `u (n−d+1)` | PhaseIncrement | `probe_delayed_increment_values` |
++| M39 | `inputPhasor` reads the newest slot instead of the oldest | PhaseIncrement | `probe_input_delay_values` |
++| M40 | 004: wrong delay index, `D` → `D+1` | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
++| M41 | 004: wrong delay index, `D` → `D−1` (younger read) | PhaseCoherence | same |
++| M42 | 004: current `θ` instead of the delayed `θ` | PhaseCoherence | same |
++| M43 | 004: dropped `ω·τ` offset (ω := 0) | PhaseCoherence | `probe_input_offset_value`, `probe_coherence_values` (both fail) |
++| M44 | 004: `phase := 0` (input `1`) | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` (and `probe_input_offset_value`) |
++| M45 | 004: missing `η` (`(η+μ) R` → `μ R`) | PhaseCoherence | `probe_drive_second`, `probe_asym_drive` |
++| M46 | 013 (auditor): swap `i`/`j` in `coherenceInput` | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
++| M47 | 013 (auditor): conjugated input | PhaseCoherence | same |
++| M48 | 013 (auditor): `α` ↔ `1−α` in the EMA | PhaseCoherence | `probe_alpha_quarter` only (the `α = 1/2` probes are blind to it) |
++| M49 | 013 (auditor): drive `−μ` → `+μ` | PhaseCoherence | `probe_drive_second`, `probe_asym_drive` |
++| M50 | 013 (auditor): trace step uses the input of step `n+1` (off by one) | PhaseCoherence | `probe_coherence_values`, `probe_asym_coherence_values` |
++| M51 | 013 survivor: `reported` one-sided (`‖C i j‖` only) | PhaseCoherence | `probe_asym_reported` (also `probe_asym_reported_swapped`) |
++| M52 | 013 survivor: `reported` diagonal `1` instead of `0` | PhaseCoherence | `probe_asym_reported_diag` |
++| M53 | (N2) `inputPhasor` offset `(ω_i+ω_j)/2·τ` → `ω_i·τ` (wrong index / node-uniform `ω_i`) | PhaseIncrement | `probe_input_asym_omega_value` |
++| M54 | (N2) offset → `ω_j·τ` (wrong index) | PhaseIncrement | `probe_input_asym_omega_value` |
++| M55 | (N2) offset dropped (formerly the documented survivor S1) | PhaseIncrement | `probe_input_asym_omega_value` |
++| M56 | (N2) `coherenceInput` reads a node-uniform `ω` (`fun _ => ω i`) | PhaseCoherence | `probe_coherence_input_asym_omega` |
++
++Former known survivor **S1** (documented before the 2026-11-11 refresh, now the counted M55): dropping the static offset `(ω_i+ω_j)/2·τ` in `PhaseIncrement.inputPhasor` alone is not detected by that file's theorems or value probes
++(the offset cancels in the step ratio; Auditor Seat 002's note on 011; no value probe of that file involves `ω` or `τ`). It **is** killed one level up by the value probes
++`probe_input_offset_value` and `probe_coherence_values` of `PhaseCoherence.lean` (M43), so "pinned one level up" now rests on value probes, not on `input_engine_convention`.
++
++Result as recorded before the refresh (local, 2026-11-10; full run of the revised rule, `lean_mutation_check.py`): positive controls PASS (8 files), both validator negative controls REJECTED, classifier negative
++control PASS; **23/23 statement mutants rejected (M1–M23 unchanged; 0 of them flagged with a name-reference/parse error line)**; statement controls SE1 (equivalent) and ST1 (typo)
++NOT rejected; **16/16 definition mutants KILLED by a declared value probe (M37–M52), 39/39 in total; no counted survivor**; **9/9 equivalence controls NOT killed** (E1–E5, E7–E9 fail
++only in rewrite lemmas, E6 builds); **3/3 typo controls flagged INVALID** (unknown identifier, parse error, unknown identifier); S1 survives as documented. RESULT PASS.
++Under the first version of the rule E1, E2 and E3 would have been scored killed and T1 too (audit of `64f39eb`). The value probes that actually failed are in the table above
++(per mutant); rewrite lemmas also failed for most mutants but earn no credit. No mutant, pin or proof was changed after seeing a mutation result, except the re-proof of
++`probe_input_offset_value` described under the controls (it was itself brittle: killed by E1/E2) and the pin changes recorded earlier (M48 → `probe_alpha_quarter`, M51/M52 → direct
++probes). Limits that remain: a value probe can still fail because its *proof script* is brittle rather than because the value differs; the equivalence controls bound this (nine
++rewrites, none kills) but cannot exclude it for other rewrites. The `ω` probes used a node-uniform `ω`, so a mutant replacing `(ω_i+ω_j)/2` by `ω_i` was not in the list; that gap is closed by N2 (M53–M56, §11.7).
++
++### 11.4 Gate results before the refresh (local, 2026-11-10, Europe/Tirane; the refreshed numbers are in §11.7)
++
++* `SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2297 jobs, 0 warnings, 18 `.lean` files (root + 17 modules; 3 modules new) hashed in `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` (22 entries),
++  step 6: 18 files scanned, 0 hits, **615 declarations audited** (512 on `main`; +103 for the three new files, 3 of them the audit-fix value probes), every one depending only on
++  `propext`, `Classical.choice`, `Quot.sound` (`disallowed=0`). Iterations: two for the first commit (Mathlib line-length linter; a docstring line starting with `theorem` read by the step-7
++  declaration scan), none for the audit-fix commit; no proof changed.
++* `lean_mutation_check.py` (full run): 39/39 with the revised rule plus 9 + 3 + 2 controls (above).
++* `research/lean_gate/tests`: 52 passed (40 before P5; `test_lean_gate_p5.py` has 12 tests: restated statements vs the deposit, banned markers and credit by handle, fix lemmas present,
++  the probes against an independent simulation, the exact counts 23 + 16 = 39 mutants and 9 / 3 / 2 controls, every edit applies once and every pin is a value probe, the revised kill rule's
++  negative controls incl. name-reference and parse errors anywhere, closed-value-equality shape of the probes).
++* Repository checks (`tools/ci`, local venv): `check_artifact_pins`, `check_sha256sums`, `check_modes --strict`, `hygiene_scan --pii`, `lint_claims`, `check_manifest`, `check_current_inventory`,
++  `check_pinned_restatement` all PASS; `unittest discover tools/ci/tests`: 179 tests OK. `registry/artifacts_current.csv` regenerated after staging (the builder lists tracked files only).
++* Not done at that time (not on `main`): mutants for the auditor's `Capacity` lemmas `preM_between` and `convex_weights_iff` (PR #27); added as M57–M58 in the refresh (§11.7). `Capacity.lean`, `.github/` and `Pinned/` are untouched.
++
++### 11.5 Expected merge conflicts with P4b (PR #26) (as predicted before the merge; what actually happened is in §11.7)
++
++Both branches append to the same places: `AIEFGateCore.lean` (import lines), `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` (regenerate), `README.md` (table/summary text),
++this SPEC (§10 vs §11 appended at the end), `research/lean_gate/lean_mutation_check.py` (P4b appends M24–M36 to `MUTANTS` and edits `OPENS`/docstring; P5 adds `DEF_MUTANTS`,
++`KNOWN_SURVIVORS` and helpers after `MUTANTS` and a loop at the end of `main`), `registry/artifacts_current.csv` (regenerate with
++`build_current_inventory.py`) and `tests/test_lean_gate_p4a.py` (P4b relaxes `== 23` to `>= 23`; P5 does not touch it). No Lean file is shared (P4b: `WeightUpdate.lean`, `Freeze.lean`;
++P5: `HistoryBuffer.lean`, `PhaseIncrement.lean`, `PhaseCoherence.lean`). The declaration count after both merges is not the sum of the two gate totals as printed here
++(P4b 599, P5 612, base 512): expect `512 + 87 + 100 = 699` (to be re-measured).
++
++### 11.6 Still open (P5)
++
++* No proof that the Lean convention is the Python one (hand-checked only); `shuffle_driver`, the clip/projection and the `B` trajectory are outside the model. `research/lean_gate/tests/test_engine_production_delay.py` now pins the **Python** side of the delay contract at the production `D = 50` (51-slot queue, oldest-slot read, append/pop aging, first live delayed value at n = 50); it does not prove that the Lean `HistoryBuffer` sequence equals the Python list, and it is not a float64 phase-locking result.
++* Probes use `D ∈ {1, 2}`, `Fin 2` and phase multiples of `π/2`; the general statements cover all `D`, `V`, `ω`, `τ`. (The new Python tests are engine probes, not Lean value probes.)
++* The generic bounds (unit disk, drive range, row envelope) survive phase mutants by nature (auditor note N4); they are not evidence about phases.
++* `α = 1/2` probes cannot see an `α ↔ 1−α` swap; `probe_alpha_quarter` and `innovation_engine_convention` do.
++* No Lean-side statement pin (Lea-style statement hash) in CI. The mutation check **does** run in CI: `.github/workflows/lean.yml`, step "Lean-gate mutation check (AIEFGateCore only)", on the required `AIEFGateCore` row since PR #27; on this branch it runs the full 58-mutant suite (SPEC §11.7). The earlier wording "the mutation check is not run in CI" was stale and is corrected here.
++* **AUD-RATELAW stays UNEXPLAINED.**
++
++### 11.7 Merge refresh onto `main` and auditor notes N1/N2 (2026-11-11, Europe/Tirane)
++
++**Merge.** `research/lean-gate-p5` (tip `54037ea`) was merged (merge commit, no rebase, no force-push) with `origin/main` (`1c30ca5`: P4b = PR #26 and the #27 follow-ups; later `main`
++commits are merged in a second merge commit, see the commit log). Six files conflicted (12 hunks), resolved as follows: `AIEFGateCore.lean` keeps `Freeze`, `WeightUpdate` and the three P5
++imports; `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` regenerated with the command in `check_lean_gate.sh` (24 entries); `lean/AIEFGateCore/README.md` (3 hunks) lists P4a, P4b and P5 in
++the summary, both table rows, and both mutant sentences (M14–M23 P4a, M24–M36 P4b, M37–M56 P5 definition mutants); `registry/artifacts_current.csv` kept both sides then rebuilt with
++`build_current_inventory.py` after `git add`; this SPEC keeps §10 (P4b) then §11 (P5); `lean_mutation_check.py` keeps M24–M36 in `MUTANTS`, `DEF_MUTANTS`, `def_mutant_status`, the
++equivalence/typo/statement controls and `AIEF_MUT_ONLY` (now also honoured by the definition-mutant loop). No pinned file is touched.
++
++**N1 (wording).** §11.3 now states that KILLED for a definition mutant means a declared closed-number value probe fails to build, not that the mutant computes a different value; the
++docstring of `lean_mutation_check.py` says the same.
++
++**N2 (asymmetric `ω`).** Every earlier probe had a node-uniform `ω` (`1` or `0`), so `(ω_i+ω_j)/2` could be replaced by `ω_i` or `ω_j` unseen, and dropping the offset in `PhaseIncrement.lean`
++alone survived (S1). New value probes: `PhaseIncrement.probe_input_asym_omega_value` (`ω = (1, 0)`, `τ = π`, `D = 1`, no increments, read time `0`: the four inputs are `−1, −i, −i, 1`
++for `(0,0),(0,1),(1,0),(1,1)`) and `PhaseCoherence.probe_coherence_input_asym_omega` (the same on `coherenceInput`). New definition mutants (probes declared in `DEF_MUTANTS`): M53 `ω_i·τ`,
++M54 `ω_j·τ`, M55 offset dropped (the former S1), all on `PhaseIncrement.lean` line 58 and killed by `probe_input_asym_omega_value`; M56 `fun _ => ω i` in `coherenceInput`, killed by
++`probe_coherence_input_asym_omega`. Consequence: S1 is now detected, so `KNOWN_SURVIVORS` is empty (a stale entry would fail the run) and the survivor test was changed accordingly. A new
++equivalence control E10 (commuted offset sum) guards the new probe. The first versions of the probes were brittle: the control run caught E1/E2 killing the coherence probe (`exact` on
++the unchanged shape) and E10 killing the `PhaseIncrement` probe (rewrite with a fixed summand order); both were re-proved with `simp`/closed numerals (no `add_comm`, which the unmutated
++build reports as an unused simp argument), after which no control is killed.
++
++**#27 mutants (optional, added).** M57: `Capacity.preM_between` with `h1 : γ dt ≤ 1` weakened to `True`, refuted by `Capacity.false_preM_between_no_bound`; M58: `Capacity.convex_weights_iff`
++with the upper bound dropped from the right side, refuted at `γ = 1`, `dt = 2` (the left side then fails while the weakened right side holds). Numbered after M56, so nothing collides
++(M37–M56 definition mutants, M57–M58 statement mutants appended to `MUTANTS`). `OPENS` gained `open AIEFGate.MatrixForm (preM)`; the P4b shape test now pins `len(MUTANTS) == 38`.
++
++**Results (local, 2026-11-11).** `SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2299 jobs, 0 warnings, 20 `.lean` files hashed (24 entries), step 6 0 hits, **707 declarations audited**
++(`propext`, `Classical.choice`, `Quot.sound` only). Full `lean_mutation_check.py`: unmutated controls PASS, validator and classifier negative controls PASS; **38/38 statement mutants rejected**
++(one flagged with a name-reference/parse line, information only: M31); statement controls SE1/ST1 not rejected; **20/20 definition mutants KILLED by a declared value probe (M37–M56), 58/58 in
++total**; **10/10 equivalence controls not killed**; **3/3 typo controls INVALID**; RESULT PASS. Controls of the earlier numbers (23 + 16 = 39, 9 controls) are superseded by 38 + 20 = 58 and 10.
+diff --git a/research/lean_gate/lean_mutation_check.py b/research/lean_gate/lean_mutation_check.py
+index a289bca..ed38a41 100644
+--- a/research/lean_gate/lean_mutation_check.py
++++ b/research/lean_gate/lean_mutation_check.py
+@@ -88,6 +88,35 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
+   M35 WeightUpdate.edge_eventually_on, hgap := True              -> WeightUpdate.false_on_no_gap
+   M36 WeightUpdate.onGap_iff, `S < Sstar` -> `S ≤ Sstar`          -> WeightUpdate.false_gap_at_threshold
+ 
++  #27 (Capacity.lean follow-ups; numbered M57-M58 because M37-M56 are the P5 definition mutants):
++  M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
++  M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
++
++  P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
++  mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are the P4b statement mutants).
++  A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. RULE
++  (revised after the audit of 64f39eb, which showed that the first version scored semantically EQUIVALENT rewrites
++  such as `* 1`, `+ 0`, `id (...)` and even a misspelled identifier as killed, i.e. it measured proof brittleness):
++  a definition mutant is KILLED iff
++    (1) the mutated file fails to build;
++    (2) NO error line anywhere is a name-reference error (Unknown identifier / constant / namespace) or a parse error
++        (unexpected token, expected ...): such a mutant is INVALID and fails the run (it says nothing about semantics);
++    (3) at least one of the VALUE PROBES declared for that mutant (closed-form value equalities, `VALUE_PROBES`)
++        fails. A rewrite lemma such as `input_engine_convention` or `delayed_input_step` failing does NOT count: it
++        fails under equivalent rewrites too.
++  Negative controls, all of which must come out as expected or the run FAILS: EQUIV_CONTROLS (semantically equal
++  definitions: `* 1`, `+ 0`, `id`, a reordered EMA sum, a commuted `reported`, `not (n < d)` for `d <= n`, a
++  different proof term for the oldest slot, a commuted `(eta + mu)`) must NOT be killed; TYPO_CONTROLS (a misspelled
++  identifier, syntax garbage) must be classified INVALID and not killed. The statement mutants M1-M23 are protected
++  by step (b) (a typo or an equivalent statement cannot be refuted by a proved negation); STATEMENT_CONTROLS checks
++  one of each, and every statement mutant whose build output contains a name-reference/parse error line is flagged
++  (information only, the verdict is unchanged). `KNOWN_SURVIVORS` lists mutants that are expected to survive; they
++  are run and reported but do not enter the count (the list is empty since N2).
++  (N1) KILLED means "a pre-declared closed-number VALUE probe FAILS TO BUILD", not "the mutant computes a different
++  value": the harness never evaluates the mutated definition, it only sees which probe declarations no longer
++  elaborate. (N2) M53-M56 mutate the static offset (ω_i + ω_j)/2 · τ (wrong index, dropped, node-uniform ω); they are
++  killed only by the asymmetric-ω probes (ω = (1, 0)), because every earlier probe has node-uniform ω.
++
+ Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
+ """
+ import os
+@@ -282,8 +311,144 @@ MUTANTS = [
+      [("3 / 25 < onGap S ↔ S < Sstar", "3 / 25 < onGap S ↔ S ≤ Sstar", 1)], "",
+      "WeightUpdate.false_gap_at_threshold ((H WeightUpdate.Sstar (by norm_num [WeightUpdate.Sstar])).2 le_rfl)",
+      None),
++    # ---- #27 (Capacity.lean, auditor follow-ups); numbered after the P5 definition mutants M37-M56 ----
++    ("M57_capacity_preM_between_gamma_dt_bound_dropped", "Capacity.lean", "preM_between",
++     [("(h1 : p.γ * p.dt ≤ 1)", "(h1 : True)", 1)], CAP_VARS,
++     "Capacity.false_preM_between_no_bound (fun p D Bm i j hγ h0 => (@H Unit _ _ p hγ h0 trivial D Bm i j).1)",
++     None),
++    ("M58_capacity_convex_weights_upper_bound_dropped", "Capacity.lean", "convex_weights_iff",
++     [("(0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1)", "(0 ≤ p.γ * p.dt)", 1)], CAP_VARS,
++     "(by have h := ((@H Unit _ _ ⟨2, 1, 1, 0, 0, 0, 0⟩).2 (by norm_num)).1; norm_num at h)", None),
++]
++
++# ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
++# name, file, [(old, new, count)] applied to the whole file text, VALUE PROBES declared in advance (>= 1 must fail).
++# Rule (see the module docstring): build fails, no name-reference/parse error line, and a declared VALUE PROBE fails.
++CI_OLD = "    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=\n  inputPhasor d x0 u omega tau n i j\n"
++
++
++def ci(new):
++    return [(CI_OLD, "    (tau : ℝ) (n : ℕ) (i j : V) : ℂ :=\n  " + new + "\n", 1)]
++
++
++# closed-form value equalities (statements of the form `f (concrete data) = concrete value`), proved from the
++# definitions; rewrite lemmas (input_engine_convention, delayed_input_step, innovation_*, ...) are NOT in these lists
++VP_INC = ["probe_delayed_increment_values", "probe_input_delay_values", "probe_input_asym_omega_value"]
++VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_quarter", "probe_input_offset_value",
++          "probe_reported_second", "probe_drive_second", "probe_asym_drive", "probe_main_preM",
++          "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag",
++          "probe_coherence_input_asym_omega"]
++VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH}
++PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
++PIN_DRIVE = ["probe_drive_second", "probe_asym_drive"]
++DRIVE_OLD = "  (eta + mu) * reported C i j - mu\n"
++REP_OLD = "  if i = j then 0 else (‖C i j‖ + ‖C j i‖) / 2\n"
++EMA_OLD = "  (alpha : ℂ) * C i j + ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j\n"
++DELAY_OLD = "  if d ≤ n then u (n - d) j else 0"
++OFFSET_OLD = "    ((omega i + omega j) / 2) * tau)\n\nnoncomputable def delayedIncrement"
++
++
++def offset(new):
++    """edit of the static offset `(ω_i + ω_j)/2 · τ` at the end of `inputPhasor` (PhaseIncrement.lean, line 58)"""
++    return [(OFFSET_OLD, "    " + new + ")\n\nnoncomputable def delayedIncrement", 1)]
++
++
++PIN_OMEGA = ["probe_input_asym_omega_value"]
++SLOT_OLD = "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -"
++DEF_MUTANTS = [
++    # 011 (PhaseIncrement.lean): value probes of `delayedIncrement` (M37, M38) and of the input read (M39)
++    ("M37_phase_delayed_increment_starts_late", "PhaseIncrement.lean",
++     [(DELAY_OLD, "  if d < n then u (n - d) j else 0", 1)], ["probe_delayed_increment_values"]),
++    ("M38_phase_delayed_increment_off_by_one", "PhaseIncrement.lean",
++     [(DELAY_OLD, "  if d ≤ n then u (n - d + 1) j else 0", 1)], ["probe_delayed_increment_values"]),
++    ("M39_phase_input_reads_newest_slot", "PhaseIncrement.lean",
++     [(SLOT_OLD, "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨d, Nat.lt_succ_self d⟩ j -", 1)],
++     ["probe_input_delay_values"]),
++    # cycle-004 survivors, now on the phase-specific coherence input (PhaseCoherence.lean)
++    ("M40_coherence_input_wrong_delay_plus_one", "PhaseCoherence.lean",
++     ci("inputPhasor (d + 1) x0 u omega tau n i j"), PIN_INPUT),
++    ("M41_coherence_input_wrong_delay_minus_one", "PhaseCoherence.lean",
++     ci("inputPhasor (d - 1) x0 u omega tau n i j"), PIN_INPUT),
++    ("M42_coherence_input_current_theta_not_delayed", "PhaseCoherence.lean",
++     ci("phasor (phaseTrace x0 u n i - phaseTrace x0 u n j - ((omega i + omega j) / 2) * tau)"), PIN_INPUT),
++    ("M43_coherence_input_dropped_omega_tau", "PhaseCoherence.lean",
++     ci("inputPhasor d x0 u (fun _ => 0) tau n i j"), ["probe_input_offset_value", "probe_coherence_values"]),
++    ("M44_coherence_input_phase_is_zero", "PhaseCoherence.lean", ci("1"), PIN_INPUT),
++    ("M45_drive_missing_eta", "PhaseCoherence.lean",
++     [(DRIVE_OLD, "  mu * reported C i j - mu\n", 1)], PIN_DRIVE),
++    # the auditor's cycle-013 mutants (five killed in the audit, two survivors of the original file)
++    ("M46_coherence_input_swap_i_j", "PhaseCoherence.lean",
++     ci("inputPhasor d x0 u omega tau n j i"), PIN_INPUT),
++    ("M47_coherence_input_conjugated", "PhaseCoherence.lean",
++     ci("(starRingEnd ℂ) (inputPhasor d x0 u omega tau n i j)"), PIN_INPUT),
++    ("M48_coherence_ema_alpha_swapped", "PhaseCoherence.lean",
++     [(EMA_OLD, "  ((1 - alpha : ℝ) : ℂ) * C i j + (alpha : ℂ) * coherenceInput d x0 u omega tau n i j\n", 1)],
++     ["probe_alpha_quarter"]),
++    ("M49_drive_mu_sign", "PhaseCoherence.lean",
++     [(DRIVE_OLD, "  (eta + mu) * reported C i j + mu\n", 1)], PIN_DRIVE),
++    ("M50_trace_step_uses_next_input", "PhaseCoherence.lean",
++     [("  | n + 1 => coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau n\n",
++       "  | n + 1 =>\n    coherenceStep alpha (coherenceTrace alpha C0 d x0 u omega tau n) d x0 u omega tau (n + 1)\n", 1)],
++     PIN_INPUT),
++    ("M51_reported_one_sided_not_symmetrised", "PhaseCoherence.lean",
++     [(REP_OLD, "  if i = j then 0 else ‖C i j‖\n", 1)], ["probe_asym_reported"]),
++    ("M52_reported_diagonal_one", "PhaseCoherence.lean",
++     [(REP_OLD, "  if i = j then 1 else (‖C i j‖ + ‖C j i‖) / 2\n", 1)], ["probe_asym_reported_diag"]),
++    # (N2) the static offset `(ω_i + ω_j)/2 · τ` of `inputPhasor` (PhaseIncrement.lean line 58): the node-uniform
++    # probes (`ω = 1` or `ω = 0`) cannot see a wrong index; the asymmetric probe (`ω = (1, 0)`) pins it.
++    ("M53_phase_input_offset_omega_i_only", "PhaseIncrement.lean", offset("omega i * tau"), PIN_OMEGA),
++    ("M54_phase_input_offset_omega_j_only", "PhaseIncrement.lean", offset("omega j * tau"), PIN_OMEGA),
++    ("M55_phase_input_offset_dropped", "PhaseIncrement.lean", offset("0"), PIN_OMEGA),
++    ("M56_coherence_input_node_uniform_omega_i", "PhaseCoherence.lean",
++     ci("inputPhasor d x0 u (fun _ => omega i) tau n i j"), ["probe_coherence_input_asym_omega"]),
++]
++
++# Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
++# the file fails); a control scored killed FAILS the run (the rule would then measure proof brittleness).
++EQUIV_CONTROLS = [
++    ("E1_coherence_input_times_one", "PhaseCoherence.lean", ci("inputPhasor d x0 u omega tau n i j * 1")),
++    ("E2_coherence_input_plus_zero", "PhaseCoherence.lean", ci("(inputPhasor d x0 u omega tau n i j + 0)")),
++    ("E3_coherence_input_id", "PhaseCoherence.lean", ci("id (inputPhasor d x0 u omega tau n i j)")),
++    ("E4_delayed_read_not_lt", "PhaseIncrement.lean", [(DELAY_OLD, "  if ¬ n < d then u (n - d) j else 0", 1)]),
++    ("E5_delayed_read_plus_zero", "PhaseIncrement.lean", [(DELAY_OLD, "  if d ≤ n then u (n - d + 0) j else 0", 1)]),
++    ("E6_oldest_slot_other_proof_term", "PhaseIncrement.lean",
++     [(SLOT_OLD, "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.succ_pos d⟩ j -", 1)]),
++    ("E7_ema_sum_commuted", "PhaseCoherence.lean",
++     [(EMA_OLD, "  ((1 - alpha : ℝ) : ℂ) * coherenceInput d x0 u omega tau n i j + (alpha : ℂ) * C i j\n", 1)]),
++    ("E8_reported_sum_commuted", "PhaseCoherence.lean",
++     [(REP_OLD, "  if i = j then 0 else (‖C j i‖ + ‖C i j‖) / 2\n", 1)]),
++    ("E9_drive_coefficient_commuted", "PhaseCoherence.lean",
++     [(DRIVE_OLD, "  (mu + eta) * reported C i j - mu\n", 1)]),
++    ("E10_offset_sum_commuted", "PhaseIncrement.lean", offset("((omega j + omega i) / 2) * tau")),
+ ]
+ 
++# Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
++TYPO_CONTROLS = [
++    ("T1_misspelled_identifier_inputPhasorXX", "PhaseCoherence.lean", ci("inputPhasorXX d x0 u omega tau n i j")),
++    ("T2_syntax_garbage_unbalanced_paren", "PhaseCoherence.lean", ci("inputPhasor d x0 u omega tau n i j )")),
++    ("T3_misspelled_identifier_delayedIncrementXX", "PhaseIncrement.lean",
++     [(DELAY_OLD, "  if d ≤ n then u (n - d) j else delayedIncrementXX", 1)]),
++]
++
++# Statement-level controls on M4's statement (GateMap.stepB_add_smul_of_branch): an equivalent rewrite and a typo must
++# both be NOT rejected (step (b): neither can be refuted by the proved negation `false_main_no_gamma`).
++M4_OLD = "t * (1 - p.γ * p.dt) * branchScale p G drive B ctrl e * h e"
++STATEMENT_CONTROLS = [
++    ("SE1_statement_equivalent_commuted_gamma_dt", "GateMap.lean", "stepB_add_smul_of_branch",
++     [(M4_OLD, "t * (1 - p.dt * p.γ) * branchScale p G drive B ctrl e * h e", 1)], GATE_VARS,
++     f"RedTeam.false_main_no_gamma ({GATE_INST})"),
++    ("ST1_statement_typo_branchScaleXX", "GateMap.lean", "stepB_add_smul_of_branch",
++     [(M4_OLD, "t * (1 - p.γ * p.dt) * branchScaleXX p G drive B ctrl e * h e", 1)], GATE_VARS,
++     f"RedTeam.false_main_no_gamma ({GATE_INST})"),
++]
++
++# Expected survivors: reported and run, never counted. EMPTY since the (N2) asymmetric-ω value probe: the static
++# offset (ω_i + ω_j)/2 · τ cancels in the step ratio of `delayed_input_step`, so before N2 dropping it in
++# PhaseIncrement.lean alone survived (that file had no value probe involving ω or τ; S1, killed only one level up by
++# M43). `probe_input_asym_omega_value` (PhaseIncrement.lean) now kills it (M55, a counted definition mutant). The
++# mechanism is kept: a mutant listed here is run, reported, and fails the run if it is detected (stale entry).
++KNOWN_SURVIVORS = []
++
+ # Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
+ # name-reference errors only; it must be classified as such and must NOT count as a build rejection.
+ LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB_add_smul_of_branch",
+@@ -292,7 +457,7 @@ LEGACY_NAME_ONLY = ("M1_legacy_delete_kernel_hypothesis", "GateMap.lean", "stepB
+ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n"
+          "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n"
+          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
+-         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\n"
++         "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\nopen AIEFGate.MatrixForm (preM)\n"
+          "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n")
+ ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
+ 
+@@ -393,6 +558,62 @@ def build_rejected(rc, errs, kind):
+     return rc != 0 and bool(errs) and kind == "REAL PROOF FAILURE"
+ 
+ 
++def mutate_file(src, edits):
++    """Definition mutants: exact-count textual edits on the whole file."""
++    out = src
++    for old, new, count in edits:
++        if out.count(old) != count:
++            raise RuntimeError(f"expected {count} occurrence(s) of {old!r}, found {out.count(old)}")
++        out = out.replace(old, new)
++    return out
++
++
++DECL_RE = re.compile(r"^\s*(?:private\s+|protected\s+)*(?:noncomputable\s+)?(?:theorem|lemma|def|abbrev|instance)\s+(\S+)")
++
++
++def failing_decls(msrc, errs):
++    """Names of the declarations that contain an error line (`Mutant.lean:LINE:COL: error: ...`)."""
++    lines = msrc.splitlines()
++    names = []
++    for e in errs:
++        m = re.search(r"Mutant\.lean:(\d+):", e)
++        if not m:
++            continue
++        for k in range(int(m.group(1)) - 1, -1, -1):
++            d = DECL_RE.match(lines[k])
++            if d:
++                if d.group(1) not in names:
++                    names.append(d.group(1))
++                break
++    return names
++
++
++NAME_REF_RE = re.compile(r"nknown (identifier|constant|namespace)")
++PARSE_ERR_RE = re.compile(r"\berror(\([^)]*\))?: (unexpected |expected )")
++
++
++def invalid_lines(errs):
++    """Error lines that are name-reference or parse errors (such a mutant says nothing about semantics)."""
++    return [l for l in errs if NAME_REF_RE.search(l) or PARSE_ERR_RE.search(l)]
++
++
++def def_mutant_status(rc, errs, failing, pins):
++    """Definition-mutant rule (P5, revised): 'BUILDS' (no error), 'INVALID' (any name-reference or parse error line),
++    'KILLED' (builds fail, no invalid line, and a declared VALUE PROBE fails) or 'SURVIVED' (fails only in other
++    declarations, e.g. brittle rewrite lemmas, which gives no credit)."""
++    if rc == 0 and not errs:
++        return "BUILDS"
++    if rc == 0 or not errs:
++        return "INVALID"
++    if invalid_lines(errs):
++        return "INVALID"
++    return "KILLED" if any(p in failing for p in pins) else "SURVIVED"
++
++
++def def_mutant_killed(rc, errs, failing, pins):
++    return def_mutant_status(rc, errs, failing, pins) == "KILLED"
++
++
+ def refute(msrc, src, thm, closure, term):
+     """(refuted, why, control_ok): step (b) on the mutated statement and step (c) on the unmutated one."""
+     rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term))
+@@ -404,7 +625,7 @@ def refute(msrc, src, thm, closure, term):
+ def main():
+     ok = True
+     srcs = {}
+-    for f in sorted({m[1] for m in MUTANTS}):
++    for f in sorted({m[1] for m in MUTANTS} | {m[1] for m in DEF_MUTANTS} | {m[1] for m in KNOWN_SURVIVORS} | {m[1] for m in EQUIV_CONTROLS} | {m[1] for m in TYPO_CONTROLS}):
+         srcs[f] = (SRCDIR / f).read_text()
+         rc, errs, _ = lean(srcs[f])
+         good = rc == 0 and not errs
+@@ -428,6 +649,7 @@ def main():
+           f"{'YES (BAD)' if build_rejected(lrc, lerrs, lkind) else 'NO'} -> {'PASS' if lgood else 'FAIL'}")
+     ok &= lgood
+     n_rej = 0
++    n_flag = 0
+     only = os.environ.get("AIEF_MUT_ONLY")   # debugging aid: regex on mutant names; the full run is the record
+     for name, f, thm, edits, closure, term, eterm in MUTANTS:
+         if only and not re.search(only, name):
+@@ -452,6 +674,9 @@ def main():
+             if erefuted:
+                 emsg = []
+         n_rej += rejected
++        if invalid_lines(errs):
++            line += "; NOTE: build output also has a name-reference/parse error line (info only)"
++            n_flag += 1
+         print(f"{line} -> {'REJECTED (good)' if rejected else 'NOT REJECTED (BAD)'}")
+         for l in errs[:1]:
+             print("    build: " + l.split("Mutant.lean:")[-1][:150])
+@@ -461,7 +686,74 @@ def main():
+         for l in emsg[:3]:
+             print("    engine refutation: " + l.split("Mutant.lean:")[-1][:200])
+         ok &= rejected
+-    print(f"mutants rejected: {n_rej}/{len(MUTANTS)}")
++    print(f"statement mutants rejected: {n_rej}/{len(MUTANTS)}; flagged with a name-reference/parse error line: {n_flag}")
++    # statement-level controls: an equivalent statement and a typo must NOT be rejected
++    for name, f, thm, edits, closure, term in STATEMENT_CONTROLS:
++        src = srcs[f]
++        msrc = mutate(src, thm, edits)
++        rc, errs, out = lean(msrc)
++        build_rej = build_rejected(rc, errs, classify(errs, out))
++        refuted, why, control_ok, _ = refute(msrc, src, thm, closure, term)
++        rejected = build_rej and refuted and control_ok
++        good = not rejected and not refuted
++        print(f"STATEMENT CONTROL {name}: build rejected: {build_rej}; refuted by proof: {refuted} -> "
++              f"{'NOT REJECTED (good)' if good else 'REJECTED (BAD)'}")
++        ok &= good
++    # P5: definition mutants (rule: build fails, no name-reference/parse error line, a declared value probe fails)
++    n_def = 0
++    for name, f, edits, pins in DEF_MUTANTS:
++        if only and not re.search(only, name):
++            continue
++        src = srcs[f]
++        msrc = mutate_file(src, edits)
++        assert msrc != src
++        rc, errs, out = lean(msrc)
++        failing = failing_decls(msrc, errs)
++        status = def_mutant_status(rc, errs, failing, pins)
++        killed = status == "KILLED"
++        n_def += killed
++        hit = [p for p in pins if p in failing]
++        print(f"{name}: {status}; failing declarations: {', '.join(failing) or '-'}; "
++              f"value probes failing: {', '.join(hit) or 'NONE'} -> "
++              f"{'KILLED (good)' if killed else status + ' (BAD)'}")
++        for l in invalid_lines(errs)[:1]:
++            print("    invalid-mutant line: " + l.split("Mutant.lean:")[-1][:150])
++        ok &= killed
++    print(f"definition mutants killed: {n_def}/{len(DEF_MUTANTS)}")
++    print(f"mutants rejected in total: {n_rej + n_def}/{len(MUTANTS) + len(DEF_MUTANTS)}")
++    # equivalence controls: must NOT be killed
++    n_eq = 0
++    for name, f, edits in EQUIV_CONTROLS:
++        msrc = mutate_file(srcs[f], edits)
++        rc, errs, out = lean(msrc)
++        failing = failing_decls(msrc, errs)
++        status = def_mutant_status(rc, errs, failing, VALUE_PROBES[f])
++        good = status != "KILLED"
++        n_eq += good
++        print(f"EQUIVALENCE CONTROL {name}: {status}; build {'passes' if rc == 0 and not errs else 'fails'}; "
++              f"failing declarations: {', '.join(failing) or '-'} -> "
++              f"{'NOT KILLED (good)' if good else 'KILLED (BAD: the rule scores an equivalent rewrite as a kill)'}")
++        ok &= good
++    print(f"equivalence controls not killed: {n_eq}/{len(EQUIV_CONTROLS)}")
++    # typo / invalid-mutant controls: must be classified INVALID
++    n_ty = 0
++    for name, f, edits in TYPO_CONTROLS:
++        msrc = mutate_file(srcs[f], edits)
++        rc, errs, out = lean(msrc)
++        failing = failing_decls(msrc, errs)
++        status = def_mutant_status(rc, errs, failing, VALUE_PROBES[f])
++        good = status == "INVALID"
++        n_ty += good
++        print(f"TYPO CONTROL {name}: {status} -> {'FLAGGED INVALID, not killed (good)' if good else 'NOT FLAGGED (BAD)'}")
++        ok &= good
++    print(f"typo controls flagged invalid: {n_ty}/{len(TYPO_CONTROLS)}")
++    # expected survivors: reported honestly, not counted
++    for name, f, edits in KNOWN_SURVIVORS:
++        rc, errs, out = lean(mutate_file(srcs[f], edits))
++        clean = rc == 0 and not errs
++        print(f"{name}: build {'PASSES' if clean else 'FAILS'} -> "
++              f"{'SURVIVES, as documented (not counted)' if clean else 'now detected (documented survivor is stale)'}")
++        ok &= clean
+     print("RESULT:", "PASS" if ok else "FAIL")
+     sys.exit(0 if ok else 1)
+ 
+diff --git a/research/lean_gate/tests/test_engine_production_delay.py b/research/lean_gate/tests/test_engine_production_delay.py
+new file mode 100644
+index 0000000..3412ad4
+--- /dev/null
++++ b/research/lean_gate/tests/test_engine_production_delay.py
+@@ -0,0 +1,191 @@
++"""Production-delay engine probes: the real 51-slot history buffer at dt=0.01, tau=0.5.
++
++Why this file exists
++--------------------
++``research/lean_gate/tests/test_engine_step_order.py`` runs the real ``advance_state``
++on exact N=2 states, but its helper hard-asserts ``c.delay_steps == 1`` (line 40 of that
++file). The frozen production constants in ``aief_experiment_engine_v1.py`` are
++``FROZEN_DT = 0.01``, ``FROZEN_TAU = 0.5`` (lines 64-65), so ``delay_steps = 50`` and
++``initialize_state`` creates ``delay_steps + 1 = 51`` history slots (line 711).
++``compute_R`` reads ``state.history[0]`` (line 729), the phase coupling reads
++``state.history[0]`` (lines 830-835), and each step appends the new phase and pops the
++oldest entry (lines 841-844).
++
++The Lean P5 ``HistoryBuffer`` theorems are general in the delay ``D``, but they are
++abstract sequence functions; they do not check the Python list/aliasing contract or the
++startup-to-live-delay boundary. These tests exercise that contract on the real engine.
++They are engine facts, not Lean facts. They do not claim anything about float64 phase
++locking, and they do not promote any Lean candidate.
++
++Wrong orders each probe rules out (the value under the wrong order is asserted to differ):
++  * reading ``history[1]`` or the newest slot instead of ``history[0]``;
++  * aliasing the 51 initial copies of theta;
++  * appending the old theta, or failing to pop exactly one oldest slot;
++  * reading current theta in the sine coupling (the c015 F1 mutant).
++Expected values are hand-derived, not obtained by calling the engine's own ``compute_R``.
++"""
++import math
++import sys
++from pathlib import Path
++
++import numpy as np
++
++REPO = Path(__file__).resolve().parents[3]
++sys.path.insert(0, str(REPO))
++import aief_experiment_engine_v1 as eng  # noqa: E402
++
++TOL = 1e-12
++PI = math.pi
++
++
++def production_config(**overrides):
++    """Frozen production parameters, with named, explicit overrides."""
++    params = dict(
++        N=eng.FROZEN_N,
++        dt=eng.FROZEN_DT,
++        tau=eng.FROZEN_TAU,
++        omega=tuple(float(x) for x in eng.FROZEN_OMEGA),
++        a=eng.FROZEN_A,
++        q=eng.FROZEN_Q,
++        delta=eng.FROZEN_DELTA,
++        eta=eng.FROZEN_ETA,
++        mu=eng.FROZEN_MU,
++        gamma=eng.FROZEN_GAMMA,
++        T_window=eng.FROZEN_T_WINDOW,
++        B_c=eng.FROZEN_B_C,
++        B_init_scale=eng.FROZEN_B_INIT_SCALE,
++        scale_epsilon=1e-12,
++    )
++    params.update(overrides)
++    c = eng.ModelConfig(**params)
++    c.validate()
++    return c
++
++
++def test_production_delay_configuration_and_initialisation():
++    """dt=0.01 / tau=0.5 gives D=50, a 51-slot history, and independent copies."""
++    c = production_config()
++    assert c.delay_steps == 50
++    assert c.dt == 0.01 and c.tau == 0.5
++    assert abs(c.alpha - eng.FROZEN_ALPHA) < TOL
++    # The d=1 step-order probes are unit-delay probes, not production-delay coverage.
++    assert c.delay_steps != 1
++
++    st = eng.initialize_state(20260814, c)
++    assert st.N == eng.FROZEN_N
++    assert len(st.history) == c.delay_steps + 1 == 51
++    for h in st.history:
++        assert np.array_equal(h, st.theta)
++
++    # initialize_state must copy theta for each slot, not alias one array.
++    st.history[0][0] = 123.0
++    assert st.history[1][0] != 123.0
++    assert st.history[50][0] != 123.0
++    assert st.theta[0] != 123.0
++
++
++def test_production_delay_buffer_aging_and_oldest_slot():
++    """51 non-constant slots age one place per step; EMA source is always slot 0.
++
++    With omega=0 and eta=mu=gamma=0 the weights stay zero, so theta is constant and
++    every appended phase is that same theta. Before step n (n = 0..50) the oldest
++    slot must be initial_history[n]; at n=50 it is the last initial slot, and after
++    that step the oldest slot is the first *live* delayed value (the appended theta).
++    """
++    c = production_config(
++        omega=(0.0,) * eng.FROZEN_N,
++        eta=0.0, mu=0.0, gamma=0.0,
++        a=1.0, q=1.0, delta=0.05,
++        B_init_scale=0.0,
++    )
++    assert c.delay_steps == 50
++
++    theta = np.linspace(0.0, 1.0, eng.FROZEN_N)
++    initial = [np.full(eng.FROZEN_N, k / 100.0) for k in range(51)]
++    st = eng.DynamicState(
++        theta=theta,
++        B=np.zeros((eng.FROZEN_N, eng.FROZEN_N)),
++        coherence_acc=np.zeros((eng.FROZEN_N, eng.FROZEN_N), dtype=complex),
++        history=initial,
++    )
++    rng = np.random.default_rng(0)
++    alpha = c.alpha
++    C_expected = np.zeros((eng.FROZEN_N, eng.FROZEN_N), dtype=complex)
++
++    for n in range(51):
++        # Before each call: oldest slot is initial_history[min(n, 50)].
++        expected_oldest = initial[min(n, 50)]
++        assert np.array_equal(st.history[0], expected_oldest), f"oldest slot drift at step {n}"
++
++        # Independent hand-derived EMA source: omega=0, tau offset=0, so
++        # z_inst[i,j] = exp(i(theta_i - delayed_j)). This is not a call to compute_R.
++        z_inst = np.exp(1j * (theta[:, None] - expected_oldest[None, :]))
++        C_expected = alpha * C_expected + (1.0 - alpha) * z_inst
++
++        R, R_driver, info = eng.advance_state(st, c, rng, shuffle_driver=False)
++
++        assert np.allclose(st.coherence_acc, C_expected, rtol=0.0, atol=TOL), \
++            f"EMA did not read slot 0 at step {n}"
++        assert np.allclose(R, R_driver, rtol=0.0, atol=TOL)
++        assert info["pre_violation"] is False
++        assert len(st.history) == 51, f"history length changed at step {n}"
++        assert np.array_equal(st.history[-1], theta), f"newest slot is not the appended theta at step {n}"
++        assert np.array_equal(st.theta, theta), f"theta moved at step {n}"
++
++    # The n=50 boundary consumed initial_history[50]; every initial slot is now gone.
++    assert np.array_equal(st.history[0], theta)
++    assert all(np.array_equal(h, theta) for h in st.history)
++
++
++def test_production_delay_coupling_reads_oldest_slot():
++    """At D=50, the sine coupling and compute_R read history[0], not slot 1/current/newest.
++
++    N=2 hand-derived state: theta=(0, pi/2), omega=0, B0=C0=0, eta=4, mu=gamma=0,
++    T_window=1/log(2). With history[0]=(0,0):
++      z = [[1,1],[i,i]] => R = (1-alpha)*[[0,1],[1,0]]
++      B_new = dt*eta*(1-alpha)*[[0,1],[1,0]] = b*[[0,1],[1,0]], b = 0.04*(1-alpha)
++      theta_new[1] = pi/2 + dt*b*sin(0 - pi/2) = pi/2 - dt*b.
++    Reading history[1]=(pi,pi) or the newest slot would give a different theta;
++    reading CURRENT theta (c015 F1) would leave theta unchanged.
++    """
++    c = production_config(
++        N=2, dt=0.01, tau=0.5,
++        omega=(0.0, 0.0),
++        a=1.0, q=1.0, delta=0.05,
++        eta=4.0, mu=0.0, gamma=0.0,
++        T_window=1.0 / math.log(2.0),
++        B_init_scale=0.0,
++        scale_epsilon=1.0,
++    )
++    assert c.delay_steps == 50
++    alpha = c.alpha
++    assert 0.0 < alpha < 1.0
++
++    theta = np.array([0.0, PI / 2])
++    history = [np.full(2, k / 100.0) for k in range(51)]
++    history[0] = np.array([0.0, 0.0])
++    history[1] = np.array([PI, PI])          # distinguishes slot 0 from slot 1
++    history[50] = np.array([PI / 2, PI / 2])  # distinguishes slot 0 from newest
++    st = eng.DynamicState(
++        theta=theta,
++        B=np.zeros((2, 2)),
++        coherence_acc=np.zeros((2, 2), dtype=complex),
++        history=history,
++    )
++    rng = np.random.default_rng(0)
++
++    b = c.dt * c.eta * (1.0 - alpha)
++    expected_R = np.array([[0.0, 1.0 - alpha], [1.0 - alpha, 0.0]])
++    expected_theta = np.array([0.0, PI / 2 - c.dt * b])
++
++    R, R_driver, info = eng.advance_state(st, c, rng, shuffle_driver=False)
++
++    assert np.allclose(R, expected_R, rtol=0.0, atol=TOL)
++    assert np.allclose(st.B, np.array([[0.0, b], [b, 0.0]]), rtol=0.0, atol=TOL)
++    assert np.allclose(st.theta, expected_theta, rtol=0.0, atol=TOL)
++    # Negative controls: the wrong orders give visibly different values.
++    assert abs(st.theta[1] - PI / 2) > 1e-6            # current theta in the sine (F1)
++    assert abs(st.theta[1] - (PI / 2 + c.dt * b)) > 1e-6  # slot 1 = (pi, pi)
++    assert len(st.history) == 51
++    assert np.array_equal(st.history[0], np.array([PI, PI]))  # old slot 1 is now oldest
++    assert np.array_equal(st.history[-1], expected_theta)
+diff --git a/research/lean_gate/tests/test_lean_gate_p4b.py b/research/lean_gate/tests/test_lean_gate_p4b.py
+index ca827df..3a4261c 100644
+--- a/research/lean_gate/tests/test_lean_gate_p4b.py
++++ b/research/lean_gate/tests/test_lean_gate_p4b.py
+@@ -115,13 +115,17 @@ def test_sources_have_no_banned_markers_and_credit_by_handle_only():
+ 
+ def test_p4b_mutants_shape():
+     names = [m[0] for m in mc.MUTANTS]
+-    assert len(names) == 36                                      # the single exact pin (P4a test: >= 23)
++    # 36 (M1-M36) + 2 (M57, M58: #27 Capacity follow-ups, appended after the P5 definition mutants M37-M56)
++    assert len(names) == 38                                      # the single exact pin (P4a test: >= 23)
+     assert names[23].startswith("M24") and names[35].startswith("M36")
+-    assert {m[1] for m in mc.MUTANTS[23:]} == {"WeightUpdate.lean"}
+-    assert [m[2] for m in mc.MUTANTS[23:]] == [
++    assert names[36].startswith("M57") and names[37].startswith("M58")
++    assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
++    assert {m[1] for m in mc.MUTANTS[36:]} == {"Capacity.lean"}
++    assert [m[2] for m in mc.MUTANTS[36:]] == ["preM_between", "convex_weights_iff"]
++    assert [m[2] for m in mc.MUTANTS[23:36]] == [
+         "rowM_le_upper", "stepM_scalar_recurrence", "appliedFactor_lower", "stepM_factor_lower",
+         "trajectory_symmetric", "trajectory_zero_diag", "trajectory_nonneg", "trajectory_good_of_start",
+         "edge_eventually_off_from", "edge_eventually_on_from", "edge_eventually_off", "edge_eventually_on",
+         "onGap_iff"]
+-    for m in mc.MUTANTS[23:]:
++    for m in mc.MUTANTS[23:36]:
+         assert "WeightUpdate.false_" in m[5]                     # each refuted by a proved false_* theorem
+diff --git a/research/lean_gate/tests/test_lean_gate_p5.py b/research/lean_gate/tests/test_lean_gate_p5.py
+new file mode 100644
+index 0000000..e825b8f
+--- /dev/null
++++ b/research/lean_gate/tests/test_lean_gate_p5.py
+@@ -0,0 +1,315 @@
++"""Lean P5: pin the exact values behind PhaseCoherence.lean (port of cycles 010, 011 and 013 of Researcher 040282,
++restated on Params / preM / stepM) against an independent floating/exact simulation of the engine convention
++(compute_R, aief_experiment_engine_v1.py about lines 735-751, hand-checked, NOT proved against Python), check that the
++statements restated in HistoryBuffer.lean / PhaseIncrement.lean / PhaseCoherence.lean agree textually with the
++deposited sources (the deposit is not on main, so the statements are recorded below with their md5s), and pin the
++shape and the EXACT COUNT of the P5 mutants of lean_mutation_check.py without running Lean.
++
++Mutation-count pin (`TOTAL_MUTANTS` below is the exact combined pin; the P4b test pins `len(MUTANTS)`): after the
++merge of P4b (PR #26) and the #27 follow-ups, `MUTANTS` has 38 entries (M1-M36 statement mutants, plus M57, M58 on
++`Capacity.preM_between` / `convex_weights_iff`) and `DEF_MUTANTS` 20 (M37-M56: M37-M52 as ported, M53-M56 the N2
++asymmetric-omega offset mutants), total 58; controls: 10 equivalence, 3 typo, 2 statement-level; no expected survivor
++(the former S1 is the counted M55).
++
++Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
++"""
++import cmath
++import math
++import re
++import sys
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++sys.path.insert(0, str(HERE.parent))
++import lean_mutation_check as mc  # noqa: E402
++
++REPO = HERE.parents[2]
++GATE = REPO / "lean" / "AIEFGateCore" / "AIEFGateCore"
++HB = (GATE / "HistoryBuffer.lean").read_text()
++PI = (GATE / "PhaseIncrement.lean").read_text()
++PC = (GATE / "PhaseCoherence.lean").read_text()
++
++N_STATEMENT_MUTANTS = 38          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups)
++N_DEF_MUTANTS = 20                # M37-M56
++TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 58 (52 before the N2 mutants M53-M56 and the #27 mutants M57-M58)
++
++# Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...
++# PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.
++HISTORY_STATEMENTS = {
++    'historyTrace_index':
++        '{A : Type u} (d : Nat) (x : Nat → A) : ∀ n (i : Fin (d + 1)), historyTrace d x n i = x (n + i.val - d)',
++    'historyTrace_oldest':
++        '{A : Type u} (d : Nat) (x : Nat → A) (n : Nat) : historyTrace d x n ⟨0, Nat.zero_lt_succ d⟩ = x (n - d)',
++    'historyTrace_newest':
++        '{A : Type u} (d : Nat) (x : Nat → A) (n : Nat) : historyTrace d x n ⟨d, Nat.lt_succ_self d⟩ = x n',
++}
++
++PHASE_STATEMENTS = {
++    'phasor_wrap':
++        '(t : ℝ) : phasor (wrapPhase t) = phasor t',
++    'delayed_input_step':
++        '(d : ℕ) (x0 : ι → ℝ) (u : ℕ → ι → ℝ) (omega : ι → ℝ) (tau : ℝ) (n : ℕ) (i j : ι) : inputPhasor d x0 u omega tau (n + 1) i j = inputPhasor d x0 u omega tau n i j * phasor (u n i - delayedIncrement d u n j)',
++    'delayed_input_chord_bound':
++        '(d : ℕ) (x0 : ι → ℝ) (u : ℕ → ι → ℝ) (omega : ι → ℝ) (tau : ℝ) (n : ℕ) (i j : ι) : ‖inputPhasor d x0 u omega tau (n + 1) i j - inputPhasor d x0 u omega tau n i j‖ ≤ |u n i - delayedIncrement d u n j|',
++}
++
++C013_STATEMENTS = {
++    'input_engine_convention':
++        '(d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) : coherenceInput d x0 u omega tau n i j = Complex.exp (Complex.I * ((phaseTrace x0 u n i - phaseTrace x0 u (n - d) j - ((omega i + omega j) / 2) * tau : ℝ) : ℂ))',
++    'input_norm':
++        '(d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) : ‖coherenceInput d x0 u omega tau n i j‖ = 1',
++    'innovation_engine_convention':
++        '(alpha : ℝ) (C : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) : coherenceStep alpha C d x0 u omega tau n i j - (alpha : ℂ) * C i j = ((1 - alpha : ℝ) : ℂ) * Complex.exp (Complex.I * ((phaseTrace x0 u n i - phaseTrace x0 u (n - d) j - ((omega i + omega j) / 2) * tau : ℝ) : ℂ))',
++    'lateSource_startup':
++        '(d : ℕ) (u : ℕ → V → ℝ) (n : ℕ) (j : V) (h : n < d) : lateSource d u n j = 0',
++    'innovation_transport':
++        '(alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i j : V) : coherenceTrace alpha C0 d x0 u omega tau (n + 2) i j - (alpha : ℂ) * coherenceTrace alpha C0 d x0 u omega tau (n + 1) i j = (coherenceTrace alpha C0 d x0 u omega tau (n + 1) i j - (alpha : ℂ) * coherenceTrace alpha C0 d x0 u omega tau n i j) * phasor (u n i - lateSource d u n j)',
++    'coherenceTrace_unitDisk':
++        '(alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (hC : ∀ i j, ‖C0 i j‖ ≤ 1) : ∀ n i j, ‖coherenceTrace alpha C0 d x0 u omega tau n i j‖ ≤ 1',
++    'reported_bounds':
++        '(C : V → V → ℂ) (hC : ∀ i j, ‖C i j‖ ≤ 1) (i j : V) : 0 ≤ reported C i j ∧ reported C i j ≤ 1',
++    'phase_drive_bounds':
++        '(eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (heta : 0 ≤ eta) (hmu : 0 ≤ mu) (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (hC : ∀ i j, ‖C0 i j‖ ≤ 1) (n : ℕ) (i j : V) : -mu ≤ sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j ∧ sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j ≤ eta',
++    'phase_normalized_drive_bounds':
++        '(p : AIEFGate.Params) (eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (heta : 0 ≤ eta) (hmu : 0 ≤ mu) (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (hC : ∀ i j, ‖C0 i j‖ ≤ 1) (hg : 0 < p.γ) (n : ℕ) (i j : V) : -mu / p.γ ≤ sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j / p.γ ∧ sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j / p.γ ≤ eta / p.γ',
++    'phase_positiveRow_bound':
++        '[Fintype V] [DecidableEq V] (p : AIEFGate.Params) (eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (heta : 0 ≤ eta) (hmu : 0 ≤ mu) (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (hC : ∀ i j, ‖C0 i j‖ ≤ 1) (hg : 0 < p.γ) (n : ℕ) (i : V) : (∑ j ∈ (Finset.univ : Finset V).erase i, max 0 (sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j / p.γ)) ≤ ((Fintype.card V - 1 : ℕ) : ℝ) * (eta / p.γ)',
++    'drive_eta_response':
++        '(eta mu delta : ℝ) (C : V → V → ℂ) (i j : V) : sourceDrive (eta + delta) mu C i j - sourceDrive eta mu C i j = delta * reported C i j',
++    'main_preM_source_formula':
++        '(p : AIEFGate.Params) (eta mu : ℝ) (C : V → V → ℂ) (B : V → V → ℝ) (i j : V) : AIEFGate.MatrixForm.preM p (sourceDrive eta mu C) B i j = B i j + p.dt * ((eta + mu) * reported C i j - mu - p.γ * B i j)',
++    'main_phase_preM':
++        '(p : AIEFGate.Params) (eta mu alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (B : V → V → ℝ) (i j : V) : AIEFGate.MatrixForm.preM p (sourceDrive eta mu (coherenceTrace alpha C0 d x0 u omega tau (n + 1))) B i j = B i j + p.dt * ((eta + mu) * reported (coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j - mu - p.γ * B i j)',
++    'probe_coherence_values':
++        '(i j : Fin 2) : coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 1 i j = 0 ∧ coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2 i j = -Complex.I/2 ∧ coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 3 i j = 1/2-Complex.I/4 ∧ coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 4 i j = 3/4-Complex.I/8',
++    'probe_late_start':
++        ': lateSource 2 probeU 1 (0 : Fin 2) = 0',
++    'probe_reported_second':
++        ': reported (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2) (0 : Fin 2) 1 = 1/2',
++    'probe_drive_second':
++        ': sourceDrive 2 1 (coherenceTrace (1/2) probeC0 2 probeX probeU probeOmega Real.pi 2) (0 : Fin 2) 1 = 1/2',
++}
++
++
++def _norm(s):
++    s = s.replace("Researcher040282.Phase.", "").replace("Researcher040282.Delay.", "")
++    s = s.replace("Phase.", "").replace("History.", "")
++    return " ".join(s.split())
++
++
++def _stmt(src, name):
++    m = re.search(rf"^(?:theorem|lemma) {re.escape(name)}\b(.*?):=", src, re.M | re.S)
++    assert m, name
++    return _norm(m.group(1))
++
++
++def test_restated_statements_match_deposit():
++    for name, want in HISTORY_STATEMENTS.items():
++        assert _stmt(HB, name) == want, name
++    for name, want in PHASE_STATEMENTS.items():
++        assert _stmt(PI, name) == want, name
++    for name, want in C013_STATEMENTS.items():
++        assert _stmt(PC, name) == want, name
++
++
++def test_sources_have_no_banned_markers_credit_by_handle_only():
++    for src in (HB, PI, PC):
++        body = [l for l in src.splitlines() if not l.lstrip().startswith(("--", "/-", "*"))]
++        for bad in ("sorry", "admit", "native_decide", "axiom ", "unsafe", "implemented_by", "extern"):
++            assert not any(bad in l for l in body), bad
++        assert "@" not in src.replace("@[", "")                      # no e-mail addresses
++        assert "Researcher 040282" in src and ("1b5ae52" in src or "410275ad" in src)
++    assert "fe47db36" in HB and "b26f225f" in PI and "410275adc4ea837a6384cefe2d545c2d" in PC
++    assert "hand-checked, not proved against Python" in PC.replace("\n", " ")  # transcription honesty (scope)
++    assert "wrong_" not in PC.replace("`wrong_*_refuted`", "")      # N3: no wrong_*_refuted lemma name left
++
++
++def test_fix_lemmas_present_n1_n2_n3_n5():
++    for name in ("reported_diag", "reported_symm", "reported_offdiag", "sourceDrive_diag", "sourceDrive_symm",
++                 "probe_asym_coherence_values", "probe_asym_directed_ne", "probe_asym_reported",
++                 "probe_asym_reported_swapped", "probe_asym_reported_diag", "probe_alpha_quarter",
++                 "main_phase_stepM_eq_stepB"):
++        assert re.search(rf"^theorem {name}\b", PC, re.M), name
++    for name in ("inputPhasor_delay_three_differs", "inputPhasor_delay_one_differs", "inputPhasor_delay_zero_differs",
++                 "inputPhasor_no_offset_differs", "constant_input_differs", "drive_without_eta_differs"):
++        assert re.search(rf"^theorem {name}\b", PC, re.M), name
++    assert "def probeC00 (_ _ : Fin 2) : ℂ := 0" in PC            # N5 zero initial coherence
++    assert "def probeU2 (_ : ℕ) (i : Fin 2) : ℝ := if i = 0 then Real.pi / 2 else 0" in PC  # N1 node-dependent
++
++
++# ---- independent simulation of the engine convention (compute_R, advance of theta, EMA) ----------------------
++
++def simulate(alpha, c0, d, x0, u, omega, tau, steps):
++    """theta_{n+1} = wrap(theta_n + u_n); history of d+1 snapshots with constant prehistory; C_{n+1} = alpha C_n +
++    (1-alpha) z_n with z_n = exp(i (theta_n,i - delayed_j - (omega_i + omega_j)/2 tau)), delayed = oldest snapshot."""
++    n_nodes = len(x0)
++    theta = [list(x0)]
++    for n in range(steps):
++        theta.append([(theta[n][i] + u(n, i)) % (2 * math.pi) for i in range(n_nodes)])
++    cs = [c0]
++    for n in range(steps):
++        zs = [[cmath.exp(1j * (theta[n][i] - theta[max(n - d, 0)][j] - (omega[i] + omega[j]) / 2 * tau))
++               for j in range(n_nodes)] for i in range(n_nodes)]
++        cs.append([[alpha * cs[n][i][j] + (1 - alpha) * zs[i][j] for j in range(n_nodes)] for i in range(n_nodes)])
++    return cs
++
++
++def reported(c, i, j):
++    return 0.0 if i == j else (abs(c[i][j]) + abs(c[j][i])) / 2
++
++
++def test_asymmetric_zero_init_probe_pins_the_average():
++    u = lambda n, i: math.pi / 2 if i == 0 else 0.0          # probeU2
++    zero = [[0j, 0j], [0j, 0j]]
++    cs = simulate(0.5, zero, 1, [0.0, 0.0], u, [0.0, 0.0], 0.0, 2)
++    assert all(abs(cs[1][i][j] - 0.5) < 1e-12 for i in range(2) for j in range(2))
++    assert abs(cs[2][0][1] - (0.25 + 0.5j)) < 1e-12 and abs(cs[2][1][0] - 0.75) < 1e-12
++    assert abs(abs(cs[2][0][1]) - math.sqrt(5) / 4) < 1e-12 and abs(abs(cs[2][1][0]) - 0.75) < 1e-12
++    assert abs(abs(cs[2][0][1]) - abs(cs[2][1][0])) > 0.1                       # probe_asym_directed_ne
++    r = reported(cs[2], 0, 1)
++    assert abs(r - (3 + math.sqrt(5)) / 8) < 1e-12 and reported(cs[2], 1, 0) == r   # probe_asym_reported(_swapped)
++    # the one-sided mutants (N1) are far from the average, the diagonal mutant is far from 0 (N2)
++    assert abs(abs(cs[2][0][1]) - r) > 0.09 and abs(abs(cs[2][1][0]) - r) > 0.09
++    assert reported(cs[2], 0, 0) == 0.0 and abs(cs[2][0][0]) > 0.1               # probe_asym_reported_diag
++    assert abs(3 * r - 1 - (3 * (3 + math.sqrt(5)) / 8 - 1)) < 1e-12              # probe_asym_drive (eta=2, mu=1)
++
++
++def test_alpha_quarter_probe_detects_alpha_swap():
++    u = lambda n, i: math.pi / 2 if i == 0 else 0.0
++    zero = [[0j, 0j], [0j, 0j]]
++    cs = simulate(0.25, zero, 1, [0.0, 0.0], u, [0.0, 0.0], 0.0, 1)
++    assert all(abs(cs[1][i][j] - 0.75) < 1e-12 for i in range(2) for j in range(2))   # probe_alpha_quarter
++    cs_swapped = simulate(0.75, zero, 1, [0.0, 0.0], u, [0.0, 0.0], 0.0, 1)             # alpha <-> 1 - alpha
++    assert abs(cs_swapped[1][0][0] - 0.75) > 0.4
++    half = simulate(0.5, zero, 1, [0.0, 0.0], u, [0.0, 0.0], 0.0, 1)
++    assert abs(half[1][0][0] - 0.5) < 1e-12                       # alpha = 1/2 is self-dual: blind to the swap
++
++
++def test_uniform_c0_one_probe_values():
++    u = lambda n, i: math.pi / 2
++    one = [[1 + 0j, 1 + 0j], [1 + 0j, 1 + 0j]]
++    cs = simulate(0.5, one, 2, [0.0, 0.0], u, [1.0, 1.0], math.pi, 4)
++    want = [0, -0.5j, 0.5 - 0.25j, 0.75 - 0.125j]                # probe_coherence_values (traces 1..4)
++    for k, w in enumerate(want, start=1):
++        assert abs(cs[k][0][1] - w) < 1e-9, k
++    assert abs(reported(cs[2], 0, 1) - 0.5) < 1e-9                # probe_reported_second
++
++
++# ---- mutants: shape, edits apply, pins exist, kill rule --------------------------------------------------------
++
++def test_p5_mutants_shape_and_exact_count():
++    assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58
++    assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
++    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (58)
++    names = [m[0] for m in mc.DEF_MUTANTS]
++    assert names[0].startswith("M37") and names[-1].startswith("M56")
++    assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
++    assert len({m[0] for m in mc.MUTANTS} & set(names)) == 0
++    required = ("delay_plus_one", "delay_minus_one", "current_theta", "dropped_omega_tau", "phase_is_zero",
++                "missing_eta", "swap_i_j", "conjugated", "alpha_swapped", "mu_sign", "next_input",
++                "one_sided", "diagonal_one")
++    for r in required:
++        assert any(r in n for n in names), r
++
++
++def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():
++    srcs = {"PhaseIncrement.lean": PI, "PhaseCoherence.lean": PC}
++    rewrite_lemmas = ("input_engine_convention", "delayed_input_step", "innovation_engine_convention",
++                      "innovation_transport", "reported_symm", "reported_offdiag", "reported_diag",
++                      "main_preM_source_formula", "drive_eta_response", "coherenceTrace_unitDisk")
++    for f, probes in mc.VALUE_PROBES.items():
++        for p in probes:
++            assert re.search(rf"^theorem {p}\b", srcs[f], re.M), (f, p)
++            assert p.startswith("probe_") and p not in rewrite_lemmas
++    for name, f, edits, pins in mc.DEF_MUTANTS:
++        assert f in srcs, name
++        assert mc.mutate_file(srcs[f], edits) != srcs[f], name        # each edit matches exactly `count` times
++        assert pins and set(pins) <= set(mc.VALUE_PROBES[f]), (name, pins)   # credit only via VALUE probes
++    for name, f, edits in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS + mc.KNOWN_SURVIVORS:
++        assert mc.mutate_file(srcs[f], edits) != srcs[f], name
++
++
++def test_controls_exist_with_exact_counts():
++    assert len(mc.EQUIV_CONTROLS) == 10 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2
++    eq = {n.split("_")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}
++    ci_new = {k: eq[k][1][0][1] for k in ("E1", "E2", "E3")}
++    assert "* 1" in ci_new["E1"] and "+ 0" in ci_new["E2"] and "id (inputPhasor" in ci_new["E3"]   # the audit's three
++    # one equivalent rewrite on each of: the 011 delayed read, the EMA step, reported
++    assert {f for n, f, e in mc.EQUIV_CONTROLS if n.startswith(("E4", "E5", "E6"))} == {"PhaseIncrement.lean"}
++    assert any(n.startswith("E7_ema") for n, f, e in mc.EQUIV_CONTROLS)
++    assert any(n.startswith("E8_reported") for n, f, e in mc.EQUIV_CONTROLS)
++    assert [n.split("_")[0] for n, f, e in mc.TYPO_CONTROLS] == ["T1", "T2", "T3"]
++    assert "inputPhasorXX" in mc.TYPO_CONTROLS[0][2][0][1]
++    assert [c[0].split("_")[0] for c in mc.STATEMENT_CONTROLS] == ["SE1", "ST1"]
++    names = [m[0] for m in mc.DEF_MUTANTS] + [c[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
++    assert len(names) == len(set(names))
++
++
++def test_def_mutants_never_edit_unlisted_files_and_no_expected_survivor_since_n2():
++    assert {m[1] for m in mc.DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
++    assert mc.KNOWN_SURVIVORS == []          # the former S1 (offset dropped in 011 only) is the counted M55 since N2
++    # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value
++    m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M43")][0]
++    assert m43[3] == ["probe_input_offset_value", "probe_coherence_values"]
++    m51 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M51")][0]
++    m52 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M52")][0]
++    assert m51[3] == ["probe_asym_reported"] and m52[3] == ["probe_asym_reported_diag"]
++
++
++def test_n2_asymmetric_omega_probe_and_offset_mutants():
++    """(N2) the static offset `(omega i + omega j)/2 * tau`: every earlier probe has node-uniform omega (1 or 0), so a
++    wrong index (omega i only / omega j only), a dropped offset and a node-uniform omega are pinned only by the new
++    asymmetric probes (omega = (1, 0)), declared in advance for M53-M56."""
++    assert "theorem probe_input_asym_omega_value" in PI
++    assert "theorem probe_coherence_input_asym_omega" in PC
++    assert "if i = 0 then (1 : ℝ) else 0" in PI                              # omega differs per node: (1, 0)
++    assert "probe_input_asym_omega_value" in mc.VP_INC
++    assert "probe_coherence_input_asym_omega" in mc.VP_COH
++    by = {m[0].split("_")[0]: m for m in mc.DEF_MUTANTS}
++    for k in ("M53", "M54", "M55"):
++        assert by[k][1] == "PhaseIncrement.lean" and by[k][3] == ["probe_input_asym_omega_value"], k
++    assert by["M56"][1] == "PhaseCoherence.lean" and by["M56"][3] == ["probe_coherence_input_asym_omega"]
++    new = {k: by[k][2][0][1] for k in ("M53", "M54", "M55")}
++    assert "omega i * tau" in new["M53"] and "omega j * tau" in new["M54"] and "    0)" in new["M55"]
++    assert "(fun _ => omega i)" in by["M56"][2][0][1]
++    # the equivalence control commutes the offset sum and must not be killed by the new probe
++    assert any(n.startswith("E10_offset_sum_commuted") and f == "PhaseIncrement.lean"
++               for n, f, e in mc.EQUIV_CONTROLS)
++    # numeric content of the probe: exp(-i (w_i + w_j)/2 * pi) for w = (1, 0)
++    w = (1.0, 0.0)
++    want = {(0, 0): -1, (0, 1): -1j, (1, 0): -1j, (1, 1): 1}
++    for (i, j), v in want.items():
++        assert abs(cmath.exp(-1j * ((w[i] + w[j]) / 2) * math.pi) - v) < 1e-12
++        assert abs(cmath.exp(-1j * (w[i] * math.pi)) - v) > 1e-9 or i == j     # omega_i only differs off the diagonal
++    assert abs(cmath.exp(-1j * w[1] * math.pi) - want[(0, 1)]) > 1e-9            # omega_j only differs too
++
++
++def test_kill_rule_revised_negative_controls():
++    real = ["Mutant.lean:10:2: error: type mismatch"]
++    unk = ["Mutant.lean:60:2: error(lean.unknownIdentifier): Unknown identifier `inputPhasorXX`"]
++    unkc = ["Mutant.lean:61:2: error(lean.unknownIdentifier): Unknown constant `foo`"]
++    parse = ["Mutant.lean:60:37: error: unexpected token ')'; expected command"]
++    msrc = "\n".join(["x"] * 3 + ["theorem pin_a : True := by", "  trivial", "theorem other : True := by"] +
++                     ["  sorry"] * 4 + ["  rfl"])
++    assert mc.failing_decls(msrc, ["Mutant.lean:5:3: error: boom"]) == ["pin_a"]
++    assert mc.failing_decls(msrc, ["Mutant.lean:9:3: error: boom"]) == ["other"]
++    st = mc.def_mutant_status
++    assert st(1, real, ["pin_a"], ["pin_a"]) == "KILLED"
++    assert st(1, real, ["other"], ["pin_a"]) == "SURVIVED"                    # only a rewrite lemma fails: no credit
++    assert st(0, [], [], ["pin_a"]) == "BUILDS"
++    for bad in (unk, unkc, parse, real + unk, unk + real):                    # ANY invalid line anywhere
++        assert st(1, bad, ["pin_a"], ["pin_a"]) == "INVALID"
++        assert not mc.def_mutant_killed(1, bad, ["pin_a"], ["pin_a"])
++    # a type mismatch message mentions "expected to have type": it must NOT be read as a parse error
++    mism = ["Mutant.lean:7:2: error: Type mismatch\n  has type A but is expected to have type B"]
++    assert mc.invalid_lines(mism) == [] and st(1, mism, ["pin_a"], ["pin_a"]) == "KILLED"
++    assert mc.invalid_lines(real + unk) == unk
++
++
++def test_value_probe_statements_are_closed_value_equalities():
++    # every VALUE probe states `f concrete = concrete` (an equality over concrete data, only node indices quantified)
++    for f, src in (("PhaseIncrement.lean", PI), ("PhaseCoherence.lean", PC)):
++        for p in mc.VALUE_PROBES[f]:
++            st = _stmt(src, p)
++            assert "=" in st, p
++            assert not re.search(r"\((d|x0|u|omega|tau|alpha|C0|eta|mu|C) :", st), p   # no quantified data

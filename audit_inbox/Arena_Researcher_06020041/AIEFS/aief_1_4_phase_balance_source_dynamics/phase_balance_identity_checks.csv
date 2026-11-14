@@ -1,0 +1,7 @@
+identity,maximum_absolute_error,median_absolute_error
+source_phase_edge_a_forward,1.7255398268433757e-15,1.3877787807814457e-16
+source_phase_edge_b_forward,1.047382306668854e-15,1.5700924586837752e-16
+source_increment_forward,2.2432079341972015e-15,2.2511948120545006e-16
+source_phase_edge_a_reverse,1.7255398268433757e-15,1.3877787807814457e-16
+source_phase_edge_b_reverse,1.2658490090568385e-15,1.1102230246251565e-16
+source_increment_reverse,2.040676481793015e-15,1.7808180645313476e-16

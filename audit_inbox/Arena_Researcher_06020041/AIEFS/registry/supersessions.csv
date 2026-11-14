@@ -1,0 +1,21 @@
+superseded_target,authoritative_target,category,rationale
+workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f/,AIEF_Experiments/aief_modular_platform_v1_analysis_v4/,platform_directory,"Added authority.py SHA-256 lock gate, Analysis v4 dual-horizon DID engine, PROJECT_INTEGRATION_MAP.md, and hardened pytest suite."
+workspace-019ff86e-8322-7d0d-bcaf-ed27a8018c0f.zip,AIEF_Experiments/aief_modular_platform_v1_analysis_v4/,zip_archive,100% SHA-256 duplicate of superseded v1 modular scaffold.
+AIEF_Experiments/aief_modular_platform_v1_analysis_v4.zip,AIEF_Experiments/aief_modular_platform_v1_analysis_v4/,zip_archive,100% SHA-256 duplicate archive of unpacked v1_analysis_v4 directory.
+AIEF_1_4_Twindow_sensitivity_analysis.py,AIEF_1_4_Twindow_sensitivity_analysis_v2.py,python_script,Initial single-horizon prototype superseded by v2.
+AIEF_1_4_Twindow_sensitivity_analysis_v2.py,AIEF_1_4_Twindow_sensitivity_analysis_v3.py,python_script,Superseded by v3 authority-locked legacy analysis.
+AIEF_1_4_Twindow_sensitivity_analysis_v3.py,AIEF_Experiments/aief_modular_platform_v1_analysis_v4/AIEF_1_4_Twindow_sensitivity_analysis_v4.py,python_script,v4 adds non-confounded fixed-physical vs normalized-EMA DID estimands while retaining v3 locked at root for authority.py verification.
+Older files/b57562a8ee77/,runs/b57562a8ee77/,run_directory,Older files/b57562a8ee77 was an earlier --baseline-only certificate run; runs/b57562a8ee77 is the complete 200-condition frozen oracle.
+runs_pivot_study/ebfec9a5c419/,runs/b57562a8ee77/,run_directory,120-condition exploratory pilot (freezeable=False) superseded for inference by full 200-condition frozen oracle.
+aief_1_4_matched_phase_memory_ablation/,test_output/,output_directory,Root directory named after the study contains an aborted 3-file partial attempt (~2.9 KB); completed 40-seed dataset is in test_output/ (~6.2 MB).
+runs/87dfe5798954 + 9 sibling 20-seed reruns,runs/c3da1ac707bf + runs/73dca37cf93f,run_cohort,"Early 20-seed deterministic reruns (identical sha256 d71bb071...) replaced by disjoint 50+50 seed production cohorts (N=100, overlap=0)."
+paired_seed_analysis/,audits/scientific/revalidated_summaries/aief_1_3_disjoint_100seed_paired_effects.csv,statistical_output,Retired pseudoreplicated N=40 pool replaced by verified N=100 disjoint paired statistics.
+AIEF_1_3_paired_statistics.py,AIEF_1_3_paired_statistics_updated.py,python_script,Added seed-disjointness gate blocking duplicate-seed pseudoreplication.
+AIEF_1_3_closure_diagnostics.py,AIEF_1_3_closure_diagnostics_updated.py,python_script,Updated cohort validation and disjointness checks.
+AIEF_1_3_sensitivity_audit.py,AIEF_1_3_sensitivity_audit_updated.py,python_script,Updated sensitivity audit supporting multi-cohort disjoint 100-seed validation.
+AIEF_1_3_persistence_mechanism_test.py,AIEF_1_3_persistence_mechanism_test_updated.py,python_script,Updated mechanism test supporting disjoint 100-seed cohorts.
+aief_1_4_intertwining_controller/,aief_1_4_intertwining_controller 02/,output_directory,Fixed edge-tie multiplicity classification from 38/40 seeds to 40/40 seeds; 01 is an exact byte duplicate of 02.
+aief_1_4_feedback_rank_memory_reduction 01/,aief_1_4_feedback_rank_memory_reduction/,output_directory,Complete 11-file bundle supersedes earlier 8-file snapshot in 01.
+aief_1_4_k3_structure_scan.py,aief_1_4_k3_fiber_audit/,scientific_analysis,Replaced subgraph triangle overcount (856 subgraphs) with true isolated K3 connected-component audit (26 components).
+aief_1_4_operator_compression.py,aief_1_4_full_state_tangent_operator.py,scientific_analysis,"Retired 8D POD autonomous compression (24,323.8% leakage) in favor of exact full-state non-autonomous cocycle."
+Root 4 synthesis .md docs (shorter revisions),audits/github_reconciliation/recovered_from_workspace_019ff402/newer_zip_markdown/,documentation_revision,workspace-019ff402.zip holds expanded revisions of 4 root Markdown docs (+52 to +265 lines); unpacked non-destructively alongside unified diffs.

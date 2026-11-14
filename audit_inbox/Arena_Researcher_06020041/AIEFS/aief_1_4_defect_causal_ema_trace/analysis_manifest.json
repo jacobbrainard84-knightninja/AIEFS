@@ -1,0 +1,69 @@
+{
+  "alpha_EMA": 0.9994288298464774,
+  "analysis": "AIEF-1.4 causal trace of K3 defect through EMA and proposals",
+  "command": [
+    "AIEF_1_4_defect_causal_ema_trace.py",
+    "--npz",
+    "runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+    "--manifest",
+    "runs/5a9f093a2fe0/manifest.json",
+    "--cocycle-npz",
+    "aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+    "--seed",
+    "4619122171158768524",
+    "--dt",
+    "0.01",
+    "--scale-epsilon",
+    "1e-12",
+    "--intervals",
+    "100,150,200,250,320",
+    "--signal-floor",
+    "1e-15",
+    "--output-dir",
+    "aief_1_4_defect_causal_ema_trace"
+  ],
+  "dt": 0.01,
+  "ema_rate": 0.05713333333333332,
+  "final_replay_exact": true,
+  "inputs": {
+    "cocycle_npz": {
+      "path": "/home/deck/AI_Programs/SSRH/aief_1_4_frozen_driver_cocycle/frozen_cocycle_matrices.npz",
+      "sha256": "c3aa9683fefbfb1d80b426833b4312fb5b3532ba449af9889138b0d603e39e58"
+    },
+    "manifest": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/manifest.json",
+      "sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33"
+    },
+    "npz": {
+      "path": "/home/deck/AI_Programs/SSRH/runs/5a9f093a2fe0/AIEF_1_4_5a9f093a2fe0_branch_diagnostics.npz",
+      "sha256": "8fa9cc059117a7dbef0ed14e52907ec63f7626b50e4b3c8815977547e4590f0f"
+    }
+  },
+  "interpretation_constraints": [
+    "Complex EMA differences are directed quantities; R is reconstructed only after magnitude and symmetrization.",
+    "Magnitude linearization is approximate and separately audited.",
+    "Shared pointwise multipliers do not alone establish causal direction.",
+    "Results remain conditional on one seed and fixed winner branch."
+  ],
+  "intervals": [
+    0.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    320.0
+  ],
+  "outputs": [
+    "defect_causal_trace_trajectory.csv",
+    "defect_causal_trace_intervals.csv",
+    "defect_causal_identity_checks.csv",
+    "defect_causal_ema_report.txt"
+  ],
+  "scale_epsilon": 1e-12,
+  "seed": "4619122171158768524",
+  "signal_floor": 1e-15,
+  "source": {
+    "path": "/home/deck/AI_Programs/SSRH/AIEF_1_4_defect_causal_ema_trace.py",
+    "sha256": "cc57c504d6b5e8b698ee7017eb675957594bc432329b6af5faae63af168c44ee"
+  }
+}
