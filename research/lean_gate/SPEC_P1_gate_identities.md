@@ -1094,6 +1094,53 @@ with the upper bound dropped from the right side, refuted at `γ = 1`, `dt = 2` 
 (one flagged with a name-reference/parse line, information only: M31); statement controls SE1/ST1 not rejected; **20/20 definition mutants KILLED by a declared value probe (M37–M56), 58/58 in
 total**; **10/10 equivalence controls not killed**; **3/3 typo controls INVALID**; RESULT PASS. Controls of the earlier numbers (23 + 16 = 39, 9 controls) are superseded by 38 + 20 = 58 and 10.
 
+## 12. C014 (branch `research/lean-gate-c014`, tip `9b9b3d9`; merge-refreshed on 2026-11-14 onto `main` `7129d31`)
+
+### 12.1 What it is
+
+`lean/AIEFGateCore/AIEFGateCore/TrajectoryInvariants.lean` (namespace `AIEFGate.TrajectorySafety`) ports cycle 014 of
+Researcher 040282 (deposit md5 `c6914623bfcc3002cb1ab0a47e848698`). For any drive `F` and auxiliary update `U`, every
+`stepM` weight state after time 0 is structural (needs only `0 ≤ cap`, `0 ≤ ε` of that step) and, under `EngineGate`
+of that step's parameters, is row-capped, entry-enveloped, and gives bounded sine coupling and phase increment. These
+are induction wrappers around the P4a one-step facts in `Capacity.lean`; no new one-step mathematics. The full-reset
+witnesses (`pWide`) say nothing about the engine's parameters. The Auditor review the header cites
+(`2026-11-10_audit_040282_c014.md`) is not in this repository.
+
+### 12.2 Mutants (numbered from M71; M59–M70 are reserved for the c016 port)
+
+| Mutant | Kind | Edit | Killed by |
+|---|---|---|---|
+| M71 | statement | `post_capacity`: cap of step `n` -> cap of step `n+1` | `capacity_clock_refuted` |
+| M72 | statement | `all_times_structural`: initial-structure hypothesis -> `True` | `initial_time_refuted` |
+| M73 | statement | `post_capacity`: `EngineGate` hypothesis -> `True` | `broken_link_refuted` |
+| M74 | definition | `weightUpdate := symM` (gate bypassed) | probe `probe_gate_scales_row` (`3/4`; bypass gives `3`) |
+| M75 | definition | `feedbackStep` gives `U` the old `B` twice (Researcher 001's survivor on `9b9b3d9`) | probe `probe_aux_reads_old_and_new` (`-1`; gives `-11`) |
+| M76 | definition | `feedbackStep` gives `U` the new `B` twice | probe `probe_aux_reads_old_and_new` (gives `0`) |
+| E11 | equivalence control | the `let Bnew` of `feedbackStep` inlined | must NOT be killed |
+
+The two value probes are new (not in the deposit) and sit in a marked block of the module. `OPENS` gained
+`open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)`; statement mutants use the closure `TS_VARS`.
+
+### 12.3 Tests
+
+`research/lean_gate/tests/test_lean_gate_c014.py` pins the module import and hash, no escape hatches, `#print axioms`
+for both probes, the exact shape and order of M71–M76 and E11, that each edit applies, that M59–M70 stay free, and
+recomputes both probe values (and the mutant values) in exact rationals from `preM`/`clipM`/`symM`/`scale`/`GateOnX`/
+`kernelM` (text-pinned). The P4b and P5 tests' count pins were moved to 41 statement / 23 definition / 64 total and
+11 equivalence controls, with the P5 checks scoped to the P5 slice.
+
+### 12.4 Results (local, 2026-11-14)
+
+`SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2300 jobs, 0 warnings, 25 files hashed, step 6 0 hits, **789 declarations
+audited** (`propext`, `Classical.choice`, `Quot.sound` only). Full `lean_mutation_check.py`: **41/41 statement and
+23/23 definition mutants killed, 64/64**; 11/11 equivalence controls not killed; 3/3 typo controls INVALID; RESULT PASS.
+
+### 12.5 Still open (C014)
+
+* `U` and `F` are arbitrary, so nothing here says the engine's feedback is safe beyond the one-step gate facts.
+* No Python-side check that the engine passes old and new `B` in this order (the probe only pins the Lean convention).
+* The oscillation witnesses use a full-reset `pWide` step; they are not evidence about engine parameters.
+
 ## 13. Frequency lock (branch `research/lean-gate-phaselock`, from `main` `7129d31`; numbered after C014's §12)
 
 ### 13.1 Why

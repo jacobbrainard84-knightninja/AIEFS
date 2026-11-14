@@ -92,6 +92,15 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
 
+  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff. because M59-M70 are
+  reserved for the c016 port):
+  M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
+  M72 TrajectorySafety.all_times_structural, hInit := True            -> TrajectorySafety.initial_time_refuted
+  M73 TrajectorySafety.post_capacity, hp (EngineGate) := True         -> TrajectorySafety.broken_link_refuted (`pB`)
+  Definition mutants (rule below): M74 `weightUpdate := symM` (gate bypassed), M75 `feedbackStep` hands `U` the old
+  B twice, M76 the new B twice; probes `probe_gate_scales_row`, `probe_aux_reads_old_and_new`; equivalence control
+  E11 (the `let` inlined) must not be killed. M75 is the survivor of Researcher 001's audit of 9b9b3d9.
+
   P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
   mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are the P4b statement mutants).
   A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. RULE
@@ -141,6 +150,7 @@ CAP_VARS = "{V : Type} [Fintype V] [LinearOrder V] (p : Params)"
 XO_NN = "(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))"
 GP = "EngineWitness.engineGate_pE"
 WU_VARS = CAP_VARS + " (B D : ℕ → V → V → ℝ)"
+TS_VARS = "{V S : Type} [Fintype V] [LinearOrder V]"   # section variables of TrajectoryInvariants.lean
 WU_FAC = ("(by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE])"
           " (fun n => rfl) (fun n i j => Capacity.Xo_symm _ i j) ")
 
@@ -319,6 +329,24 @@ MUTANTS = [
     ("M58_capacity_convex_weights_upper_bound_dropped", "Capacity.lean", "convex_weights_iff",
      [("(0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1)", "(0 ≤ p.γ * p.dt)", 1)], CAP_VARS,
      "(by have h := ((@H Unit _ _ ⟨2, 1, 1, 0, 0, 0, 0⟩).2 (by norm_num)).1; norm_num at h)", None),
+    # ---- C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282); numbered from M71 because
+    #      M59-M70 are reserved for the c016 port (Researcher 001) ----
+    ("M71_trajectory_post_capacity_next_cap", "TrajectoryInvariants.lean", "post_capacity",
+     [("i ≤ (p n).cap", "i ≤ (p (n + 1)).cap", 1)], TS_VARS,
+     "TrajectorySafety.capacity_clock_refuted (@H (Fin 2) Unit _ _ TrajectorySafety.capSchedule"
+     " TrajectorySafety.oneDrive TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0"
+     " (by simpa [TrajectorySafety.capSchedule] using TrajectorySafety.pWide_engine) 0)", None),
+    ("M72_trajectory_all_times_no_initial_structure", "TrajectoryInvariants.lean", "all_times_structural",
+     [("(hInit : Structural initial.2)", "(hInit : True)", 1)], TS_VARS,
+     "TrajectorySafety.initial_time_refuted (@H (Fin 2) Unit _ _ (fun _ => TrajectorySafety.pWide)"
+     " TrajectorySafety.oneDrive TrajectorySafety.keepAux ((), TrajectorySafety.dirtyB)"
+     " (fun _ => by norm_num [TrajectorySafety.pWide]) (fun _ => by norm_num [TrajectorySafety.pWide]) trivial 0)",
+     None),
+    ("M73_trajectory_post_capacity_no_engine_gate", "TrajectoryInvariants.lean", "post_capacity",
+     [("(hp : EngineGate (p n))", "(hp : True)", 1)], TS_VARS,
+     "TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)"
+     " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
+     None),
 ]
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
@@ -338,7 +366,10 @@ VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_
           "probe_reported_second", "probe_drive_second", "probe_asym_drive", "probe_main_preM",
           "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag",
           "probe_coherence_input_asym_omega"]
-VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH}
+VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new"]
+VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS}
+WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"
+FB_OLD = "  (U n state.1 state.2 Bnew, Bnew)\n"
 PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
 PIN_DRIVE = ["probe_drive_second", "probe_asym_drive"]
 DRIVE_OLD = "  (eta + mu) * reported C i j - mu\n"
@@ -401,6 +432,14 @@ DEF_MUTANTS = [
     ("M55_phase_input_offset_dropped", "PhaseIncrement.lean", offset("0"), PIN_OMEGA),
     ("M56_coherence_input_node_uniform_omega_i", "PhaseCoherence.lean",
      ci("inputPhasor d x0 u (fun _ => omega i) tau n i j"), ["probe_coherence_input_asym_omega"]),
+    # ---- C014 (TrajectoryInvariants.lean); M74-M76 follow the C014 statement mutants M71-M73 ----
+    ("M74_trajectory_weight_update_bypasses_gate", "TrajectoryInvariants.lean",
+     [(WU_DEF_OLD, "def weightUpdate (p : Params) (D B : Weights V) : Weights V := symM p D B\n", 1)],
+     ["probe_gate_scales_row"]),
+    ("M75_trajectory_aux_update_gets_old_B_only", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 state.2 state.2, Bnew)\n", 1)], ["probe_aux_reads_old_and_new"]),
+    ("M76_trajectory_aux_update_gets_new_B_only", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 Bnew Bnew, Bnew)\n", 1)], ["probe_aux_reads_old_and_new"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -420,6 +459,9 @@ EQUIV_CONTROLS = [
     ("E9_drive_coefficient_commuted", "PhaseCoherence.lean",
      [(DRIVE_OLD, "  (mu + eta) * reported C i j - mu\n", 1)]),
     ("E10_offset_sum_commuted", "PhaseIncrement.lean", offset("((omega j + omega i) / 2) * tau")),
+    ("E11_trajectory_feedback_let_inlined", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 state.2 (weightUpdate (p n) (F n state.1 state.2) state.2),\n"
+               "    weightUpdate (p n) (F n state.1 state.2) state.2)\n", 1)]),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -458,7 +500,8 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\nopen AIEFGate.RedTeam (hw ctrlX)\n"
          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
          "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\nopen AIEFGate.MatrixForm (preM)\n"
-         "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n")
+         "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n"
+         "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
