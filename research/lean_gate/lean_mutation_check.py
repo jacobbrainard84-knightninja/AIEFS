@@ -622,6 +622,21 @@ def refute(msrc, src, thm, closure, term):
     return refuted, why, crc != 0 and bool(cerrs), (rerrs or rout.splitlines())
 
 
+def partial_run_reason(only, n_stmt_ran, n_def_ran, n_stmt=None, n_def=None):
+    """None for a full run; otherwise why the run cannot PASS. A filtered or short run (AIEF_MUT_ONLY, or fewer mutants
+    executed than listed) is a debugging aid only: it may report, but it must FAIL, so an injected filter (for example
+    `AIEF_MUT_ONLY: '^$'`, which selects nothing) cannot turn the CI step green while running 0 mutants."""
+    n_stmt = len(MUTANTS) if n_stmt is None else n_stmt
+    n_def = len(DEF_MUTANTS) if n_def is None else n_def
+    if only:
+        return f"AIEF_MUT_ONLY is set ({only!r}): filtered debugging run, not a PASS"
+    if n_stmt_ran != n_stmt or n_def_ran != n_def:
+        return f"ran {n_stmt_ran}/{n_stmt} statement and {n_def_ran}/{n_def} definition mutants: incomplete run, not a PASS"
+    if n_stmt == 0 or n_def == 0:
+        return "empty mutant list: not a PASS"
+    return None
+
+
 def main():
     ok = True
     srcs = {}
@@ -650,10 +665,13 @@ def main():
     ok &= lgood
     n_rej = 0
     n_flag = 0
-    only = os.environ.get("AIEF_MUT_ONLY")   # debugging aid: regex on mutant names; the full run is the record
+    only = os.environ.get("AIEF_MUT_ONLY")   # debugging aid: regex on mutant names; a filtered run always FAILS (partial_run_reason)
+    n_stmt_ran = 0
+    n_def_ran = 0
     for name, f, thm, edits, closure, term, eterm in MUTANTS:
         if only and not re.search(only, name):
             continue
+        n_stmt_ran += 1
         src = srcs[f]
         msrc = mutate(src, thm, edits)
         assert msrc != src
@@ -704,6 +722,7 @@ def main():
     for name, f, edits, pins in DEF_MUTANTS:
         if only and not re.search(only, name):
             continue
+        n_def_ran += 1
         src = srcs[f]
         msrc = mutate_file(src, edits)
         assert msrc != src
@@ -754,6 +773,10 @@ def main():
         print(f"{name}: build {'PASSES' if clean else 'FAILS'} -> "
               f"{'SURVIVES, as documented (not counted)' if clean else 'now detected (documented survivor is stale)'}")
         ok &= clean
+    why = partial_run_reason(only, n_stmt_ran, n_def_ran)
+    if why:
+        print("PARTIAL RUN: " + why)
+        ok = False
     print("RESULT:", "PASS" if ok else "FAIL")
     sys.exit(0 if ok else 1)
 

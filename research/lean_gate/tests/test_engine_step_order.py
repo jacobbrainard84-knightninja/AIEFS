@@ -276,8 +276,11 @@ MUTANTS = [
     ("no_mod_2pi", "        2.0 * np.pi\n    )", "        1e300\n    )"),
     ("append_stale_theta", "state.history.append(state.theta.copy())",
      "state.history.append(state.history[-1].copy())"),
-    # Equivalent, so not counted: `> delay_steps` instead of `+ 1` (one pop per step keeps a 51-slot start at
-    # 51) and `theta` instead of `theta.copy()` in initialize_state (DynamicState copies every slot).
+    # (Two further edits are equivalent and so are NOT in this list: `> delay_steps` instead of `> delay_steps + 1`,
+    # because one pop per step keeps a 51-slot start at 51, and `theta` instead of `theta.copy()` in
+    # initialize_state, because DynamicState copies every slot.)
+    # The three entries below are real, counted mutants. queue_one_long and pop_newest are killed by value asserts;
+    # init_one_short is killed by the 51-slot length assert in test_probe_d50_config_and_init.
     ("queue_one_long", "if len(state.history) > config.delay_steps + 1:",
      "if len(state.history) > config.delay_steps + 2:"),
     ("init_one_short", "history = [theta.copy() for _ in range(config.delay_steps + 1)]",
