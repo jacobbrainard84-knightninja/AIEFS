@@ -116,12 +116,14 @@ def test_sources_have_no_banned_markers_and_credit_by_handle_only():
 def test_p4b_mutants_shape():
     names = [m[0] for m in mc.MUTANTS]
     # 36 (M1-M36) + 2 (M57, M58: #27 Capacity follow-ups, appended after the P5 definition mutants M37-M56)
-    assert len(names) == 38                                      # the single exact pin (P4a test: >= 23)
+    # + 3 (M71-M73: C014 TrajectoryInvariants.lean statement mutants, see test_lean_gate_c014.py)
+    assert len(names) == 41                                      # the single exact pin (P4a test: >= 23)
     assert names[23].startswith("M24") and names[35].startswith("M36")
     assert names[36].startswith("M57") and names[37].startswith("M58")
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
-    assert {m[1] for m in mc.MUTANTS[36:]} == {"Capacity.lean"}
-    assert [m[2] for m in mc.MUTANTS[36:]] == ["preM_between", "convex_weights_iff"]
+    assert {m[1] for m in mc.MUTANTS[36:38]} == {"Capacity.lean"}
+    assert [m[2] for m in mc.MUTANTS[36:38]] == ["preM_between", "convex_weights_iff"]
+    assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean"}
     assert [m[2] for m in mc.MUTANTS[23:36]] == [
         "rowM_le_upper", "stepM_scalar_recurrence", "appliedFactor_lower", "stepM_factor_lower",
         "trajectory_symmetric", "trajectory_zero_diag", "trajectory_nonneg", "trajectory_good_of_start",
