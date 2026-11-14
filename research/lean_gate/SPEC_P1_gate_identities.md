@@ -1093,3 +1093,43 @@ with the upper bound dropped from the right side, refuted at `γ = 1`, `dt = 2` 
 (`propext`, `Classical.choice`, `Quot.sound` only). Full `lean_mutation_check.py`: unmutated controls PASS, validator and classifier negative controls PASS; **38/38 statement mutants rejected**
 (one flagged with a name-reference/parse line, information only: M31); statement controls SE1/ST1 not rejected; **20/20 definition mutants KILLED by a declared value probe (M37–M56), 58/58 in
 total**; **10/10 equivalence controls not killed**; **3/3 typo controls INVALID**; RESULT PASS. Controls of the earlier numbers (23 + 16 = 39, 9 controls) are superseded by 38 + 20 = 58 and 10.
+
+## 13. Frequency lock (branch `research/lean-gate-phaselock`, from `main` `7129d31`; numbered after C014's §12)
+
+### 13.1 Why
+
+Arena_Researcher_06020041 cycles 3 and 5 (`PhaseLockCoherence.lean` md5 `038cfbeb…`, `LockedCoherence.lean` md5
+`6554994d…`, on `audit-inbox` only) compile with standard axioms, but their "lock" hypothesis
+`∀ n ≥ N, ∀ i, u n i = 0` is a frozen network. Engine natural frequencies average about 1.43, so it never applies.
+Auditor Seat 002 rated them REWORK. `lean/AIEFGateCore/AIEFGateCore/FrequencyLock.lean` is that rework, written by
+Auditor Seat 002; no deposited file is copied or executed.
+
+### 13.2 Statements (all proved; standard axioms only)
+
+Hypothesis (frequency lock): `hlock : ∀ n, N ≤ n → ∀ i, u n i = c` for one real `c` (`c = 0` is the old case).
+
+* `input_step_of_common_increment`: if `u n i = c n`, `d ≤ n` and `u (n-d) j = c (n-d)`, then
+  `coherenceInput (n+1) i j = coherenceInput n i j * phasor (c n − c (n−d))`.
+* `coherenceInput_constant_of_frequencyLock`: under `hlock`, `coherenceInput n i j = coherenceInput (N+d) i j`
+  for all `n ≥ N + d`.
+* `coherenceTrace_error_of_frequencyLock`: `C (N+d+k) − z = α^k (C (N+d) − z)`, `z = coherenceInput (N+d) i j`.
+* `coherenceTrace_norm_of_frequencyLock`: with `0 ≤ α ≤ 1` and `‖C0‖ ≤ 1`, `1 − 2α^k ≤ ‖C (N+d+k) i j‖`.
+* `reported_of_frequencyLock`: for `i ≠ j`, `1 − 2α^k ≤ reported (C (N+d+k)) i j`.
+* `frequencyLock_nonzero_rate`: the hypothesis holds at rate `1` (not only the frozen case).
+* `common_rate_input_not_constant`: delay 1, identical nodes, rate `π, 0, π, …`: the input flips sign each step,
+  so "all nodes move together" is not enough with a delay; the constant rate is needed.
+
+### 13.3 Results (local, 2026-11-14)
+
+`check_lean_gate.sh` and the Python test `research/lean_gate/tests/test_lean_gate_freqlock.py` (module imported and
+hashed, no escape hatches, statement text pins, `#print axioms` lines); results in the commit message.
+
+### 13.4 Still open
+
+* The lock is ASSUMED, not derived from the closed loop; this does not prove the engine locks (O1 open).
+* At the engine's `α = exp(−dt/T_window)` (`aief_experiment_engine_v1.py` `alpha`, `dt = 0.01`,
+  `T_window = 17.502917…`, so `α ≈ 0.999429`) the bound `1 − 2α^k` passes `1/2` only after `k = 2427` steps; it is a
+  rate, not a claim about any run.
+* No mutants yet: they will be numbered after C014's M71–M76 once that branch lands (the shared count pins would
+  otherwise conflict).
+* Exact reals; not float64 or the Python code. `AUD-RATELAW stays UNEXPLAINED`.

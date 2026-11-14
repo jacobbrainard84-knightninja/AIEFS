@@ -17,3 +17,4 @@ import AIEFGateCore.PhaseIncrement
 import AIEFGateCore.PhaseCoherence
 import AIEFGateCore.Freeze
 import AIEFGateCore.WeightUpdate
+import AIEFGateCore.FrequencyLock
