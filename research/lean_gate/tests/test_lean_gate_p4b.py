@@ -46,12 +46,26 @@ def test_parameters():
     assert H == Fr(3, 20000) and GAMMA * Fr(8, 3) == L and CAP == Fr(19, 30)
 
 
+def _sstar_claim(s):
+    """`s` is exactly 19/90 - 1e-10 and its float64 value is `float(19/90) - 1e-10` (no `or True` escape hatch)."""
+    return s == Fr(19, 90) - Fr(1, 10**10) and float(s) == float(Fr(19, 90)) - 1e-10
+
+
+def test_sstar_claim_is_not_vacuous():
+    """The assertion in `test_threshold_is_exact_and_strict` is a real condition: it fails for a perturbed value
+    (either the exact part or the float part)."""
+    assert _sstar_claim(SSTAR)
+    assert not _sstar_claim(SSTAR + Fr(1, 10**10))
+    assert not _sstar_claim(Fr(19, 90))
+    assert not _sstar_claim(Fr(18999999991, 90000000001))
+
+
 def test_threshold_is_exact_and_strict():
     assert on_gap(SSTAR) == BC                                  # equality at the threshold: strict `<` fails
     assert not BC < on_gap(SSTAR)                               # false_gap_at_threshold
     eps = Fr(1, 10**9)
     assert BC < on_gap(SSTAR - eps) and not BC < on_gap(SSTAR + eps)
-    assert SSTAR == Fr(19, 90) - Fr(1, 10**10) and float(SSTAR) == float(Fr(19, 90)) - 1e-10 or True
+    assert _sstar_claim(SSTAR)                                  # exact rational and its float64 value
     assert abs(float(SSTAR / L) - 5.2777777752777775) < 1e-12   # 5.28 times the maximal drive
     assert abs(float(SSTAR / GAMMA) - 14.0740740) < 1e-6        # in u units (S / gamma)
 
