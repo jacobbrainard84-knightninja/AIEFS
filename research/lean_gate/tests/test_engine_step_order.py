@@ -20,7 +20,8 @@ probes leave open. These are engine facts, not Lean facts; they do not adopt any
 
 probe_memory_mu_sym, probe_clip and probe_wrap cover the gaps Researcher 001 found in the
 first version (EMA memory term, mu, |C| symmetrisation, the max(0, .) clip, mod 2 pi).
-test_negative_controls runs every probe against 13 one-line mutants of a temporary copy of the
+test_probe_d50_* run the production delay length (delay_steps = 50, a 51-slot queue; GPT-6 inbox note
+2026-11-13). test_negative_controls runs every probe against 16 one-line mutants of a temporary copy of the
 engine and requires each mutant to fail at least one probe, so the controls are committed.
 """
 import importlib.util
@@ -40,13 +41,13 @@ PI = math.pi
 
 
 def cfg(dt=1.0, tau=1.0, gamma=1.0, T_window=1.0 / math.log(2.0), mu=0.0, omega=(0.0, 0.0),
-        m=None):
+        m=None, eta=4.0, delay=1):
     m = m or eng
     c = m.ModelConfig(N=2, dt=dt, tau=tau, omega=omega, a=1.0, q=1.0, delta=0.0,
-                        eta=4.0, mu=mu, gamma=gamma, T_window=T_window, B_c=0.0,
+                        eta=eta, mu=mu, gamma=gamma, T_window=T_window, B_c=0.0,
                         B_init_scale=0.0, scale_epsilon=1.0)
     c.validate()
-    assert c.delay_steps == 1
+    assert c.delay_steps == delay
     return c
 
 
@@ -182,7 +183,78 @@ def test_probe_wrap(m=None):
     assert close(st.theta, [0.4, 0.4])
 
 
-PROBES = [test_probe_015_first_step_table, test_probe_delay_coupling_reads_history_oldest,
+# ---- production delay length (GPT-6 inbox note 2026-11-13: the probes above use a 1-step queue) ----
+D50 = dict(dt=0.01, tau=0.5, delay=50)   # FROZEN_DT, FROZEN_TAU: delay_steps = round(tau/dt) = 50
+
+
+def marker_history(n=51):
+    # 51 pairwise-distinct phase vectors, so every slot is identifiable
+    return [np.array([0.1 + 0.01 * k, 3.0 - 0.02 * k]) for k in range(n)]
+
+
+def test_probe_d50_config_and_init(m=None):
+    m = m or eng
+    assert m.FROZEN_DELAY_STEPS == 50 and round(m.FROZEN_TAU / m.FROZEN_DT) == 50
+    c = cfg(m=m, **D50)
+    st = m.initialize_state(7, c)
+    assert len(st.history) == 51                                  # delay_steps + 1 slots
+    assert len({id(h) for h in st.history}) == 51                 # separate arrays (DynamicState copies each slot)
+    assert all(np.array_equal(h, st.theta) for h in st.history)
+
+
+def test_probe_d50_reads_slot0_only(m=None):
+    # One step at delay 50 with nonzero B: changing slots 1..50 changes nothing, changing slot 0 changes
+    # R and theta. Pins that both the C input and the sine coupling read history[0] of a 51-slot queue.
+    m = m or eng
+    c = cfg(m=m, gamma=0.015, omega=(1.0, 2.0), **D50)
+    theta = [1.0, 2.5]
+    H = marker_history()
+    C0 = [[0.0, 0.5], [0.5, 0.0]]                                 # C0 != 0, so |C| depends on the input phase
+    H2 = [H[0]] + [h + 0.7 for h in H[1:]]
+    H3 = [H[0] + np.array([0.4, -0.3])] + H[1:]
+    a, Ra, _ = step(c, theta, H, B=xo(0.1), C0=C0, m=m)
+    b, Rb, _ = step(c, theta, H2, B=xo(0.1), C0=C0, m=m)
+    d, Rd, _ = step(c, theta, H3, B=xo(0.1), C0=C0, m=m)
+    assert close(Ra, Rb) and close(a.theta, b.theta) and close(a.B, b.B)
+    assert not close(Ra, Rd) and not close(a.theta, d.theta)
+    assert len(a.history) == 51 and close(a.history[-1], a.theta) and close(a.history[0], H[1])
+
+
+def test_probe_d50_queue_aging(m=None):
+    # eta = 0, mu = 1 keeps B = 0 (drive R - 1 <= 0, clipped), so theta_{n+1} = theta_n + dt*omega mod 2pi
+    # exactly as the engine computes it. Over 120 steps from a 51-slot marker queue the queue before step n
+    # must be S[n:n+51], where S = initial queue + every appended theta: the oldest slot is the phase from
+    # exactly 50 steps earlier (tau/dt), the length stays 51 and the newest slot is the new theta.
+    m = m or eng
+    c = cfg(m=m, mu=1.0, eta=0.0, omega=(1.0, 2.0), **D50)
+    H = marker_history()
+    st = m.DynamicState(theta=H[-1].copy(), B=np.zeros((2, 2)),
+                        coherence_acc=np.zeros((2, 2), dtype=complex), history=[h.copy() for h in H])
+    S = [h.copy() for h in H]
+    for n in range(120):
+        assert len(st.history) == 51
+        for k in range(51):
+            assert np.array_equal(st.history[k], S[n + k]), (n, k)
+        m.advance_state(st, c, np.random.default_rng(0), shuffle_driver=False)
+        assert np.array_equal(st.B, np.zeros((2, 2)))
+        S.append(st.theta.copy())
+        assert np.array_equal(st.history[-1], st.theta)
+    # first live delayed value: from a constant start queue, history[0] is still theta0 before step 50
+    # and becomes the first appended phase before step 51
+    st = m.initialize_state(3, c)
+    t0 = st.theta.copy()
+    for n in range(52):
+        if n <= 50:
+            assert np.array_equal(st.history[0], t0), n
+        else:
+            assert not np.array_equal(st.history[0], t0) and np.array_equal(st.history[0], first)
+        m.advance_state(st, c, np.random.default_rng(0), shuffle_driver=False)
+        if n == 0:
+            first = st.theta.copy()
+
+
+PROBES = [test_probe_d50_config_and_init, test_probe_d50_reads_slot0_only, test_probe_d50_queue_aging,
+          test_probe_015_first_step_table, test_probe_delay_coupling_reads_history_oldest,
           test_probe_dt_half_no_projection, test_probe_old_B_carry_partial_step,
           test_probe_memory_mu_sym, test_probe_clip, test_probe_wrap]
 
@@ -204,6 +276,12 @@ MUTANTS = [
     ("no_mod_2pi", "        2.0 * np.pi\n    )", "        1e300\n    )"),
     ("append_stale_theta", "state.history.append(state.theta.copy())",
      "state.history.append(state.history[-1].copy())"),
+    # (`> delay_steps` instead of `+ 1` is equivalent from a 51-slot start: one pop per step keeps 51.)
+    ("queue_one_long", "if len(state.history) > config.delay_steps + 1:",
+     "if len(state.history) > config.delay_steps + 2:"),
+    ("init_one_short", "history = [theta.copy() for _ in range(config.delay_steps + 1)]",
+     "history = [theta.copy() for _ in range(config.delay_steps)]"),
+    ("pop_newest", "state.history.pop(0)", "state.history.pop(-2)"),
     ("R_from_old_C", "    # Update EMA\n", "    old_abs = np.abs(state.coherence_acc)\n    # Update EMA\n"),
 ]
 
