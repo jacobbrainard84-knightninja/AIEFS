@@ -130,11 +130,12 @@ def job_text_of_step(text):
 
 def job_keys(job):
     """Top-level keys of a job (indent 4), in order."""
-    return [l.strip().split(":", 1)[0] for l in (job or "").splitlines()[1:]
+    # N1 (R001 on bd4211d): normalise `if :`, `'if':` and `"if":` to `if`.
+    return [l.strip().split(":", 1)[0].strip().strip("'\"") for l in (job or "").splitlines()[1:]
             if l.strip() and not l.strip().startswith("#") and len(l) - len(l.lstrip()) == 4]
 
 
-FORBIDDEN_JOB_KEYS = {"if", "continue-on-error", "needs"}
+FORBIDDEN_JOB_KEYS = {"if", "continue-on-error", "needs", "<<"}  # `<<` merge key could inject any of them
 
 
 def step_is_valid(text):
@@ -216,6 +217,12 @@ class LeanMutationStepTests(unittest.TestCase):
                 + EXPECTED_PROJECT_ENV, 1),
             # Researcher 001 delta audit of 6ff39ae, H2b and the job-level skip
             "lean_job_if_false": self.text.replace("\n  lean:\n", "\n  lean:\n    if: false\n", 1),
+            "lean_job_if_space_colon": self.text.replace("\n  lean:\n", "\n  lean:\n    if : false\n", 1),
+            "lean_job_if_single_quoted": self.text.replace("\n  lean:\n", "\n  lean:\n    'if': false\n", 1),
+            "lean_job_if_double_quoted": self.text.replace("\n  lean:\n", "\n  lean:\n    \"if\": false\n", 1),
+            "lean_job_coe_quoted": self.text.replace("\n  lean:\n", "\n  lean:\n    'continue-on-error': true\n", 1),
+            "lean_job_needs_quoted": self.text.replace("\n  lean:\n", "\n  lean:\n    'needs': [x]\n", 1),
+            "lean_job_merge_key": self.text.replace("\n  lean:\n", "\n  lean:\n    <<: *skip\n", 1),
             "lean_job_continue_on_error": self.text.replace("\n  lean:\n", "\n  lean:\n    continue-on-error: true\n", 1),
             "step_moved_to_never_running_job_with_spaced_gate_row": self.text.replace(
                 "      " + STEP_NAME,
