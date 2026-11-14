@@ -12,7 +12,8 @@ constant with the matrix expression left in a comment all fail test_run_script_i
 test_known_disablings_are_rejected applies each of those edits to the real workflow text and requires rejection.
 Since the audit of PR #32 (H1-H3) the step's key list (name, if, env, run; a duplicate `run:` is visible) and its whole
 env block are pinned, `AIEF_MUT_ONLY` may not appear anywhere in lean.yml, and the step must sit in the job whose matrix
-has the required AIEFGateCore row. lean_mutation_check.py also FAILS any filtered or short run on its own
+has the required AIEFGateCore row; since the delta audit of 6ff39ae that job must be `lean` itself, with no job-level
+`if:`, `continue-on-error` or `needs:` (a skipped job reports as passed for the required lean checks). lean_mutation_check.py also FAILS any filtered or short run on its own
 (partial_run_reason, tested in research/lean_gate/tests/test_mutation_full_run.py).
 
 Run from the repository root:  python3 -m unittest discover -s tools/ci/tests -v
@@ -127,9 +128,21 @@ def job_text_of_step(text):
     return "\n".join(lines[a:b])
 
 
+def job_keys(job):
+    """Top-level keys of a job (indent 4), in order."""
+    return [l.strip().split(":", 1)[0] for l in (job or "").splitlines()[1:]
+            if l.strip() and not l.strip().startswith("#") and len(l) - len(l.lstrip()) == 4]
+
+
+FORBIDDEN_JOB_KEYS = {"if", "continue-on-error", "needs"}
+
+
 def step_is_valid(text):
     b = step_block(text)
     job = job_text_of_step(text)
+    # H2b (R001 on 6ff39ae): the step must be in the `lean` job itself, and that job may not be skippable or soft.
+    if job is None or job.splitlines()[0].strip() != "lean:" or FORBIDDEN_JOB_KEYS & set(job_keys(job)):
+        return False
     return (b is not None and run_script(b) == EXPECTED_RUN
             and project_env_lines(b) == [EXPECTED_PROJECT_ENV]
             and env_block_lines(b) == [EXPECTED_PROJECT_ENV]
@@ -201,6 +214,14 @@ class LeanMutationStepTests(unittest.TestCase):
                 "        if: steps.present.outputs.present == 'true'\n        env:\n          " + EXPECTED_PROJECT_ENV,
                 "        if: steps.present.outputs.present == 'true'\n        run: echo skipped\n        env:\n          "
                 + EXPECTED_PROJECT_ENV, 1),
+            # Researcher 001 delta audit of 6ff39ae, H2b and the job-level skip
+            "lean_job_if_false": self.text.replace("\n  lean:\n", "\n  lean:\n    if: false\n", 1),
+            "lean_job_continue_on_error": self.text.replace("\n  lean:\n", "\n  lean:\n    continue-on-error: true\n", 1),
+            "step_moved_to_never_running_job_with_spaced_gate_row": self.text.replace(
+                "      " + STEP_NAME,
+                "  later:\n    needs: [lean]\n    if: failure()\n    runs-on: ubuntu-latest\n    strategy:\n      matrix:\n"
+                "        include:\n          - {  project: AIEFGateCore, script: x, axiom_root: x, required: true }\n"
+                "    steps:\n      " + STEP_NAME, 1),
         }
         for name, t in edits.items():
             with self.subTest(edit=name):
