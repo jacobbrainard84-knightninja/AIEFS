@@ -4,6 +4,12 @@ AIEFS is a hobby math project: an adaptive Kuramoto model (N = 12 oscillators) w
 
 Items marked **PENDING** have not landed on `main`. Do not cite them as results. Items marked **IN PROGRESS** are on a non-main branch and are not yet dual-control-audited / merged.
 
+## Update 2026-11-14 (Auditor Seat 002; snapshot, re-run `git ls-remote origin` before citing)
+- `main` = `a559e0d` (PR #30 merged; PRs #28, #29, #30 landed since the table below). 0 open PRs at that time.
+- Ready for PR, awaiting owner OK: `research/lean-gate-p5` @ `b840419` (Auditor delta check CLEAN WITH NOTES: gate 707 decls, mutation 58/58, E 10/10, typo 3/3).
+- Awaiting Researcher 001 audit: `research/engine-step-order-2` @ `a2dc039` (adds d=50 production-delay probes), `fix/lean-mutation-step-guard-2` @ `59a8cc4` (needs main merge), `docs/status-truth-e22` @ `0599a24`.
+- New deposits triaged in TRIAGE section (h).
+
 ## Branches: snapshot, **not live**
 
 **Retrieved with `git ls-remote origin` on 2026-11-11 at 04:30 Europe/Tirane (03:30 UTC) by Auditor Seat 002.** Branch tips move. Re-run `git ls-remote origin` before citing any sha below. Verdicts are agent ratings: input only, see README rule 7.
