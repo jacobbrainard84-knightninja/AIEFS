@@ -693,7 +693,7 @@ negative control PASS, **13/13 mutants rejected**, every build rejection a REAL 
 * The closed-form clique multiplier `λ_k`, finite-time departure from it, float64 error, `TIE_TOL`.
 * Engine-shaped versions of `false_drop_hc0`, `false_rel_x_only`, `false_rel_h_only` (§8.3).
 * The bridge covers K3 / `CCtrl` / `vCtrl` and the general incidence; no bridge to `lean/AIEFProofsKn` (K12).
-* The mutation check is not run in CI (it needs a built Lean project and about 2 minutes locally).
+* The mutation check was not run in CI when P3 landed. Since PR #27 it runs in CI: `.github/workflows/lean.yml`, step "Lean-gate mutation check (AIEFGateCore only)" on the required `AIEFGateCore` row (about 2 minutes locally at P3).
 * `R` symmetry / `B` symmetry invariance of the engine remain hypotheses (§7.4).
 * **AUD-RATELAW stays UNEXPLAINED.** P3 does not change any label, ERRATA entry or registry claim.
 
@@ -727,7 +727,7 @@ Auditor Seat 002); the review is not part of this repository and is not a librar
 | `gateM_nonneg`, `gateM_le_input`, `gateM_symm`, `gateM_diag` | as named (`EngineGate` not needed) | `gate_nonneg`, `kernel_le_input`, `gate_symmetric`, `gate_zero_diag` |
 | `gateM_sub_of_rowSum_eq` | equal row sums, zero diagonals | `gate_difference_of_rowSum_eq` |
 | `stepM_row_le_cap`, `stepM_nonneg`, `gateM_stepM` | `EngineGate p`; **no symmetry hypothesis on `D`, `Bm`** | (new, on `stepM`) |
-| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form |
+| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form. Despite the names these are **affine** identities: the weights `1 − γdt`, `γdt` are a convex pair only when `0 ≤ γdt ≤ 1` (`convex_weights_iff`, `preM_between`, PR #27). Names kept for the port. |
 
 The `0 < ε` / `0 ≤ ε` scope is exactly what is proved: `0 ≤ ε` for the kernel row bound only; everything that
 involves the guard goes through `EngineGate`, hence `0 < ε`. "`0 < ε` can be relaxed" is **not** claimed in general.
@@ -781,7 +781,7 @@ script, and no mutant, statement or proof was changed to make it pass.
   the four `rat_*` counterexamples are ported only as `Fin 2` matrix witnesses, not as the 12-node engine state.
 * No trajectory statement: one step, exact reals, chosen `Fin 2` inputs; nothing about float64 or `TIE_TOL`.
 * The gate is not nonexpansive (`false_gate_nonexpansive`); no Lipschitz bound is claimed.
-* The mutation check is not run in CI (it needs a built Lean project and about 5 minutes locally).
+* The mutation check was not run in CI when P4a landed. Since PR #27 it runs in CI (see §8.5; about 5 minutes locally at P4a).
 * **AUD-RATELAW stays UNEXPLAINED.**
 
 
@@ -954,6 +954,8 @@ before the 2026-11-11 refresh the pin was 23 + 16 = 39 on the branch and 36 + 16
 
 ### 11.3 Mutation check: M37–M52 (16 definition mutants)
 
+*(Written before the 2026-11-11 refresh; the counts in this section and in §11.4 (16 definition, 39 in total, 9 equivalence controls, one documented survivor) are superseded by §11.7: 20 definition mutants M37–M56, 38 statement mutants, 58 in total, 10 equivalence controls, no survivor.)*
+
 Why a new kind. M1–M36 change a theorem *statement* and are refuted by a proved negation theorem. The survivors reported for cycle 004 and cycle 013 are wrong
 *implementations* (a different delay index, a swapped `i j`, a one-sided `reported`, …): a mutated definition has no statement to refute, so steps (b)/(c) of
 the original rule cannot apply.
@@ -1059,7 +1061,7 @@ P5: `HistoryBuffer.lean`, `PhaseIncrement.lean`, `PhaseCoherence.lean`). The dec
 * Probes use `D ∈ {1, 2}`, `Fin 2` and phase multiples of `π/2`; the general statements cover all `D`, `V`, `ω`, `τ`.
 * The generic bounds (unit disk, drive range, row envelope) survive phase mutants by nature (auditor note N4); they are not evidence about phases.
 * `α = 1/2` probes cannot see an `α ↔ 1−α` swap; `probe_alpha_quarter` and `innovation_engine_convention` do.
-* No Lean-side statement pin (Lea-style statement hash) in CI; the mutation check is not run in CI (a parallel auditor branch proposes adding it).
+* No Lean-side statement pin (Lea-style statement hash) in CI; the mutation check runs in CI since PR #27 (`.github/workflows/lean.yml`, step "Lean-gate mutation check (AIEFGateCore only)"; PR #28 pins that step with a guard test). The Lean-side statement pin is still open.
 * **AUD-RATELAW stays UNEXPLAINED.**
 
 ### 11.7 Merge refresh onto `main` and auditor notes N1/N2 (2026-11-11, Europe/Tirane)
