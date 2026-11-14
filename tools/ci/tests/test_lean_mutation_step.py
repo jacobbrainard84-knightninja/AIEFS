@@ -6,6 +6,11 @@ The step filters on the matrix row inside its run line (`if [ "$PROJECT" = "AIEF
 quietly print "no mutation check for ..." on every row and the red team would stop running with CI still green.
 These tests fail instead.
 
+The run script and the PROJECT env line are pinned exactly (comments and blank lines are not ignored), so a
+commented-out checker call, moving the call into the else branch, appending `|| true`, or setting PROJECT to a
+constant with the matrix expression left in a comment all fail test_run_script_is_exact / test_project_env_is_exact.
+test_known_disablings_are_rejected applies each of those edits to the real workflow text and requires rejection.
+
 Run from the repository root:  python3 -m unittest discover -s tools/ci/tests -v
 """
 import os
@@ -32,6 +37,45 @@ def step_block(text):
             break
         out.append(l)
     return "\n".join(out)
+
+
+EXPECTED_RUN = [
+    'if [ "$PROJECT" = "AIEFGateCore" ]; then',
+    "python3 " + CHECKER,
+    "else",
+    'echo "no mutation check for $PROJECT"',
+    "fi",
+]
+EXPECTED_PROJECT_ENV = "PROJECT: ${{ matrix.project }}"
+
+
+def run_script(block):
+    """Lines of the step's `run: |` script, stripped of indentation; None if absent. Nothing is skipped."""
+    if block is None:
+        return None
+    lines = block.splitlines()
+    ks = [k for k, l in enumerate(lines) if l.strip() == "run: |"]
+    if len(ks) != 1:
+        return None
+    key_indent = len(lines[ks[0]]) - len(lines[ks[0]].lstrip())
+    out = []
+    for l in lines[ks[0] + 1:]:
+        if l.strip() and (len(l) - len(l.lstrip())) <= key_indent:
+            break
+        out.append(l.strip())
+    while out and not out[-1]:
+        out.pop()
+    return out
+
+
+def project_env_lines(block):
+    return [l.strip() for l in (block or "").splitlines() if l.strip().startswith("PROJECT:")]
+
+
+def step_is_valid(text):
+    b = step_block(text)
+    return (b is not None and run_script(b) == EXPECTED_RUN
+            and project_env_lines(b) == [EXPECTED_PROJECT_ENV])
 
 
 class LeanMutationStepTests(unittest.TestCase):
@@ -62,6 +106,35 @@ class LeanMutationStepTests(unittest.TestCase):
         m = re.search(r'\[ "\$PROJECT" = "([A-Za-z0-9_]+)" \]', step_block(renamed) or "")
         rows = re.findall(r"\{\s*project:\s*([A-Za-z0-9_]+)\s*,", renamed)
         self.assertNotIn(m.group(1), rows)
+
+
+    def test_run_script_is_exact(self):
+        self.assertEqual(run_script(self.block), EXPECTED_RUN,
+                         "mutation step run script changed; update EXPECTED_RUN only together with the step")
+
+    def test_project_env_is_exact(self):
+        self.assertEqual(project_env_lines(self.block), [EXPECTED_PROJECT_ENV])
+
+    def test_known_disablings_are_rejected(self):
+        call = "python3 " + CHECKER
+        self.assertIn(call, self.text)
+        self.assertTrue(step_is_valid(self.text), "real lean.yml must pass the exact-step check")
+        edits = {
+            "commented_out_call": self.text.replace(call, "# " + call),
+            "or_true": self.text.replace(call, call + " || true"),
+            "call_in_else_branch": self.text.replace(
+                call + "\n", "echo skipped\n", 1).replace(
+                'echo "no mutation check for $PROJECT"', call, 1),
+            "project_constant_with_comment": self.text.replace(
+                EXPECTED_PROJECT_ENV, "PROJECT: AIEFGateCoreX  # ${{ matrix.project }}"),
+            "commented_out_filter": self.text.replace(
+                'if [ "$PROJECT" = "AIEFGateCore" ]; then', 'if true; then  # [ "$PROJECT" = "AIEFGateCore" ]'),
+            "extra_exit_0": self.text.replace(call, "exit 0\n            " + call),
+        }
+        for name, t in edits.items():
+            with self.subTest(edit=name):
+                self.assertNotEqual(t, self.text, name + " edit did not apply")
+                self.assertFalse(step_is_valid(t), name + " was not rejected")
 
 
 if __name__ == "__main__":
