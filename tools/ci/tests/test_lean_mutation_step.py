@@ -10,6 +10,10 @@ The run script and the PROJECT env line are pinned exactly (comments and blank l
 commented-out checker call, moving the call into the else branch, appending `|| true`, or setting PROJECT to a
 constant with the matrix expression left in a comment all fail test_run_script_is_exact / test_project_env_is_exact.
 test_known_disablings_are_rejected applies each of those edits to the real workflow text and requires rejection.
+Since the audit of PR #32 (H1-H3) the step's key list (name, if, env, run; a duplicate `run:` is visible) and its whole
+env block are pinned, `AIEF_MUT_ONLY` may not appear anywhere in lean.yml, and the step must sit in the job whose matrix
+has the required AIEFGateCore row. lean_mutation_check.py also FAILS any filtered or short run on its own
+(partial_run_reason, tested in research/lean_gate/tests/test_mutation_full_run.py).
 
 Run from the repository root:  python3 -m unittest discover -s tools/ci/tests -v
 """
@@ -72,10 +76,66 @@ def project_env_lines(block):
     return [l.strip() for l in (block or "").splitlines() if l.strip().startswith("PROJECT:")]
 
 
+EXPECTED_STEP_KEYS = ["name", "if", "env", "run"]
+GATE_ROW = re.compile(r"\{\s*project:\s*AIEFGateCore\s*,[^}]*required:\s*true\s*\}")
+
+
+def step_keys(block):
+    """Top-level keys of the step, in order (duplicates kept, so a second `run:` is visible)."""
+    if block is None:
+        return None
+    lines = block.splitlines()
+    indent = len(lines[0]) - len(lines[0].lstrip()) + 2
+    keys = [lines[0].strip()[2:].split(":", 1)[0]]
+    for l in lines[1:]:
+        if l.strip() and not l.strip().startswith("#") and len(l) - len(l.lstrip()) == indent:
+            keys.append(l.strip().split(":", 1)[0])
+    return keys
+
+
+def env_block_lines(block):
+    """Non-blank lines of the step's `env:` mapping (comments included)."""
+    lines = (block or "").splitlines()
+    ks = [k for k, l in enumerate(lines) if l.strip() == "env:"]
+    if len(ks) != 1:
+        return None
+    ind = len(lines[ks[0]]) - len(lines[ks[0]].lstrip())
+    out = []
+    for l in lines[ks[0] + 1:]:
+        if l.strip() and len(l) - len(l.lstrip()) <= ind:
+            break
+        if l.strip():
+            out.append(l.strip())
+    return out
+
+
+def job_text_of_step(text):
+    """Text of the `jobs:` entry that contains the mutation step, or None."""
+    lines = text.splitlines()
+    starts = [k for k, l in enumerate(lines) if l.strip().startswith(STEP_NAME)]
+    if len(starts) != 1 or "jobs:" not in [l.rstrip() for l in lines]:
+        return None
+    j0 = [l.rstrip() for l in lines].index("jobs:")
+    heads = [k for k in range(j0 + 1, len(lines))
+             if re.match(r"^  [A-Za-z0-9_-]+:\s*(#.*)?$", lines[k])]
+    before = [k for k in heads if k < starts[0]]
+    if not before:
+        return None
+    a = before[-1]
+    after = [k for k in heads if k > a]
+    b = after[0] if after else len(lines)
+    return "\n".join(lines[a:b])
+
+
 def step_is_valid(text):
     b = step_block(text)
+    job = job_text_of_step(text)
     return (b is not None and run_script(b) == EXPECTED_RUN
-            and project_env_lines(b) == [EXPECTED_PROJECT_ENV])
+            and project_env_lines(b) == [EXPECTED_PROJECT_ENV]
+            and env_block_lines(b) == [EXPECTED_PROJECT_ENV]
+            and step_keys(b) == EXPECTED_STEP_KEYS
+            and "AIEF_MUT_ONLY" not in text
+            and job is not None and GATE_ROW.search(job) is not None)
 
 
 class LeanMutationStepTests(unittest.TestCase):
@@ -130,6 +190,17 @@ class LeanMutationStepTests(unittest.TestCase):
             "commented_out_filter": self.text.replace(
                 'if [ "$PROJECT" = "AIEFGateCore" ]; then', 'if true; then  # [ "$PROJECT" = "AIEFGateCore" ]'),
             "extra_exit_0": self.text.replace(call, "exit 0\n            " + call),
+            # Researcher 001 audit of #32, H1-H3
+            "mut_only_in_step_env": self.text.replace(
+                "          " + EXPECTED_PROJECT_ENV, "          " + EXPECTED_PROJECT_ENV + "\n          AIEF_MUT_ONLY: '^$'", 1),
+            "mut_only_in_job_env": self.text.replace(
+                "    env:\n", "    env:\n      AIEF_MUT_ONLY: '^$'\n", 1),
+            "step_moved_to_job_without_gate_row": self.text.replace(
+                "      " + STEP_NAME, "  other:\n    runs-on: ubuntu-latest\n    steps:\n      " + STEP_NAME, 1),
+            "duplicate_run_key": self.text.replace(
+                "        if: steps.present.outputs.present == 'true'\n        env:\n          " + EXPECTED_PROJECT_ENV,
+                "        if: steps.present.outputs.present == 'true'\n        run: echo skipped\n        env:\n          "
+                + EXPECTED_PROJECT_ENV, 1),
         }
         for name, t in edits.items():
             with self.subTest(edit=name):
