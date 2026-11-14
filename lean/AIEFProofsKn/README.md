@@ -76,9 +76,9 @@ script header.
 Local result (2026-10-29, `SKIP_CACHE=1`): 7/7 PASS, 1,879 build jobs, 0 warnings, 52 declarations
 audited, standard axioms only.
 
-`.github/workflows/lean.yml` (repository root) builds only `lean/AIEFProofs`. This project is not yet in
-CI. A second job with `lake-package-directory: lean/AIEFProofsKn` and `./check_lean_kn.sh` as the check
-step would add it; that has not been written or tested.
+`.github/workflows/lean.yml` (repository root) builds this project as the `lean (AIEFProofsKn)` matrix row
+with `./check_lean_kn.sh`, and the `main` ruleset requires that check on every PR. (This paragraph said "not yet in
+CI" until 2026-11-14; the row had been added and made required earlier.)
 
 ## Licence
 
