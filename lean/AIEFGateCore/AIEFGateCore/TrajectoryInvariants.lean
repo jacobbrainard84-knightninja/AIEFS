@@ -12,14 +12,17 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 Port of cycle 014 of Researcher 040282 (handle only; `TrajectoryInvariants.lean`, supplied by the
 owner on 2026-11-10, md5 `c6914623bfcc3002cb1ab0a47e848698`; Auditor review
-`2026-11-10_audit_040282_c014.md`, verdict ADOPT AS SMALL BUILDING BLOCK). Statements and proofs
-are kept as deposited apart from line wrapping and this header.
+`2026-11-10_audit_040282_c014.md`, verdict ADOPT AS SMALL BUILDING BLOCK; that note is not in this
+repository). Statements and proofs are kept as deposited apart from line wrapping, this header and
+the block "Value probes for the mutation check" (`probe_gate_scales_row`,
+`probe_aux_reads_old_and_new` and their helpers), which is new and not part of the deposit.
 
 What it says: for any drive `F` and auxiliary update `U` (no invariant assumed on either), every
-`stepM` weight state after time 0 is structural (non-negative, symmetric, zero diagonal), its rows
-are within `cap`, entries are within the entry envelope, and the sine coupling and phase increment
-are bounded. These are induction wrappers around the P4a one-step facts in `Capacity.lean`; they add
-no new one-step mathematics.
+`stepM` weight state after time 0 is structural (non-negative, symmetric, zero diagonal; needs only
+`0 ≤ cap` and `0 ≤ ε` of that step), and, under `EngineGate` of the parameters used in that step
+(`0 < ε`), its rows are within `cap`, entries are within the entry envelope, and the sine coupling
+and phase increment are bounded. These are induction wrappers around the P4a one-step facts in
+`Capacity.lean`; they add no new one-step mathematics.
 
 Caveat on the witnesses: in `pWide = ⟨1, 1, 2, 1, 2, 1, 0⟩`
 the update fully resets `B` to the gated drive, so `feedback_two_cycle`,
@@ -354,6 +357,41 @@ theorem noGate_over_capacity :
   norm_num [Counterfactual.noGate, Capacity.rowS, symM, clipM, preM,
     pTight, zeroB, Capacity.Xo, Fin.sum_univ_two]
 
+/-! ### Value probes for the mutation check (Auditor, c014 refresh)
+
+Closed-number equalities pinned by `research/lean_gate/lean_mutation_check.py` (definition
+mutants M74-M76). `probe_gate_scales_row`: the capacity gate fires and scales the over-capacity
+row 3 to `cap · 3 / (3 + ε) = 3/4` (a gate-bypass `weightUpdate := symM` gives 3).
+`probe_aux_reads_old_and_new`: the auxiliary update `U` receives the OLD weights as its third
+argument and the NEW weights as its fourth (`-1 + 10 · 0`; old-only gives `-11`, new-only
+gives `0`). -/
+
+private theorem tight_pre (D B : Weights (Fin 2)) : preM pTight D B = D := by
+  funext i j
+  dsimp [preM, pTight]
+  ring
+
+private theorem tight_sym_three (B : Weights (Fin 2)) : symM pTight (X 3) B = X 3 := by
+  funext i j
+  fin_cases i <;> fin_cases j <;> simp [symM, clipM, tight_pre, Capacity.Xo]
+
+theorem probe_gate_scales_row : Capacity.rowS (weightUpdate pTight (X 3) zeroB) 0 = 3 / 4 := by
+  unfold weightUpdate
+  rw [Capacity.stepM_eq_gateM, tight_sym_three]
+  have hg : Capacity.GateOnX pTight (X 3) := ⟨0, by rw [Capacity.rowS_Xo]; norm_num [pTight]⟩
+  rw [Capacity.rowS]
+  simp only [Fin.sum_univ_two, Capacity.gateM, if_pos hg, Capacity.kernelM, Capacity.rowS_Xo]
+  norm_num [scale, Capacity.Xo, pTight]
+
+def oneDriveR (_ : ℕ) (_ : ℝ) (_ : Weights (Fin 2)) : Weights (Fin 2) := X 1
+
+def auxOldNew (_ : ℕ) (_ : ℝ) (Bold Bnew : Weights (Fin 2)) : ℝ := Bold 0 0 + 10 * Bnew 0 0
+
+theorem probe_aux_reads_old_and_new :
+    (trajectory (fun _ => pWide) oneDriveR auxOldNew ((0 : ℝ), dirtyB) 1).1 = -1 := by
+  have h : weightUpdate pWide (X 1) dirtyB = X 1 := wide_resets_one dirtyB
+  simp [trajectory, feedbackStep, oneDriveR, auxOldNew, h, dirtyB, Capacity.Xo]
+
 /-- Current versus next capacity: shrinking a future parameter cannot retroactively
 bound a state produced by the preceding transition. -/
 def capSchedule (n : ℕ) : Params := if n = 0 then pWide else pQuarter
@@ -419,6 +457,10 @@ end AIEFGate.TrajectorySafety
 #print axioms AIEFGate.TrajectorySafety.noDiag_nonzero
 
 #print axioms AIEFGate.TrajectorySafety.noGate_over_capacity
+
+#print axioms AIEFGate.TrajectorySafety.probe_gate_scales_row
+
+#print axioms AIEFGate.TrajectorySafety.probe_aux_reads_old_and_new
 
 #print axioms AIEFGate.TrajectorySafety.capacity_clock_refuted
 

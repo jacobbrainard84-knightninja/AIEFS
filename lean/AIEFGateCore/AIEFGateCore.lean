@@ -12,6 +12,9 @@ import AIEFGateCore.Persistence
 import AIEFGateCore.PersistenceWitness
 import AIEFGateCore.EngineRedTeam
 import AIEFGateCore.Capacity
+import AIEFGateCore.HistoryBuffer
+import AIEFGateCore.PhaseIncrement
+import AIEFGateCore.PhaseCoherence
 import AIEFGateCore.Freeze
 import AIEFGateCore.WeightUpdate
 import AIEFGateCore.TrajectoryInvariants

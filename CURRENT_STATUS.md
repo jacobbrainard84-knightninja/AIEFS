@@ -97,7 +97,9 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   - The closed form `κ_k = kη/c − 1/T_w` needs further ideal hypotheses.
   - It was checked on 374 resolved components (264 two-sided, 110 all-tied K3) from 40 fixed seeds × 5 T_w.
     These are not independent replications.
-  - A ~2e-8 gap is unexplained until a step-size sweep is run. A within-step response of R to a B perturbation is ruled out, because Engine v1
+  - A ~2e-8 gap is unexplained. The step-size sweep has since been run (`ERRATA_2026-10-28.md` E22, 2026-11-08): exact
+    arithmetic matches the state formula to 4e-13 and the float error scales as 1/δ, but the predeclared rule did not close it
+    on-branch (2.17e-10 against 2.1e-10), so the label stays unexplained. A within-step response of R to a B perturbation is ruled out, because Engine v1
     computes R before it updates B (`ERRATA_2026-10-28.md` E5). The maximum residual comes from one component with a tiny
     finite-difference step (δ in [1e-9, 1e-8)); the 263 well-resolved components agree within 2.1e-10. Finite-difference/rounding
     error is the most likely cause; finite-time departure and unequal controlling scales are less likely.
@@ -172,7 +174,7 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
 | Do the coupled phase/EMA dynamics force both K3 proposal differences to zero? | `CF11` | A proof, or long-horizon runs on many seeds. There is currently no proof or test in the repo. |
 | Do the exceptional support, clipping and winner branch persist for all time? | `CF12` | A proof of persistence, or a counterexample trajectory. |
 | Do the single-seed AIEF-1.4 results hold on other seeds? | `AUD-SCOPE-1.4` | Re-run the operator/cocycle/controller pipeline on more of the 40 seeds. |
-| What explains the ~2e-8 rate-law gap? | `AUD-RATELAW` | Run a δ sweep on the component with the maximum residual (δ in [1e-9, 1e-8)). Finite-difference/rounding error is the most likely cause (the well-resolved components agree within 2.1e-10); finite-time departure, unequal controlling scales and storage rounding are less likely. The gap stays unexplained until the sweep is run. Finite ε accounts for only ~1.6e-12, and a within-step R response is ruled out (E5). |
+| What explains the ~2e-8 rate-law gap? | `AUD-RATELAW` | The δ sweep on the component with the maximum residual (δ in [1e-9, 1e-8)) has been run (`ERRATA_2026-10-28.md` E22): exact arithmetic matches the state formula to 4e-13 and the float error scales as 1/δ, but the predeclared rule did not close it on-branch (2.17e-10 against 2.1e-10). Finite-difference/rounding error is the most likely cause (the well-resolved components agree within 2.1e-10); finite-time departure, unequal controlling scales and storage rounding are less likely. The gap stays unexplained. Finite ε accounts for only ~1.6e-12, and a within-step R response is ruled out (E5). |
 | Is there a valid slow-pole statement on the closed state? | `AUD-SLOWPOLE` | An analysis on the closed 966-dim state with more than one replay, using one of the methods in the next five rows. |
 | Is the 966-dim response a derivative? | `AUD-SLOWPOLE` | One-sided, branch-aware directional maps with the support, gate and controller branch held fixed, instead of a central difference across nonsmooth points. |
 | Finite-time growth on the 966-dim state | `AUD-SLOWPOLE` | Singular values of the 500-step map instead of eigenvalues, unless the base state is shown to be fixed or periodic with the matching period. |
