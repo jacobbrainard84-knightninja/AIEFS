@@ -6,10 +6,13 @@ deposited sources (the deposit is not on main, so the statements are recorded be
 shape and the EXACT COUNT of the P5 mutants of lean_mutation_check.py without running Lean.
 
 Mutation-count pin (`TOTAL_MUTANTS` below is the exact combined pin; the P4b test pins `len(MUTANTS)`): after the
-merge of P4b (PR #26) and the #27 follow-ups, `MUTANTS` has 38 entries (M1-M36 statement mutants, plus M57, M58 on
+merge of P4b (PR #26) and the #27 follow-ups, `MUTANTS` had 38 entries (M1-M36 statement mutants, plus M57, M58 on
 `Capacity.preM_between` / `convex_weights_iff`) and `DEF_MUTANTS` 20 (M37-M56: M37-M52 as ported, M53-M56 the N2
 asymmetric-omega offset mutants), total 58; controls: 10 equivalence, 3 typo, 2 statement-level; no expected survivor
-(the former S1 is the counted M55).
+(the former S1 is the counted M55). P6 (CoherenceMotion.lean, cycle 016) adds 11 statement mutants M59-M69 and 7
+definition mutants M70-M76, 4 equivalence controls E11-E14 and 1 typo control T4: the pins below are now 49 + 27 = 76,
+14 equivalence, 4 typo; the P5 subset (M37-M56, files PhaseIncrement / PhaseCoherence) is checked separately, and the
+P6 mutants are pinned in `test_lean_gate_c016.py`.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -29,9 +32,12 @@ HB = (GATE / "HistoryBuffer.lean").read_text()
 PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
-N_STATEMENT_MUTANTS = 38          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups)
-N_DEF_MUTANTS = 20                # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 58 (52 before the N2 mutants M53-M56 and the #27 mutants M57-M58)
+N_STATEMENT_MUTANTS = 49          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups) + M59-M69 (P6)
+N_DEF_MUTANTS = 27                # M37-M56 (P5) + M70-M76 (P6)
+N_P5_DEF_MUTANTS = 20             # M37-M56
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 76 (58 before P6; 52 before the N2 mutants M53-M56 and #27's M57-M58)
+P5_FILES = ("PhaseIncrement.lean", "PhaseCoherence.lean")
+P5_DEF_MUTANTS = [m for m in mc.DEF_MUTANTS if m[1] in P5_FILES]
 
 # Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...
 # PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.
@@ -198,10 +204,11 @@ def test_uniform_c0_one_probe_values():
 # ---- mutants: shape, edits apply, pins exist, kill rule --------------------------------------------------------
 
 def test_p5_mutants_shape_and_exact_count():
-    assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58
+    assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58, M59-M69
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (58)
-    names = [m[0] for m in mc.DEF_MUTANTS]
+    assert len(P5_DEF_MUTANTS) == N_P5_DEF_MUTANTS
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (76)
+    names = [m[0] for m in P5_DEF_MUTANTS]
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
     assert len({m[0] for m in mc.MUTANTS} & set(names)) == 0
@@ -218,19 +225,24 @@ def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():
                       "innovation_transport", "reported_symm", "reported_offdiag", "reported_diag",
                       "main_preM_source_formula", "drive_eta_response", "coherenceTrace_unitDisk")
     for f, probes in mc.VALUE_PROBES.items():
+        if f not in srcs:
+            continue                                                   # P6 file: test_lean_gate_c016.py
         for p in probes:
             assert re.search(rf"^theorem {p}\b", srcs[f], re.M), (f, p)
             assert p.startswith("probe_") and p not in rewrite_lemmas
-    for name, f, edits, pins in mc.DEF_MUTANTS:
+    for name, f, edits, pins in P5_DEF_MUTANTS:
         assert f in srcs, name
         assert mc.mutate_file(srcs[f], edits) != srcs[f], name        # each edit matches exactly `count` times
         assert pins and set(pins) <= set(mc.VALUE_PROBES[f]), (name, pins)   # credit only via VALUE probes
     for name, f, edits in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS + mc.KNOWN_SURVIVORS:
-        assert mc.mutate_file(srcs[f], edits) != srcs[f], name
+        if f in srcs:                                                  # P6 controls: test_lean_gate_c016.py
+            assert mc.mutate_file(srcs[f], edits) != srcs[f], name
 
 
 def test_controls_exist_with_exact_counts():
-    assert len(mc.EQUIV_CONTROLS) == 10 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2
+    assert len(mc.EQUIV_CONTROLS) == 14 and len(mc.TYPO_CONTROLS) == 4 and len(mc.STATEMENT_CONTROLS) == 2
+    assert len([c for c in mc.EQUIV_CONTROLS if c[1] in P5_FILES]) == 10      # E1-E10 (P5); E11-E14 are P6
+    assert len([c for c in mc.TYPO_CONTROLS if c[1] in P5_FILES]) == 3        # T1-T3 (P5); T4 is P6
     eq = {n.split("_")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}
     ci_new = {k: eq[k][1][0][1] for k in ("E1", "E2", "E3")}
     assert "* 1" in ci_new["E1"] and "+ 0" in ci_new["E2"] and "id (inputPhasor" in ci_new["E3"]   # the audit's three
@@ -238,7 +250,7 @@ def test_controls_exist_with_exact_counts():
     assert {f for n, f, e in mc.EQUIV_CONTROLS if n.startswith(("E4", "E5", "E6"))} == {"PhaseIncrement.lean"}
     assert any(n.startswith("E7_ema") for n, f, e in mc.EQUIV_CONTROLS)
     assert any(n.startswith("E8_reported") for n, f, e in mc.EQUIV_CONTROLS)
-    assert [n.split("_")[0] for n, f, e in mc.TYPO_CONTROLS] == ["T1", "T2", "T3"]
+    assert [n.split("_")[0] for n, f, e in mc.TYPO_CONTROLS] == ["T1", "T2", "T3", "T4"]
     assert "inputPhasorXX" in mc.TYPO_CONTROLS[0][2][0][1]
     assert [c[0].split("_")[0] for c in mc.STATEMENT_CONTROLS] == ["SE1", "ST1"]
     names = [m[0] for m in mc.DEF_MUTANTS] + [c[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
@@ -246,7 +258,8 @@ def test_controls_exist_with_exact_counts():
 
 
 def test_def_mutants_never_edit_unlisted_files_and_no_expected_survivor_since_n2():
-    assert {m[1] for m in mc.DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
+    assert {m[1] for m in P5_DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
+    assert {m[1] for m in mc.DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean", "CoherenceMotion.lean"}
     assert mc.KNOWN_SURVIVORS == []          # the former S1 (offset dropped in 011 only) is the counted M55 since N2
     # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value
     m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M43")][0]
