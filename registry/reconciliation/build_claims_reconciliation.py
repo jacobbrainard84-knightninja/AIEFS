@@ -357,7 +357,7 @@ NEW = [
   "(new)", "Not established (open item; no timestep study run)",
   "not from audit rounds 1-4; post-push review 2026-10-28",
   "What would test it: a separately versioned, regenerated dt sweep reporting topology agreement and trajectory "
-  "differences across dt. Related: the ~2e-8 rate-law gap (AUD-RATELAW) also waits on a step-size sweep."),
+  "differences across dt. Related: the ~2e-8 rate-law gap (AUD-RATELAW): its step-size sweep has since been run (ERRATA_2026-10-28.md E22) and the gap stays UNEXPLAINED."),
  ("AUD-B-SCAFFOLD", A,
   "OPEN ITEM: 'B is a conditional (continuous-weight) scaffold' is audit wording (resp1 #6, line 19; resp2 #4). The conditions "
   "under which B acts as a scaffold have not been stated as a testable claim or tested.",
