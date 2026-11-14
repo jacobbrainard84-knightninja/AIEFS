@@ -50,7 +50,9 @@ independent audits.
   value and applies only to the single exceptional K3. Round-4 bounds: 264 two-sided fibers to κ 2.1e-6,
   and 110 all-tied K3 one-sided rays to κ 1.7e-5; a ~2e-8 relative gap in λ is unexplained. A within-step
   response of R to B is ruled out by the engine's update order (`ERRATA_2026-10-28.md` E5). Finite-difference/rounding error
-  at one component with a tiny step is the most likely cause; the gap stays unexplained until a step-size sweep is run
+  at one component with a tiny step is the most likely cause. The step-size sweep has been run (`ERRATA_2026-10-28.md`
+  E22): on that component the exact multiplier equals the state formula to 4e-13 and the float error scales as 1/δ, but
+  the predeclared rule did not close the gap on-branch (2.17e-10 against a 2.1e-10 bound), so the label stays unexplained
   (`AUD-RATELAW`, `AUD-KAPPA-TW`, `AUD-CYCLE-KERNEL`).
 - **Capacity gate.** `s_i = min(1, c/(q_i+ε))` is multiplicative normalisation. It is idempotent
   but **not** a projection (`AUD-GATE`).

@@ -97,7 +97,9 @@ Retired (`S01–S18`, `Superseded`), `Rejected` and Quarantined (`AUD-SLOWPOLE`)
   - The closed form `κ_k = kη/c − 1/T_w` needs further ideal hypotheses.
   - It was checked on 374 resolved components (264 two-sided, 110 all-tied K3) from 40 fixed seeds × 5 T_w.
     These are not independent replications.
-  - A ~2e-8 gap is unexplained until a step-size sweep is run. A within-step response of R to a B perturbation is ruled out, because Engine v1
+  - A ~2e-8 gap is unexplained. The step-size sweep has since been run (`ERRATA_2026-10-28.md` E22, 2026-11-08): exact
+    arithmetic matches the state formula to 4e-13 and the float error scales as 1/δ, but the predeclared rule did not close it
+    on-branch (2.17e-10 against 2.1e-10), so the label stays unexplained. A within-step response of R to a B perturbation is ruled out, because Engine v1
     computes R before it updates B (`ERRATA_2026-10-28.md` E5). The maximum residual comes from one component with a tiny
     finite-difference step (δ in [1e-9, 1e-8)); the 263 well-resolved components agree within 2.1e-10. Finite-difference/rounding
     error is the most likely cause; finite-time departure and unequal controlling scales are less likely.
