@@ -152,6 +152,8 @@ XO_NN = "(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))"
 GP = "EngineWitness.engineGate_pE"
 WU_VARS = CAP_VARS + " (B D : ℕ → V → V → ℝ)"
 TS_VARS = "{V S : Type} [Fintype V] [LinearOrder V]"   # section variables of TrajectoryInvariants.lean
+FL_VARS = "{V : Type}"                                 # section variables of FrequencyLock.lean
+FL_PROBE = " PhaseCoherence.probeX PhaseCoherence.probeU PhaseCoherence.probeOmega Real.pi"
 WU_FAC = ("(by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE])"
           " (fun n => rfl) (fun n i j => Capacity.Xo_symm _ i j) ")
 
@@ -347,7 +349,34 @@ MUTANTS = [
      "TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)"
      " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
      None),
+    # ---- Phase lock (FrequencyLock.lean, Auditor Seat 002's rework of Arena cycles 3/5); numbered from M85
+    # (M79-M84 are left for the renumbered c016 definition mutants) ----
+    ("M85_lock_reported_factor_two_dropped", "FrequencyLock.lean", "reported_of_pairLock",
+     [("1 - 2 * alpha ^ k ≤ reported", "1 - alpha ^ k ≤ reported", 1)], FL_VARS,
+     "FrequencyLock.pairLock_factor_two_refuted (@H (Fin 2) (1/2) PhaseCoherence.probeC0 0" + FL_PROBE +
+     " (Real.pi / 2) 0 0 1 (by decide) (fun _ _ => ⟨rfl, rfl⟩) (by norm_num) (by norm_num)"
+     " (fun _ _ => by simp [PhaseCoherence.probeC0]) 1)", None),
+    ("M86_lock_norm_factor_two_dropped", "FrequencyLock.lean", "coherenceTrace_norm_of_pairLock",
+     [("1 - 2 * alpha ^ k ≤ ‖", "1 - alpha ^ k ≤ ‖", 1)], FL_VARS,
+     "FrequencyLock.pairLock_norm_factor_two_refuted (@H (Fin 2) (1/2) PhaseCoherence.probeC0 0" + FL_PROBE +
+     " (Real.pi / 2) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) (by norm_num) (by norm_num)"
+     " (fun _ _ => by simp [PhaseCoherence.probeC0]) 1)", None),
+    ("M87_lock_constant_from_N_not_N_plus_d", "FrequencyLock.lean", "coherenceInput_constant_of_pairLock",
+     [("(hn : N + d ≤ n)", "(hn : N ≤ n)", 1)], FL_VARS,
+     "FrequencyLock.delay_start_refuted (@H (Fin 2) 2" + FL_PROBE +
+     " (Real.pi / 2) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) 0 (le_refl 0))", None),
+    ("M88_lock_only_node_i_locked", "FrequencyLock.lean", "coherenceInput_constant_of_pairLock",
+     [("(hlock : ∀ n, N ≤ n → u n i = c ∧ u n j = c)", "(hlock : ∀ n, N ≤ n → u n i = c)", 1)], FL_VARS,
+     "FrequencyLock.half_lock_refuted (@H (Fin 2) 0 (fun _ => 0) FrequencyLock.splitU (fun _ => 0) 0 Real.pi 0 0 1"
+     " (fun _ _ => by simp [FrequencyLock.splitU]) 1 (by norm_num))", None),
+    ("M89_lock_period_condition_dropped", "FrequencyLock.lean", "coherenceInput_constant_of_periodicPairRate",
+     [("(hper : ∀ n, N + d ≤ n → c n = c (n - d))", "(hper : True)", 1)], FL_VARS,
+     "FrequencyLock.nonperiodic_rate_refuted (@H (Fin 2) 1 (fun _ => 0) FrequencyLock.altU (fun _ => 0) 0"
+     " (fun m => if m % 2 = 0 then Real.pi else 0) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) trivial 2 (by norm_num))", None),
 ]
+
+UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
+ALT_OLD = "def altU (n : ℕ) (_ : Fin 2) : ℝ := if n % 2 = 0 then Real.pi else 0\n"
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
 # name, file, [(old, new, count)] applied to the whole file text, VALUE PROBES declared in advance (>= 1 must fail).
@@ -367,7 +396,10 @@ VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_
           "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag",
           "probe_coherence_input_asym_omega"]
 VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new", "probe_aux_time_and_new_entry"]
-VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS}
+# Phase lock (FrequencyLock.lean): the witnesses that pin the rate definitions `unitRate` and `altU`
+VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant"]
+VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
+                "FrequencyLock.lean": VP_FL}
 WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"
 FB_OLD = "  (U n state.1 state.2 Bnew, Bnew)\n"
 PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
@@ -445,6 +477,11 @@ DEF_MUTANTS = [
      [(FB_OLD, "  (U n state.1 state.2 (F n state.1 state.2), Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
     ("M78_trajectory_aux_update_gets_next_time", "TrajectoryInvariants.lean",
      [(FB_OLD, "  (U (n + 1) state.1 state.2 Bnew, Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
+    # ---- Phase lock (FrequencyLock.lean): the rate definitions of the witnesses ----
+    ("M90_lock_unit_rate_frozen", "FrequencyLock.lean", [(UR_OLD, "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 0\n", 1)],
+     ["probe_unitRate_nonzero"]),
+    ("M91_lock_alt_rate_constant", "FrequencyLock.lean", [(ALT_OLD, "def altU (_ : ℕ) (_ : Fin 2) : ℝ := Real.pi\n", 1)],
+     ["probe_altU_not_constant"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -467,6 +504,8 @@ EQUIV_CONTROLS = [
     ("E11_trajectory_feedback_let_inlined", "TrajectoryInvariants.lean",
      [(FB_OLD, "  (U n state.1 state.2 (weightUpdate (p n) (F n state.1 state.2) state.2),\n"
                "    weightUpdate (p n) (F n state.1 state.2) state.2)\n", 1)]),
+    # Phase lock: any nonzero constant rate is the same witness (numbered after c016's renumbered E12-E15)
+    ("E16_lock_unit_rate_five", "FrequencyLock.lean", [(UR_OLD, "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 5\n", 1)]),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -506,7 +545,8 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
          "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\nopen AIEFGate.MatrixForm (preM)\n"
          "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n"
-         "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n")
+         "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n"
+         "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
