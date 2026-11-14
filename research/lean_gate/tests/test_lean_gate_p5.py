@@ -10,7 +10,7 @@ merge of P4b (PR #26) and the #27 follow-ups, `MUTANTS` has 38 entries (M1-M36 s
 `Capacity.preM_between` / `convex_weights_iff`) and `DEF_MUTANTS` 20 (M37-M56: M37-M52 as ported, M53-M56 the N2
 asymmetric-omega offset mutants), total 58; controls: 10 equivalence, 3 typo, 2 statement-level; no expected survivor
 (the former S1 is the counted M55). Since the C014 refresh (test_lean_gate_c014.py): + M71-M73 statement and
-M74-M76 definition mutants and the equivalence control E11, total 64 (M59-M70 are reserved for the c016 port).
+M74-M78 definition mutants and the equivalence control E11, total 66. C014 entries are selected by file.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -31,9 +31,9 @@ PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
 N_STATEMENT_MUTANTS = 41          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups) + M71-M73 (C014)
-N_DEF_MUTANTS = 23                # M37-M56 (P5) + M74-M76 (C014)
+N_DEF_MUTANTS = 25                # M37-M56 (P5) + M74-M78 (C014)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 64 (58 before C014; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 66 (58 before C014; 52 before N2 M53-M56 and #27 M57-M58)
 
 # Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...
 # PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.
@@ -202,8 +202,8 @@ def test_uniform_c0_one_probe_values():
 def test_p5_mutants_shape_and_exact_count():
     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (64)
-    names = [m[0] for m in mc.DEF_MUTANTS[:N_P5_DEF_MUTANTS]]             # the P5 slice; C014's M74-M76 follow
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (66)
+    names = [m[0] for m in mc.DEF_MUTANTS if m[1] != "TrajectoryInvariants.lean"]   # the P5 entries
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
     assert len({m[0] for m in mc.MUTANTS} & set(names)) == 0
@@ -249,8 +249,9 @@ def test_controls_exist_with_exact_counts():
 
 
 def test_def_mutants_never_edit_unlisted_files_and_no_expected_survivor_since_n2():
-    assert {m[1] for m in mc.DEF_MUTANTS[:N_P5_DEF_MUTANTS]} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
-    assert {m[1] for m in mc.DEF_MUTANTS[N_P5_DEF_MUTANTS:]} == {"TrajectoryInvariants.lean"}   # C014
+    p5 = [m for m in mc.DEF_MUTANTS if m[1] in {"PhaseIncrement.lean", "PhaseCoherence.lean"}]
+    assert len(p5) == N_P5_DEF_MUTANTS                                           # P5 entries, selected by file
+    assert {m[1] for m in mc.DEF_MUTANTS} - {"PhaseIncrement.lean", "PhaseCoherence.lean"} == {"TrajectoryInvariants.lean"}
     assert mc.KNOWN_SURVIVORS == []          # the former S1 (offset dropped in 011 only) is the counted M55 since N2
     # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value
     m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M43")][0]
