@@ -193,8 +193,11 @@ NEW = [
   "(ERRATA_2026-10-28.md E5). Remaining unverified candidates: finite-difference error, unequal controlling scales, finite-time departure "
   "from the ideal locked point, storage rounding. The maximum residual (2.04e-8) comes from a single component with a tiny "
   "finite-difference step (delta in [1e-9, 1e-8)); the other 263 well-resolved components agree within 2.1e-10, so finite-difference/rounding "
-  "error is the most likely cause, and finite-time departure and unequal controlling scales are less likely. The gap stays unexplained "
-  "until a step-size sweep is run.",
+  "error is the most likely cause, and finite-time departure and unequal controlling scales are less likely. The gap stays unexplained. "
+  "The step-size sweep has since been run (ERRATA_2026-10-28.md E22; research/rate_law/rate_law_delta_sweep_v1.py; "
+  "research/rate_law/results/rate_law_delta_sweep_v1.json): on that component the exact rational evaluation gives the state-formula "
+  "multiplier to 4.04e-13 relative and the float error scales as 1/delta (log-log slope -1.09), but the predeclared rule did not close "
+  "it on-branch (2.17e-10 against the 2.1e-10 bound), so the label stays UNEXPLAINED.",
   "Supported", "Conditional theorem", "AI Agent Audits/evidence/results/rate_law_census_r4.json;AI Agent Audits/AIEFS_audit_response_3.md §2.2",
   "40 fixed seeds x 5 T_w; not independent replications. 32 poorly resolved two-sided fibers (rho = 2) agree only to lambda 4.8e-6 / kappa 4.8e-4.",
   "(stated more strongly in 1.4 docs)", "Supported (audit-derived, conditional)",
@@ -354,7 +357,7 @@ NEW = [
   "(new)", "Not established (open item; no timestep study run)",
   "not from audit rounds 1-4; post-push review 2026-10-28",
   "What would test it: a separately versioned, regenerated dt sweep reporting topology agreement and trajectory "
-  "differences across dt. Related: the ~2e-8 rate-law gap (AUD-RATELAW) also waits on a step-size sweep."),
+  "differences across dt. Related: the ~2e-8 rate-law gap (AUD-RATELAW): its step-size sweep has since been run (ERRATA_2026-10-28.md E22) and the gap stays UNEXPLAINED."),
  ("AUD-B-SCAFFOLD", A,
   "OPEN ITEM: 'B is a conditional (continuous-weight) scaffold' is audit wording (resp1 #6, line 19; resp2 #4). The conditions "
   "under which B acts as a scaffold have not been stated as a testable claim or tested.",
