@@ -276,7 +276,8 @@ MUTANTS = [
     ("no_mod_2pi", "        2.0 * np.pi\n    )", "        1e300\n    )"),
     ("append_stale_theta", "state.history.append(state.theta.copy())",
      "state.history.append(state.history[-1].copy())"),
-    # (`> delay_steps` instead of `+ 1` is equivalent from a 51-slot start: one pop per step keeps 51.)
+    # Equivalent, so not counted: `> delay_steps` instead of `+ 1` (one pop per step keeps a 51-slot start at
+    # 51) and `theta` instead of `theta.copy()` in initialize_state (DynamicState copies every slot).
     ("queue_one_long", "if len(state.history) > config.delay_steps + 1:",
      "if len(state.history) > config.delay_steps + 2:"),
     ("init_one_short", "history = [theta.copy() for _ in range(config.delay_steps + 1)]",
