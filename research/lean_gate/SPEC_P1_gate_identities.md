@@ -693,7 +693,7 @@ negative control PASS, **13/13 mutants rejected**, every build rejection a REAL 
 * The closed-form clique multiplier `λ_k`, finite-time departure from it, float64 error, `TIE_TOL`.
 * Engine-shaped versions of `false_drop_hc0`, `false_rel_x_only`, `false_rel_h_only` (§8.3).
 * The bridge covers K3 / `CCtrl` / `vCtrl` and the general incidence; no bridge to `lean/AIEFProofsKn` (K12).
-* The mutation check is not run in CI (it needs a built Lean project and about 2 minutes locally).
+* The mutation check was not run in CI when P3 landed. Since PR #27 it runs in CI: `.github/workflows/lean.yml`, step "Lean-gate mutation check (AIEFGateCore only)" on the required `AIEFGateCore` row (about 2 minutes locally at P3).
 * `R` symmetry / `B` symmetry invariance of the engine remain hypotheses (§7.4).
 * **AUD-RATELAW stays UNEXPLAINED.** P3 does not change any label, ERRATA entry or registry claim.
 
@@ -727,7 +727,7 @@ Auditor Seat 002); the review is not part of this repository and is not a librar
 | `gateM_nonneg`, `gateM_le_input`, `gateM_symm`, `gateM_diag` | as named (`EngineGate` not needed) | `gate_nonneg`, `kernel_le_input`, `gate_symmetric`, `gate_zero_diag` |
 | `gateM_sub_of_rowSum_eq` | equal row sums, zero diagonals | `gate_difference_of_rowSum_eq` |
 | `stepM_row_le_cap`, `stepM_nonneg`, `gateM_stepM` | `EngineGate p`; **no symmetry hypothesis on `D`, `Bm`** | (new, on `stepM`) |
-| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form |
+| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form. Despite the names these are **affine** identities: the weights `1 − γdt`, `γdt` are a convex pair only when `0 ≤ γdt ≤ 1` (`convex_weights_iff`, `preM_between`, PR #27). Names kept for the port. |
 
 The `0 < ε` / `0 ≤ ε` scope is exactly what is proved: `0 ≤ ε` for the kernel row bound only; everything that
 involves the guard goes through `EngineGate`, hence `0 < ε`. "`0 < ε` can be relaxed" is **not** claimed in general.
@@ -781,7 +781,7 @@ script, and no mutant, statement or proof was changed to make it pass.
   the four `rat_*` counterexamples are ported only as `Fin 2` matrix witnesses, not as the 12-node engine state.
 * No trajectory statement: one step, exact reals, chosen `Fin 2` inputs; nothing about float64 or `TIE_TOL`.
 * The gate is not nonexpansive (`false_gate_nonexpansive`); no Lipschitz bound is claimed.
-* The mutation check is not run in CI (it needs a built Lean project and about 5 minutes locally).
+* The mutation check was not run in CI when P4a landed. Since PR #27 it runs in CI (see §8.5; about 5 minutes locally at P4a).
 * **AUD-RATELAW stays UNEXPLAINED.**
 
 
