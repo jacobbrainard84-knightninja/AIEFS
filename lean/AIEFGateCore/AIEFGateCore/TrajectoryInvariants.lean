@@ -360,11 +360,13 @@ theorem noGate_over_capacity :
 /-! ### Value probes for the mutation check (Auditor, c014 refresh)
 
 Closed-number equalities pinned by `research/lean_gate/lean_mutation_check.py` (definition
-mutants M74-M76). `probe_gate_scales_row`: the capacity gate fires and scales the over-capacity
+mutants M74-M78). `probe_gate_scales_row`: the capacity gate fires and scales the over-capacity
 row 3 to `cap · 3 / (3 + ε) = 3/4` (a gate-bypass `weightUpdate := symM` gives 3).
 `probe_aux_reads_old_and_new`: the auxiliary update `U` receives the OLD weights as its third
 argument and the NEW weights as its fourth (`-1 + 10 · 0`; old-only gives `-11`, new-only
-gives `0`). -/
+gives `0`). `probe_aux_time_and_new_entry`: `U` receives the current time `n` and the gated new
+off-diagonal entry `3/4` (`0 + 10 · 3/4 = 15/2`; the raw drive gives `30`, time `n + 1` gives
+`17/2`). -/
 
 private theorem tight_pre (D B : Weights (Fin 2)) : preM pTight D B = D := by
   funext i j
@@ -382,6 +384,22 @@ theorem probe_gate_scales_row : Capacity.rowS (weightUpdate pTight (X 3) zeroB) 
   rw [Capacity.rowS]
   simp only [Fin.sum_univ_two, Capacity.gateM, if_pos hg, Capacity.kernelM, Capacity.rowS_Xo]
   norm_num [scale, Capacity.Xo, pTight]
+
+private theorem tight_gate_entry : weightUpdate pTight (X 3) zeroB 0 1 = 3 / 4 := by
+  unfold weightUpdate
+  rw [Capacity.stepM_eq_gateM, tight_sym_three]
+  have hg : Capacity.GateOnX pTight (X 3) := ⟨0, by rw [Capacity.rowS_Xo]; norm_num [pTight]⟩
+  simp only [Capacity.gateM, if_pos hg, Capacity.kernelM, Capacity.rowS_Xo]
+  norm_num [scale, Capacity.Xo, pTight]
+
+def threeDriveR (_ : ℕ) (_ : ℝ) (_ : Weights (Fin 2)) : Weights (Fin 2) := X 3
+
+def auxTimeNew (n : ℕ) (_ : ℝ) (_ Bnew : Weights (Fin 2)) : ℝ := (n : ℝ) + 10 * Bnew 0 1
+
+theorem probe_aux_time_and_new_entry :
+    (trajectory (fun _ => pTight) threeDriveR auxTimeNew ((0 : ℝ), zeroB) 1).1 = 15 / 2 := by
+  simp only [trajectory, feedbackStep, threeDriveR, auxTimeNew, tight_gate_entry]
+  norm_num
 
 def oneDriveR (_ : ℕ) (_ : ℝ) (_ : Weights (Fin 2)) : Weights (Fin 2) := X 1
 
@@ -461,6 +479,7 @@ end AIEFGate.TrajectorySafety
 #print axioms AIEFGate.TrajectorySafety.probe_gate_scales_row
 
 #print axioms AIEFGate.TrajectorySafety.probe_aux_reads_old_and_new
+#print axioms AIEFGate.TrajectorySafety.probe_aux_time_and_new_entry
 
 #print axioms AIEFGate.TrajectorySafety.capacity_clock_refuted
 

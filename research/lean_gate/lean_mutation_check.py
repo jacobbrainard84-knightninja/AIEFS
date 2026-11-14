@@ -92,13 +92,14 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
 
-  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff. because M59-M70 are
-  reserved for the c016 port):
+  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port renumbers
+  after these):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
   M72 TrajectorySafety.all_times_structural, hInit := True            -> TrajectorySafety.initial_time_refuted
   M73 TrajectorySafety.post_capacity, hp (EngineGate) := True         -> TrajectorySafety.broken_link_refuted (`pB`)
   Definition mutants (rule below): M74 `weightUpdate := symM` (gate bypassed), M75 `feedbackStep` hands `U` the old
-  B twice, M76 the new B twice; probes `probe_gate_scales_row`, `probe_aux_reads_old_and_new`; equivalence control
+  B twice, M76 the new B twice, M77 the raw drive instead of the new B, M78 the time `n + 1`; probes
+  `probe_gate_scales_row`, `probe_aux_reads_old_and_new`, `probe_aux_time_and_new_entry`; equivalence control
   E11 (the `let` inlined) must not be killed. M75 is the survivor of Researcher 001's audit of 9b9b3d9.
 
   P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
@@ -329,8 +330,7 @@ MUTANTS = [
     ("M58_capacity_convex_weights_upper_bound_dropped", "Capacity.lean", "convex_weights_iff",
      [("(0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1)", "(0 ≤ p.γ * p.dt)", 1)], CAP_VARS,
      "(by have h := ((@H Unit _ _ ⟨2, 1, 1, 0, 0, 0, 0⟩).2 (by norm_num)).1; norm_num at h)", None),
-    # ---- C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282); numbered from M71 because
-    #      M59-M70 are reserved for the c016 port (Researcher 001) ----
+    # ---- C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282); numbered from M71 ----
     ("M71_trajectory_post_capacity_next_cap", "TrajectoryInvariants.lean", "post_capacity",
      [("i ≤ (p n).cap", "i ≤ (p (n + 1)).cap", 1)], TS_VARS,
      "TrajectorySafety.capacity_clock_refuted (@H (Fin 2) Unit _ _ TrajectorySafety.capSchedule"
@@ -366,7 +366,7 @@ VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_
           "probe_reported_second", "probe_drive_second", "probe_asym_drive", "probe_main_preM",
           "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag",
           "probe_coherence_input_asym_omega"]
-VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new"]
+VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new", "probe_aux_time_and_new_entry"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS}
 WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"
 FB_OLD = "  (U n state.1 state.2 Bnew, Bnew)\n"
@@ -432,7 +432,7 @@ DEF_MUTANTS = [
     ("M55_phase_input_offset_dropped", "PhaseIncrement.lean", offset("0"), PIN_OMEGA),
     ("M56_coherence_input_node_uniform_omega_i", "PhaseCoherence.lean",
      ci("inputPhasor d x0 u (fun _ => omega i) tau n i j"), ["probe_coherence_input_asym_omega"]),
-    # ---- C014 (TrajectoryInvariants.lean); M74-M76 follow the C014 statement mutants M71-M73 ----
+    # ---- C014 (TrajectoryInvariants.lean); M74-M78 follow the C014 statement mutants M71-M73 ----
     ("M74_trajectory_weight_update_bypasses_gate", "TrajectoryInvariants.lean",
      [(WU_DEF_OLD, "def weightUpdate (p : Params) (D B : Weights V) : Weights V := symM p D B\n", 1)],
      ["probe_gate_scales_row"]),
@@ -440,6 +440,11 @@ DEF_MUTANTS = [
      [(FB_OLD, "  (U n state.1 state.2 state.2, Bnew)\n", 1)], ["probe_aux_reads_old_and_new"]),
     ("M76_trajectory_aux_update_gets_new_B_only", "TrajectoryInvariants.lean",
      [(FB_OLD, "  (U n state.1 Bnew Bnew, Bnew)\n", 1)], ["probe_aux_reads_old_and_new"]),
+    # Researcher 001's two survivors on 3a4c75b (audit note 3), killed by the second probe:
+    ("M77_trajectory_aux_update_gets_drive_not_new_B", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 state.2 (F n state.1 state.2), Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
+    ("M78_trajectory_aux_update_gets_next_time", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U (n + 1) state.1 state.2 Bnew, Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of

@@ -123,7 +123,7 @@ def test_p4b_mutants_shape():
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
     assert {m[1] for m in mc.MUTANTS[36:38]} == {"Capacity.lean"}
     assert [m[2] for m in mc.MUTANTS[36:38]] == ["preM_between", "convex_weights_iff"]
-    assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean"}
+    assert {m[1] for m in mc.MUTANTS[38:41]} == {"TrajectoryInvariants.lean"}
     assert [m[2] for m in mc.MUTANTS[23:36]] == [
         "rowM_le_upper", "stepM_scalar_recurrence", "appliedFactor_lower", "stepM_factor_lower",
         "trajectory_symmetric", "trajectory_zero_diag", "trajectory_nonneg", "trajectory_good_of_start",
