@@ -46,12 +46,26 @@ def test_parameters():
     assert H == Fr(3, 20000) and GAMMA * Fr(8, 3) == L and CAP == Fr(19, 30)
 
 
+def _sstar_claim(s):
+    """`s` is exactly 19/90 - 1e-10 and its float64 value is `float(19/90) - 1e-10` (no `or True` escape hatch)."""
+    return s == Fr(19, 90) - Fr(1, 10**10) and float(s) == float(Fr(19, 90)) - 1e-10
+
+
+def test_sstar_claim_is_not_vacuous():
+    """The assertion in `test_threshold_is_exact_and_strict` is a real condition: it fails for a perturbed value
+    (either the exact part or the float part)."""
+    assert _sstar_claim(SSTAR)
+    assert not _sstar_claim(SSTAR + Fr(1, 10**10))
+    assert not _sstar_claim(Fr(19, 90))
+    assert not _sstar_claim(Fr(18999999991, 90000000001))
+
+
 def test_threshold_is_exact_and_strict():
     assert on_gap(SSTAR) == BC                                  # equality at the threshold: strict `<` fails
     assert not BC < on_gap(SSTAR)                               # false_gap_at_threshold
     eps = Fr(1, 10**9)
     assert BC < on_gap(SSTAR - eps) and not BC < on_gap(SSTAR + eps)
-    assert SSTAR == Fr(19, 90) - Fr(1, 10**10) and float(SSTAR) == float(Fr(19, 90)) - 1e-10 or True
+    assert _sstar_claim(SSTAR)                                  # exact rational and its float64 value
     assert abs(float(SSTAR / L) - 5.2777777752777775) < 1e-12   # 5.28 times the maximal drive
     assert abs(float(SSTAR / GAMMA) - 14.0740740) < 1e-6        # in u units (S / gamma)
 
@@ -117,13 +131,17 @@ def test_p4b_mutants_shape():
     names = [m[0] for m in mc.MUTANTS]
     # 36 (M1-M36) + 2 (M57, M58: #27 Capacity follow-ups, appended after the P5 definition mutants M37-M56)
     # + 3 (M71-M73: C014 TrajectoryInvariants.lean statement mutants, see test_lean_gate_c014.py)
-    assert len(names) == 41                                      # the single exact pin (P4a test: >= 23)
+    # + 11 (M59-M69: P6 CoherenceMotion statement mutants, see test_lean_gate_c016.py)
+    assert len(names) == 52                                      # the single exact pin (P4a test: >= 23)
     assert names[23].startswith("M24") and names[35].startswith("M36")
     assert names[36].startswith("M57") and names[37].startswith("M58")
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
     assert {m[1] for m in mc.MUTANTS[36:38]} == {"Capacity.lean"}
     assert [m[2] for m in mc.MUTANTS[36:38]] == ["preM_between", "convex_weights_iff"]
-    assert {m[1] for m in mc.MUTANTS[38:41]} == {"TrajectoryInvariants.lean"}
+    # the C014 and P6 entries are selected by file, not by position
+    assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean", "CoherenceMotion.lean"}
+    assert len([m for m in mc.MUTANTS if m[1] == "TrajectoryInvariants.lean"]) == 3
+    assert len([m for m in mc.MUTANTS if m[1] == "CoherenceMotion.lean"]) == 11
     assert [m[2] for m in mc.MUTANTS[23:36]] == [
         "rowM_le_upper", "stepM_scalar_recurrence", "appliedFactor_lower", "stepM_factor_lower",
         "trajectory_symmetric", "trajectory_zero_diag", "trajectory_nonneg", "trajectory_good_of_start",
