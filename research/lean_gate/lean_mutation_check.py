@@ -92,6 +92,13 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
 
+  DelayRoots.lean (Arena_Researcher_06020041 cycles 9/10 root lemmas; numbered M92 ff., after the phaselock port):
+  M92 symRoot_eq_one_or_lt, ha1 (a < 1) := True                  -> a = 2, d = 1: root -2 (false_symRoot_no_upper)
+  M93 symRoot_eq_one_or_lt, conclusion drops `z = 1 ∨`           -> the neutral root 1 (false_one_inside)
+  M94 transRoot_lt_one, hm (1 ≤ m) := True                       -> m = 0, h = 3, d = 0: root -2
+  M95 transRoot_lt_one, hmh (m h < 1) := True                    -> m = h = 1, d = 0: root -1
+  M96 projectedSlope_lt_quarter, `C < x` -> `C ≤ x`              -> C = ε = x = 1: slope exactly 1/4
+
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port renumbers
   after these):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
@@ -346,7 +353,25 @@ MUTANTS = [
      [("(hp : EngineGate (p n))", "(hp : True)", 1)], TS_VARS,
      "TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)"
      " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
+     None),    # ---- DelayRoots.lean (Arena cycles 9/10 root lemmas); numbered M92 ff. after phaselock's M85-M91 ----
+    ("M92_delayroots_sym_upper_bound_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
+     [("(ha1 : a < 1)", "(ha1 : True)", 1)], "",
+     "DelayRoots.false_symRoot_no_upper (H 2 (by norm_num) trivial 1 (-2) DelayRoots.symRoot_root_a_two)", None),
+    ("M93_delayroots_sym_neutral_root_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
+     [("    z = 1 ∨ ‖z‖ < 1", "    ‖z‖ < 1", 1)], "",
+     "DelayRoots.false_one_inside (H (1 / 2) (by norm_num) (by norm_num) 0 1 (DelayRoots.symRoot_one (1 / 2) 0).1)",
      None),
+    ("M94_delayroots_trans_m_ge_one_dropped", "DelayRoots.lean", "transRoot_lt_one",
+     [("(hm : 1 ≤ m)", "(hm : True)", 1)], "",
+     "DelayRoots.false_minus_two_inside (H 0 trivial 3 (by norm_num) (by norm_num) 0 (-2)"
+     " DelayRoots.transRoot_root_m_zero)", None),
+    ("M95_delayroots_trans_mh_lt_one_dropped", "DelayRoots.lean", "transRoot_lt_one",
+     [("(hmh : (m : ℝ) * h < 1)", "(hmh : True)", 1)], "",
+     "DelayRoots.false_minus_one_inside (H 1 le_rfl 1 (by norm_num) trivial 0 (-1) DelayRoots.transRoot_root_mh_one)",
+     None),
+    ("M96_delayroots_slope_strict_to_weak", "DelayRoots.lean", "projectedSlope_lt_quarter",
+     [("(hx : C < x)", "(hx : C ≤ x)", 1)], "",
+     "DelayRoots.false_slope_at_boundary (H 1 1 1 (by norm_num) (by norm_num) le_rfl)", None),
 ]
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----

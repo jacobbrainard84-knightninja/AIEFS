@@ -1146,3 +1146,41 @@ controls not killed; 3/3 typo controls INVALID; RESULT PASS.
 * `U` and `F` are arbitrary, so nothing here says the engine's feedback is safe beyond the one-step gate facts.
 * No Python-side check that the engine passes old and new `B` in this order (the probe only pins the Lean convention).
 * The oscillation witnesses use a full-reset `pWide` step; they are not evidence about engine parameters.
+
+## 15. DelayRoots (branch `research/lean-gate-delay-roots`, from `main` `871417d`)
+
+### 15.1 What it is
+`lean/AIEFGateCore/AIEFGateCore/DelayRoots.lean` (namespace `AIEFGate.DelayRoots`) is pure algebra. It covers the characteristic polynomials in Arena_Researcher_06020041's cycles 9 and 10, which are unverified inbox material (Auditor review on `audit-inbox` @ `4ee9fe5`):
+
+- `symRoot_eq_one_or_lt`: for 0 < a < 1, every root of λ^(d+1) − (1−a)λ^d − a is 1 or has |λ| < 1.
+- `symRoot_one`: 1 is a root, and P′(1) = 1 + a·d.
+- `transRoot_lt_one`: for 1 ≤ m, 0 < h and m·h < 1, every root of λ^(d+1) − (1−m·h)λ^d + h has |λ| < 1.
+- `projectedSlope_lt_quarter`: if x > C > 0 and ε > 0, then C·ε/(x+ε)² < 1/4.
+- Key lemma `eq_one_of_norm_ge_one_of_near`: if |z| ≥ 1, c > 0 and |z − c| ≤ 1 − c, then z = 1.
+
+**Not covered:** that these polynomials are the correct linearisation of the engine step; the existence of the cycle 8 rotating orbit; the projected orbit's non-differentiable tie; heterogeneous ω; production runs. Nothing here supports any AIEF-1.4 claim.
+
+### 15.2 Mutants M92–M96 (statement mutants, numbered after phaselock's M85–M91)
+| Mutant | Change | Refuted by |
+|---|---|---|
+| M92 | `symRoot_eq_one_or_lt`: `a < 1` := True | a = 2, d = 1, root −2 |
+| M93 | `symRoot_eq_one_or_lt`: conclusion drops `z = 1 ∨` | the root 1 |
+| M94 | `transRoot_lt_one`: `1 ≤ m` := True | m = 0, h = 3, d = 0, root −2 |
+| M95 | `transRoot_lt_one`: `m h < 1` := True | m = h = 1, d = 0, root −1 |
+| M96 | `projectedSlope_lt_quarter`: `C < x` → `C ≤ x` | C = ε = x = 1, slope exactly 1/4 |
+
+**Not mutated:**
+- `0 < a`. Negative a can still give spectral radius 1, so there is no simple witness. The deposit cites d = 3, a = −0.5 as having an unstable root of about 1.234, but no exact witness is formalised.
+- `0 < h`. With h = 0, the root 0 or 1 makes the conclusion fail only at the boundary.
+- `0 < ε`.
+
+### 15.3 Tests
+`research/lean_gate/tests/test_lean_gate_delayroots.py` checks:
+- that the module is imported and hash-pinned, with no escape hatches;
+- the exact shape of M92–M96 (selected by file);
+- the witness roots, re-checked in exact rational arithmetic.
+
+The pins move as follows: P4b `len(MUTANTS)` goes from 41 to 46, and P5 `N_STATEMENT_MUTANTS` from 41 to 46, so `TOTAL_MUTANTS` becomes 71. If c016 and phaselock land first, these pins are merged additively.
+
+### 15.4 Results
+See the commit message of the branch tip.

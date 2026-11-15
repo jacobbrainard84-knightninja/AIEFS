@@ -117,7 +117,8 @@ def test_p4b_mutants_shape():
     names = [m[0] for m in mc.MUTANTS]
     # 36 (M1-M36) + 2 (M57, M58: #27 Capacity follow-ups, appended after the P5 definition mutants M37-M56)
     # + 3 (M71-M73: C014 TrajectoryInvariants.lean statement mutants, see test_lean_gate_c014.py)
-    assert len(names) == 41                                      # the single exact pin (P4a test: >= 23)
+    # + 5 (M92-M96: DelayRoots.lean statement mutants, see test_lean_gate_delayroots.py)
+    assert len(names) == 46                                      # the single exact pin (P4a test: >= 23)
     assert names[23].startswith("M24") and names[35].startswith("M36")
     assert names[36].startswith("M57") and names[37].startswith("M58")
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
