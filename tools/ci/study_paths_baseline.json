@@ -1,0 +1,194 @@
+{
+ "_note": "Known-unresolved study-registry path tokens at main 871417d, checked by tools/ci/check_study_paths.py. Replacing, restoring or retiring a path is an owner/provenance decision; do not substitute similar-looking files. Delete an entry when its token resolves or its row/field/token is gone (the checker fails on stale entries).",
+ "entries": [
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_0_TO_1_2_FOUNDATIONAL",
+   "field": "canonical_entrypoints",
+   "token": "AIEF_1_0_*.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_0_TO_1_2_FOUNDATIONAL",
+   "field": "canonical_entrypoints",
+   "token": "AIEF_1_1_*.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_0_TO_1_2_FOUNDATIONAL",
+   "field": "canonical_entrypoints",
+   "token": "AIEF_1_2_*.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_0_TO_1_2_FOUNDATIONAL",
+   "field": "canonical_evidence_paths",
+   "token": "Papers/",
+   "reason": "unresolved at 871417d; intentional deletion of third-party papers (4 'Remove third-party paper' commits in git log --all; the row summary records it)"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_3_DISJOINT_100SEED",
+   "field": "canonical_entrypoints",
+   "token": "AIEF_1_3_sensitivity_audit_updated.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_3_DISJOINT_100SEED",
+   "field": "canonical_entrypoints",
+   "token": "AIEF_1_3_persistence_mechanism_test_updated.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_SPLIT_STATE_ABLATION",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_frozen_history_reproduction/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_SPLIT_STATE_ABLATION",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_trajectory_recovery_equivalence/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_MATCHED_PHASE_ABLATION",
+   "field": "canonical_entrypoints",
+   "token": "AIEF_1_4_driver_mechanism.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_MATCHED_PHASE_ABLATION",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_driver_mechanism/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_TANGENT_AND_COCYCLE",
+   "field": "canonical_entrypoints",
+   "token": "aief_1_4_full_state_tangent_operator.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_TANGENT_AND_COCYCLE",
+   "field": "canonical_entrypoints",
+   "token": "aief_1_4_history_cocycle_test.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_TANGENT_AND_COCYCLE",
+   "field": "canonical_entrypoints",
+   "token": "aief_1_4_branch_tangent_comparison.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_TANGENT_AND_COCYCLE",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_jacobian_step_convergence/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_TANGENT_AND_COCYCLE",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_*_report.txt",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_CONTROLLER_FIBER",
+   "field": "canonical_entrypoints",
+   "token": "aief_1_4_intertwining_controller.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_CONTROLLER_FIBER",
+   "field": "canonical_entrypoints",
+   "token": "aief_1_4_fiber_coordinate_controller.py",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_CONTROLLER_FIBER",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_k3_fiber_audit/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_CONTROLLER_FIBER",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_full_seed_fiber_audit/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_PROPOSAL_EQUALIZATION",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_boundary_stress_audit/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_PROPOSAL_EQUALIZATION",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_proposal_margin_audit/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/studies.csv",
+   "row_id": "AIEF_1_4_PROPOSAL_EQUALIZATION",
+   "field": "canonical_evidence_paths",
+   "token": "aief_1_4_selection_margin_control/",
+   "reason": "unresolved at 871417d; never present in any commit (git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/supersessions.csv",
+   "row_id": "AIEF_1_4_Twindow_sensitivity_analysis.py",
+   "field": "authoritative_target",
+   "token": "AIEF_1_4_Twindow_sensitivity_analysis_v2.py",
+   "reason": "unresolved at 871417d; successor target never pushed (never present in any commit, git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/supersessions.csv",
+   "row_id": "AIEF_1_3_sensitivity_audit.py",
+   "field": "authoritative_target",
+   "token": "AIEF_1_3_sensitivity_audit_updated.py",
+   "reason": "unresolved at 871417d; successor target never pushed (never present in any commit, git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/supersessions.csv",
+   "row_id": "AIEF_1_3_persistence_mechanism_test.py",
+   "field": "authoritative_target",
+   "token": "AIEF_1_3_persistence_mechanism_test_updated.py",
+   "reason": "unresolved at 871417d; successor target never pushed (never present in any commit, git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/supersessions.csv",
+   "row_id": "aief_1_4_k3_structure_scan.py",
+   "field": "authoritative_target",
+   "token": "aief_1_4_k3_fiber_audit/",
+   "reason": "unresolved at 871417d; successor target never pushed (never present in any commit, git log --all); replacement is an owner/provenance decision"
+  },
+  {
+   "file": "registry/supersessions.csv",
+   "row_id": "aief_1_4_operator_compression.py",
+   "field": "authoritative_target",
+   "token": "aief_1_4_full_state_tangent_operator.py",
+   "reason": "unresolved at 871417d; successor target never pushed (never present in any commit, git log --all); replacement is an owner/provenance decision"
+  }
+ ]
+}
