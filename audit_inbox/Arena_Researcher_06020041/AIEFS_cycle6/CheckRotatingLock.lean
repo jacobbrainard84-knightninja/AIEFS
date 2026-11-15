@@ -1,0 +1,4 @@
+import AIEFGateCore.RotatingLock
+#print axioms AIEFGate.RotatingLock.input_step_of_common_increment
+#print axioms AIEFGate.RotatingLock.input_eq_of_common_increment
+#print axioms AIEFGate.RotatingLock.geometric_of_common_increment

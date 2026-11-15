@@ -1,0 +1,565 @@
+{
+  "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/compare/7129d31322b31389f5fee3a64bb216b19574600f...578868241870e66fe4cb905f3b6d707fd7d39f4f",
+  "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/7129d31322b31389f5fee3a64bb216b19574600f...578868241870e66fe4cb905f3b6d707fd7d39f4f",
+  "permalink_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/jacobbrainard84-knightninja:7129d31...jacobbrainard84-knightninja:5788682",
+  "diff_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/7129d31322b31389f5fee3a64bb216b19574600f...578868241870e66fe4cb905f3b6d707fd7d39f4f.diff",
+  "patch_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/7129d31322b31389f5fee3a64bb216b19574600f...578868241870e66fe4cb905f3b6d707fd7d39f4f.patch",
+  "base_commit": {
+    "sha": "7129d31322b31389f5fee3a64bb216b19574600f",
+    "node_id": "C_kwDOUCH-K9oAKDcxMjlkMzEzMjJiMzEzODlmNWZlZTNhNjRiYjIxNmIxOTU3NDYwMGY",
+    "commit": {
+      "author": {
+        "name": "jacobbrainard84-knightninja",
+        "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+        "date": "2026-11-14T15:11:16Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-11-14T15:11:16Z"
+      },
+      "message": "Merge pull request #36 from jacobbrainard84-knightninja/fix/mutation-check-count-guard\n\nlean gate: fail partial mutation runs; harden mutation-step guard (H1-H3, F1)",
+      "tree": {
+        "sha": "b55fde7ebdacd241f3cc0ff93e5a03d5b8626481",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/b55fde7ebdacd241f3cc0ff93e5a03d5b8626481"
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/7129d31322b31389f5fee3a64bb216b19574600f",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq+HoUCRC1aQ7uu5UhlAAAjSUQAGgHvLYdCZCkA7FN+I6E8Rpj\nu6PWscAoQe0iqkhgN0YEmV/70kLBFykfcMJkdlZ8mB8AVecn5mcCg9vOE4tyq6FF\nW1pLW1fJ/SJHkAmsTtN2yRDGgvsIXsv5qfe5MVfJ1Ni9kg4HEsqDTVz12vXfhlfF\nSXrVi0R5/N7IglRQiVVtGonB/HjL65uwcq0KGLZKzkvXtcP6QDqah1IvZwWo93Cq\nayuyOsLol7n0iBVMFw7MOgSa/egREOJBVHDoB7UafmH4LwVbSnXox0fI5yh5PxE1\nhylMkCi6fKhJ1dVjlhVyIoT7/dQy36j83iU6EWqR1BwCaBk/bgqu+7EuKJ2bO69d\nghZyCiuJ9KzWLiiozNxfxneNFuEI1X93rQ9MivYibwvHA4y0lQ09tMe20WxuBbjU\nVeXqFlTN6J3wg+Y44ffFNA9aj3iyEXK6INs5Ea0TNBIgnm6VLHJYVD/xjQvGEIxd\nmAjy4328+2iXGOgTAPqFAHsHjEShKLUo5HAo+g9e4SFw81NUpjfW1SeFyZAkxvQd\nVoy+4Rm9O9K55iydWWHVbLsV4cNS5mUCFt+iT2WQ5QwhlJctGnNzpN9bvgIGR2xQ\nDCpFr4EPfg9U6dFfbI7l7CZ27x5KhRoYpQRtae4TGcGwm4bNM6IOzWsqQaTG29TA\n8nb0sETeJg0wQyCHuJQY\n=p7+e\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree b55fde7ebdacd241f3cc0ff93e5a03d5b8626481\nparent e54c2c4d945f239b43807fbf839e882b8d2cc42a\nparent 2deb0465a6ab0e2d8fbdcf753637465e0862e5b8\nauthor jacobbrainard84-knightninja <264570062+jacobbrainard84-knightninja@users.noreply.github.com> 1794669076 -0700\ncommitter GitHub <noreply@github.com> 1794669076 -0700\n\nMerge pull request #36 from jacobbrainard84-knightninja/fix/mutation-check-count-guard\n\nlean gate: fail partial mutation runs; harden mutation-step guard (H1-H3, F1)",
+        "verified_at": "2026-11-14T15:11:16Z"
+      }
+    },
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/7129d31322b31389f5fee3a64bb216b19574600f",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/7129d31322b31389f5fee3a64bb216b19574600f",
+    "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/7129d31322b31389f5fee3a64bb216b19574600f/comments",
+    "author": {
+      "login": "jacobbrainard84-knightninja",
+      "id": 264570062,
+      "node_id": "U_kgDOD8UEzg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+      "html_url": "https://github.com/jacobbrainard84-knightninja",
+      "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+      "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+      "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+      "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+      "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e54c2c4d945f239b43807fbf839e882b8d2cc42a",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/e54c2c4d945f239b43807fbf839e882b8d2cc42a",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/e54c2c4d945f239b43807fbf839e882b8d2cc42a"
+      },
+      {
+        "sha": "2deb0465a6ab0e2d8fbdcf753637465e0862e5b8",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/2deb0465a6ab0e2d8fbdcf753637465e0862e5b8",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/2deb0465a6ab0e2d8fbdcf753637465e0862e5b8"
+      }
+    ]
+  },
+  "merge_base_commit": {
+    "sha": "7129d31322b31389f5fee3a64bb216b19574600f",
+    "node_id": "C_kwDOUCH-K9oAKDcxMjlkMzEzMjJiMzEzODlmNWZlZTNhNjRiYjIxNmIxOTU3NDYwMGY",
+    "commit": {
+      "author": {
+        "name": "jacobbrainard84-knightninja",
+        "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+        "date": "2026-11-14T15:11:16Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-11-14T15:11:16Z"
+      },
+      "message": "Merge pull request #36 from jacobbrainard84-knightninja/fix/mutation-check-count-guard\n\nlean gate: fail partial mutation runs; harden mutation-step guard (H1-H3, F1)",
+      "tree": {
+        "sha": "b55fde7ebdacd241f3cc0ff93e5a03d5b8626481",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/b55fde7ebdacd241f3cc0ff93e5a03d5b8626481"
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/7129d31322b31389f5fee3a64bb216b19574600f",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq+HoUCRC1aQ7uu5UhlAAAjSUQAGgHvLYdCZCkA7FN+I6E8Rpj\nu6PWscAoQe0iqkhgN0YEmV/70kLBFykfcMJkdlZ8mB8AVecn5mcCg9vOE4tyq6FF\nW1pLW1fJ/SJHkAmsTtN2yRDGgvsIXsv5qfe5MVfJ1Ni9kg4HEsqDTVz12vXfhlfF\nSXrVi0R5/N7IglRQiVVtGonB/HjL65uwcq0KGLZKzkvXtcP6QDqah1IvZwWo93Cq\nayuyOsLol7n0iBVMFw7MOgSa/egREOJBVHDoB7UafmH4LwVbSnXox0fI5yh5PxE1\nhylMkCi6fKhJ1dVjlhVyIoT7/dQy36j83iU6EWqR1BwCaBk/bgqu+7EuKJ2bO69d\nghZyCiuJ9KzWLiiozNxfxneNFuEI1X93rQ9MivYibwvHA4y0lQ09tMe20WxuBbjU\nVeXqFlTN6J3wg+Y44ffFNA9aj3iyEXK6INs5Ea0TNBIgnm6VLHJYVD/xjQvGEIxd\nmAjy4328+2iXGOgTAPqFAHsHjEShKLUo5HAo+g9e4SFw81NUpjfW1SeFyZAkxvQd\nVoy+4Rm9O9K55iydWWHVbLsV4cNS5mUCFt+iT2WQ5QwhlJctGnNzpN9bvgIGR2xQ\nDCpFr4EPfg9U6dFfbI7l7CZ27x5KhRoYpQRtae4TGcGwm4bNM6IOzWsqQaTG29TA\n8nb0sETeJg0wQyCHuJQY\n=p7+e\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree b55fde7ebdacd241f3cc0ff93e5a03d5b8626481\nparent e54c2c4d945f239b43807fbf839e882b8d2cc42a\nparent 2deb0465a6ab0e2d8fbdcf753637465e0862e5b8\nauthor jacobbrainard84-knightninja <264570062+jacobbrainard84-knightninja@users.noreply.github.com> 1794669076 -0700\ncommitter GitHub <noreply@github.com> 1794669076 -0700\n\nMerge pull request #36 from jacobbrainard84-knightninja/fix/mutation-check-count-guard\n\nlean gate: fail partial mutation runs; harden mutation-step guard (H1-H3, F1)",
+        "verified_at": "2026-11-14T15:11:16Z"
+      }
+    },
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/7129d31322b31389f5fee3a64bb216b19574600f",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/7129d31322b31389f5fee3a64bb216b19574600f",
+    "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/7129d31322b31389f5fee3a64bb216b19574600f/comments",
+    "author": {
+      "login": "jacobbrainard84-knightninja",
+      "id": 264570062,
+      "node_id": "U_kgDOD8UEzg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+      "html_url": "https://github.com/jacobbrainard84-knightninja",
+      "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+      "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+      "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+      "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+      "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e54c2c4d945f239b43807fbf839e882b8d2cc42a",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/e54c2c4d945f239b43807fbf839e882b8d2cc42a",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/e54c2c4d945f239b43807fbf839e882b8d2cc42a"
+      },
+      {
+        "sha": "2deb0465a6ab0e2d8fbdcf753637465e0862e5b8",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/2deb0465a6ab0e2d8fbdcf753637465e0862e5b8",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/2deb0465a6ab0e2d8fbdcf753637465e0862e5b8"
+      }
+    ]
+  },
+  "status": "ahead",
+  "ahead_by": 3,
+  "behind_by": 0,
+  "total_commits": 3,
+  "commits": [
+    {
+      "sha": "9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+      "node_id": "C_kwDOUCH-K9oAKDliOWIzZDllM2U0MzU2OTgwMjBjMDQ3YjQ0OTEyNTI1YzNjMWU0ZDM",
+      "commit": {
+        "author": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-10T18:55:52Z"
+        },
+        "committer": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-10T18:55:52Z"
+        },
+        "message": "lean(gate): port 040282 cycle 014 TrajectoryInvariants.lean as TrajectorySafety (all-step structural/capacity/envelope safety under arbitrary feedback drive)",
+        "tree": {
+          "sha": "790f4584ba57f455bb0ca2c894c4dc982a792a08",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/790f4584ba57f455bb0ca2c894c4dc982a792a08"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+        "comment_count": 0,
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/9b9b3d9e3e435698020c047b44912525c3c1e4d3/comments",
+      "author": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "1c30ca56e56f11517d1e04f90d521a5aa6990c52",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/1c30ca56e56f11517d1e04f90d521a5aa6990c52",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/1c30ca56e56f11517d1e04f90d521a5aa6990c52"
+        }
+      ]
+    },
+    {
+      "sha": "3a4c75b08b3efa48219e1851f504ab1c8e916b18",
+      "node_id": "C_kwDOUCH-K9oAKDNhNGM3NWIwOGIzZWZhNDgyMTllMTg1MWY1MDRhYjFjOGU5MTZiMTg",
+      "commit": {
+        "author": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-14T15:38:22Z"
+        },
+        "committer": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-14T15:38:22Z"
+        },
+        "message": "C014: merge main 7129d31 into research/lean-gate-c014; add mutants M71-M76, E11, value probes, tests, SPEC §12\n\nMerge of origin/main 7129d31 (P5, #31-#36) into 9b9b3d9. Conflicts: lean/AIEFGateCore/README.md (P5 row then C014\nrow), AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt (regenerated lines, sums verified), registry/artifacts_current.csv\n(rebuilt by build_current_inventory.py).\n\nC014 work in the same commit:\n- TrajectoryInvariants.lean: marked \"Value probes\" block (probe_gate_scales_row, probe_aux_reads_old_and_new, helpers;\n  not part of the deposit) with #print axioms; header says capacity/envelope/sine/phase need EngineGate (R001 N1),\n  that the cited review is not in the repo (N3), and that the probe block is new.\n- lean_mutation_check.py: statement mutants M71-M73, definition mutants M74-M76 (M75 = R001's old-B survivor),\n  equivalence control E11; M59-M70 reserved for c016.\n- tests: new test_lean_gate_c014.py (shape, exact probe values in rationals, text pins); P4b/P5 count pins to\n  41/23/64 and 11 equivalence controls, P5 checks scoped to the P5 slice (R001 N2).\n- SPEC §12, README counts.\n\nLocal: check_lean_gate.sh PASS (2300 jobs, 0 warnings, 789 decls, standard axioms); full mutation check 41/41 + 23/23,\nE 11/11 not killed, typo 3/3, PASS; all checkers rc 0; pytest 291 passed.",
+        "tree": {
+          "sha": "d89fe7220755d3358e2f527d83300ce8d235f028",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/d89fe7220755d3358e2f527d83300ce8d235f028"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/3a4c75b08b3efa48219e1851f504ab1c8e916b18",
+        "comment_count": 0,
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/3a4c75b08b3efa48219e1851f504ab1c8e916b18",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/3a4c75b08b3efa48219e1851f504ab1c8e916b18",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/3a4c75b08b3efa48219e1851f504ab1c8e916b18/comments",
+      "author": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/9b9b3d9e3e435698020c047b44912525c3c1e4d3",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/9b9b3d9e3e435698020c047b44912525c3c1e4d3"
+        },
+        {
+          "sha": "7129d31322b31389f5fee3a64bb216b19574600f",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/7129d31322b31389f5fee3a64bb216b19574600f",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/7129d31322b31389f5fee3a64bb216b19574600f"
+        }
+      ]
+    },
+    {
+      "sha": "578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "node_id": "C_kwDOUCH-K9oAKDU3ODg2ODI0MTg3MGU2NmZlNGNiOTA1ZjNiNmQ3MDdmZDdkMzlmNGY",
+      "commit": {
+        "author": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-14T16:22:01Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2026-11-14T16:22:01Z"
+        },
+        "message": "Merge pull request #37 from jacobbrainard84-knightninja/research/lean-gate-c014\n\nLean gate: port 040282 c014 TrajectoryInvariants (M71–M76, SPEC §12)",
+        "tree": {
+          "sha": "d89fe7220755d3358e2f527d83300ce8d235f028",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/d89fe7220755d3358e2f527d83300ce8d235f028"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/578868241870e66fe4cb905f3b6d707fd7d39f4f",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq+IqpCRC1aQ7uu5UhlAAAnT0QAAidRPVd/Pvwso/1qKXv0V9T\ntbg9j/kmi8WkTM8pB0iqCyfNg+H5JgIlvZZqUxxj/5Z7Dcfl/Zj/NqjYUdEY77Vt\nsuc4ddowsR0PMCDxU0NSufqdf8wDO73KgWb+/bmNF7YGfT/h/QhWDzkQGTpBDoPE\n8GNybCq8HRJiLI++cH8mPuWqPwMyyWaiGqdq2vu4nKoB7QxTJK5M1iiM3Oi8k6f9\nWELSfV/byD/s0mFDW+jb7x3wDd99Z63bUtWXjActbFFPstB7IFkWCOg2PDUwSf5S\nDE0dpFVzs9Rq8UOKvjM+TApZba4QX+i3vD46k91IPV5X6DZJ9aCLs6Zv/p+ZFM3a\nqq+M7y43BR8JsTcgu0kgMI+Rlab59iKop4wTYiATpbnJ1smhoFIdo9mkbdUfoeDG\nL1J/IaHyRY2qgjuU1zTL2odT7Sh2wGmTTpgpPkSkUNkKhIdzmz4YE/itQqrBQyb3\n/Z1gldwKOUbsY1H9KnsKShloHFr09qWM/6X2LbXiDwVEctURowzuQmW0rNIRrefW\neLSRkgIZxbFS1pHx8Xs+K/ebWdC4HtW2zn02eAJRPFKzhs8tUhWQjt4Z5wMgO4yt\nnQmG1Bp5cwlV+ZJGo/HgYfEPDyQhtSHIj2Sy8rKRz0x5PATDSUOxYfvF2PvPu9Eh\naFpVEqBS3bRNhXcg8orJ\n=0bOL\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree d89fe7220755d3358e2f527d83300ce8d235f028\nparent 7129d31322b31389f5fee3a64bb216b19574600f\nparent 3a4c75b08b3efa48219e1851f504ab1c8e916b18\nauthor jacobbrainard84-knightninja <264570062+jacobbrainard84-knightninja@users.noreply.github.com> 1794673321 -0700\ncommitter GitHub <noreply@github.com> 1794673321 -0700\n\nMerge pull request #37 from jacobbrainard84-knightninja/research/lean-gate-c014\n\nLean gate: port 040282 c014 TrajectoryInvariants (M71–M76, SPEC §12)",
+          "verified_at": "2026-11-14T16:22:02Z"
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/578868241870e66fe4cb905f3b6d707fd7d39f4f/comments",
+      "author": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "7129d31322b31389f5fee3a64bb216b19574600f",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/7129d31322b31389f5fee3a64bb216b19574600f",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/7129d31322b31389f5fee3a64bb216b19574600f"
+        },
+        {
+          "sha": "3a4c75b08b3efa48219e1851f504ab1c8e916b18",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/3a4c75b08b3efa48219e1851f504ab1c8e916b18",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/3a4c75b08b3efa48219e1851f504ab1c8e916b18"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "sha": "c2050ae7f4007bd6c16b4b1f5f2c8fc9953997ad",
+      "filename": "lean/AIEFGateCore/AIEFGateCore.lean",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FAIEFGateCore.lean",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FAIEFGateCore.lean",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/lean%2FAIEFGateCore%2FAIEFGateCore.lean?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -17,3 +17,4 @@ import AIEFGateCore.PhaseIncrement\n import AIEFGateCore.PhaseCoherence\n import AIEFGateCore.Freeze\n import AIEFGateCore.WeightUpdate\n+import AIEFGateCore.TrajectoryInvariants"
+    },
+    {
+      "sha": "6c163dc42c2f6810983e1c7579efa1cb64f186ed",
+      "filename": "lean/AIEFGateCore/AIEFGateCore/TrajectoryInvariants.lean",
+      "status": "added",
+      "additions": 475,
+      "deletions": 0,
+      "changes": 475,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FAIEFGateCore%2FTrajectoryInvariants.lean",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FAIEFGateCore%2FTrajectoryInvariants.lean",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/lean%2FAIEFGateCore%2FAIEFGateCore%2FTrajectoryInvariants.lean?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -0,0 +1,475 @@\n+/-\n+Copyright (c) 2026 Jacob Brainard and AIEF contributors. All rights reserved.\n+Released under Apache 2.0 license as described in the file LICENSE.\n+Authors: AIEF / SSRH\n+-/\n+-- SPDX-License-Identifier: Apache-2.0\n+import AIEFGateCore.Capacity\n+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n+\n+/-!\n+# (C014) All-step weight safety of `stepM` under arbitrary causal feedback driving\n+\n+Port of cycle 014 of Researcher 040282 (handle only; `TrajectoryInvariants.lean`, supplied by the\n+owner on 2026-11-10, md5 `c6914623bfcc3002cb1ab0a47e848698`; Auditor review\n+`2026-11-10_audit_040282_c014.md`, verdict ADOPT AS SMALL BUILDING BLOCK; that note is not in this\n+repository). Statements and proofs are kept as deposited apart from line wrapping, this header and\n+the block \"Value probes for the mutation check\" (`probe_gate_scales_row`,\n+`probe_aux_reads_old_and_new` and their helpers), which is new and not part of the deposit.\n+\n+What it says: for any drive `F` and auxiliary update `U` (no invariant assumed on either), every\n+`stepM` weight state after time 0 is structural (non-negative, symmetric, zero diagonal; needs only\n+`0 ≤ cap` and `0 ≤ ε` of that step), and, under `EngineGate` of the parameters used in that step\n+(`0 < ε`), its rows are within `cap`, entries are within the entry envelope, and the sine coupling\n+and phase increment are bounded. These are induction wrappers around the P4a one-step facts in\n+`Capacity.lean`; they add no new one-step mathematics.\n+\n+Caveat on the witnesses: in `pWide = ⟨1, 1, 2, 1, 2, 1, 0⟩`\n+the update fully resets `B` to the gated drive, so `feedback_two_cycle`,\n+`feedback_not_eventually_constant` and `feedback_threshold_switches` show only that a full-reset\n+step can oscillate under a flipping drive. They are NOT statements about the AIEFS engine's\n+parameters and must not be cited as such. `Counterfactual.*` are deliberately wrong operators used\n+only to show each ingredient (clip, symmetrise, zero diagonal, gate) is needed.\n+-/\n+\n+\n+set_option autoImplicit false\n+set_option linter.style.header false\n+\n+namespace AIEFGate.TrajectorySafety\n+\n+open Finset AIEFGate.MatrixForm\n+open scoped BigOperators\n+\n+variable {V S : Type*} [Fintype V] [LinearOrder V]\n+\n+abbrev Weights (V : Type*) := V → V → ℝ\n+\n+noncomputable section\n+\n+namespace Counterfactual\n+\n+/-- Deliberately omit clipping; NOT the implementation used by trajectory. -/\n+def noClip (p : Params) (D B : Weights V) : Weights V :=\n+  Capacity.gateM p (fun i j => if i = j then 0 else (preM p D B i j + preM p D B j i) / 2)\n+\n+/-- Deliberately omit symmetrisation. -/\n+def noSym (p : Params) (D B : Weights V) : Weights V :=\n+  Capacity.gateM p (fun i j => if i = j then 0 else clipM p D B i j)\n+\n+/-- Deliberately retain the diagonal. -/\n+def noDiag (p : Params) (D B : Weights V) : Weights V :=\n+  Capacity.gateM p (fun i j => (clipM p D B i j + clipM p D B j i) / 2)\n+\n+/-- Deliberately bypass the capacity gate. -/\n+def noGate (p : Params) (D B : Weights V) : Weights V := symM p D B\n+\n+end Counterfactual\n+\n+\n+/-- IMPLEMENTATION: real matrix operator from current main. -/\n+def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n+\n+def Structural (B : Weights V) : Prop :=\n+  (∀ i j, 0 ≤ B i j) ∧ (∀ i j, B i j = B j i) ∧ (∀ i, B i i = 0)\n+\n+/-- Drive is allowed to read the old auxiliary state AND old B. New B is computed\n+before the auxiliary update, which can use both old and new B (as the phase does).\n+No restriction, invariant, symmetry or future-tail premise is imposed on F/U. -/\n+def feedbackStep (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (n : ℕ)\n+    (state : S × Weights V) : S × Weights V :=\n+  let Bnew := weightUpdate (p n) (F n state.1 state.2) state.2\n+  (U n state.1 state.2 Bnew, Bnew)\n+\n+def trajectory (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (initial : S × Weights V) :\n+    ℕ → S × Weights V\n+  | 0 => initial\n+  | n + 1 => feedbackStep p F U n (trajectory p F U initial n)\n+\n+def weightsTrace (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (initial : S × Weights V)\n+    (n : ℕ) : Weights V := (trajectory p F U initial n).2\n+\n+theorem weightsTrace_succ (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (initial : S × Weights V) (n : ℕ) :\n+    weightsTrace p F U initial (n + 1) =\n+      weightUpdate (p n) (F n (trajectory p F U initial n).1 (weightsTrace p F U initial n))\n+        (weightsTrace p F U initial n) := rfl\n+\n+/-- Reuse one-step main facts; structural safety needs only cap,epsilon>=0.\n+No structural/feasibility/symmetry premise on D or B, no gamma/dt stability guard. -/\n+theorem weightUpdate_structural (p : Params) (hc : 0 ≤ p.cap) (he : 0 ≤ p.ε)\n+    (D B : Weights V) : Structural (weightUpdate p D B) := by\n+  refine ⟨?_, ?_, ?_⟩\n+  · intro i j\n+    change 0 ≤ stepM p D B i j\n+    rw [Capacity.stepM_eq_gateM]\n+    exact Capacity.gateM_nonneg p (Capacity.symM_nonneg p D B) hc he i j\n+  · exact stepM_symm p D B\n+  · exact stepM_diag p D B\n+\n+/-- Every positive-time state is repaired by its most recent step. Only that\n+step's sign hypotheses are needed; no assumptions about earlier steps or B0. -/\n+theorem positive_time_structural (p : ℕ → Params)\n+    (F : ℕ → S → Weights V → Weights V) (U : ℕ → S → Weights V → Weights V → S)\n+    (initial : S × Weights V) (n : ℕ) (hc : 0 ≤ (p n).cap) (he : 0 ≤ (p n).ε) :\n+    Structural (weightsTrace p F U initial (n + 1)) := by\n+  rw [weightsTrace_succ]\n+  exact weightUpdate_structural (p n) hc he _ _\n+\n+/-- Including time zero correctly requires the initial structural invariant. -/\n+theorem all_times_structural (p : ℕ → Params)\n+    (F : ℕ → S → Weights V → Weights V) (U : ℕ → S → Weights V → Weights V → S)\n+    (initial : S × Weights V) (hc : ∀ n, 0 ≤ (p n).cap) (he : ∀ n, 0 ≤ (p n).ε)\n+    (hInit : Structural initial.2) : ∀ n, Structural (weightsTrace p F U initial n) := by\n+  intro n\n+  cases n with\n+  | zero => exact hInit\n+  | succ n => exact positive_time_structural p F U initial n (hc n) (he n)\n+\n+/-- Capacity is tied to the parameters USED in this transition, not p_(n+1).\n+No initial feasibility and no restriction on the state-dependent drive. -/\n+theorem post_capacity (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (initial : S × Weights V)\n+    (n : ℕ) (hp : EngineGate (p n)) (i : V) :\n+    Capacity.rowS (weightsTrace p F U initial (n + 1)) i ≤ (p n).cap := by\n+  rw [weightsTrace_succ]\n+  exact Capacity.stepM_row_le_cap (p n) hp _ _ i\n+\n+theorem fixed_parameter_capacity (p : Params) (hp : EngineGate p)\n+    (F : ℕ → S → Weights V → Weights V) (U : ℕ → S → Weights V → Weights V → S)\n+    (initial : S × Weights V) (n : ℕ) (i : V) :\n+    Capacity.rowS (weightsTrace (fun _ => p) F U initial (n + 1)) i ≤ p.cap :=\n+  post_capacity (fun _ => p) F U initial n hp i\n+\n+omit [LinearOrder V] in\n+/-- A row envelope controls each nonnegative edge, not just a matrix norm. -/\n+theorem entry_envelope (B : Weights V) (c : ℝ) (hn : ∀ i j, 0 ≤ B i j)\n+    (hr : ∀ i, Capacity.rowS B i ≤ c) (i j : V) : 0 ≤ B i j ∧ B i j ≤ c := by\n+  have hle : B i j ≤ ∑ k, B i k :=\n+    Finset.single_le_sum (fun k _ => hn i k) (Finset.mem_univ j)\n+  exact ⟨hn i j, hle.trans (hr i)⟩\n+\n+theorem post_entry_envelope (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (initial : S × Weights V)\n+    (n : ℕ) (hp : EngineGate (p n)) (i j : V) :\n+    0 ≤ weightsTrace p F U initial (n + 1) i j ∧\n+      weightsTrace p F U initial (n + 1) i j ≤ (p n).cap := by\n+  exact entry_envelope _ _\n+    (positive_time_structural p F U initial n hp.cap_pos.le hp.eps_pos.le).1\n+    (post_capacity p F U initial n hp) i j\n+\n+/-- The actual delayed-minus-current sine convention, with NEW weights. -/\n+def sineCoupling (B : Weights V) (theta delayed : V → ℝ) (i : V) : ℝ :=\n+  ∑ j, B i j * Real.sin (delayed j - theta i)\n+\n+omit [LinearOrder V] in\n+/-- No phase-locking or small-angle assumption is needed for this envelope. -/\n+theorem sineCoupling_bound (B : Weights V) (c : ℝ) (theta delayed : V → ℝ)\n+    (hn : ∀ i j, 0 ≤ B i j) (hr : ∀ i, Capacity.rowS B i ≤ c) (i : V) :\n+    |sineCoupling B theta delayed i| ≤ c := by\n+  calc\n+    _ ≤ ∑ j, |B i j * Real.sin (delayed j - theta i)| := Finset.abs_sum_le_sum_abs _ _\n+    _ = ∑ j, B i j * |Real.sin (delayed j - theta i)| := by\n+      apply Finset.sum_congr rfl\n+      intro j _\n+      rw [abs_mul, abs_of_nonneg (hn i j)]\n+    _ ≤ ∑ j, B i j * 1 := by\n+      apply Finset.sum_le_sum\n+      intro j _\n+      exact mul_le_mul_of_nonneg_left (Real.abs_sin_le_one _) (hn i j)\n+    _ = Capacity.rowS B i := by simp [Capacity.rowS]\n+    _ ≤ c := hr i\n+\n+theorem post_sineCoupling_bound (p : ℕ → Params)\n+    (F : ℕ → S → Weights V → Weights V) (U : ℕ → S → Weights V → Weights V → S)\n+    (initial : S × Weights V) (n : ℕ) (hp : EngineGate (p n))\n+    (theta delayed : V → ℝ) (i : V) :\n+    |sineCoupling (weightsTrace p F U initial (n + 1)) theta delayed i| ≤ (p n).cap := by\n+  exact sineCoupling_bound _ _ theta delayed\n+    (positive_time_structural p F U initial n hp.cap_pos.le hp.eps_pos.le).1\n+    (post_capacity p F U initial n hp) i\n+\n+/-- Source-shaped phase increment; this is not a definition of the whole phase loop. -/\n+def phaseIncrement (p : ℕ → Params) (F : ℕ → S → Weights V → Weights V)\n+    (U : ℕ → S → Weights V → Weights V → S) (initial : S × Weights V)\n+    (omega theta delayed : V → ℝ) (n : ℕ) (i : V) : ℝ :=\n+  (p n).dt * (omega i + sineCoupling (weightsTrace p F U initial (n + 1)) theta delayed i)\n+\n+theorem post_phaseIncrement_bound (p : ℕ → Params)\n+    (F : ℕ → S → Weights V → Weights V) (U : ℕ → S → Weights V → Weights V → S)\n+    (initial : S × Weights V) (omega theta delayed : V → ℝ)\n+    (n : ℕ) (hp : EngineGate (p n)) (i : V) :\n+    |phaseIncrement p F U initial omega theta delayed n i| ≤\n+      |(p n).dt| * (|omega i| + (p n).cap) := by\n+  rw [phaseIncrement, abs_mul]\n+  apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)\n+  exact (abs_add_le _ _).trans\n+    (add_le_add le_rfl (post_sineCoupling_bound p F U initial n hp theta delayed i))\n+\n+section Witnesses\n+\n+/-- Exact-real non-production witnesses; all have EngineGate except pB below. -/\n+def pWide : Params := ⟨1, 1, 2, 1, 2, 1, 0⟩\n+def pTight : Params := ⟨1, 1, 1, 1, 1, 1, 0⟩\n+def pQuarter : Params := ⟨1, 1, 1/4, 1, 1/4, 1, 0⟩\n+\n+theorem pWide_engine : EngineGate pWide := by constructor <;> norm_num [pWide]\n+theorem pTight_engine : EngineGate pTight := by constructor <;> norm_num [pTight]\n+theorem pQuarter_engine : EngineGate pQuarter := by constructor <;> norm_num [pQuarter]\n+\n+abbrev X := Capacity.Xo\n+\n+def zeroB : Weights (Fin 2) := fun _ _ => 0\n+def onesB : Weights (Fin 2) := fun _ _ => 1\n+def dirtyB : Weights (Fin 2) := fun i j => if i = j then -1 else 1\n+\n+def asymDrive : Weights (Fin 2) := fun i j => if i = 0 ∧ j = 1 then 2 else 0\n+\n+theorem dirty_not_structural : ¬ Structural dirtyB := by\n+  intro h\n+  have hd := h.2.2 (0 : Fin 2)\n+  norm_num [dirtyB] at hd\n+\n+/-- Main's gamma*dt=1 reset ignores the old B, not a hypothesis of the general proof. -/\n+private theorem wide_pre (D B : Weights (Fin 2)) : preM pWide D B = D := by\n+  funext i j\n+  dsimp [preM, pWide]\n+  ring\n+\n+private theorem wide_sym_zero (B : Weights (Fin 2)) : symM pWide (X 0) B = X 0 := by\n+  funext i j\n+  fin_cases i <;> fin_cases j <;> simp [symM, clipM, wide_pre, Capacity.Xo]\n+\n+private theorem wide_sym_one (B : Weights (Fin 2)) : symM pWide (X 1) B = X 1 := by\n+  funext i j\n+  fin_cases i <;> fin_cases j <;> simp [symM, clipM, wide_pre, Capacity.Xo]\n+\n+theorem wide_resets_zero (B : Weights (Fin 2)) : weightUpdate pWide (X 0) B = X 0 := by\n+  unfold weightUpdate\n+  rw [Capacity.stepM_eq_gateM, wide_sym_zero]\n+  exact Capacity.gateM_fixes_feasible pWide pWide_engine _\n+    (by intro i; rw [Capacity.rowS_Xo]; norm_num [pWide])\n+\n+theorem wide_resets_one (B : Weights (Fin 2)) : weightUpdate pWide (X 1) B = X 1 := by\n+  unfold weightUpdate\n+  rw [Capacity.stepM_eq_gateM, wide_sym_one]\n+  exact Capacity.gateM_fixes_feasible pWide pWide_engine _\n+    (by intro i; rw [Capacity.rowS_Xo]; norm_num [pWide])\n+\n+theorem dirty_start_repaired : weightUpdate pWide (X 1) dirtyB = X 1 := wide_resets_one dirtyB\n+\n+open Classical in\n+/-- Genuine B-feedback: the drive flips when the previous edge is positive. -/\n+def flipDrive (_ : ℕ) (_ : Unit) (B : Weights (Fin 2)) : Weights (Fin 2) :=\n+  X (if B 0 1 ≤ 0 then 1 else 0)\n+\n+def keepAux (_ : ℕ) (_ : Unit) (_ _ : Weights (Fin 2)) : Unit := ()\n+\n+theorem feedback_three_steps :\n+    weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 1 = X 1 ∧\n+    weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 2 = X 0 ∧\n+    weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 3 = X 1 := by\n+  have h1 : weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 1 = X 1 := by\n+    rw [weightsTrace_succ]\n+    simpa [weightsTrace, trajectory, flipDrive, zeroB] using wide_resets_one zeroB\n+  have h2 : weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 2 = X 0 := by\n+    rw [weightsTrace_succ, h1]\n+    simp only [flipDrive, Capacity.Xo]\n+    norm_num\n+    exact wide_resets_zero (X 1)\n+  have h3 : weightsTrace (fun _ => pWide) flipDrive keepAux ((), zeroB) 3 = X 1 := by\n+    rw [weightsTrace_succ, h2]\n+    simp only [flipDrive, Capacity.Xo]\n+    norm_num\n+    exact wide_resets_one (X 0)\n+  exact ⟨h1,h2,h3⟩\n+\n+/-- A complete two-cycle under valid parameters and genuinely state-dependent\n+bounded drive. Safety is not an eventual-freezing theorem. -/\n+theorem feedback_two_cycle : ∀ k,\n+    weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) (2*k) = X 0 ∧\n+    weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) (2*k+1) = X 1 := by\n+  intro k\n+  induction k with\n+  | zero =>\n+      constructor\n+      · change zeroB = X 0\n+        funext i j\n+        simp [zeroB, Capacity.Xo]\n+      · exact feedback_three_steps.1\n+  | succ k ih =>\n+      have he : weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) (2*(k+1)) = X 0 := by\n+        have ht : 2*(k+1) = (2*k+1)+1 := by omega\n+        rw [ht, weightsTrace_succ, ih.2]\n+        simp only [flipDrive, Capacity.Xo]\n+        norm_num\n+        exact wide_resets_zero (X 1)\n+      have ho : weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) (2*(k+1)+1) = X 1 := by\n+        rw [weightsTrace_succ, he]\n+        simp only [flipDrive, Capacity.Xo]\n+        norm_num\n+        exact wide_resets_one (X 0)\n+      exact ⟨he,ho⟩\n+\n+theorem feedback_not_eventually_constant :\n+    ¬ ∃ N c, ∀ n, N ≤ n →\n+      weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) n 0 1 = c := by\n+  rintro ⟨N,c,h⟩\n+  have he := h (2*N) (by omega)\n+  have ho := h (2*N+1) (by omega)\n+  rw [(feedback_two_cycle N).1] at he\n+  rw [(feedback_two_cycle N).2] at ho\n+  norm_num [Capacity.Xo] at he ho\n+  linarith\n+\n+/-- Even threshold support switches arbitrarily late in the general feedback\n+class. This is not a counterexample to the uninstantiated phase/EMA system. -/\n+theorem feedback_threshold_switches (bc : ℝ) (hb0 : 0 ≤ bc) (hb1 : bc < 1) (N : ℕ) :\n+    ∃ n, N ≤ n ∧\n+      ¬ weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) n 0 1 > bc ∧\n+      weightsTrace (fun _ => pWide) flipDrive keepAux ((),zeroB) (n + 1) 0 1 > bc := by\n+  refine ⟨2*N, by omega, ?_, ?_⟩\n+  · rw [(feedback_two_cycle N).1]\n+    simpa [Capacity.Xo] using not_lt.mpr hb0\n+  · rw [(feedback_two_cycle N).2]\n+    simpa [Capacity.Xo] using hb1\n+\n+/-- Exact bad-component values, independent of a failed kept proof. -/\n+theorem noClip_negative : Counterfactual.noClip pWide (X (-1)) zeroB 0 1 = -1 := by\n+  norm_num [Counterfactual.noClip, Capacity.gateM, Capacity.GateOnX, Capacity.rowS,\n+    preM, pWide, zeroB, Capacity.Xo, Fin.sum_univ_two, Fin.exists_fin_two]\n+\n+theorem noSym_asymmetric :\n+    Counterfactual.noSym pWide asymDrive zeroB 0 1 = 2 ∧\n+    Counterfactual.noSym pWide asymDrive zeroB 1 0 = 0 := by\n+  norm_num [Counterfactual.noSym, Capacity.gateM, Capacity.GateOnX, Capacity.rowS,\n+    clipM, preM, pWide, zeroB, asymDrive, Fin.sum_univ_two, Fin.exists_fin_two]\n+\n+theorem noDiag_nonzero : Counterfactual.noDiag pWide onesB zeroB 0 0 = 1 := by\n+  norm_num [Counterfactual.noDiag, Capacity.gateM, Capacity.GateOnX, Capacity.rowS,\n+    clipM, preM, pWide, zeroB, onesB, Fin.sum_univ_two, Fin.exists_fin_two]\n+\n+theorem noGate_over_capacity :\n+    Capacity.rowS (Counterfactual.noGate pTight (X 3) zeroB) 0 = 3 := by\n+  norm_num [Counterfactual.noGate, Capacity.rowS, symM, clipM, preM,\n+    pTight, zeroB, Capacity.Xo, Fin.sum_univ_two]\n+\n+/-! ### Value probes for the mutation check (Auditor, c014 refresh)\n+\n+Closed-number equalities pinned by `research/lean_gate/lean_mutation_check.py` (definition\n+mutants M74-M76). `probe_gate_scales_row`: the capacity gate fires and scales the over-capacity\n+row 3 to `cap · 3 / (3 + ε) = 3/4` (a gate-bypass `weightUpdate := symM` gives 3).\n+`probe_aux_reads_old_and_new`: the auxiliary update `U` receives the OLD weights as its third\n+argument and the NEW weights as its fourth (`-1 + 10 · 0`; old-only gives `-11`, new-only\n+gives `0`). -/\n+\n+private theorem tight_pre (D B : Weights (Fin 2)) : preM pTight D B = D := by\n+  funext i j\n+  dsimp [preM, pTight]\n+  ring\n+\n+private theorem tight_sym_three (B : Weights (Fin 2)) : symM pTight (X 3) B = X 3 := by\n+  funext i j\n+  fin_cases i <;> fin_cases j <;> simp [symM, clipM, tight_pre, Capacity.Xo]\n+\n+theorem probe_gate_scales_row : Capacity.rowS (weightUpdate pTight (X 3) zeroB) 0 = 3 / 4 := by\n+  unfold weightUpdate\n+  rw [Capacity.stepM_eq_gateM, tight_sym_three]\n+  have hg : Capacity.GateOnX pTight (X 3) := ⟨0, by rw [Capacity.rowS_Xo]; norm_num [pTight]⟩\n+  rw [Capacity.rowS]\n+  simp only [Fin.sum_univ_two, Capacity.gateM, if_pos hg, Capacity.kernelM, Capacity.rowS_Xo]\n+  norm_num [scale, Capacity.Xo, pTight]\n+\n+def oneDriveR (_ : ℕ) (_ : ℝ) (_ : Weights (Fin 2)) : Weights (Fin 2) := X 1\n+\n+def auxOldNew (_ : ℕ) (_ : ℝ) (Bold Bnew : Weights (Fin 2)) : ℝ := Bold 0 0 + 10 * Bnew 0 0\n+\n+theorem probe_aux_reads_old_and_new :\n+    (trajectory (fun _ => pWide) oneDriveR auxOldNew ((0 : ℝ), dirtyB) 1).1 = -1 := by\n+  have h : weightUpdate pWide (X 1) dirtyB = X 1 := wide_resets_one dirtyB\n+  simp [trajectory, feedbackStep, oneDriveR, auxOldNew, h, dirtyB, Capacity.Xo]\n+\n+/-- Current versus next capacity: shrinking a future parameter cannot retroactively\n+bound a state produced by the preceding transition. -/\n+def capSchedule (n : ℕ) : Params := if n = 0 then pWide else pQuarter\n+\n+def oneDrive (_ : ℕ) (_ : Unit) (_ : Weights (Fin 2)) : Weights (Fin 2) := X 1\n+\n+theorem capacity_clock_refuted :\n+    ¬ Capacity.rowS (weightsTrace capSchedule oneDrive keepAux ((),zeroB) 1) 0 ≤\n+      (capSchedule 1).cap := by\n+  have h : weightsTrace capSchedule oneDrive keepAux ((),zeroB) 1 = X 1 := by\n+    rw [weightsTrace_succ]\n+    simpa [capSchedule, oneDrive, weightsTrace, trajectory] using wide_resets_one zeroB\n+  rw [h, Capacity.rowS_Xo]\n+  norm_num [capSchedule, pQuarter]\n+\n+/-- Reuse main's independent guard-link counterexample; no duplicate gate audit. -/\n+theorem broken_link_refuted :\n+    ¬ Capacity.rowS (weightUpdate Capacity.pB (X 75) zeroB) 0 ≤ Capacity.pB.cap :=\n+  Capacity.false_stepM_row_no_link\n+\n+/-- A universal all-times safety claim without initial structure is false at time0. -/\n+theorem initial_time_refuted :\n+    ¬ Structural (weightsTrace (fun _ => pWide) oneDrive keepAux ((),dirtyB) 0) := by\n+  exact dirty_not_structural\n+\n+end Witnesses\n+\n+end\n+end AIEFGate.TrajectorySafety\n+\n+#print axioms AIEFGate.TrajectorySafety.weightsTrace_succ\n+#print axioms AIEFGate.TrajectorySafety.weightUpdate_structural\n+#print axioms AIEFGate.TrajectorySafety.positive_time_structural\n+#print axioms AIEFGate.TrajectorySafety.all_times_structural\n+#print axioms AIEFGate.TrajectorySafety.post_capacity\n+#print axioms AIEFGate.TrajectorySafety.fixed_parameter_capacity\n+#print axioms AIEFGate.TrajectorySafety.entry_envelope\n+#print axioms AIEFGate.TrajectorySafety.post_entry_envelope\n+#print axioms AIEFGate.TrajectorySafety.sineCoupling_bound\n+#print axioms AIEFGate.TrajectorySafety.post_sineCoupling_bound\n+#print axioms AIEFGate.TrajectorySafety.post_phaseIncrement_bound\n+\n+#print axioms AIEFGate.TrajectorySafety.pWide_engine\n+\n+#print axioms AIEFGate.TrajectorySafety.pTight_engine\n+\n+#print axioms AIEFGate.TrajectorySafety.pQuarter_engine\n+\n+#print axioms AIEFGate.TrajectorySafety.dirty_not_structural\n+\n+#print axioms AIEFGate.TrajectorySafety.wide_resets_zero\n+\n+#print axioms AIEFGate.TrajectorySafety.wide_resets_one\n+\n+#print axioms AIEFGate.TrajectorySafety.dirty_start_repaired\n+\n+#print axioms AIEFGate.TrajectorySafety.feedback_three_steps\n+\n+#print axioms AIEFGate.TrajectorySafety.noClip_negative\n+\n+#print axioms AIEFGate.TrajectorySafety.noSym_asymmetric\n+\n+#print axioms AIEFGate.TrajectorySafety.noDiag_nonzero\n+\n+#print axioms AIEFGate.TrajectorySafety.noGate_over_capacity\n+\n+#print axioms AIEFGate.TrajectorySafety.probe_gate_scales_row\n+\n+#print axioms AIEFGate.TrajectorySafety.probe_aux_reads_old_and_new\n+\n+#print axioms AIEFGate.TrajectorySafety.capacity_clock_refuted\n+\n+#print axioms AIEFGate.TrajectorySafety.broken_link_refuted\n+\n+#print axioms AIEFGate.TrajectorySafety.initial_time_refuted\n+\n+#print axioms AIEFGate.TrajectorySafety.feedback_two_cycle\n+\n+#print axioms AIEFGate.TrajectorySafety.feedback_not_eventually_constant\n+\n+#print axioms AIEFGate.TrajectorySafety.feedback_threshold_switches"
+    },
+    {
+      "sha": "bd7be6a58a6370e012945d174d0af010c0ab7b8d",
+      "filename": "lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FAIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FAIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/lean%2FAIEFGateCore%2FAIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -1,7 +1,7 @@\n 3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71  lean-toolchain\n 40f8df690288bfc789e0455dea403d94e09fd62663fdc1779b7dd7da21d4060e  lakefile.toml\n 94599bf6f8550e9d15ee4f674b6d7771e93ccf83fc3fd1f74978a50fe2b5da67  lake-manifest.json\n-ee3b035a84a0be00d3c1d7076097d89187b1390d896c65ade562e3ca33cf58b1  AIEFGateCore.lean\n+3875f2a848dbf16acd2b9bef5e5a83097154286c89d268be493e60e3360a7aad  AIEFGateCore.lean\n 3da9d4f814e8d57001d8dd9f9065ae40acb732a8d6ea57dc9540981d0848011f  AIEFGateCore/Bridge.lean\n 6a63028c91eb38661e1f5281dd547d7a355827b95a5c6554f502e5f1c70a3e74  AIEFGateCore/Capacity.lean\n 22b80647ca2e7e4ce185f5874f04858b98a46f08cf9ce3903eb52530153602d9  AIEFGateCore/EngineRedTeam.lean\n@@ -20,5 +20,6 @@ ece99276501624c13bc9eb1a4e66c806357a039b5ccd248a7ba4224c4ea7f10b  AIEFGateCore/P\n 2b29268378599f6acce6b71b9fee6f25752a87642057c5f7e6b7706f590fb8cd  AIEFGateCore/Pinned/ControllerFiberProjector.lean\n 564d18a64d8c5b11b6d3ab2b559896b3dcfeadcb36e49f1ee7789db3fa28fae4  AIEFGateCore/Pinned/ControllerFiberQuotient.lean\n 483bcf6e803d2f13c93e3a60d260e6c5df5fc0fb0a5429f1ebdb8a66886f90ca  AIEFGateCore/RedTeam.lean\n+8b291752c347c5ff98660743ebc3290e56bb0e9ab550fd0c52b8ade68d5dff96  AIEFGateCore/TrajectoryInvariants.lean\n d449ca2ceebcf640e5869cdf3bd3cfce4b8094f85b2e639d7024575d8354aa3e  AIEFGateCore/WeightUpdate.lean\n 9c2864682b8541abe8ba0c9daa496ed0909316bad71f04759dbb21d4128e1854  check_lean_gate.sh"
+    },
+    {
+      "sha": "328bb90d00cbe0d66aed053940e9b1e3949256a3",
+      "filename": "lean/AIEFGateCore/README.md",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 2,
+      "changes": 5,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FREADME.md",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/lean%2FAIEFGateCore%2FREADME.md",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/lean%2FAIEFGateCore%2FREADME.md?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -33,6 +33,7 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched\n | `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex` (affine, not convex unless `0 ≤ γdt ≤ 1`: `convex_weights_iff`), `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |\n | `WeightUpdate.rowM_le_upper`, `stepM_factor_lower`, `stepM_scalar_recurrence`, `trajectory_symmetric`, `trajectory_good_of_start`, `edge_eventually_off/on(_from)`, `onGap_iff`, `onGap_N12_fails`, `false_*`, `witness_*` | (P4b) weight-update bridge of the cycle-003 deposit on `Params`/`stepM`: Lemma 1 row sandwich, gate-factor floor, scalar recurrence, trajectory invariants (B stays symmetric, nonnegative, zero-diagonal, feasible), per-edge ∃N OFF/ON freezing (`Freeze.lean` restates the scalar core), and the exact ON-certificate threshold `S < 18999999991/90000000000` at `pE`, `B_c = 3/25` (fails at the N = 12 coarse envelope) |\n | `History.historyTrace_{index,oldest,newest}`, `Phase.{phasor_wrap,delayed_input_step,delayed_input_chord_bound}`, `PhaseCoherence.{input_engine_convention,innovation_*,coherenceTrace_unitDisk,phase_*_bounds,drive_eta_response,main_preM_source_formula,main_phase_preM,reported_{diag,offdiag,symm},sourceDrive_{diag,symm},main_phase_stepM_eq_stepB,probe_*}` | (P5) phase-specific coherence EMA and drive on `Params`/`preM`/`stepM`, ported from cycles 010, 011 and 013 of Researcher 040282 (handle only; cycles 010/011 on `audit-inbox` commit `1b5ae52`, cycle 013 supplied by the owner, md5 `410275ad…`, see SPEC §11): the delayed read is `n − D`, the input is `exp(i(θ_n,i − θ_{n−D},j − (ω_i+ω_j)τ/2))`, the EMA/reported/drive follow the engine convention (`compute_R`, `advance_state`, **hand-checked, not proved against Python**); node-uniform and asymmetric zero-init probes pin delay, offset, EMA weight, symmetrised average and zero diagonal. Out of scope: trajectory of `B`, locking, clip/projection, `shuffle_driver` |\n+| `TrajectorySafety.{weightUpdate_structural,positive_time_structural,all_times_structural,post_capacity,fixed_parameter_capacity,post_entry_envelope,post_sineCoupling_bound,post_phaseIncrement_bound}`, witnesses and `Counterfactual.*` refutations | (C014) all-step safety of `stepM` under arbitrary causal feedback drive `F` and auxiliary update `U` (no invariant on either), ported from cycle 014 of Researcher 040282 (handle only; supplied by the owner, md5 `c6914623…`): after time 0 the weights are structural, rows within `cap`, entries within the envelope, sine coupling and phase increment bounded. Induction wrappers around the P4a one-step facts, no new one-step mathematics. The two-cycle / non-convergence witnesses use `pWide`, a full-reset step, and say nothing about engine parameters |\n \n **Scope.** Reals, not float64; edge-vector form, not the symmetric matrix; one step with `R` fixed (ERRATA E5);\n exact controller order (no `TIE_TOL`). Persistence (P3) is conditional on staying in the branch, with `R` frozen;\n@@ -49,14 +50,14 @@ build with 0 warnings, forbidden markers, axiom audit (only propext, Classical.c\n 2026-11-09 (P3, `SKIP_CACHE=1`): PASS, 2149 jobs, 0 warnings, 14 source files, 439 declarations audited, 239\n theorems printed with `#print axioms`, 0 disallowed.\n Cross-check against the pinned engine: `research/lean_gate/lean_gate_crosscheck_v1.py`; mutation check:\n-`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4, §9.3, §10.4): 58 mutants (38 statement mutants: M1–M36, M57, M58; 20 definition mutants: M37–M56), run in CI on the required `lean (AIEFGateCore)` job since PR #27, each statement mutant must (a) fail to build with the kept\n+`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4, §9.3, §10.4, §12.2): 64 mutants (41 statement mutants: M1–M36, M57, M58, M71–M73; 23 definition mutants: M37–M56, M74–M76; M59–M70 reserved for the c016 port), run in CI on the required `lean (AIEFGateCore)` job since PR #27, each statement mutant must (a) fail to build with the kept\n proof by a real proof failure (since P3 a failure made only of `Unknown identifier`/`unknown constant` errors does\n not count; a classifier negative control checks this), (b) be refuted by a proved negation theorem (no `sorry`,\n standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` refutation are rejected as negative\n controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated\n statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as\n dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,\n-weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. M24–M36 (P4b): the same for `WeightUpdate.lean`. M57, M58 (#27 follow-ups): `Capacity.preM_between` / `convex_weights_iff` statements, same three conditions. P5 adds 20 *definition* mutants M37–M56 (list `DEF_MUTANTS`; M37–M52 as ported, M53–M56 the asymmetric-ω offset mutants): a mutant is killed iff the mutated file fails to build, with no name-reference or parse error line anywhere, and a pre-declared closed-form VALUE probe fails (rewrite lemmas earn no credit; SPEC §11.3); 10 equivalence controls (`* 1`, `+ 0`, `id`, …) must not be killed, 3 typo controls must be flagged invalid, and `KNOWN_SURVIVORS` is empty (the former survivor S1 is the counted M55).\n+weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. M24–M36 (P4b): the same for `WeightUpdate.lean`. M57, M58 (#27 follow-ups): `Capacity.preM_between` / `convex_weights_iff` statements, same three conditions. C014 adds statement mutants M71–M73 (`TrajectoryInvariants.post_capacity` / `all_times_structural` weakened, refuted by its `*_refuted` theorems), definition mutants M74–M76 (gate bypass in `weightUpdate`; `feedbackStep` giving `U` only the old or only the new `B`, killed by `probe_gate_scales_row` / `probe_aux_reads_old_and_new`) and equivalence control E11, see SPEC §12. P5 adds 20 *definition* mutants M37–M56 (list `DEF_MUTANTS`; M37–M52 as ported, M53–M56 the asymmetric-ω offset mutants): a mutant is killed iff the mutated file fails to build, with no name-reference or parse error line anywhere, and a pre-declared closed-form VALUE probe fails (rewrite lemmas earn no credit; SPEC §11.3); 11 equivalence controls (`* 1`, `+ 0`, `id`, an inlined `let`, …) must not be killed, 3 typo controls must be flagged invalid, and `KNOWN_SURVIVORS` is empty (the former survivor S1 is the counted M55).\n \n `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the\n cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`."
+    },
+    {
+      "sha": "f9d1278d05e8241a852c039b8d4f0c035f0e1ff8",
+      "filename": "registry/artifacts_current.csv",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 7,
+      "changes": 16,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/registry%2Fartifacts_current.csv",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/registry%2Fartifacts_current.csv",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/registry%2Fartifacts_current.csv?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -950,7 +950,7 @@ worktree,lean/AIEFFreezeCore/check_lean_freeze.sh,98d60b064510069f8765957e59d4aa\n worktree,lean/AIEFFreezeCore/lake-manifest.json,f7dfbf70e1a5351f347097df79c7c1cacdd21681ea8750e002df95b9e60219cf,3148,,not_in_snapshot\n worktree,lean/AIEFFreezeCore/lakefile.toml,c3a4ab2ebbf2bb62b53138be48756d695a3bd95dfbc80ae7164a382f1c0b7f74,371,,not_in_snapshot\n worktree,lean/AIEFFreezeCore/lean-toolchain,3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71,25,,not_in_snapshot\n-worktree,lean/AIEFGateCore/AIEFGateCore.lean,ee3b035a84a0be00d3c1d7076097d89187b1390d896c65ade562e3ca33cf58b1,665,,not_in_snapshot\n+worktree,lean/AIEFGateCore/AIEFGateCore.lean,3875f2a848dbf16acd2b9bef5e5a83097154286c89d268be493e60e3360a7aad,706,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/Bridge.lean,3da9d4f814e8d57001d8dd9f9065ae40acb732a8d6ea57dc9540981d0848011f,13034,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/Capacity.lean,6a63028c91eb38661e1f5281dd547d7a355827b95a5c6554f502e5f1c70a3e74,24691,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/EngineRedTeam.lean,22b80647ca2e7e4ce185f5874f04858b98a46f08cf9ce3903eb52530153602d9,12046,,not_in_snapshot\n@@ -969,9 +969,10 @@ worktree,lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiber.lean,7511feb4e52a\n worktree,lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberProjector.lean,2b29268378599f6acce6b71b9fee6f25752a87642057c5f7e6b7706f590fb8cd,9369,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberQuotient.lean,564d18a64d8c5b11b6d3ab2b559896b3dcfeadcb36e49f1ee7789db3fa28fae4,2779,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/RedTeam.lean,483bcf6e803d2f13c93e3a60d260e6c5df5fc0fb0a5429f1ebdb8a66886f90ca,34238,,not_in_snapshot\n+worktree,lean/AIEFGateCore/AIEFGateCore/TrajectoryInvariants.lean,8b291752c347c5ff98660743ebc3290e56bb0e9ab550fd0c52b8ade68d5dff96,21779,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/WeightUpdate.lean,d449ca2ceebcf640e5869cdf3bd3cfce4b8094f85b2e639d7024575d8354aa3e,32319,,not_in_snapshot\n-worktree,lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt,a591e2fec97e530c76864218d7913c772bae87819da24f03c50a6c63a64c2dd1,2296,,not_in_snapshot\n-worktree,lean/AIEFGateCore/README.md,5e9947fd37cf0a549605ac9596af30ef51bad31e6c41a2cc914373e131d0132f,11013,,not_in_snapshot\n+worktree,lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt,62537315dc0270289840553c10d5cfe842014c248f4018ebbf5192d1b6e5af95,2401,,not_in_snapshot\n+worktree,lean/AIEFGateCore/README.md,155b5c22d1be1858de156a7ed1684679c3ba3ea3b8350526f472ab5f0d1b2c9a,12284,,not_in_snapshot\n worktree,lean/AIEFGateCore/check_lean_gate.sh,9c2864682b8541abe8ba0c9daa496ed0909316bad71f04759dbb21d4128e1854,15054,,not_in_snapshot\n worktree,lean/AIEFGateCore/lake-manifest.json,94599bf6f8550e9d15ee4f674b6d7771e93ccf83fc3fd1f74978a50fe2b5da67,3146,,not_in_snapshot\n worktree,lean/AIEFGateCore/lakefile.toml,40f8df690288bfc789e0455dea403d94e09fd62663fdc1779b7dd7da21d4060e,365,,not_in_snapshot\n@@ -1044,17 +1045,18 @@ worktree,research/freezing/margins.json,7644bfd70e18bbe7b132f2f82dfdde0b51cd040e\n worktree,research/freezing/margins.py,104621694c044a718f37d73b63b9dac4f0a3aaa86182061889f5bb7601ada1a5,1205,,not_in_snapshot\n worktree,research/freezing/results.json,2ec8ef36f34bbf61283b7d94c7be08fb79dfb4822b4bd69d60044e23b901ef5b,7273,,not_in_snapshot\n worktree,research/freezing/run_log.txt,f7c2aee00703f6b79a32f6a1944166cecf1531ef162735d7f301948a94839b7d,6316,,not_in_snapshot\n-worktree,research/lean_gate/SPEC_P1_gate_identities.md,ef8fb4e14d66a734c44f21cac2ee168e3e07dad453aa62551b7c22c7efed1254,93757,,not_in_snapshot\n+worktree,research/lean_gate/SPEC_P1_gate_identities.md,f31c5862470e34f36b7621516814b23ce8e4c23e7a77a3bf2e350195daeb0bbe,97125,,not_in_snapshot\n worktree,research/lean_gate/lean_gate_crosscheck_v1.py,efa9690e971e60cea44d5c32e8f4cbc3102f01b9ad9acb7a61176f61db237e18,16735,,not_in_snapshot\n-worktree,research/lean_gate/lean_mutation_check.py,199eee8b289e3fe3d8f02310aaca5ea07a9a56e4dfe769a03f276c0d75277e4d,51028,,not_in_snapshot\n+worktree,research/lean_gate/lean_mutation_check.py,ccffb55512c89c8dba3176a7c14cd7d2c280b19b68122cd5954400898902f994,54678,,not_in_snapshot\n worktree,research/lean_gate/results/lean_gate_crosscheck_v1.json,0a42840213e40fd0ac504865257f04806b30735d9509dd30d50fe9e756ce5794,11151,,not_in_snapshot\n worktree,research/lean_gate/tests/test_engine_step_order.py,1bf37a061c601de3d902635870534238e9a9415b7625d1780273b7706e9c0689,16229,,not_in_snapshot\n+worktree,research/lean_gate/tests/test_lean_gate_c014.py,8fb2d05716bdb88d5a89a6783ea7c8d8650ea8770858f6798aad7be5fe66a0e5,7889,,not_in_snapshot\n worktree,research/lean_gate/tests/test_lean_gate_crosscheck_v1.py,c9417cad8839d3b5c52fbc788a11ddfda761a85ff2396ffc8e03d2c5f5e18ee7,4137,,not_in_snapshot\n worktree,research/lean_gate/tests/test_lean_gate_p2.py,88f484f046f5754f3cee71c9d87e00fafb5296cbea014ee22f0eb30f4a36522b,5707,,not_in_snapshot\n worktree,research/lean_gate/tests/test_lean_gate_p3.py,dad34e1ab44c74720f88f0c78c54989c4d0ad7d1ab2fcbb733d97f056c37fb44,7987,,not_in_snapshot\n worktree,research/lean_gate/tests/test_lean_gate_p4a.py,8f9008e581b1b8fd001d53bf8992ff881c7e633274772b53ad9a9687fa4854d9,4319,,not_in_snapshot\n-worktree,research/lean_gate/tests/test_lean_gate_p4b.py,0cdb775a194fb9096e28b640f59617d541db37a7813f273bb487276d8f0c2a71,5725,,not_in_snapshot\n-worktree,research/lean_gate/tests/test_lean_gate_p5.py,9092e14b6f988314696edcfa02a5dec82389186afcb22be5ac5983b8d6c7eb6a,22060,,not_in_snapshot\n+worktree,research/lean_gate/tests/test_lean_gate_p4b.py,930fcfe8150757828ebd1cf4981a1a06b188cc78daca06dcee85f9d62da1187c,5903,,not_in_snapshot\n+worktree,research/lean_gate/tests/test_lean_gate_p5.py,4406c4ca8e2c232b09f673e6b7492e432759fe05d9ca73d588f0817cb1e503fb,22601,,not_in_snapshot\n worktree,research/lean_gate/tests/test_mutation_full_run.py,c670c9dd347cce3a1ca6e97a26048177253c64555d29ec86c0634f5448b77c72,5310,,not_in_snapshot\n worktree,research/rate_law/rate_law_delta_sweep_v1.py,6b0cbe627ae6c54aaa2e45ed2476c27fbdf7693c42ace74f59d48e3ddff62091,45558,,not_in_snapshot\n worktree,research/rate_law/results/rate_law_delta_sweep_v1.json,49d8e115a7886e23c6195a6a7bcd44070eb669369bcbd5209c213030e3bbad18,286266,,not_in_snapshot"
+    },
+    {
+      "sha": "37e99db0ad14c7a71c9871c362121dae2e595951",
+      "filename": "research/lean_gate/SPEC_P1_gate_identities.md",
+      "status": "modified",
+      "additions": 47,
+      "deletions": 0,
+      "changes": 47,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2FSPEC_P1_gate_identities.md",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2FSPEC_P1_gate_identities.md",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/research%2Flean_gate%2FSPEC_P1_gate_identities.md?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -1093,3 +1093,50 @@ with the upper bound dropped from the right side, refuted at `γ = 1`, `dt = 2`\n (`propext`, `Classical.choice`, `Quot.sound` only). Full `lean_mutation_check.py`: unmutated controls PASS, validator and classifier negative controls PASS; **38/38 statement mutants rejected**\n (one flagged with a name-reference/parse line, information only: M31); statement controls SE1/ST1 not rejected; **20/20 definition mutants KILLED by a declared value probe (M37–M56), 58/58 in\n total**; **10/10 equivalence controls not killed**; **3/3 typo controls INVALID**; RESULT PASS. Controls of the earlier numbers (23 + 16 = 39, 9 controls) are superseded by 38 + 20 = 58 and 10.\n+\n+## 12. C014 (branch `research/lean-gate-c014`, tip `9b9b3d9`; merge-refreshed on 2026-11-14 onto `main` `7129d31`)\n+\n+### 12.1 What it is\n+\n+`lean/AIEFGateCore/AIEFGateCore/TrajectoryInvariants.lean` (namespace `AIEFGate.TrajectorySafety`) ports cycle 014 of\n+Researcher 040282 (deposit md5 `c6914623bfcc3002cb1ab0a47e848698`). For any drive `F` and auxiliary update `U`, every\n+`stepM` weight state after time 0 is structural (needs only `0 ≤ cap`, `0 ≤ ε` of that step) and, under `EngineGate`\n+of that step's parameters, is row-capped, entry-enveloped, and gives bounded sine coupling and phase increment. These\n+are induction wrappers around the P4a one-step facts in `Capacity.lean`; no new one-step mathematics. The full-reset\n+witnesses (`pWide`) say nothing about the engine's parameters. The Auditor review the header cites\n+(`2026-11-10_audit_040282_c014.md`) is not in this repository.\n+\n+### 12.2 Mutants (numbered from M71; M59–M70 are reserved for the c016 port)\n+\n+| Mutant | Kind | Edit | Killed by |\n+|---|---|---|---|\n+| M71 | statement | `post_capacity`: cap of step `n` -> cap of step `n+1` | `capacity_clock_refuted` |\n+| M72 | statement | `all_times_structural`: initial-structure hypothesis -> `True` | `initial_time_refuted` |\n+| M73 | statement | `post_capacity`: `EngineGate` hypothesis -> `True` | `broken_link_refuted` |\n+| M74 | definition | `weightUpdate := symM` (gate bypassed) | probe `probe_gate_scales_row` (`3/4`; bypass gives `3`) |\n+| M75 | definition | `feedbackStep` gives `U` the old `B` twice (Researcher 001's survivor on `9b9b3d9`) | probe `probe_aux_reads_old_and_new` (`-1`; gives `-11`) |\n+| M76 | definition | `feedbackStep` gives `U` the new `B` twice | probe `probe_aux_reads_old_and_new` (gives `0`) |\n+| E11 | equivalence control | the `let Bnew` of `feedbackStep` inlined | must NOT be killed |\n+\n+The two value probes are new (not in the deposit) and sit in a marked block of the module. `OPENS` gained\n+`open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)`; statement mutants use the closure `TS_VARS`.\n+\n+### 12.3 Tests\n+\n+`research/lean_gate/tests/test_lean_gate_c014.py` pins the module import and hash, no escape hatches, `#print axioms`\n+for both probes, the exact shape and order of M71–M76 and E11, that each edit applies, that M59–M70 stay free, and\n+recomputes both probe values (and the mutant values) in exact rationals from `preM`/`clipM`/`symM`/`scale`/`GateOnX`/\n+`kernelM` (text-pinned). The P4b and P5 tests' count pins were moved to 41 statement / 23 definition / 64 total and\n+11 equivalence controls, with the P5 checks scoped to the P5 slice.\n+\n+### 12.4 Results (local, 2026-11-14)\n+\n+`SKIP_CACHE=1 ./check_lean_gate.sh`: PASS, 2300 jobs, 0 warnings, 25 files hashed, step 6 0 hits, **789 declarations\n+audited** (`propext`, `Classical.choice`, `Quot.sound` only). Full `lean_mutation_check.py`: **41/41 statement and\n+23/23 definition mutants killed, 64/64**; 11/11 equivalence controls not killed; 3/3 typo controls INVALID; RESULT PASS.\n+\n+### 12.5 Still open (C014)\n+\n+* `U` and `F` are arbitrary, so nothing here says the engine's feedback is safe beyond the one-step gate facts.\n+* No Python-side check that the engine passes old and new `B` in this order (the probe only pins the Lean convention).\n+* The oscillation witnesses use a full-reset `pWide` step; they are not evidence about engine parameters."
+    },
+    {
+      "sha": "2dd24e6b77e0eb3f128431b554bacb0894f70113",
+      "filename": "research/lean_gate/lean_mutation_check.py",
+      "status": "modified",
+      "additions": 45,
+      "deletions": 2,
+      "changes": 47,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Flean_mutation_check.py",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Flean_mutation_check.py",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/research%2Flean_gate%2Flean_mutation_check.py?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -92,6 +92,15 @@\n   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)\n   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)\n \n+  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff. because M59-M70 are\n+  reserved for the c016 port):\n+  M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted\n+  M72 TrajectorySafety.all_times_structural, hInit := True            -> TrajectorySafety.initial_time_refuted\n+  M73 TrajectorySafety.post_capacity, hp (EngineGate) := True         -> TrajectorySafety.broken_link_refuted (`pB`)\n+  Definition mutants (rule below): M74 `weightUpdate := symM` (gate bypassed), M75 `feedbackStep` hands `U` the old\n+  B twice, M76 the new B twice; probes `probe_gate_scales_row`, `probe_aux_reads_old_and_new`; equivalence control\n+  E11 (the `let` inlined) must not be killed. M75 is the survivor of Researcher 001's audit of 9b9b3d9.\n+\n   P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION\n   mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are the P4b statement mutants).\n   A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. RULE\n@@ -141,6 +150,7 @@\n XO_NN = \"(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))\"\n GP = \"EngineWitness.engineGate_pE\"\n WU_VARS = CAP_VARS + \" (B D : ℕ → V → V → ℝ)\"\n+TS_VARS = \"{V S : Type} [Fintype V] [LinearOrder V]\"   # section variables of TrajectoryInvariants.lean\n WU_FAC = (\"(by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE])\"\n           \" (fun n => rfl) (fun n i j => Capacity.Xo_symm _ i j) \")\n \n@@ -319,6 +329,24 @@ def via(inst, binders, pos):\n     (\"M58_capacity_convex_weights_upper_bound_dropped\", \"Capacity.lean\", \"convex_weights_iff\",\n      [(\"(0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1)\", \"(0 ≤ p.γ * p.dt)\", 1)], CAP_VARS,\n      \"(by have h := ((@H Unit _ _ ⟨2, 1, 1, 0, 0, 0, 0⟩).2 (by norm_num)).1; norm_num at h)\", None),\n+    # ---- C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282); numbered from M71 because\n+    #      M59-M70 are reserved for the c016 port (Researcher 001) ----\n+    (\"M71_trajectory_post_capacity_next_cap\", \"TrajectoryInvariants.lean\", \"post_capacity\",\n+     [(\"i ≤ (p n).cap\", \"i ≤ (p (n + 1)).cap\", 1)], TS_VARS,\n+     \"TrajectorySafety.capacity_clock_refuted (@H (Fin 2) Unit _ _ TrajectorySafety.capSchedule\"\n+     \" TrajectorySafety.oneDrive TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0\"\n+     \" (by simpa [TrajectorySafety.capSchedule] using TrajectorySafety.pWide_engine) 0)\", None),\n+    (\"M72_trajectory_all_times_no_initial_structure\", \"TrajectoryInvariants.lean\", \"all_times_structural\",\n+     [(\"(hInit : Structural initial.2)\", \"(hInit : True)\", 1)], TS_VARS,\n+     \"TrajectorySafety.initial_time_refuted (@H (Fin 2) Unit _ _ (fun _ => TrajectorySafety.pWide)\"\n+     \" TrajectorySafety.oneDrive TrajectorySafety.keepAux ((), TrajectorySafety.dirtyB)\"\n+     \" (fun _ => by norm_num [TrajectorySafety.pWide]) (fun _ => by norm_num [TrajectorySafety.pWide]) trivial 0)\",\n+     None),\n+    (\"M73_trajectory_post_capacity_no_engine_gate\", \"TrajectoryInvariants.lean\", \"post_capacity\",\n+     [(\"(hp : EngineGate (p n))\", \"(hp : True)\", 1)], TS_VARS,\n+     \"TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)\"\n+     \" (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)\",\n+     None),\n ]\n \n # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----\n@@ -338,7 +366,10 @@ def ci(new):\n           \"probe_reported_second\", \"probe_drive_second\", \"probe_asym_drive\", \"probe_main_preM\",\n           \"probe_asym_reported\", \"probe_asym_reported_swapped\", \"probe_asym_reported_diag\",\n           \"probe_coherence_input_asym_omega\"]\n-VALUE_PROBES = {\"PhaseIncrement.lean\": VP_INC, \"PhaseCoherence.lean\": VP_COH}\n+VP_TS = [\"probe_gate_scales_row\", \"probe_aux_reads_old_and_new\"]\n+VALUE_PROBES = {\"PhaseIncrement.lean\": VP_INC, \"PhaseCoherence.lean\": VP_COH, \"TrajectoryInvariants.lean\": VP_TS}\n+WU_DEF_OLD = \"def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\\n\"\n+FB_OLD = \"  (U n state.1 state.2 Bnew, Bnew)\\n\"\n PIN_INPUT = [\"probe_coherence_values\", \"probe_asym_coherence_values\"]\n PIN_DRIVE = [\"probe_drive_second\", \"probe_asym_drive\"]\n DRIVE_OLD = \"  (eta + mu) * reported C i j - mu\\n\"\n@@ -401,6 +432,14 @@ def offset(new):\n     (\"M55_phase_input_offset_dropped\", \"PhaseIncrement.lean\", offset(\"0\"), PIN_OMEGA),\n     (\"M56_coherence_input_node_uniform_omega_i\", \"PhaseCoherence.lean\",\n      ci(\"inputPhasor d x0 u (fun _ => omega i) tau n i j\"), [\"probe_coherence_input_asym_omega\"]),\n+    # ---- C014 (TrajectoryInvariants.lean); M74-M76 follow the C014 statement mutants M71-M73 ----\n+    (\"M74_trajectory_weight_update_bypasses_gate\", \"TrajectoryInvariants.lean\",\n+     [(WU_DEF_OLD, \"def weightUpdate (p : Params) (D B : Weights V) : Weights V := symM p D B\\n\", 1)],\n+     [\"probe_gate_scales_row\"]),\n+    (\"M75_trajectory_aux_update_gets_old_B_only\", \"TrajectoryInvariants.lean\",\n+     [(FB_OLD, \"  (U n state.1 state.2 state.2, Bnew)\\n\", 1)], [\"probe_aux_reads_old_and_new\"]),\n+    (\"M76_trajectory_aux_update_gets_new_B_only\", \"TrajectoryInvariants.lean\",\n+     [(FB_OLD, \"  (U n state.1 Bnew Bnew, Bnew)\\n\", 1)], [\"probe_aux_reads_old_and_new\"]),\n ]\n \n # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of\n@@ -420,6 +459,9 @@ def offset(new):\n     (\"E9_drive_coefficient_commuted\", \"PhaseCoherence.lean\",\n      [(DRIVE_OLD, \"  (mu + eta) * reported C i j - mu\\n\", 1)]),\n     (\"E10_offset_sum_commuted\", \"PhaseIncrement.lean\", offset(\"((omega j + omega i) / 2) * tau\")),\n+    (\"E11_trajectory_feedback_let_inlined\", \"TrajectoryInvariants.lean\",\n+     [(FB_OLD, \"  (U n state.1 state.2 (weightUpdate (p n) (F n state.1 state.2) state.2),\\n\"\n+               \"    weightUpdate (p n) (F n state.1 state.2) state.2)\\n\", 1)]),\n ]\n \n # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.\n@@ -458,7 +500,8 @@ def offset(new):\n          \"open AIEFGate.EngineWitness (pE driveE BE sE driveW BW)\\nopen AIEFGate.RedTeam (hw ctrlX)\\n\"\n          \"open AIEFGate.Bridge (toR CtrlJ01)\\nopen AIEFGate.ControllerFiber (vCtrl)\\n\"\n          \"open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\\nopen AIEFGate.MatrixForm (preM)\\n\"\n-         \"open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\\n\")\n+         \"open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\\n\"\n+         \"open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\\n\")\n ALLOWED_AXIOMS = {\"propext\", \"Classical.choice\", \"Quot.sound\"}\n \n "
+    },
+    {
+      "sha": "91eea74e543633bc75df41670ce87ce5fb5fa51a",
+      "filename": "research/lean_gate/tests/test_lean_gate_c014.py",
+      "status": "added",
+      "additions": 153,
+      "deletions": 0,
+      "changes": 153,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Ftests%2Ftest_lean_gate_c014.py",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Ftests%2Ftest_lean_gate_c014.py",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/research%2Flean_gate%2Ftests%2Ftest_lean_gate_c014.py?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -0,0 +1,153 @@\n+\"\"\"Lean C014: pin TrajectoryInvariants.lean (port of cycle 014 of Researcher 040282, namespace\n+AIEFGate.TrajectorySafety) and its mutants in lean_mutation_check.py without running Lean.\n+\n+Mutants (numbered from M71 because M59-M70 are reserved for the c016 port):\n+  statement M71 post_capacity `(p n).cap` -> `(p (n + 1)).cap`  (refuted by capacity_clock_refuted)\n+            M72 all_times_structural hInit := True             (refuted by initial_time_refuted)\n+            M73 post_capacity hp (EngineGate) := True          (refuted by broken_link_refuted, at `pB`)\n+  definition M74 weightUpdate := symM (gate bypassed)          (probe_gate_scales_row)\n+             M75 feedbackStep hands U the old B twice          (probe_aux_reads_old_and_new; the survivor of\n+                                                               Researcher 001's audit of 9b9b3d9)\n+             M76 feedbackStep hands U the new B twice          (probe_aux_reads_old_and_new)\n+  equivalence control E11: the `let Bnew` of feedbackStep inlined, must NOT be killed.\n+The two value probes are recomputed here in exact rational arithmetic from the definitions (hand-checked).\n+\n+Run: /workspace/venv-pt/bin/pytest -q research/lean_gate/tests/test_lean_gate_c014.py\n+\"\"\"\n+import hashlib\n+import re\n+import sys\n+from fractions import Fraction as Q\n+from pathlib import Path\n+\n+HERE = Path(__file__).resolve().parent\n+sys.path.insert(0, str(HERE.parent))\n+import lean_mutation_check as mc  # noqa: E402\n+\n+REPO = HERE.parents[2]\n+PROJ = REPO / \"lean\" / \"AIEFGateCore\"\n+F = \"TrajectoryInvariants.lean\"\n+SRC = (PROJ / \"AIEFGateCore\" / F).read_text()\n+\n+STATEMENT = [(\"M71\", \"post_capacity\", \"capacity_clock_refuted\"),\n+             (\"M72\", \"all_times_structural\", \"initial_time_refuted\"),\n+             (\"M73\", \"post_capacity\", \"broken_link_refuted\")]\n+DEF = [(\"M74\", [\"probe_gate_scales_row\"]), (\"M75\", [\"probe_aux_reads_old_and_new\"]),\n+       (\"M76\", [\"probe_aux_reads_old_and_new\"])]\n+\n+\n+def c014_statement_mutants():\n+    return [m for m in mc.MUTANTS if m[1] == F]\n+\n+\n+def c014_def_mutants():\n+    return [m for m in mc.DEF_MUTANTS if m[1] == F]\n+\n+\n+def test_module_is_imported_and_hash_pinned():\n+    root = (PROJ / \"AIEFGateCore.lean\").read_text()\n+    assert re.search(r\"^import AIEFGateCore\\.TrajectoryInvariants$\", root, re.M)\n+    sums = (PROJ / \"AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt\").read_text()\n+    digest = hashlib.sha256((PROJ / \"AIEFGateCore\" / F).read_bytes()).hexdigest()\n+    assert f\"{digest}  AIEFGateCore/{F}\" in sums\n+\n+\n+def test_no_escape_hatches_and_axioms_printed():\n+    code = re.sub(r\"/-.*?-/\", \"\", SRC, flags=re.S)\n+    code = re.sub(r\"--.*\", \"\", code)\n+    for bad in (\"sorry\", \"admit\", \"native_decide\", \"axiom \", \"unsafe\", \"implemented_by\", \"extern\"):\n+        assert bad not in code, bad\n+    for probe in mc.VALUE_PROBES[F]:\n+        assert re.search(rf\"^theorem {probe}\\b\", SRC, re.M), probe\n+        assert f\"#print axioms AIEFGate.TrajectorySafety.{probe}\\n\" in SRC, probe\n+\n+\n+def test_statement_mutants_exact_shape():\n+    ms = c014_statement_mutants()\n+    assert [m[0].split(\"_\")[0] for m in ms] == [s[0] for s in STATEMENT]\n+    assert mc.MUTANTS[-3:] == ms                       # appended after M57, M58\n+    for (num, thm, refuter), (name, f, t, edits, closure, term, engine) in zip(STATEMENT, ms):\n+        assert t == thm and closure == mc.TS_VARS and engine is None, name\n+        assert mc.mutate(SRC, t, edits) != SRC, name   # each edit matches exactly `count` times in the statement\n+        assert re.search(rf\"^theorem {refuter}\\b\", SRC, re.M), (name, refuter)\n+        assert term.startswith(f\"TrajectorySafety.{refuter} (@H (Fin 2) Unit _ _ \"), name\n+    # the refutation context opens the C014 names the mutated statements use\n+    assert \"open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\" in mc.OPENS\n+\n+\n+def test_def_mutants_exact_shape_and_value_probe_pins():\n+    ms = c014_def_mutants()\n+    assert [m[0].split(\"_\")[0] for m in ms] == [d[0] for d in DEF]\n+    assert mc.DEF_MUTANTS[-3:] == ms                   # appended after the P5 mutants M37-M56\n+    for (num, pins), (name, f, edits, got) in zip(DEF, ms):\n+        assert got == pins and set(got) <= set(mc.VALUE_PROBES[F]), name\n+        assert mc.mutate_file(SRC, edits) != SRC, name\n+    assert \"symM p D B\" in ms[0][2][0][1]\n+    assert \"(U n state.1 state.2 state.2, Bnew)\" in ms[1][2][0][1]\n+    assert \"(U n state.1 Bnew Bnew, Bnew)\" in ms[2][2][0][1]\n+    e11 = [c for c in mc.EQUIV_CONTROLS if c[0].startswith(\"E11_\")]\n+    assert len(e11) == 1 and e11[0][1] == F and mc.mutate_file(SRC, e11[0][2]) != SRC\n+    assert not [s for s in mc.KNOWN_SURVIVORS if s[1] == F]\n+\n+\n+def test_numbering_leaves_m59_to_m70_for_c016():\n+    nums = sorted(int(m[0].split(\"_\")[0][1:]) for m in mc.MUTANTS + mc.DEF_MUTANTS)\n+    assert not [n for n in nums if 59 <= n <= 70]\n+    assert [n for n in nums if n >= 71] == [71, 72, 73, 74, 75, 76]\n+    assert len(nums) == len(set(nums))\n+\n+\n+# ---- the value probes, recomputed from the definitions (exact rationals) ----------------------------------------\n+\n+def params(t):\n+    return dict(zip((\"dt\", \"g\", \"cap\", \"eps\", \"gapA\", \"gapQ\", \"gapDelta\"), map(Q, t)))\n+\n+\n+P_WIDE = params((1, 1, 2, 1, 2, 1, 0))\n+P_TIGHT = params((1, 1, 1, 1, 1, 1, 0))\n+\n+\n+def Xo(a):\n+    return [[Q(0), Q(a)], [Q(a), Q(0)]]\n+\n+\n+def stepM(p, D, B, gate=True):\n+    pre = [[B[i][j] * (1 - p[\"g\"] * p[\"dt\"]) + p[\"dt\"] * D[i][j] for j in range(2)] for i in range(2)]\n+    clip = [[max(pre[i][j], Q(0)) for j in range(2)] for i in range(2)]\n+    sym = [[Q(0) if i == j else (clip[i][j] + clip[j][i]) / 2 for j in range(2)] for i in range(2)]\n+    rows = [sum(r) for r in sym]\n+    if not gate or not any(p[\"gapA\"] - p[\"gapQ\"] * r < p[\"gapDelta\"] for r in rows):\n+        return sym\n+    sc = [min(Q(1), p[\"cap\"] / (r + p[\"eps\"])) for r in rows]\n+    return [[Q(0) if i == j else sym[i][j] * min(sc[i], sc[j]) for j in range(2)] for i in range(2)]\n+\n+\n+def test_model_matches_lean_definitions():\n+    mf = (PROJ / \"AIEFGateCore\" / \"MatrixForm.lean\").read_text()\n+    assert \"  Bm i j + p.dt * (D i j - p.γ * Bm i j)\\n\" in mf                     # preM, as modelled above\n+    assert \"  max (preM p D Bm i j) 0\\n\" in mf                                     # clipM\n+    assert \"  if i = j then 0 else (clipM p D Bm i j + clipM p D Bm j i) / 2\\n\" in mf  # symM\n+    gm = (PROJ / \"AIEFGateCore\" / \"GateMap.lean\").read_text()\n+    assert \"  min 1 (p.cap / (q + p.ε))\\n\" in gm                                   # scale\n+    cap = (PROJ / \"AIEFGateCore\" / \"Capacity.lean\").read_text()\n+    assert \"  ∃ i, p.gapA - p.gapQ * rowS X i < p.gapDelta\\n\" in cap               # GateOnX\n+    assert \"  if i = j then 0 else X i j * min (scale p (rowS X i)) (scale p (rowS X j))\\n\" in cap   # kernelM\n+    assert \"def pTight : Params := ⟨1, 1, 1, 1, 1, 1, 0⟩\" in SRC and \"def pWide : Params := ⟨1, 1, 2, 1, 2, 1, 0⟩\" in SRC\n+\n+\n+def test_probe_gate_scales_row_value():\n+    zero = Xo(0)\n+    assert sum(stepM(P_TIGHT, Xo(3), zero)[0]) == Q(3, 4)          # probe_gate_scales_row\n+    assert sum(stepM(P_TIGHT, Xo(3), zero, gate=False)[0]) == 3     # M74 (gate bypassed) gives 3\n+    assert \"theorem probe_gate_scales_row : Capacity.rowS (weightUpdate pTight (X 3) zeroB) 0 = 3 / 4\" in SRC\n+\n+\n+def test_probe_aux_reads_old_and_new_value():\n+    dirty = [[Q(-1), Q(1)], [Q(1), Q(-1)]]\n+    new = stepM(P_WIDE, Xo(1), dirty)\n+    assert new == Xo(1)                                              # wide_resets_one\n+    aux = lambda old, nw: old[0][0] + 10 * nw[0][0]                 # auxOldNew\n+    assert aux(dirty, new) == -1                                     # probe_aux_reads_old_and_new\n+    assert aux(dirty, dirty) == -11 and aux(new, new) == 0           # M75 and M76 change the value\n+    assert \"def auxOldNew (_ : ℕ) (_ : ℝ) (Bold Bnew : Weights (Fin 2)) : ℝ := Bold 0 0 + 10 * Bnew 0 0\" in SRC\n+    assert \"(trajectory (fun _ => pWide) oneDriveR auxOldNew ((0 : ℝ), dirtyB) 1).1 = -1\" in SRC"
+    },
+    {
+      "sha": "d52767c41093f9e417fb613591b0eb8c7e0fed98",
+      "filename": "research/lean_gate/tests/test_lean_gate_p4b.py",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 3,
+      "changes": 8,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Ftests%2Ftest_lean_gate_p4b.py",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Ftests%2Ftest_lean_gate_p4b.py",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/research%2Flean_gate%2Ftests%2Ftest_lean_gate_p4b.py?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -116,12 +116,14 @@ def test_sources_have_no_banned_markers_and_credit_by_handle_only():\n def test_p4b_mutants_shape():\n     names = [m[0] for m in mc.MUTANTS]\n     # 36 (M1-M36) + 2 (M57, M58: #27 Capacity follow-ups, appended after the P5 definition mutants M37-M56)\n-    assert len(names) == 38                                      # the single exact pin (P4a test: >= 23)\n+    # + 3 (M71-M73: C014 TrajectoryInvariants.lean statement mutants, see test_lean_gate_c014.py)\n+    assert len(names) == 41                                      # the single exact pin (P4a test: >= 23)\n     assert names[23].startswith(\"M24\") and names[35].startswith(\"M36\")\n     assert names[36].startswith(\"M57\") and names[37].startswith(\"M58\")\n     assert {m[1] for m in mc.MUTANTS[23:36]} == {\"WeightUpdate.lean\"}\n-    assert {m[1] for m in mc.MUTANTS[36:]} == {\"Capacity.lean\"}\n-    assert [m[2] for m in mc.MUTANTS[36:]] == [\"preM_between\", \"convex_weights_iff\"]\n+    assert {m[1] for m in mc.MUTANTS[36:38]} == {\"Capacity.lean\"}\n+    assert [m[2] for m in mc.MUTANTS[36:38]] == [\"preM_between\", \"convex_weights_iff\"]\n+    assert {m[1] for m in mc.MUTANTS[38:]} == {\"TrajectoryInvariants.lean\"}\n     assert [m[2] for m in mc.MUTANTS[23:36]] == [\n         \"rowM_le_upper\", \"stepM_scalar_recurrence\", \"appliedFactor_lower\", \"stepM_factor_lower\",\n         \"trajectory_symmetric\", \"trajectory_zero_diag\", \"trajectory_nonneg\", \"trajectory_good_of_start\","
+    },
+    {
+      "sha": "2ba3a80a5bc2f585ef5ea6966777ff22ad0d12b0",
+      "filename": "research/lean_gate/tests/test_lean_gate_p5.py",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 9,
+      "changes": 22,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Ftests%2Ftest_lean_gate_p5.py",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/578868241870e66fe4cb905f3b6d707fd7d39f4f/research%2Flean_gate%2Ftests%2Ftest_lean_gate_p5.py",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/research%2Flean_gate%2Ftests%2Ftest_lean_gate_p5.py?ref=578868241870e66fe4cb905f3b6d707fd7d39f4f",
+      "patch": "@@ -9,7 +9,8 @@\n merge of P4b (PR #26) and the #27 follow-ups, `MUTANTS` has 38 entries (M1-M36 statement mutants, plus M57, M58 on\n `Capacity.preM_between` / `convex_weights_iff`) and `DEF_MUTANTS` 20 (M37-M56: M37-M52 as ported, M53-M56 the N2\n asymmetric-omega offset mutants), total 58; controls: 10 equivalence, 3 typo, 2 statement-level; no expected survivor\n-(the former S1 is the counted M55).\n+(the former S1 is the counted M55). Since the C014 refresh (test_lean_gate_c014.py): + M71-M73 statement and\n+M74-M76 definition mutants and the equivalence control E11, total 64 (M59-M70 are reserved for the c016 port).\n \n Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q\n \"\"\"\n@@ -29,9 +30,10 @@\n PI = (GATE / \"PhaseIncrement.lean\").read_text()\n PC = (GATE / \"PhaseCoherence.lean\").read_text()\n \n-N_STATEMENT_MUTANTS = 38          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups)\n-N_DEF_MUTANTS = 20                # M37-M56\n-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 58 (52 before the N2 mutants M53-M56 and the #27 mutants M57-M58)\n+N_STATEMENT_MUTANTS = 41          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups) + M71-M73 (C014)\n+N_DEF_MUTANTS = 23                # M37-M56 (P5) + M74-M76 (C014)\n+N_P5_DEF_MUTANTS = 20             # M37-M56\n+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 64 (58 before C014; 52 before N2 M53-M56 and #27 M57-M58)\n \n # Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...\n # PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.\n@@ -200,8 +202,8 @@ def test_uniform_c0_one_probe_values():\n def test_p5_mutants_shape_and_exact_count():\n     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58\n     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS\n-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (58)\n-    names = [m[0] for m in mc.DEF_MUTANTS]\n+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (64)\n+    names = [m[0] for m in mc.DEF_MUTANTS[:N_P5_DEF_MUTANTS]]             # the P5 slice; C014's M74-M76 follow\n     assert names[0].startswith(\"M37\") and names[-1].startswith(\"M56\")\n     assert [int(n.split(\"_\")[0][1:]) for n in names] == list(range(37, 57))\n     assert len({m[0] for m in mc.MUTANTS} & set(names)) == 0\n@@ -213,7 +215,8 @@ def test_p5_mutants_shape_and_exact_count():\n \n \n def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():\n-    srcs = {\"PhaseIncrement.lean\": PI, \"PhaseCoherence.lean\": PC}\n+    srcs = {\"PhaseIncrement.lean\": PI, \"PhaseCoherence.lean\": PC,\n+            \"TrajectoryInvariants.lean\": (GATE / \"TrajectoryInvariants.lean\").read_text()}\n     rewrite_lemmas = (\"input_engine_convention\", \"delayed_input_step\", \"innovation_engine_convention\",\n                       \"innovation_transport\", \"reported_symm\", \"reported_offdiag\", \"reported_diag\",\n                       \"main_preM_source_formula\", \"drive_eta_response\", \"coherenceTrace_unitDisk\")\n@@ -230,7 +233,7 @@ def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():\n \n \n def test_controls_exist_with_exact_counts():\n-    assert len(mc.EQUIV_CONTROLS) == 10 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2\n+    assert len(mc.EQUIV_CONTROLS) == 11 and len(mc.TYPO_CONTROLS) == 3 and len(mc.STATEMENT_CONTROLS) == 2\n     eq = {n.split(\"_\")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}\n     ci_new = {k: eq[k][1][0][1] for k in (\"E1\", \"E2\", \"E3\")}\n     assert \"* 1\" in ci_new[\"E1\"] and \"+ 0\" in ci_new[\"E2\"] and \"id (inputPhasor\" in ci_new[\"E3\"]   # the audit's three\n@@ -246,7 +249,8 @@ def test_controls_exist_with_exact_counts():\n \n \n def test_def_mutants_never_edit_unlisted_files_and_no_expected_survivor_since_n2():\n-    assert {m[1] for m in mc.DEF_MUTANTS} == {\"PhaseIncrement.lean\", \"PhaseCoherence.lean\"}\n+    assert {m[1] for m in mc.DEF_MUTANTS[:N_P5_DEF_MUTANTS]} == {\"PhaseIncrement.lean\", \"PhaseCoherence.lean\"}\n+    assert {m[1] for m in mc.DEF_MUTANTS[N_P5_DEF_MUTANTS:]} == {\"TrajectoryInvariants.lean\"}   # C014\n     assert mc.KNOWN_SURVIVORS == []          # the former S1 (offset dropped in 011 only) is the counted M55 since N2\n     # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value\n     m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith(\"M43\")][0]"
+    }
+  ]
+}

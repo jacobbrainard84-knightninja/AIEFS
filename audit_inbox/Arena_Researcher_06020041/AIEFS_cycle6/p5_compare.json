@@ -1,0 +1,448 @@
+{
+  "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/compare/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2...b8404198bff62d77373ac2c19e988b0f90660aff",
+  "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2...b8404198bff62d77373ac2c19e988b0f90660aff",
+  "permalink_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/jacobbrainard84-knightninja:ab18b06...jacobbrainard84-knightninja:b840419",
+  "diff_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2...b8404198bff62d77373ac2c19e988b0f90660aff.diff",
+  "patch_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/compare/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2...b8404198bff62d77373ac2c19e988b0f90660aff.patch",
+  "base_commit": {
+    "sha": "ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+    "node_id": "C_kwDOUCH-K9oAKGFiMThiMDY4ZTE1NjBiN2Q2ZDgwMDVmNDJlZDRkMjJjNzA5N2M4YzI",
+    "commit": {
+      "author": {
+        "name": "Researcher 001 (local)",
+        "email": "researcher001@localhost.invalid",
+        "date": "2026-11-11T04:57:31Z"
+      },
+      "committer": {
+        "name": "Researcher 001 (local)",
+        "email": "researcher001@localhost.invalid",
+        "date": "2026-11-11T04:57:31Z"
+      },
+      "message": "Merge origin/main (75f2b74: #28 mutation-step guard, #29 engine step-order pins) into research/lean-gate-p5; regenerate registry/artifacts_current.csv",
+      "tree": {
+        "sha": "4c6b3306761b5de8cf45e286748fb5c92c7aa7a4",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/4c6b3306761b5de8cf45e286748fb5c92c7aa7a4"
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+    "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "590ab6cf0b5883a1734e313eda134eb5e416311e",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/590ab6cf0b5883a1734e313eda134eb5e416311e",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/590ab6cf0b5883a1734e313eda134eb5e416311e"
+      },
+      {
+        "sha": "75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/75f2b7405ec6eeae36bf20a5e88bedd997788d83"
+      }
+    ]
+  },
+  "merge_base_commit": {
+    "sha": "ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+    "node_id": "C_kwDOUCH-K9oAKGFiMThiMDY4ZTE1NjBiN2Q2ZDgwMDVmNDJlZDRkMjJjNzA5N2M4YzI",
+    "commit": {
+      "author": {
+        "name": "Researcher 001 (local)",
+        "email": "researcher001@localhost.invalid",
+        "date": "2026-11-11T04:57:31Z"
+      },
+      "committer": {
+        "name": "Researcher 001 (local)",
+        "email": "researcher001@localhost.invalid",
+        "date": "2026-11-11T04:57:31Z"
+      },
+      "message": "Merge origin/main (75f2b74: #28 mutation-step guard, #29 engine step-order pins) into research/lean-gate-p5; regenerate registry/artifacts_current.csv",
+      "tree": {
+        "sha": "4c6b3306761b5de8cf45e286748fb5c92c7aa7a4",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/4c6b3306761b5de8cf45e286748fb5c92c7aa7a4"
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+    "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "590ab6cf0b5883a1734e313eda134eb5e416311e",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/590ab6cf0b5883a1734e313eda134eb5e416311e",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/590ab6cf0b5883a1734e313eda134eb5e416311e"
+      },
+      {
+        "sha": "75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+        "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/75f2b7405ec6eeae36bf20a5e88bedd997788d83"
+      }
+    ]
+  },
+  "status": "ahead",
+  "ahead_by": 4,
+  "behind_by": 0,
+  "total_commits": 4,
+  "commits": [
+    {
+      "sha": "b919b242e1696581176fbfc19890947ddd3ee754",
+      "node_id": "C_kwDOUCH-K9oAKGI5MTliMjQyZTE2OTY1ODExNzZmYmZjMTk4OTA5NDdkZGQzZWU3NTQ",
+      "commit": {
+        "author": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-11T04:12:40Z"
+        },
+        "committer": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-11T04:12:40Z"
+        },
+        "message": "docs(lean-gate): mutation check runs in CI since #27 (SPEC 8.5/9.5, README count 36); note stepM_eq_gateM_convex is affine unless 0<=γdt<=1\n\nSource: GPT-6 audit-inbox note 2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md (confirmed by Auditor Seat 002 on main 1c30ca5). Docs only; no Lean or pinned file changed.",
+        "tree": {
+          "sha": "5b6da7ebea503ea3a49aa6f35c29967712c90bac",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/5b6da7ebea503ea3a49aa6f35c29967712c90bac"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/b919b242e1696581176fbfc19890947ddd3ee754",
+        "comment_count": 0,
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/b919b242e1696581176fbfc19890947ddd3ee754",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/b919b242e1696581176fbfc19890947ddd3ee754",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/b919b242e1696581176fbfc19890947ddd3ee754/comments",
+      "author": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "1c30ca56e56f11517d1e04f90d521a5aa6990c52",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/1c30ca56e56f11517d1e04f90d521a5aa6990c52",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/1c30ca56e56f11517d1e04f90d521a5aa6990c52"
+        }
+      ]
+    },
+    {
+      "sha": "06f45b067caa5f96f502fc7e37f71c39d95ad0f3",
+      "node_id": "C_kwDOUCH-K9oAKDA2ZjQ1YjA2N2NhYTVmOTZmNTAyZmM3ZTM3ZjcxYzM5ZDk1YWQwZjM",
+      "commit": {
+        "author": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-11T04:54:25Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2026-11-11T04:54:25Z"
+        },
+        "message": "Merge branch 'main' into docs/lean-gate-doc-drift",
+        "tree": {
+          "sha": "bfafbf1deb4e0ec58fa1fa0ec115bb9193efdc1c",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/bfafbf1deb4e0ec58fa1fa0ec115bb9193efdc1c"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/06f45b067caa5f96f502fc7e37f71c39d95ad0f3",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq8/UBCRC1aQ7uu5UhlAAAex4QACkVqfVNFPZmnlhM68IaWu2A\nLYVpa2uSGsJBMcTNmY2ez8qQFYY+r2b2JSXYJwu1Jo3ewNBZLw0cKFEX3poRy/Ym\nrB/COTHKVVOpjZ3r2G1kAPxxPkgWJiCJdW46LecCpajasd5ZkkFSAfhhjFybAzPm\noPzseWVEkHw8R0xRDeG97Cu95Xy43NNUBtaM9y7Eflguy6IisVZWfMHmxgOYjPea\ntE272xM3leTiqHn+A1eR1fY21FRS6qMo3Qe1RWs0UqiB0ZJJMhthC1r5d2AeeqpI\nu2CHG/BJyvo0yeMlAF8v316h31UkC2tWMVjOPQwO0CGdpUq9dvC1uaBSG/srwgHv\nkvHTd6LwhgeioWBSnAQ8OJNkQHl+RzR3kv7lqOEvE/r/RcCuZTO4kZWLCp5NUwdt\ny4eeNsr5QJYpxkOwLtlZ/HEqepS5PwK25IF+l5cRgHWDkyaXddVM57SzmlOHszAk\nSeg3cpWTLh+cZf8B84lZIiPDMcyz3S/W7RxKOoJ+5DR/pfrcrIDTJbFO+YO9hAjN\naEWs6+4VARtXmKTPUOEMc9lceBRiNcEjg9w6bEaB/7giacUj6YIqgiv3yDQ5dSse\nsaKQH9cZgaRuapRj/SlO4L3PtYaX3Th6tm5lY0K1Kaq7Kr68Xw9KXnfXnQaKfiAB\n0Z5x2Npk/ovWPpBf3b6M\n=Ap5q\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree bfafbf1deb4e0ec58fa1fa0ec115bb9193efdc1c\nparent b919b242e1696581176fbfc19890947ddd3ee754\nparent 75f2b7405ec6eeae36bf20a5e88bedd997788d83\nauthor jacobbrainard84-knightninja <264570062+jacobbrainard84-knightninja@users.noreply.github.com> 1794372865 -0700\ncommitter GitHub <noreply@github.com> 1794372865 -0700\n\nMerge branch 'main' into docs/lean-gate-doc-drift",
+          "verified_at": "2026-11-11T04:54:25Z"
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/06f45b067caa5f96f502fc7e37f71c39d95ad0f3",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/06f45b067caa5f96f502fc7e37f71c39d95ad0f3",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/06f45b067caa5f96f502fc7e37f71c39d95ad0f3/comments",
+      "author": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "b919b242e1696581176fbfc19890947ddd3ee754",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/b919b242e1696581176fbfc19890947ddd3ee754",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/b919b242e1696581176fbfc19890947ddd3ee754"
+        },
+        {
+          "sha": "75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/75f2b7405ec6eeae36bf20a5e88bedd997788d83"
+        }
+      ]
+    },
+    {
+      "sha": "a559e0d30458bb01989ac47225675d6baec518b8",
+      "node_id": "C_kwDOUCH-K9oAKGE1NTllMGQzMDQ1OGJiMDE5ODlhYzQ3MjI1Njc1ZDZiYWVjNTE4Yjg",
+      "commit": {
+        "author": {
+          "name": "jacobbrainard84-knightninja",
+          "email": "264570062+jacobbrainard84-knightninja@users.noreply.github.com",
+          "date": "2026-11-11T12:01:47Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2026-11-11T12:01:47Z"
+        },
+        "message": "Merge pull request #30 from jacobbrainard84-knightninja/docs/lean-gate-doc-drift\n\ndocs(lean-gate): mutation check runs in CI, 36 mutants, affine note",
+        "tree": {
+          "sha": "bfafbf1deb4e0ec58fa1fa0ec115bb9193efdc1c",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/bfafbf1deb4e0ec58fa1fa0ec115bb9193efdc1c"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/a559e0d30458bb01989ac47225675d6baec518b8",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq9FkrCRC1aQ7uu5UhlAAAfUIQACztJ1u/R+Ml3ZtYtUaMg8MV\n+F3yatVQvpmqwhn+jBoRc+OJqOG/ivRjS7GWQAwns9m86KI/8N3Nc/bx3zut1NaX\n0/DaxBo7+lJlFJ398L0eUzuwJ7zhgvGivnXfst0XHQX6X9qvZAK0SO5GSaujTSBD\nKB8d8eBekGXlgDQgEcVHpxiZsw159BkFpCYgFnQ8hOTE5skXiLKs55zkQpb3yrl+\ndCpuPAOQqyH7fHAgWBjwqDeN73T08WmioCqmYNOURin3wj6KsBwJkUYI8alTA7Kx\nLUCyYT31lELVmDJc1l5pCGtvJpa7qdIv6GkXIpB/GKLW7Ybl+fhbWM+RX5AmpcsH\nRMfPYqZa9n3QOFG8B0ZsbHApeNKHvnXmx+nHokpG0kQ1dfhBNawThpO8aQH4ugu5\n0puV7Fc7rS4tR3SHxUI0CmxmNGck2LXOYq9iuS5hU3OAGQV2a5YXHfBc304W/klA\nvU1ztFT81wYMHuQAF7pmSvQn370MGb8K3gwAvdEu6hShUoJxVp1WPSFj/OGfak8Y\nPCN/8zbX8+k7p6OBhqSJZrMeqDFenUzF5RYSlSPR+rBTxMumRcPky/rEvmsslfHc\nS4vA+/9VWcgVOdo+nxaOLBg3zk0JcxTJW36ZifYZtexUsnr1HvJ8pDgIwi96q73M\nEC//RAbO/Rp7O0N95nlu\n=GCH1\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree bfafbf1deb4e0ec58fa1fa0ec115bb9193efdc1c\nparent 75f2b7405ec6eeae36bf20a5e88bedd997788d83\nparent 06f45b067caa5f96f502fc7e37f71c39d95ad0f3\nauthor jacobbrainard84-knightninja <264570062+jacobbrainard84-knightninja@users.noreply.github.com> 1794398507 -0700\ncommitter GitHub <noreply@github.com> 1794398507 -0700\n\nMerge pull request #30 from jacobbrainard84-knightninja/docs/lean-gate-doc-drift\n\ndocs(lean-gate): mutation check runs in CI, 36 mutants, affine note",
+          "verified_at": "2026-11-11T12:01:48Z"
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/a559e0d30458bb01989ac47225675d6baec518b8",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/a559e0d30458bb01989ac47225675d6baec518b8",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/a559e0d30458bb01989ac47225675d6baec518b8/comments",
+      "author": {
+        "login": "jacobbrainard84-knightninja",
+        "id": 264570062,
+        "node_id": "U_kgDOD8UEzg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/264570062?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jacobbrainard84-knightninja",
+        "html_url": "https://github.com/jacobbrainard84-knightninja",
+        "followers_url": "https://api.github.com/users/jacobbrainard84-knightninja/followers",
+        "following_url": "https://api.github.com/users/jacobbrainard84-knightninja/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jacobbrainard84-knightninja/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jacobbrainard84-knightninja/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jacobbrainard84-knightninja/subscriptions",
+        "organizations_url": "https://api.github.com/users/jacobbrainard84-knightninja/orgs",
+        "repos_url": "https://api.github.com/users/jacobbrainard84-knightninja/repos",
+        "events_url": "https://api.github.com/users/jacobbrainard84-knightninja/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jacobbrainard84-knightninja/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/75f2b7405ec6eeae36bf20a5e88bedd997788d83",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/75f2b7405ec6eeae36bf20a5e88bedd997788d83"
+        },
+        {
+          "sha": "06f45b067caa5f96f502fc7e37f71c39d95ad0f3",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/06f45b067caa5f96f502fc7e37f71c39d95ad0f3",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/06f45b067caa5f96f502fc7e37f71c39d95ad0f3"
+        }
+      ]
+    },
+    {
+      "sha": "b8404198bff62d77373ac2c19e988b0f90660aff",
+      "node_id": "C_kwDOUCH-K9oAKGI4NDA0MTk4YmZmNjJkNzczNzNhYzJjMTllOTg4YjBmOTA2NjBhZmY",
+      "commit": {
+        "author": {
+          "name": "Researcher 001 (local)",
+          "email": "researcher001@localhost.invalid",
+          "date": "2026-11-14T13:28:33Z"
+        },
+        "committer": {
+          "name": "Researcher 001 (local)",
+          "email": "researcher001@localhost.invalid",
+          "date": "2026-11-14T13:28:33Z"
+        },
+        "message": "Merge origin/main (a559e0d: #28 mutation-step guard test, #30 docs drift) into research/lean-gate-p5; README/SPEC counts set to 58 = 38 statement + 20 definition; regenerate registry/artifacts_current.csv",
+        "tree": {
+          "sha": "320d2deb2c592df6509cad1be446d9116bbe37e8",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/320d2deb2c592df6509cad1be446d9116bbe37e8"
+        },
+        "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/commits/b8404198bff62d77373ac2c19e988b0f90660aff",
+        "comment_count": 0,
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/b8404198bff62d77373ac2c19e988b0f90660aff",
+      "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/b8404198bff62d77373ac2c19e988b0f90660aff",
+      "comments_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/b8404198bff62d77373ac2c19e988b0f90660aff/comments",
+      "author": null,
+      "committer": null,
+      "parents": [
+        {
+          "sha": "ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/ab18b068e1560b7d6d8005f42ed4d22c7097c8c2"
+        },
+        {
+          "sha": "a559e0d30458bb01989ac47225675d6baec518b8",
+          "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/commits/a559e0d30458bb01989ac47225675d6baec518b8",
+          "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/commit/a559e0d30458bb01989ac47225675d6baec518b8"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "sha": "74ce34f18974e02146a9f0390268da1f9eb27285",
+      "filename": "lean/AIEFGateCore/README.md",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 3,
+      "changes": 6,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/b8404198bff62d77373ac2c19e988b0f90660aff/lean%2FAIEFGateCore%2FREADME.md",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/b8404198bff62d77373ac2c19e988b0f90660aff/lean%2FAIEFGateCore%2FREADME.md",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/lean%2FAIEFGateCore%2FREADME.md?ref=b8404198bff62d77373ac2c19e988b0f90660aff",
+      "patch": "@@ -30,7 +30,7 @@ A separate Lake project so that the hash-pinned `lean/AIEFProofs` is not touched\n | `iterate_stepB_add_smul_of_branch`, `stepB_add_smul_of_uniformBranch`, `amp_mem_Icc` | (P3) if the uniform branch holds at every step `k < n`, then `stepB^[n](B + t h) = stepB^[n] B + amp n · h`, `amp n = t ∏ (1−γdt) s_k` |\n | `PersistenceWitness.engine_gated_persistence` | (P3) for every `n`, at `ε = 10⁻¹²`, K3, `R` frozen, `h = vCtrl`: gate firing and binding scale at every step, branch hypothesis holds for all `k < n`; `false_iterate_no_decay` |\n | `EngineRedTeam.engine_false_{drop_ker,drop_hc1,drop_clip,main_no_gamma,multiplier_no_gamma}` | (P3) the same negations at engine-shaped parameters (`ε = 10⁻¹² > 0`, `EngineGate`) |\n-| `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex`, `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |\n+| `Capacity.gateM_feasible`, `gateM_fixes_feasible`, `gateM_idempotent`, `stepM_row_le_cap`, `kernel_row_le_cap`, `gateM_sub_of_rowSum_eq`, `stepM_eq_gateM_convex` (affine, not convex unless `0 ≤ γdt ≤ 1`: `convex_weights_iff`), `false_*`, `witness_*` | (P4a) guarded-capacity content of the matrix gate on `Params`/`GateOnM`/`stepM`, ported from the cycle-002 statements of Researcher 040282 (handle only; source path and commit in the module docstring and SPEC §9): row sums `≤ cap` for `EngineGate` (`0 < ε`), `0 ≤ ε` only for the kernel row bound, idempotence, fixed points, negations (unguarded kernel, nonexpansiveness, `ε < 0`, broken link) and `Fin 2` witnesses |\n | `WeightUpdate.rowM_le_upper`, `stepM_factor_lower`, `stepM_scalar_recurrence`, `trajectory_symmetric`, `trajectory_good_of_start`, `edge_eventually_off/on(_from)`, `onGap_iff`, `onGap_N12_fails`, `false_*`, `witness_*` | (P4b) weight-update bridge of the cycle-003 deposit on `Params`/`stepM`: Lemma 1 row sandwich, gate-factor floor, scalar recurrence, trajectory invariants (B stays symmetric, nonnegative, zero-diagonal, feasible), per-edge ∃N OFF/ON freezing (`Freeze.lean` restates the scalar core), and the exact ON-certificate threshold `S < 18999999991/90000000000` at `pE`, `B_c = 3/25` (fails at the N = 12 coarse envelope) |\n | `History.historyTrace_{index,oldest,newest}`, `Phase.{phasor_wrap,delayed_input_step,delayed_input_chord_bound}`, `PhaseCoherence.{input_engine_convention,innovation_*,coherenceTrace_unitDisk,phase_*_bounds,drive_eta_response,main_preM_source_formula,main_phase_preM,reported_{diag,offdiag,symm},sourceDrive_{diag,symm},main_phase_stepM_eq_stepB,probe_*}` | (P5) phase-specific coherence EMA and drive on `Params`/`preM`/`stepM`, ported from cycles 010, 011 and 013 of Researcher 040282 (handle only; cycles 010/011 on `audit-inbox` commit `1b5ae52`, cycle 013 supplied by the owner, md5 `410275ad…`, see SPEC §11): the delayed read is `n − D`, the input is `exp(i(θ_n,i − θ_{n−D},j − (ω_i+ω_j)τ/2))`, the EMA/reported/drive follow the engine convention (`compute_R`, `advance_state`, **hand-checked, not proved against Python**); node-uniform and asymmetric zero-init probes pin delay, offset, EMA weight, symmetrised average and zero diagonal. Out of scope: trajectory of `B`, locking, clip/projection, `shuffle_driver` |\n \n@@ -49,14 +49,14 @@ build with 0 warnings, forbidden markers, axiom audit (only propext, Classical.c\n 2026-11-09 (P3, `SKIP_CACHE=1`): PASS, 2149 jobs, 0 warnings, 14 source files, 439 declarations audited, 239\n theorems printed with `#print axioms`, 0 disallowed.\n Cross-check against the pinned engine: `research/lean_gate/lean_gate_crosscheck_v1.py`; mutation check:\n-`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4, §9.3): 23 mutants, each must (a) fail to build with the kept\n+`research/lean_gate/lean_mutation_check.py`. Mutation check (SPEC §7.3, §8.4, §9.3, §10.4): 58 mutants (38 statement mutants: M1–M36, M57, M58; 20 definition mutants: M37–M56), run in CI on the required `lean (AIEFGateCore)` job since PR #27, each statement mutant must (a) fail to build with the kept\n proof by a real proof failure (since P3 a failure made only of `Unknown identifier`/`unknown constant` errors does\n not count; a classifier negative control checks this), (b) be refuted by a proved negation theorem (no `sorry`,\n standard axioms only, checked with `#print axioms`; a `sorry` and an `axiom` refutation are rejected as negative\n controls; M1–M5 also at engine parameters `ε = 10⁻¹²`) and (c) the same refutation term must fail on the unmutated\n statement (term-specificity only). M1–M3 and M8 weaken the hypothesis to `(name : True)`, the same proposition as\n dropping it, so their build rejection is a type mismatch, not a name reference. M11–M13: wrong bridge vector,\n-weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. M24–M36 (P4b): the same for `WeightUpdate.lean`. P5 adds 16 *definition* mutants M37–M52 (list `DEF_MUTANTS`; M24–M36 are the P4b statement mutants): a mutant is killed iff the mutated file fails to build, with no name-reference or parse error line anywhere, and a pre-declared closed-form VALUE probe fails (rewrite lemmas earn no credit; SPEC §11.3); 9 equivalence controls (`* 1`, `+ 0`, `id`, …) must not be killed, 3 typo controls must be flagged invalid, and `KNOWN_SURVIVORS` documents one expected survivor.\n+weakened controller set, persistence without decay. M14–M23 (P4a): statements of `Capacity.lean` weakened or altered, refuted by its `false_*` theorems. M24–M36 (P4b): the same for `WeightUpdate.lean`. M57, M58 (#27 follow-ups): `Capacity.preM_between` / `convex_weights_iff` statements, same three conditions. P5 adds 20 *definition* mutants M37–M56 (list `DEF_MUTANTS`; M37–M52 as ported, M53–M56 the asymmetric-ω offset mutants): a mutant is killed iff the mutated file fails to build, with no name-reference or parse error line anywhere, and a pre-declared closed-form VALUE probe fails (rewrite lemmas earn no credit; SPEC §11.3); 10 equivalence controls (`* 1`, `+ 0`, `id`, …) must not be killed, 3 typo controls must be flagged invalid, and `KNOWN_SURVIVORS` is empty (the former survivor S1 is the counted M55).\n \n `.lake/` is ignored by the root `.gitignore`. To reuse an existing Mathlib build instead of downloading the\n cache, hard-link another project's packages: `cp -al ../AIEFFreezeCore/.lake/packages .lake/packages`."
+    },
+    {
+      "sha": "236a82c6d975a88b6ac0a856e5957a96a2d9ab87",
+      "filename": "registry/artifacts_current.csv",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/b8404198bff62d77373ac2c19e988b0f90660aff/registry%2Fartifacts_current.csv",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/b8404198bff62d77373ac2c19e988b0f90660aff/registry%2Fartifacts_current.csv",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/registry%2Fartifacts_current.csv?ref=b8404198bff62d77373ac2c19e988b0f90660aff",
+      "patch": "@@ -971,7 +971,7 @@ worktree,lean/AIEFGateCore/AIEFGateCore/Pinned/ControllerFiberQuotient.lean,564d\n worktree,lean/AIEFGateCore/AIEFGateCore/RedTeam.lean,483bcf6e803d2f13c93e3a60d260e6c5df5fc0fb0a5429f1ebdb8a66886f90ca,34238,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEFGateCore/WeightUpdate.lean,d449ca2ceebcf640e5869cdf3bd3cfce4b8094f85b2e639d7024575d8354aa3e,32319,,not_in_snapshot\n worktree,lean/AIEFGateCore/AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt,a591e2fec97e530c76864218d7913c772bae87819da24f03c50a6c63a64c2dd1,2296,,not_in_snapshot\n-worktree,lean/AIEFGateCore/README.md,639a8026a3dbc01ea1e2a68de665577f00574327456ba0016ef3825471d1c528,10621,,not_in_snapshot\n+worktree,lean/AIEFGateCore/README.md,5e9947fd37cf0a549605ac9596af30ef51bad31e6c41a2cc914373e131d0132f,11013,,not_in_snapshot\n worktree,lean/AIEFGateCore/check_lean_gate.sh,9c2864682b8541abe8ba0c9daa496ed0909316bad71f04759dbb21d4128e1854,15054,,not_in_snapshot\n worktree,lean/AIEFGateCore/lake-manifest.json,94599bf6f8550e9d15ee4f674b6d7771e93ccf83fc3fd1f74978a50fe2b5da67,3146,,not_in_snapshot\n worktree,lean/AIEFGateCore/lakefile.toml,40f8df690288bfc789e0455dea403d94e09fd62663fdc1779b7dd7da21d4060e,365,,not_in_snapshot\n@@ -1044,7 +1044,7 @@ worktree,research/freezing/margins.json,7644bfd70e18bbe7b132f2f82dfdde0b51cd040e\n worktree,research/freezing/margins.py,104621694c044a718f37d73b63b9dac4f0a3aaa86182061889f5bb7601ada1a5,1205,,not_in_snapshot\n worktree,research/freezing/results.json,2ec8ef36f34bbf61283b7d94c7be08fb79dfb4822b4bd69d60044e23b901ef5b,7273,,not_in_snapshot\n worktree,research/freezing/run_log.txt,f7c2aee00703f6b79a32f6a1944166cecf1531ef162735d7f301948a94839b7d,6316,,not_in_snapshot\n-worktree,research/lean_gate/SPEC_P1_gate_identities.md,076c4a66a02e053cd61f466dad55241b88ffcc734f8b4651fb79e5fee80b480c,92966,,not_in_snapshot\n+worktree,research/lean_gate/SPEC_P1_gate_identities.md,ef8fb4e14d66a734c44f21cac2ee168e3e07dad453aa62551b7c22c7efed1254,93757,,not_in_snapshot\n worktree,research/lean_gate/lean_gate_crosscheck_v1.py,efa9690e971e60cea44d5c32e8f4cbc3102f01b9ad9acb7a61176f61db237e18,16735,,not_in_snapshot\n worktree,research/lean_gate/lean_mutation_check.py,4e23addd72ca311b8c90706a24a4665980d1491bed03076c1927114295cd4875,49884,,not_in_snapshot\n worktree,research/lean_gate/results/lean_gate_crosscheck_v1.json,0a42840213e40fd0ac504865257f04806b30735d9509dd30d50fe9e756ce5794,11151,,not_in_snapshot"
+    },
+    {
+      "sha": "0d70419df665e99a03854559e7aa8b49c9202723",
+      "filename": "research/lean_gate/SPEC_P1_gate_identities.md",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 4,
+      "changes": 10,
+      "blob_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/b8404198bff62d77373ac2c19e988b0f90660aff/research%2Flean_gate%2FSPEC_P1_gate_identities.md",
+      "raw_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/raw/b8404198bff62d77373ac2c19e988b0f90660aff/research%2Flean_gate%2FSPEC_P1_gate_identities.md",
+      "contents_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/research%2Flean_gate%2FSPEC_P1_gate_identities.md?ref=b8404198bff62d77373ac2c19e988b0f90660aff",
+      "patch": "@@ -693,7 +693,7 @@ negative control PASS, **13/13 mutants rejected**, every build rejection a REAL\n * The closed-form clique multiplier `λ_k`, finite-time departure from it, float64 error, `TIE_TOL`.\n * Engine-shaped versions of `false_drop_hc0`, `false_rel_x_only`, `false_rel_h_only` (§8.3).\n * The bridge covers K3 / `CCtrl` / `vCtrl` and the general incidence; no bridge to `lean/AIEFProofsKn` (K12).\n-* The mutation check is not run in CI (it needs a built Lean project and about 2 minutes locally).\n+* The mutation check was not run in CI when P3 landed. Since PR #27 it runs in CI: `.github/workflows/lean.yml`, step \"Lean-gate mutation check (AIEFGateCore only)\" on the required `AIEFGateCore` row (about 2 minutes locally at P3).\n * `R` symmetry / `B` symmetry invariance of the engine remain hypotheses (§7.4).\n * **AUD-RATELAW stays UNEXPLAINED.** P3 does not change any label, ERRATA entry or registry claim.\n \n@@ -727,7 +727,7 @@ Auditor Seat 002); the review is not part of this repository and is not a librar\n | `gateM_nonneg`, `gateM_le_input`, `gateM_symm`, `gateM_diag` | as named (`EngineGate` not needed) | `gate_nonneg`, `kernel_le_input`, `gate_symmetric`, `gate_zero_diag` |\n | `gateM_sub_of_rowSum_eq` | equal row sums, zero diagonals | `gate_difference_of_rowSum_eq` |\n | `stepM_row_le_cap`, `stepM_nonneg`, `gateM_stepM` | `EngineGate p`; **no symmetry hypothesis on `D`, `Bm`** | (new, on `stepM`) |\n-| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form |\n+| `preM_eq_convex`, `symM_eq_convex`, `stepM_eq_gateM_convex` | `γ ≠ 0` | port bridge to the cycle-003 proposal form. Despite the names these are **affine** identities: the weights `1 − γdt`, `γdt` are a convex pair only when `0 ≤ γdt ≤ 1` (`convex_weights_iff`, `preM_between`, PR #27). Names kept for the port. |\n \n The `0 < ε` / `0 ≤ ε` scope is exactly what is proved: `0 ≤ ε` for the kernel row bound only; everything that\n involves the guard goes through `EngineGate`, hence `0 < ε`. \"`0 < ε` can be relaxed\" is **not** claimed in general.\n@@ -781,7 +781,7 @@ script, and no mutant, statement or proof was changed to make it pass.\n   the four `rat_*` counterexamples are ported only as `Fin 2` matrix witnesses, not as the 12-node engine state.\n * No trajectory statement: one step, exact reals, chosen `Fin 2` inputs; nothing about float64 or `TIE_TOL`.\n * The gate is not nonexpansive (`false_gate_nonexpansive`); no Lipschitz bound is claimed.\n-* The mutation check is not run in CI (it needs a built Lean project and about 5 minutes locally).\n+* The mutation check was not run in CI when P4a landed. Since PR #27 it runs in CI (see §8.5; about 5 minutes locally at P4a).\n * **AUD-RATELAW stays UNEXPLAINED.**\n \n \n@@ -954,6 +954,8 @@ before the 2026-11-11 refresh the pin was 23 + 16 = 39 on the branch and 36 + 16\n \n ### 11.3 Mutation check: M37–M52 (16 definition mutants)\n \n+*(Written before the 2026-11-11 refresh; the counts in this section and in §11.4 (16 definition, 39 in total, 9 equivalence controls, one documented survivor) are superseded by §11.7: 20 definition mutants M37–M56, 38 statement mutants, 58 in total, 10 equivalence controls, no survivor.)*\n+\n Why a new kind. M1–M36 change a theorem *statement* and are refuted by a proved negation theorem. The survivors reported for cycle 004 and cycle 013 are wrong\n *implementations* (a different delay index, a swapped `i j`, a one-sided `reported`, …): a mutated definition has no statement to refute, so steps (b)/(c) of\n the original rule cannot apply.\n@@ -1059,7 +1061,7 @@ P5: `HistoryBuffer.lean`, `PhaseIncrement.lean`, `PhaseCoherence.lean`). The dec\n * Probes use `D ∈ {1, 2}`, `Fin 2` and phase multiples of `π/2`; the general statements cover all `D`, `V`, `ω`, `τ`.\n * The generic bounds (unit disk, drive range, row envelope) survive phase mutants by nature (auditor note N4); they are not evidence about phases.\n * `α = 1/2` probes cannot see an `α ↔ 1−α` swap; `probe_alpha_quarter` and `innovation_engine_convention` do.\n-* No Lean-side statement pin (Lea-style statement hash) in CI; the mutation check is not run in CI (a parallel auditor branch proposes adding it).\n+* No Lean-side statement pin (Lea-style statement hash) in CI; the mutation check runs in CI since PR #27 (`.github/workflows/lean.yml`, step \"Lean-gate mutation check (AIEFGateCore only)\"; PR #28 pins that step with a guard test). The Lean-side statement pin is still open.\n * **AUD-RATELAW stays UNEXPLAINED.**\n \n ### 11.7 Merge refresh onto `main` and auditor notes N1/N2 (2026-11-11, Europe/Tirane)"
+    }
+  ]
+}
