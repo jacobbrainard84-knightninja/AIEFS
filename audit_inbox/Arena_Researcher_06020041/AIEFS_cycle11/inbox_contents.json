@@ -1,0 +1,866 @@
+[
+  {
+    "name": "2026-10-31_grok-bot_merged-branch-salvage.md",
+    "path": "audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md",
+    "sha": "86363de3f176d5b6e86d976894d97cb6815245be",
+    "size": 5833,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/86363de3f176d5b6e86d976894d97cb6815245be",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/86363de3f176d5b6e86d976894d97cb6815245be",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-10-31_grok-bot_merged-branch-salvage.md"
+    }
+  },
+  {
+    "name": "2026-10-31_researcher026_full-state-review.md",
+    "path": "audit_inbox/2026-10-31_researcher026_full-state-review.md",
+    "sha": "5bc1d4dfb9b5ca86a4eabbe23984bc81334fc182",
+    "size": 20705,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-10-31_researcher026_full-state-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-10-31_researcher026_full-state-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/5bc1d4dfb9b5ca86a4eabbe23984bc81334fc182",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-10-31_researcher026_full-state-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-10-31_researcher026_full-state-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/5bc1d4dfb9b5ca86a4eabbe23984bc81334fc182",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-10-31_researcher026_full-state-review.md"
+    }
+  },
+  {
+    "name": "2026-11-06_auditor-seat-002_salvage-branch-delete-list.md",
+    "path": "audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md",
+    "sha": "d578e753d0a82cddacfd622447d876df8ad9e111",
+    "size": 4298,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d578e753d0a82cddacfd622447d876df8ad9e111",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d578e753d0a82cddacfd622447d876df8ad9e111",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-06_auditor-seat-002_salvage-branch-delete-list.md"
+    }
+  },
+  {
+    "name": "2026-11-08_arena-chronicler_doc-drift-report.md",
+    "path": "audit_inbox/2026-11-08_arena-chronicler_doc-drift-report.md",
+    "sha": "d973964d1213f611ccb445958892e65a14305268",
+    "size": 11858,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_arena-chronicler_doc-drift-report.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_arena-chronicler_doc-drift-report.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d973964d1213f611ccb445958892e65a14305268",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_arena-chronicler_doc-drift-report.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_arena-chronicler_doc-drift-report.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d973964d1213f611ccb445958892e65a14305268",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_arena-chronicler_doc-drift-report.md"
+    }
+  },
+  {
+    "name": "2026-11-08_arena-chronicler_project-chronicler",
+    "path": "audit_inbox/2026-11-08_arena-chronicler_project-chronicler",
+    "sha": "ea6b327f4399f5d0f4894b019e80a9eedbb1dc0b",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_arena-chronicler_project-chronicler?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-08_arena-chronicler_project-chronicler",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/ea6b327f4399f5d0f4894b019e80a9eedbb1dc0b",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_arena-chronicler_project-chronicler?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/ea6b327f4399f5d0f4894b019e80a9eedbb1dc0b",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-08_arena-chronicler_project-chronicler"
+    }
+  },
+  {
+    "name": "2026-11-08_auditor-seat-002_gpt-6-review.md",
+    "path": "audit_inbox/2026-11-08_auditor-seat-002_gpt-6-review.md",
+    "sha": "d600f42e6433fe4bcd929aec76b2d6e78718abaf",
+    "size": 14933,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_auditor-seat-002_gpt-6-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_gpt-6-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d600f42e6433fe4bcd929aec76b2d6e78718abaf",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_gpt-6-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_auditor-seat-002_gpt-6-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d600f42e6433fe4bcd929aec76b2d6e78718abaf",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_gpt-6-review.md"
+    }
+  },
+  {
+    "name": "2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "path": "audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "sha": "35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+    "size": 18284,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/35e3c5955ac69f867b584aa4e472dfc2dc1616ec",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_researcher-040282-intake.md"
+    }
+  },
+  {
+    "name": "2026-11-08_auditor-seat-002_workspace-notes",
+    "path": "audit_inbox/2026-11-08_auditor-seat-002_workspace-notes",
+    "sha": "633797ac50b1d1505c7aa4402cb25382aeeb7caa",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_auditor-seat-002_workspace-notes?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_workspace-notes",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/633797ac50b1d1505c7aa4402cb25382aeeb7caa",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_auditor-seat-002_workspace-notes?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/633797ac50b1d1505c7aa4402cb25382aeeb7caa",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-08_auditor-seat-002_workspace-notes"
+    }
+  },
+  {
+    "name": "2026-11-08_gpt-6_northstar-review.md",
+    "path": "audit_inbox/2026-11-08_gpt-6_northstar-review.md",
+    "sha": "1580c4de6431d312a3e01e318657832c494ad8e0",
+    "size": 15838,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_northstar-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_northstar-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/1580c4de6431d312a3e01e318657832c494ad8e0",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_gpt-6_northstar-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_northstar-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/1580c4de6431d312a3e01e318657832c494ad8e0",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_northstar-review.md"
+    }
+  },
+  {
+    "name": "2026-11-08_gpt-6_v4-1-input-trust-boundary.md",
+    "path": "audit_inbox/2026-11-08_gpt-6_v4-1-input-trust-boundary.md",
+    "sha": "1b51573f1cf2a108bebb5f0bb3a9d127c1031eb6",
+    "size": 8468,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1-input-trust-boundary.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1-input-trust-boundary.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/1b51573f1cf2a108bebb5f0bb3a9d127c1031eb6",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1-input-trust-boundary.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1-input-trust-boundary.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/1b51573f1cf2a108bebb5f0bb3a9d127c1031eb6",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1-input-trust-boundary.md"
+    }
+  },
+  {
+    "name": "2026-11-08_gpt-6_v4-1-validator-forged-cohort.md",
+    "path": "audit_inbox/2026-11-08_gpt-6_v4-1-validator-forged-cohort.md",
+    "sha": "a5ff802c60c63047c9eeb5b72bdc16804b90e689",
+    "size": 9199,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1-validator-forged-cohort.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1-validator-forged-cohort.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/a5ff802c60c63047c9eeb5b72bdc16804b90e689",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1-validator-forged-cohort.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1-validator-forged-cohort.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/a5ff802c60c63047c9eeb5b72bdc16804b90e689",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1-validator-forged-cohort.md"
+    }
+  },
+  {
+    "name": "2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md",
+    "path": "audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md",
+    "sha": "4541a67e67c2f8df1beca024d7daa6d371c3c620",
+    "size": 10508,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/4541a67e67c2f8df1beca024d7daa6d371c3c620",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/4541a67e67c2f8df1beca024d7daa6d371c3c620",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-negcontrol.md"
+    }
+  },
+  {
+    "name": "2026-11-08_gpt-6_v4-1_full-schema-reproducer.py",
+    "path": "audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py",
+    "sha": "3247a67f85cf17662c0439273c9048a2f515c110",
+    "size": 16978,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/3247a67f85cf17662c0439273c9048a2f515c110",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/3247a67f85cf17662c0439273c9048a2f515c110",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_full-schema-reproducer.py"
+    }
+  },
+  {
+    "name": "2026-11-08_gpt-6_v4-1_validator-only-reproducer.py",
+    "path": "audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py",
+    "sha": "0b76930b3f6f3adcdb21d40506681185eb64347c",
+    "size": 6363,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0b76930b3f6f3adcdb21d40506681185eb64347c",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0b76930b3f6f3adcdb21d40506681185eb64347c",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-08_gpt-6_v4-1_validator-only-reproducer.py"
+    }
+  },
+  {
+    "name": "2026-11-08_researcher-040282",
+    "path": "audit_inbox/2026-11-08_researcher-040282",
+    "sha": "9850e0ebcc2821c2027063b752325853bcd4e607",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_researcher-040282?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-08_researcher-040282",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/9850e0ebcc2821c2027063b752325853bcd4e607",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-08_researcher-040282?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/9850e0ebcc2821c2027063b752325853bcd4e607",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-08_researcher-040282"
+    }
+  },
+  {
+    "name": "2026-11-09_arena-chronicler_corrigenda.md",
+    "path": "audit_inbox/2026-11-09_arena-chronicler_corrigenda.md",
+    "sha": "65cf771128c4f806cae08ff21d654a1c293c7bec",
+    "size": 8258,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_arena-chronicler_corrigenda.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_arena-chronicler_corrigenda.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/65cf771128c4f806cae08ff21d654a1c293c7bec",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_arena-chronicler_corrigenda.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_arena-chronicler_corrigenda.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/65cf771128c4f806cae08ff21d654a1c293c7bec",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_arena-chronicler_corrigenda.md"
+    }
+  },
+  {
+    "name": "2026-11-09_auditor-seat-002_arena-chronicler-review.md",
+    "path": "audit_inbox/2026-11-09_auditor-seat-002_arena-chronicler-review.md",
+    "sha": "015429247e0453915cc8b3cf0a6c19d0de842bca",
+    "size": 10907,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_auditor-seat-002_arena-chronicler-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_arena-chronicler-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/015429247e0453915cc8b3cf0a6c19d0de842bca",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_arena-chronicler-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_auditor-seat-002_arena-chronicler-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/015429247e0453915cc8b3cf0a6c19d0de842bca",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_arena-chronicler-review.md"
+    }
+  },
+  {
+    "name": "2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md",
+    "path": "audit_inbox/2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md",
+    "sha": "def1e1f3ed1e143b98e715135b513d2ce56cb3ee",
+    "size": 3649,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/def1e1f3ed1e143b98e715135b513d2ce56cb3ee",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/def1e1f3ed1e143b98e715135b513d2ce56cb3ee",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_chronicler-corrigenda-review.md"
+    }
+  },
+  {
+    "name": "2026-11-09_auditor-seat-002_v41-p1-reproduction",
+    "path": "audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction",
+    "sha": "9f7fdab69de6afda71e7b4d9f9d4b2eea310187b",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/9f7fdab69de6afda71e7b4d9f9d4b2eea310187b",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/9f7fdab69de6afda71e7b4d9f9d4b2eea310187b",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-09_auditor-seat-002_v41-p1-reproduction"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_s01-bundle-preflight.py",
+    "path": "audit_inbox/2026-11-09_gpt-6_s01-bundle-preflight.py",
+    "sha": "3773555001be1895eb14e16b3ad09fcd0721ed1d",
+    "size": 6103,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_s01-bundle-preflight.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_s01-bundle-preflight.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/3773555001be1895eb14e16b3ad09fcd0721ed1d",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_s01-bundle-preflight.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_s01-bundle-preflight.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/3773555001be1895eb14e16b3ad09fcd0721ed1d",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_s01-bundle-preflight.py"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt",
+    "sha": "bad661941d5dca119e55ae7403924e18863b31be",
+    "size": 2777,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/bad661941d5dca119e55ae7403924e18863b31be",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/bad661941d5dca119e55ae7403924e18863b31be",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-evidence.txt"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py",
+    "sha": "06cc0ba88e084d3d81f0bd05d827c305b31c9d6b",
+    "size": 7906,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/06cc0ba88e084d3d81f0bd05d827c305b31c9d6b",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/06cc0ba88e084d3d81f0bd05d827c305b31c9d6b",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-reproducer.py"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_provenance-mutation-review.md",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md",
+    "sha": "2dbeea9b64c9022e693b6d0b0757cb9fb06954b6",
+    "size": 10740,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/2dbeea9b64c9022e693b6d0b0757cb9fb06954b6",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/2dbeea9b64c9022e693b6d0b0757cb9fb06954b6",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_provenance-mutation-review.md"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt",
+    "sha": "d57e007886872f9a1f90713887ce110bfe1e99a0",
+    "size": 2879,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d57e007886872f9a1f90713887ce110bfe1e99a0",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/d57e007886872f9a1f90713887ce110bfe1e99a0",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval-evidence.txt"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md",
+    "sha": "f4ffb71adf14f581b3f736e8d7be871d28de88f5",
+    "size": 5129,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/f4ffb71adf14f581b3f736e8d7be871d28de88f5",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/f4ffb71adf14f581b3f736e8d7be871d28de88f5",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-artifact-retrieval.md"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md",
+    "sha": "87afb154b977c7cc40f7455cb4fc5ff95db38e57",
+    "size": 1991,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/87afb154b977c7cc40f7455cb4fc5ff95db38e57",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/87afb154b977c7cc40f7455cb4fc5ff95db38e57",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-line-citation-correction.md"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt",
+    "sha": "6b97fad7a60a1e9bc0c57b31e637f804b799aff0",
+    "size": 512,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/6b97fad7a60a1e9bc0c57b31e637f804b799aff0",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/6b97fad7a60a1e9bc0c57b31e637f804b799aff0",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_s01-preflight-negative.txt"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md",
+    "sha": "cf5f52ef2bb40f64e3541835232ac32a65eda09c",
+    "size": 11976,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/cf5f52ef2bb40f64e3541835232ac32a65eda09c",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/cf5f52ef2bb40f64e3541835232ac32a65eda09c",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-design-review.md"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt",
+    "sha": "0eee9a48b76ef9a0db2e3968725be456d6ec8ddc",
+    "size": 4351,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0eee9a48b76ef9a0db2e3968725be456d6ec8ddc",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0eee9a48b76ef9a0db2e3968725be456d6ec8ddc",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression-evidence.txt"
+    }
+  },
+  {
+    "name": "2026-11-09_gpt-6_v4-1_trust-anchor-regression.py",
+    "path": "audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression.py",
+    "sha": "62edde4fdd89c30d95a32a73d8c13661cd5c12fa",
+    "size": 7784,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/62edde4fdd89c30d95a32a73d8c13661cd5c12fa",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/62edde4fdd89c30d95a32a73d8c13661cd5c12fa",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-09_gpt-6_v4-1_trust-anchor-regression.py"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_check-study-entrypoints.py",
+    "path": "audit_inbox/2026-11-10_gpt-6_check-study-entrypoints.py",
+    "sha": "e10bb1c7edfd04f0267273f665327962475bbb26",
+    "size": 2802,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_check-study-entrypoints.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_check-study-entrypoints.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e10bb1c7edfd04f0267273f665327962475bbb26",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_check-study-entrypoints.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_check-study-entrypoints.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e10bb1c7edfd04f0267273f665327962475bbb26",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_check-study-entrypoints.py"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_check_study_entrypoints.py",
+    "path": "audit_inbox/2026-11-10_gpt-6_check_study_entrypoints.py",
+    "sha": "e10bb1c7edfd04f0267273f665327962475bbb26",
+    "size": 2802,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_check_study_entrypoints.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_check_study_entrypoints.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e10bb1c7edfd04f0267273f665327962475bbb26",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_check_study_entrypoints.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_check_study_entrypoints.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e10bb1c7edfd04f0267273f665327962475bbb26",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_check_study_entrypoints.py"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_cycle004-ema-delay-review.md",
+    "path": "audit_inbox/2026-11-10_gpt-6_cycle004-ema-delay-review.md",
+    "sha": "e57150a8e38d55da5f9c110847d505d04a72ed18",
+    "size": 11033,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_cycle004-ema-delay-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_cycle004-ema-delay-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e57150a8e38d55da5f9c110847d505d04a72ed18",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_cycle004-ema-delay-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_cycle004-ema-delay-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e57150a8e38d55da5f9c110847d505d04a72ed18",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_cycle004-ema-delay-review.md"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_lean-p3-p4a-review.md",
+    "path": "audit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md",
+    "sha": "73f5c4702657137f78fd7c5fa355f7600e39f638",
+    "size": 9918,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/73f5c4702657137f78fd7c5fa355f7600e39f638",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/73f5c4702657137f78fd7c5fa355f7600e39f638",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_lean-p3-p4a-review.md"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_p4b-weight-update-review.md",
+    "path": "audit_inbox/2026-11-10_gpt-6_p4b-weight-update-review.md",
+    "sha": "8288c5f642020dad67d4162f0d929eb48ec669f6",
+    "size": 9491,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_p4b-weight-update-review.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_p4b-weight-update-review.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/8288c5f642020dad67d4162f0d929eb48ec669f6",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_p4b-weight-update-review.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_p4b-weight-update-review.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/8288c5f642020dad67d4162f0d929eb48ec669f6",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_p4b-weight-update-review.md"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_study-entrypoint-checker-tests.txt",
+    "path": "audit_inbox/2026-11-10_gpt-6_study-entrypoint-checker-tests.txt",
+    "sha": "ec9310110de3a889c213122ef6c9fb2142372e78",
+    "size": 316,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_study-entrypoint-checker-tests.txt?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-checker-tests.txt",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/ec9310110de3a889c213122ef6c9fb2142372e78",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-checker-tests.txt",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_study-entrypoint-checker-tests.txt?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/ec9310110de3a889c213122ef6c9fb2142372e78",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-checker-tests.txt"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt",
+    "path": "audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt",
+    "sha": "0ca46b0434da1159906cebbcd160170793489293",
+    "size": 2336,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0ca46b0434da1159906cebbcd160170793489293",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0ca46b0434da1159906cebbcd160170793489293",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity-evidence.txt"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_study-entrypoint-integrity.md",
+    "path": "audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md",
+    "sha": "06d4f5b3217ac64fbe2b9c34c2603ad9138b461f",
+    "size": 6849,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/06d4f5b3217ac64fbe2b9c34c2603ad9138b461f",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/06d4f5b3217ac64fbe2b9c34c2603ad9138b461f",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_study-entrypoint-integrity.md"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_test-study-entrypoints.py",
+    "path": "audit_inbox/2026-11-10_gpt-6_test-study-entrypoints.py",
+    "sha": "0db012ab180f1dcd7f34c3613e19157b98e83e12",
+    "size": 1439,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_test-study-entrypoints.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_test-study-entrypoints.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0db012ab180f1dcd7f34c3613e19157b98e83e12",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_test-study-entrypoints.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_test-study-entrypoints.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0db012ab180f1dcd7f34c3613e19157b98e83e12",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_test-study-entrypoints.py"
+    }
+  },
+  {
+    "name": "2026-11-10_gpt-6_test_check_study_entrypoints.py",
+    "path": "audit_inbox/2026-11-10_gpt-6_test_check_study_entrypoints.py",
+    "sha": "0db012ab180f1dcd7f34c3613e19157b98e83e12",
+    "size": 1439,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_test_check_study_entrypoints.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_test_check_study_entrypoints.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0db012ab180f1dcd7f34c3613e19157b98e83e12",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-10_gpt-6_test_check_study_entrypoints.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-10_gpt-6_test_check_study_entrypoints.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0db012ab180f1dcd7f34c3613e19157b98e83e12",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-10_gpt-6_test_check_study_entrypoints.py"
+    }
+  },
+  {
+    "name": "2026-11-11_auditor-seat-002_lean-candidate-reviews",
+    "path": "audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews",
+    "sha": "c03cb5d235297ec6d442ab326c6662d6ff7bdec5",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/c03cb5d235297ec6d442ab326c6662d6ff7bdec5",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/c03cb5d235297ec6d442ab326c6662d6ff7bdec5",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews"
+    }
+  },
+  {
+    "name": "2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md",
+    "path": "audit_inbox/2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md",
+    "sha": "33ac3e9a88d2815717a6ecec9e26a199b22328ee",
+    "size": 3781,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/33ac3e9a88d2815717a6ecec9e26a199b22328ee",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/33ac3e9a88d2815717a6ecec9e26a199b22328ee",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-11_gpt-6_lean-mutation-ci-doc-drift.md"
+    }
+  },
+  {
+    "name": "2026-11-13_gpt-6_p5-delay-buffer-audit.md",
+    "path": "audit_inbox/2026-11-13_gpt-6_p5-delay-buffer-audit.md",
+    "sha": "76580262cb80648223987ce39dc2ba1662a6bf37",
+    "size": 6881,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-13_gpt-6_p5-delay-buffer-audit.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-13_gpt-6_p5-delay-buffer-audit.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/76580262cb80648223987ce39dc2ba1662a6bf37",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-13_gpt-6_p5-delay-buffer-audit.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-13_gpt-6_p5-delay-buffer-audit.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/76580262cb80648223987ce39dc2ba1662a6bf37",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-13_gpt-6_p5-delay-buffer-audit.md"
+    }
+  },
+  {
+    "name": "2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md",
+    "path": "audit_inbox/2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md",
+    "sha": "fcde67d5fda765a3499a4c0b61b65bb92b9881be",
+    "size": 8289,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/fcde67d5fda765a3499a4c0b61b65bb92b9881be",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/fcde67d5fda765a3499a4c0b61b65bb92b9881be",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md"
+    }
+  },
+  {
+    "name": "2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-review",
+    "path": "audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-review",
+    "sha": "c994d78649cb8b6f936b853a53065396229b9569",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-review?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-review",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/c994d78649cb8b6f936b853a53065396229b9569",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-review?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/c994d78649cb8b6f936b853a53065396229b9569",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-review"
+    }
+  },
+  {
+    "name": "2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review",
+    "path": "audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review",
+    "sha": "86d9633b362c8370ca92595c7a2a389dc9c9e8cc",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/86d9633b362c8370ca92595c7a2a389dc9c9e8cc",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/86d9633b362c8370ca92595c7a2a389dc9c9e8cc",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review"
+    }
+  },
+  {
+    "name": "2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md",
+    "path": "audit_inbox/2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md",
+    "sha": "6cb01bba99ac9643c22170f3894915fbc6c04974",
+    "size": 24576,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/6cb01bba99ac9643c22170f3894915fbc6c04974",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/6cb01bba99ac9643c22170f3894915fbc6c04974",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/2026-11-15_gpt-6_check-modes-bounded-streaming-redteam.md"
+    }
+  },
+  {
+    "name": "Arena_Researcher_06020041",
+    "path": "audit_inbox/Arena_Researcher_06020041",
+    "sha": "8129a1f4836f513c5c117cc247ac1cd8c821454f",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/Arena_Researcher_06020041?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/Arena_Researcher_06020041",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/8129a1f4836f513c5c117cc247ac1cd8c821454f",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/Arena_Researcher_06020041?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/8129a1f4836f513c5c117cc247ac1cd8c821454f",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/Arena_Researcher_06020041"
+    }
+  },
+  {
+    "name": "README.md",
+    "path": "audit_inbox/README.md",
+    "sha": "efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+    "size": 1982,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/README.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/README.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/README.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/efa9ecc20d90c81f58071c4d8aab52537c89d15c",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/README.md"
+    }
+  },
+  {
+    "name": "TRIAGE.md",
+    "path": "audit_inbox/TRIAGE.md",
+    "sha": "251f4a3744d691aacc97b44607587913c6368892",
+    "size": 39489,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/TRIAGE.md?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/TRIAGE.md",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/251f4a3744d691aacc97b44607587913c6368892",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/TRIAGE.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/TRIAGE.md?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/251f4a3744d691aacc97b44607587913c6368892",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/TRIAGE.md"
+    }
+  },
+  {
+    "name": "briefing",
+    "path": "audit_inbox/briefing",
+    "sha": "96c60b133673bd6a132df557068542171ff7502d",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/briefing?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/briefing",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/96c60b133673bd6a132df557068542171ff7502d",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/briefing?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/96c60b133673bd6a132df557068542171ff7502d",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/briefing"
+    }
+  },
+  {
+    "name": "check_study_entrypoints.py",
+    "path": "audit_inbox/check_study_entrypoints.py",
+    "sha": "e10bb1c7edfd04f0267273f665327962475bbb26",
+    "size": 2802,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/check_study_entrypoints.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/check_study_entrypoints.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e10bb1c7edfd04f0267273f665327962475bbb26",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/check_study_entrypoints.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/check_study_entrypoints.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/e10bb1c7edfd04f0267273f665327962475bbb26",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/check_study_entrypoints.py"
+    }
+  },
+  {
+    "name": "salvage",
+    "path": "audit_inbox/salvage",
+    "sha": "f734ce35aefed70a2b6bdc8e70944e05dcb2a3fd",
+    "size": 0,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/salvage?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/salvage",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/f734ce35aefed70a2b6bdc8e70944e05dcb2a3fd",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/salvage?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/trees/f734ce35aefed70a2b6bdc8e70944e05dcb2a3fd",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/tree/audit-inbox/audit_inbox/salvage"
+    }
+  },
+  {
+    "name": "test_check_study_entrypoints.py",
+    "path": "audit_inbox/test_check_study_entrypoints.py",
+    "sha": "0db012ab180f1dcd7f34c3613e19157b98e83e12",
+    "size": 1439,
+    "url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/test_check_study_entrypoints.py?ref=audit-inbox",
+    "html_url": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/test_check_study_entrypoints.py",
+    "git_url": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0db012ab180f1dcd7f34c3613e19157b98e83e12",
+    "download_url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/audit_inbox/test_check_study_entrypoints.py",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/contents/audit_inbox/test_check_study_entrypoints.py?ref=audit-inbox",
+      "git": "https://api.github.com/repos/jacobbrainard84-knightninja/AIEFS/git/blobs/0db012ab180f1dcd7f34c3613e19157b98e83e12",
+      "html": "https://github.com/jacobbrainard84-knightninja/AIEFS/blob/audit-inbox/audit_inbox/test_check_study_entrypoints.py"
+    }
+  }
+]

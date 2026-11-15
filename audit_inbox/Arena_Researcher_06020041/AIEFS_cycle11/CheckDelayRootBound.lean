@@ -1,0 +1,4 @@
+import AIEFGateCore.DelayRootBound
+#print axioms AIEFGate.DelayRootBound.transverse_root_inside
+#print axioms AIEFGate.DelayRootBound.complete_graph_transverse_root_inside
+#print axioms AIEFGate.DelayRootBound.nonstrict_boundary_counterexample
