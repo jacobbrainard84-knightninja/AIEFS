@@ -3,7 +3,7 @@
 Checks that the module is imported by the library root and hash-pinned, that it has no escape hatches, that the
 lock hypothesis is a lock of one pair (i, j) (not the frozen `u n i = 0` of the Arena cycle 3/5 deposit, and not
 an all-nodes lock), that the periodic theorem carries the period condition, that every named theorem exists with a
-`#print axioms` line, that mutants M85-M91 and control E16 are registered, and recomputes the engine-alpha step
+`#print axioms` line, that mutants M85-M92 and control E16 are registered, and recomputes the engine-alpha step
 counts quoted in the docs from dt and the omegas parsed out of the engine source.
 
 Run: /workspace/venv-pt/bin/pytest -q research/lean_gate/tests/test_lean_gate_freqlock.py
@@ -22,8 +22,9 @@ SRC = F.read_text()
 THEOREMS = ["input_step_of_common_increment", "coherenceInput_constant_of_periodicPairRate",
             "coherenceInput_constant_of_pairLock", "coherenceTrace_error_of_pairLock",
             "coherenceTrace_norm_of_pairLock", "reported_of_pairLock", "probe_unitRate_nonzero",
-            "frequencyLock_nonzero_rate", "common_rate_input_not_constant", "common_rate_input_ne_zero",
-            "periodic_rate_input_constant", "probe_altU_not_constant", "nonperiodic_rate_refuted",
+            "pairLock_nonzero_rate", "common_rate_input_not_constant", "common_rate_input_ne_zero",
+            "periodic_rate_input_constant", "probe_altU_not_constant", "probe_altU_period_two",
+            "probe_unitRate_constant", "nonperiodic_rate_refuted",
             "probe_pairLock_one_step", "pairLock_factor_two_refuted", "pairLock_norm_factor_two_refuted",
             "half_lock_refuted", "delay_start_refuted"]
 PRINTED = [t for t in THEOREMS if t != "common_rate_input_ne_zero"]
@@ -74,7 +75,7 @@ def test_lock_is_pairwise_not_frozen_not_global():
         assert PAIR_LOCK in head(t), t
     assert "(hn : N + d ≤ n)" in head("coherenceInput_constant_of_pairLock")
     assert "(hij : i ≠ j)" in head("reported_of_pairLock")
-    assert "unitRate 0 0 ≠ 0" in head("frequencyLock_nonzero_rate")   # N3: nonzero rate is in the statement
+    assert "unitRate 0 0 ≠ 0" in head("pairLock_nonzero_rate")   # N3: nonzero rate is in the statement
 
 
 def test_conclusions_exact():
@@ -94,7 +95,7 @@ def test_mutants_registered():
     import lean_mutation_check as mc
     st = [m for m in mc.MUTANTS if m[1] == "FrequencyLock.lean"]
     de = [m for m in mc.DEF_MUTANTS if m[1] == "FrequencyLock.lean"]
-    assert [m[0].split("_")[0] for m in st] == ["M85", "M86", "M87", "M88", "M89"]
+    assert [m[0].split("_")[0] for m in st] == ["M85", "M86", "M87", "M88", "M89", "M92"]
     assert [m[0].split("_")[0] for m in de] == ["M90", "M91"]
     for name, f, thm, edits, closure, term, _ in st:
         assert mc.mutate(SRC, thm, edits) != SRC, name               # edit inside that statement only

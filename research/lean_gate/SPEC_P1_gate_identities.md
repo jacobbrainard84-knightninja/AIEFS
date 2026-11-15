@@ -1174,20 +1174,21 @@ equal the same increment. Nothing is assumed about other nodes; `coherenceInput 
 * `coherenceTrace_norm_of_pairLock`: with `0 ≤ α ≤ 1` and `‖C0‖ ≤ 1`, `1 − 2α^k ≤ ‖C (N+d+k) i j‖`.
   (`α ≤ 1` enters through `coherenceTrace_unitDisk`; for `α > 1` the bound is trivially true.)
 * `reported_of_pairLock`: for `i ≠ j`, `1 − 2α^k ≤ reported (C (N+d+k)) i j`.
-* `frequencyLock_nonzero_rate` (N3): `unitRate 0 0 ≠ 0` is part of the statement, and the input is constant from
+* `pairLock_nonzero_rate` (N3): `unitRate 0 0 ≠ 0` is part of the statement, and the input is constant from
   step 3 at that rate, so the hypothesis is not only the frozen case.
 * `common_rate_input_not_constant`, `common_rate_input_ne_zero`: delay 1, both nodes at rate `π, 0, π, …`: the input
-  flips sign each step and is nonzero. "The pair moves together" is not enough; `c n = c (n − d)` is what is needed.
+  flips sign each step and is nonzero. "The pair moves together" is not enough. `c n = c (n − d)` is sufficient, not necessary: the exact condition is
+  `c n ≡ c (n − d)` modulo `2π` (Researcher 001's N1 on `e50102c`: delay 1, rate `2π, 0, 2π, …` keeps the input constant).
 
 Witnesses used by the mutants: `probe_pairLock_one_step` (d = 0, α = 1/2, `C 1 0 1 = 0`, reported `0`),
 `pairLock_factor_two_refuted` and `pairLock_norm_factor_two_refuted` (the factor `2` is attained, `1 − α^k` is false),
 `half_lock_refuted` (only node `i` locked: input changes), `delay_start_refuted` (constant from `N`, not `N + d`, is
-false), `nonperiodic_rate_refuted` (no period condition: false), value probes `probe_unitRate_nonzero` and
-`probe_altU_not_constant`.
+false), `nonperiodic_rate_refuted` (no period condition: false), value probes `probe_unitRate_nonzero`,
+`probe_altU_not_constant`, `probe_altU_period_two` and `probe_unitRate_constant`.
 
 How this relates to O1 (`freezing/REPORT.md`, cluster locking; N6): O1 predicts that pairs inside a frequency
 cluster lock (`R → 1`) and cross-cluster pairs stay below `R_c`. This section proves only a consequence of the first
-half: IF a pair is locked, its reported coherence tends to `1`. It does not prove that any engine pair locks and says
+half: IF a pair is locked and `α < 1`, its reported coherence tends to `1` (at `α = 1` the bound `1 − 2α^k = −1` says nothing). It does not prove that any engine pair locks and says
 nothing about cross-cluster pairs. `reported → 1` means a constant phase difference (phase-locking value `1`), not
 equal phases.
 
@@ -1201,16 +1202,26 @@ and the same term failing on the unmutated statement:
 * M87 `coherenceInput_constant_of_pairLock` from `N` instead of `N + d` (`delay_start_refuted`, d = 2: `−1` vs `1`).
 * M88 `coherenceInput_constant_of_pairLock` with only node `i` locked (`half_lock_refuted`).
 * M89 `coherenceInput_constant_of_periodicPairRate` with the period condition dropped (`nonperiodic_rate_refuted`).
+* M92 `coherenceInput_constant_of_periodicPairRate` from `N` instead of `N + d` (`delay_start_refuted` at the
+  constant rate `π/2`; Researcher 001's N6 on `e50102c`). M87 covers only the constant-rate corollary.
 
 Definition mutants (killed by value probes): M90 `unitRate := 0` (`probe_unitRate_nonzero`), M91 `altU` constant `π`
 (`probe_altU_not_constant`). Equivalence control E16 `unitRate := 5` must NOT be killed.
 
-### 14.4 Results (local, 2026-11-14)
+Value probes `VP_FL` (N2 on `e50102c`): the witness theorems themselves cannot be probes (the P5 test requires
+value probes to be `probe_*` closed-form facts, so a rewrite lemma can never earn a kill). Instead two value probes pin
+the shape they rely on: `probe_altU_period_two` (`altU 2 1 = altU 0 0 ∧ altU 3 1 = altU 1 0`: period `2`, same at
+both nodes) and `probe_unitRate_constant` (`unitRate 7 1 = unitRate 0 0`). A definition edit with period 3, a
+node-dependent `altU` or a time-dependent `unitRate` now fails a value probe. They are added to `VP_FL`, which makes
+the equivalence and typo controls stricter; E16 (`unitRate := 5`) still stays not killed. M90/M91 keep their pins.
 
-`check_lean_gate.sh` (SKIP_CACHE=1): PASS, 818 project declarations audited, build warnings 0, standard axioms
-only. `lean_mutation_check.py` full run: PASS, statement mutants rejected 46/46, definition mutants killed 27/27,
-total 73/73 (M85–M91 all caught for the reasons in §14.3), equivalence controls not killed 12/12 (E16 included),
+### 14.4 Results (local, 2026-11-15, after Researcher 001's notes N1–N6 on `e50102c`)
+
+`check_lean_gate.sh` (SKIP_CACHE=1): PASS, 820 project declarations audited, build warnings 0, standard axioms
+only. `lean_mutation_check.py` full run: PASS, statement mutants rejected 47/47, definition mutants killed 27/27,
+total 74/74 (M85–M92 all caught for the reasons in §14.3), equivalence controls not killed 12/12 (E16 included),
 typo controls 3/3. pytest (`tools/ci/tests`, `research/lean_gate/tests`): 299 passed. Checkers and inventory: rc 0.
+(Before the notes, at `e50102c`: 818 declarations, 46/46, 73/73.)
 
 ### 14.5 Still open
 

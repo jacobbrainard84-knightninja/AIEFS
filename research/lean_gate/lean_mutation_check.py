@@ -373,6 +373,13 @@ MUTANTS = [
      [("(hper : ∀ n, N + d ≤ n → c n = c (n - d))", "(hper : True)", 1)], FL_VARS,
      "FrequencyLock.nonperiodic_rate_refuted (@H (Fin 2) 1 (fun _ => 0) FrequencyLock.altU (fun _ => 0) 0"
      " (fun m => if m % 2 = 0 then Real.pi else 0) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) trivial 2 (by norm_num))", None),
+    # N6 (Researcher 001, e50102c): the start index of the periodic theorem itself (M87 covers only the corollary)
+    ("M92_lock_periodic_constant_from_N_not_N_plus_d", "FrequencyLock.lean",
+     "coherenceInput_constant_of_periodicPairRate",
+     [("(hn : N + d ≤ n)", "(hn : N ≤ n)", 1)],
+     FL_VARS,
+     "FrequencyLock.delay_start_refuted (@H (Fin 2) 2" + FL_PROBE +
+     " (fun _ => Real.pi / 2) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) (fun _ _ => rfl) 0 (le_refl 0))", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -397,7 +404,10 @@ VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_
           "probe_coherence_input_asym_omega"]
 VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new", "probe_aux_time_and_new_entry"]
 # Phase lock (FrequencyLock.lean): the witnesses that pin the rate definitions `unitRate` and `altU`
-VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant"]
+VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
+         # N2 (Researcher 001, e50102c): value probes for the shape the witness theorems rely on
+         # (period 2, node-independent, time-independent); value probes must be `probe_*` equalities
+         "probe_altU_period_two", "probe_unitRate_constant"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "FrequencyLock.lean": VP_FL}
 WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"

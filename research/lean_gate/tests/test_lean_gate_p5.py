@@ -32,10 +32,10 @@ HB = (GATE / "HistoryBuffer.lean").read_text()
 PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
-N_STATEMENT_MUTANTS = 46          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups) + M71-M73 (C014) + M85-M89 (lock)
+N_STATEMENT_MUTANTS = 47          # M1-M36 (P1-P4b) + M57, M58 (#27 Capacity follow-ups) + M71-M73 (C014) + M85-M89, M92 (lock)
 N_DEF_MUTANTS = 27                # M37-M56 (P5) + M74-M78 (C014) + M90, M91 (lock)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 73 (66 before the lock; 58 before C014; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 74 (73 before M92; 66 before the lock; 58 before C014; 52 before N2 M53-M56 and #27 M57-M58)
 
 # Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...
 # PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.
@@ -204,7 +204,7 @@ def test_uniform_c0_one_probe_values():
 def test_p5_mutants_shape_and_exact_count():
     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (73)
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (74)
     names = [m[0] for m in mc.DEF_MUTANTS if m[1] in ("PhaseIncrement.lean", "PhaseCoherence.lean")]   # the P5 entries
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))

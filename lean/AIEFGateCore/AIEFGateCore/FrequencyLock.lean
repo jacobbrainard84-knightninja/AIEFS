@@ -28,17 +28,19 @@ old frozen case.
   (`coherenceInput_constant_of_pairLock`) is the simplest case, not the only one
   (`periodic_rate_input_constant`: delay `2`, rate `π, 0, π, 0, …`).
 * `common_rate_input_not_constant`: "the pair moves together" is not enough: with delay `1` and the
-  same rate `π, 0, π, …` the input flips sign every step. What is needed is `c n = c (n − d)`.
+  same rate `π, 0, π, …` the input flips sign every step. `c n = c (n − d)` is sufficient, not
+  necessary: the exact condition is `c n ≡ c (n − d)` modulo `2π`.
 * `coherenceTrace_error_of_pairLock`: under a constant pair lock the EMA error shrinks exactly
   geometrically, `C (N+d+k) i j − z = α^k (C (N+d) i j − z)` with `z` the locked input.
 * `coherenceTrace_norm_of_pairLock` and `reported_of_pairLock`: with `0 ≤ α ≤ 1` and `‖C0‖ ≤ 1`,
-  `‖C (N+d+k) i j‖ ≥ 1 − 2 α^k` and `reported ≥ 1 − 2 α^k` for that pair, so its reported coherence
-  tends to `1`. (`α ≤ 1` is used through `coherenceTrace_unitDisk`; for `α > 1` the bound is
-  trivially true anyway.) The factor `2` is attained (`pairLock_factor_two_refuted` refutes
+  `‖C (N+d+k) i j‖ ≥ 1 − 2 α^k` and `reported ≥ 1 − 2 α^k` for that pair, so for `α < 1` its
+  reported coherence tends to `1` (at `α = 1` the EMA never moves and the bound says nothing).
+  (`α ≤ 1` is used through `coherenceTrace_unitDisk`; for `α > 1` the bound is trivially true
+  anyway.) The factor `2` is attained (`pairLock_factor_two_refuted` refutes
   `1 − α^k`). At the engine's `α = exp(−dt / T_window)` (`dt = 0.01`, `T_window ≈ 17.503`,
   `α ≈ 0.999429`) `k = 2427` is the first `k` with `1 − 2 α^k > 1/2`; the error factor `α^k` itself
   is `≤ 1/2` from `k = 1214`.
-* `frequencyLock_nonzero_rate`: the hypothesis is met at the nonzero rate `unitRate = 1`, so it is
+* `pairLock_nonzero_rate`: the hypothesis is met at the nonzero rate `unitRate = 1`, so it is
   not only the frozen case.
 
 How this relates to O1 (freezing/REPORT.md, cluster locking): O1 predicts that pairs inside a
@@ -149,7 +151,7 @@ theorem coherenceTrace_norm_of_pairLock
   linarith
 
 /-- Under a pair lock, the reported (symmetrised) coherence of that pair is at least `1 − 2 α^k`, so
-it tends to `1`. -/
+for `α < 1` it tends to `1`. -/
 theorem reported_of_pairLock
     (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ)
     (tau : ℝ) (c : ℝ) (N : ℕ) {i j : V} (hij : i ≠ j)
@@ -172,7 +174,7 @@ theorem probe_unitRate_nonzero : unitRate 0 0 ≠ 0 := by norm_num [unitRate]
 
 /-- The hypothesis is not only the frozen case: at the rate `unitRate = 1 ≠ 0` (delay `3`) it holds
 and the input is constant from step `3` on. -/
-theorem frequencyLock_nonzero_rate (x0 : Fin 2 → ℝ) (omega : Fin 2 → ℝ) (tau : ℝ) :
+theorem pairLock_nonzero_rate (x0 : Fin 2 → ℝ) (omega : Fin 2 → ℝ) (tau : ℝ) :
     unitRate 0 0 ≠ 0 ∧ ∀ n, 3 ≤ n → ∀ i j : Fin 2,
       coherenceInput 3 x0 unitRate omega tau n i j =
         coherenceInput 3 x0 unitRate omega tau 3 i j := by
@@ -184,7 +186,8 @@ theorem frequencyLock_nonzero_rate (x0 : Fin 2 → ℝ) (omega : Fin 2 → ℝ) 
 def altU (n : ℕ) (_ : Fin 2) : ℝ := if n % 2 = 0 then Real.pi else 0
 
 /-- With delay `1`, a common but time-varying rate flips the input every step: "the pair moves
-together" is not enough; the rate has to repeat with period `d`. -/
+together" is not enough; a shared rate that does not repeat with period `d` (modulo `2π`) can
+flip it. -/
 theorem common_rate_input_not_constant (n : ℕ) (hn : 1 ≤ n) :
     coherenceInput 1 (fun _ => 0) altU (fun _ => 0) 0 (n + 1) 0 1 =
       - coherenceInput 1 (fun _ => 0) altU (fun _ => 0) 0 n 0 1 := by
@@ -220,6 +223,15 @@ theorem periodic_rate_input_constant (n : ℕ) (hn : 2 ≤ n) :
 /-- `altU` is not a constant rate. -/
 theorem probe_altU_not_constant : altU 0 0 ≠ altU 1 0 := by
   simp [altU, Real.pi_ne_zero]
+
+/-- `altU` has period `2` and is the same at both nodes (value probe for
+`periodic_rate_input_constant` and `common_rate_input_not_constant`). -/
+theorem probe_altU_period_two : altU 2 1 = altU 0 0 ∧ altU 3 1 = altU 1 0 := by
+  simp [altU]
+
+/-- `unitRate` is the same at every step and node (value probe for `pairLock_nonzero_rate`). -/
+theorem probe_unitRate_constant : unitRate 7 1 = unitRate 0 0 := by
+  simp [unitRate]
 
 /-- Dropping the period condition is false: delay `1`, rate `π, 0, π, …`, the input at `2` is minus
 the input at `1`, so it is not constant from `N + d = 1`. -/
@@ -321,11 +333,13 @@ end AIEFGate
 #print axioms AIEFGate.FrequencyLock.coherenceTrace_error_of_pairLock
 #print axioms AIEFGate.FrequencyLock.coherenceTrace_norm_of_pairLock
 #print axioms AIEFGate.FrequencyLock.reported_of_pairLock
-#print axioms AIEFGate.FrequencyLock.frequencyLock_nonzero_rate
+#print axioms AIEFGate.FrequencyLock.pairLock_nonzero_rate
 #print axioms AIEFGate.FrequencyLock.probe_unitRate_nonzero
 #print axioms AIEFGate.FrequencyLock.common_rate_input_not_constant
 #print axioms AIEFGate.FrequencyLock.periodic_rate_input_constant
 #print axioms AIEFGate.FrequencyLock.probe_altU_not_constant
+#print axioms AIEFGate.FrequencyLock.probe_altU_period_two
+#print axioms AIEFGate.FrequencyLock.probe_unitRate_constant
 #print axioms AIEFGate.FrequencyLock.probe_pairLock_one_step
 #print axioms AIEFGate.FrequencyLock.pairLock_factor_two_refuted
 #print axioms AIEFGate.FrequencyLock.pairLock_norm_factor_two_refuted
