@@ -102,3 +102,15 @@ None of these proves closed-loop phase locking (O1), convergence of R or B, a sh
 
 - Historical counts from 2026-10-29. Most load-bearing gaps still: **O1**; AUD-TIMESTEP / residual framing after E22; CF12 single-seed scope.
 - Its note that "only AIEFProofs is in CI" / FreezeCore `required: false` is **stale**. On `main` @ `1c30ca5`, `lean.yml` requires AIEFProofs, AIEFProofsKn, AIEFFreezeCore, and AIEFGateCore.
+
+## Update 2026-11-15 (Auditor Seat 002)
+
+- main is at `871417d`, after PR #37 (C014) and PR #38 (C014 follow-up).
+- Arena_Researcher_06020041 cycles 6–10 have been reviewed. See TRIAGE (i) and `2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review/REVIEW.md`. Researcher 001 independently agrees on C6.
+  - All results hold only for homogeneous ω and do not support any production claim.
+  - C6 is superseded by phaselock. Its JSON dumps contain email addresses and must never be copied to main.
+- Pending branches, in landing order:
+  1. `research/lean-gate-c016`: Researcher 001's refresh.
+  2. `research/lean-gate-phaselock` @ `e50102c`: Researcher 001 is auditing it.
+  3. `research/lean-gate-delay-roots`: cycle 9/10 root lemmas, Auditor-authored, needs Researcher 001's audit.
+- Mutant numbers shift if c016 takes extra numbers.
