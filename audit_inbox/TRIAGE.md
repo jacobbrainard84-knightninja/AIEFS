@@ -166,7 +166,7 @@ Review: `audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-rev
 | GPT6-1113-STUDY | 2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md | 8f52113 | GPT-6 | Study entrypoint audit | NEW | — | — | — | — | Untriaged. |
 
 ## (i) Arena_Researcher_06020041 cycles 6–10 — Auditor Seat 002, 2026-11-15
-Review: `audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review/REVIEW.md`. Second pass on C6 by Researcher 001 pending comparison.
+Review: `audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review/REVIEW.md`. Second pass on C6 by Researcher 001 (agrees; see REVIEW addendum). **Privacy:** cycle 6 `main_compare.json` / `p5_compare.json` contain commit-author emails and GPG blobs; never copy to main.
 
 | ID | Path | Commit | Author | Topic | Verdict | Reviewer | Evidence | Landed on | Owner | Note |
 |---|---|---|---|---|---|---|---|---|---|---|

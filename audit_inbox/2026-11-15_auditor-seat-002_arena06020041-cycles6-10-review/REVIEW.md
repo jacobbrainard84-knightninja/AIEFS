@@ -72,3 +72,14 @@ Scope (stated by the deposit and agreed): this is an existence result. The orbit
 3. Do **not** extend any production or AIEF-1.4 claim from these results without a heterogeneous-ω analysis.
 
 Privacy: the deposit's notes contain generic sandbox paths only. No PII was found in cycles 6–10 notes. Do not copy host paths to main.
+
+## Addendum (2026-11-15): after comparison with Researcher 001's independent cycle 6 pass
+
+- **Agreement on C6:** correct and superseded. Port nothing except the non-monotonicity witness.
+- **Lean witness:** Researcher 001 has proved the witness in Lean on main's definitions (C1..C4 = 1/2, −1/4, −5/8, 3/16). Used as a value probe, it kills both an EMA α ↔ 1−α swap and a delay off-by-one. It goes to the phaselock follow-up.
+- **PRIVACY correction:** my "no PII" line covers the **notes only**. Cycle 6's `main_compare.json` and `p5_compare.json` are raw GitHub compare dumps. They contain commit-author email addresses (3) and GPG signature blobs. They must **never** be copied to main or quoted.
+- **Provenance gaps:**
+  - The notes cite `build_final.log`, `axioms.log` and `examples.log`, which are not in the deposit.
+  - `SHA256SUMS.txt` omits the notes and the JSONs.
+  - Its paths are parent-relative to the depositor's sandbox.
+- **Mutation gap:** dropping the `(ω_i+ω_j)/2·τ` offset survives RotatingLock's theorems. Only `PhaseCoherence.input_engine_convention` kills it.
