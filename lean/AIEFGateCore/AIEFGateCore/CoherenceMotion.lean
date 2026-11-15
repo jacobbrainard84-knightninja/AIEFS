@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: AIEF / SSRH
 -/
 -- SPDX-License-Identifier: Apache-2.0
+import Mathlib.Analysis.Complex.ExponentialBounds
 import AIEFGateCore.PhaseCoherence
 
 /-!
@@ -25,8 +26,19 @@ input `z` and `0 ≤ α ≤ 1`, the reported coherence `R` (the symmetrised modu
 `|R_{n+1} - R_n| ≤ min 1 (2 (1 - α))` (`trace_step_abs_le_min`), and the diagonal is `0`. At the
 engine `α = exp (-dt / T_window) = 0.99942883…` (`dt = 1/100`, `T_window = 25 / mean ω`,
 `mean ω = 857/600`, `aief_experiment_engine_v1.py` `FROZEN_ALPHA`) that is `2 (1 - α) ≈ 0.00114`
-per step (`engine_step_value`), so in exact arithmetic `R` needs at least about 875 steps to go
-from `0` to `1`.
+per step (`engine_step_value`). That per-step bound is what the first theorems prove. A step count
+derived from it alone is only a weak lower bound: a change of `R` of size `1` takes at least
+`1 / 0.00114234… = 875.4`, i.e. `876`, steps, and the bound `2 (1 - α)` is attained only within one
+step (`engine_factor_two_attained`), not sustained. The two envelopes iterate to much more:
+`R' ≤ α R + (1 - α)` gives `1 - R_n ≥ α^n (1 - R_0)` (`trace_rise_bound`) and
+`R' ≥ α R - (1 - α)` gives `1 + R_n ≥ α^n (1 + R_0)` (`trace_fall_bound`). At the engine `α`,
+`α^1213 > 1/2 > α^1214` (`ln 2 / (857/1500000) = 1213.2`), so from `R_0 = 0` the reported coherence
+is still below `1/2` after `1213` steps, and it needs at least `1214` steps to reach `1/2`
+(`engine_rise_half_not_before_1214`); from `R_0 = 1` it is still above `0` after `1213` steps
+(`engine_fall_zero_not_before_1214`). The `876` of the per-step bound is only a coarser lower
+bound; the `1214` figures are proved for these start values and thresholds only. (From `R_0 = 0`
+it needs at least `4031` steps to reach `0.9`, `ln 10 / (857/1500000) = 4030.2`: exact arithmetic,
+checked in `test_lean_gate_c016.py`, not by a Lean theorem.)
 
 **What this file does NOT say (auditor note N1).** It is a *speed limit*, not dynamics. The proof
 is the triangle inequality on an exponential moving average with unit-norm inputs. It uses **no
@@ -57,7 +69,12 @@ The deposit's coupled non-reset/history probe stays deferred.
 * new: `probe_diagonal_zero`; `probe_asym_state` (N2, asymmetric state `C0 0 1 = 1`, other
   entries `0`: `R = 1/2` then `1/4`, one-sided `R` would read `1` then `0`); the engine-`α` probes
   `alphaE`, `engine_speed_limit_value` (`0.00114 < 2 (1 - α) < 0.00115`),
-  `engine_factor_two_attained`, `engine_step_value`, `engine_factor_one_refuted`; and the
+  `engine_factor_two_attained`, `engine_step_value`, `engine_factor_one_refuted`; the exact pin
+  `alphaE_exact` and the closed numbers `engine_pow_1213_gt_half`, `engine_pow_1214_lt_half`
+  (they also rule out the near-miss mean `ω` numerators `856` and `858`); the rise bound
+  `trace_rise_bound`, `trace_fall_bound` and their engine corollaries
+  `engine_rise_half_not_before_1214`, `engine_fall_zero_not_before_1214` (audit of
+  `d551540`, note N2); and the
   negations `diagonal_one_refuted` and `half_increase_upper_refuted` that the mutation check
   (`lean_mutation_check.py`, M59 ff.) uses to refute weakened versions of the statements above.
 -/
@@ -208,6 +225,37 @@ theorem trace_step_abs_le_min (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
 theorem trace_diagonal (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
     (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (n : ℕ) (i : V) :
     rTrace alpha C0 d x0 u omega tau n i i = 0 := PhaseCoherence.reported_diag _ i
+
+/-- The upper envelope of `trace_step_bounds` iterated gives
+`1 - R_n ≥ α^n (1 - R_0)`. In particular for `0 < α` and `R_0 < 1`, `R` is below `1` at every
+finite step. -/
+theorem trace_rise_bound (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
+    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ)
+    (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (n : ℕ) (i j : V) :
+    alpha ^ n * (1 - rTrace alpha C0 d x0 u omega tau 0 i j) ≤
+      1 - rTrace alpha C0 d x0 u omega tau n i j := by
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    have h := (trace_step_bounds alpha C0 d x0 u omega tau ha0 ha1 k i j).2
+    have h2 := mul_le_mul_of_nonneg_left ih ha0
+    rw [pow_succ]
+    nlinarith
+
+/-- The mirror of `trace_rise_bound`: the lower envelope of `trace_step_bounds` iterated gives
+`1 + R_n ≥ α^n (1 + R_0)`. -/
+theorem trace_fall_bound (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ)
+    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ)
+    (ha0 : 0 ≤ alpha) (ha1 : alpha ≤ 1) (n : ℕ) (i j : V) :
+    alpha ^ n * (1 + rTrace alpha C0 d x0 u omega tau 0 i j) ≤
+      1 + rTrace alpha C0 d x0 u omega tau n i j := by
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    have h := (trace_step_bounds alpha C0 d x0 u omega tau ha0 ha1 k i j).1
+    have h2 := mul_le_mul_of_nonneg_left ih ha0
+    rw [pow_succ]
+    nlinarith
 
 section ValueProbes
 
@@ -372,6 +420,11 @@ float64). `2 (1 - α) = 0.00114234…`. Exact reals; the engine's float64 `α` i
 
 def alphaE : ℝ := Real.exp (-((1/100) / (25 / (857/600))))
 
+/-- Exact pin of the engine `α`: any other mean `ω` numerator (`856`, `858`, …) breaks it. -/
+theorem alphaE_exact : alphaE = Real.exp (-(857/1500000)) := by
+  unfold alphaE
+  norm_num
+
 private theorem alphaE_range : 1/2 ≤ alphaE ∧ alphaE < 1 := by
   have e : alphaE = Real.exp (-(857/1500000)) := by
     unfold alphaE
@@ -422,6 +475,64 @@ theorem engine_factor_one_refuted :
     ¬ |Rval alphaE 1 1 - Rval alphaE 1 0| ≤ 1-alphaE := by
   rw [engine_factor_two_attained]
   have hr := alphaE_range
+  linarith
+
+/-- Closed number at the engine `α`: `α^1213 > 1/2`. With the next theorem it pins the mean `ω`
+numerator `857` between `856` and `858`. Like `engine_speed_limit_value` it unfolds `alphaE`
+itself (it does not go through `alphaE_exact`, so a mutated `alphaE` fails here directly). -/
+theorem engine_pow_1213_gt_half : (1:ℝ)/2 < alphaE ^ 1213 := by
+  have e : alphaE = Real.exp (-(857/1500000)) := by
+    unfold alphaE
+    norm_num
+  rw [e, ← Real.exp_nat_mul]
+  have h := Real.log_two_gt_d9
+  have h1 : Real.log (1/2) < ((1213:ℕ):ℝ) * -(857/1500000) := by
+    rw [one_div, Real.log_inv]
+    push_cast
+    norm_num at h ⊢
+    linarith
+  exact (Real.log_lt_iff_lt_exp (by norm_num)).mp h1
+
+/-- Closed number at the engine `α`: `α^1214 < 1/2`. -/
+theorem engine_pow_1214_lt_half : alphaE ^ 1214 < (1:ℝ)/2 := by
+  have e : alphaE = Real.exp (-(857/1500000)) := by
+    unfold alphaE
+    norm_num
+  rw [e, ← Real.exp_nat_mul]
+  have h := Real.log_two_lt_d9
+  have h1 : ((1214:ℕ):ℝ) * -(857/1500000) < Real.log (1/2) := by
+    rw [one_div, Real.log_inv]
+    push_cast
+    norm_num at h ⊢
+    linarith
+  exact (Real.lt_log_iff_exp_lt (by norm_num)).mp h1
+
+/-- From `R_0 = 0`, at the engine `α`, `R` is still below `1/2` after `1213` steps or fewer:
+a rise needs at least `1214` steps to reach `1/2`. (More than the `876` steps that the per-step
+bound alone gives for a change of size `1`.) -/
+theorem engine_rise_half_not_before_1214 (C0 : V → V → ℂ) (d : ℕ)
+    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (i j : V)
+    (hR0 : rTrace alphaE C0 d x0 u omega tau 0 i j = 0) (n : ℕ) (hn : n ≤ 1213) :
+    rTrace alphaE C0 d x0 u omega tau n i j < 1/2 := by
+  have hr := alphaE_range
+  have h := trace_rise_bound alphaE C0 d x0 u omega tau (by linarith [hr.1]) hr.2.le n i j
+  have hp : alphaE ^ 1213 ≤ alphaE ^ n :=
+    pow_le_pow_of_le_one (by linarith [hr.1]) hr.2.le hn
+  have h3 := engine_pow_1213_gt_half
+  rw [hR0] at h
+  linarith
+
+/-- From `R_0 = 1`, at the engine `α`, `R` is still above `0` after `1213` steps or fewer. -/
+theorem engine_fall_zero_not_before_1214 (C0 : V → V → ℂ) (d : ℕ)
+    (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ) (tau : ℝ) (i j : V)
+    (hR0 : rTrace alphaE C0 d x0 u omega tau 0 i j = 1) (n : ℕ) (hn : n ≤ 1213) :
+    0 < rTrace alphaE C0 d x0 u omega tau n i j := by
+  have hr := alphaE_range
+  have h := trace_fall_bound alphaE C0 d x0 u omega tau (by linarith [hr.1]) hr.2.le n i j
+  have hp : alphaE ^ 1213 ≤ alphaE ^ n :=
+    pow_le_pow_of_le_one (by linarith [hr.1]) hr.2.le hn
+  have h3 := engine_pow_1213_gt_half
+  rw [hR0] at h
   linarith
 
 end ValueProbes

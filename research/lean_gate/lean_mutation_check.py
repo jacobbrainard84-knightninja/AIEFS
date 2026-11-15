@@ -92,6 +92,16 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
 
+  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
+  renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port renumbers to M87-M93) and its controls E11-E14 becoming E12-E15):
+  M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
+  M72 TrajectorySafety.all_times_structural, hInit := True            -> TrajectorySafety.initial_time_refuted
+  M73 TrajectorySafety.post_capacity, hp (EngineGate) := True         -> TrajectorySafety.broken_link_refuted (`pB`)
+  Definition mutants (rule below): M74 `weightUpdate := symM` (gate bypassed), M75 `feedbackStep` hands `U` the old
+  B twice, M76 the new B twice, M77 the raw drive instead of the new B, M78 the time `n + 1`; probes
+  `probe_gate_scales_row`, `probe_aux_reads_old_and_new`, `probe_aux_time_and_new_entry`; equivalence control
+  E11 (the `let` inlined) must not be killed. M75 is the survivor of Researcher 001's audit of 9b9b3d9.
+
   P5 (PhaseCoherence.lean / PhaseIncrement.lean, port of cycles 010, 011, 013 of Researcher 040282): DEFINITION
   mutants, a second kind (see `DEF_MUTANTS` below, numbered M37 ff. because M24-M36 are the P4b statement mutants).
   A mutated definition has no statement to refute by a negation theorem, so the (b)/(c) steps do not apply. RULE
@@ -117,12 +127,13 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   elaborate. (N2) M53-M56 mutate the static offset (ω_i + ω_j)/2 · τ (wrong index, dropped, node-uniform ω); they are
   killed only by the asymmetric-ω probes (ω = (1, 0)), because every earlier probe has node-uniform ω.
 
-  P6 (CoherenceMotion.lean, port of cycle 016 of Researcher 040282; numbered after M58, no rule change): STATEMENT
+  P6 (CoherenceMotion.lean, port of cycle 016 of Researcher 040282; the statement mutants and M70 are numbered after
+  M58, the other definition mutants after C014's M78; no rule change): STATEMENT
   mutants M59-M69 (same three conditions as M1-M58; refuted by the negations `factor_one_refuted`,
   `nonunit_initial_refuted`, `two_step_one_allowance_refuted`, `increase_only_abs_refuted`,
   `negative_alpha_upper_refuted`, `alpha_gt_one_upper_refuted`, `half_increase_upper_refuted`, `diagonal_one_refuted`
-  of that file) and DEFINITION mutants M70-M76 (the observable `rTrace` and the engine alpha `alphaE`; value probes in
-  `VP_MOT`, same kill rule), equivalence controls E11-E14 and the typo control T4. The probes of that file prove their
+  of that file) and DEFINITION mutants M70 and M79-M86 (the observable `rTrace` and the engine alpha `alphaE`; value probes in
+  `VP_MOT`, same kill rule), equivalence controls E12-E15 and the typo control T4. The probes of that file prove their
   values from the definitions unfolded in the probe itself (a private helper stated about `rTrace` would let a mutated
   `rTrace` fail only in the helper, which earns no credit).
 
@@ -155,6 +166,7 @@ CM_INST = ("@H (Fin 2) (1/2) (CoherenceMotion.valueC 1) 1 CoherenceMotion.valueX
            " CoherenceMotion.valueOmega Real.pi")
 CM_UNIT = "(fun i j => by simp [CoherenceMotion.valueC])"
 CM_PRE = " CoherenceMotion.valueX CoherenceMotion.valueU CoherenceMotion.valueOmega Real.pi"
+TS_VARS = "{V S : Type} [Fintype V] [LinearOrder V]"   # section variables of TrajectoryInvariants.lean
 WU_FAC = ("(by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE]) (by norm_num [EngineWitness.pE])"
           " (fun n => rfl) (fun n i j => Capacity.Xo_symm _ i j) ")
 
@@ -375,6 +387,23 @@ MUTANTS = [
     ("M69_motion_diagonal_claimed_one", "CoherenceMotion.lean", "trace_diagonal",
      [("n i i = 0", "n i i = 1", 1)], CM_VARS,
      "CoherenceMotion.diagonal_one_refuted (@H (Fin 2) (1/2) (CoherenceMotion.valueC 1) 1" + CM_PRE + " 1 1)", None),
+    # ---- C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282); numbered from M71 ----
+    ("M71_trajectory_post_capacity_next_cap", "TrajectoryInvariants.lean", "post_capacity",
+     [("i ≤ (p n).cap", "i ≤ (p (n + 1)).cap", 1)], TS_VARS,
+     "TrajectorySafety.capacity_clock_refuted (@H (Fin 2) Unit _ _ TrajectorySafety.capSchedule"
+     " TrajectorySafety.oneDrive TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0"
+     " (by simpa [TrajectorySafety.capSchedule] using TrajectorySafety.pWide_engine) 0)", None),
+    ("M72_trajectory_all_times_no_initial_structure", "TrajectoryInvariants.lean", "all_times_structural",
+     [("(hInit : Structural initial.2)", "(hInit : True)", 1)], TS_VARS,
+     "TrajectorySafety.initial_time_refuted (@H (Fin 2) Unit _ _ (fun _ => TrajectorySafety.pWide)"
+     " TrajectorySafety.oneDrive TrajectorySafety.keepAux ((), TrajectorySafety.dirtyB)"
+     " (fun _ => by norm_num [TrajectorySafety.pWide]) (fun _ => by norm_num [TrajectorySafety.pWide]) trivial 0)",
+     None),
+    ("M73_trajectory_post_capacity_no_engine_gate", "TrajectoryInvariants.lean", "post_capacity",
+     [("(hp : EngineGate (p n))", "(hp : True)", 1)], TS_VARS,
+     "TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)"
+     " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
+     None),
 ]
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----
@@ -397,8 +426,16 @@ VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_
 # P6 (CoherenceMotion.lean): closed-number probes at (1/2, 3/4, the engine alpha); the engine-alpha pins are
 # `engine_speed_limit_value` (pins alphaE) and `engine_factor_two_attained` (pins rTrace at alphaE)
 VP_MOT = ["probe_half_drop", "probe_half_increase", "probe_two_step", "probe_diagonal_zero", "probe_asym_state",
-          "engine_speed_limit_value", "engine_factor_two_attained"]
-VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "CoherenceMotion.lean": VP_MOT}
+          "engine_speed_limit_value", "engine_factor_two_attained",
+          "alphaE_exact", "engine_pow_1213_gt_half", "engine_pow_1214_lt_half"]
+# the equality `alphaE = exp(-(857/1500000))` and the two closed numbers `alpha^1213 > 1/2 > alpha^1214` pin the engine
+# alpha exactly (mean-omega numerators 856 and 858 fail one of them; audit of d551540, note N3)
+PIN_ALPHA_E = ["engine_speed_limit_value", "alphaE_exact", "engine_pow_1213_gt_half", "engine_pow_1214_lt_half"]
+VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new", "probe_aux_time_and_new_entry"]
+VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
+                "CoherenceMotion.lean": VP_MOT}
+WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"
+FB_OLD = "  (U n state.1 state.2 Bnew, Bnew)\n"
 PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
 PIN_DRIVE = ["probe_drive_second", "probe_asym_drive"]
 DRIVE_OLD = "  (eta + mu) * reported C i j - mu\n"
@@ -479,19 +516,38 @@ DEF_MUTANTS = [
     ("M70_motion_rtrace_reads_next_trace", "CoherenceMotion.lean",
      rt("PhaseCoherence.reported (PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j"),
      ["probe_half_drop", "probe_half_increase", "probe_two_step", "engine_factor_two_attained"]),
-    ("M71_motion_rtrace_one_sided_not_symmetrised", "CoherenceMotion.lean",
+    # ---- C014 (TrajectoryInvariants.lean); M74-M78 follow the C014 statement mutants M71-M73 ----
+    ("M74_trajectory_weight_update_bypasses_gate", "TrajectoryInvariants.lean",
+     [(WU_DEF_OLD, "def weightUpdate (p : Params) (D B : Weights V) : Weights V := symM p D B\n", 1)],
+     ["probe_gate_scales_row"]),
+    ("M75_trajectory_aux_update_gets_old_B_only", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 state.2 state.2, Bnew)\n", 1)], ["probe_aux_reads_old_and_new"]),
+    ("M76_trajectory_aux_update_gets_new_B_only", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 Bnew Bnew, Bnew)\n", 1)], ["probe_aux_reads_old_and_new"]),
+    # Researcher 001's two survivors on 3a4c75b (audit note 3), killed by the second probe:
+    ("M77_trajectory_aux_update_gets_drive_not_new_B", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 state.2 (F n state.1 state.2), Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
+    ("M78_trajectory_aux_update_gets_next_time", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U (n + 1) state.1 state.2 Bnew, Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
+    # ---- P6 (CoherenceMotion.lean), continued: M79-M86 (M79-M84 renumbered from M71-M76 after C014 took M71-M78) ----
+    ("M79_motion_rtrace_one_sided_not_symmetrised", "CoherenceMotion.lean",
      rt("‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n i j‖"), ["probe_asym_state"]),
-    ("M72_motion_rtrace_diagonal_one", "CoherenceMotion.lean",
+    ("M80_motion_rtrace_diagonal_one", "CoherenceMotion.lean",
      rt("@ite ℝ (i = j) (Classical.propDecidable _) 1 (" + RT_BODY + ")"), ["probe_diagonal_zero"]),
-    ("M73_motion_rtrace_single_step_from_c0", "CoherenceMotion.lean",
+    ("M81_motion_rtrace_single_step_from_c0", "CoherenceMotion.lean",
      rt("PhaseCoherence.reported (PhaseCoherence.coherenceStep alpha C0 d x0 u omega tau n) i j"),
      ["probe_half_drop", "probe_two_step", "engine_factor_two_attained"]),
-    ("M74_motion_alphaE_dt_ten_times_too_large", "CoherenceMotion.lean",
-     ae("Real.exp (-((1/10) / (25 / (857/600))))"), ["engine_speed_limit_value"]),
-    ("M75_motion_alphaE_mean_omega_one", "CoherenceMotion.lean",
-     ae("Real.exp (-((1/100) / (25 / 1)))"), ["engine_speed_limit_value"]),
-    ("M76_motion_alphaE_sign_flipped", "CoherenceMotion.lean",
-     ae("Real.exp ((1/100) / (25 / (857/600)))"), ["engine_speed_limit_value"]),
+    ("M82_motion_alphaE_dt_ten_times_too_large", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/10) / (25 / (857/600))))"), PIN_ALPHA_E),
+    ("M83_motion_alphaE_mean_omega_one", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/100) / (25 / 1)))"), PIN_ALPHA_E),
+    ("M84_motion_alphaE_sign_flipped", "CoherenceMotion.lean",
+     ae("Real.exp ((1/100) / (25 / (857/600)))"), PIN_ALPHA_E),
+    # audit N3 (d551540): near-miss numerators of the mean omega 857/600, the one-unit edits the old range pin admitted
+    ("M85_motion_alphaE_mean_omega_numerator_856", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/100) / (25 / (856/600))))"), PIN_ALPHA_E),
+    ("M86_motion_alphaE_mean_omega_numerator_858", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/100) / (25 / (858/600))))"), PIN_ALPHA_E),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -511,15 +567,18 @@ EQUIV_CONTROLS = [
     ("E9_drive_coefficient_commuted", "PhaseCoherence.lean",
      [(DRIVE_OLD, "  (mu + eta) * reported C i j - mu\n", 1)]),
     ("E10_offset_sum_commuted", "PhaseIncrement.lean", offset("((omega j + omega i) / 2) * tau")),
+    ("E11_trajectory_feedback_let_inlined", "TrajectoryInvariants.lean",
+     [(FB_OLD, "  (U n state.1 state.2 (weightUpdate (p n) (F n state.1 state.2) state.2),\n"
+               "    weightUpdate (p n) (F n state.1 state.2) state.2)\n", 1)]),
     # P6: `reported` is symmetric, so reading it at (j, i) is the same observable; the symmetrisation written out; the
     # engine alpha written as the reduced fraction / with T_window = 15000/857 (the same real)
-    ("E11_motion_rtrace_reads_j_i", "CoherenceMotion.lean",
+    ("E12_motion_rtrace_reads_j_i", "CoherenceMotion.lean",
      rt("PhaseCoherence.reported (PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n) j i")),
-    ("E12_motion_alphaE_reduced_fraction", "CoherenceMotion.lean", ae("Real.exp (-(857 / 1500000))")),
-    ("E13_motion_rtrace_symmetrisation_written_out", "CoherenceMotion.lean",
+    ("E13_motion_alphaE_reduced_fraction", "CoherenceMotion.lean", ae("Real.exp (-(857 / 1500000))")),
+    ("E14_motion_rtrace_symmetrisation_written_out", "CoherenceMotion.lean",
      rt("@ite ℝ (i = j) (Classical.propDecidable _) 0 ((‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n i j‖"
         " + ‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n j i‖) / 2)")),
-    ("E14_motion_alphaE_t_window_reduced", "CoherenceMotion.lean", ae("Real.exp (-((1/100) / (15000 / 857)))")),
+    ("E15_motion_alphaE_t_window_reduced", "CoherenceMotion.lean", ae("Real.exp (-((1/100) / (15000 / 857)))")),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -561,7 +620,8 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
          "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\nopen AIEFGate.MatrixForm (preM)\n"
          "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n"
-         "open AIEFGate.CoherenceMotion (rTrace)\n")
+         "open AIEFGate.CoherenceMotion (rTrace)\n"
+         "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 

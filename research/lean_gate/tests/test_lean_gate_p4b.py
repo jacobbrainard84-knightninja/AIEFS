@@ -130,15 +130,18 @@ def test_sources_have_no_banned_markers_and_credit_by_handle_only():
 def test_p4b_mutants_shape():
     names = [m[0] for m in mc.MUTANTS]
     # 36 (M1-M36) + 2 (M57, M58: #27 Capacity follow-ups, appended after the P5 definition mutants M37-M56)
+    # + 3 (M71-M73: C014 TrajectoryInvariants.lean statement mutants, see test_lean_gate_c014.py)
     # + 11 (M59-M69: P6 CoherenceMotion statement mutants, see test_lean_gate_c016.py)
-    assert len(names) == 49                                      # the single exact pin (P4a test: >= 23)
+    assert len(names) == 52                                      # the single exact pin (P4a test: >= 23)
     assert names[23].startswith("M24") and names[35].startswith("M36")
     assert names[36].startswith("M57") and names[37].startswith("M58")
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
-    assert names[38].startswith("M59") and names[48].startswith("M69")
     assert {m[1] for m in mc.MUTANTS[36:38]} == {"Capacity.lean"}
-    assert {m[1] for m in mc.MUTANTS[38:]} == {"CoherenceMotion.lean"}
     assert [m[2] for m in mc.MUTANTS[36:38]] == ["preM_between", "convex_weights_iff"]
+    # the C014 and P6 entries are selected by file, not by position
+    assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean", "CoherenceMotion.lean"}
+    assert len([m for m in mc.MUTANTS if m[1] == "TrajectoryInvariants.lean"]) == 3
+    assert len([m for m in mc.MUTANTS if m[1] == "CoherenceMotion.lean"]) == 11
     assert [m[2] for m in mc.MUTANTS[23:36]] == [
         "rowM_le_upper", "stepM_scalar_recurrence", "appliedFactor_lower", "stepM_factor_lower",
         "trajectory_symmetric", "trajectory_zero_diag", "trajectory_nonneg", "trajectory_good_of_start",

@@ -7,8 +7,8 @@ numbers behind the value probes against an independent exact-rational / float si
 -1, exactly the probe data; hand-written, NOT proved against the engine), including the engine alpha
 exp(-dt / T_window) = FROZEN_ALPHA read from aief_experiment_engine_v1.py, and a randomised check of the theorem itself,
 (c) the scope wording demanded by Auditor Seat 002's review (ADOPT WITH NOTES: N1 speed limit only, N2 node-uniform
-probes, N3 merged names, N4 float alpha), and (d) the exact shape and count of the P6 mutants (M59-M76), their
-declared value probes, the equivalence controls (E11-E14) and the typo control (T4) of lean_mutation_check.py.
+probes, N3 merged names, N4 float alpha), and (d) the exact shape and count of the P6 mutants (M59-M70, M79-M86; M71-M78 are C014's), their
+declared value probes, the equivalence controls (E12-E15) and the typo control (T4) of lean_mutation_check.py.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -136,7 +136,12 @@ def test_scope_docstring_states_what_it_does_not_say():
     assert "node-uniform" in doc and "probe_asym_state" in doc               # N2
     assert "float64" in doc and "exact reals" in doc.lower()                 # N4
     assert "α < 1/2" in doc                                                  # N2: the min is trivial below 1/2
-    assert "0.00114" in doc and "875" in doc                                 # the engine number and what it means
+    assert "0.00114" in doc and "875.4" in doc and "`876`" in doc            # the engine number and what it means
+    assert "only a coarser lower bound" in doc and "coarser" in doc          # audit N2: no overclaim for the step count
+    assert "sharp" not in doc and "tight" not in doc                         # nothing is claimed sharp
+    assert "1214" in doc and "trace_rise_bound" in doc and "trace_fall_bound" in doc and "4031" in doc
+    assert "engine_rise_half_not_before_1214" in doc and "engine_fall_zero_not_before_1214" in doc
+    assert "needs at least about 875 steps to go\nfrom `0` to `1`" not in CM                      # the old, misleading wording
     assert "supplied by the owner" in doc and DEPOSIT_MD5 in doc
 
 
@@ -194,7 +199,7 @@ def test_diagonal_probe_and_asymmetric_state_probe_values():
     A = [[Fr(0), Fr(1)], [Fr(0), Fr(0)]]                                           # valueCA: only entry (0, 1) is 1
     assert (R(h, A, 0), R(h, A, 1)) == (Fr(1, 2), Fr(1, 4))                        # probe_asym_state
     one_sided = lambda n: abs(trace(h, A, n)[0][1])
-    assert (one_sided(0), one_sided(1)) == (1, 0)                                  # what a one-sided R (M71) would read
+    assert (one_sided(0), one_sided(1)) == (1, 0)                                  # what a one-sided R (M79) would read
     # N2: the node-uniform probes cannot tell the two readings apart; the asymmetric one can
     for c in (0, 1, 3):
         for n in (0, 1, 2):
@@ -230,7 +235,55 @@ def test_engine_alpha_constant_and_value_probe():
     a = Fr(alpha)
     step_move = abs(R(a, uniform(1), 1) - R(a, uniform(1), 0))
     assert abs(float(step_move) - limit) < 1e-12 and float(step_move) > 1 - alpha
-    assert 1 / limit > 875 and 1 / limit < 876                                     # ~875 steps from 0 to 1 (exact arithmetic)
+    assert 1 / limit > 875 and 1 / limit < 876                                     # ~875 steps for a change of size 1
+
+
+def test_rise_is_slower_than_a_fall_audit_n2():
+    """Audit note N2 (d551540): the 875 (really 876) steps of the per-step bound are only a coarse lower bound. From R_0 = 0
+    the upper envelope gives 1 - R_n >= alpha^n, so R never reaches 1; reaching 1/2 takes at least 1214 steps
+    (alpha^1213 > 1/2 > alpha^1214, the closed numbers `engine_pow_1213_gt_half` / `engine_pow_1214_lt_half`) and 0.9 at
+    least 4031. Attained by the probe data (constant input -1 from C0 = 0 gives R_n = 1 - alpha^n exactly). Mirror: from
+    R_0 = 1 the lower envelope gives 1 + R_n >= 2 alpha^n, so R > 0 for n <= 1213 (`engine_fall_zero_not_before_1214`),
+    attained by constant input -1 from C0 = 1 (R_n = |2 alpha^n - 1|); a fall from 1 to 0 is NOT sharp at 876."""
+    x = Fr(857, 1500000)
+    a = math.exp(-float(x))
+    assert a ** 1213 > 0.5 > a ** 1214 and 1214 == math.ceil(math.log(2) / float(x))
+    assert a ** 4030 > 0.1 > a ** 4031 and 4031 == math.ceil(math.log(10) / float(x))
+    assert math.log(2) / float(x) > 1213 and math.log(2) / float(x) < 1214          # 1213.2: "at least about 1213", 1214 exact
+    # the same by the rise bound's own recursion and by the explicit EMA with constant input -1 from C0 = 0
+    r_bound = Fr(0)
+    for n in range(1, 1300):
+        r_bound = Fr(a).limit_denominator(10**12) * r_bound + (1 - Fr(a).limit_denominator(10**12))  # upper envelope, R_0 = 0
+        assert r_bound < 1
+        if n == 1213:
+            assert r_bound < Fr(1, 2)
+        if n == 1214:
+            assert r_bound > Fr(1, 2)
+    C = complex(0)
+    for n in range(1, 1215):
+        C = a * C + (1 - a) * (-1)
+        assert (abs(C) < 0.5) == (n <= 1213) and abs(C) < 1
+    # the per-step bound alone: a change of size 1 needs at least 1/(2(1-a)) = 875.4 steps, i.e. 876 (a weak bound)
+    assert math.ceil(1 / (2 * (1 - a))) == 876
+    # the mirror (fall from R_0 = 1 under constant input -1, C0 = 1): R_n = |2 a^n - 1| > 0 for n <= 1213, 0 at 1214 is
+    # already past the zero crossing, and the lower envelope 1 + R_n >= 2 a^n holds with equality while 2 a^n - 1 > 0
+    C = complex(1)
+    for n in range(1, 1215):
+        C = a * C + (1 - a) * (-1)
+        assert abs(C) > 0 and abs(C) >= 2 * a ** n - 1 - 1e-12 and (C.real > 0) == (n <= 1213)
+
+
+def test_engine_alpha_numerator_is_pinned_exactly_audit_n3():
+    """Audit note N3 (d551540): the mean-omega numerator 857 is pinned exactly. `alphaE_exact` states the equality, and the
+    closed numbers alpha^1213 > 1/2 > alpha^1214 hold for the numerator 857 only among the integers: 856 and 858 each break
+    one of them (see SPEC 13.4 for the Lean-side kill of both near misses)."""
+    def holds(num):
+        x = num / 1500000
+        return math.exp(-1213 * x) > 0.5 > math.exp(-1214 * x)
+    assert holds(857) and not holds(856) and not holds(858)
+    assert [n for n in range(800, 900) if holds(n)] == [857]
+    assert re.search(r"^theorem alphaE_exact : alphaE = Real\.exp \(-\(857/1500000\)\)", CM, re.M)
+    assert {"alphaE_exact", "engine_pow_1213_gt_half", "engine_pow_1214_lt_half"} <= set(mc.VP_MOT)
 
 
 def test_theorem_holds_on_random_unit_inputs():
@@ -262,20 +315,28 @@ def test_theorem_holds_on_random_unit_inputs():
 
 # ---- (d) mutants of lean_mutation_check.py ---------------------------------------------------------------------
 
-P6_STATEMENT = mc.MUTANTS[38:]
+P6_STATEMENT = [m for m in mc.MUTANTS if m[1] == "CoherenceMotion.lean"]       # selected by file, not by position
 P6_DEF = [m for m in mc.DEF_MUTANTS if m[1] == "CoherenceMotion.lean"]
 P6_EQUIV = [c for c in mc.EQUIV_CONTROLS if c[1] == "CoherenceMotion.lean"]
 P6_TYPO = [c for c in mc.TYPO_CONTROLS if c[1] == "CoherenceMotion.lean"]
 
 
 def test_p6_mutants_exact_counts_and_numbering():
-    assert len(P6_STATEMENT) == 11 and len(P6_DEF) == 7
+    assert len(P6_STATEMENT) == 11 and len(P6_DEF) == 9
     assert [int(m[0].split("_")[0][1:]) for m in P6_STATEMENT] == list(range(59, 70))
-    assert [int(m[0].split("_")[0][1:]) for m in P6_DEF] == list(range(70, 77))
+    assert [int(m[0].split("_")[0][1:]) for m in P6_DEF] == [70] + list(range(79, 87))
     assert all(m[1] == "CoherenceMotion.lean" for m in P6_STATEMENT)
-    assert {m[0] for m in mc.MUTANTS[:38]}.isdisjoint({m[0] for m in P6_STATEMENT})   # numbered after M58
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == 76
-    assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E11", "E12", "E13", "E14"]
+    assert {m[0] for m in mc.MUTANTS if m[1] != "CoherenceMotion.lean"}.isdisjoint({m[0] for m in P6_STATEMENT})
+    # numbering: M59-M70 are numbered after M58, M79-M86 after C014's M71-M78 (C014 owns M71-M78, E11)
+    nums = lambda ms: [int(m[0].split("_")[0][1:]) for m in ms]
+    c014 = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] == "TrajectoryInvariants.lean"])
+    assert sorted(c014) == list(range(71, 79)) and not set(c014) & set(nums(P6_STATEMENT) + nums(P6_DEF))
+    allnums = nums(mc.MUTANTS) + nums(mc.DEF_MUTANTS)
+    assert len(allnums) == len(set(allnums)) == 86 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (52, 34)
+    assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
+    eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
+    assert len(eqn) == len(set(eqn)) == 19                                          # unique across ports: E1-E15, T1-T4
     assert [c[0].split("_")[0] for c in P6_TYPO] == ["T4"]
     assert mc.KNOWN_SURVIVORS == []
     allnames = [m[0] for m in mc.MUTANTS] + [m[0] for m in mc.DEF_MUTANTS] + [c[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
@@ -311,25 +372,27 @@ def test_p6_def_mutants_pins_are_probes_and_edits_apply():
     assert mc.VALUE_PROBES["CoherenceMotion.lean"] is mc.VP_MOT
     # rewrite lemmas and refutations earn no credit
     for p in mc.VP_MOT:
-        assert p.startswith(("probe_", "engine_")) and not p.endswith("_refuted")
+        assert p.startswith(("probe_", "engine_", "alphaE_exact")) and not p.endswith("_refuted")
     pins = {m[0].split("_")[0]: m[3] for m in P6_DEF}
-    assert pins["M71"] == ["probe_asym_state"] and pins["M72"] == ["probe_diagonal_zero"]       # N2 and the diagonal
-    assert pins["M74"] == pins["M75"] == pins["M76"] == ["engine_speed_limit_value"]            # the engine alpha
+    assert pins["M79"] == ["probe_asym_state"] and pins["M80"] == ["probe_diagonal_zero"]       # N2 and the diagonal
+    assert all(pins[k] == mc.PIN_ALPHA_E for k in ("M82", "M83", "M84", "M85", "M86"))         # the engine alpha
+    assert {"engine_speed_limit_value", "alphaE_exact"} <= set(mc.PIN_ALPHA_E)                   # audit N3: exact pin
     assert set(pins["M70"]) == {"probe_half_drop", "probe_half_increase", "probe_two_step", "engine_factor_two_attained"}
 
 
 def test_every_new_probe_has_an_equivalence_control_and_a_mutant():
-    new_probes = {"probe_asym_state", "probe_diagonal_zero", "engine_speed_limit_value", "engine_factor_two_attained"}
+    new_probes = {"probe_asym_state", "probe_diagonal_zero", "engine_speed_limit_value", "engine_factor_two_attained",
+                  "alphaE_exact", "engine_pow_1213_gt_half", "engine_pow_1214_lt_half"}
     assert new_probes <= set(mc.VP_MOT)
     credited = {p for m in P6_DEF for p in m[3]}
     assert new_probes <= credited                                                   # each is some mutant's declared pin
     eq = {c[0].split("_")[0]: c[2][0][1] for c in P6_EQUIV}
-    # E11 reads reported at (j, i): same observable (reported_symm) -> must keep the rTrace probes
-    assert "coherenceTrace alpha C0 d x0 u omega tau n) j i" in eq["E11"]
-    # E13 writes the symmetrisation out: the control for probe_asym_state / M71
-    assert "‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n j i‖) / 2" in eq["E13"]
-    # E12 / E14 are the same real alphaE: controls for engine_speed_limit_value and engine_factor_two_attained
-    assert "857 / 1500000" in eq["E12"] and "15000 / 857" in eq["E14"]
+    # E12 reads reported at (j, i): same observable (reported_symm) -> must keep the rTrace probes
+    assert "coherenceTrace alpha C0 d x0 u omega tau n) j i" in eq["E12"]
+    # E14 writes the symmetrisation out: the control for probe_asym_state / M79
+    assert "‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n j i‖) / 2" in eq["E14"]
+    # E13 / E15 are the same real alphaE: controls for the engine-alpha probes (incl. alphaE_exact and the closed numbers)
+    assert "857 / 1500000" in eq["E13"] and "15000 / 857" in eq["E15"]
     assert Fr(1, 100) / (Fr(15000, 857)) == Fr(1, 100) / (25 / Fr(857, 600)) == Fr(857, 1500000)
     assert "reportedXX" in P6_TYPO[0][2][0][1]
 
@@ -341,26 +404,36 @@ def test_p6_mutant_values_differ_from_the_probes():
     A = [[Fr(0), Fr(1)], [Fr(0), Fr(0)]]
     # M70: reading trace n + 1 shifts every probe
     assert R(h, uniform(1), 1) != R(h, uniform(1), 0) and R(q, uniform(1), 3) != R(q, uniform(1), 2)
-    # M73: one step from C0 at every n (instead of n steps)
+    # M81: one step from C0 at every n (instead of n steps)
     assert R(q, uniform(1), 1) != R(q, uniform(1), 2)
-    # M71: one-sided R reads (1, 0) on the asymmetric state, the true R is (1/2, 1/4)
+    # M79: one-sided R reads (1, 0) on the asymmetric state, the true R is (1/2, 1/4)
     assert abs(trace(h, A, 0)[0][1]) != R(h, A, 0)
-    # M72: diagonal one
+    # M80: diagonal one
     assert reported(uniform(1), 0, 0) == 0 != 1
-    # M74-M76: engine alpha with dt x10, mean omega 1, or flipped sign
+    # M82-M86: engine alpha with dt x10, mean omega 1, flipped sign, or mean omega numerator 856/858
     for x in (Fr(857, 150000), Fr(1, 2500)):
         a = math.exp(-float(x))
         assert not (0.00114 < 2 * (1 - a) < 0.00115)
     assert not (0.00114 < 2 * (1 - math.exp(float(Fr(857, 1500000)))) < 0.00115)
+    # M85 / M86 (audit N3): the near-miss numerators stay INSIDE the old range pin (0.00114 < 2(1-alpha) < 0.00115) and
+    # are caught only by the closed numbers alpha^1213 > 1/2 > alpha^1214 (856: alpha^1214 > 1/2; 858: alpha^1213 < 1/2)
+    for num in (856, 858):
+        a = math.exp(-num / 1500000)
+        assert 0.00114 < 2 * (1 - a) < 0.00115
+    a856, a858 = math.exp(-856 / 1500000), math.exp(-858 / 1500000)
+    assert a856 ** 1214 > 0.5 and a858 ** 1213 < 0.5
+    by_name = {m[0].split("_")[0]: m for m in P6_DEF}
+    assert "(856/600)" in by_name["M85"][2][0][1] and "(858/600)" in by_name["M86"][2][0][1]
 
 
 def test_readme_and_spec_record_p6():
     readme = (PROJ / "README.md").read_text()
     spec = (REPO / "research" / "lean_gate" / "SPEC_P1_gate_identities.md").read_text()
     assert "CoherenceMotion.lean" in readme and "(P6)" in readme and "079a72f3" in readme
-    assert "76 mutants" in readme and "M59–M69" in readme and "M70–M76" in readme
-    assert re.search(r"^## 12\. P6 ", spec, re.M)
-    sec = spec[spec.index("## 12. P6"):]
+    assert "86 mutants" in readme and "M59–M69" in readme and "M70 and M79–M86" in readme
+    assert re.search(r"^## 13\. P6 ", spec, re.M) and re.search(r"^## 12\. C014 ", spec, re.M)
+    sec = spec[spec.index("## 13. P6"):]
+    assert not re.search(r"(?<![0-9.])12\.[1-6]\b", sec), "stale 12.x cross-reference in section 13"
     for needle in (DEPOSIT_MD5, "owner-supplied", "ADOPT WITH NOTES", "speed limit", "no phase", "N1", "N2", "N3", "N4",
-                   "M59", "M76", "AUD-RATELAW stays UNEXPLAINED"):
+                   "M59", "M86", "1214", "AUD-RATELAW stays UNEXPLAINED"):
         assert needle in sec, needle
