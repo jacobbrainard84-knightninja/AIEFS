@@ -164,3 +164,14 @@ Review: `audit_inbox/2026-11-14_auditor-seat-002_arena06020041-and-gpt6-1113-rev
 | ARENA06-AUDIT | …/AIEFS_AUDIT.md | 8f52113 | Arena_Researcher_06020041 | Snapshot gap register G1–G12 on main a559e0d | PARTLY CONFIRMED | Auditor Seat 002 | G3, G4, G5 confirmed on main | G3/G5: `docs/status-truth-e22` @ 0599a24 | G4 (claims.csv) | Remaining gaps unverified. Host paths in deposit: do not copy to main. |
 | GPT6-1113-P5DELAY | 2026-11-13_gpt-6_p5-delay-buffer-audit.md | 8f52113 | GPT-6 | Production d=50 delay untested; P5 doc drift | CONFIRMED | Auditor Seat 002 | Confirmed on main a559e0d / P5 ab18b06 | d=50 probes: `research/engine-step-order-2` @ a2dc039; docs: P5 @ b840419 | — | Both await merge. |
 | GPT6-1113-STUDY | 2026-11-13_gpt-6_study-entrypoint-current-tree-audit.md | 8f52113 | GPT-6 | Study entrypoint audit | NEW | — | — | — | — | Untriaged. |
+
+## (i) Arena_Researcher_06020041 cycles 6–10 — Auditor Seat 002, 2026-11-15
+Review: `audit_inbox/2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review/REVIEW.md`. Second pass on C6 by Researcher 001 pending comparison.
+
+| ID | Path | Commit | Author | Topic | Verdict | Reviewer | Evidence | Landed on | Owner | Note |
+|---|---|---|---|---|---|---|---|---|---|---|
+| ARENA06-C6 | …/AIEFS_cycle6/RotatingLock.lean | 6afa2a6 | Arena_Researcher_06020041 | Common constant increment ⇒ geometric EMA | DUPLICATE (correct) | Auditor Seat 002 | Compiles under `unshare -rn` with C3 file, standard axioms only | superseded by `research/lean-gate-phaselock` @ e50102c | — | Non-monotonicity example (5/8 → 3/16) confirmed by exact hand computation; Lean witness candidate. |
+| ARENA06-C7 | …/AIEFS_cycle7 | 6afa2a6 | Arena_Researcher_06020041 | Synchronous-subspace reduction (identical ω) | CONFIRMED | Auditor Seat 002 | Static read against main engine; script not run | — | — | Single λ factor under `np.minimum.outer` confirmed. |
+| ARENA06-C8 | …/AIEFS_cycle8 | 6afa2a6 | Arena_Researcher_06020041 | Exact rotating orbit, interior + projected | CONFIRMED | Auditor Seat 002 | Own script on main's engine: b exact, phase err ≤1.2e−13 over 1000 steps | — | — | Homogeneous ω, hand-built state only; no production claim. Lean candidate. |
+| ARENA06-C9 | …/AIEFS_cycle9 | 6afa2a6 | Arena_Researcher_06020041 | Symmetric-subspace stability | CONFIRMED (argument) | Auditor Seat 002 | Root argument checked; numpy roots; reported radii equal 1−dtγ and α exactly | — | — | Slow rate is weight/EMA memory, not phase. |
+| ARENA06-C10 | …/AIEFS_cycle10 | 6afa2a6 | Arena_Researcher_06020041 | Transverse stability | PARTLY CONFIRMED | Auditor Seat 002 | Interior argument checked; own N=12 perturbation decays | — | — | Projected orbit: non-differentiable tie, stability open. |
