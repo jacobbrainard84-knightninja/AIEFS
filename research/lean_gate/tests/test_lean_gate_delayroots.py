@@ -7,6 +7,11 @@ Statement mutants (numbered from M92; selected by file, so later ports can appen
   M94 transRoot_lt_one hm (1 ≤ m) := True               (m = 0, h = 3, d = 0: root -2)
   M95 transRoot_lt_one hmh (m h < 1) := True            (m = h = 1, d = 0: root -1)
   M96 projectedSlope_lt_quarter `C < x` -> `C ≤ x`      (C = ε = x = 1: slope 1/4)
+  M97 symRoot_eq_one_or_lt ha0 (0 < a) := True          (a = -2, d = 1: root 2)
+  M98 transRoot_lt_one h0 (0 < h) := True               (m = 1, h = 0, d = 0: root 1)
+  M99 symRoot_eq_one_or_lt `a < 1` -> `a ≤ 1`           (a = 1, d = 1: root -1)
+  M100 transRoot_lt_one `m h < 1` -> `m h ≤ 1`          (m = h = 1, d = 1: root i)
+  M101 projectedSlope_lt_quarter 0 < C, 0 < ε := True   (C = ε = -1, x = -1/2: slope 4/9)
 The witness roots are re-checked here in exact arithmetic (Gaussian integers / rationals).
 
 Run: /workspace/venv-pt/bin/pytest -q research/lean_gate/tests/test_lean_gate_delayroots.py
@@ -30,7 +35,12 @@ STATEMENT = [("M92", "symRoot_eq_one_or_lt", "false_symRoot_no_upper", "symRoot_
              ("M93", "symRoot_eq_one_or_lt", "false_one_inside", "symRoot_one"),
              ("M94", "transRoot_lt_one", "false_minus_two_inside", "transRoot_root_m_zero"),
              ("M95", "transRoot_lt_one", "false_minus_one_inside", "transRoot_root_mh_one"),
-             ("M96", "projectedSlope_lt_quarter", "false_slope_at_boundary", None)]
+             ("M96", "projectedSlope_lt_quarter", "false_slope_at_boundary", None),
+             ("M97", "symRoot_eq_one_or_lt", "false_symRoot_two", "symRoot_root_a_neg_two"),
+             ("M98", "transRoot_lt_one", "false_one_inside", "transRoot_root_h_zero"),
+             ("M99", "symRoot_eq_one_or_lt", "false_symRoot_minus_one", "symRoot_root_a_one"),
+             ("M100", "transRoot_lt_one", "false_I_inside", "transRoot_root_I"),
+             ("M101", "projectedSlope_lt_quarter", "false_slope_both_negative", None)]
 
 
 def mutants():
@@ -51,7 +61,8 @@ def test_no_escape_hatches():
     for bad in ("sorry", "admit", "native_decide", "axiom ", "unsafe", "implemented_by", "extern"):
         assert bad not in code, bad
     for thm in ("symRoot_eq_one_or_lt", "transRoot_lt_one", "projectedSlope_lt_quarter", "symRoot_one",
-                "eq_one_of_norm_ge_one_of_near"):
+                "eq_one_of_norm_ge_one_of_near", "projectedSlope_lt_quarter_of_C", "transRoot_instance_d_two",
+                "symRoot_instance_d_two"):
         assert re.search(rf"^theorem {thm}\b", SRC, re.M), thm
 
 
@@ -98,3 +109,26 @@ def test_witness_roots_exact():
     assert _poly((Q(-1), Q(0)), 0, Q(1) - 1 * 1, Q(1)) == (0, 0)
     # M96: C = eps = x = 1 gives exactly 1/4
     assert Q(1) * 1 / (1 + 1) ** 2 == Q(1, 4)
+    # M97: a = -2, d = 1, z = 2;  M99: a = 1, d = 1, z = -1  (P = z^(d+1) - (1-a) z^d - a)
+    assert _poly((Q(2), Q(0)), 1, Q(1) - (-2), Q(2)) == (0, 0)
+    assert _poly((Q(-1), Q(0)), 1, Q(1) - 1, -Q(1)) == (0, 0)
+    # M98: m = 1, h = 0, d = 0, z = 1;  M100: m = h = 1, d = 1, z = i
+    assert _poly((Q(1), Q(0)), 0, Q(1) - 1 * 0, Q(0)) == (0, 0)
+    assert _poly((Q(0), Q(1)), 1, Q(1) - 1 * 1, Q(1)) == (0, 0)
+    # M101: C = eps = -1, x = -1/2 (x > C) gives 4/9 > 1/4
+    C, e, x = Q(-1), Q(-1), Q(-1, 2)
+    assert x > C and C * e / (x + e) ** 2 == Q(4, 9) > Q(1, 4)
+
+
+def test_eps_redundant_given_C_numerically():
+    # 0 < C, C < x, eps <= 0 (and x + eps != 0): slope <= 0 < 1/4, the content of projectedSlope_lt_quarter_of_C
+    for C in (Q(1, 3), Q(1), Q(5)):
+        for x in (C + Q(1, 7), C + 3):
+            for e in (Q(0), -Q(1, 10), -x / 2, -2 * x):
+                assert C * e / (x + e) ** 2 <= 0
+
+
+def test_axioms_printed():
+    for thm in ("symRoot_eq_one_or_lt", "symRoot_one", "transRoot_lt_one", "projectedSlope_lt_quarter",
+                "projectedSlope_lt_quarter_of_C"):
+        assert f"#print axioms AIEFGate.DelayRoots.{thm}" in SRC, thm

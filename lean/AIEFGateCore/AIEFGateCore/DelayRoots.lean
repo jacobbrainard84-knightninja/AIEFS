@@ -74,7 +74,9 @@ theorem symRoot_eq_one_or_lt (a : ℝ) (ha0 : 0 < a) (ha1 : a < 1) (d : ℕ) (z 
     nlinarith
   exact eq_one_of_norm_ge_one_of_near (1 - a) (by linarith) z hlt hnear
 
-/-- Cycle 9: `1` is a root of `P`, and `P'(1) = 1 + a d > 0` (so the root is simple). -/
+/-- Cycle 9: `1` is a root of `P`, together with the arithmetic identity
+`(d + 1) - (1 - a) d = 1 + a d`. By the power rule that number is `P'(1)`, but the derivative
+itself is not formalised here, so neither `P'(1) ≠ 0` nor simplicity of the root is proved. -/
 theorem symRoot_one (a : ℝ) (d : ℕ) :
     (1 : ℂ) ^ (d + 1) - ((1 - a : ℝ) : ℂ) * 1 ^ d - (a : ℂ) = 0 ∧
       ((d + 1 : ℝ) - (1 - a) * d = 1 + a * d) := by
@@ -118,7 +120,31 @@ theorem projectedSlope_lt_quarter (C ε x : ℝ) (hC : 0 < C) (hε : 0 < ε) (hx
   rw [div_lt_iff₀ hpos]
   nlinarith [sq_nonneg (x - ε)]
 
-/-! ## Witnesses: each hypothesis is needed (used by mutants M92-M96) -/
+/-- `0 < ε` is redundant given `0 < C`: for `ε ≤ 0` the slope is `≤ 0`. (Dropping both `0 < C`
+and `0 < ε` is false, see `false_slope_both_negative`.) -/
+theorem projectedSlope_lt_quarter_of_C (C ε x : ℝ) (hC : 0 < C) (hx : C < x) :
+    C * ε / (x + ε) ^ 2 < 1 / 4 := by
+  rcases lt_or_ge 0 ε with hε | hε
+  · exact projectedSlope_lt_quarter C ε x hC hε hx
+  · have hnum : C * ε ≤ 0 := mul_nonpos_of_nonneg_of_nonpos hC.le hε
+    have : C * ε / (x + ε) ^ 2 ≤ 0 := div_nonpos_of_nonpos_of_nonneg hnum (sq_nonneg _)
+    linarith
+
+/-- Positive instance at delay `d = 2` (`m = 1`, `h = 1/2`): every root of
+`λ^3 - (1/2) λ^2 + 1/2` is strictly inside the unit disk. -/
+theorem transRoot_instance_d_two (z : ℂ)
+    (hz : z ^ (2 + 1) - ((1 - ((1 : ℕ) : ℝ) * (1 / 2) : ℝ) : ℂ) * z ^ 2 + ((1 / 2 : ℝ) : ℂ) = 0) :
+    ‖z‖ < 1 :=
+  transRoot_lt_one 1 le_rfl (1 / 2) (by norm_num) (by norm_num) 2 z hz
+
+/-- Positive instance at delay `d = 2` (`a = 1/2`): every root of `λ^3 - (1/2) λ^2 - 1/2` is `1`
+or strictly inside the unit disk. -/
+theorem symRoot_instance_d_two (z : ℂ)
+    (hz : z ^ (2 + 1) - ((1 - 1 / 2 : ℝ) : ℂ) * z ^ 2 - ((1 / 2 : ℝ) : ℂ) = 0) :
+    z = 1 ∨ ‖z‖ < 1 :=
+  symRoot_eq_one_or_lt (1 / 2) (by norm_num) (by norm_num) 2 z hz
+
+/-! ## Witnesses: each hypothesis is needed (used by the DelayRoots statement mutants) -/
 
 /-- `a = 2`, `d = 1`: `-2` is a root of `P`. -/
 theorem symRoot_root_a_two :
@@ -156,5 +182,54 @@ theorem false_minus_one_inside : ¬ ‖(-1 : ℂ)‖ < 1 := by
 theorem false_slope_at_boundary : ¬ ((1 : ℝ) * 1 / (1 + 1) ^ 2 < 1 / 4) := by
   norm_num
 
+/-- `a = -2`, `d = 1`: `2` is a root of `P` (`P = (λ - 1)(λ - 2)`), so `0 < a` is needed. -/
+theorem symRoot_root_a_neg_two :
+    (2 : ℂ) ^ (1 + 1) - ((1 - (-2) : ℝ) : ℂ) * (2 : ℂ) ^ 1 - ((-2 : ℝ) : ℂ) = 0 := by
+  push_cast; ring
+
+theorem false_symRoot_two : ¬ ((2 : ℂ) = 1 ∨ ‖(2 : ℂ)‖ < 1) := by
+  rintro (h | h)
+  · have := congrArg Complex.re h
+    norm_num at this
+  · norm_num at h
+
+/-- `a = 1`, `d = 1`: `-1` is a root of `P = λ^2 - 1`, so `a < 1` cannot be weakened to `a ≤ 1`. -/
+theorem symRoot_root_a_one :
+    (-1 : ℂ) ^ (1 + 1) - ((1 - 1 : ℝ) : ℂ) * (-1 : ℂ) ^ 1 - ((1 : ℝ) : ℂ) = 0 := by
+  push_cast; ring
+
+theorem false_symRoot_minus_one : ¬ ((-1 : ℂ) = 1 ∨ ‖(-1 : ℂ)‖ < 1) := by
+  rintro (h | h)
+  · have := congrArg Complex.re h
+    norm_num at this
+  · norm_num at h
+
+/-- `m = 1`, `h = 0`, `d = 0`: `1` is a root of `Q = λ - 1`, so `0 < h` is needed. -/
+theorem transRoot_root_h_zero :
+    (1 : ℂ) ^ (0 + 1) - ((1 - ((1 : ℕ) : ℝ) * 0 : ℝ) : ℂ) * (1 : ℂ) ^ 0 + ((0 : ℝ) : ℂ) = 0 := by
+  push_cast; ring
+
+/-- `m = h = 1`, `d = 1`: `i` is a root of `Q = λ^2 + 1`, so `m h < 1` cannot be weakened to
+`m h ≤ 1` (and the witness has `d ≥ 1`, unlike `transRoot_root_mh_one`). -/
+theorem transRoot_root_I :
+    Complex.I ^ (1 + 1) - ((1 - ((1 : ℕ) : ℝ) * 1 : ℝ) : ℂ) * Complex.I ^ 1 + ((1 : ℝ) : ℂ) =
+      0 := by
+  push_cast; simp
+
+theorem false_I_inside : ¬ ‖Complex.I‖ < 1 := by
+  simp
+
+/-- `C = ε = -1`, `x = -1/2` (so `x > C`): the slope is `4/9`, so `0 < C` and `0 < ε` cannot
+both be dropped. -/
+theorem false_slope_both_negative :
+    ¬ ((-1 : ℝ) * (-1) / ((-1 / 2) + (-1)) ^ 2 < 1 / 4) := by
+  norm_num
+
 end DelayRoots
 end AIEFGate
+
+#print axioms AIEFGate.DelayRoots.symRoot_eq_one_or_lt
+#print axioms AIEFGate.DelayRoots.symRoot_one
+#print axioms AIEFGate.DelayRoots.transRoot_lt_one
+#print axioms AIEFGate.DelayRoots.projectedSlope_lt_quarter
+#print axioms AIEFGate.DelayRoots.projectedSlope_lt_quarter_of_C

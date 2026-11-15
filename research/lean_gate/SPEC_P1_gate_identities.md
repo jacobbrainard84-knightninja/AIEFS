@@ -1153,34 +1153,52 @@ controls not killed; 3/3 typo controls INVALID; RESULT PASS.
 `lean/AIEFGateCore/AIEFGateCore/DelayRoots.lean` (namespace `AIEFGate.DelayRoots`) is pure algebra. It covers the characteristic polynomials in Arena_Researcher_06020041's cycles 9 and 10, which are unverified inbox material (Auditor review on `audit-inbox` @ `4ee9fe5`):
 
 - `symRoot_eq_one_or_lt`: for 0 < a < 1, every root of λ^(d+1) − (1−a)λ^d − a is 1 or has |λ| < 1.
-- `symRoot_one`: 1 is a root, and P′(1) = 1 + a·d.
+- `symRoot_one`: 1 is a root, plus the arithmetic identity (d+1) − (1−a)·d = 1 + a·d. By the power rule that number is P′(1), but the derivative is not formalised, so simplicity of the root is **not** proved.
 - `transRoot_lt_one`: for 1 ≤ m, 0 < h and m·h < 1, every root of λ^(d+1) − (1−m·h)λ^d + h has |λ| < 1.
-- `projectedSlope_lt_quarter`: if x > C > 0 and ε > 0, then C·ε/(x+ε)² < 1/4.
+- `projectedSlope_lt_quarter`: if x > C > 0 and ε > 0, then C·ε/(x+ε)² < 1/4. `projectedSlope_lt_quarter_of_C` proves the same without ε > 0 (for ε ≤ 0 the slope is ≤ 0).
+- Positive instances at delay d = 2: `symRoot_instance_d_two` (a = 1/2) and `transRoot_instance_d_two` (m = 1, h = 1/2).
 - Key lemma `eq_one_of_norm_ge_one_of_near`: if |z| ≥ 1, c > 0 and |z − c| ≤ 1 − c, then z = 1.
 
 **Not covered:** that these polynomials are the correct linearisation of the engine step; the existence of the cycle 8 rotating orbit; the projected orbit's non-differentiable tie; heterogeneous ω; production runs. Nothing here supports any AIEF-1.4 claim.
 
-### 15.2 Mutants M92–M96 (statement mutants, numbered after phaselock's M85–M91)
+### 15.2 Mutants M92–M101 (statement mutants, numbered after phaselock; renumbered when this branch is refreshed onto main)
 | Mutant | Change | Refuted by |
 |---|---|---|
 | M92 | `symRoot_eq_one_or_lt`: `a < 1` := True | a = 2, d = 1, root −2 |
 | M93 | `symRoot_eq_one_or_lt`: conclusion drops `z = 1 ∨` | the root 1 |
 | M94 | `transRoot_lt_one`: `1 ≤ m` := True | m = 0, h = 3, d = 0, root −2 |
-| M95 | `transRoot_lt_one`: `m h < 1` := True | m = h = 1, d = 0, root −1 |
+| M95 | `transRoot_lt_one`: `m h < 1` := True | m = h = 1, d = 0, root −1 (d = 0 is outside Arena's d ≥ 1; M100 has a d = 1 witness) |
 | M96 | `projectedSlope_lt_quarter`: `C < x` → `C ≤ x` | C = ε = x = 1, slope exactly 1/4 |
+| M97 | `symRoot_eq_one_or_lt`: `0 < a` := True | a = −2, d = 1: P = (λ−1)(λ−2), root 2 |
+| M98 | `transRoot_lt_one`: `0 < h` := True | m = 1, h = 0, d = 0: Q = λ − 1, root 1 |
+| M99 | `symRoot_eq_one_or_lt`: `a < 1` → `a ≤ 1` | a = 1, d = 1: P = λ² − 1, root −1 |
+| M100 | `transRoot_lt_one`: `m h < 1` → `m h ≤ 1` | m = h = 1, d = 1: Q = λ² + 1, root i |
+| M101 | `projectedSlope_lt_quarter`: `0 < C` and `0 < ε` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
 
-**Not mutated:**
-- `0 < a`. Negative a can still give spectral radius 1, so there is no simple witness. The deposit cites d = 3, a = −0.5 as having an unstable root of about 1.234, but no exact witness is formalised.
-- `0 < h`. With h = 0, the root 0 or 1 makes the conclusion fail only at the boundary.
-- `0 < ε`.
+M97–M101 come from Researcher 001's audit of `ae2c25a` (blocker B1 and note N1). The earlier text here said
+0 < a had "no simple witness" and 0 < h failed "only at the boundary"; both were wrong (M97, M98).
+
+**Not mutated, with the reason:**
+- `0 < ε` alone, and `0 < C` alone: each is redundant given the other. With C > 0 and ε ≤ 0, or ε > 0 and C ≤ 0,
+  the numerator C·ε is ≤ 0, so the slope is ≤ 0 < 1/4 (proved for the first case as `projectedSlope_lt_quarter_of_C`).
+  Dropping both is false (M101).
+- `1 ≤ m` weakened to `0 ≤ m`: that is M94 (m = 0).
+
+### 15.2a Dictionary to the engine (NOT proved; informal, from Researcher 001's numerical check)
+The Lean variables are free reals. Researcher 001's reading of the engine linearisation around the homogeneous-ω orbit
+is m = N − 1, h = dt·b·cos(Ω·τ), a = m·h, ε = scale_epsilon, C = capacity, x = (N − 1)·β. Researcher 001 numerically
+confirmed that the engine's phase-block spectrum is the roots of P together with N − 1 copies of the roots of Q for 5
+(N, d) cases. The block-triangular structure of the EMA/weight part is **not** verified, and nothing in this file
+claims it. Nothing here connects the Lean statements to the engine code.
 
 ### 15.3 Tests
 `research/lean_gate/tests/test_lean_gate_delayroots.py` checks:
-- that the module is imported and hash-pinned, with no escape hatches;
-- the exact shape of M92–M96 (selected by file);
-- the witness roots, re-checked in exact rational arithmetic.
+- that the module is imported and hash-pinned, with no escape hatches, and that `#print axioms` lines are present;
+- the exact shape of M92–M101 (selected by file);
+- the witness roots, re-checked in exact rational arithmetic, and the ε ≤ 0 redundancy numerically.
 
-The pins move as follows: P4b `len(MUTANTS)` goes from 41 to 46, and P5 `N_STATEMENT_MUTANTS` from 41 to 46, so `TOTAL_MUTANTS` becomes 71. If c016 and phaselock land first, these pins are merged additively.
+The pins move as follows: P4b `len(MUTANTS)` goes from 41 to 51, and P5 `N_STATEMENT_MUTANTS` from 41 to 51, so `TOTAL_MUTANTS` becomes 76. If c016 and phaselock land first, these pins are merged additively.
 
-### 15.4 Results
-See the commit message of the branch tip.
+### 15.4 Results (local, 2026-11-15)
+- First version (`ae2c25a`): `SKIP_CACHE=1 ./check_lean_gate.sh` PASS, 807 declarations, 0 warnings, standard axioms only. Full mutation run: 46/46 statement mutants rejected, 25/25 definition mutants killed, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 297 passed.
+- After Researcher 001's audit (M97–M101, `projectedSlope_lt_quarter_of_C`, the two d = 2 instances, `#print axioms`): gate PASS, **818 declarations**, standard axioms only. Full unfiltered mutation run: **51/51 statement** (the one name-reference note is M31's, pre-existing), **25/25 definition**, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 299 passed; all repository checkers rc 0.
