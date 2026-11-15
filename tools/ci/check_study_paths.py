@@ -12,6 +12,10 @@ What is checked (CHECKED_FIELDS; the row id is the value of the id column):
     registry/studies.csv        canonical_entrypoints, canonical_evidence_paths     id: study_id
     registry/supersessions.csv  authoritative_target                                id: superseded_target
 
+`canonical_entrypoints` names scripts: each token must resolve to a tracked FILE (or a glob that matches
+tracked files); a directory does not count (FILE_ONLY_FIELDS). Evidence paths and supersession targets may
+be a file or a directory.
+
 `supersessions.csv:superseded_target` is NOT checked: a superseded thing is allowed to be gone (it is the
 retired one); the authoritative target is the claim that something exists. `rationale` and the other
 columns are prose and are not read.
@@ -31,13 +35,15 @@ Tokenizer (TOKENIZER; applied identically to every checked field, nothing is dro
 Resolution (against `git ls-files`, i.e. the tracked tree; untracked or ignored files do not count):
 
   * a token resolves if it is a tracked file or a tracked directory (a prefix of a tracked path); a token
-    ending in `/` must be a directory;
+    ending in `/` must be a directory; in a FILE_ONLY_FIELDS field only a tracked file resolves (a token
+    ending in `/` never does);
   * a token containing `*` or `?` is a glob, matched segment by segment at the repository root: `*` and
     `?` never match `/`, there is no `**`, `[` is literal. A glob resolves if some tracked file or
-    directory matches all its segments. So `aief_1_4_*_report.txt` matches root-level files only.
+    directory matches all its segments. So `aief_1_4_*_report.txt` matches root-level files only. A glob ending in `/` matches
+    directories only; in a FILE_ONLY_FIELDS field a glob matches files only.
 
 Baseline (tools/ci/study_paths_baseline.json): the known-unresolved tokens, each with file, row_id, field,
-token and a reason. Replacing or restoring a missing path is an owner/provenance decision, so the checker
+token and a reason (the reason states the git-history evidence: `git log --all -- <token>`). Replacing or restoring a missing path is an owner/provenance decision, so the checker
 never rewrites registry CSVs; it only stops the debt from growing silently. Findings (ERROR, exit 1):
 
   UNRESOLVED        a token does not resolve and is not baselined
@@ -67,13 +73,16 @@ import sys
 
 IN_GHA = os.environ.get("GITHUB_ACTIONS") == "true"
 DEFAULT_BASELINE = os.path.join("tools", "ci", "study_paths_baseline.json")
-BASELINE_REASON = "unresolved at 871417d; replacement is an owner/provenance decision"
+# Placeholder for --print-baseline only: classify each entry from `git log --all -- <token>` before committing.
+BASELINE_REASON = "TODO classify: unresolved; check git log --all -- <token>"
 
 # (csv file, id column, checked fields)
 CHECKED_FIELDS = (
     ("registry/studies.csv", "study_id", ("canonical_entrypoints", "canonical_evidence_paths")),
     ("registry/supersessions.csv", "superseded_target", ("authoritative_target",)),
 )
+# Fields whose tokens must be tracked FILES (a script is not a directory).
+FILE_ONLY_FIELDS = {("registry/studies.csv", "canonical_entrypoints")}
 SEPARATOR_RE = re.compile(r";| \+ ")
 TOKENIZER = "split at ';' and ' + ', strip whitespace and a leading './', keep inner whitespace, commas are not separators"
 # Pieces that are not paths. Each must be named here; everything else is a path.
@@ -117,21 +126,24 @@ class Tree:
             for i in range(1, len(parts)):
                 self.dirs.add("/".join(parts[:i]))
         self._split_dirs = [d.split("/") for d in self.dirs]
-        self._split = [f.split("/") for f in self.files] + self._split_dirs
+        self._split_files = [f.split("/") for f in self.files]
+        self._split = self._split_files + self._split_dirs
 
     @staticmethod
     def _seg_regex(seg):
         return re.compile("".join("[^/]*" if c == "*" else "[^/]" if c == "?" else re.escape(c) for c in seg) + r"\Z")
 
-    def resolves(self, token):
+    def resolves(self, token, files_only=False):
         dir_only = token.endswith("/")
         t = token[:-1] if dir_only else token
-        if not t:
+        if not t or (files_only and dir_only):
             return False
         if "*" in t or "?" in t:
             rxs = [self._seg_regex(s) for s in t.split("/")]
-            cands = self._split_dirs if dir_only else self._split
+            cands = self._split_dirs if dir_only else self._split_files if files_only else self._split
             return any(len(p) == len(rxs) and all(r.match(s) for r, s in zip(rxs, p)) for p in cands)
+        if files_only:
+            return t in self.files
         return t in self.dirs if dir_only else (t in self.files or t in self.dirs)
 
 
@@ -232,7 +244,7 @@ def check(repo, baseline_path):
         key = (rel, rid, field, tok)
         s = stats.setdefault((rel, field), {"tokens": 0, "unresolved": 0, "rows": set(), "baselined": 0})
         s["tokens"] += 1
-        if tree.resolves(tok):
+        if tree.resolves(tok, (rel, field) in FILE_ONLY_FIELDS):
             if key in base:
                 findings.append(("STALE_BASELINE", f"{rel}:{line_no} {rid} {field}: {tok!r} now resolves; "
                                                    f"remove its entry from the baseline"))
@@ -262,7 +274,7 @@ def print_baseline(repo):
     tree = Tree(tracked_files(repo))
     tokens, _, _, errors, _ = read_registry(repo, tree)
     ents = [{"file": rel, "row_id": rid, "field": field, "token": tok, "reason": BASELINE_REASON}
-            for rel, rid, field, tok, _ in tokens if not tree.resolves(tok)]
+            for rel, rid, field, tok, _ in tokens if not tree.resolves(tok, (rel, field) in FILE_ONLY_FIELDS)]
     print(json.dumps({"entries": ents}, indent=2, ensure_ascii=False))
     return 1 if errors else 0
 

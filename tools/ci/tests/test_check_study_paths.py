@@ -29,7 +29,7 @@ SCRIPT = os.path.join(CI, "check_study_paths.py")
 STUDY_COLS = ["study_id", "title", "era", "artifact_status", "evidence_scope", "canonical_entrypoints",
               "canonical_evidence_paths", "sample_design", "stage4_target_dir", "summary"]
 SUP_COLS = ["superseded_target", "authoritative_target", "category", "rationale"]
-REASON = csp.BASELINE_REASON
+REASON = "unresolved at 871417d; test reason"
 
 
 def study(sid, entry="", evidence=""):
@@ -49,7 +49,7 @@ EP, EV, AU = "canonical_entrypoints", "canonical_evidence_paths", "authoritative
 
 
 def make_repo(root, studies=(), sups=(), files=("a.py", "d/x.txt", "dir with space/y.txt", "runs/r1/f.csv"),
-              baseline=(), untracked=(), study_cols=None):
+              baseline=(), untracked=(), study_cols=None, untrack=()):
     def w(rel, data):
         p = os.path.join(root, rel)
         os.makedirs(os.path.dirname(p) or root, exist_ok=True)
@@ -68,7 +68,7 @@ def make_repo(root, studies=(), sups=(), files=("a.py", "d/x.txt", "dir with spa
             wr.writerow(r)
         w(rel, buf.getvalue())
     w("tools/ci/study_paths_baseline.json", json.dumps({"entries": list(baseline)}))
-    tracked = list(files) + [S, U]
+    tracked = list(files) + [r for r in (S, U) if r not in untrack]
     subprocess.run(["git", "-C", root, "add", "--"] + tracked, check=True)
     return os.path.join(root, "tools", "ci", "study_paths_baseline.json")
 
@@ -165,6 +165,47 @@ class OutcomeTests(Base):
         rc, out = run(csp, self.root)
         self.assertEqual((rc, self.codes(out)), (1, {"REGISTRY_BAD"}), out)
 
+    def test_untracked_registry_csv_fails(self):
+        # the CSV exists on disk but is not in git: it must not be read (audit N1)
+        for rel in (S, U):
+            with self.subTest(rel):
+                with tempfile.TemporaryDirectory() as d:
+                    make_repo(d, studies=[study("A", "a.py")], sups=[sup("o.py", "a.py")], untrack=(rel,))
+                    self.assertTrue(os.path.isfile(os.path.join(d, rel)))
+                    rc, out = run(csp, d)
+                    self.assertEqual((rc, self.codes(out)), (1, {"REGISTRY_BAD"}), out)
+                    self.assertIn(f"{rel} is absent or not tracked", out)
+
+    def test_registry_csv_removed_from_index_but_on_disk_fails(self):
+        make_repo(self.root, studies=[study("A", "a.py")])
+        subprocess.run(["git", "-C", self.root, "rm", "-q", "--cached", S], check=True)
+        rc, out = run(csp, self.root)
+        self.assertEqual((rc, self.codes(out)), (1, {"REGISTRY_BAD"}), out)
+
+    def test_entrypoint_must_be_a_file_not_a_directory(self):
+        for tok in ("d", "d/", "dir with space/", "dir*", "d/s*"):    # directories, and globs matching directories only
+            with self.subTest(tok):
+                rc, out = self.go(studies=[study("A", tok)])
+                self.assertEqual((rc, self.codes(out)), (1, {"UNRESOLVED"}), out)
+                self.assertIn(repr(tok), out)
+
+    def test_entrypoint_file_and_file_glob_pass(self):
+        for tok in ("a.py", "d/x.txt", "d/*.txt", "d/*", "*.py", "dir with space/y.txt", "runs/r1/f.csv"):
+            with self.subTest(tok):
+                with tempfile.TemporaryDirectory() as d:
+                    make_repo(d, studies=[study("A", tok)])
+                    rc, out = run(csp, d)
+                    self.assertEqual(rc, 0, out)
+
+    def test_evidence_path_and_supersession_target_may_be_a_directory(self):
+        rc, out = self.go(studies=[study("A", "a.py", "d;d/;runs/r1/;d/*;dir with space/")], sups=[sup("o.py", "d/")])
+        self.assertEqual(rc, 0, out)
+
+    def test_baselined_directory_entrypoint_is_not_stale(self):
+        # a directory token in an entrypoint field stays unresolved, so its baseline entry is not stale
+        rc, out = self.go(studies=[study("A", "d/")], baseline=[bl(S, "A", EP, "d/")])
+        self.assertEqual(rc, 0, out)
+
     def test_removed_column_fails(self):
         cols = [c for c in STUDY_COLS if c != EV]
         rc, out = self.go(studies=[study("A", "a.py")], study_cols=cols)
@@ -213,7 +254,9 @@ class OutcomeTests(Base):
         with contextlib.redirect_stdout(buf):
             rc = csp.main(["--repo", self.root, "--print-baseline"])
         got = [(e["file"], e["row_id"], e["field"], e["token"], e["reason"]) for e in json.loads(buf.getvalue())["entries"]]
-        self.assertEqual((rc, got), (0, [(S, "A", EP, "m.py", REASON), (U, "o", AU, "n.py", REASON)]))
+        ph = csp.BASELINE_REASON
+        self.assertEqual((rc, got), (0, [(S, "A", EP, "m.py", ph), (U, "o", AU, "n.py", ph)]))
+        self.assertTrue(ph.startswith("TODO"))      # a placeholder, never a final reason
 
 
 class TokenizerTests(unittest.TestCase):
@@ -265,6 +308,13 @@ class ResolutionTests(unittest.TestCase):
         for tok in ("a.py", "d", "d/", "d/sub", "d/sub/z.txt", "dir with space/", "dir with space/y.txt"):
             self.assertTrue(self.tree.resolves(tok), tok)
 
+    def test_files_only_mode(self):
+        for tok in ("a.py", "d/x.txt", "d/*.txt", "*.py", "dir with space/y.txt", "d/sub/z.txt"):
+            self.assertTrue(self.tree.resolves(tok, files_only=True), tok)
+        for tok in ("d", "d/", "d/sub", "dir with space/", "d/s*", "dir*", "*/", "nope.py", "a.py/"):
+            self.assertFalse(self.tree.resolves(tok, files_only=True), tok)
+        self.assertTrue(self.tree.resolves("d") and self.tree.resolves("d/*"))     # file-or-dir mode still accepts them
+
     def test_non_members(self):
         for tok in ("b.py", "d/y.txt", "dir with", "a.py/", "d/x.txt/", "case.py", "../a.py", "/a.py", "d//x.txt", ""):
             self.assertFalse(self.tree.resolves(tok), tok)
@@ -313,12 +363,23 @@ class CliTests(Base):
 
 
 class ShippedBaselineTests(unittest.TestCase):
-    def test_shipped_baseline_is_well_formed(self):
+    def test_shipped_baseline_is_well_formed_and_reasons_are_specific(self):
         entries, errors = csp.load_baseline(os.path.join(CI, "study_paths_baseline.json"))
         self.assertEqual(errors, [])
-        self.assertTrue(entries)
-        for e in entries:
-            self.assertTrue(e[4].startswith("unresolved at 871417d"), e)
+        kinds = {"papers": 0, "successor": 0, "never": 0}
+        for file, rid, field, token, reason in entries:
+            self.assertTrue(reason.startswith("unresolved at 871417d; "), reason)
+            if token == "Papers/":
+                self.assertIn("intentional deletion of third-party papers", reason)
+                kinds["papers"] += 1
+            elif file == U:
+                self.assertIn("successor target never pushed", reason)
+                kinds["successor"] += 1
+            else:
+                self.assertIn("never present in any commit", reason)
+                kinds["never"] += 1
+        self.assertEqual(kinds, {"papers": 1, "successor": 5, "never": 21})
+        self.assertEqual(len({e[4] for e in entries}), 3)      # no longer one generic string
 
     def test_script_is_executable_with_shebang(self):
         self.assertTrue(os.access(SCRIPT, os.X_OK))
@@ -358,12 +419,19 @@ def scenarios(mod):
     case("token_gone", 1, "BASELINE_GONE", studies=[study("A", "a.py")], baseline=[bl(S, "A", EP, "m.py")])
     case("semicolon_split", 1, "UNRESOLVED", studies=[study("A", "a.py;nothere.py")])
     case("space_token_checked", 1, "UNRESOLVED", studies=[study("A", "no such dir/")])
-    case("space_dir_resolves", 0, studies=[study("A", "dir with space/")])
+    case("space_dir_resolves", 0, studies=[study("A", "a.py", "dir with space/")])
     case("prose_not_skipped", 1, "UNRESOLVED", studies=[study("A", "just some words")])
     case("glob_root_only", 1, "UNRESOLVED", studies=[study("A", "*_nothing.txt")], files=("a.py", "n/q_nothing.txt"))
     case("glob_match", 0, studies=[study("A", "*.py")])
-    case("dir_prefix", 0, studies=[study("A", "d;runs/")])
+    case("dir_prefix", 0, studies=[study("A", "a.py", "d;runs/")])
+    case("entrypoint_dir", 1, "UNRESOLVED", studies=[study("A", "d")])
+    case("entrypoint_dir_slash", 1, "UNRESOLVED", studies=[study("A", "d/")])
+    case("entrypoint_glob_dir_only", 1, "UNRESOLVED", studies=[study("A", "d*")], files=("a.py", "dd/x.txt"))
+    case("entrypoint_file", 0, studies=[study("A", "d/x.txt")])
+    case("untracked_registry_csv", 1, "REGISTRY_BAD", studies=[study("A", "a.py")], untrack=(S,))
+    case("untracked_supersessions_csv", 1, "REGISTRY_BAD", studies=[study("A", "a.py")], untrack=(U,))
     case("file_with_trailing_slash", 1, "UNRESOLVED", studies=[study("A", "a.py/")])
+    case("evidence_file_with_trailing_slash", 1, "UNRESOLVED", studies=[study("A", "a.py", "a.py/")])
     case("duplicate_id", 1, "REGISTRY_BAD", studies=[study("A", "a.py"), study("A", "a.py")])
     case("bad_reason", 1, "BASELINE_BAD", studies=[study("A", "zzz.py")], baseline=[bl(S, "A", EP, "zzz.py", reason="")])
     case("duplicate_baseline", 1, "BASELINE_BAD", studies=[study("A", "zzz.py")],
@@ -384,6 +452,8 @@ def load_mutant(src, old, new):
 
 MUTANTS = [
     ("always_resolved", "        return t in self.dirs if dir_only else (t in self.files or t in self.dirs)\n", "        return True\n"),
+    ("resolves_entirely_true", '        dir_only = token.endswith("/")\n', '        return True\n        dir_only = token.endswith("/")\n'),
+    ("resolves_entirely_false", '        dir_only = token.endswith("/")\n', '        return False\n        dir_only = token.endswith("/")\n'),
     ("never_resolved", "        return t in self.dirs if dir_only else (t in self.files or t in self.dirs)\n", "        return False\n"),
     ("glob_always_resolves", '            return any(len(p) == len(rxs) and all(r.match(s) for r, s in zip(rxs, p)) for p in cands)',
      "            return True"),
@@ -408,6 +478,14 @@ MUTANTS = [
     ("exit_code_always_zero", "    return 1 if findings else 0\n\n\nif __name__", "    return 0\n\n\nif __name__"),
     ("untracked_files_count", '    r = subprocess.run(["git", "ls-files", "-z"], cwd=repo, capture_output=True)',
      '    r = subprocess.run(["git", "ls-files", "-z", "--others", "--cached"], cwd=repo, capture_output=True)'),
+    ("untracked_registry_csv_accepted", "        if rel not in tree.files or not os.path.isfile(path):\n",
+     "        if not os.path.isfile(path):\n"),
+    ("entrypoints_may_be_directories", "        if tree.resolves(tok, (rel, field) in FILE_ONLY_FIELDS):\n",
+     "        if tree.resolves(tok):\n"),
+    ("files_only_accepts_dirs", "        if files_only:\n            return t in self.files\n",
+     "        if files_only:\n            return t in self.files or t in self.dirs\n"),
+    ("files_only_glob_matches_dirs", "self._split_files if files_only else self._split\n", "self._split\n"),
+    ("files_only_slash_token_accepted", "        if not t or (files_only and dir_only):\n", "        if not t:\n"),
     ("supersessions_not_checked", '    ("registry/supersessions.csv", "superseded_target", ("authoritative_target",)),\n', ""),
 ]
 
