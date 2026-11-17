@@ -193,7 +193,7 @@ NEW = [
   "(ERRATA_2026-10-28.md E5). Remaining unverified candidates: finite-difference error, unequal controlling scales, finite-time departure "
   "from the ideal locked point, storage rounding. The maximum residual (2.04e-8) comes from a single component with a tiny "
   "finite-difference step (delta in [1e-9, 1e-8)); the other 263 well-resolved components agree within 2.1e-10, so finite-difference/rounding "
-  "error is the most likely cause, and finite-time departure and unequal controlling scales are less likely. The gap stays unexplained. "
+  "error is the most likely cause, and finite-time departure and unequal controlling scales are less likely. "
   "The step-size sweep has since been run (ERRATA_2026-10-28.md E22; research/rate_law/rate_law_delta_sweep_v1.py; "
   "research/rate_law/results/rate_law_delta_sweep_v1.json): on that component the exact rational evaluation gives the state-formula "
   "multiplier to 4.04e-13 relative and the float error scales as 1/delta (log-log slope -1.09), but the predeclared rule did not close "

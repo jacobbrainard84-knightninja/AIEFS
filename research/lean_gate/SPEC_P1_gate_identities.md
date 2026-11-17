@@ -1106,7 +1106,7 @@ are induction wrappers around the P4a one-step facts in `Capacity.lean`; no new 
 witnesses (`pWide`) say nothing about the engine's parameters. The Auditor review the header cites
 (`2026-11-10_audit_040282_c014.md`) is not in this repository.
 
-### 12.2 Mutants (numbered from M71; the c016 port renumbers after these)
+### 12.2 Mutants (numbered from M71; the c016 port, §13, comes after these: its definition mutants are M79–M86)
 
 | Mutant | Kind | Edit | Killed by |
 |---|---|---|---|
@@ -1147,7 +1147,190 @@ controls not killed; 3/3 typo controls INVALID; RESULT PASS.
 * No Python-side check that the engine passes old and new `B` in this order (the probe only pins the Lean convention).
 * The oscillation witnesses use a full-reset `pWide` step; they are not evidence about engine parameters.
 
-## 15. DelayRoots (branch `research/lean-gate-delay-roots`, from `main` `871417d`)
+## 13. P6 (branch `research/lean-gate-c016`, from `main` `7129d31`, which contains P5 (#31), the guard fixes (#32, #36), the engine step-order work (#33), the E22 docs (#34) and the claims fix (#35); merge-refreshed on 2026-11-14 onto `main` `871417d`, which also contains C014 (#37, §12) and its follow-up (#38))
+
+Port of Researcher 040282's cycle 016 (`CoherenceMotion`) into `lean/AIEFGateCore/AIEFGateCore/CoherenceMotion.lean` (namespace `AIEFGate.CoherenceMotion`, imported by `AIEFGateCore.lean`),
+with the notes of Auditor Seat 002's review (`audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews/2026-11-11_audit_040282_c012_c016.md`, verdict **ADOPT WITH NOTES**). Nothing under
+`Pinned/`, `lean/AIEFProofs*`, `lean/AIEFFreezeCore`, `Capacity.lean`, `.github/` or any other hash-pinned artifact is edited. **AUD-RATELAW stays UNEXPLAINED**; this package
+does not touch it.
+
+**Credit.** Statements and proofs come from Researcher 040282 (handle only). Cycle 016: `CoherenceMotion.lean`, md5 `079a72f37e16e2187a913b96e28ab605`; the file is owner-supplied (the owner supplied it), and
+a copy is on branch `audit-inbox` at `audit_inbox/2026-11-08_researcher-040282/researcher_040282/cycle_016/CoherenceMotion.lean` (the md5 of that copy was checked; it is read-only
+evidence and is not imported). The deposit imported the then-unmerged P5 branch at `54037ea`; this port imports the merged `AIEFGateCore.PhaseCoherence`. The merged names are the
+names the deposit used (`PhaseCoherence.reported`, `coherenceStep`, `coherenceTrace`, `coherenceInput`, `input_norm`, `input_engine_convention`, `coherenceTrace_unitDisk`,
+`reported_bounds`, `reported_diag`, `reported_offdiag`, `Phase.phaseTrace`, `Phase.wrapPhase`), so no import or identifier had to be retargeted (review note N3).
+`test_lean_gate_c016.py` records the whitespace-removed deposit statements (21 theorems) and checks that the restated statements agree. No deposited Python was executed.
+
+**What it says, and what it does NOT say.** For the coherence EMA `C_{n+1} = α C_n + (1 − α) z_{n+1}` with unit-modulus input `z` and `0 ≤ α ≤ 1`, the reported coherence
+`R = reported C` satisfies `α R − (1 − α) ≤ R' ≤ α R + (1 − α)` and `|R' − R| ≤ (1 − α)(1 + R)`. With every entry of `C0` in the unit disk, `|R_{n+1} − R_n| ≤ min 1 (2 (1 − α))`
+and the diagonal of `R` is `0`. At the engine `α = exp(−dt/T_window) = 0.99942883…` (`dt = 1/100`, `T_window = 25 / mean ω`, `mean ω = 857/600` (`FROZEN_DT`, `FROZEN_OMEGA`,
+`FROZEN_T_WINDOW`, `FROZEN_ALPHA` of `aief_experiment_engine_v1.py`), so `α = exp(−857/1500000)`), `2 (1 − α) = 0.0011423…`. What the theorems prove is the per-step bound. A step count from it alone is a weak lower bound: a change of `R` of size `1` takes at least `1/(2(1−α)) = 875.4`, i.e. `876`, steps, and `2 (1 − α)` is attained within one step only (`engine_factor_two_attained`), not sustained. The envelopes iterate to more (audit of `d551540`, note N2): `R' ≤ αR + (1−α)` gives `1 − R_n ≥ α^n (1 − R_0)` (`trace_rise_bound`) and `R' ≥ αR − (1−α)` gives `1 + R_n ≥ α^n (1 + R_0)` (`trace_fall_bound`). At the engine `α`, `α^1213 > 1/2 > α^1214` (`ln 2 / (857/1500000) = 1213.2`): from `R_0 = 0` the reported coherence is still below `1/2` after `1213` steps, so it needs at least `1214` steps to reach `1/2` (`engine_rise_half_not_before_1214`; for `R_0 < 1`, `α > 0` it is below `1` at every finite step), and from `R_0 = 1` it is still above `0` after `1213` steps (`engine_fall_zero_not_before_1214`). It needs at least `4031` steps to go from `0` to `0.9` (`ln 10 / (857/1500000) = 4030.2`, exact arithmetic, checked in `test_lean_gate_c016.py`, not by a Lean theorem). The `1214` figures are for these start values and thresholds only (attained under constant input `−1`, so they are tight there). **This is a triangle-inequality speed limit on an exponential moving average with unit-norm inputs. It uses no phase structure, no delay, no `ω` and no `B`:
+the same bound holds for ANY unit input sequence. It does not say that `R` converges, locks or stays near a value, and it says nothing about `B`, the clip/projection or the gate.**
+(The only fact about the phase machinery that is used is that the input has modulus one, `PhaseCoherence.input_norm`, directly or through `coherenceTrace_unitDisk` and `reported_bounds`.)
+
+### 13.1 What is proved (all on `CoherenceMotion.lean`; exact reals; `V` any type)
+
+| Theorem | Hypotheses (exactly as proved) | Content |
+|---|---|---|
+| `complex_step_bounds` | `0 ≤ α ≤ 1`, `‖z‖ = 1` | `α‖C‖ − (1−α) ≤ ‖αC + (1−α)z‖ ≤ α‖C‖ + (1−α)` |
+| `reported_nonneg` | none | `0 ≤ reported C i j` |
+| `reported_step_bounds`, `reported_step_signed`, `reported_step_abs_state_bound` | `0 ≤ α ≤ 1` | one-step envelope of `reported` for the real `coherenceStep` (no unit-disk premise): `αR−(1−α) ≤ R' ≤ αR+(1−α)`; `−(1−α)(1+R) ≤ R'−R ≤ (1−α)(1−R)`; `|R'−R| ≤ (1−α)(1+R)` |
+| `rTrace` (def) | – | observable wrapper `reported (coherenceTrace α C0 d x0 u ω τ n) i j`; no new state or recurrence |
+| `trace_step_bounds`, `trace_step_abs_state_bound` | `0 ≤ α ≤ 1` | the same on the trace |
+| `trace_step_abs_le`, `trace_step_abs_le_min` | `0 ≤ α ≤ 1`, `‖C0 i j‖ ≤ 1` | `|R_{n+1} − R_n| ≤ 2(1−α)` and `≤ min 1 (2(1−α))` (the unit disk is inherited from `C0` through `coherenceTrace_unitDisk`) |
+| `trace_diagonal` | none | `rTrace … n i i = 0` |
+| probes `probe_half_drop`, `probe_half_increase`, `probe_two_step`, `factor_two_attained`, `increase_factor_attained` | none / `1/2 ≤ α ≤ 1` / `α ≤ 1` | node-uniform data: `D = 1`, `x0 = 0`, `u = 0`, `ω = 1`, `τ = π` (input `−1` everywhere), constant `C0 = c`: `α = 1/2`, `c = 1`: `R = 1, 0`; `c = 0`: `R = 0, 1/2`; `α = 3/4`, `c = 1`: `R_2 = 1/8`; the factor `2` is attained for `α ≥ 1/2` (not a claim of optimality for other `α` or zero-initialised trajectories) |
+| refutations `factor_one_refuted`, `increase_only_abs_refuted`, `negative_alpha_upper_refuted`, `alpha_gt_one_upper_refuted`, `nonunit_initial_refuted`, `two_step_one_allowance_refuted` | none | each hypothesis and constant is necessary: factor `1` instead of `2`, an increase-only envelope, `α < 0`, `α > 1`, a non-unit-disk `C0`, and two steps sharing one allowance are refuted by value |
+| **new** `probe_diagonal_zero`, `diagonal_one_refuted`, `half_increase_upper_refuted` | none | diagonal `0` at `n = 0, 1` with `C0 = 1`; a diagonal claimed `1` and an upper envelope `(1−α)/2` instead of `(1−α)` are refuted by value |
+| **new (N2)** `probe_asym_state` | none | asymmetric state, `C0 0 1 = 1`, every other entry `0`, `α = 1/2`: `R_0 = 1/2`, `R_1 = 1/4`; a one-sided `R` (`‖C 0 1‖` only) would read `1`, `0` |
+| **new (N2 of the `d551540` audit)** `trace_rise_bound`, `trace_fall_bound`, `engine_pow_1213_gt_half`, `engine_pow_1214_lt_half`, `engine_rise_half_not_before_1214`, `engine_fall_zero_not_before_1214` | `0 ≤ α ≤ 1` for the two bounds; none for the closed numbers; `R_0 = 0` resp. `R_0 = 1`, `n ≤ 1213` for the last two | `α^n (1 − R_0) ≤ 1 − R_n` and `α^n (1 + R_0) ≤ 1 + R_n`; at the engine `α`: `α^1213 > 1/2 > α^1214` (from `log 2` bounds, `Real.log_two_gt_d9`/`lt_d9`), hence `R_n < 1/2` for every `n ≤ 1213` when `R_0 = 0`, and `R_n > 0` when `R_0 = 1`. Attained under constant input `−1` (`R_n = 1 − α^n` from `C0 = 0`; `R_n = |2α^n − 1|` from `C0 = 1`) |
+| **new (engine α)** `alphaE`, `alphaE_exact` (N3 of the `d551540` audit: `alphaE = exp(−(857/1500000))`, pins the mean `ω` numerator), `engine_speed_limit_value`, `engine_factor_two_attained`, `engine_step_value`, `engine_factor_one_refuted` | none | `alphaE = exp(−((1/100)/(25/(857/600))))`: `0.00114 < 2(1−alphaE) < 0.00115` (proved from `1−x ≤ e^{−x}` and `e^{−x}(1+x) ≤ 1`, `x = 857/1500000`); one step of the probe data moves `R` by exactly `2(1−alphaE)`, `0.00114… < |R_1 − R_0| < 0.00115`, and `1−alphaE` does not bound it |
+
+### 13.2 Review notes applied
+
+* **N1 (main limitation: speed limit, not dynamics).** The module docstring and the README row say plainly what the file does NOT say (no phase, delay, `ω` or `B` structure; holds for any unit input sequence; says nothing about convergence, locking, `B`, the clip or the gate). `test_lean_gate_c016.py` checks the wording.
+* **N2 (node-uniform probes do not exercise the symmetrisation).** `probe_asym_state` is the new asymmetric-state probe (above). It is the declared pin of the new mutant M71 (one-sided `R`); the node-uniform probes cannot tell the one-sided reading from `reported`
+  (`test_lean_gate_c016.py` checks that numerically). For `α < 1/2` the `min` is just `1`, which is trivial because `R ∈ [0,1]`; stated in the docstring.
+* **N3 (depends on an unmerged branch).** P5 is merged; the imports were re-checked against the merged names (above) and the file builds against the merged `PhaseCoherence` with the deposit's own import line (`import AIEFGateCore.PhaseCoherence`) and namespaces unchanged; only the deposit's header comment ("UNMERGED team P5 branch 54037ea") was replaced.
+* **N4 (float α is not exact).** The bound is about exact reals; the engine `α` is modelled as the exact real `exp(−857/1500000)`, the float64 `FROZEN_ALPHA = 0.9994288298464774` is not that real (stated in the docstring and here).
+* **Mutants (review port note).** M60 is the review's suggested mutant, the bound `(1−α)/2` instead of `2(1−α)`; M59 drops the factor `2`.
+
+Audit of `research/lean-gate-c016` at `d551540` (Auditor Seat 002, CLEAN WITH NOTES; numbered here as A1–A4 to keep them apart from the review's N1–N4):
+
+* **A1 (renumbering).** E11 clashed with C014's E11 and M71–M76 with C014's M71–M78; done in the merge with `main` `871417d`, see §13.4 (c016 keeps M59–M70; definition mutants M71–M76 became **M79–M84**, E11–E14 became **E12–E15**; T4 is free, so it stays; this section is §13 because C014 is §12; every `12.x` cross-reference of this section, the README, the module docstring and the tests was updated).
+* **A2 (the `875` wording).** Misleading as a step count ("from `0` to `1`" in `d551540`): reworded in the module docstring and in this section (above). The bound `2 (1 − α)` per step gives only `876` steps for a change of size `1`; the audit's suggestion that `875` is "sharp for a fall" is **also not right** (from `R_0 = 1`, `1 + R_n ≥ 2 α^n` forces at least `1214` steps to reach `0`), so no step count is called sharp except the `1214` figures under their stated start values. Added: the closed numbers `engine_pow_1213_gt_half`/`engine_pow_1214_lt_half`, `trace_rise_bound` and `trace_fall_bound` and the corollaries `engine_rise_half_not_before_1214`, `engine_fall_zero_not_before_1214`, and a test with exact arithmetic (`test_rise_is_slower_than_a_fall_audit_n2`). The audit's "about 1213 steps to 1/2" is the real number `1213.2`; the integer is `1214`.
+* **A3 (alphaE pin).** `alphaE_exact` (an equality) plus the two closed numbers now pin the mean `ω` numerator; they are declared pins of M82–M86 (`PIN_ALPHA_E`). The near misses are the numbered mutants **M85** (`856/600`) and **M86** (`858/600`, see §13.4): both are killed. **They were also killed by the `d551540` file**: `engine_speed_limit_value` proves its own `alphaE = exp(−(857/1500000))` internally (by `norm_num`) before using the range, so a near-miss `alphaE` already failed *inside that proof*; the audit's remark describes the *statement* (a range), not the proof. The equality is now a declaration of its own, so the pin no longer depends on the proof internals.
+* **A4 (scope).** Kept: the docstring says it is a triangle-inequality speed limit and says nothing about convergence or locking.
+
+### 13.3 What changed against the deposit
+
+Statements are unchanged (21 theorem statements, whitespace removed; `1/2 ≤ alpha` is written `1 / 2 ≤ alpha` and long lines are re-wrapped, for the Mathlib whitespace/line-length linters, which are warnings-as-failures here). The deposit's trailing `#print axioms`
+lines are removed (step 7 of `check_lean_gate.sh` audits every declaration), and the `set_option linter.style.header false` is dropped (the file has the project header). **The probe proofs were rewritten** (reason below), the file header and docstring were added,
+and new items were added (table above). Reason for the proof rewrite: the deposit's probes rewrote with private helper lemmas stated about `rTrace` (`value_r0`, `value_r1`). Compiling the deposit with `rTrace` mutated to read trace `n+1`, only those helpers and the rewrite
+lemmas failed and `probe_half_drop`, `probe_half_increase` still built (checked): under the kill rule of §11.3 a probe that still builds earns no credit, so such a mutant would have SURVIVED. The probes now unfold `Rval`/`rTrace`/`reported` themselves
+and use only helpers about `coherenceTrace` and `coherenceInput` (untouched by the P6 mutants). The equivalence controls guard against the converse (proof scripts that are brittle under equal rewrites).
+**No pass/fail rule of `lean_mutation_check.py` is changed** (kill rule, build-rejection rule and refutation validator are as in §11.3); additions are data: `VP_MOT`, the new entries, and `open AIEFGate.CoherenceMotion (rTrace)` in `OPENS` (the statements of the new mutants mention `rTrace`).
+The count pins of `test_lean_gate_p4b.py` and `test_lean_gate_p5.py` were updated (merged totals: 41 + 11 = **52** statement mutants, 25 + 9 = **34** definition mutants, **86** in total; 11 + 4 = 15 equivalence and 3 + 1 = 4 typo controls; the P5 subset M37–M56 and the C014 and P6 subsets are selected by file, not by position); no other assertion was relaxed. New since the first version (audit A2/A3): `trace_rise_bound`, `engine_rise_half_not_before_1214`, `alphaE_exact`, `engine_pow_1213_gt_half`, `engine_pow_1214_lt_half`, and `import Mathlib.Analysis.Complex.ExponentialBounds` (for `Real.log_two_gt_d9`/`log_two_lt_d9`).
+
+### 13.4 Numbering and mutation check: M59–M70, M79–M86 (renumbered after C014; M85, M86 added for audit N3)
+
+`main` `871417d` contains C014 (§12), which owns **M71–M78** (statement M71–M73, definition M74–M78) and **E11**. The c016 mutants were renumbered as agreed with Auditor Seat 002: statement mutants **M59–M69** and definition mutant **M70** keep their numbers; the other definition mutants become **M79–M84**
+(old M71→M79, M72→M80, M73→M81, M74→M82, M75→M83, M76→M84); equivalence controls old E11–E14 → **E12–E15**; the typo control **T4** has no clash (C014 has no typo control) and stays. Numbers are unique across ports (`test_c014_numbers_and_no_duplicates` and `test_p6_mutants_exact_counts_and_numbering`).
+
+Statement mutants **M59–M69** (11, refuted by the proved negations of `CoherenceMotion.lean`, same three conditions as M1–M58): M59 `trace_step_abs_le` with factor `2` dropped (`factor_one_refuted`), M60 bound `(1−α)/2` (`factor_one_refuted`),
+M61 unit-disk hypothesis `:= True` (`nonunit_initial_refuted`), M62 `R_{n+2} − R_n` with one allowance (`two_step_one_allowance_refuted`), M63 `trace_step_abs_le_min` with `min 1 (1−α)` (`factor_one_refuted`), M64 its unit-disk hypothesis dropped,
+M65 `trace_step_abs_state_bound` increase-only `(1−α)(1−R)` (`increase_only_abs_refuted`), M66 `0 ≤ α` dropped from `trace_step_bounds` (`negative_alpha_upper_refuted`), M67 `α ≤ 1` dropped (`alpha_gt_one_upper_refuted`), M68 upper envelope `(1−α)/2`
+(`half_increase_upper_refuted`), M69 `trace_diagonal` claiming `1` (`diagonal_one_refuted`). Definition mutants (9, `DEF_MUTANTS`, declared value probes in `VP_MOT`): **M70** `rTrace` reads trace `n+1` (`probe_half_drop`, `probe_half_increase`, `probe_two_step`, `engine_factor_two_attained`),
+**M79** `rTrace` one-sided `‖C i j‖` (`probe_asym_state`), **M80** diagonal `1` (`probe_diagonal_zero`), **M81** `rTrace` from one `coherenceStep` of `C0` instead of the trace (`probe_half_drop`, `probe_two_step`, `engine_factor_two_attained`), **M82** `alphaE` with `dt = 1/10`, **M83** `alphaE` with mean `ω = 1`, **M84** `alphaE` with the sign of the exponent
+flipped, **M85** / **M86** `alphaE` with the mean `ω` numerator `856` / `858` (audit N3; M82–M86: `PIN_ALPHA_E` = `engine_speed_limit_value`, `alphaE_exact`, `engine_pow_1213_gt_half`, `engine_pow_1214_lt_half`). Equivalence controls **E12–E15**, each of which must not be killed: E12 `rTrace` reads `reported` at `(j, i)` (equal by `reported_symm`), E13 `alphaE = exp(−(857/1500000))`, E14 the symmetrisation written out (`(‖C i j‖ + ‖C j i‖)/2` under `if i = j then 0`), E15 `alphaE` with `T_window = 15000/857`.
+Typo control **T4** (`reportedXX`) must be flagged INVALID. The kill rule is unchanged. Totals on `main` + this branch: **52 statement + 34 definition = 86 mutants** (C014: 41 statement = 36 + M57, M58 + 3, 25 definition = 20 + 5; c016: 11 + 9), **15 equivalence controls** (E1–E15), **4 typo controls**, 2 statement controls, `KNOWN_SURVIVORS` empty.
+
+**Near-miss values for the engine `α` (audit N3 of `d551540`): M85, M86.** The first version of this refresh ran `856` and `858` once by hand and added no mutant, because M85 was assumed free for the phase-lock port. They are now counted mutants **M85** and **M86** (`Real.exp (-((1/100) / (25 / (856/600))))`, `858/600`) with the declared pins `PIN_ALPHA_E`; **the phase-lock port (planned M85–M91, E16, §14) must therefore renumber to M87–M93** (E16 is unaffected). Expected and checked: build fails, no name-reference or parse error line, failing declarations among `alphaE_exact`, `alphaE_range`, `engine_speed_limit_value`, `engine_pow_1213_gt_half`, `engine_pow_1214_lt_half` (the closed numbers unfold `alphaE` themselves and do not go through `alphaE_exact`; a first version that did go through it was not mutation-sensitive, because a theorem with an error is still usable downstream, and was changed). For the integers `800…899`, only `857` satisfies `α^1213 > 1/2 > α^1214` (`test_engine_alpha_numerator_is_pinned_exactly_audit_n3`). The unmutated value written another way builds (not killed), as the equivalence controls E13/E15 require.
+Two limits, as in §11.3: KILLED means "a pre-declared closed-number probe fails to build", not "the mutant computes a different value" (the numeric difference of each mutant is shown separately in `test_lean_gate_c016.py` with exact rationals); and the symmetric `rTrace` mutant class (E12, E14)
+is protected by the controls only.
+
+### 13.5 Gate results (local, 2026-11-15, Europe/Tirane; merge-refresh onto `main` `871417d` with the audit fixes N1–N3)
+
+* `SKIP_CACHE=1 STRICT_ORPHANS=1 lean/AIEFGateCore/check_lean_gate.sh` (`LOG_DIR` outside the repo): **PASS**, 2304 jobs, **0 warnings**, 26 hash entries in `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` (regenerated with the command in the header of `check_lean_gate.sh`), step 6: 22 files scanned, 0 hits, step 7: **843 declarations audited** (794 on `main`; +49 for the new file), every one depending only on `propext`, `Classical.choice`, `Quot.sound`, 0 `sorry`. Iteration: the first build of the N2 additions had 3 over-long lines (linter warnings); re-wrapped, no statement or proof changed afterwards.
+* `lean_mutation_check.py`, **full unfiltered run** (no `AIEF_MUT_ONLY`, run on the final Lean sources): unmutated controls PASS, validator and classifier negative controls as before; **52/52 statement mutants rejected** (one flagged with a name-reference/parse error line: the pre-existing M31, information only); **34/34 definition mutants KILLED by a declared value probe** (M82–M86 by `PIN_ALPHA_E`; M85/M86 fail in `alphaE_exact`, `alphaE_range`, `engine_speed_limit_value`, `engine_pow_1213_gt_half`, `engine_pow_1214_lt_half`), **86/86 in total**; **15/15 equivalence controls not killed** (E12 fails only in rewrite lemmas, E13–E15 build); **4/4 typo controls INVALID**; RESULT PASS.
+* `python -m pytest research/lean_gate tools/ci/tests`: **310 passed** (124 in `research/lean_gate`, 186 in `tools/ci/tests`); `python -m unittest discover -s tools/ci/tests`: 186 tests OK.
+* Repository checks (`/workspace/venv_req_cmp`): `check_artifact_pins`, `check_sha256sums`, `check_modes --strict`, `hygiene_scan --pii`, `lint_claims`, `check_manifest`, `check_current_inventory`, `check_pinned_restatement` all rc 0; `audits/engineering/verify_inventory_current.py` rc 0. `registry/artifacts_current.csv` is rebuilt with `build_current_inventory.py` after `git add`.
+
+### 13.6 Still open (P6)
+
+* Nothing relates the Lean model to float64 or to the Python code beyond the hand-checked convention of §11; the engine `α` is an exact real.
+* A speed limit only: no statement about what `R` does, about `B`, about the clip/projection or `shuffle_driver`. The deposit's coupled non-reset/history probe stays deferred.
+* The `min` bound is trivial for `α < 1/2`; for `α` near the engine value it is the only quantitative statement about `R` along the real step.
+* The probes use `D = 1`, `Fin 2` and zero phases (input `−1`); `probe_asym_state` is the only probe with a non-symmetric state.
+* **AUD-RATELAW stays UNEXPLAINED.**
+## 14. Frequency lock (branch `research/lean-gate-phaselock`, from `main` `7129d31`, merge-refreshed onto `main` `5788682` and `research/lean-gate-c014-followup` `6a719db`, then on 2026-11-15 onto `main` `ade1179`, which contains P6 (#39, §13); numbered after C014's §12 and P6's §13)
+
+### 14.1 Why
+
+Arena_Researcher_06020041 cycles 3 and 5 (`PhaseLockCoherence.lean` md5 `038cfbeb…`, `LockedCoherence.lean` md5
+`6554994d…`, on `audit-inbox` only) compile with standard axioms, but their "lock" hypothesis
+`∀ n ≥ N, ∀ i, u n i = 0` is a frozen network. Engine natural frequencies average about 1.43, so it never applies.
+Auditor Seat 002 rated them REWORK. `lean/AIEFGateCore/AIEFGateCore/FrequencyLock.lean` is that rework, written by
+Auditor Seat 002; no deposited file is copied or executed. This version answers Researcher 001's audit of `02adc22`
+(B1, B2, N2-N6).
+
+### 14.2 Statements (all proved; standard axioms only)
+
+The hypothesis is a lock of ONE PAIR `(i, j)`, not of the whole network (B2): from step `N` on, `u n i` and `u n j`
+equal the same increment. Nothing is assumed about other nodes; `coherenceInput … i j` reads only `i` and `j`.
+
+* `input_step_of_common_increment`: if `u n i = c n`, `d ≤ n` and `u (n-d) j = c (n-d)`, then
+  `coherenceInput (n+1) i j = coherenceInput n i j * phasor (c n − c (n−d))`.
+* `coherenceInput_constant_of_periodicPairRate` (B1): with `hlock : ∀ n ≥ N, u n i = c n ∧ u n j = c n` and the
+  period condition `hper : ∀ n ≥ N + d, c n = c (n − d)`, `coherenceInput n i j = coherenceInput (N+d) i j` for all
+  `n ≥ N + d`. A constant rate is the simplest case, not the only one: `periodic_rate_input_constant` (delay `2`,
+  rate `π, 0, π, 0, …`, constant from step `2`).
+* `coherenceInput_constant_of_pairLock`: the constant-rate case, `hlock : ∀ n ≥ N, u n i = c ∧ u n j = c`.
+* `coherenceTrace_error_of_pairLock`: `C (N+d+k) i j − z = α^k (C (N+d) i j − z)`, `z = coherenceInput (N+d) i j`.
+* `coherenceTrace_norm_of_pairLock`: with `0 ≤ α ≤ 1` and `‖C0‖ ≤ 1`, `1 − 2α^k ≤ ‖C (N+d+k) i j‖`.
+  (`α ≤ 1` enters through `coherenceTrace_unitDisk`; for `α > 1` the bound is trivially true.)
+* `reported_of_pairLock`: for `i ≠ j`, `1 − 2α^k ≤ reported (C (N+d+k)) i j`.
+* `pairLock_nonzero_rate` (N3): `unitRate 0 0 ≠ 0` is part of the statement, and the input is constant from
+  step 3 at that rate, so the hypothesis is not only the frozen case.
+* `common_rate_input_not_constant`, `common_rate_input_ne_zero`: delay 1, both nodes at rate `π, 0, π, …`: the input
+  flips sign each step and is nonzero. "The pair moves together" is not enough. `c n = c (n − d)` is sufficient, not necessary: the exact condition is
+  `c n ≡ c (n − d)` modulo `2π` (Researcher 001's N1 on `e50102c`: delay 1, rate `2π, 0, 2π, …` keeps the input constant).
+
+Witnesses used by the mutants: `probe_pairLock_one_step` (d = 0, α = 1/2, `C 1 0 1 = 0`, reported `0`),
+`pairLock_factor_two_refuted` and `pairLock_norm_factor_two_refuted` (the factor `2` is attained, `1 − α^k` is false),
+`half_lock_refuted` (only node `i` locked: input changes), `delay_start_refuted` (constant from `N`, not `N + d`, is
+false), `nonperiodic_rate_refuted` (no period condition: false), value probes `probe_unitRate_nonzero`,
+`probe_altU_not_constant`, `probe_altU_period_two` and `probe_unitRate_constant`.
+
+How this relates to O1 (`freezing/REPORT.md`, cluster locking; N6): O1 predicts that pairs inside a frequency
+cluster lock (`R → 1`) and cross-cluster pairs stay below `R_c`. This section proves only a consequence of the first
+half: IF a pair is locked and `α < 1`, its reported coherence tends to `1` (at `α = 1` the bound `1 − 2α^k = −1` says nothing). It does not prove that any engine pair locks and says
+nothing about cross-cluster pairs. `reported → 1` means a constant phase difference (phase-locking value `1`), not
+equal phases.
+
+### 14.3 Mutants (numbered after P6's M79–M86 and E12–E15; M85–M92 before the 2026-11-15 refresh, shifted by 2)
+
+Statement mutants, each a real build failure plus a refutation by a proved `*_refuted` theorem with standard axioms,
+and the same term failing on the unmutated statement:
+
+* M87 `reported_of_pairLock` `1 − 2α^k` → `1 − α^k` (refuted by `pairLock_factor_two_refuted`).
+* M88 the same on `coherenceTrace_norm_of_pairLock` (`pairLock_norm_factor_two_refuted`).
+* M89 `coherenceInput_constant_of_pairLock` from `N` instead of `N + d` (`delay_start_refuted`, d = 2: `−1` vs `1`).
+* M90 `coherenceInput_constant_of_pairLock` with only node `i` locked (`half_lock_refuted`).
+* M91 `coherenceInput_constant_of_periodicPairRate` with the period condition dropped (`nonperiodic_rate_refuted`).
+* M94 `coherenceInput_constant_of_periodicPairRate` from `N` instead of `N + d` (`delay_start_refuted` at the
+  constant rate `π/2`; Researcher 001's N6 on `e50102c`). M89 covers only the constant-rate corollary.
+
+Definition mutants (killed by value probes): M92 `unitRate := 0` (`probe_unitRate_nonzero`), M93 `altU` constant `π`
+(`probe_altU_not_constant`). Equivalence control E16 `unitRate := 5` must NOT be killed.
+
+Value probes `VP_FL` (N2 on `e50102c`): the witness theorems themselves cannot be probes (the P5 test requires
+value probes to be `probe_*` closed-form facts, so a rewrite lemma can never earn a kill). Instead two value probes pin
+the shape they rely on: `probe_altU_period_two` (`altU 2 1 = altU 0 0 ∧ altU 3 1 = altU 1 0`: period `2`, same at
+both nodes) and `probe_unitRate_constant` (`unitRate 7 1 = unitRate 0 0`). A definition edit with period 3, a
+node-dependent `altU` or a time-dependent `unitRate` now fails a value probe. They are added to `VP_FL`, which makes
+the equivalence and typo controls stricter; E16 (`unitRate := 5`) still stays not killed. M92/M93 keep their pins.
+
+### 14.4 Results (local, 2026-11-17, after the refresh onto `main` `ade1179` and the renumbering to M87–M94)
+
+`check_lean_gate.sh` (SKIP_CACHE=1): PASS, 869 project declarations audited (P6 included), build warnings 0,
+standard axioms only. `lean_mutation_check.py` full run: PASS, statement mutants rejected 58/58, definition mutants
+killed 36/36, total 94/94 (lock mutants M87–M94 all caught for the reasons in §14.3), equivalence controls not killed
+16/16 (E16 included), typo controls 4/4. pytest (`tools/ci/tests`, `research/lean_gate/tests`): 317 passed.
+Checkers and inventory: rc 0.
+(At `a9e0a35`, before the refresh, 2026-11-15: 820 declarations, 47/47, 27/27, 74/74, 12/12, 3/3, pytest 299.
+At `e50102c`: 818 declarations, 46/46, 73/73.)
+
+### 14.5 Still open
+
+* The lock is ASSUMED, not derived from the closed loop; this does not prove the engine locks (O1 open).
+* At the engine's `α = exp(−dt/T_window)` (`aief_experiment_engine_v1.py` `alpha`, `dt = 0.01`,
+  `T_window = 25 / mean(ω) = 17.502917…`, so `α ≈ 0.999429`) the bound `1 − 2α^k` passes `1/2` only from `k = 2427`
+  steps; the error factor `α^k` itself is `≤ 1/2` from `k = 1214`. The test reads `dt` and the ω list from the engine
+  source (N4). This is a rate, not a claim about any run.
+* Exact reals; not float64 or the Python code. `AUD-RATELAW stays UNEXPLAINED`.
+
+## 15. DelayRoots (branch `research/lean-gate-delay-roots`, from `main` `871417d`; merge-refreshed on 2026-11-17 onto `main` `16c7893`, which contains P6 (#39, §13) and the frequency lock (#41, §14); numbered after both)
 
 ### 15.1 What it is
 `lean/AIEFGateCore/AIEFGateCore/DelayRoots.lean` (namespace `AIEFGate.DelayRoots`) is pure algebra. It covers the characteristic polynomials in Arena_Researcher_06020041's cycles 9 and 10, which are unverified inbox material (Auditor review on `audit-inbox` @ `4ee9fe5`):
