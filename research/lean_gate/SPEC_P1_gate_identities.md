@@ -1384,8 +1384,9 @@ claims it. Nothing here connects the Lean statements to the engine code.
 - the exact shape of M95–M106 (selected by file);
 - the witness roots, re-checked in exact rational arithmetic, and the ε ≤ 0 redundancy numerically.
 
-The pins move as follows: P4b `len(MUTANTS)` goes from 41 to 51, and P5 `N_STATEMENT_MUTANTS` from 41 to 51, so `TOTAL_MUTANTS` becomes 76. If c016 and phaselock land first, these pins are merged additively.
+The pins move as follows (after the 2026-11-17 refresh onto `16c7893`): P4b `len(MUTANTS)` goes from 58 to 70, and P5 `N_STATEMENT_MUTANTS` from 58 to 70, so `TOTAL_MUTANTS` goes from 94 to 106 (`N_DEF_MUTANTS` stays 36). `test_lean_gate_c016.py` pins the same totals. (Before the refresh, on `871417d`: 41 to 51, total 76.)
 
-### 15.4 Results (local, 2026-11-15)
+### 15.4 Results (local, 2026-11-15; refreshed 2026-11-17)
 - First version (`ae2c25a`): `SKIP_CACHE=1 ./check_lean_gate.sh` PASS, 807 declarations, 0 warnings, standard axioms only. Full mutation run: 46/46 statement mutants rejected, 25/25 definition mutants killed, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 297 passed.
 - After Researcher 001's audit (M100–M104, `projectedSlope_lt_quarter_of_C`, the two d = 2 instances, `#print axioms`): gate PASS, **818 declarations**, standard axioms only. Full unfiltered mutation run: **51/51 statement** (the one name-reference note is M31's, pre-existing), **25/25 definition**, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 299 passed; all repository checkers rc 0.
+- After the merge-refresh onto `main` `16c7893` (P6 #39, study-path #40, frequency lock #41) and the renumbering to M95–M106: gate PASS, **893 declarations**, standard axioms only. Full mutation run: **70/70 statement**, **36/36 definition**, **106/106 total**, 16/16 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS. pytest 367 passed; all repository checkers rc 0.
