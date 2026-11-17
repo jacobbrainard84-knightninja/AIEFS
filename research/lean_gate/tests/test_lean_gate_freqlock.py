@@ -3,7 +3,7 @@
 Checks that the module is imported by the library root and hash-pinned, that it has no escape hatches, that the
 lock hypothesis is a lock of one pair (i, j) (not the frozen `u n i = 0` of the Arena cycle 3/5 deposit, and not
 an all-nodes lock), that the periodic theorem carries the period condition, that every named theorem exists with a
-`#print axioms` line, that mutants M85-M92 and control E16 are registered, and recomputes the engine-alpha step
+`#print axioms` line, that mutants M87-M94 and control E16 are registered, and recomputes the engine-alpha step
 counts quoted in the docs from dt and the omegas parsed out of the engine source.
 
 Run: /workspace/venv-pt/bin/pytest -q research/lean_gate/tests/test_lean_gate_freqlock.py
@@ -95,8 +95,8 @@ def test_mutants_registered():
     import lean_mutation_check as mc
     st = [m for m in mc.MUTANTS if m[1] == "FrequencyLock.lean"]
     de = [m for m in mc.DEF_MUTANTS if m[1] == "FrequencyLock.lean"]
-    assert [m[0].split("_")[0] for m in st] == ["M85", "M86", "M87", "M88", "M89", "M92"]
-    assert [m[0].split("_")[0] for m in de] == ["M90", "M91"]
+    assert [m[0].split("_")[0] for m in st] == ["M87", "M88", "M89", "M90", "M91", "M94"]
+    assert [m[0].split("_")[0] for m in de] == ["M92", "M93"]
     for name, f, thm, edits, closure, term, _ in st:
         assert mc.mutate(SRC, thm, edits) != SRC, name               # edit inside that statement only
         assert term.startswith("FrequencyLock.") and "_refuted (@H " in term, name

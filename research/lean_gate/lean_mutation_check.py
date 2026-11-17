@@ -92,8 +92,8 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
 
-  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port renumbers
-  after these):
+  C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
+  renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
   M72 TrajectorySafety.all_times_structural, hInit := True            -> TrajectorySafety.initial_time_refuted
   M73 TrajectorySafety.post_capacity, hp (EngineGate) := True         -> TrajectorySafety.broken_link_refuted (`pB`)
@@ -127,6 +127,16 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   elaborate. (N2) M53-M56 mutate the static offset (ω_i + ω_j)/2 · τ (wrong index, dropped, node-uniform ω); they are
   killed only by the asymmetric-ω probes (ω = (1, 0)), because every earlier probe has node-uniform ω.
 
+  P6 (CoherenceMotion.lean, port of cycle 016 of Researcher 040282; the statement mutants and M70 are numbered after
+  M58, the other definition mutants after C014's M78; no rule change): STATEMENT
+  mutants M59-M69 (same three conditions as M1-M58; refuted by the negations `factor_one_refuted`,
+  `nonunit_initial_refuted`, `two_step_one_allowance_refuted`, `increase_only_abs_refuted`,
+  `negative_alpha_upper_refuted`, `alpha_gt_one_upper_refuted`, `half_increase_upper_refuted`, `diagonal_one_refuted`
+  of that file) and DEFINITION mutants M70 and M79-M86 (the observable `rTrace` and the engine alpha `alphaE`; value probes in
+  `VP_MOT`, same kill rule), equivalence controls E12-E15 and the typo control T4. The probes of that file prove their
+  values from the definitions unfolded in the probe itself (a private helper stated about `rTrace` would let a mutated
+  `rTrace` fail only in the helper, which earns no credit).
+
 Usage: python research/lean_gate/lean_mutation_check.py   (needs elan/lake and a built project)
 """
 import os
@@ -151,6 +161,11 @@ CAP_VARS = "{V : Type} [Fintype V] [LinearOrder V] (p : Params)"
 XO_NN = "(Capacity.Xo_nonneg (by norm_num [EngineWitness.pE]))"
 GP = "EngineWitness.engineGate_pE"
 WU_VARS = CAP_VARS + " (B D : ℕ → V → V → ℝ)"
+CM_VARS = "{V : Type}"
+CM_INST = ("@H (Fin 2) (1/2) (CoherenceMotion.valueC 1) 1 CoherenceMotion.valueX CoherenceMotion.valueU"
+           " CoherenceMotion.valueOmega Real.pi")
+CM_UNIT = "(fun i j => by simp [CoherenceMotion.valueC])"
+CM_PRE = " CoherenceMotion.valueX CoherenceMotion.valueU CoherenceMotion.valueOmega Real.pi"
 TS_VARS = "{V S : Type} [Fintype V] [LinearOrder V]"   # section variables of TrajectoryInvariants.lean
 FL_VARS = "{V : Type}"                                 # section variables of FrequencyLock.lean
 FL_PROBE = " PhaseCoherence.probeX PhaseCoherence.probeU PhaseCoherence.probeOmega Real.pi"
@@ -332,6 +347,48 @@ MUTANTS = [
     ("M58_capacity_convex_weights_upper_bound_dropped", "Capacity.lean", "convex_weights_iff",
      [("(0 ≤ p.γ * p.dt ∧ p.γ * p.dt ≤ 1)", "(0 ≤ p.γ * p.dt)", 1)], CAP_VARS,
      "(by have h := ((@H Unit _ _ ⟨2, 1, 1, 0, 0, 0, 0⟩).2 (by norm_num)).1; norm_num at h)", None),
+    # ---- P6: CoherenceMotion.lean (port of cycle 016 of Researcher 040282), numbered after M58 ----
+    ("M59_motion_abs_le_factor_two_dropped", "CoherenceMotion.lean", "trace_step_abs_le",
+     [("2*(1-alpha)", "(1-alpha)", 1)], CM_VARS,
+     f"CoherenceMotion.factor_one_refuted ({CM_INST} (by norm_num) (by norm_num) {CM_UNIT} 0 0 1)", None),
+    ("M60_motion_abs_le_bound_halved_not_doubled", "CoherenceMotion.lean", "trace_step_abs_le",
+     [("2*(1-alpha)", "(1-alpha)/2", 1)], CM_VARS,
+     f"CoherenceMotion.factor_one_refuted (le_trans ({CM_INST} (by norm_num) (by norm_num) {CM_UNIT} 0 0 1)"
+     " (by norm_num))", None),
+    ("M61_motion_abs_le_unit_disk_dropped", "CoherenceMotion.lean", "trace_step_abs_le",
+     [("(hC0 : ∀ i j, ‖C0 i j‖ ≤ 1)", "(hC0 : True)", 1)], CM_VARS,
+     "CoherenceMotion.nonunit_initial_refuted (@H (Fin 2) (1/2) (CoherenceMotion.valueC 3) 1" + CM_PRE +
+     " (by norm_num) (by norm_num) trivial 0 0 1)", None),
+    ("M62_motion_abs_le_two_steps_one_allowance", "CoherenceMotion.lean", "trace_step_abs_le",
+     [("(n+1) i j", "(n+2) i j", 1)], CM_VARS,
+     "CoherenceMotion.two_step_one_allowance_refuted (@H (Fin 2) (3/4) (CoherenceMotion.valueC 1) 1" + CM_PRE +
+     f" (by norm_num) (by norm_num) {CM_UNIT} 0 0 1)", None),
+    ("M63_motion_abs_le_min_factor_two_dropped", "CoherenceMotion.lean", "trace_step_abs_le_min",
+     [("min 1 (2*(1-alpha))", "min 1 (1-alpha)", 1)], CM_VARS,
+     f"CoherenceMotion.factor_one_refuted (le_trans ({CM_INST} (by norm_num) (by norm_num) {CM_UNIT} 0 0 1)"
+     " (min_le_right _ _))", None),
+    ("M64_motion_abs_le_min_unit_disk_dropped", "CoherenceMotion.lean", "trace_step_abs_le_min",
+     [("(hC0 : ∀ i j, ‖C0 i j‖ ≤ 1)", "(hC0 : True)", 1)], CM_VARS,
+     "CoherenceMotion.nonunit_initial_refuted (le_trans (@H (Fin 2) (1/2) (CoherenceMotion.valueC 3) 1" + CM_PRE +
+     " (by norm_num) (by norm_num) trivial 0 0 1) (min_le_right _ _))", None),
+    ("M65_motion_state_bound_increase_only", "CoherenceMotion.lean", "trace_step_abs_state_bound",
+     [("(1-alpha)*(1 + rTrace", "(1-alpha)*(1 - rTrace", 1)], CM_VARS,
+     f"CoherenceMotion.increase_only_abs_refuted ({CM_INST} (by norm_num) (by norm_num) 0 0 1)", None),
+    ("M66_motion_step_bounds_nonneg_alpha_dropped", "CoherenceMotion.lean", "trace_step_bounds",
+     [("(ha0 : 0 ≤ alpha)", "(ha0 : True)", 1)], CM_VARS,
+     "CoherenceMotion.negative_alpha_upper_refuted (@H (Fin 2) (-1) (CoherenceMotion.valueC 1) 1" + CM_PRE +
+     " trivial (by norm_num) 0 0 1).2", None),
+    ("M67_motion_step_bounds_alpha_le_one_dropped", "CoherenceMotion.lean", "trace_step_bounds",
+     [("(ha1 : alpha ≤ 1)", "(ha1 : True)", 1)], CM_VARS,
+     "CoherenceMotion.alpha_gt_one_upper_refuted (@H (Fin 2) 2 (CoherenceMotion.valueC 0) 1" + CM_PRE +
+     " (by norm_num) trivial 0 0 1).2", None),
+    ("M68_motion_step_bounds_upper_envelope_halved", "CoherenceMotion.lean", "trace_step_bounds",
+     [("tau n i j + (1-alpha)", "tau n i j + (1-alpha)/2", 1)], CM_VARS,
+     "CoherenceMotion.half_increase_upper_refuted (@H (Fin 2) (1/2) (CoherenceMotion.valueC 0) 1" + CM_PRE +
+     " (by norm_num) (by norm_num) 0 0 1).2", None),
+    ("M69_motion_diagonal_claimed_one", "CoherenceMotion.lean", "trace_diagonal",
+     [("n i i = 0", "n i i = 1", 1)], CM_VARS,
+     "CoherenceMotion.diagonal_one_refuted (@H (Fin 2) (1/2) (CoherenceMotion.valueC 1) 1" + CM_PRE + " 1 1)", None),
     # ---- C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282); numbered from M71 ----
     ("M71_trajectory_post_capacity_next_cap", "TrajectoryInvariants.lean", "post_capacity",
      [("i ≤ (p n).cap", "i ≤ (p (n + 1)).cap", 1)], TS_VARS,
@@ -349,32 +406,32 @@ MUTANTS = [
      "TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)"
      " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
      None),
-    # ---- Phase lock (FrequencyLock.lean, Auditor Seat 002's rework of Arena cycles 3/5); numbered from M85
+    # ---- Phase lock (FrequencyLock.lean, Auditor Seat 002's rework of Arena cycles 3/5); numbered from M87 (after P6's M85, M86)
     # (M79-M84 are left for the renumbered c016 definition mutants) ----
-    ("M85_lock_reported_factor_two_dropped", "FrequencyLock.lean", "reported_of_pairLock",
+    ("M87_lock_reported_factor_two_dropped", "FrequencyLock.lean", "reported_of_pairLock",
      [("1 - 2 * alpha ^ k ≤ reported", "1 - alpha ^ k ≤ reported", 1)], FL_VARS,
      "FrequencyLock.pairLock_factor_two_refuted (@H (Fin 2) (1/2) PhaseCoherence.probeC0 0" + FL_PROBE +
      " (Real.pi / 2) 0 0 1 (by decide) (fun _ _ => ⟨rfl, rfl⟩) (by norm_num) (by norm_num)"
      " (fun _ _ => by simp [PhaseCoherence.probeC0]) 1)", None),
-    ("M86_lock_norm_factor_two_dropped", "FrequencyLock.lean", "coherenceTrace_norm_of_pairLock",
+    ("M88_lock_norm_factor_two_dropped", "FrequencyLock.lean", "coherenceTrace_norm_of_pairLock",
      [("1 - 2 * alpha ^ k ≤ ‖", "1 - alpha ^ k ≤ ‖", 1)], FL_VARS,
      "FrequencyLock.pairLock_norm_factor_two_refuted (@H (Fin 2) (1/2) PhaseCoherence.probeC0 0" + FL_PROBE +
      " (Real.pi / 2) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) (by norm_num) (by norm_num)"
      " (fun _ _ => by simp [PhaseCoherence.probeC0]) 1)", None),
-    ("M87_lock_constant_from_N_not_N_plus_d", "FrequencyLock.lean", "coherenceInput_constant_of_pairLock",
+    ("M89_lock_constant_from_N_not_N_plus_d", "FrequencyLock.lean", "coherenceInput_constant_of_pairLock",
      [("(hn : N + d ≤ n)", "(hn : N ≤ n)", 1)], FL_VARS,
      "FrequencyLock.delay_start_refuted (@H (Fin 2) 2" + FL_PROBE +
      " (Real.pi / 2) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) 0 (le_refl 0))", None),
-    ("M88_lock_only_node_i_locked", "FrequencyLock.lean", "coherenceInput_constant_of_pairLock",
+    ("M90_lock_only_node_i_locked", "FrequencyLock.lean", "coherenceInput_constant_of_pairLock",
      [("(hlock : ∀ n, N ≤ n → u n i = c ∧ u n j = c)", "(hlock : ∀ n, N ≤ n → u n i = c)", 1)], FL_VARS,
      "FrequencyLock.half_lock_refuted (@H (Fin 2) 0 (fun _ => 0) FrequencyLock.splitU (fun _ => 0) 0 Real.pi 0 0 1"
      " (fun _ _ => by simp [FrequencyLock.splitU]) 1 (by norm_num))", None),
-    ("M89_lock_period_condition_dropped", "FrequencyLock.lean", "coherenceInput_constant_of_periodicPairRate",
+    ("M91_lock_period_condition_dropped", "FrequencyLock.lean", "coherenceInput_constant_of_periodicPairRate",
      [("(hper : ∀ n, N + d ≤ n → c n = c (n - d))", "(hper : True)", 1)], FL_VARS,
      "FrequencyLock.nonperiodic_rate_refuted (@H (Fin 2) 1 (fun _ => 0) FrequencyLock.altU (fun _ => 0) 0"
      " (fun m => if m % 2 = 0 then Real.pi else 0) 0 0 1 (fun _ _ => ⟨rfl, rfl⟩) trivial 2 (by norm_num))", None),
-    # N6 (Researcher 001, e50102c): the start index of the periodic theorem itself (M87 covers only the corollary)
-    ("M92_lock_periodic_constant_from_N_not_N_plus_d", "FrequencyLock.lean",
+    # N6 (Researcher 001, e50102c): the start index of the periodic theorem itself (M89 covers only the corollary)
+    ("M94_lock_periodic_constant_from_N_not_N_plus_d", "FrequencyLock.lean",
      "coherenceInput_constant_of_periodicPairRate",
      [("(hn : N + d ≤ n)", "(hn : N ≤ n)", 1)],
      FL_VARS,
@@ -402,6 +459,14 @@ VP_COH = ["probe_coherence_values", "probe_asym_coherence_values", "probe_alpha_
           "probe_reported_second", "probe_drive_second", "probe_asym_drive", "probe_main_preM",
           "probe_asym_reported", "probe_asym_reported_swapped", "probe_asym_reported_diag",
           "probe_coherence_input_asym_omega"]
+# P6 (CoherenceMotion.lean): closed-number probes at (1/2, 3/4, the engine alpha); the engine-alpha pins are
+# `engine_speed_limit_value` (pins alphaE) and `engine_factor_two_attained` (pins rTrace at alphaE)
+VP_MOT = ["probe_half_drop", "probe_half_increase", "probe_two_step", "probe_diagonal_zero", "probe_asym_state",
+          "engine_speed_limit_value", "engine_factor_two_attained",
+          "alphaE_exact", "engine_pow_1213_gt_half", "engine_pow_1214_lt_half"]
+# the equality `alphaE = exp(-(857/1500000))` and the two closed numbers `alpha^1213 > 1/2 > alpha^1214` pin the engine
+# alpha exactly (mean-omega numerators 856 and 858 fail one of them; audit of d551540, note N3)
+PIN_ALPHA_E = ["engine_speed_limit_value", "alphaE_exact", "engine_pow_1213_gt_half", "engine_pow_1214_lt_half"]
 VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new", "probe_aux_time_and_new_entry"]
 # Phase lock (FrequencyLock.lean): the witnesses that pin the rate definitions `unitRate` and `altU`
 VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
@@ -409,6 +474,7 @@ VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
          # (period 2, node-independent, time-independent); value probes must be `probe_*` equalities
          "probe_altU_period_two", "probe_unitRate_constant"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
+                "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL}
 WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"
 FB_OLD = "  (U n state.1 state.2 Bnew, Bnew)\n"
@@ -427,6 +493,20 @@ def offset(new):
 
 
 PIN_OMEGA = ["probe_input_asym_omega_value"]
+RT_BODY = "PhaseCoherence.reported (PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n) i j"
+RT_OLD = "ℝ :=\n  " + RT_BODY + "\n"
+AE_OLD = "def alphaE : ℝ := Real.exp (-((1/100) / (25 / (857/600))))\n"
+
+
+def rt(new):
+    """edit of the body of `rTrace` (CoherenceMotion.lean)"""
+    return [(RT_OLD, "ℝ :=\n  " + new + "\n", 1)]
+
+
+def ae(new):
+    """edit of the engine alpha `alphaE` (CoherenceMotion.lean)"""
+    return [(AE_OLD, "def alphaE : ℝ := " + new + "\n", 1)]
+
 SLOT_OLD = "AIEFGate.History.historyTrace d (phaseTrace x0 u) n ⟨0, Nat.zero_lt_succ d⟩ j -"
 DEF_MUTANTS = [
     # 011 (PhaseIncrement.lean): value probes of `delayedIncrement` (M37, M38) and of the input read (M39)
@@ -474,6 +554,10 @@ DEF_MUTANTS = [
     ("M55_phase_input_offset_dropped", "PhaseIncrement.lean", offset("0"), PIN_OMEGA),
     ("M56_coherence_input_node_uniform_omega_i", "PhaseCoherence.lean",
      ci("inputPhasor d x0 u (fun _ => omega i) tau n i j"), ["probe_coherence_input_asym_omega"]),
+    # ---- P6 (CoherenceMotion.lean), numbered after M58: mutants of the observable `rTrace` and of the engine alpha ----
+    ("M70_motion_rtrace_reads_next_trace", "CoherenceMotion.lean",
+     rt("PhaseCoherence.reported (PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau (n + 1)) i j"),
+     ["probe_half_drop", "probe_half_increase", "probe_two_step", "engine_factor_two_attained"]),
     # ---- C014 (TrajectoryInvariants.lean); M74-M78 follow the C014 statement mutants M71-M73 ----
     ("M74_trajectory_weight_update_bypasses_gate", "TrajectoryInvariants.lean",
      [(WU_DEF_OLD, "def weightUpdate (p : Params) (D B : Weights V) : Weights V := symM p D B\n", 1)],
@@ -487,10 +571,29 @@ DEF_MUTANTS = [
      [(FB_OLD, "  (U n state.1 state.2 (F n state.1 state.2), Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
     ("M78_trajectory_aux_update_gets_next_time", "TrajectoryInvariants.lean",
      [(FB_OLD, "  (U (n + 1) state.1 state.2 Bnew, Bnew)\n", 1)], ["probe_aux_time_and_new_entry"]),
+    # ---- P6 (CoherenceMotion.lean), continued: M79-M86 (M79-M84 renumbered from M71-M76 after C014 took M71-M78) ----
+    ("M79_motion_rtrace_one_sided_not_symmetrised", "CoherenceMotion.lean",
+     rt("‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n i j‖"), ["probe_asym_state"]),
+    ("M80_motion_rtrace_diagonal_one", "CoherenceMotion.lean",
+     rt("@ite ℝ (i = j) (Classical.propDecidable _) 1 (" + RT_BODY + ")"), ["probe_diagonal_zero"]),
+    ("M81_motion_rtrace_single_step_from_c0", "CoherenceMotion.lean",
+     rt("PhaseCoherence.reported (PhaseCoherence.coherenceStep alpha C0 d x0 u omega tau n) i j"),
+     ["probe_half_drop", "probe_two_step", "engine_factor_two_attained"]),
+    ("M82_motion_alphaE_dt_ten_times_too_large", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/10) / (25 / (857/600))))"), PIN_ALPHA_E),
+    ("M83_motion_alphaE_mean_omega_one", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/100) / (25 / 1)))"), PIN_ALPHA_E),
+    ("M84_motion_alphaE_sign_flipped", "CoherenceMotion.lean",
+     ae("Real.exp ((1/100) / (25 / (857/600)))"), PIN_ALPHA_E),
+    # audit N3 (d551540): near-miss numerators of the mean omega 857/600, the one-unit edits the old range pin admitted
+    ("M85_motion_alphaE_mean_omega_numerator_856", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/100) / (25 / (856/600))))"), PIN_ALPHA_E),
+    ("M86_motion_alphaE_mean_omega_numerator_858", "CoherenceMotion.lean",
+     ae("Real.exp (-((1/100) / (25 / (858/600))))"), PIN_ALPHA_E),
     # ---- Phase lock (FrequencyLock.lean): the rate definitions of the witnesses ----
-    ("M90_lock_unit_rate_frozen", "FrequencyLock.lean", [(UR_OLD, "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 0\n", 1)],
+    ("M92_lock_unit_rate_frozen", "FrequencyLock.lean", [(UR_OLD, "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 0\n", 1)],
      ["probe_unitRate_nonzero"]),
-    ("M91_lock_alt_rate_constant", "FrequencyLock.lean", [(ALT_OLD, "def altU (_ : ℕ) (_ : Fin 2) : ℝ := Real.pi\n", 1)],
+    ("M93_lock_alt_rate_constant", "FrequencyLock.lean", [(ALT_OLD, "def altU (_ : ℕ) (_ : Fin 2) : ℝ := Real.pi\n", 1)],
      ["probe_altU_not_constant"]),
 ]
 
@@ -514,6 +617,15 @@ EQUIV_CONTROLS = [
     ("E11_trajectory_feedback_let_inlined", "TrajectoryInvariants.lean",
      [(FB_OLD, "  (U n state.1 state.2 (weightUpdate (p n) (F n state.1 state.2) state.2),\n"
                "    weightUpdate (p n) (F n state.1 state.2) state.2)\n", 1)]),
+    # P6: `reported` is symmetric, so reading it at (j, i) is the same observable; the symmetrisation written out; the
+    # engine alpha written as the reduced fraction / with T_window = 15000/857 (the same real)
+    ("E12_motion_rtrace_reads_j_i", "CoherenceMotion.lean",
+     rt("PhaseCoherence.reported (PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n) j i")),
+    ("E13_motion_alphaE_reduced_fraction", "CoherenceMotion.lean", ae("Real.exp (-(857 / 1500000))")),
+    ("E14_motion_rtrace_symmetrisation_written_out", "CoherenceMotion.lean",
+     rt("@ite ℝ (i = j) (Classical.propDecidable _) 0 ((‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n i j‖"
+        " + ‖PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n j i‖) / 2)")),
+    ("E15_motion_alphaE_t_window_reduced", "CoherenceMotion.lean", ae("Real.exp (-((1/100) / (15000 / 857)))")),
     # Phase lock: any nonzero constant rate is the same witness (numbered after c016's renumbered E12-E15)
     ("E16_lock_unit_rate_five", "FrequencyLock.lean", [(UR_OLD, "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 5\n", 1)]),
 ]
@@ -524,6 +636,8 @@ TYPO_CONTROLS = [
     ("T2_syntax_garbage_unbalanced_paren", "PhaseCoherence.lean", ci("inputPhasor d x0 u omega tau n i j )")),
     ("T3_misspelled_identifier_delayedIncrementXX", "PhaseIncrement.lean",
      [(DELAY_OLD, "  if d ≤ n then u (n - d) j else delayedIncrementXX", 1)]),
+    ("T4_misspelled_identifier_reportedXX", "CoherenceMotion.lean",
+     rt("PhaseCoherence.reportedXX (PhaseCoherence.coherenceTrace alpha C0 d x0 u omega tau n) i j")),
 ]
 
 # Statement-level controls on M4's statement (GateMap.stepB_add_smul_of_branch): an equivalent rewrite and a typo must
@@ -555,6 +669,7 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.Bridge (toR CtrlJ01)\nopen AIEFGate.ControllerFiber (vCtrl)\n"
          "open AIEFGate.Capacity (rowS kernelM gateM appliedFactor)\nopen AIEFGate.MatrixForm (preM)\n"
          "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n"
+         "open AIEFGate.CoherenceMotion (rTrace)\n"
          "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n"
          "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
