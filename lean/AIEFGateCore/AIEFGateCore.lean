@@ -19,3 +19,4 @@ import AIEFGateCore.Freeze
 import AIEFGateCore.WeightUpdate
 import AIEFGateCore.TrajectoryInvariants
 import AIEFGateCore.CoherenceMotion
+import AIEFGateCore.FrequencyLock

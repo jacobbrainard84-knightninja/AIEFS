@@ -1243,3 +1243,89 @@ is protected by the controls only.
 * The `min` bound is trivial for `α < 1/2`; for `α` near the engine value it is the only quantitative statement about `R` along the real step.
 * The probes use `D = 1`, `Fin 2` and zero phases (input `−1`); `probe_asym_state` is the only probe with a non-symmetric state.
 * **AUD-RATELAW stays UNEXPLAINED.**
+## 14. Frequency lock (branch `research/lean-gate-phaselock`, from `main` `7129d31`, merge-refreshed onto `main` `5788682` and `research/lean-gate-c014-followup` `6a719db`, then on 2026-11-15 onto `main` `ade1179`, which contains P6 (#39, §13); numbered after C014's §12 and P6's §13)
+
+### 14.1 Why
+
+Arena_Researcher_06020041 cycles 3 and 5 (`PhaseLockCoherence.lean` md5 `038cfbeb…`, `LockedCoherence.lean` md5
+`6554994d…`, on `audit-inbox` only) compile with standard axioms, but their "lock" hypothesis
+`∀ n ≥ N, ∀ i, u n i = 0` is a frozen network. Engine natural frequencies average about 1.43, so it never applies.
+Auditor Seat 002 rated them REWORK. `lean/AIEFGateCore/AIEFGateCore/FrequencyLock.lean` is that rework, written by
+Auditor Seat 002; no deposited file is copied or executed. This version answers Researcher 001's audit of `02adc22`
+(B1, B2, N2-N6).
+
+### 14.2 Statements (all proved; standard axioms only)
+
+The hypothesis is a lock of ONE PAIR `(i, j)`, not of the whole network (B2): from step `N` on, `u n i` and `u n j`
+equal the same increment. Nothing is assumed about other nodes; `coherenceInput … i j` reads only `i` and `j`.
+
+* `input_step_of_common_increment`: if `u n i = c n`, `d ≤ n` and `u (n-d) j = c (n-d)`, then
+  `coherenceInput (n+1) i j = coherenceInput n i j * phasor (c n − c (n−d))`.
+* `coherenceInput_constant_of_periodicPairRate` (B1): with `hlock : ∀ n ≥ N, u n i = c n ∧ u n j = c n` and the
+  period condition `hper : ∀ n ≥ N + d, c n = c (n − d)`, `coherenceInput n i j = coherenceInput (N+d) i j` for all
+  `n ≥ N + d`. A constant rate is the simplest case, not the only one: `periodic_rate_input_constant` (delay `2`,
+  rate `π, 0, π, 0, …`, constant from step `2`).
+* `coherenceInput_constant_of_pairLock`: the constant-rate case, `hlock : ∀ n ≥ N, u n i = c ∧ u n j = c`.
+* `coherenceTrace_error_of_pairLock`: `C (N+d+k) i j − z = α^k (C (N+d) i j − z)`, `z = coherenceInput (N+d) i j`.
+* `coherenceTrace_norm_of_pairLock`: with `0 ≤ α ≤ 1` and `‖C0‖ ≤ 1`, `1 − 2α^k ≤ ‖C (N+d+k) i j‖`.
+  (`α ≤ 1` enters through `coherenceTrace_unitDisk`; for `α > 1` the bound is trivially true.)
+* `reported_of_pairLock`: for `i ≠ j`, `1 − 2α^k ≤ reported (C (N+d+k)) i j`.
+* `pairLock_nonzero_rate` (N3): `unitRate 0 0 ≠ 0` is part of the statement, and the input is constant from
+  step 3 at that rate, so the hypothesis is not only the frozen case.
+* `common_rate_input_not_constant`, `common_rate_input_ne_zero`: delay 1, both nodes at rate `π, 0, π, …`: the input
+  flips sign each step and is nonzero. "The pair moves together" is not enough. `c n = c (n − d)` is sufficient, not necessary: the exact condition is
+  `c n ≡ c (n − d)` modulo `2π` (Researcher 001's N1 on `e50102c`: delay 1, rate `2π, 0, 2π, …` keeps the input constant).
+
+Witnesses used by the mutants: `probe_pairLock_one_step` (d = 0, α = 1/2, `C 1 0 1 = 0`, reported `0`),
+`pairLock_factor_two_refuted` and `pairLock_norm_factor_two_refuted` (the factor `2` is attained, `1 − α^k` is false),
+`half_lock_refuted` (only node `i` locked: input changes), `delay_start_refuted` (constant from `N`, not `N + d`, is
+false), `nonperiodic_rate_refuted` (no period condition: false), value probes `probe_unitRate_nonzero`,
+`probe_altU_not_constant`, `probe_altU_period_two` and `probe_unitRate_constant`.
+
+How this relates to O1 (`freezing/REPORT.md`, cluster locking; N6): O1 predicts that pairs inside a frequency
+cluster lock (`R → 1`) and cross-cluster pairs stay below `R_c`. This section proves only a consequence of the first
+half: IF a pair is locked and `α < 1`, its reported coherence tends to `1` (at `α = 1` the bound `1 − 2α^k = −1` says nothing). It does not prove that any engine pair locks and says
+nothing about cross-cluster pairs. `reported → 1` means a constant phase difference (phase-locking value `1`), not
+equal phases.
+
+### 14.3 Mutants (numbered after P6's M79–M86 and E12–E15; M85–M92 before the 2026-11-15 refresh, shifted by 2)
+
+Statement mutants, each a real build failure plus a refutation by a proved `*_refuted` theorem with standard axioms,
+and the same term failing on the unmutated statement:
+
+* M87 `reported_of_pairLock` `1 − 2α^k` → `1 − α^k` (refuted by `pairLock_factor_two_refuted`).
+* M88 the same on `coherenceTrace_norm_of_pairLock` (`pairLock_norm_factor_two_refuted`).
+* M89 `coherenceInput_constant_of_pairLock` from `N` instead of `N + d` (`delay_start_refuted`, d = 2: `−1` vs `1`).
+* M90 `coherenceInput_constant_of_pairLock` with only node `i` locked (`half_lock_refuted`).
+* M91 `coherenceInput_constant_of_periodicPairRate` with the period condition dropped (`nonperiodic_rate_refuted`).
+* M94 `coherenceInput_constant_of_periodicPairRate` from `N` instead of `N + d` (`delay_start_refuted` at the
+  constant rate `π/2`; Researcher 001's N6 on `e50102c`). M89 covers only the constant-rate corollary.
+
+Definition mutants (killed by value probes): M92 `unitRate := 0` (`probe_unitRate_nonzero`), M93 `altU` constant `π`
+(`probe_altU_not_constant`). Equivalence control E16 `unitRate := 5` must NOT be killed.
+
+Value probes `VP_FL` (N2 on `e50102c`): the witness theorems themselves cannot be probes (the P5 test requires
+value probes to be `probe_*` closed-form facts, so a rewrite lemma can never earn a kill). Instead two value probes pin
+the shape they rely on: `probe_altU_period_two` (`altU 2 1 = altU 0 0 ∧ altU 3 1 = altU 1 0`: period `2`, same at
+both nodes) and `probe_unitRate_constant` (`unitRate 7 1 = unitRate 0 0`). A definition edit with period 3, a
+node-dependent `altU` or a time-dependent `unitRate` now fails a value probe. They are added to `VP_FL`, which makes
+the equivalence and typo controls stricter; E16 (`unitRate := 5`) still stays not killed. M92/M93 keep their pins.
+
+### 14.4 Results (local, 2026-11-17, after the refresh onto `main` `ade1179` and the renumbering to M87–M94)
+
+`check_lean_gate.sh` (SKIP_CACHE=1): PASS, 869 project declarations audited (P6 included), build warnings 0,
+standard axioms only. `lean_mutation_check.py` full run: PASS, statement mutants rejected 58/58, definition mutants
+killed 36/36, total 94/94 (lock mutants M87–M94 all caught for the reasons in §14.3), equivalence controls not killed
+16/16 (E16 included), typo controls 4/4. pytest (`tools/ci/tests`, `research/lean_gate/tests`): 317 passed.
+Checkers and inventory: rc 0.
+(At `a9e0a35`, before the refresh, 2026-11-15: 820 declarations, 47/47, 27/27, 74/74, 12/12, 3/3, pytest 299.
+At `e50102c`: 818 declarations, 46/46, 73/73.)
+
+### 14.5 Still open
+
+* The lock is ASSUMED, not derived from the closed loop; this does not prove the engine locks (O1 open).
+* At the engine's `α = exp(−dt/T_window)` (`aief_experiment_engine_v1.py` `alpha`, `dt = 0.01`,
+  `T_window = 25 / mean(ω) = 17.502917…`, so `α ≈ 0.999429`) the bound `1 − 2α^k` passes `1/2` only from `k = 2427`
+  steps; the error factor `α^k` itself is `≤ 1/2` from `k = 1214`. The test reads `dt` and the ω list from the engine
+  source (N4). This is a rate, not a claim about any run.
+* Exact reals; not float64 or the Python code. `AUD-RATELAW stays UNEXPLAINED`.
