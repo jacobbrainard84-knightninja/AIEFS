@@ -140,9 +140,10 @@ def test_p4b_mutants_shape():
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
     assert {m[1] for m in mc.MUTANTS[36:38]} == {"Capacity.lean"}
     assert [m[2] for m in mc.MUTANTS[36:38]] == ["preM_between", "convex_weights_iff"]
-    # the C014, P6 and phase-lock entries are selected by file, not by position
+    # the C014, P6, phase-lock and DelayRoots entries are selected by file, not by position
     assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean", "CoherenceMotion.lean",
-                                              "FrequencyLock.lean"}
+                                              "FrequencyLock.lean", "DelayRoots.lean"}
+    assert len([m for m in mc.MUTANTS if m[1] == "DelayRoots.lean"]) == 12
     assert len([m for m in mc.MUTANTS if m[1] == "TrajectoryInvariants.lean"]) == 3
     assert len([m for m in mc.MUTANTS if m[1] == "CoherenceMotion.lean"]) == 11
     assert len([m for m in mc.MUTANTS if m[1] == "FrequencyLock.lean"]) == 6

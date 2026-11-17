@@ -335,8 +335,11 @@ def test_p6_mutants_exact_counts_and_numbering():
     # the phase-lock port (FrequencyLock.lean, SPEC §14) is numbered after P6: M87-M94, E16
     lock = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] == "FrequencyLock.lean"])
     assert sorted(lock) == list(range(87, 95))
-    assert len(allnums) == len(set(allnums)) == 94 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (58, 36)
+    # the DelayRoots port (DelayRoots.lean, SPEC §15) is numbered after the phase lock: M95-M106
+    roots = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] == "DelayRoots.lean"])
+    assert sorted(roots) == list(range(95, 107))
+    assert len(allnums) == len(set(allnums)) == 106 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (70, 36)
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 20                                          # unique across ports: E1-E16, T1-T4
