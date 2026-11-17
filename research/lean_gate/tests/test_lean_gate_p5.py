@@ -30,10 +30,10 @@ HB = (GATE / "HistoryBuffer.lean").read_text()
 PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
-N_STATEMENT_MUTANTS = 53          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M92-M103 (DelayRoots)
+N_STATEMENT_MUTANTS = 53          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M95-M106 (DelayRoots)
 N_DEF_MUTANTS = 25                # M37-M56 (P5) + M74-M78 (C014)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 78 (76 before M102-M103; 71 before the DelayRoots audit fixes; 66 before DelayRoots; 58 before C014; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 78 (76 before M105-M106; 71 before the DelayRoots audit fixes; 66 before DelayRoots; 58 before C014; 52 before N2 M53-M56 and #27 M57-M58)
 
 # Statements of the deposit (md5 fe47db36... HistoryBuffer.lean, b26f225f... PhaseIncrement.lean, 410275ad...
 # PhaseCoherenceBridge.lean), whitespace-normalised, namespace prefixes (Researcher040282.Phase./Delay.) removed.

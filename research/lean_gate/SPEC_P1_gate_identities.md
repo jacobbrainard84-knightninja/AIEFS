@@ -1161,32 +1161,32 @@ controls not killed; 3/3 typo controls INVALID; RESULT PASS.
 
 **Not covered:** that these polynomials are the correct linearisation of the engine step; the existence of the cycle 8 rotating orbit; the projected orbit's non-differentiable tie; heterogeneous ω; production runs. Nothing here supports any AIEF-1.4 claim.
 
-### 15.2 Mutants M92–M103 (statement mutants, numbered after phaselock; renumbered when this branch is refreshed onto main)
+### 15.2 Mutants M95–M106 (statement mutants, numbered after P6 and phaselock; first written as M92–M103 and renumbered by +3 on the refresh onto main `16c7893`, which carries phaselock M87–M94)
 | Mutant | Change | Refuted by |
 |---|---|---|
-| M92 | `symRoot_eq_one_or_lt`: `a < 1` := True | a = 2, d = 1, root −2 |
-| M93 | `symRoot_eq_one_or_lt`: conclusion drops `z = 1 ∨` | the root 1 |
-| M94 | `transRoot_lt_one`: `1 ≤ m` := True | m = 0, h = 3, d = 0, root −2 |
-| M95 | `transRoot_lt_one`: `m h < 1` := True | m = h = 1, d = 0, root −1 (d = 0 is outside Arena's d ≥ 1; M100 has a d = 1 witness) |
-| M96 | `projectedSlope_lt_quarter`: `C < x` → `C ≤ x` | C = ε = x = 1, slope exactly 1/4 |
-| M97 | `symRoot_eq_one_or_lt`: `0 < a` := True | a = −2, d = 1: P = (λ−1)(λ−2), root 2 |
-| M98 | `transRoot_lt_one`: `0 < h` := True | m = 1, h = 0, d = 0: Q = λ − 1, root 1 |
-| M99 | `symRoot_eq_one_or_lt`: `a < 1` → `a ≤ 1` | a = 1, d = 1: P = λ² − 1, root −1 |
-| M100 | `transRoot_lt_one`: `m h < 1` → `m h ≤ 1` | m = h = 1, d = 1: Q = λ² + 1, root i |
-| M101 | `projectedSlope_lt_quarter`: `0 < C` and `0 < ε` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
-| M102 | `projectedSlope_lt_quarter_of_C`: `0 < C` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
-| M103 | `projectedSlope_lt_quarter_of_C`: `C < x` → `C ≤ x` | C = ε = x = 1: slope exactly 1/4 |
+| M95 | `symRoot_eq_one_or_lt`: `a < 1` := True | a = 2, d = 1, root −2 |
+| M96 | `symRoot_eq_one_or_lt`: conclusion drops `z = 1 ∨` | the root 1 |
+| M97 | `transRoot_lt_one`: `1 ≤ m` := True | m = 0, h = 3, d = 0, root −2 |
+| M98 | `transRoot_lt_one`: `m h < 1` := True | m = h = 1, d = 0, root −1 (d = 0 is outside Arena's d ≥ 1; M103 has a d = 1 witness) |
+| M99 | `projectedSlope_lt_quarter`: `C < x` → `C ≤ x` | C = ε = x = 1, slope exactly 1/4 |
+| M100 | `symRoot_eq_one_or_lt`: `0 < a` := True | a = −2, d = 1: P = (λ−1)(λ−2), root 2 |
+| M101 | `transRoot_lt_one`: `0 < h` := True | m = 1, h = 0, d = 0: Q = λ − 1, root 1 |
+| M102 | `symRoot_eq_one_or_lt`: `a < 1` → `a ≤ 1` | a = 1, d = 1: P = λ² − 1, root −1 |
+| M103 | `transRoot_lt_one`: `m h < 1` → `m h ≤ 1` | m = h = 1, d = 1: Q = λ² + 1, root i |
+| M104 | `projectedSlope_lt_quarter`: `0 < C` and `0 < ε` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
+| M105 | `projectedSlope_lt_quarter_of_C`: `0 < C` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
+| M106 | `projectedSlope_lt_quarter_of_C`: `C < x` → `C ≤ x` | C = ε = x = 1: slope exactly 1/4 |
 
-M97–M101 come from Researcher 001's audit of `ae2c25a` (blocker B1 and note N1). The earlier text here said
-0 < a had "no simple witness" and 0 < h failed "only at the boundary"; both were wrong (M97, M98). M102–M103 come
+M100–M104 come from Researcher 001's audit of `ae2c25a` (blocker B1 and note N1). The earlier text here said
+0 < a had "no simple witness" and 0 < h failed "only at the boundary"; both were wrong (M100, M101). M105–M106 come
 from Researcher 001's audit of `cce534d` (note N2): the C-only variant has its own two load-bearing hypotheses.
 The two d = 2 instances show the hypotheses can be met; they do not claim any root exists (N3).
 
 **Not mutated, with the reason:**
 - `0 < ε` alone, and `0 < C` alone: each is redundant given the other. With C > 0 and ε ≤ 0, or ε > 0 and C ≤ 0,
   the numerator C·ε is ≤ 0, so the slope is ≤ 0 < 1/4 (proved for the first case as `projectedSlope_lt_quarter_of_C`).
-  Dropping both is false (M101).
-- `1 ≤ m` weakened to `0 ≤ m`: that is M94 (m = 0).
+  Dropping both is false (M104).
+- `1 ≤ m` weakened to `0 ≤ m`: that is M97 (m = 0).
 
 ### 15.2a Dictionary to the engine (NOT proved; informal, from Researcher 001's numerical check)
 The Lean variables are free reals. Researcher 001's reading of the engine linearisation around the homogeneous-ω orbit
@@ -1198,11 +1198,11 @@ claims it. Nothing here connects the Lean statements to the engine code.
 ### 15.3 Tests
 `research/lean_gate/tests/test_lean_gate_delayroots.py` checks:
 - that the module is imported and hash-pinned, with no escape hatches, and that `#print axioms` lines are present;
-- the exact shape of M92–M103 (selected by file);
+- the exact shape of M95–M106 (selected by file);
 - the witness roots, re-checked in exact rational arithmetic, and the ε ≤ 0 redundancy numerically.
 
 The pins move as follows: P4b `len(MUTANTS)` goes from 41 to 51, and P5 `N_STATEMENT_MUTANTS` from 41 to 51, so `TOTAL_MUTANTS` becomes 76. If c016 and phaselock land first, these pins are merged additively.
 
 ### 15.4 Results (local, 2026-11-15)
 - First version (`ae2c25a`): `SKIP_CACHE=1 ./check_lean_gate.sh` PASS, 807 declarations, 0 warnings, standard axioms only. Full mutation run: 46/46 statement mutants rejected, 25/25 definition mutants killed, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 297 passed.
-- After Researcher 001's audit (M97–M101, `projectedSlope_lt_quarter_of_C`, the two d = 2 instances, `#print axioms`): gate PASS, **818 declarations**, standard axioms only. Full unfiltered mutation run: **51/51 statement** (the one name-reference note is M31's, pre-existing), **25/25 definition**, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 299 passed; all repository checkers rc 0.
+- After Researcher 001's audit (M100–M104, `projectedSlope_lt_quarter_of_C`, the two d = 2 instances, `#print axioms`): gate PASS, **818 declarations**, standard axioms only. Full unfiltered mutation run: **51/51 statement** (the one name-reference note is M31's, pre-existing), **25/25 definition**, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 299 passed; all repository checkers rc 0.

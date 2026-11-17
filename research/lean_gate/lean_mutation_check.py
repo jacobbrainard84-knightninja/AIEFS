@@ -92,21 +92,21 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M57 Capacity.preM_between, h1 (γ dt ≤ 1) := True                -> Capacity.false_preM_between_no_bound (γ = 1, dt = 2)
   M58 Capacity.convex_weights_iff, `γ dt ≤ 1` dropped              -> (γ = 1, dt = 2: the left side fails, the mutant's right holds)
 
-  DelayRoots.lean (Arena_Researcher_06020041 cycles 9/10 root lemmas; numbered M92 ff., after the phaselock port):
-  M92 symRoot_eq_one_or_lt, ha1 (a < 1) := True                  -> a = 2, d = 1: root -2 (false_symRoot_no_upper)
-  M93 symRoot_eq_one_or_lt, conclusion drops `z = 1 ∨`           -> the neutral root 1 (false_one_inside)
-  M94 transRoot_lt_one, hm (1 ≤ m) := True                       -> m = 0, h = 3, d = 0: root -2
-  M95 transRoot_lt_one, hmh (m h < 1) := True                    -> m = h = 1, d = 0: root -1
-  M96 projectedSlope_lt_quarter, `C < x` -> `C ≤ x`              -> C = ε = x = 1: slope exactly 1/4
-  M97 symRoot_eq_one_or_lt, ha0 (0 < a) := True                   -> a = -2, d = 1: root 2 (P = (l-1)(l-2))
-  M98 transRoot_lt_one, h0 (0 < h) := True                        -> m = 1, h = 0, d = 0: root 1
-  M99 symRoot_eq_one_or_lt, `a < 1` -> `a ≤ 1`                    -> a = 1, d = 1: root -1
-  M100 transRoot_lt_one, `m h < 1` -> `m h ≤ 1`                   -> m = h = 1, d = 1: root i
-  M101 projectedSlope_lt_quarter, `0 < C` and `0 < ε` := True     -> C = ε = -1, x = -1/2: slope 4/9
-  (0 < ε alone is redundant given 0 < C: projectedSlope_lt_quarter_of_C; M97-M101 from Researcher 001's audit of ae2c25a)
-  M102 projectedSlope_lt_quarter_of_C, hC (0 < C) := True       -> C = ε = -1, x = -1/2: slope 4/9
-  M103 projectedSlope_lt_quarter_of_C, `C < x` -> `C ≤ x`       -> C = ε = x = 1: slope exactly 1/4
-  (M102-M103 from Researcher 001's audit of cce534d)
+  DelayRoots.lean (Arena_Researcher_06020041 cycles 9/10 root lemmas; numbered M95 ff., after the phaselock port):
+  M95 symRoot_eq_one_or_lt, ha1 (a < 1) := True                  -> a = 2, d = 1: root -2 (false_symRoot_no_upper)
+  M96 symRoot_eq_one_or_lt, conclusion drops `z = 1 ∨`           -> the neutral root 1 (false_one_inside)
+  M97 transRoot_lt_one, hm (1 ≤ m) := True                       -> m = 0, h = 3, d = 0: root -2
+  M98 transRoot_lt_one, hmh (m h < 1) := True                    -> m = h = 1, d = 0: root -1
+  M99 projectedSlope_lt_quarter, `C < x` -> `C ≤ x`              -> C = ε = x = 1: slope exactly 1/4
+  M100 symRoot_eq_one_or_lt, ha0 (0 < a) := True                   -> a = -2, d = 1: root 2 (P = (l-1)(l-2))
+  M101 transRoot_lt_one, h0 (0 < h) := True                        -> m = 1, h = 0, d = 0: root 1
+  M102 symRoot_eq_one_or_lt, `a < 1` -> `a ≤ 1`                    -> a = 1, d = 1: root -1
+  M103 transRoot_lt_one, `m h < 1` -> `m h ≤ 1`                   -> m = h = 1, d = 1: root i
+  M104 projectedSlope_lt_quarter, `0 < C` and `0 < ε` := True     -> C = ε = -1, x = -1/2: slope 4/9
+  (0 < ε alone is redundant given 0 < C: projectedSlope_lt_quarter_of_C; M100-M104 from Researcher 001's audit of ae2c25a)
+  M105 projectedSlope_lt_quarter_of_C, hC (0 < C) := True       -> C = ε = -1, x = -1/2: slope 4/9
+  M106 projectedSlope_lt_quarter_of_C, `C < x` -> `C ≤ x`       -> C = ε = x = 1: slope exactly 1/4
+  (M105-M106 from Researcher 001's audit of cce534d)
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port renumbers
   after these):
@@ -362,48 +362,48 @@ MUTANTS = [
      [("(hp : EngineGate (p n))", "(hp : True)", 1)], TS_VARS,
      "TrajectorySafety.broken_link_refuted (@H (Fin 2) Unit _ _ (fun _ => Capacity.pB)"
      " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
-     None),    # ---- DelayRoots.lean (Arena cycles 9/10 root lemmas); numbered M92 ff. after phaselock's M85-M91 ----
-    ("M92_delayroots_sym_upper_bound_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
+     None),    # ---- DelayRoots.lean (Arena cycles 9/10 root lemmas); numbered M95 ff. after P6's M59-M70, M79-M86 and phaselock's M87-M94 ----
+    ("M95_delayroots_sym_upper_bound_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
      [("(ha1 : a < 1)", "(ha1 : True)", 1)], "",
      "DelayRoots.false_symRoot_no_upper (H 2 (by norm_num) trivial 1 (-2) DelayRoots.symRoot_root_a_two)", None),
-    ("M93_delayroots_sym_neutral_root_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
+    ("M96_delayroots_sym_neutral_root_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
      [("    z = 1 ∨ ‖z‖ < 1", "    ‖z‖ < 1", 1)], "",
      "DelayRoots.false_one_inside (H (1 / 2) (by norm_num) (by norm_num) 0 1 (DelayRoots.symRoot_one (1 / 2) 0).1)",
      None),
-    ("M94_delayroots_trans_m_ge_one_dropped", "DelayRoots.lean", "transRoot_lt_one",
+    ("M97_delayroots_trans_m_ge_one_dropped", "DelayRoots.lean", "transRoot_lt_one",
      [("(hm : 1 ≤ m)", "(hm : True)", 1)], "",
      "DelayRoots.false_minus_two_inside (H 0 trivial 3 (by norm_num) (by norm_num) 0 (-2)"
      " DelayRoots.transRoot_root_m_zero)", None),
-    ("M95_delayroots_trans_mh_lt_one_dropped", "DelayRoots.lean", "transRoot_lt_one",
+    ("M98_delayroots_trans_mh_lt_one_dropped", "DelayRoots.lean", "transRoot_lt_one",
      [("(hmh : (m : ℝ) * h < 1)", "(hmh : True)", 1)], "",
      "DelayRoots.false_minus_one_inside (H 1 le_rfl 1 (by norm_num) trivial 0 (-1) DelayRoots.transRoot_root_mh_one)",
      None),
-    ("M96_delayroots_slope_strict_to_weak", "DelayRoots.lean", "projectedSlope_lt_quarter",
+    ("M99_delayroots_slope_strict_to_weak", "DelayRoots.lean", "projectedSlope_lt_quarter",
      [("(hx : C < x)", "(hx : C ≤ x)", 1)], "",
      "DelayRoots.false_slope_at_boundary (H 1 1 1 (by norm_num) (by norm_num) le_rfl)", None),
     # Researcher 001's audit of ae2c25a (B1, N1): 0 < a and 0 < h are load-bearing; boundary weakenings of a < 1, m h < 1;
     # 0 < C and 0 < eps together (each alone is redundant given the other, see projectedSlope_lt_quarter_of_C)
-    ("M97_delayroots_sym_a_pos_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
+    ("M100_delayroots_sym_a_pos_dropped", "DelayRoots.lean", "symRoot_eq_one_or_lt",
      [("(ha0 : 0 < a)", "(ha0 : True)", 1)], "",
      "DelayRoots.false_symRoot_two (H (-2) trivial (by norm_num) 1 2 DelayRoots.symRoot_root_a_neg_two)", None),
-    ("M98_delayroots_trans_h_pos_dropped", "DelayRoots.lean", "transRoot_lt_one",
+    ("M101_delayroots_trans_h_pos_dropped", "DelayRoots.lean", "transRoot_lt_one",
      [("(h0 : 0 < h)", "(h0 : True)", 1)], "",
      "DelayRoots.false_one_inside (H 1 le_rfl 0 trivial (by norm_num) 0 1 DelayRoots.transRoot_root_h_zero)", None),
-    ("M99_delayroots_sym_a_lt_one_to_le", "DelayRoots.lean", "symRoot_eq_one_or_lt",
+    ("M102_delayroots_sym_a_lt_one_to_le", "DelayRoots.lean", "symRoot_eq_one_or_lt",
      [("(ha1 : a < 1)", "(ha1 : a ≤ 1)", 1)], "",
      "DelayRoots.false_symRoot_minus_one (H 1 (by norm_num) le_rfl 1 (-1) DelayRoots.symRoot_root_a_one)", None),
-    ("M100_delayroots_trans_mh_lt_one_to_le", "DelayRoots.lean", "transRoot_lt_one",
+    ("M103_delayroots_trans_mh_lt_one_to_le", "DelayRoots.lean", "transRoot_lt_one",
      [("(hmh : (m : ℝ) * h < 1)", "(hmh : (m : ℝ) * h ≤ 1)", 1)], "",
      "DelayRoots.false_I_inside (H 1 le_rfl 1 (by norm_num) (by norm_num) 1 Complex.I DelayRoots.transRoot_root_I)",
      None),
-    ("M101_delayroots_slope_C_and_eps_pos_dropped", "DelayRoots.lean", "projectedSlope_lt_quarter",
+    ("M104_delayroots_slope_C_and_eps_pos_dropped", "DelayRoots.lean", "projectedSlope_lt_quarter",
      [("(hC : 0 < C) (hε : 0 < ε)", "(hC : True) (hε : True)", 1)], "",
      "DelayRoots.false_slope_both_negative (H (-1) (-1) (-1 / 2) trivial trivial (by norm_num))", None),
     # Researcher 001's audit of cce534d (N2): the C-only variant has its own two load-bearing hypotheses
-    ("M102_delayroots_slopeC_C_pos_dropped", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
+    ("M105_delayroots_slopeC_C_pos_dropped", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
      [("(hC : 0 < C)", "(hC : True)", 1)], "",
      "DelayRoots.false_slope_both_negative (H (-1) (-1) (-1 / 2) trivial (by norm_num))", None),
-    ("M103_delayroots_slopeC_lt_to_le", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
+    ("M106_delayroots_slopeC_lt_to_le", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
      [("(hx : C < x)", "(hx : C ≤ x)", 1)], "",
      "DelayRoots.false_slope_at_boundary (H 1 1 1 (by norm_num) le_rfl)", None),
 ]

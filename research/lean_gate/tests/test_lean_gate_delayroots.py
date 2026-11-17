@@ -1,17 +1,17 @@
 """Lean DelayRoots: pin DelayRoots.lean (root lemmas for the delay characteristic polynomials of
 Arena_Researcher_06020041 cycles 9/10, namespace AIEFGate.DelayRoots) and its mutants without running Lean.
 
-Statement mutants (numbered from M92; selected by file, so later ports can append):
-  M92 symRoot_eq_one_or_lt ha1 (a < 1) := True          (a = 2, d = 1: root -2)
-  M93 symRoot_eq_one_or_lt drops the neutral root `z = 1 ∨` (the root 1 itself)
-  M94 transRoot_lt_one hm (1 ≤ m) := True               (m = 0, h = 3, d = 0: root -2)
-  M95 transRoot_lt_one hmh (m h < 1) := True            (m = h = 1, d = 0: root -1)
-  M96 projectedSlope_lt_quarter `C < x` -> `C ≤ x`      (C = ε = x = 1: slope 1/4)
-  M97 symRoot_eq_one_or_lt ha0 (0 < a) := True          (a = -2, d = 1: root 2)
-  M98 transRoot_lt_one h0 (0 < h) := True               (m = 1, h = 0, d = 0: root 1)
-  M99 symRoot_eq_one_or_lt `a < 1` -> `a ≤ 1`           (a = 1, d = 1: root -1)
-  M100 transRoot_lt_one `m h < 1` -> `m h ≤ 1`          (m = h = 1, d = 1: root i)
-  M101 projectedSlope_lt_quarter 0 < C, 0 < ε := True   (C = ε = -1, x = -1/2: slope 4/9)
+Statement mutants (numbered from M95; selected by file, so later ports can append):
+  M95 symRoot_eq_one_or_lt ha1 (a < 1) := True          (a = 2, d = 1: root -2)
+  M96 symRoot_eq_one_or_lt drops the neutral root `z = 1 ∨` (the root 1 itself)
+  M97 transRoot_lt_one hm (1 ≤ m) := True               (m = 0, h = 3, d = 0: root -2)
+  M98 transRoot_lt_one hmh (m h < 1) := True            (m = h = 1, d = 0: root -1)
+  M99 projectedSlope_lt_quarter `C < x` -> `C ≤ x`      (C = ε = x = 1: slope 1/4)
+  M100 symRoot_eq_one_or_lt ha0 (0 < a) := True          (a = -2, d = 1: root 2)
+  M101 transRoot_lt_one h0 (0 < h) := True               (m = 1, h = 0, d = 0: root 1)
+  M102 symRoot_eq_one_or_lt `a < 1` -> `a ≤ 1`           (a = 1, d = 1: root -1)
+  M103 transRoot_lt_one `m h < 1` -> `m h ≤ 1`          (m = h = 1, d = 1: root i)
+  M104 projectedSlope_lt_quarter 0 < C, 0 < ε := True   (C = ε = -1, x = -1/2: slope 4/9)
 The witness roots are re-checked here in exact arithmetic (Gaussian integers / rationals).
 
 Run: /workspace/venv-pt/bin/pytest -q research/lean_gate/tests/test_lean_gate_delayroots.py
@@ -31,18 +31,18 @@ PROJ = REPO / "lean" / "AIEFGateCore"
 F = "DelayRoots.lean"
 SRC = (PROJ / "AIEFGateCore" / F).read_text()
 
-STATEMENT = [("M92", "symRoot_eq_one_or_lt", "false_symRoot_no_upper", "symRoot_root_a_two"),
-             ("M93", "symRoot_eq_one_or_lt", "false_one_inside", "symRoot_one"),
-             ("M94", "transRoot_lt_one", "false_minus_two_inside", "transRoot_root_m_zero"),
-             ("M95", "transRoot_lt_one", "false_minus_one_inside", "transRoot_root_mh_one"),
-             ("M96", "projectedSlope_lt_quarter", "false_slope_at_boundary", None),
-             ("M97", "symRoot_eq_one_or_lt", "false_symRoot_two", "symRoot_root_a_neg_two"),
-             ("M98", "transRoot_lt_one", "false_one_inside", "transRoot_root_h_zero"),
-             ("M99", "symRoot_eq_one_or_lt", "false_symRoot_minus_one", "symRoot_root_a_one"),
-             ("M100", "transRoot_lt_one", "false_I_inside", "transRoot_root_I"),
-             ("M101", "projectedSlope_lt_quarter", "false_slope_both_negative", None),
-             ("M102", "projectedSlope_lt_quarter_of_C", "false_slope_both_negative", None),
-             ("M103", "projectedSlope_lt_quarter_of_C", "false_slope_at_boundary", None)]
+STATEMENT = [("M95", "symRoot_eq_one_or_lt", "false_symRoot_no_upper", "symRoot_root_a_two"),
+             ("M96", "symRoot_eq_one_or_lt", "false_one_inside", "symRoot_one"),
+             ("M97", "transRoot_lt_one", "false_minus_two_inside", "transRoot_root_m_zero"),
+             ("M98", "transRoot_lt_one", "false_minus_one_inside", "transRoot_root_mh_one"),
+             ("M99", "projectedSlope_lt_quarter", "false_slope_at_boundary", None),
+             ("M100", "symRoot_eq_one_or_lt", "false_symRoot_two", "symRoot_root_a_neg_two"),
+             ("M101", "transRoot_lt_one", "false_one_inside", "transRoot_root_h_zero"),
+             ("M102", "symRoot_eq_one_or_lt", "false_symRoot_minus_one", "symRoot_root_a_one"),
+             ("M103", "transRoot_lt_one", "false_I_inside", "transRoot_root_I"),
+             ("M104", "projectedSlope_lt_quarter", "false_slope_both_negative", None),
+             ("M105", "projectedSlope_lt_quarter_of_C", "false_slope_both_negative", None),
+             ("M106", "projectedSlope_lt_quarter_of_C", "false_slope_at_boundary", None)]
 
 
 def mutants():
@@ -100,24 +100,24 @@ def _poly(z, d, lead, const):
 
 
 def test_witness_roots_exact():
-    # M92: a = 2, d = 1, z = -2 is a root of P = z^2 - (1-a) z - a
+    # M95: a = 2, d = 1, z = -2 is a root of P = z^2 - (1-a) z - a
     assert _poly((Q(-2), Q(0)), 1, Q(1) - 2, -Q(2)) == (0, 0)
-    # M93: z = 1 is a root of P for every a and d
+    # M96: z = 1 is a root of P for every a and d
     for a in (Q(1, 2), Q(1, 7)):
         for d in (0, 1, 50):
             assert _poly((Q(1), Q(0)), d, 1 - a, -a) == (0, 0)
-    # M94: m = 0, h = 3, d = 0, z = -2;  M95: m = h = 1, d = 0, z = -1  (Q = z^(d+1) - (1-mh) z^d + h)
+    # M97: m = 0, h = 3, d = 0, z = -2;  M98: m = h = 1, d = 0, z = -1  (Q = z^(d+1) - (1-mh) z^d + h)
     assert _poly((Q(-2), Q(0)), 0, Q(1) - 0 * 3, Q(3)) == (0, 0)
     assert _poly((Q(-1), Q(0)), 0, Q(1) - 1 * 1, Q(1)) == (0, 0)
-    # M96: C = eps = x = 1 gives exactly 1/4
+    # M99: C = eps = x = 1 gives exactly 1/4
     assert Q(1) * 1 / (1 + 1) ** 2 == Q(1, 4)
-    # M97: a = -2, d = 1, z = 2;  M99: a = 1, d = 1, z = -1  (P = z^(d+1) - (1-a) z^d - a)
+    # M100: a = -2, d = 1, z = 2;  M102: a = 1, d = 1, z = -1  (P = z^(d+1) - (1-a) z^d - a)
     assert _poly((Q(2), Q(0)), 1, Q(1) - (-2), Q(2)) == (0, 0)
     assert _poly((Q(-1), Q(0)), 1, Q(1) - 1, -Q(1)) == (0, 0)
-    # M98: m = 1, h = 0, d = 0, z = 1;  M100: m = h = 1, d = 1, z = i
+    # M101: m = 1, h = 0, d = 0, z = 1;  M103: m = h = 1, d = 1, z = i
     assert _poly((Q(1), Q(0)), 0, Q(1) - 1 * 0, Q(0)) == (0, 0)
     assert _poly((Q(0), Q(1)), 1, Q(1) - 1 * 1, Q(1)) == (0, 0)
-    # M101: C = eps = -1, x = -1/2 (x > C) gives 4/9 > 1/4
+    # M104: C = eps = -1, x = -1/2 (x > C) gives 4/9 > 1/4
     C, e, x = Q(-1), Q(-1), Q(-1, 2)
     assert x > C and C * e / (x + e) ** 2 == Q(4, 9) > Q(1, 4)
 
