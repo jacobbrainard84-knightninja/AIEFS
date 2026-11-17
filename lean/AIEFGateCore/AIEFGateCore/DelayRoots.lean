@@ -13,7 +13,8 @@ Research candidate. Pure algebra about two characteristic polynomials that appea
 linearisation of the engine step around the homogeneous-ω rotating orbit (Arena cycle 8):
 
 * `P(λ) = λ^(d+1) - (1-a) λ^d - a` with `0 < a < 1` (phase inside the symmetric subspace):
-  every root is `1` or lies strictly inside the unit disk, and `1` is a simple root.
+  every root is `1` or lies strictly inside the unit disk (`1` is always a root; simplicity is
+  not proved here).
 * `Q(λ) = λ^(d+1) - (1-m h) λ^d + h` with `m ≥ 1`, `0 < h`, `m h < 1` (transverse phase):
   every root lies strictly inside the unit disk.
 * The projected-branch weight slope `C ε / (x + ε)^2` is below `1/4` whenever `x > C > 0`.

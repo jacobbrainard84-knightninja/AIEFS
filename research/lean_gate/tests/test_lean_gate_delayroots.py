@@ -40,7 +40,9 @@ STATEMENT = [("M92", "symRoot_eq_one_or_lt", "false_symRoot_no_upper", "symRoot_
              ("M98", "transRoot_lt_one", "false_one_inside", "transRoot_root_h_zero"),
              ("M99", "symRoot_eq_one_or_lt", "false_symRoot_minus_one", "symRoot_root_a_one"),
              ("M100", "transRoot_lt_one", "false_I_inside", "transRoot_root_I"),
-             ("M101", "projectedSlope_lt_quarter", "false_slope_both_negative", None)]
+             ("M101", "projectedSlope_lt_quarter", "false_slope_both_negative", None),
+             ("M102", "projectedSlope_lt_quarter_of_C", "false_slope_both_negative", None),
+             ("M103", "projectedSlope_lt_quarter_of_C", "false_slope_at_boundary", None)]
 
 
 def mutants():

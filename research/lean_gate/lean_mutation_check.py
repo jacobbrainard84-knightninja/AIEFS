@@ -104,6 +104,9 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M100 transRoot_lt_one, `m h < 1` -> `m h ≤ 1`                   -> m = h = 1, d = 1: root i
   M101 projectedSlope_lt_quarter, `0 < C` and `0 < ε` := True     -> C = ε = -1, x = -1/2: slope 4/9
   (0 < ε alone is redundant given 0 < C: projectedSlope_lt_quarter_of_C; M97-M101 from Researcher 001's audit of ae2c25a)
+  M102 projectedSlope_lt_quarter_of_C, hC (0 < C) := True       -> C = ε = -1, x = -1/2: slope 4/9
+  M103 projectedSlope_lt_quarter_of_C, `C < x` -> `C ≤ x`       -> C = ε = x = 1: slope exactly 1/4
+  (M102-M103 from Researcher 001's audit of cce534d)
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port renumbers
   after these):
@@ -396,6 +399,13 @@ MUTANTS = [
     ("M101_delayroots_slope_C_and_eps_pos_dropped", "DelayRoots.lean", "projectedSlope_lt_quarter",
      [("(hC : 0 < C) (hε : 0 < ε)", "(hC : True) (hε : True)", 1)], "",
      "DelayRoots.false_slope_both_negative (H (-1) (-1) (-1 / 2) trivial trivial (by norm_num))", None),
+    # Researcher 001's audit of cce534d (N2): the C-only variant has its own two load-bearing hypotheses
+    ("M102_delayroots_slopeC_C_pos_dropped", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
+     [("(hC : 0 < C)", "(hC : True)", 1)], "",
+     "DelayRoots.false_slope_both_negative (H (-1) (-1) (-1 / 2) trivial (by norm_num))", None),
+    ("M103_delayroots_slopeC_lt_to_le", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
+     [("(hx : C < x)", "(hx : C ≤ x)", 1)], "",
+     "DelayRoots.false_slope_at_boundary (H 1 1 1 (by norm_num) le_rfl)", None),
 ]
 
 # ---- P5: definition mutants (numbered after P4b's M24-M36, which live on research/lean-gate-p4b) ----

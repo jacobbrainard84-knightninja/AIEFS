@@ -1161,7 +1161,7 @@ controls not killed; 3/3 typo controls INVALID; RESULT PASS.
 
 **Not covered:** that these polynomials are the correct linearisation of the engine step; the existence of the cycle 8 rotating orbit; the projected orbit's non-differentiable tie; heterogeneous ω; production runs. Nothing here supports any AIEF-1.4 claim.
 
-### 15.2 Mutants M92–M101 (statement mutants, numbered after phaselock; renumbered when this branch is refreshed onto main)
+### 15.2 Mutants M92–M103 (statement mutants, numbered after phaselock; renumbered when this branch is refreshed onto main)
 | Mutant | Change | Refuted by |
 |---|---|---|
 | M92 | `symRoot_eq_one_or_lt`: `a < 1` := True | a = 2, d = 1, root −2 |
@@ -1174,9 +1174,13 @@ controls not killed; 3/3 typo controls INVALID; RESULT PASS.
 | M99 | `symRoot_eq_one_or_lt`: `a < 1` → `a ≤ 1` | a = 1, d = 1: P = λ² − 1, root −1 |
 | M100 | `transRoot_lt_one`: `m h < 1` → `m h ≤ 1` | m = h = 1, d = 1: Q = λ² + 1, root i |
 | M101 | `projectedSlope_lt_quarter`: `0 < C` and `0 < ε` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
+| M102 | `projectedSlope_lt_quarter_of_C`: `0 < C` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
+| M103 | `projectedSlope_lt_quarter_of_C`: `C < x` → `C ≤ x` | C = ε = x = 1: slope exactly 1/4 |
 
 M97–M101 come from Researcher 001's audit of `ae2c25a` (blocker B1 and note N1). The earlier text here said
-0 < a had "no simple witness" and 0 < h failed "only at the boundary"; both were wrong (M97, M98).
+0 < a had "no simple witness" and 0 < h failed "only at the boundary"; both were wrong (M97, M98). M102–M103 come
+from Researcher 001's audit of `cce534d` (note N2): the C-only variant has its own two load-bearing hypotheses.
+The two d = 2 instances show the hypotheses can be met; they do not claim any root exists (N3).
 
 **Not mutated, with the reason:**
 - `0 < ε` alone, and `0 < C` alone: each is redundant given the other. With C > 0 and ε ≤ 0, or ε > 0 and C ≤ 0,
@@ -1194,7 +1198,7 @@ claims it. Nothing here connects the Lean statements to the engine code.
 ### 15.3 Tests
 `research/lean_gate/tests/test_lean_gate_delayroots.py` checks:
 - that the module is imported and hash-pinned, with no escape hatches, and that `#print axioms` lines are present;
-- the exact shape of M92–M101 (selected by file);
+- the exact shape of M92–M103 (selected by file);
 - the witness roots, re-checked in exact rational arithmetic, and the ε ≤ 0 redundancy numerically.
 
 The pins move as follows: P4b `len(MUTANTS)` goes from 41 to 51, and P5 `N_STATEMENT_MUTANTS` from 41 to 51, so `TOTAL_MUTANTS` becomes 76. If c016 and phaselock land first, these pins are merged additively.
