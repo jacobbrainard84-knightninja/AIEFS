@@ -35,10 +35,10 @@ HB = (GATE / "HistoryBuffer.lean").read_text()
 PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
-N_STATEMENT_MUTANTS = 58          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M59-M69 (P6) + M87-M91, M94 (lock)
+N_STATEMENT_MUTANTS = 70          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M59-M69 (P6) + M87-M91, M94 (lock) + M95-M106 (DelayRoots)
 N_DEF_MUTANTS = 36                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93 (lock)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 94 (86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 106 (94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
 P5_FILES = ("PhaseIncrement.lean", "PhaseCoherence.lean")
 P5_DEF_MUTANTS = [m for m in mc.DEF_MUTANTS if m[1] in P5_FILES]
 
@@ -210,7 +210,7 @@ def test_p5_mutants_shape_and_exact_count():
     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58, M59-M69
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
     assert len(P5_DEF_MUTANTS) == N_P5_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (94)
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (106)
     names = [m[0] for m in P5_DEF_MUTANTS]                              # the P5 entries, selected by file
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))

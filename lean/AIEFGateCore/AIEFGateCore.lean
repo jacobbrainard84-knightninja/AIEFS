@@ -20,3 +20,4 @@ import AIEFGateCore.WeightUpdate
 import AIEFGateCore.TrajectoryInvariants
 import AIEFGateCore.CoherenceMotion
 import AIEFGateCore.FrequencyLock
+import AIEFGateCore.DelayRoots

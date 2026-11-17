@@ -1329,3 +1329,64 @@ At `e50102c`: 818 declarations, 46/46, 73/73.)
   steps; the error factor `α^k` itself is `≤ 1/2` from `k = 1214`. The test reads `dt` and the ω list from the engine
   source (N4). This is a rate, not a claim about any run.
 * Exact reals; not float64 or the Python code. `AUD-RATELAW stays UNEXPLAINED`.
+
+## 15. DelayRoots (branch `research/lean-gate-delay-roots`, from `main` `871417d`; merge-refreshed on 2026-11-17 onto `main` `16c7893`, which contains P6 (#39, §13) and the frequency lock (#41, §14); numbered after both)
+
+### 15.1 What it is
+`lean/AIEFGateCore/AIEFGateCore/DelayRoots.lean` (namespace `AIEFGate.DelayRoots`) is pure algebra. It covers the characteristic polynomials in Arena_Researcher_06020041's cycles 9 and 10, which are unverified inbox material (Auditor review on `audit-inbox` @ `4ee9fe5`):
+
+- `symRoot_eq_one_or_lt`: for 0 < a < 1, every root of λ^(d+1) − (1−a)λ^d − a is 1 or has |λ| < 1.
+- `symRoot_one`: 1 is a root, plus the arithmetic identity (d+1) − (1−a)·d = 1 + a·d. By the power rule that number is P′(1), but the derivative is not formalised, so simplicity of the root is **not** proved.
+- `transRoot_lt_one`: for 1 ≤ m, 0 < h and m·h < 1, every root of λ^(d+1) − (1−m·h)λ^d + h has |λ| < 1.
+- `projectedSlope_lt_quarter`: if x > C > 0 and ε > 0, then C·ε/(x+ε)² < 1/4. `projectedSlope_lt_quarter_of_C` proves the same without ε > 0 (for ε ≤ 0 the slope is ≤ 0).
+- Positive instances at delay d = 2: `symRoot_instance_d_two` (a = 1/2) and `transRoot_instance_d_two` (m = 1, h = 1/2).
+- Key lemma `eq_one_of_norm_ge_one_of_near`: if |z| ≥ 1, c > 0 and |z − c| ≤ 1 − c, then z = 1.
+
+**Not covered:** that these polynomials are the correct linearisation of the engine step; the existence of the cycle 8 rotating orbit; the projected orbit's non-differentiable tie; heterogeneous ω; production runs. Nothing here supports any AIEF-1.4 claim.
+
+### 15.2 Mutants M95–M106 (statement mutants, numbered after P6 and phaselock; first written as M92–M103 and renumbered by +3 on the refresh onto main `16c7893`, which carries phaselock M87–M94)
+| Mutant | Change | Refuted by |
+|---|---|---|
+| M95 | `symRoot_eq_one_or_lt`: `a < 1` := True | a = 2, d = 1, root −2 |
+| M96 | `symRoot_eq_one_or_lt`: conclusion drops `z = 1 ∨` | the root 1 |
+| M97 | `transRoot_lt_one`: `1 ≤ m` := True | m = 0, h = 3, d = 0, root −2 |
+| M98 | `transRoot_lt_one`: `m h < 1` := True | m = h = 1, d = 0, root −1 (d = 0 is outside Arena's d ≥ 1; M103 has a d = 1 witness) |
+| M99 | `projectedSlope_lt_quarter`: `C < x` → `C ≤ x` | C = ε = x = 1, slope exactly 1/4 |
+| M100 | `symRoot_eq_one_or_lt`: `0 < a` := True | a = −2, d = 1: P = (λ−1)(λ−2), root 2 |
+| M101 | `transRoot_lt_one`: `0 < h` := True | m = 1, h = 0, d = 0: Q = λ − 1, root 1 |
+| M102 | `symRoot_eq_one_or_lt`: `a < 1` → `a ≤ 1` | a = 1, d = 1: P = λ² − 1, root −1 |
+| M103 | `transRoot_lt_one`: `m h < 1` → `m h ≤ 1` | m = h = 1, d = 1: Q = λ² + 1, root i |
+| M104 | `projectedSlope_lt_quarter`: `0 < C` and `0 < ε` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
+| M105 | `projectedSlope_lt_quarter_of_C`: `0 < C` := True | C = ε = −1, x = −1/2 (x > C): slope 4/9 |
+| M106 | `projectedSlope_lt_quarter_of_C`: `C < x` → `C ≤ x` | C = ε = x = 1: slope exactly 1/4 |
+
+M100–M104 come from Researcher 001's audit of `ae2c25a` (blocker B1 and note N1). The earlier text here said
+0 < a had "no simple witness" and 0 < h failed "only at the boundary"; both were wrong (M100, M101). M105–M106 come
+from Researcher 001's audit of `cce534d` (note N2): the C-only variant has its own two load-bearing hypotheses.
+The two d = 2 instances show the hypotheses can be met; they do not claim any root exists (N3).
+
+**Not mutated, with the reason:**
+- `0 < ε` alone, and `0 < C` alone: each is redundant given the other. With C > 0 and ε ≤ 0, or ε > 0 and C ≤ 0,
+  the numerator C·ε is ≤ 0, so the slope is ≤ 0 < 1/4 (proved for the first case as `projectedSlope_lt_quarter_of_C`).
+  Dropping both is false (M104).
+- `1 ≤ m` weakened to `0 ≤ m`: that is M97 (m = 0).
+
+### 15.2a Dictionary to the engine (NOT proved; informal, from Researcher 001's numerical check)
+The Lean variables are free reals. Researcher 001's reading of the engine linearisation around the homogeneous-ω orbit
+is m = N − 1, h = dt·b·cos(Ω·τ), a = m·h, ε = scale_epsilon, C = capacity, x = (N − 1)·β. Researcher 001 numerically
+confirmed that the engine's phase-block spectrum is the roots of P together with N − 1 copies of the roots of Q for 5
+(N, d) cases. The block-triangular structure of the EMA/weight part is **not** verified, and nothing in this file
+claims it. Nothing here connects the Lean statements to the engine code.
+
+### 15.3 Tests
+`research/lean_gate/tests/test_lean_gate_delayroots.py` checks:
+- that the module is imported and hash-pinned, with no escape hatches, and that `#print axioms` lines are present;
+- the exact shape of M95–M106 (selected by file);
+- the witness roots, re-checked in exact rational arithmetic, and the ε ≤ 0 redundancy numerically.
+
+The pins move as follows (after the 2026-11-17 refresh onto `16c7893`): P4b `len(MUTANTS)` goes from 58 to 70, and P5 `N_STATEMENT_MUTANTS` from 58 to 70, so `TOTAL_MUTANTS` goes from 94 to 106 (`N_DEF_MUTANTS` stays 36). `test_lean_gate_c016.py` pins the same totals. (Before the refresh, on `871417d`: 41 to 51, total 76.)
+
+### 15.4 Results (local, 2026-11-15; refreshed 2026-11-17)
+- First version (`ae2c25a`): `SKIP_CACHE=1 ./check_lean_gate.sh` PASS, 807 declarations, 0 warnings, standard axioms only. Full mutation run: 46/46 statement mutants rejected, 25/25 definition mutants killed, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 297 passed.
+- After Researcher 001's audit (M100–M104, `projectedSlope_lt_quarter_of_C`, the two d = 2 instances, `#print axioms`): gate PASS, **818 declarations**, standard axioms only. Full unfiltered mutation run: **51/51 statement** (the one name-reference note is M31's, pre-existing), **25/25 definition**, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 299 passed; all repository checkers rc 0.
+- After the merge-refresh onto `main` `16c7893` (P6 #39, study-path #40, frequency lock #41) and the renumbering to M95–M106: gate PASS, **893 declarations**, standard axioms only. Full mutation run: **70/70 statement**, **36/36 definition**, **106/106 total**, 16/16 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS. pytest 367 passed; all repository checkers rc 0.
