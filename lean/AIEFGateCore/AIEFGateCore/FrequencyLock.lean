@@ -233,6 +233,11 @@ theorem probe_altU_period_two : altU 2 1 = altU 0 0 ∧ altU 3 1 = altU 1 0 := b
 theorem probe_unitRate_constant : unitRate 7 1 = unitRate 0 0 := by
   simp [unitRate]
 
+/-- The values of `altU` at steps `0` and `1` (value probe, Researcher 001's #41 note 1:
+without it an `altU` with `Real.pi / 2` in place of `Real.pi` passed every probe). -/
+theorem probe_altU_values : altU 0 0 = Real.pi ∧ altU 1 0 = 0 := by
+  simp [altU]
+
 /-- Dropping the period condition is false: delay `1`, rate `π, 0, π, …`, the input at `2` is minus
 the input at `1`, so it is not constant from `N + d = 1`. -/
 theorem nonperiodic_rate_refuted :
@@ -340,6 +345,7 @@ end AIEFGate
 #print axioms AIEFGate.FrequencyLock.probe_altU_not_constant
 #print axioms AIEFGate.FrequencyLock.probe_altU_period_two
 #print axioms AIEFGate.FrequencyLock.probe_unitRate_constant
+#print axioms AIEFGate.FrequencyLock.probe_altU_values
 #print axioms AIEFGate.FrequencyLock.probe_pairLock_one_step
 #print axioms AIEFGate.FrequencyLock.pairLock_factor_two_refuted
 #print axioms AIEFGate.FrequencyLock.pairLock_norm_factor_two_refuted

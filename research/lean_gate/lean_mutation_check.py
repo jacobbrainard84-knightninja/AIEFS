@@ -423,7 +423,7 @@ MUTANTS = [
      " (fun _ _ _ => TrajectorySafety.X 75) TrajectorySafety.keepAux ((), TrajectorySafety.zeroB) 0 trivial 0)",
      None),
     # ---- Phase lock (FrequencyLock.lean, Auditor Seat 002's rework of Arena cycles 3/5); numbered from M87 (after P6's M85, M86)
-    # (M79-M84 are left for the renumbered c016 definition mutants) ----
+    # (P6 holds M79-M86; definition mutants added after #41 are M107-M109, numbered after DelayRoots' M95-M106) ----
     ("M87_lock_reported_factor_two_dropped", "FrequencyLock.lean", "reported_of_pairLock",
      [("1 - 2 * alpha ^ k ≤ reported", "1 - alpha ^ k ≤ reported", 1)], FL_VARS,
      "FrequencyLock.pairLock_factor_two_refuted (@H (Fin 2) (1/2) PhaseCoherence.probeC0 0" + FL_PROBE +
@@ -532,7 +532,9 @@ VP_TS = ["probe_gate_scales_row", "probe_aux_reads_old_and_new", "probe_aux_time
 VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
          # N2 (Researcher 001, e50102c): value probes for the shape the witness theorems rely on
          # (period 2, node-independent, time-independent); value probes must be `probe_*` equalities
-         "probe_altU_period_two", "probe_unitRate_constant"]
+         "probe_altU_period_two", "probe_unitRate_constant",
+         # #41 note 1 (Researcher 001, 9fd50ba): pin the values of altU, so pi/2 in place of pi is killed
+         "probe_altU_values"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL}
@@ -655,6 +657,17 @@ DEF_MUTANTS = [
      ["probe_unitRate_nonzero"]),
     ("M93_lock_alt_rate_constant", "FrequencyLock.lean", [(ALT_OLD, "def altU (_ : ℕ) (_ : Fin 2) : ℝ := Real.pi\n", 1)],
      ["probe_altU_not_constant"]),
+    # #41 note 1 (Researcher 001, 9fd50ba), numbered after DelayRoots' M95-M106: the wrong angle, the wrong period,
+    # and a time-varying unit rate
+    ("M107_lock_alt_rate_half_pi", "FrequencyLock.lean",
+     [(ALT_OLD, "def altU (n : ℕ) (_ : Fin 2) : ℝ := if n % 2 = 0 then Real.pi / 2 else 0\n", 1)],
+     ["probe_altU_values"]),
+    ("M108_lock_alt_rate_period_three", "FrequencyLock.lean",
+     [(ALT_OLD, "def altU (n : ℕ) (_ : Fin 2) : ℝ := if n % 3 = 0 then Real.pi else 0\n", 1)],
+     ["probe_altU_period_two"]),
+    ("M109_lock_unit_rate_time_varying", "FrequencyLock.lean",
+     [(UR_OLD, "def unitRate (n : ℕ) (_ : Fin 2) : ℝ := (n : ℝ) + 1\n", 1)],
+     ["probe_unitRate_constant"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -688,6 +701,9 @@ EQUIV_CONTROLS = [
     ("E15_motion_alphaE_t_window_reduced", "CoherenceMotion.lean", ae("Real.exp (-((1/100) / (15000 / 857)))")),
     # Phase lock: any nonzero constant rate is the same witness (numbered after c016's renumbered E12-E15)
     ("E16_lock_unit_rate_five", "FrequencyLock.lean", [(UR_OLD, "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 5\n", 1)]),
+    # #41 note 1: the same altU with the branches swapped must not be killed by probe_altU_values
+    ("E17_lock_alt_rate_branches_swapped", "FrequencyLock.lean",
+     [(ALT_OLD, "def altU (n : ℕ) (_ : Fin 2) : ℝ := if n % 2 = 1 then 0 else Real.pi\n", 1)]),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.

@@ -16,6 +16,7 @@ P6 (CoherenceMotion.lean, cycle 016) adds 11 statement mutants M59-M69 and 9 def
 52 + 34 = 86, 15 equivalence, 4 typo. P6 entries are selected by file and pinned in `test_lean_gate_c016.py`.
 Since the phase-lock rework (test_lean_gate_freqlock.py, numbered after P6): + M87-M91, M94 statement and
 M92, M93 definition mutants and the equivalence control E16 on FrequencyLock.lean: 58 + 36 = 94, 16 equivalence.
+The #41 note-1 follow-up adds M107-M109 (FrequencyLock definition mutants) and E17: 70 + 39 = 109, 17 equivalence.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -36,9 +37,9 @@ PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
 N_STATEMENT_MUTANTS = 70          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M59-M69 (P6) + M87-M91, M94 (lock) + M95-M106 (DelayRoots)
-N_DEF_MUTANTS = 36                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93 (lock)
+N_DEF_MUTANTS = 39                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93, M107-M109 (lock)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 106 (94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 109 (106 after DelayRoots; 94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
 P5_FILES = ("PhaseIncrement.lean", "PhaseCoherence.lean")
 P5_DEF_MUTANTS = [m for m in mc.DEF_MUTANTS if m[1] in P5_FILES]
 
@@ -210,7 +211,7 @@ def test_p5_mutants_shape_and_exact_count():
     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58, M59-M69
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
     assert len(P5_DEF_MUTANTS) == N_P5_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (106)
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (109)
     names = [m[0] for m in P5_DEF_MUTANTS]                              # the P5 entries, selected by file
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
@@ -245,8 +246,8 @@ def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():
 
 
 def test_controls_exist_with_exact_counts():
-    assert len(mc.EQUIV_CONTROLS) == 16 and len(mc.TYPO_CONTROLS) == 4 and len(mc.STATEMENT_CONTROLS) == 2
-    assert len([c for c in mc.EQUIV_CONTROLS if c[1] in P5_FILES]) == 10      # E1-E10 (P5); E11 is C014, E12-E15 P6, E16 lock
+    assert len(mc.EQUIV_CONTROLS) == 17 and len(mc.TYPO_CONTROLS) == 4 and len(mc.STATEMENT_CONTROLS) == 2
+    assert len([c for c in mc.EQUIV_CONTROLS if c[1] in P5_FILES]) == 10      # E1-E10 (P5); E11 is C014, E12-E15 P6, E16-E17 lock
     assert len([c for c in mc.TYPO_CONTROLS if c[1] in P5_FILES]) == 3        # T1-T3 (P5); T4 is P6
     eq = {n.split("_")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}
     ci_new = {k: eq[k][1][0][1] for k in ("E1", "E2", "E3")}

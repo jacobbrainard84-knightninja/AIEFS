@@ -1311,13 +1311,21 @@ both nodes) and `probe_unitRate_constant` (`unitRate 7 1 = unitRate 0 0`). A def
 node-dependent `altU` or a time-dependent `unitRate` now fails a value probe. They are added to `VP_FL`, which makes
 the equivalence and typo controls stricter; E16 (`unitRate := 5`) still stays not killed. M92/M93 keep their pins.
 
+Follow-up to Researcher 001's #41 note 1 (`9fd50ba`, 2026-11-17): those probes pin the *shape* of `altU` but not its
+*values*, so `altU` with `π/2` in place of `π` passed every probe. A third value probe, `probe_altU_values`
+(`altU 0 0 = π ∧ altU 1 0 = 0`), is added to `VP_FL`, and three definition mutants are registered, numbered after
+DelayRoots' M95–M106: M107 `altU` with `π/2` (`probe_altU_values`), M108 `altU` with period 3
+(`probe_altU_period_two`), and M109 `unitRate n = n + 1` (`probe_unitRate_constant`). Equivalence control E17 (`altU`
+with its branches swapped, `if n % 2 = 1 then 0 else π`) must NOT be killed.
+
 ### 14.4 Results (local, 2026-11-17, after the refresh onto `main` `ade1179` and the renumbering to M87–M94)
 
 `check_lean_gate.sh` (SKIP_CACHE=1): PASS, 869 project declarations audited (P6 included), build warnings 0,
 standard axioms only. `lean_mutation_check.py` full run: PASS, statement mutants rejected 58/58, definition mutants
 killed 36/36, total 94/94 (lock mutants M87–M94 all caught for the reasons in §14.3), equivalence controls not killed
-16/16 (E16 included), typo controls 4/4. pytest (`tools/ci/tests`, `research/lean_gate/tests`): 317 passed.
-Checkers and inventory: rc 0.
+16/16 (E16 included), typo controls 4/4. pytest (`tools/ci/tests`, `research/lean_gate/tests`): 317 passed at `0141601`, and 360 at the merged tip `9fd50ba`
+(which adds #40's study-path tests). Checkers and inventory: rc 0. The M107–M109 / E17 follow-up results are in
+§14.6.
 (At `a9e0a35`, before the refresh, 2026-11-15: 820 declarations, 47/47, 27/27, 74/74, 12/12, 3/3, pytest 299.
 At `e50102c`: 818 declarations, 46/46, 73/73.)
 
@@ -1329,6 +1337,15 @@ At `e50102c`: 818 declarations, 46/46, 73/73.)
   steps; the error factor `α^k` itself is `≤ 1/2` from `k = 1214`. The test reads `dt` and the ω list from the engine
   source (N4). This is a rate, not a claim about any run.
 * Exact reals; not float64 or the Python code. `AUD-RATELAW stays UNEXPLAINED`.
+
+### 14.6 Results of the #41 note-1 follow-up (local, 2026-11-17, on `main` `c9863e1`)
+
+`check_lean_gate.sh` (SKIP_CACHE=1): PASS, 894 project declarations audited (`probe_altU_values` added), build
+warnings 0, standard axioms only. `lean_mutation_check.py` full run: PASS, statement mutants rejected 70/70,
+definition mutants killed 39/39 (M107 killed by `probe_altU_values`, M108 by `probe_altU_period_two`, M109 by
+`probe_unitRate_constant`), total 109/109, equivalence controls not killed 17/17 (E17 included), typo controls 4/4.
+(The mutation run came before one doc-comment line in `FrequencyLock.lean` was rewrapped to fix a
+line-length warning. The rewrap changes no code, and the gate above ran after it.)
 
 ## 15. DelayRoots (branch `research/lean-gate-delay-roots`, from `main` `871417d`; merge-refreshed on 2026-11-17 onto `main` `16c7893`, which contains P6 (#39, §13) and the frequency lock (#41, §14); numbered after both)
 
