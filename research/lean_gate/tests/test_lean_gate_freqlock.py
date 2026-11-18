@@ -24,7 +24,7 @@ THEOREMS = ["input_step_of_common_increment", "coherenceInput_constant_of_period
             "coherenceTrace_norm_of_pairLock", "reported_of_pairLock", "probe_unitRate_nonzero",
             "pairLock_nonzero_rate", "common_rate_input_not_constant", "common_rate_input_ne_zero",
             "periodic_rate_input_constant", "probe_altU_not_constant", "probe_altU_period_two",
-            "probe_unitRate_constant", "nonperiodic_rate_refuted",
+            "probe_unitRate_constant", "probe_altU_values", "nonperiodic_rate_refuted",
             "probe_pairLock_one_step", "pairLock_factor_two_refuted", "pairLock_norm_factor_two_refuted",
             "half_lock_refuted", "delay_start_refuted"]
 PRINTED = [t for t in THEOREMS if t != "common_rate_input_ne_zero"]
@@ -96,14 +96,17 @@ def test_mutants_registered():
     st = [m for m in mc.MUTANTS if m[1] == "FrequencyLock.lean"]
     de = [m for m in mc.DEF_MUTANTS if m[1] == "FrequencyLock.lean"]
     assert [m[0].split("_")[0] for m in st] == ["M87", "M88", "M89", "M90", "M91", "M94"]
-    assert [m[0].split("_")[0] for m in de] == ["M92", "M93"]
+    assert [m[0].split("_")[0] for m in de] == ["M92", "M93", "M107", "M108", "M109"]
     for name, f, thm, edits, closure, term, _ in st:
         assert mc.mutate(SRC, thm, edits) != SRC, name               # edit inside that statement only
         assert term.startswith("FrequencyLock.") and "_refuted (@H " in term, name
     for name, f, edits, pins in de:
         assert mc.mutate_file(SRC, edits) != SRC and set(pins) <= set(mc.VALUE_PROBES[f]), name
     eq = [c for c in mc.EQUIV_CONTROLS if c[1] == "FrequencyLock.lean"]
-    assert [c[0].split("_")[0] for c in eq] == ["E16"] and mc.mutate_file(SRC, eq[0][2]) != SRC
+    assert [c[0].split("_")[0] for c in eq] == ["E16", "E17"]
+    assert all(mc.mutate_file(SRC, c[2]) != SRC for c in eq)
+    m107 = [m for m in de if m[0].startswith("M107")][0]
+    assert m107[3] == ["probe_altU_values"] and "Real.pi / 2" in m107[2][0][1]   # #41 note 1
 
 
 def engine_constants():
