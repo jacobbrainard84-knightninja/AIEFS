@@ -1,0 +1,9 @@
+import AIEFGateCore.NeutralProjection
+#print axioms AIEFGate.NeutralProjection.conserved_step
+#print axioms AIEFGate.NeutralProjection.conserved_evolve
+#print axioms AIEFGate.NeutralProjection.projection_step
+#print axioms AIEFGate.NeutralProjection.projection_uniform
+#print axioms AIEFGate.NeutralProjection.phase_only_counterexample
+
+#print axioms AIEFGate.NeutralProjection.projection_evolve
+#print axioms AIEFGate.NeutralProjection.uniform_reached_projection
