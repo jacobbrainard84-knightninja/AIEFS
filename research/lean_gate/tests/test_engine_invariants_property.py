@@ -25,9 +25,19 @@ delay_steps * dt. alpha out of (0, 1] cannot be produced by a config that passes
 not tested as a rejection.
 
 test_negative_controls applies 11 one-line mutants to a temporary copy of the engine (the locked file is never edited)
-and requires each to break at least one invariant, so a vacuous checker would fail CI. Two further mutants
-(B_sym_dropped, B_diag_kept) are equivalent in valid states, with the reason written next to EQUIVALENT, and
-test_equivalent_mutants_survive pins that they give bit-identical trajectories.
+and requires each to break at least one invariant, so a vacuous checker would fail CI. Not all of those kills are
+ours: 4 of the 11 are stopped by the engine's own RuntimeError self-checks (state.validate, or advance_state's
+internal "Gap projection failed" check) before any assert here can fire; test_negative_control_kill_source pins which ones, so the count of kills by these invariants is not overstated.
+
+Two further mutants (B_sym_dropped, B_diag_kept) are equivalent ONLY ON ENGINE-REACHABLE STATES (states built by
+initialize_state / advance_state / apply_intervention, where B is exactly symmetric with an exactly zero diagonal).
+They are NOT equivalent on every state validate accepts: validate tolerates asymmetry and diagonal entries up to
+FROZEN_ZERO_TOL = 1e-12, and from such starting states both mutants are caught (test_equivalent_only_on_reachable).
+
+One more mutant, projection_scale_uncapped (drop min(1, .) from the projection scale), is NOT equivalent but survives
+every random case: an entry is scaled by min(s_i, s_j) <= s_i, so each row still ends at or under capacity and the gap
+invariant holds; what changes is that entries between two under-capacity rows get scaled UP. No invariant above looks
+at that, so test_projection_never_increases_entries is a targeted case that kills it.
 """
 import importlib.util
 import math
@@ -150,7 +160,13 @@ def test_coherence_bound_is_conditional():
 
 
 def test_initial_gap_not_enforced():
-    """Documented engine fact: initialize_state scales B by B_init_scale without the gap projection."""
+    """Documented engine fact: initialize_state scales B by B_init_scale without the gap projection.
+
+    The gap holds at init only for small enough B_init_scale (it holds at the production config; R001 saw it break from
+    0.1 up). The Lean files assume the start condition (or T >= 1), so they are consistent with this. Known doc issue,
+    for a separate doc branch: research/freezing/REPORT.md says "the engine init satisfies it" without that
+    qualifier; that is true only at the production config.
+    """
     import dataclasses
     c = dataclasses.replace(eng.DEFAULT_MODEL_CONFIG, B_init_scale=2.0)
     c.validate()
@@ -204,8 +220,9 @@ MUTANTS = [
 ]
 
 
-# Equivalent mutants: these lines are redundant in a valid state, so the invariants CANNOT catch them, and that is
-# correct, not a gap. test_equivalent_mutants_survive pins it, so a future engine change that makes them matter shows up.
+# Mutants equivalent on ENGINE-REACHABLE states (not on every validate-accepted state; see the module docstring and
+# test_equivalent_only_on_reachable). On reachable states these lines are redundant, so the invariants cannot catch
+# them there. test_equivalent_mutants_survive pins that, so a future engine change that makes them matter shows up.
 #  B_sym_dropped: B and R are exactly symmetric, and B + dt((eta+mu)R - mu - gamma B) does the same float operations on
 #    equal inputs at (i, j) and (j, i), so the sum is already exactly symmetric.
 #  B_diag_kept: B_ii = R_ii = 0, so the diagonal update is -dt*mu <= 0 (mu >= 0 by validate), and the max(., 0) clip
@@ -251,3 +268,83 @@ def test_equivalent_mutants_survive(tmp_path, name, old, new):
     for k in range(20):
         a, b = run_case(SEED + 1000 * k, m=mod, branches=False), run_case(SEED + 1000 * k, branches=False)
         assert np.array_equal(a.B, b.B) and np.array_equal(a.theta, b.theta), f"{name} is not equivalent (case {k})"
+
+
+# Which negative controls are stopped by the engine's own self-checks (RuntimeError from state.validate) rather than
+# by an assert in this file. Measured at main 8b49f15; a change here means the kill source moved.
+ENGINE_SELF_CHECK_KILLS = {"clip_dropped", "projection_dropped", "history_never_pops", "intervention_no_sym"}
+
+
+@pytest.mark.parametrize("name,old,new", MUTANTS, ids=[x[0] for x in MUTANTS])
+def test_negative_control_kill_source(tmp_path, name, old, new):
+    mod = _load_mutant(tmp_path, name, old, new)
+    for k in range(20):
+        try:
+            run_case(SEED + 1000 * k, m=mod)
+        except RuntimeError:
+            assert name in ENGINE_SELF_CHECK_KILLS, f"{name}: now killed by an engine self-check"
+            return
+        except (AssertionError, ValueError, FloatingPointError):
+            assert name not in ENGINE_SELF_CHECK_KILLS, f"{name}: now killed by our asserts"
+            return
+    pytest.fail(f"mutant {name} survived 20 random cases")
+
+
+def _reachable_start():
+    import dataclasses
+    c = dataclasses.replace(eng.DEFAULT_MODEL_CONFIG, mu=0.0)
+    c.validate()
+    return c
+
+
+@pytest.mark.parametrize("name,old,new", EQUIVALENT, ids=[x[0] for x in EQUIVALENT])
+def test_equivalent_only_on_reachable(tmp_path, name, old, new):
+    """Off-reachable but validate-accepted starts (5e-13 asymmetry / 5e-13 diagonal, mu = 0) catch both mutants."""
+    mod = _load_mutant(tmp_path, name, old, new)
+    c = _reachable_start()
+    for m, should_fail in ((eng, False), (mod, True)):
+        s = m.initialize_state(0, c)
+        if name == "B_sym_dropped":
+            s.B[0, 1] += 5e-13
+        else:
+            s.B[0, 0] = 5e-13
+        s.validate(c)                                     # validate accepts the perturbed start
+        m.advance_state(s, c, np.random.default_rng(SEED))
+        if should_fail:
+            with pytest.raises(AssertionError):
+                check_state(s, c, m)
+        else:
+            check_state(s, c, m)                          # the real engine cleans it up in one step
+
+
+PROJECTION_SCALE_UNCAPPED = (
+    "projection_scale_uncapped",
+    "        scale = np.minimum(1.0, config.capacity / (row_sum_pre + config.scale_epsilon))\n",
+    "        scale = config.capacity / (row_sum_pre + config.scale_epsilon)\n")
+
+
+def _projection_case(m):
+    """eta = mu = gamma = 0, so B_unprojected == B; rows 2, 3 are over capacity, rows 0, 1 are under it."""
+    import dataclasses
+    c = dataclasses.replace(eng.DEFAULT_MODEL_CONFIG, eta=0.0, mu=0.0, gamma=0.0)
+    c.validate()
+    s = m.initialize_state(0, c)
+    cap = c.capacity
+    B = np.zeros((c.N, c.N))
+    B[0, 1] = B[1, 0] = 0.1 * cap
+    B[2, 3] = B[3, 2] = 2.0 * cap
+    s.B = B
+    s.validate(c)
+    _, _, info = m.advance_state(s, c, np.random.default_rng(SEED))
+    assert info["projection_active"] or info["pre_violation"]
+    check_state(s, c, m)                                   # all invariants, gap included, hold for BOTH engines
+    return B, s.B
+
+
+def test_projection_never_increases_entries(tmp_path):
+    old, new = _projection_case(eng)
+    assert np.all(new <= old), "projection increased an entry"
+    assert new[0, 1] == old[0, 1], "entry between two under-capacity rows changed"
+    mod = _load_mutant(tmp_path, *PROJECTION_SCALE_UNCAPPED)
+    old, new = _projection_case(mod)                       # gap still holds (see docstring) ...
+    assert new[0, 1] > 5 * old[0, 1]                       # ... but the under-capacity pair was scaled UP
