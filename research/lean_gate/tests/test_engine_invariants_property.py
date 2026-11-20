@@ -6,7 +6,8 @@ the real, SHA-256-locked aief_experiment_engine_v1.py on a few hundred random VA
 analysis rely on:
 
   I1  state.validate passes (history length delay_steps + 1, shapes, finiteness, B symmetric/zero-diag/nonneg).
-  I2  theta == history[-1] exactly, theta in [0, 2 pi).
+  I2  theta == history[-1] exactly, theta in [0, 2 pi] -- CLOSED at 2 pi: np.mod(x, 2 pi) returns exactly 2 pi for a
+      tiny negative x (float rounding), so [0, 2 pi) is not an engine invariant (test_mod_can_return_two_pi).
   I3  B exactly symmetric, diagonal exactly 0, B >= 0; after every advance_state also the gap
       a - q * rowsum >= delta - FROZEN_GAP_TOL. initialize_state does NOT enforce the gap: with a large B_init_scale the
       initial B can violate it until the first step projects it (test_initial_gap_not_enforced). At the production
@@ -72,7 +73,7 @@ def check_state(state, c, m=eng, gap=True):
     state.validate(c)                                                        # I1
     assert len(state.history) == c.delay_steps + 1
     assert np.array_equal(state.theta, state.history[-1]), "theta != history[-1]"   # I2
-    assert np.all(state.theta >= 0.0) and np.all(state.theta < TWO_PI)
+    assert np.all(state.theta >= 0.0) and np.all(state.theta <= TWO_PI)
     assert np.array_equal(state.B, state.B.T), "B not exactly symmetric"   # I3
     assert np.all(np.diag(state.B) == 0.0) and np.all(state.B >= 0.0)
     if gap:
@@ -159,6 +160,11 @@ def test_initial_gap_not_enforced():
     assert np.min(c.a - c.q * np.sum(s.B, axis=1)) >= c.delta - eng.FROZEN_GAP_TOL   # projected after one step
     p = eng.initialize_state(0, eng.DEFAULT_MODEL_CONFIG)
     check_state(p, eng.DEFAULT_MODEL_CONFIG)                                 # production init satisfies it
+
+
+def test_mod_can_return_two_pi():
+    """Why I2 is closed at 2 pi: the engine wraps with np.mod, which rounds a tiny negative phase up to 2 pi."""
+    assert np.mod(-1e-20, TWO_PI) == TWO_PI
 
 
 def test_seed_determinism_bit_exact():                                       # I8
