@@ -5,6 +5,10 @@ Truthfulness hardening plan (2026-11-20), item H3 + AGREED REVISION: stdlib only
 It is NOT a CI gate and is not wired into any workflow. research/engine_guards and the SHA-locked engine are out
 of scope, and the tool never edits the working tree: every mutant is written into a scratch `git clone` of the
 repository (default under /tmp) and that clone is reset (git checkout + git clean) after each mutant.
+Clone-location guard (F1, 2026-11-20 audit): --repo and the clone path (<work>/clone) are realpath-resolved FIRST and
+the run is refused (exit 2) when they are equal or either lies inside the other. An existing <work>/clone is deleted
+only if it carries the marker file .git/H3_MUTATION_CLONE that this tool writes into every clone it creates;
+anything else is refused (exit 2), never removed.
 
     unshare -rn python3 research/hardening/py_mutation_check.py --out /path/report.json   # all default targets
     python3 research/hardening/py_mutation_check.py --target tools/ci/check_modes.py --max-per-file 10
@@ -53,11 +57,11 @@ DEFAULT_TARGETS = [
     "tools/ci/check_study_paths.py", "tools/ci/hygiene_scan.py", "tools/ci/lint_claims.py",
     "audits/engineering/verify_inventory_current.py", "research/lean_gate/spec_results_line.py",
 ]
-# tools/redteam holds red-team suites that are NOT run by CI (2026-11-20); --ci-tests-only drops it so the report
-# can show the kill rate of the CI-run tests separately.
-TEST_DIRS = ["tools/ci/tests", "research/lean_gate/tests", "research/hardening/tests", "audits/engineering/tests",
-             "tools/redteam"]
-CI_TEST_DIRS = TEST_DIRS[:-1]
+# CI_TEST_DIRS is exactly what .github/workflows/repo-checks.yml runs (2026-11-20): `unittest discover -s tools/ci/tests`
+# and `pytest research/lean_gate/tests` (tests/ and tests_modular/ are engine/platform suites, not checker tests).
+# The other dirs (incl. tools/redteam) are NOT run by CI; --ci-tests-only restricts the tests signal to CI_TEST_DIRS.
+CI_TEST_DIRS = ["tools/ci/tests", "research/lean_gate/tests"]
+TEST_DIRS = CI_TEST_DIRS + ["research/hardening/tests", "audits/engineering/tests", "tools/redteam"]
 OUT_OF_SCOPE = ("research/engine_guards/", "aief_experiment_engine_v1.py", "Pinned/", "lean/AIEFProofs", "AIEFFreezeCore")
 
 ERRORISH = re.compile(r"err|problem|fail|bad|issue|viol|missing|mismatch|stale|finding|unexpected|wrong", re.I)
@@ -290,6 +294,44 @@ def good_bad(rel: str) -> tuple[list[str], list[tuple[str, object]]]:
 
 # ---------------------------------------------------------------------------------------------- driver
 
+CLONE_MARKER = "H3_MUTATION_CLONE"   # written into <clone>/.git/ (git clean never touches .git)
+
+
+class Refused(Exception):
+    """A clone location that could touch the source tree or a directory this tool did not create."""
+
+
+def _inside(child: str, parent: str) -> bool:
+    return child != parent and os.path.commonpath([child, parent]) == parent
+
+
+def prepare_clone(repo: str, work: str) -> Path:
+    """Resolve paths, refuse unsafe layouts, remove only a previous clone of OURS, then clone repo -> <work>/clone."""
+    repo_r = os.path.realpath(repo)
+    root_r = os.path.realpath(os.path.join(work, "clone"))
+    if root_r == repo_r:
+        raise Refused(f"clone path {root_r} is the source repository")
+    if _inside(root_r, repo_r):
+        raise Refused(f"clone path {root_r} is inside the source repository {repo_r}")
+    if _inside(repo_r, root_r):
+        raise Refused(f"source repository {repo_r} is inside the clone path {root_r}")
+    root = Path(root_r)
+    if os.path.lexists(root_r):
+        if os.path.islink(os.path.join(work, "clone")) or not root.is_dir() \
+                or not (root / ".git" / CLONE_MARKER).is_file():
+            raise Refused(f"{root_r} exists and is not a clone made by this tool (no .git/{CLONE_MARKER}); "
+                          f"not deleting it")
+        shutil.rmtree(root_r)
+    os.makedirs(os.path.dirname(root_r), exist_ok=True)
+    subprocess.run(["git", "clone", "-q", "--local", repo_r, root_r], check=True)
+    (root / ".git" / CLONE_MARKER).write_text("created by research/hardening/py_mutation_check.py\n", encoding="utf-8")
+    return root
+
+
+def pytest_available(py: str = None) -> bool:
+    return subprocess.run([py or PY, "-c", "import pytest"], capture_output=True).returncode == 0
+
+
 def reset_clone(root: Path):
     subprocess.run(["git", "-C", str(root), "checkout", "-q", "-f", "--", "."], check=True)
     subprocess.run(["git", "-C", str(root), "reset", "-q"], check=True)
@@ -355,6 +397,8 @@ def run_target(root: Path, rel: str, signals: list[Signal], cap: int, seed: int,
             res["signals"].append({"signal": s.name, "baseline_rc": rc, "seconds": round(dt, 1)})
         else:
             res["dropped_signals"].append({"signal": s.name, "why": f"baseline rc={rc}", "tail": tail[-400:]})
+            print(f"WARNING: {rel}: signal '{s.name}' DROPPED (baseline rc={rc}); its kills are not counted",
+                  file=sys.stderr)
     src = original.decode("utf-8")
     allm = enumerate_mutants(src)
     chosen = sample(allm, cap, seed)
@@ -389,7 +433,11 @@ def run_target(root: Path, rel: str, signals: list[Signal], cap: int, seed: int,
     res["killed"], res["survived"] = k, sv
     res["timeout"] = sum(x["outcome"] == "timeout" for x in res["mutants"])
     res["error"] = sum(x["outcome"] == "error" for x in res["mutants"])
-    res["kill_rate"] = round(k / (k + sv), 3) if k + sv else None
+    # One denominator (N2): a timeout is DETECTED (the mutant hangs a signal); errors (non-compiling) are excluded.
+    # detected_rate = (killed + timeout) / (killed + timeout + survived).
+    det = k + res["timeout"]
+    res["detected"] = det
+    res["kill_rate"] = round(det / (det + sv), 3) if det + sv else None
     return res
 
 
@@ -412,13 +460,16 @@ def main(argv=None) -> int:
         if any(x in t for x in OUT_OF_SCOPE):
             print(f"refusing out-of-scope target {t}", file=sys.stderr)
             return 2
+    if not pytest_available():
+        print(f"ERROR: {PY} cannot import pytest; the tests signal would be silently dropped. "
+              f"Run with an interpreter that has pytest.", file=sys.stderr)
+        return 2
     work = Path(a.work or tempfile.mkdtemp(prefix="h3_mut_"))
-    root = work / "clone"
-    if root.exists():
-        shutil.rmtree(root)
-    subprocess.run(["git", "clone", "-q", "--local", a.repo, str(root)], check=True)
-    if Path(a.repo).resolve() == root.resolve():
-        raise SystemExit("clone equals source")
+    try:
+        root = prepare_clone(a.repo, str(work))
+    except Refused as e:
+        print(f"ERROR: refusing: {e}", file=sys.stderr)
+        return 2
     gcfg = work / "gitconfig"
     gcfg.write_text("[user]\n\tname = H3 mutation clone\n\temail = h3@localhost.invalid\n", encoding="utf-8")
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1", GIT_CONFIG_GLOBAL=str(gcfg), GITHUB_ACTIONS="")
@@ -426,7 +477,8 @@ def main(argv=None) -> int:
     reset = lambda: reset_clone(root)  # noqa: E731
     report = {"repo_head": subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True,
                                           text=True).stdout.strip(),
-              "seed": a.seed, "max_per_file": a.max_per_file, "targets": []}
+              "seed": a.seed, "max_per_file": a.max_per_file, "timeout": a.timeout, "ci_tests_only": a.ci_tests_only,
+              "argv": list(sys.argv[1:] if argv is None else argv), "python": PY, "targets": []}
     prev = None
     if a.rescore:
         prev = {t["target"]: {m["id"] for m in t.get("mutants", []) if m["outcome"] == "survived"}
@@ -453,6 +505,8 @@ def main(argv=None) -> int:
         if a.out:
             Path(a.out).write_text(json.dumps(report, indent=1), encoding="utf-8")
     tot = {k: sum(t.get(k, 0) for t in report["targets"]) for k in ("killed", "survived", "timeout", "error")}
+    det = tot["killed"] + tot["timeout"]
+    tot["detected_rate"] = round(det / (det + tot["survived"]), 3) if det + tot["survived"] else None
     report["totals"] = tot
     if a.out:
         Path(a.out).write_text(json.dumps(report, indent=1), encoding="utf-8")
