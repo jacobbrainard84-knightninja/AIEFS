@@ -1602,7 +1602,27 @@ Local, 2026-11-20, on `main` `63e06d7` plus `5ee0db3`: `SKIP_CACHE=1 ./check_lea
 killed, **142/142 total**, 21/21 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
 pytest 381 passed; all repository checkers rc 0 after the inventory rebuild.
 
-After pre-read P1 (M143–M145, `probe_tdelta_values`), local, 2026-11-20, on `ea96f55`: gate PASS, 0 warnings,
-**979 declarations**, standard axioms only. Full unfiltered mutation run: **84/84 statement** mutants rejected,
+After pre-read P1 (M143–M145, `probe_tdelta_values`), local, 2026-11-20, committed as `0602c77`; sentence written by
+`spec_results_line.py` (§18) from the run logs: Gate PASS at `ea96f55` plus 2 uncommitted files (the P1 Lean change
+and its SHA256SUMS, committed unchanged in `0602c77`), 0 warnings, **979 declarations**, standard axioms only. Full
+unfiltered mutation run: **84/84 statement** mutants rejected (1 flagged with a name-reference/parse error line),
 **61/61 definition** mutants killed, **145/145 total**, 21/21 equivalence controls not killed, 4/4 typo controls
 flagged invalid, RESULT PASS. pytest 381 passed.
+
+## 18. Results sentences from logs, and pin consistency (H7, truthfulness hardening)
+
+Hand-typed results sentences drift from what was run. From here on, a results sentence in this SPEC is written by
+`research/lean_gate/spec_results_line.py --mut <mutation log> --gate <.check_logs/<utc>/summary.txt> --pytest <n>`.
+It reads only the summary lines. It prints `NOT A PASS: …` (exit 1) when any count is short, a RESULT is not PASS, the
+mutation run was filtered (`AIEF_MUT_ONLY`) or the gate had warnings. A gate run on an uncommitted tree is written as
+`<sha> plus N uncommitted files`, never as the bare sha. The script never runs Lean or the mutation check.
+
+`research/lean_gate/tests/test_spec_results_and_pins.py` checks that:
+* every mutant number named in this SPEC, `lean/AIEFGateCore/README.md` and the docstring of `lean_mutation_check.py`
+  exists in the code;
+* every mutant in the code is named in this SPEC and the README;
+* the latest statement, definition, total, equivalence and typo counts in this SPEC equal the list sizes in the code;
+* the script's output is exact on a fixture and refuses short, failed, filtered or malformed runs.
+
+**Not covered:** the declaration count and pytest count are not checked against a fresh run (that needs Lean in the
+test), and the per-file attribution of each mutant range is checked only by the per-port tests.
