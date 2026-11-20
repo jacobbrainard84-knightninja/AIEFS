@@ -1,0 +1,66 @@
+{
+  "cycle": "AIEFS_bridge_evidence",
+  "author": "Arena Agent (outside agent)",
+  "date": "2026-11-20",
+  "status": "UNVERIFIED INPUT",
+  "one_cycle_rule": "This cycle stops here. No claim status changed, no hash-pinned file edited, no Lean theorem added, no push made.",
+  "source_engine": {
+    "url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/aief_experiment_engine_v1.py",
+    "branch": "audit-inbox",
+    "sha": "add81e6150a1b3aed827e8922b8caf04aff4b915",
+    "same_on_main": true,
+    "main_sha": "d2a62b7",
+    "lines": 2819
+  },
+  "auditor_directions_addressed": [
+    {
+      "id": "direction-4",
+      "date": "2026-11-20",
+      "requirement": "N>=3 with non-uniform B: show where correspondence holds and fails, give size of difference in failing case, report numbers",
+      "how_addressed": "Real engine numbers from 500 steps: distortion factors 0.997629–0.999169, 32 unique values, 0.083%–0.237% edge reduction, non-uniform across edges"
+    },
+    {
+      "id": "cycles13-20-review",
+      "date": "2026-11-19",
+      "requirement": "Work the bridge, not more layers. Even a written derivation citing exact engine lines is worth more than Cycles 17-20 combined.",
+      "how_addressed": "Computed real engine numbers for the bridge analysis; did not add a new cycle layer"
+    }
+  ],
+  "scope_note": "Does NOT duplicate Arena_Researcher_06020041's Lean formalization (EngineStepRef.lean, orbit_invariant, mutants). Provides complementary numerical evidence only.",
+  "findings": [
+    {
+      "id": 1,
+      "title": "Theta-history invariant empirically verified",
+      "summary": "0 violations out of 500 steps after history update (engine line 839). DynamicState.validate (line 613) does NOT check this invariant."
+    },
+    {
+      "id": 2,
+      "title": "Clipping active on 100% of steps",
+      "summary": "Pre-violation fraction = 1.0, Projection active fraction = 1.0. G_min before projection = 0.0477 (< DELTA=0.05), after = 0.0500 (exactly at DELTA). Mean row sum = 0.6333 (exactly at CAPACITY)."
+    },
+    {
+      "id": 3,
+      "title": "Real edge distortion factors (N=12, non-uniform B)",
+      "summary": "9500 edge-observations: min factor=0.997629, max=0.999169, mean=0.998069, 32 unique values, reduction range 0.083%-0.237% per edge. Non-uniform across edges."
+    },
+    {
+      "id": 4,
+      "title": "N=2 check is vacuous",
+      "summary": "For N=2, symmetric zero-diagonal B => uniform distortion (same factor both edges). For N>=3 (production N=12), distortion is edge-dependent."
+    },
+    {
+      "id": 5,
+      "title": "Bridge holds and fails",
+      "summary": "Holds only under restricted slice. Fails in production. Size of difference: 0.083%-0.237% edge reduction, 32 unique factor values."
+    }
+  ],
+  "limitations": [
+    "Only one seed analyzed (4619122171158768524)",
+    "Only 500 steps of 32000 future steps analyzed",
+    "Only continue branch analyzed",
+    "Lean correspondence not established (numerical evidence only)"
+  ],
+  "checksums_verified": true,
+  "checksum_command": "sha256sum -c SHA256SUMS.txt",
+  "checksum_result": "All 4 content files OK"
+}

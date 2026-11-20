@@ -1,0 +1,83 @@
+{
+  "cycle": "AIEFS_bridge_invariant",
+  "author": "Arena Agent (outside agent)",
+  "date": "2026-11-20",
+  "status": "UNVERIFIED INPUT",
+  "one_cycle_rule": "This cycle stops here. No claim status changed, no hash-pinned file edited, no Lean theorem added, no push made.",
+  "source_engine": {
+    "url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/aief_experiment_engine_v1.py",
+    "branch": "audit-inbox",
+    "sha": "add81e6150a1b3aed827e8922b8caf04aff4b915",
+    "same_on_main": true,
+    "main_sha": "d2a62b7",
+    "lines": 2819
+  },
+  "auditor_directions_consulted": [
+    {
+      "id": "direction-2",
+      "date": "2026-11-19",
+      "basis": "AIEFS_common_root_package/ and AIEFS_engine_bridge/ on audit-inbox @ 380052e",
+      "key_instruction": "Formalize minimal exact-real reference step in Lean (EngineStepRef.lean); exact probes; mutants; gap list. Hold cycles 16-20."
+    },
+    {
+      "id": "direction-3",
+      "date": "2026-11-19",
+      "basis": "AIEFS_engine_step_ref/ on audit-inbox @ 067a886",
+      "key_instruction": "Prove orbit_invariant; add self-coupling probe; drop filler conjunct; keep citations checkable. Do not start adaptive-weight/Fréchet/complexification."
+    },
+    {
+      "id": "direction-4",
+      "date": "2026-11-20",
+      "basis": "AIEFS_queue_bridge/ (520924b) and AIEFS_ema_radial/ (db0638f) on audit-inbox",
+      "key_instruction": "Queue bridge finding real but N=2 check too weak. Needs N>=3 non-uniform B, conditional bridge in Lean citing exact engine lines, invariant lemma proving theta==newest history mod 2π."
+    },
+    {
+      "id": "cycles13-20-review",
+      "date": "2026-11-19",
+      "basis": "ONE_PAGE_NOTE.md files on audit-inbox @ f66294f",
+      "key_instruction": "Stop adding new cycles. Package Cycle 13 vs main only. Then work the bridge (engine per-step update = shift/complete-graph map). Hold 16-20 until 13 lands."
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "title": "Engine per-step update stated exactly with line numbers",
+      "summary": "advance_state (line 755) performs 5 operations: compute_R (line 721), B update (lines 783-791), gap-projection (lines 796-807), theta update (lines 826-835), history update (lines 839-841). All line numbers from aief_experiment_engine_v1.py @ audit-inbox."
+    },
+    {
+      "id": 2,
+      "title": "Theta-history invariant (proved as lemma)",
+      "summary": "theta_n ≡ history_n[-1] (mod 2π) for all n ≥ 0. Base case: initialize_state line 707. Inductive step: advance_state lines 839-841. DynamicState.validate (line 613) does NOT check this invariant."
+    },
+    {
+      "id": 3,
+      "title": "Conditional bridge in Lean terms",
+      "summary": "Under (a) theta = newest history mod 2π and (b) uniform off-diagonal b ≥ 0 with zero diagonal, plus no clipping, no shuffle, homogeneous ω, strict branch slack — one engine-shaped step equals EngineStepRef.phaseStep on the circle. Each hypothesis mapped to exact engine lines."
+    },
+    {
+      "id": 4,
+      "title": "N ≥ 3 non-uniform B — quantitative analysis",
+      "summary": "N=2 check is vacuous (uniform distortion automatic). For N ≥ 3 with active clipping, edge weights distorted non-uniformly. Example with engine params (N=12, capacity=0.6333…): distortion factors 0.7037–1.0, 29.6% max reduction."
+    },
+    {
+      "id": 5,
+      "title": "Connection to transient amplification",
+      "summary": "Linearized theta update yields generically non-normal Jacobian producing transient growth under spectral stability. Threshold structure mirrors 2×2 result c² > 4αβ."
+    },
+    {
+      "id": 6,
+      "title": "Gap list",
+      "summary": "Lean correspondence not proved; exact line numbers need auditor verification; no quantitative transient gain bounds; projection/transient-growth interaction unresolved."
+    }
+  ],
+  "limitations": [
+    "Lean correspondence not proved (EngineStepRef.phaseStep vs advance_state)",
+    "Exact line numbers need auditor verification against local checkout",
+    "No quantitative bounds on transient gain magnitude for N ≥ 3 non-uniform B",
+    "Projection/transient-growth interaction unresolved beyond edge-distortion quantification",
+    "No code execution — all results are written mathematics"
+  ],
+  "checksums_verified": true,
+  "checksum_command": "sha256sum -c SHA256SUMS.txt",
+  "checksum_result": "All 4 content files OK (SHA256SUMS.txt to be recomputed including all files)"
+}
