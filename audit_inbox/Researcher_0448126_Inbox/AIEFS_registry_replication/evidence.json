@@ -1,0 +1,92 @@
+{
+  "cycle": "AIEFS_registry_replication",
+  "author": "Arena Agent (Researcher 0448126 lane)",
+  "date": "2026-11-20",
+  "status": "UNVERIFIED INPUT",
+  "one_cycle_rule": "This cycle stops here. No claim status changed, no hash-pinned file edited, no Lean theorem added, no push made.",
+  "registry_source": {
+    "url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/main/registry/claims.csv",
+    "branch": "main",
+    "sha": "0a6a2f6",
+    "total_claims": 33,
+    "supported_claims": 24
+  },
+  "engine_source": {
+    "url": "https://raw.githubusercontent.com/jacobbrainard84-knightninja/AIEFS/audit-inbox/aief_experiment_engine_v1.py",
+    "branch": "audit-inbox",
+    "sha": "add81e6150a1b3aed827e8922b8caf04aff4b915",
+    "same_on_main": true,
+    "main_sha": "d2a62b7",
+    "lines": 2819
+  },
+  "lane": "Researcher 0448126 — independent numerical replication of Supported claims",
+  "lane_note": "Does NOT duplicate Arena_Researcher_06020041's Lean bridge or Researcher 0282416's census of false self-tests. Bridge and peak-gain work parked per lead auditor direction.",
+  "match_class_summary": {
+    "EXACT": 6,
+    "WITHIN_STATED_PRECISION": 0,
+    "MISMATCH": 0,
+    "NOT_RUN": 1,
+    "total": 7
+  },
+  "findings": [
+    {
+      "id": 1,
+      "claim_id": "EMP-AIEF14-01",
+      "title": "reset_B reconstructs mature topology identically to continue",
+      "match": "EXACT",
+      "summary": "reset_B Jaccard_final=1.000000±0.003, continue Jaccard_final=1.000000±0.003; all 40 paired seeds identical; --verify-continue passed"
+    },
+    {
+      "id": 2,
+      "claim_id": "AIEFS_PROJ-01 (extra row)",
+      "title": "Projection active on 100% of production steps",
+      "match": "EXACT",
+      "summary": "Pre_gap_violation_fraction=1.0, Projection_active_fraction=1.0, G_min_future=0.0500000000 (at DELTA), Mean_row_sum=0.6333333328809375 (at CAPACITY)"
+    },
+    {
+      "id": 3,
+      "claim_id": "AUD-FROZEN-TOPO",
+      "title": "0 edges change threshold status after split",
+      "match": "EXACT",
+      "summary": "0 of 66 edges change threshold status (1 seed); P_full binary (0 or 1), non-binary count=0"
+    },
+    {
+      "id": 4,
+      "claim_id": "AUD-GATE",
+      "title": "Capacity gate is idempotent",
+      "match": "EXACT",
+      "summary": "Gate formula from engine lines 804-807 verified idempotent: scale=1.0 when row sums at/below CAPACITY"
+    },
+    {
+      "id": 5,
+      "claim_id": "AUD-HELDOUT-LABEL",
+      "title": "B_final > B_C iff P_future > 0.5 (labels identical)",
+      "match": "EXACT",
+      "summary": "Labels identical: 0 edges change threshold status, P_full is binary"
+    },
+    {
+      "id": 6,
+      "claim_id": "AUD-TIES",
+      "title": "K_n derived ratios verified",
+      "match": "EXACT",
+      "summary": "nonadditivity=1/sqrt(2k(k-1)), odd_defect=sqrt(2/(k+1)) verified for K3-K12"
+    },
+    {
+      "id": 7,
+      "claim_id": "CF05",
+      "title": "K3 winner map (7,2,7)",
+      "match": "NOT_RUN",
+      "summary": "Winner definition not specified in claim or accessible docs; B symmetric so endpoint comparison cannot determine winner"
+    }
+  ],
+  "limitations": [
+    "Only 6 of ~24 Supported claims verified",
+    "Engine-based claims verified on 1 seed (EMP-AIEF14-01 on 40 seeds)",
+    "CF05 not runnable without winner definition",
+    "No Lean formalization replicated",
+    "Superseded/Retired/Rejected/Exploratory claims not evaluated"
+  ],
+  "checksums_verified": true,
+  "checksum_command": "sha256sum -c SHA256SUMS.txt",
+  "checksum_result": "All 3 content files OK"
+}
