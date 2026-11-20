@@ -340,9 +340,9 @@ def test_p6_mutants_exact_counts_and_numbering():
     assert sorted(roots) == list(range(95, 107))
     # the Arena cycle 13/21 intake (CommonRootSimple.lean, EngineStepRef.lean, SPEC §16): M110-M129
     arena = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in ("CommonRootSimple.lean", "EngineStepRef.lean")])
-    assert sorted(arena) == list(range(110, 130))
-    assert len(allnums) == len(set(allnums)) == 129 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (79, 50)
+    assert sorted(arena) == list(range(110, 131))
+    assert len(allnums) == len(set(allnums)) == 130 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (79, 51)
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 24                                          # unique across ports: E1-E20, T1-T4

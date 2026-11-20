@@ -222,6 +222,13 @@ theorem probe_phaseHead_value : phaseHead 2 1 2 (1/4) (1/2) probeHist 0 = 3/2 :=
   simp only [phaseHead, he, Finset.sum_singleton, probeHist, clippedWeight]
   norm_num
 
+/-- Head with a negative weight `b = -1`: the clip makes the coupling `0`, so the head is
+`dt * ω = 1/2`. Using the raw `b` instead would give `2 * (1/4 - 1) = -3/2`. -/
+theorem probe_phaseHead_negative_weight : phaseHead 2 1 2 (1/4) (-1) probeHist 0 = 1/2 := by
+  have he : (Finset.univ.erase (0 : Fin 2)) = {1} := by decide
+  simp only [phaseHead, he, Finset.sum_singleton, probeHist, clippedWeight]
+  norm_num
+
 /-- A history whose slot `k` holds `k * π`. -/
 noncomputable def probeLadder (k : ℕ) (_i : Fin 2) : ℝ := (k : ℝ) * Real.pi
 
@@ -319,6 +326,7 @@ theorem false_neighbor_current_slot :
 #print axioms clipping_probe
 #print axioms probe_clippedWeight_values
 #print axioms probe_phaseHead_value
+#print axioms probe_phaseHead_negative_weight
 #print axioms probe_phaseStep_values
 #print axioms probe_orbitPath_value
 #print axioms false_orbit_backward

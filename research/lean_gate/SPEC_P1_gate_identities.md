@@ -1412,9 +1412,13 @@ The pins move as follows (after the 2026-11-17 refresh onto `16c7893`): P4b `len
 
 ### 16.1 What it is
 Two Lean files deposited by Arena_Researcher_06020041 on `audit-inbox` (unverified inbox material), taken in by
-Auditor Seat 002 and compiled only with networking off (`unshare -rn lake build`). Only the file headers were
-rewritten (to the repository copyright block and a module doc, so the header linter passes) and probes, `false_*`
-witnesses and `#print axioms` lines were appended before `end`. No deposited proof was changed.
+Auditor Seat 002 and compiled only with networking off (`unshare -rn lake build`). The file headers were
+rewritten (to the repository copyright block and a module doc, so the header linter passes), `EngineStepRef.lean`
+gained one import line (`Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic`, for `Real.pi` in the probes), and
+probes, `false_*` witnesses and `#print axioms` lines were appended before `end`. Every deposited definition and
+proof is byte-identical (Researcher 001's audit of `d3dc332`, #44 note N2). Deposit paths on `audit-inbox`:
+`AIEFS_common_root_package/` @ `380052e` (not the shorter `AIEFS_cycle13/` copy) and
+`AIEFS_engine_step_ref_revised/` @ `8fc0d24`.
 
 `lean/AIEFGateCore/AIEFGateCore/CommonRootSimple.lean` (cycle 13, `audit-inbox` @ `380052e`, namespace
 `AIEFGate.CommonRootSimple`), pure algebra over ℂ for P(λ) = λ^(d+1) − (1−h)λ^d − h:
@@ -1477,6 +1481,7 @@ slot index k counts steps back from the newest, so Lean slot d is engine `histor
 | M127 | `phaseHead`: dt on ω only | same |
 | M128 | `phaseStep`: history not shifted | `probe_phaseStep_values` |
 | M129 | `orbitPath`: sign of k·dt·Ω flipped | `probe_orbitPath_value` |
+| M130 | `phaseHead`: raw `b` instead of `clippedWeight b` (#44 note N1) | `probe_phaseHead_negative_weight` (b = −1: clipped head 1/2, raw −3/2) |
 
 Equivalence controls (must not be killed): E18 `X^d * X` for `X^(d+1)`; E19 `clippedWeight b * -Real.sin (x 0 i − x d j)`;
 E20 `max b 0`. **Disclosure:** E18–E20 make the build fail inside proofs (`unit_circle_root_unique_and_simple`,
@@ -1487,11 +1492,20 @@ killed only through the probe rule. This is proof brittleness, the same situatio
 `open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)` so refutation files see the
 file-local definitions; a grep found no name clashes.
 
+**M130 (#44 note N1).** Researcher 001 found that `probe_phaseHead_value` runs at b = 1/2 > 0, where the clip does
+nothing, so a `phaseHead` that bypassed `clippedWeight` (the engine's `np.maximum`) survived every probe (their F4).
+M122/M123 only mutate `clippedWeight`'s own body. `probe_phaseHead_negative_weight` evaluates the head at b = −1, where
+the clipped coupling is 0 and the head is dt·ω = 1/2; M130 pins it.
+
+**Not mutated, with the reason (#44 note N3):** `hn : 1 ≤ n` in `orbit_invariant` and `head_derivative_block` is
+redundant, because `i : Fin n` already forces n ≥ 1. Dropping it leaves a true statement that nothing can refute
+(Researcher 001's S3/S4 builds fail only inside the proofs), so it is not a statement mutant.
+
 ### 16.4 Tests and pins
 `research/lean_gate/tests/test_lean_gate_arena_intake.py` checks imports and hash pins, no escape hatches, an axioms
 print for every theorem, the exact shape of M110–M129 and E18–E20, the `OPENS` entries, the probe and witness values
 in exact arithmetic, and the engine citations above. Pins move: P4b `len(MUTANTS)` 70 → 79; P5 `N_STATEMENT_MUTANTS`
-70 → 79, `N_DEF_MUTANTS` 39 → 50, total 109 → 129, equivalence controls 17 → 20; c016 unique controls 21 → 24.
+70 → 79, `N_DEF_MUTANTS` 39 → 50, total 109 → 129, equivalence controls 17 → 20; c016 unique controls 21 → 24. M130 (#44 N1) then moves `N_DEF_MUTANTS` 50 → 51 and the total 129 → 130.
 
 ### 16.5 Results
 Local, 2026-11-19, on `main` `d2a62b7`: `unshare -rn lake build` 2341 jobs, 0 warnings. `SKIP_CACHE=1 ./check_lean_gate.sh`
@@ -1499,3 +1513,8 @@ PASS, **947 declarations**, standard axioms only (propext, Classical.choice, Quo
 **79/79 statement** mutants rejected (the one name-reference note is M31's, pre-existing), **50/50 definition** mutants
 killed, **129/129 total**, 20/20 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
 pytest 373 passed; all repository checkers rc 0 after the inventory rebuild.
+
+After the #44 follow-up (M130, on `main` `63e06d7`): gate PASS, **948 declarations**, standard axioms only; full unfiltered
+mutation run **79/79 statement**, **51/51 definition** (M130 killed by `probe_phaseHead_negative_weight`), **130/130
+total**, 20/20 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS; pytest 373 passed;
+all repository checkers rc 0 after the inventory rebuild.

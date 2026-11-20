@@ -114,6 +114,7 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   read from the current slot), each refuted by a `false_*` theorem. Definition mutants M119-M129 (commonPoly,
   clippedWeight, phaseHead, phaseStep, orbitPath) killed by `probe_*` value probes; E18-E20 must not be killed
   (they break proofs but no probe, so they survive only through the probe rule: disclosed brittleness).
+  M130 (#44 N1): phaseHead uses the raw b instead of clippedWeight b -> probe_phaseHead_negative_weight (b = -1).
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
@@ -568,7 +569,7 @@ VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
 # CommonRootSimple.lean / EngineStepRef.lean (Arena cycles 13 and 21): closed-number evaluations of the definitions,
 # proved by unfolding them in the probe itself
 VP_CR = ["probe_commonPoly_eval_d1", "probe_commonPoly_eval_d2"]
-VP_SR = ["probe_clippedWeight_values", "probe_phaseHead_value", "probe_phaseStep_values", "probe_orbitPath_value"]
+VP_SR = ["probe_clippedWeight_values", "probe_phaseHead_value", "probe_phaseHead_negative_weight", "probe_phaseStep_values", "probe_orbitPath_value"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
@@ -737,6 +738,10 @@ DEF_MUTANTS = [
      [(STEP_OLD, "  if k = 0 then phaseHead n d dt omega b x i else x k i\n", 1)], ["probe_phaseStep_values"]),
     ("M129_stepref_orbit_sign_flipped", "EngineStepRef.lean",
      [(ORBIT_OLD, "  theta + (k : ℝ) * dt * Omega + t * v k i\n", 1)], ["probe_orbitPath_value"]),
+    # #44 note N1 (Researcher 001, d3dc332): the head uses the raw weight b, bypassing the clip (engine np.maximum)
+    ("M130_stepref_head_raw_weight", "EngineStepRef.lean",
+     [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
+                 "    b * Real.sin (x d j - x 0 i))\n", 1)], ["probe_phaseHead_negative_weight"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of

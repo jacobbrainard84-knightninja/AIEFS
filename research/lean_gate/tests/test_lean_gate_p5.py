@@ -18,7 +18,7 @@ Since the phase-lock rework (test_lean_gate_freqlock.py, numbered after P6): + M
 M92, M93 definition mutants and the equivalence control E16 on FrequencyLock.lean: 58 + 36 = 94, 16 equivalence.
 The #41 note-1 follow-up adds M107-M109 (FrequencyLock definition mutants) and E17: 70 + 39 = 109, 17 equivalence.
 The Arena cycle 13/21 intake (SPEC §16) adds M110-M118 statement, M119-M129 definition mutants and E18-E20:
-79 + 50 = 129, 20 equivalence.
+79 + 50 = 129, 20 equivalence; M130 (#44 N1) makes 79 + 51 = 130.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -39,9 +39,9 @@ PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
 N_STATEMENT_MUTANTS = 79          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M59-M69 (P6) + M87-M91, M94 (lock) + M95-M106 (DelayRoots) + M110-M118 (§16)
-N_DEF_MUTANTS = 50                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93, M107-M109 (lock) + M119-M129 (§16)
+N_DEF_MUTANTS = 51                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93, M107-M109 (lock) + M119-M130 (§16, M130 #44 N1)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 129 (109 after #43; 106 after DelayRoots; 94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 130 (129 after #44; 109 after #43; 106 after DelayRoots; 94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
 P5_FILES = ("PhaseIncrement.lean", "PhaseCoherence.lean")
 P5_DEF_MUTANTS = [m for m in mc.DEF_MUTANTS if m[1] in P5_FILES]
 
@@ -213,7 +213,7 @@ def test_p5_mutants_shape_and_exact_count():
     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58, M59-M69
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
     assert len(P5_DEF_MUTANTS) == N_P5_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (129)
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (130)
     names = [m[0] for m in P5_DEF_MUTANTS]                              # the P5 entries, selected by file
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
