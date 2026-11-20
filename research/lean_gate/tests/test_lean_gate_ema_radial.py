@@ -1,5 +1,5 @@
 """Lean intake of Arena_Researcher_06020041's EMA radial note (SPEC §17): pin EmaRadialRef.lean and its mutants
-M131-M142 / control E21 without running Lean.
+M131-M145 / control E21 without running Lean.
 
 EmaRadialRef.lean (audit-inbox db0638f, AIEFS_ema_radial/): along the stipulated normalized path
 old(t) = 1 + t(u + iv), input(t) = exp(i t delta), the EMA alpha*old + (1-alpha)*input has magnitude derivative
@@ -72,7 +72,7 @@ def test_statement_mutants_exact_shape():
 
 def test_definition_mutants_and_control():
     de = [m for m in mc.DEF_MUTANTS if m[1] == F]
-    assert [int(m[0].split("_")[0][1:]) for m in de] == list(range(136, 143))
+    assert [int(m[0].split("_")[0][1:]) for m in de] == list(range(136, 146))
     for name, f, edits, pins in de:
         assert mc.mutate_file(SRC, edits) != SRC, name
         assert pins and set(pins) <= set(mc.VALUE_PROBES[F]), name
@@ -106,6 +106,12 @@ def test_probe_values_and_mutant_values_exact():
     assert math.isclose(abs(_re(0.5, 1, 0, 1)), 1.5)                   # M140
     m1, m2 = _mag(0.5, 1, 4, 0, 1), _mag(0.5, -1, 0, 0, 1)
     assert math.isclose((m1 + m2) / 2, 1.5) and math.isclose(m1, 2.5) and math.isclose(m1 + m2, 3.0)   # M141/M142
+    # probe_tdelta_values (t = 1/2, delta = pi): M143 cos(delta), M144 sin(delta), M145 alpha*v
+    assert math.isclose(_re(0.5, 0, math.pi, 0.5), 0.5, abs_tol=1e-12)
+    assert math.isclose(0.5 * (1 + 0.5 * 0) + 0.5 * math.cos(math.pi), 0.0, abs_tol=1e-12)   # M143
+    assert math.isclose(_im(0.5, 2, math.pi, 0.5), 1.0, abs_tol=1e-12)
+    assert math.isclose(0.5 * (0.5 * 2) + 0.5 * math.sin(math.pi), 0.5, abs_tol=1e-12)   # M144
+    assert math.isclose(0.5 * 2 + 0.5 * math.sin(0.5 * math.pi), 1.5, abs_tol=1e-12)     # M145
 
 
 def test_path_matches_coherence_step_numerically():

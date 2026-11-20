@@ -118,7 +118,8 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   EmaRadialRef.lean (Arena, audit-inbox db0638f; SPEC §17): M131-M135 statement mutants of the directional
   derivatives (alpha dropped, the input term dropped or added, the average of the first entry only), each refuted
   by a `false_*` theorem; definition mutants M136-M142 (reStep, imStep, magnitude, symMagnitude) killed by the
-  `probe_*` value probes added at intake; E21 (reStep terms commuted) must not be killed.
+  `probe_*` value probes added at intake; E21 (reStep terms commuted) must not be killed. M143-M145 (pre-read P1):
+  `t` dropped from the input angle in reStep / imStep or from the EMA's `t * v` -> probe_tdelta_values (t = 1/2, δ = π).
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
@@ -586,7 +587,8 @@ VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
 VP_CR = ["probe_commonPoly_eval_d1", "probe_commonPoly_eval_d2"]
 VP_SR = ["probe_clippedWeight_values", "probe_phaseHead_value", "probe_phaseHead_negative_weight", "probe_phaseStep_values", "probe_orbitPath_value"]
 # EmaRadialRef.lean (Arena, SPEC §17): closed-number evaluations added at intake
-VP_EMA = ["probe_reStep_values", "probe_imStep_value", "probe_magnitude_value", "probe_symMagnitude_value"]
+VP_EMA = ["probe_reStep_values", "probe_imStep_value", "probe_magnitude_value", "probe_symMagnitude_value",
+          "probe_tdelta_values"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
@@ -781,6 +783,13 @@ DEF_MUTANTS = [
     ("M142_ema_sym_half_dropped", "EmaRadialRef.lean",
      [(SYM_OLD, "  magnitude alpha u₁ v₁ delta₁ t + magnitude alpha u₂ v₂ delta₂ t\n", 1)],
      ["probe_symMagnitude_value"]),
+    # ema-radial pre-read P1 (Researcher 001, ea96f55): the input angle t * delta and the EMA's t * v
+    ("M143_ema_real_angle_t_dropped", "EmaRadialRef.lean",
+     [(RE_OLD, "  alpha * (1 + t * u) + (1 - alpha) * Real.cos delta\n", 1)], ["probe_tdelta_values"]),
+    ("M144_ema_imag_angle_t_dropped", "EmaRadialRef.lean",
+     [(IM_OLD, "  alpha * (t * v) + (1 - alpha) * Real.sin delta\n", 1)], ["probe_tdelta_values"]),
+    ("M145_ema_imag_t_v_dropped", "EmaRadialRef.lean",
+     [(IM_OLD, "  alpha * v + (1 - alpha) * Real.sin (t * delta)\n", 1)], ["probe_tdelta_values"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of

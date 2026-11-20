@@ -1543,7 +1543,9 @@ by the test.
   entry of the form `p·(1 + t(u+iv))` (unit modulus) or an input phasor of the form `p·exp(i t δ)`. The engine's EMA starts
   at `0` and approaches unit modulus only asymptotically, so unit coherence at the base point is a stipulation.
 * Direct value probes `probe_reStep_values`, `probe_imStep_value`, `probe_magnitude_value` (5/2) and
-  `probe_symMagnitude_value` (3/2). The deposited `*_probe` theorems only restate derivatives, so they cannot kill
+  `probe_symMagnitude_value` (3/2), and `probe_tdelta_values` at `t = 1/2`, `δ = π` (`reStep (1/2) 0 π (1/2) = 1/2`,
+  `imStep (1/2) 2 π (1/2) = 1`; pre-read P1 of Researcher 001: the earlier probes all had `t·δ = 0` or `δ = 0`, so a `t`
+  dropped from the input angle survived them). The deposited `*_probe` theorems only restate derivatives, so they cannot kill
   definition mutants.
 * Proved refutations `false_real_no_alpha`, `false_imag_no_input`, `false_magnitude_no_alpha`,
   `false_magnitude_angular` and `false_sym_first_only`, each by `HasDerivAt.unique` against the proved derivative.
@@ -1564,7 +1566,7 @@ about a run of the engine. The derivative is taken in a hand-picked normalizatio
 explicit `coherenceInput` value, and `coherenceInput` is fixed by `Phase.inputPhasor`. This is a known gap. The bridge
 is pinned only by the test's shape check and a floating-point check of the modulus identity.
 
-### 17.3 Definition mutants M136–M142 (rule as §11.3)
+### 17.3 Definition mutants M136–M145 (rule as §11.3)
 | # | Change | Killed by |
 |---|---|---|
 | M136 | `reStep`: input cos → sin | `probe_reStep_values` (1/2 instead of 1) |
@@ -1574,6 +1576,9 @@ is pinned only by the test's shape check and a floating-point check of the modul
 | M140 | `magnitude`: imaginary part dropped | `probe_magnitude_value` (3/2) |
 | M141 | `symMagnitude`: first entry twice | `probe_symMagnitude_value` (5/2) |
 | M142 | `symMagnitude`: /2 dropped | `probe_symMagnitude_value` (3) |
+| M143 | `reStep`: cos (t·δ) → cos δ | `probe_tdelta_values` (0 instead of 1/2) |
+| M144 | `imStep`: sin (t·δ) → sin δ | `probe_tdelta_values` (1/2 instead of 1) |
+| M145 | `imStep`: α(t·v) → α·v | `probe_tdelta_values` (3/2 instead of 1) |
 
 Equivalence control E21: `reStep` with its two terms in the other order. It makes `real_direction` fail inside its
 proof, but no value probe fails, so it is not killed. This is the same proof brittleness disclosed for E17–E20.
@@ -1581,12 +1586,12 @@ proof, but no value probe fails, so it is not killed. This is the same proof bri
 
 ### 17.4 Tests and pins
 `research/lean_gate/tests/test_lean_gate_ema_radial.py` checks the import and hash pin, no escape hatches, an axioms
-print for every theorem, the bridge's hypotheses, the exact shape of M131–M142 and E21, the probe and mutant values,
+print for every theorem, the bridge's hypotheses, the exact shape of M131–M145 and E21, the probe and mutant values,
 the modulus identity numerically, and the engine citations. Pins move as follows:
 * P4b `len(MUTANTS)`: 79 → 84.
 * P5 `N_STATEMENT_MUTANTS`: 79 → 84.
-* P5 `N_DEF_MUTANTS`: 51 → 58.
-* Total mutants: 130 → 142.
+* P5 `N_DEF_MUTANTS`: 51 → 58, then 61 with M143–M145 (pre-read P1).
+* Total mutants: 130 → 142, then 145.
 * Equivalence controls: 20 → 21.
 * c016 unique controls: 24 → 25.
 
@@ -1596,3 +1601,8 @@ Local, 2026-11-20, on `main` `63e06d7` plus `5ee0db3`: `SKIP_CACHE=1 ./check_lea
 **84/84 statement** mutants rejected (the one name-reference note is M31's, pre-existing), **58/58 definition** mutants
 killed, **142/142 total**, 21/21 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
 pytest 381 passed; all repository checkers rc 0 after the inventory rebuild.
+
+After pre-read P1 (M143–M145, `probe_tdelta_values`), local, 2026-11-20, on `ea96f55`: gate PASS, 0 warnings,
+**979 declarations**, standard axioms only. Full unfiltered mutation run: **84/84 statement** mutants rejected,
+**61/61 definition** mutants killed, **145/145 total**, 21/21 equivalence controls not killed, 4/4 typo controls
+flagged invalid, RESULT PASS. pytest 381 passed.

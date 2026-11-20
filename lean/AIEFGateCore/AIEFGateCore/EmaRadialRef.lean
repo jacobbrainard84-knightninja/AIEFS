@@ -202,6 +202,16 @@ theorem probe_symMagnitude_value : symMagnitude (1/2) 1 4 0 (-1) 0 0 1 = 3/2 := 
   rw [symMagnitude, probe_magnitude_value, h2]
   norm_num
 
+/-- Values at `t = 1/2`, `δ = π` (#46 pre-read P1, Researcher 001): the input angle is `t * δ`.
+`reStep (1/2) 0 π (1/2) = 1/2`; `cos δ` for `cos (t * δ)` gives `0`.
+`imStep (1/2) 2 π (1/2) = 1`; `sin δ` for `sin (t * δ)` gives `1/2`, and `α * v` for
+`α * (t * v)` gives `3/2`. -/
+theorem probe_tdelta_values :
+    reStep (1/2) 0 Real.pi (1/2) = 1/2 ∧ imStep (1/2) 2 Real.pi (1/2) = 1 := by
+  have h : (1/2 : ℝ) * Real.pi = Real.pi / 2 := by ring
+  refine ⟨?_, ?_⟩ <;>
+    simp only [reStep, imStep, h, Real.cos_pi_div_two, Real.sin_pi_div_two] <;> norm_num
+
 theorem false_real_no_alpha :
     ¬ (∀ alpha u delta : ℝ, HasDerivAt (fun t => reStep alpha u delta t) u 0) := by
   intro H
@@ -241,6 +251,7 @@ theorem false_sym_first_only :
 #print axioms probe_imStep_value
 #print axioms probe_magnitude_value
 #print axioms probe_symMagnitude_value
+#print axioms probe_tdelta_values
 #print axioms false_real_no_alpha
 #print axioms false_imag_no_input
 #print axioms false_magnitude_no_alpha
