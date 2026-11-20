@@ -1,0 +1,79 @@
+"""theta == history[-1] guard for the pinned engine's DynamicState (audit-inbox direction 4, queue bridge).
+
+The engine (`aief_experiment_engine_v1.py`) is SHA-256-locked in the authority lock, so the guard cannot be added to
+`DynamicState.validate` itself. It lives in `research/engine_guards/theta_history.py` and wraps validate. Every engine
+path that writes the state keeps `history[-1] == theta`: initialize_state (history = copies of theta), advance_state
+(appends theta.copy() after the update) and apply_intervention (history = copies of the new theta). validate checks
+shapes, finiteness and B, but not this link, so a hand-built or deserialised state with a stale head passes it.
+"""
+import os
+import sys
+
+import numpy as np
+import pytest
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
+import aief_experiment_engine_v1 as eng  # noqa: E402
+from research.engine_guards.theta_history import check_theta_history, validate_with_theta_history  # noqa: E402
+
+CFG = eng.DEFAULT_MODEL_CONFIG
+
+
+def _fresh(seed=7):
+    return eng.initialize_state(seed, CFG)
+
+
+def _mismatched(seed=7):
+    s = _fresh(seed)
+    s.theta = s.theta.copy()
+    s.theta[0] = s.theta[0] + 0.25
+    return s
+
+
+def test_engine_validate_misses_mismatch():
+    """Documents the gap: the pinned validate accepts a state whose theta is not the newest history entry."""
+    s = _mismatched()
+    assert not np.array_equal(s.theta, s.history[-1])
+    s.validate(CFG)  # no exception: the gap this guard closes
+
+
+def test_guard_rejects_mismatch():
+    with pytest.raises(RuntimeError, match="history\\[-1\\]"):
+        check_theta_history(_mismatched())
+    with pytest.raises(RuntimeError, match="history\\[-1\\]"):
+        validate_with_theta_history(_mismatched(), CFG)
+
+
+def test_guard_rejects_older_slot_match_only():
+    """theta equal to an older slot but not the newest one is still rejected."""
+    s = _fresh()
+    s.history[-1] = s.history[-1] + 1.0
+    assert np.array_equal(s.theta, s.history[0])
+    with pytest.raises(RuntimeError):
+        check_theta_history(s)
+
+
+def test_guard_runs_engine_validate_first():
+    s = _fresh()
+    s.history = s.history[:-1]  # wrong length: engine validate must raise, not the guard
+    with pytest.raises(RuntimeError, match="History length"):
+        validate_with_theta_history(s, CFG)
+
+
+def test_guard_accepts_initialized_state():
+    validate_with_theta_history(_fresh(), CFG)
+
+
+def test_guard_accepts_after_engine_steps():
+    s = _fresh(11)
+    rng = np.random.default_rng(11)
+    for step in range(CFG.delay_steps + 3):  # past one full history wrap
+        eng.advance_state(s, CFG, rng)
+        validate_with_theta_history(s, CFG, step=step)
+
+
+def test_guard_accepts_clone():
+    validate_with_theta_history(_fresh().clone(), CFG)
