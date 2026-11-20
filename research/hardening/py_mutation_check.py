@@ -53,7 +53,11 @@ DEFAULT_TARGETS = [
     "tools/ci/check_study_paths.py", "tools/ci/hygiene_scan.py", "tools/ci/lint_claims.py",
     "audits/engineering/verify_inventory_current.py", "research/lean_gate/spec_results_line.py",
 ]
-TEST_DIRS = ["tools/ci/tests", "research/lean_gate/tests", "research/hardening/tests", "audits/engineering/tests"]
+# tools/redteam holds red-team suites that are NOT run by CI (2026-11-20); --ci-tests-only drops it so the report
+# can show the kill rate of the CI-run tests separately.
+TEST_DIRS = ["tools/ci/tests", "research/lean_gate/tests", "research/hardening/tests", "audits/engineering/tests",
+             "tools/redteam"]
+CI_TEST_DIRS = TEST_DIRS[:-1]
 OUT_OF_SCOPE = ("research/engine_guards/", "aief_experiment_engine_v1.py", "Pinned/", "lean/AIEFProofs", "AIEFFreezeCore")
 
 ERRORISH = re.compile(r"err|problem|fail|bad|issue|viol|missing|mismatch|stale|finding|unexpected|wrong", re.I)
@@ -188,11 +192,11 @@ def run_cmd(cmd, cwd, timeout, env):
         return None, time.time() - t, "TIMEOUT"
 
 
-def find_tests(root: Path, rel: str) -> list[str]:
+def find_tests(root: Path, rel: str, dirs=None) -> list[str]:
     stem = Path(rel).stem
     pat = re.compile(r"\b" + re.escape(stem) + r"\b")
     hits = []
-    for d in TEST_DIRS:
+    for d in dirs or TEST_DIRS:
         p = root / d
         if p.is_dir():
             for f in sorted(p.glob("test_*.py")):
@@ -293,14 +297,31 @@ def reset_clone(root: Path):
     subprocess.run(["git", "-C", str(root), "clean", "-fdxq"], check=True)
 
 
-def evaluate(root: Path, rel: str, signals: list[Signal], timeout: float, env, reset) -> tuple[str, str, str]:
-    """Run signals in order on the file currently in root. Returns (outcome, signal, tail)."""
+# Targets whose good/bad runs hash every tracked file through registry/artifacts_current.csv. Writing a mutant
+# into the clone changes the checker's own bytes, so the inventory would flag the mutated file itself and every
+# mutant would be "killed" for a reason unrelated to its logic (found in the first 2026-11-20 run: 35/40 vacuous
+# kills of verify_inventory_current.py). For these the inventory is regenerated after writing each mutant, i.e.
+# the mutant is judged as if it had been committed together with a fresh inventory.
+REFRESH_INVENTORY = {"tools/ci/check_current_inventory.py", "audits/engineering/verify_inventory_current.py"}
+INVENTORY_BUILDER = "registry/reconciliation/build_current_inventory.py"
+
+
+def refresh_inventory(root: Path, env):
+    subprocess.run([PY, INVENTORY_BUILDER], cwd=root, env=env, check=True, capture_output=True)
+
+
+def evaluate(root: Path, rel: str, signals: list[Signal], timeout: float, env, reset, apply=None
+             ) -> tuple[str, str, str]:
+    """Run signals in order on the file currently in root. Returns (outcome, signal, tail).
+    apply() re-applies the mutant (and any inventory refresh) after a fixture's reset."""
     for s in signals:
         if s.fixture is not None:
             s.fixture(root)
         rc, _, tail = run_cmd(s.cmd, root, timeout, env)
         if s.fixture is not None:
             reset()
+            if apply is not None:
+                apply()
         if rc is None:
             return "timeout", s.name, tail
         ok = (rc == 0) if s.expect_zero else (rc != 0)
@@ -310,9 +331,10 @@ def evaluate(root: Path, rel: str, signals: list[Signal], timeout: float, env, r
 
 
 def run_target(root: Path, rel: str, signals: list[Signal], cap: int, seed: int, timeout: float, env,
-               reset, log=print) -> dict:
+               reset, log=print, only_ids=None) -> dict:
     path = root / rel
     original = path.read_bytes()
+    refresh = rel in REFRESH_INVENTORY and (root / INVENTORY_BUILDER).is_file()
     res = {"target": rel, "signals": [], "dropped_signals": [], "mutants": []}
     # baseline: every signal must give its expected result on the unmutated file
     kept = []
@@ -336,6 +358,8 @@ def run_target(root: Path, rel: str, signals: list[Signal], cap: int, seed: int,
     src = original.decode("utf-8")
     allm = enumerate_mutants(src)
     chosen = sample(allm, cap, seed)
+    if only_ids is not None:  # rescore mode: re-run just these mutant ids (e.g. a previous run's survivors)
+        chosen = [m for m in chosen if m.mid in only_ids]
     res["n_sites"] = len(allm)
     log(f"{rel}: {len(allm)} mutants, running {len(chosen)}; signals {[s.name for s in kept]}")
     try:
@@ -345,8 +369,12 @@ def run_target(root: Path, rel: str, signals: list[Signal], cap: int, seed: int,
             except SyntaxError as e:
                 out = ("error", "", f"SyntaxError {e}")
             else:
-                path.write_text(m.source, encoding="utf-8")
-                out = evaluate(root, rel, kept, timeout, env, reset) if kept else ("error", "", "no signals")
+                def apply(m=m):
+                    path.write_text(m.source, encoding="utf-8")
+                    if refresh:
+                        refresh_inventory(root, env)
+                apply()
+                out = evaluate(root, rel, kept, timeout, env, reset, apply) if kept else ("error", "", "no signals")
                 path.write_bytes(original)
                 reset()
             line = src.splitlines()[m.lineno - 1].strip()
@@ -374,6 +402,8 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, default=20261120)
     ap.add_argument("--timeout", type=float, default=300.0, help="seconds per signal run")
     ap.add_argument("--out", default=None, help="write the JSON report here")
+    ap.add_argument("--ci-tests-only", action="store_true", help="use only test dirs that CI runs (no tools/redteam)")
+    ap.add_argument("--rescore", default=None, help="previous JSON report: re-run only its survivors")
     a = ap.parse_args(argv)
     targets = a.target or DEFAULT_TARGETS
     for t in targets:
@@ -395,12 +425,17 @@ def main(argv=None) -> int:
     report = {"repo_head": subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True,
                                           text=True).stdout.strip(),
               "seed": a.seed, "max_per_file": a.max_per_file, "targets": []}
+    prev = None
+    if a.rescore:
+        prev = {t["target"]: {m["id"] for m in t.get("mutants", []) if m["outcome"] == "survived"}
+                for t in json.loads(Path(a.rescore).read_text(encoding="utf-8"))["targets"]}
+        targets = [t for t in targets if prev.get(t)]
     for rel in targets:
         if not (root / rel).is_file():
             report["targets"].append({"target": rel, "skipped": "not in tree"})
             print(f"{rel}: not in tree, skipped")
             continue
-        tests = find_tests(root, rel)
+        tests = find_tests(root, rel, CI_TEST_DIRS if a.ci_tests_only else TEST_DIRS)
         sigs = []
         if tests:
             sigs.append(Signal("tests", [PY, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider", *tests], True))
@@ -408,7 +443,8 @@ def main(argv=None) -> int:
         sigs.append(Signal("good", good, True))
         for name, fx in bads:
             sigs.append(Signal("bad:" + name, good, False, fx))
-        r = run_target(root, rel, sigs, a.max_per_file, a.seed, a.timeout, env, reset)
+        r = run_target(root, rel, sigs, a.max_per_file, a.seed, a.timeout, env, reset,
+                       only_ids=None if prev is None else prev[rel])
         r["tests"] = tests
         report["targets"].append(r)
         if a.out:
