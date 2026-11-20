@@ -404,6 +404,8 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default=None, help="write the JSON report here")
     ap.add_argument("--ci-tests-only", action="store_true", help="use only test dirs that CI runs (no tools/redteam)")
     ap.add_argument("--rescore", default=None, help="previous JSON report: re-run only its survivors")
+    ap.add_argument("--tests-only", action="store_true",
+                    help="only the tests signal (for --rescore: good/bad runs are deterministic and already ran)")
     a = ap.parse_args(argv)
     targets = a.target or DEFAULT_TARGETS
     for t in targets:
@@ -440,9 +442,10 @@ def main(argv=None) -> int:
         if tests:
             sigs.append(Signal("tests", [PY, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider", *tests], True))
         good, bads = good_bad(rel)
-        sigs.append(Signal("good", good, True))
-        for name, fx in bads:
-            sigs.append(Signal("bad:" + name, good, False, fx))
+        if not a.tests_only:
+            sigs.append(Signal("good", good, True))
+            for name, fx in bads:
+                sigs.append(Signal("bad:" + name, good, False, fx))
         r = run_target(root, rel, sigs, a.max_per_file, a.seed, a.timeout, env, reset,
                        only_ids=None if prev is None else prev[rel])
         r["tests"] = tests
