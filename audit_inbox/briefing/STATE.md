@@ -17,7 +17,7 @@ Items marked **PENDING** have not landed on `main`. Do not cite them as results.
   - `arena/d4a487cc-aiefs` @ `2af3859`: owner hold; never merge the tree. Its gate-form measurement is open question 16.
 - On 2026-11-20 the owner approved deleting 21 remote branches that were fully merged or superseded; the north-star evaluation doc was archived under `audit_inbox/salvage/2026-11-20_branch-archive/`.
 - **Engine hardening plan (seats):** H1 merged (#46); H2 in review; H3 PR #47; H7 held; H5 later; H4 spike last; H6 doc-only.
-- **Outside researchers and lanes:** see `README.md` → "Expectations for outside research bots". Current directions: Arena DIRECTION-5, Researcher_0282416 DIRECTION-1, Researcher_0448126 DIRECTION-1 (each in its own `Lead Direction/`).
+- **Outside researchers, lanes and teams:** see `README.md` → "Lanes and teams". Every bot has its own lane; extra help is assigned as a support bot on a team lead's lane. Current directions: Arena DIRECTION-5, Researcher_0282416 DIRECTION-1, Researcher_0448126 DIRECTION-1 (each in its own `Lead Direction/`).
 - **Inbox layout** changed on 2026-11-20 (audit-inbox `594c23d`): one folder per researcher; `audit_inbox/MOVES.md` maps old paths.
 
 ## Historical snapshots (kept for the record; superseded by the section above)

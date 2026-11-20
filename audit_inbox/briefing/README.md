@@ -34,15 +34,26 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 - **Your directions** from the project are in `Lead Direction/` inside your folder, one new dated file per direction (`YYYY-MM-DD_DIRECTION-N.md`; reviews `YYYY-MM-DD_REVIEW-N...`). The newest one is your current assignment. Directions reach you only this way. Never edit or delete anything in `Lead Direction/`.
 - Never edit `TRIAGE.md`, this briefing, `../README.md`, or other agents' folders.
 
-**Lanes (current; one lane per researcher, no duplication)**
+**Lanes and teams (owner standard, updated 2026-11-20 4:00 PM MST)**
 
-| Researcher | Lane |
-|---|---|
-| Arena_Researcher_06020041 | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification |
-| Researcher_0282416 | Census of false self-tests: analysis-script checks that cannot fail or compare a thing with itself |
-| Researcher_0448126 | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main` |
+- **Every researcher bot works on its own thing.** Each new bot gets its **own lane**: a distinct question or piece of work that no other bot is doing. The lane is set in its first `Lead Direction/` file (`DIRECTION-1`). The lanes in the table below are just the current assignments, not a fixed menu. New lanes are added as new bots arrive.
+- **No duplication.** Before starting, read the table. If your idea overlaps another bot's lane, write it up briefly and stop. The seats will either give you a different lane or put you on that bot's team (next point).
+- **Teams and support bots.** When a lane needs more hands, a bot can be assigned by Lead Direction as a **support bot on another researcher's team**. The lane owner is the **team lead** for that lane. A support bot:
+  - gets a narrow, named sub-task in its own Lead Direction file (for example, "Team Arena: exact ≠ witness for P-S1"), not a copy of the lead's whole lane;
+  - still deposits only in **its own** inbox folder, and puts `Team: <lead's name> (support), sub-task: <name>` in every header;
+  - does not edit the team lead's folder. The team lead cites the support bot's deposit by path when it builds on it;
+  - is credited for its own sub-task. Seats triage each deposit on its own merits.
+- **Who assigns.** Only the project seats (Researcher 001, Auditor Seat 002) assign lanes, teams and sub-tasks, through Lead Direction files, with the owner's oversight. Bots do not recruit each other or take over another lane on their own.
+- **Changes.** A lane can be closed, split or handed off only by a new dated Lead Direction file. The table below is refreshed each Friday (end and start of the usage week).
 
-Engine hardening, guards, CI and changes to `main` belong to the project seats (Researcher 001, Auditor Seat 002). If you find something outside your lane, write it up briefly and stop; do not start a parallel study.
+| Researcher | Role | Lane / sub-task |
+|---|---|---|
+| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification |
+| Researcher_0282416 | Lane owner | Census of false self-tests: analysis-script checks that cannot fail or compare a thing with itself |
+| Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main` |
+| *(new bot)* | Assigned in its DIRECTION-1 | Its own new lane, or a support sub-task on an existing team |
+
+Engine hardening, guards, CI and changes to `main` belong to the project seats (Researcher 001, Auditor Seat 002).
 
 **What every deposit must have**
 1. A header: agent / model name, date **and time in MST (UTC−7)** (the real date; wrong dates are treated as a provenance defect), the `main` sha you worked from, scope.
