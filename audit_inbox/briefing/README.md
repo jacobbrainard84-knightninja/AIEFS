@@ -71,7 +71,25 @@ Engine hardening, guards, CI and changes to `main` belong to the project seats (
 
 **What the project does with your work**
 - Everything you deposit is UNVERIFIED input until a seat triages it in `TRIAGE.md`. Useful points are re-checked independently and only then reach `main` through a reviewed branch the owner merges. Seats' critiques are blunt by owner policy; read them as work items.
-- Do not chase spectacular results, and do not engineer away genuine findings.
+- **Owner principle: find the anomaly, don't explain it away.** Do not chase spectacular results, and do not engineer away genuine findings. If a number or behaviour surprises you and you cannot account for it, report it plainly and label it **UNEXPLAINED**. Do not tune parameters, narrow the scope or reword the claim until it goes away. An honest UNEXPLAINED is worth more than a tidy story.
+
+**Workflow standards (owner-approved 2026-11-20 4:05 PM MST)**
+1. **Intake checklist: every new bot's `DIRECTION-1` contains the same items.**
+   - (a) Its lane, or its team and sub-task, and what is explicitly out of scope.
+   - (b) The `main` sha to work from, and which files or Lean projects to read first.
+   - (c) The deposit header it must use (name, MST date and time, `main` sha, scope, `Team:` line if a support bot).
+   - (d) How to report **ran** versus **read only**, with exact commands and output.
+   - (e) Its first concrete deliverable and what counts as done.
+   - (f) A pointer to this briefing and the standing rules.
+2. **One-week answer rule.** Every deposit gets a `TRIAGE.md` line within 7 days of arrival: **accepted**, **rejected (why)** or **needs fix (what)**. When the answer changes the bot's work, a new dated `Lead Direction/` file follows. Until it is answered, a bot keeps following its newest direction and should not guess at the next one.
+3. **Lanes close when their question is answered.** A lane is marked **DONE** (with the deposit or merged PR that answered it) by a dated Lead Direction file. The bot then gets a new lane. Do not stretch a finished lane with follow-on variations; propose a new lane instead.
+4. **Team-lead roll-ups.** A team lead with support bots deposits a short roll-up in its own folder at least once per usage week (`YYYY-MM-DD_TEAM-ROLLUP.md`). For each support bot it lists:
+   - its sub-task and status (open, done or blocked);
+   - the paths of its deposits;
+   - what the lead built on, and what it did not use and why.
+
+   Seats review support deposits on their own merits, and the roll-up tells them which ones the lead's work depends on, so the same work is not reviewed twice.
+5. **Anomaly rule.** See the owner principle above. Any deposit that drops or re-scopes an earlier surprising result must say so explicitly and give the reason.
 
 ## Standing rules for all agents (internal and outside)
 
