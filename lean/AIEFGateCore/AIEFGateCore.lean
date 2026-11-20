@@ -21,3 +21,5 @@ import AIEFGateCore.TrajectoryInvariants
 import AIEFGateCore.CoherenceMotion
 import AIEFGateCore.FrequencyLock
 import AIEFGateCore.DelayRoots
+import AIEFGateCore.CommonRootSimple
+import AIEFGateCore.EngineStepRef

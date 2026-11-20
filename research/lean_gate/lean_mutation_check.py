@@ -108,6 +108,13 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M106 projectedSlope_lt_quarter_of_C, `C < x` -> `C ≤ x`       -> C = ε = x = 1: slope exactly 1/4
   (M105-M106 from Researcher 001's audit of cce534d)
 
+  Arena intake (CommonRootSimple.lean cycle 13, EngineStepRef.lean cycle 21; SPEC §16; numbered after M107-M109):
+  M110-M113 CommonRootSimple statements (0 < h, h < 1 dropped; P'(1) without the delay factor), M114-M118
+  EngineStepRef statements (orbit backward / no frequency equation, 0 < b dropped, history unshifted, neighbour
+  read from the current slot), each refuted by a `false_*` theorem. Definition mutants M119-M129 (commonPoly,
+  clippedWeight, phaseHead, phaseStep, orbitPath) killed by `probe_*` value probes; E18-E20 must not be killed
+  (they break proofs but no probe, so they survive only through the probe rule: disclosed brittleness).
+
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
@@ -497,6 +504,29 @@ MUTANTS = [
     ("M106_delayroots_slopeC_lt_to_le", "DelayRoots.lean", "projectedSlope_lt_quarter_of_C",
      [("(hx : C < x)", "(hx : C ≤ x)", 1)], "",
      "DelayRoots.false_slope_at_boundary (H 1 1 1 (by norm_num) le_rfl)", None),
+    # ---- CommonRootSimple.lean (Arena_Researcher_06020041 cycle 13); numbered M110 ff. after the lock's M107-M109.
+    # Each refutation is a proved negation of the whole weakened statement, stated in that file ----
+    ("M110_commonroot_multiplicity_pos_dropped", "CommonRootSimple.lean", "root_multiplicity_one",
+     [("(hh : 0 < h)", "(hh : True)", 1)], "", "CommonRootSimple.false_multiplicity_no_pos H", None),
+    ("M111_commonroot_unit_upper_bound_dropped", "CommonRootSimple.lean", "unit_circle_root_unique_and_simple",
+     [("(hh1 : h < 1)", "(hh1 : True)", 1)], "", "CommonRootSimple.false_unit_root_no_upper H", None),
+    ("M112_commonroot_unit_pos_dropped", "CommonRootSimple.lean", "unit_circle_root_unique_and_simple",
+     [("(hh : 0 < h)", "(hh : True)", 1)], "", "CommonRootSimple.false_unit_root_no_pos H", None),
+    ("M113_commonroot_derivative_delay_factor_dropped", "CommonRootSimple.lean", "derivative_at_one",
+     [("(((1 + (d : ℝ) * h : ℝ) : ℂ))", "(((1 + h : ℝ) : ℂ))", 1)], "",
+     "CommonRootSimple.false_derivative_no_delay H", None),
+    # ---- EngineStepRef.lean (Arena_Researcher_06020041 cycle 21 revision, audit-inbox 8fc0d24) ----
+    ("M114_stepref_orbit_moves_backward", "EngineStepRef.lean", "orbit_invariant",
+     [("v 0 k i + dt * Omega", "v 0 k i - dt * Omega", 1)], "", "EngineStepRef.false_orbit_backward H", None),
+    ("M115_stepref_orbit_frequency_equation_dropped", "EngineStepRef.lean", "orbit_invariant",
+     [("(horbit : Omega = omega + ((n : ℝ) - 1) * clippedWeight b *\n      Real.sin (-((d : ℝ) * dt * Omega)))",
+       "(horbit : True)", 1)], "", "EngineStepRef.false_orbit_no_frequency H", None),
+    ("M116_stepref_block_positive_weight_dropped", "EngineStepRef.lean", "head_derivative_block",
+     [("(hb : 0 < b)", "(hb : True)", 1)], "", "EngineStepRef.false_block_no_pos H", None),
+    ("M117_stepref_history_shift_dropped", "EngineStepRef.lean", "history_derivative",
+     [("(v (k - 1) i) 0", "(v k i) 0", 1)], "", "EngineStepRef.false_history_no_shift H", None),
+    ("M118_stepref_neighbor_reads_current_slot", "EngineStepRef.lean", "neighbor_derivative",
+     [("(v d j - v 0 i)) 0", "(v 0 j - v 0 i)) 0", 1)], "", "EngineStepRef.false_neighbor_current_slot H", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -535,9 +565,20 @@ VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
          "probe_altU_period_two", "probe_unitRate_constant",
          # #41 note 1 (Researcher 001, 9fd50ba): pin the values of altU, so pi/2 in place of pi is killed
          "probe_altU_values"]
+# CommonRootSimple.lean / EngineStepRef.lean (Arena cycles 13 and 21): closed-number evaluations of the definitions,
+# proved by unfolding them in the probe itself
+VP_CR = ["probe_commonPoly_eval_d1", "probe_commonPoly_eval_d2"]
+VP_SR = ["probe_clippedWeight_values", "probe_phaseHead_value", "probe_phaseStep_values", "probe_orbitPath_value"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
-                "FrequencyLock.lean": VP_FL}
+                "FrequencyLock.lean": VP_FL,
+                "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR}
+CP_OLD = "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n"
+CW_OLD = "def clippedWeight (b : ℝ) : ℝ := max 0 b\n"
+HEAD_OLD = ("  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
+            "    clippedWeight b * Real.sin (x d j - x 0 i))\n")
+STEP_OLD = "  if k = 0 then phaseHead n d dt omega b x i else x (k - 1) i\n"
+ORBIT_OLD = "  theta - (k : ℝ) * dt * Omega + t * v k i\n"
 WU_DEF_OLD = "def weightUpdate (p : Params) (D B : Weights V) : Weights V := stepM p D B\n"
 FB_OLD = "  (U n state.1 state.2 Bnew, Bnew)\n"
 PIN_INPUT = ["probe_coherence_values", "probe_asym_coherence_values"]
@@ -668,6 +709,34 @@ DEF_MUTANTS = [
     ("M109_lock_unit_rate_time_varying", "FrequencyLock.lean",
      [(UR_OLD, "def unitRate (n : ℕ) (_ : Fin 2) : ℝ := (n : ℝ) + 1\n", 1)],
      ["probe_unitRate_constant"]),
+    # ---- CommonRootSimple.lean: the polynomial (numbered after the statement mutants M110-M118) ----
+    ("M119_commonroot_constant_sign_flipped", "CommonRootSimple.lean",
+     [(CP_OLD, "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d + C (h : ℂ)\n", 1)], VP_CR),
+    ("M120_commonroot_middle_power_shifted", "CommonRootSimple.lean",
+     [(CP_OLD, "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ (d + 1) - C (h : ℂ)\n", 1)], VP_CR),
+    ("M121_commonroot_middle_coefficient_one_plus_h", "CommonRootSimple.lean",
+     [(CP_OLD, "  X ^ (d + 1) - C (((1 + h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n", 1)], VP_CR),
+    # ---- EngineStepRef.lean: clip, head, step, orbit ----
+    ("M122_stepref_clip_dropped", "EngineStepRef.lean", [(CW_OLD, "def clippedWeight (b : ℝ) : ℝ := b\n", 1)],
+     ["probe_clippedWeight_values"]),
+    ("M123_stepref_clip_min_for_max", "EngineStepRef.lean",
+     [(CW_OLD, "def clippedWeight (b : ℝ) : ℝ := min 0 b\n", 1)], ["probe_clippedWeight_values"]),
+    ("M124_stepref_head_self_coupling", "EngineStepRef.lean",
+     [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j : Fin n,\n    clippedWeight b * Real.sin (x d j - x 0 i))\n", 1)],
+     ["probe_phaseHead_value"]),
+    ("M125_stepref_head_reads_current_slot", "EngineStepRef.lean",
+     [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
+                 "    clippedWeight b * Real.sin (x 0 j - x 0 i))\n", 1)], ["probe_phaseHead_value"]),
+    ("M126_stepref_head_sine_reversed", "EngineStepRef.lean",
+     [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
+                 "    clippedWeight b * Real.sin (x 0 i - x d j))\n", 1)], ["probe_phaseHead_value"]),
+    ("M127_stepref_head_dt_on_omega_only", "EngineStepRef.lean",
+     [(HEAD_OLD, "  x 0 i + dt * omega + (∑ j ∈ Finset.univ.erase i,\n"
+                 "    clippedWeight b * Real.sin (x d j - x 0 i))\n", 1)], ["probe_phaseHead_value"]),
+    ("M128_stepref_history_not_shifted", "EngineStepRef.lean",
+     [(STEP_OLD, "  if k = 0 then phaseHead n d dt omega b x i else x k i\n", 1)], ["probe_phaseStep_values"]),
+    ("M129_stepref_orbit_sign_flipped", "EngineStepRef.lean",
+     [(ORBIT_OLD, "  theta + (k : ℝ) * dt * Omega + t * v k i\n", 1)], ["probe_orbitPath_value"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -704,6 +773,14 @@ EQUIV_CONTROLS = [
     # #41 note 1: the same altU with the branches swapped must not be killed by probe_altU_values
     ("E17_lock_alt_rate_branches_swapped", "FrequencyLock.lean",
      [(ALT_OLD, "def altU (n : ℕ) (_ : Fin 2) : ℝ := if n % 2 = 1 then 0 else Real.pi\n", 1)]),
+    # Arena cycles 13 and 21 (the researcher's P-E1 for each file, plus a commuted max)
+    ("E18_commonroot_top_power_split", "CommonRootSimple.lean",
+     [(CP_OLD, "  X ^ d * X - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n", 1)]),
+    ("E19_stepref_sine_written_negated", "EngineStepRef.lean",
+     [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
+                 "    clippedWeight b * -Real.sin (x 0 i - x d j))\n", 1)]),
+    ("E20_stepref_clip_max_commuted", "EngineStepRef.lean",
+     [(CW_OLD, "def clippedWeight (b : ℝ) : ℝ := max b 0\n", 1)]),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -747,7 +824,9 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.WeightUpdate (pdriveRow edgeFloor Good onGap Sstar)\n"
          "open AIEFGate.CoherenceMotion (rTrace)\n"
          "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n"
-         "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n")
+         "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n"
+         "open Polynomial (derivative)\nopen AIEFGate.CommonRootSimple (commonPoly)\n"
+         "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 

@@ -1407,3 +1407,95 @@ The pins move as follows (after the 2026-11-17 refresh onto `16c7893`): P4b `len
 - First version (`ae2c25a`): `SKIP_CACHE=1 ./check_lean_gate.sh` PASS, 807 declarations, 0 warnings, standard axioms only. Full mutation run: 46/46 statement mutants rejected, 25/25 definition mutants killed, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 297 passed.
 - After Researcher 001's audit (M100–M104, `projectedSlope_lt_quarter_of_C`, the two d = 2 instances, `#print axioms`): gate PASS, **818 declarations**, standard axioms only. Full unfiltered mutation run: **51/51 statement** (the one name-reference note is M31's, pre-existing), **25/25 definition**, 11/11 equivalence controls not killed, 3/3 typo controls flagged invalid, RESULT PASS. pytest 299 passed; all repository checkers rc 0.
 - After the merge-refresh onto `main` `16c7893` (P6 #39, study-path #40, frequency lock #41) and the renumbering to M95–M106: gate PASS, **893 declarations**, standard axioms only. Full mutation run: **70/70 statement**, **36/36 definition**, **106/106 total**, 16/16 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS. pytest 367 passed; all repository checkers rc 0.
+
+## 16. Arena intake: CommonRootSimple and EngineStepRef (branch `research/lean-gate-arena-intake`, from `main` `d2a62b7`; numbered after §15 and the #41 follow-up M107–M109 / E17)
+
+### 16.1 What it is
+Two Lean files deposited by Arena_Researcher_06020041 on `audit-inbox` (unverified inbox material), taken in by
+Auditor Seat 002 and compiled only with networking off (`unshare -rn lake build`). Only the file headers were
+rewritten (to the repository copyright block and a module doc, so the header linter passes) and probes, `false_*`
+witnesses and `#print axioms` lines were appended before `end`. No deposited proof was changed.
+
+`lean/AIEFGateCore/AIEFGateCore/CommonRootSimple.lean` (cycle 13, `audit-inbox` @ `380052e`, namespace
+`AIEFGate.CommonRootSimple`), pure algebra over ℂ for P(λ) = λ^(d+1) − (1−h)λ^d − h:
+- `common_root`: 1 is a root for every real h and natural d.
+- `derivative_at_one`: P′(1) = 1 + d·h (the derivative is now formalised, closing the gap noted in §15.1).
+- `root_multiplicity_one`: for 0 < h, the root 1 is simple.
+- `unit_circle_root_unique_and_simple`: for 0 < h < 1, any root with |z| = 1 is z = 1 and is simple.
+- Counterexamples kept from the deposit: `negative_parameter_double_*`, `upper_boundary_other_unit_root`, `derivative_probe`.
+
+`lean/AIEFGateCore/AIEFGateCore/EngineStepRef.lean` (cycle 21, `audit-inbox` @ `8fc0d24`, namespace
+`AIEFGate.EngineStepRef`), a fixed-weight reference model of one phase step:
+- `clippedWeight b = max 0 b`; `phaseHead` = x 0 i + dt·(ω + Σ_{j ≠ i} clippedWeight b · sin(x d j − x 0 i));
+  `phaseStep` uses the head at slot 0 and shifts slot k > 0 to the old slot k − 1; `orbitPath` is the rotating
+  history θ − k·dt·Ω plus t·v.
+- `orbit_invariant`: if Ω = ω + (n−1)·clippedWeight b·sin(−d·dt·Ω), the rotating history advances by +dt·Ω (unwrapped).
+- `neighbor_derivative`, `head_derivative_raw`, `head_derivative_block`, `phase_step_head`, `history_derivative`:
+  real derivatives in t at t = 0 (HasDerivAt) of the step along the orbit, giving the block
+  (1 − (n−1)·dt·b·cos(d·dt·Ω))·v₀ᵢ + dt·b·cos(d·dt·Ω)·Σ_{j≠i} v_d j for the head and v_(k−1) for k > 0.
+- Concrete probes from the deposit: `two_node_probe`, `self_coupling_probe`, `adjacent_history_probe`, `clipping_probe`.
+
+**Engine citations (checked by Auditor against `aief_experiment_engine_v1.py` at `d2a62b7`, lines 789–797, 830–839,
+841–844; pinned in `test_lean_gate_arena_intake.py`):** the coupling uses the clipped, already-updated weight
+matrix with a zero diagonal (no self coupling), the delayed neighbour phase, and the current own phase; the history
+is appended then its oldest entry dropped (engine `history[0]` is the OLDEST entry, length delay_steps + 1). The Lean
+slot index k counts steps back from the newest, so Lean slot d is engine `history[0]`; the order is reversed, not wrong.
+
+**Not covered (disclosures):**
+- Fixed common off-diagonal weight b, no shuffle, no active projection, no EMA/weight dynamics: this is not the
+  adaptive engine, and nothing here says the engine's linearisation equals this block.
+- Unwrapped phases: the engine takes θ mod 2π after the step; the Lean model does not (the file says so).
+- Existence of Ω solving the orbit equation is **not** proved; `orbit_invariant` takes it as a hypothesis.
+- `probe_orbitPath_value` checks a single point (5 − 2·2·3 + 7·2 = 7; the flipped sign gives 31), so it pins the
+  sign of the k·dt·Ω term (M129) and little else.
+- Nothing here supports any AIEF-1.4 claim.
+
+### 16.2 Statement mutants M110–M118 (rule as §5: real proof failure, refuted by a proved negation, term-specific)
+| Mutant | Change | Refuted by |
+|---|---|---|
+| M110 | `root_multiplicity_one`: `0 < h` := True | `false_multiplicity_no_pos` (d = 1, h = −1: double root at 1) |
+| M111 | `unit_circle_root_unique_and_simple`: `h < 1` := True | `false_unit_root_no_upper` |
+| M112 | `unit_circle_root_unique_and_simple`: `0 < h` := True | `false_unit_root_no_pos` |
+| M113 | `derivative_at_one`: `1 + d·h` → `1 + h` | `false_derivative_no_delay` |
+| M114 | `orbit_invariant`: `+ dt·Ω` → `− dt·Ω` | `false_orbit_backward` |
+| M115 | `orbit_invariant`: orbit equation := True | `false_orbit_no_frequency` |
+| M116 | `head_derivative_block`: `0 < b` := True | `false_block_no_pos` (via `clipping_probe`, `HasDerivAt.unique`) |
+| M117 | `history_derivative`: `v (k−1) i` → `v k i` | `false_history_no_shift` (via `adjacent_history_probe`) |
+| M118 | `neighbor_derivative`: `v d j` → `v 0 j` | `false_neighbor_current_slot` |
+
+### 16.3 Definition mutants M119–M129 (rule as §11.3: build fails, no name-reference/parse error, a declared value probe fails)
+| Mutant | Change | Killed by |
+|---|---|---|
+| M119 | `commonPoly`: constant term sign flipped | `probe_commonPoly_eval_d1`, `probe_commonPoly_eval_d2` |
+| M120 | `commonPoly`: middle power X^(d+1) | same |
+| M121 | `commonPoly`: middle coefficient 1 + h | same |
+| M122 | `clippedWeight`: clip dropped | `probe_clippedWeight_values` |
+| M123 | `clippedWeight`: `min` for `max` | same |
+| M124 | `phaseHead`: self coupling (sum over all j) | `probe_phaseHead_value` |
+| M125 | `phaseHead`: reads the current slot of the neighbour | same |
+| M126 | `phaseHead`: sine argument reversed | same |
+| M127 | `phaseHead`: dt on ω only | same |
+| M128 | `phaseStep`: history not shifted | `probe_phaseStep_values` |
+| M129 | `orbitPath`: sign of k·dt·Ω flipped | `probe_orbitPath_value` |
+
+Equivalence controls (must not be killed): E18 `X^d * X` for `X^(d+1)`; E19 `clippedWeight b * -Real.sin (x 0 i − x d j)`;
+E20 `max b 0`. **Disclosure:** E18–E20 make the build fail inside proofs (`unit_circle_root_unique_and_simple`,
+`orbit_invariant` / `head_derivative_raw`, `head_derivative_block`) but no value probe fails, so they count as not
+killed only through the probe rule. This is proof brittleness, the same situation as Researcher 001's #43 note N1 on E17.
+
+`OPENS` gains `open Polynomial (derivative)`, `open AIEFGate.CommonRootSimple (commonPoly)` and
+`open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)` so refutation files see the
+file-local definitions; a grep found no name clashes.
+
+### 16.4 Tests and pins
+`research/lean_gate/tests/test_lean_gate_arena_intake.py` checks imports and hash pins, no escape hatches, an axioms
+print for every theorem, the exact shape of M110–M129 and E18–E20, the `OPENS` entries, the probe and witness values
+in exact arithmetic, and the engine citations above. Pins move: P4b `len(MUTANTS)` 70 → 79; P5 `N_STATEMENT_MUTANTS`
+70 → 79, `N_DEF_MUTANTS` 39 → 50, total 109 → 129, equivalence controls 17 → 20; c016 unique controls 21 → 24.
+
+### 16.5 Results
+Local, 2026-11-19, on `main` `d2a62b7`: `unshare -rn lake build` 2341 jobs, 0 warnings. `SKIP_CACHE=1 ./check_lean_gate.sh`
+PASS, **947 declarations**, standard axioms only (propext, Classical.choice, Quot.sound). Full unfiltered mutation run:
+**79/79 statement** mutants rejected (the one name-reference note is M31's, pre-existing), **50/50 definition** mutants
+killed, **129/129 total**, 20/20 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
+pytest 373 passed; all repository checkers rc 0 after the inventory rebuild.
