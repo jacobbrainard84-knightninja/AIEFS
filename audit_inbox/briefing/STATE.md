@@ -1,8 +1,26 @@
-# Project state (as of 2026-11-11 04:30 Europe/Tirane; refreshed by Auditor Seat 002)
+# Project state (current section refreshed 2026-11-20 4:10 PM MST by Auditor Seat 002)
 
 AIEFS is a hobby math project: an adaptive Kuramoto model (N = 12 oscillators) with Hebbian-style adaptive couplings B, a delay τ = 0.5, an EMA of pairwise coherence R, and a min-endpoint multiplicative capacity gate, together with Lean 4 proofs of some supporting facts.
 
-Items marked **PENDING** have not landed on `main`. Do not cite them as results. Items marked **IN PROGRESS** are on a non-main branch and are not yet dual-control-audited / merged.
+Items marked **PENDING** have not landed on `main`. Do not cite them as results. Branch verdicts are agent ratings: input only (README rule 7).
+
+## Current state, 2026-11-20 (snapshot; re-run `git ls-remote origin` before citing)
+
+- **`main` = `0a6a2f6`** (`0a6a2f62ea9af147cac60a7be30d85d6b37fe52a`), after PR #46.
+- **Merged since the 2026-11-11 snapshot below:** #28–#30 (mutation-step guard, engine step-order pins, doc drift); #31 Lean P5 (delay buffer, phase increment, coherence EMA); #32, #36 (mutation-check guards); #33 engine step-order round 2; #34, #35 (E22 step-size sweep was run, label stays UNEXPLAINED); #37, #38 c014 TrajectoryInvariants; #39 c016 coherence speed limit; #40 `check_study_paths.py`; #41, #43 phase/frequency lock (SPEC §14); #42 DelayRoots (SPEC §15); #44, #45 Arena intake: CommonRootSimple + EngineStepRef (SPEC §16); #46 H1 metamorphic engine tests.
+- **Open PR:** #47 H3, a report-only Python mutation tester for the checker scripts (`research/h3-py-mutation` @ `e4341ca`; independent audit CLEAN). Waits on the owner's merge.
+- **PENDING branches (not on `main`):**
+  - `research/lean-gate-ema-radial` @ `0602c77`: EMA radial lemma from Arena (SPEC §17). Audited CLEAN WITH NOTES; PR waits on the owner.
+  - `fix/validate-theta-history` @ `2c71648`: engine-side guard that `theta == history[-1]`. Audited CLEAN WITH NOTES; PR waits on the owner.
+  - `research/h2-engine-invariants` @ `cf340b4`: seeded engine-invariant property tests. In delta review.
+  - `research/h7-spec-pins` @ `e55b418`: held until ema-radial lands.
+  - `arena/d4a487cc-aiefs` @ `2af3859`: owner hold; never merge the tree. Its gate-form measurement is open question 16.
+- On 2026-11-20 the owner approved deleting 21 remote branches that were fully merged or superseded; the north-star evaluation doc was archived under `audit_inbox/salvage/2026-11-20_branch-archive/`.
+- **Engine hardening plan (seats):** H1 merged (#46); H2 in review; H3 PR #47; H7 held; H5 later; H4 spike last; H6 doc-only.
+- **Outside researchers and lanes:** see `README.md` → "Expectations for outside research bots". Current directions: Arena DIRECTION-5, Researcher_0282416 DIRECTION-1, Researcher_0448126 DIRECTION-1 (each in its own `Lead Direction/`).
+- **Inbox layout** changed on 2026-11-20 (audit-inbox `594c23d`): one folder per researcher; `audit_inbox/MOVES.md` maps old paths.
+
+## Historical snapshots (kept for the record; superseded by the section above)
 
 ## Update 2026-11-14 (Auditor Seat 002; snapshot, re-run `git ls-remote origin` before citing)
 - `main` = `a559e0d` (PR #30 merged; PRs #28, #29, #30 landed since the table below). 0 open PRs at that time.

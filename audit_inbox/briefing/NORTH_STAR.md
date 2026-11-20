@@ -42,7 +42,9 @@ What separates an interesting proving ground from a useful library comes down to
 - how **tightly the hypotheses** are stated;
 - whether verification stays **as careful as the numerical audits**.
 
-## Where we are now (checked 2026-11-11 against `origin/main` `1c30ca5`)
+## Where we are now (checked 2026-11-11 against `origin/main` `1c30ca5`; addendum 2026-11-20)
+
+**Addendum 2026-11-20 4:10 PM MST (main `0a6a2f6`).** Since the check below, `lean/AIEFGateCore` gained: P5 delay buffer, phase increment and coherence EMA (#31); c014 trajectory invariants (#37, #38); c016 coherence speed limit and step envelopes (#39); phase/frequency lock (#41, #43); delay characteristic polynomials, DelayRoots (#42); and an engine-shaped step reference `EngineStepRef` plus `CommonRootSimple` (#44, #45). `EngineStepRef` is an intentionally restricted model with a **prescribed scalar weight**; a matrix-weight version that covers states the engine actually reaches is Arena's current assignment (DIRECTION-5). Pending: the EMA radial lemma (`research/lean-gate-ema-radial`). The list below is the 2026-11-11 picture.
 
 The premise that "the Lean part is only a 2×3 kernel identity" is **out of date**.
 

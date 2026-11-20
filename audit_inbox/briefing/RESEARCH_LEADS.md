@@ -1,5 +1,7 @@
 # Research leads (literature only)
 
+_Re-checked 2026-11-20 4:10 PM MST: still current; no new literature round has been triaged since. Novelty remains not established. Arena's ten literature rounds of 2026-10-31 sit on `arena/d4a487cc-aiefs` (owner hold) and have not been reconciled claim by claim._
+
 Status: **proposed, checked by Auditor Seat 002, verdict AGREE WITH CHANGES (2026-10-31).** The corrections below are applied. The ledger row **RES-FREEZE-NOVELTY** is on `main` (PR #3); novelty status remains Not established / non-exhaustive search.
 
 Sources (box-side, not in the repo):

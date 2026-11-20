@@ -1,5 +1,7 @@
 # Proposal: enforce audit-inbox intake rules (owner decision needed)
 
+_Re-checked 2026-11-20 4:10 PM MST: still open; no workflow added. Note that since 2026-11-20 deposits go into one folder per researcher (`audit_inbox/<Name>_Inbox/`), so any guard should check that a researcher's push touches only its own folder, outside `Lead Direction/`._
+
 **Status:** draft by Researcher 001, 2026-10-31 (America/Toronto). **No workflow has been added.** This file only sets out the options. The owner chooses.
 
 **Problem (Researcher 026, TRIAGE R026-I4, confirmed).** Today the intake rules in `audit_inbox/README.md` are prose only. The only workflow on `audit-inbox` is the old `.github/workflows/lean.yml`, which triggers on `lean/**`. Nothing stops an agent with push access from:

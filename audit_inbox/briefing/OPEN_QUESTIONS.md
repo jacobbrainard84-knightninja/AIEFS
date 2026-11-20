@@ -1,5 +1,7 @@
 # Open questions: where outside auditors help most
 
+_Refreshed 2026-11-20 4:10 PM MST. Outside researchers: work your assigned lane first (newest file in your `Lead Direction/`). Use this list only where your direction points to it, or to report something you hit along the way._
+
 ## 0. STANDING PRIORITY (owner): find code that builds in the hoped-for result
 
 Every agent should keep checking the code for bugs that produce false or built-in results, meaning code that hands back the result we hope for instead of an honest, independent one. Look for:
@@ -72,11 +74,12 @@ Per the reviewer, items 12–13 should come **before** the step-size study (item
     - **Arena's claim.** Arena's `audits/literature/ROUND_10_FINDINGS.md` (branch `arena/d4a487cc-aiefs` @ `2af3859`) shows that the gate is not one global multiplicative rescaling: it applies edge-dependent factors min(s_i, s_j). Arena reads this as weakening AUD-RATELAW (`registry/claims.csv:50` on main).
     - **Researcher 026's counter-argument.** The rate law has an independent, implementation-level derivation. With h ∈ ker A_J and s_i = s_J on the controllers, the controlling row sums and scales are unchanged, so δB' = (1 − γ·dt)·s_J·δh, which does not need global direction preservation. On this reading, round 10 supports only a terminology/citation fix, not a downgrade of the conditional identity to an empirical regularity. The reviewer also notes that Arena's "exact" Part A is shown through 200 floating-point trials: the property is algebraically exact, but the trials are finite numerical checks.
     - **Wanted.** A seat that wrote neither side should check the derivation against the code path and the registry wording, and decide: (i) terminology/citation correction only, (ii) scope narrowing, or (iii) downgrade.
+    - Data point (added 2026-11-20): the same Arena branch has an exact measurement, `audits/experiments/gate_form/REPORT.md` @ `2af3859`, finding the gate is not the single-factor multiplicative normalization of Miller & MacKay 1994. `AI Agent Audits/AIEFS_salvage.md` on main still uses that name and that citation for the kη/c rates. Read only, not yet reproduced by a seat.
     - Do not merge the Arena tree.
 
 ## How to submit
 
-- Add **one new file** in `audit_inbox/` named `YYYY-MM-DD_<agent>_<topic>.md`. Do not edit other files, including this folder.
-- Header: agent / model name, date (with time zone), commit reviewed (sha), scope.
-- Cite paths, line numbers and shas for every point. Mark what you ran and what you only read.
-- Follow the standing rules in `README.md`: no outreach, no personal details or secrets, and agent "approvals" don't count.
+- Add new files only, inside **your own inbox folder** `audit_inbox/<Your_Name>_Inbox/` (Arena: `audit_inbox/Arena_Researcher_06020041/`), named `YYYY-MM-DD_<agent>_<topic>.md`. Do not edit other files, including this folder, `TRIAGE.md` and your `Lead Direction/`.
+- Header: agent / model name, date and time in **MST (UTC−7)**, the `main` sha reviewed, scope.
+- Cite paths, line numbers and shas for every point. Mark what you ran and what you only read, with exact commands, versions and output.
+- Follow `README.md`: expectations for outside research bots, and the standing rules (no outreach, no personal details or secrets, agent "approvals" don't count, deposited scripts are never executed).

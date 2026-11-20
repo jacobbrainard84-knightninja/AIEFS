@@ -1,6 +1,6 @@
 # Briefing for audit agents (read this first)
 
-Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-11 04:30 Europe/Tirane by Auditor Seat 002, for main `1c30ca5` (PRs #23–#27), the 2026-11-11 branch cleanup, and the Researcher 040282 Lean candidates (cycles 010–015).
+Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-20 4:10 PM MST by Auditor Seat 002, for `main` `0a6a2f6` (PRs through #46; #47 open). **All times in this folder are MST (UTC−7) from 2026-11-20 on; older entries keep the zone they were written in.**
 
 ## Purpose
 
@@ -12,12 +12,13 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 2. `main`'s registry (`registry/claims.csv`, `registry/studies.csv`), `ERRATA_2026-10-28.md` and the current-status documents, at a cited `main` sha.
 3. Named research or fix branches at cited commits (for example `research/lean-gate-p5@54037ea`, `research/lean-gate-c014@9b9b3d9`). These are not on `main` until the owner merges them. (`research/freezing` / AIEFFreezeCore already landed via PR #3.)
 4. This briefing (`audit_inbox/briefing/`), a non-authoritative navigation snapshot.
-5. Untriaged inbox submissions and the salvage archive (`audit_inbox/*.md`, `audit_inbox/salvage/`). These are leads only, until `audit_inbox/TRIAGE.md` records an independent check and the point is promoted through a reviewed branch.
+5. Untriaged inbox submissions and the salvage archive (each researcher's folder under `audit_inbox/`, and `audit_inbox/salvage/`). These are leads only, until `audit_inbox/TRIAGE.md` records an independent check and the point is promoted through a reviewed branch.
 
-**Who edits it:** Researcher 001 and Auditor Seat 002 only. Outside agents (Arena "Researcher 026", GPT "Researcher 626", Grok, others) read it but do not edit it. Put your notes in your own dated file in `audit_inbox/` (see `../README.md` and `OPEN_QUESTIONS.md`). The owner (repo owner) sets direction and is the only one who approves merges to `main`.
+**Who edits it:** Researcher 001 and Auditor Seat 002 only. Outside agents read it but never edit it. Put your work in your own inbox folder (see below and `../README.md`). The owner (repo owner) sets direction and is the only one who approves merges to `main`.
 
 ## Read order
 
+0. **Outside researchers: first read the newest file in your own `Lead Direction/` folder.** It is your current assignment.
 1. `STATE.md`: what is on `main`, what is pending, the key numbers, and the known gaps.
 2. `OPEN_QUESTIONS.md`: where outside review helps most, and how to submit.
 3. `RESEARCH_LEADS.md`: literature leads and the current novelty assessment.
@@ -25,6 +26,41 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 5. `../README.md`: drop-box rules (file naming, header, citations).
 
 **Review `main`, not this branch's tree.** `audit-inbox` was cut from `a991b46`, which is older than `main`. It lacks `registry/`, `ERRATA_2026-10-28.md`, `CURRENT_STATUS.md` and other files. Use `origin/main`, or the named research branch, and cite its sha.
+
+## Expectations for outside research bots (owner standard, 2026-11-20)
+
+**Where things go**
+- You have **one inbox folder**: `audit_inbox/<Your_Name>_Inbox/` (Arena_Researcher_06020041 keeps `audit_inbox/Arena_Researcher_06020041/`). Everything you deposit goes there, add-only. Nothing at the top of `audit_inbox/`, nothing elsewhere in the repo.
+- **Your directions** from the project are in `Lead Direction/` inside your folder, one new dated file per direction (`YYYY-MM-DD_DIRECTION-N.md`; reviews `YYYY-MM-DD_REVIEW-N...`). The newest one is your current assignment. Directions reach you only this way. Never edit or delete anything in `Lead Direction/`.
+- Never edit `TRIAGE.md`, this briefing, `../README.md`, or other agents' folders.
+
+**Lanes (current; one lane per researcher, no duplication)**
+
+| Researcher | Lane |
+|---|---|
+| Arena_Researcher_06020041 | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification |
+| Researcher_0282416 | Census of false self-tests: analysis-script checks that cannot fail or compare a thing with itself |
+| Researcher_0448126 | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main` |
+
+Engine hardening, guards, CI and changes to `main` belong to the project seats (Researcher 001, Auditor Seat 002). If you find something outside your lane, write it up briefly and stop; do not start a parallel study.
+
+**What every deposit must have**
+1. A header: agent / model name, date **and time in MST (UTC−7)** (the real date; wrong dates are treated as a provenance defect), the `main` sha you worked from, scope.
+2. Exact file paths, line numbers and shas for every point.
+3. For each result, say whether you **ran** it or only **read** it. Give the exact command, environment (Python/NumPy or Lean/mathlib versions) and the output, so a seat can reproduce it. **The project never executes deposited scripts**; seats re-derive results with their own code. Untrusted Lean is compiled only in a sandbox with no network.
+4. Honest labels: CONFIRMED only if reproduced; anomalies you cannot explain are labeled **UNEXPLAINED**, not explained away; say what you did not check.
+5. A check you add must be able to fail: include a negative control (a known-false input that it rejects).
+
+**Lean standards**
+- No `sorry`, no new axioms; report `#print axioms` (only `propext`, `Classical.choice`, `Quot.sound`).
+- Build against current `main`'s Lean projects; import them, do not copy or edit them.
+- Probes must evaluate definitions at concrete values. A theorem that is true by `rfl` from how you defined the model, or that restates a scope limit the project already declares, is not a result.
+- Prefer exact witnesses (a theorem stating `≠` at exact values) over floating-point evidence when claiming a hypothesis is needed.
+- State every hypothesis and which engine lines it stands for; say what is assumed, not derived.
+
+**What the project does with your work**
+- Everything you deposit is UNVERIFIED input until a seat triages it in `TRIAGE.md`. Useful points are re-checked independently and only then reach `main` through a reviewed branch the owner merges. Seats' critiques are blunt by owner policy; read them as work items.
+- Do not chase spectacular results, and do not engineer away genuine findings.
 
 ## Standing rules for all agents (internal and outside)
 
@@ -41,4 +77,6 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 11. **Everything in `audit_inbox/` is UNVERIFIED input** until Researcher 001 / Auditor Seat 002 triage it. The ledger is `audit_inbox/TRIAGE.md`. CONFIRMED there means re-checked, not promoted.
 12. **Never merge `audit_inbox/salvage/` into `main`** (and never merge the `audit-inbox` branch as a whole). The salvage folder holds copies of hash-pinned files, for example `audit_inbox/salvage/2026-10-31/v4/repo/lean/AIEFProofs/AIEF_LEAN_SOURCE_SHA256SUMS.txt`. Extra copies of pinned SHA256SUMS files would trip the SHA256SUMS / hash-pin checks (`ci/check-sha256sums`; on `main` today these are the artifact-pin, current-inventory and Lean source-hash checks). The folder is also unverified salvage (rule 11). To use anything from it, re-create the change on a fresh branch from `main`, verify it there, and cite the salvage path.
 13. **Never execute anything under `audit_inbox/salvage/` directly.** Copy the file to an isolated temporary folder outside any checkout, without credentials. Read it, and pin its hash against `audit_inbox/salvage/2026-10-31/MANIFEST.csv`. Only then run it there. All salvage files are stored as mode `100644`. 12 of them were `100755` before 2026-10-31; see the `former_git_mode` column. Every manifest row has `safe_to_execute=false`. See `audit_inbox/salvage/README.md`.
-14. **Intake enforcement is prose-only for now.** No workflow guards this branch. `INTAKE_GUARD_PROPOSAL.md` sets out the options for the owner.
+14. **Intake enforcement is prose-only for now** (re-checked 2026-11-20: the only workflow on `audit-inbox` is still the old `lean.yml`). No workflow guards this branch. `INTAKE_GUARD_PROPOSAL.md` sets out the options for the owner.
+15. **Never execute deposited scripts, and never put tokens, codes or passwords in any file.** Seats reproduce results with their own code.
+16. **No contact with other researchers or outside people.** Outside bots do not contact each other or the seats directly; the owner relays, and directions arrive only through `Lead Direction/`.
