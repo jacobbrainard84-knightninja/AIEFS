@@ -1,5 +1,5 @@
 """Lean intake of Arena_Researcher_06020041 cycles 13 and 21 (SPEC §16): pin CommonRootSimple.lean and
-EngineStepRef.lean and their mutants M110-M129 / controls E18-E20 without running Lean.
+EngineStepRef.lean and their mutants M110-M130 / controls E18-E20 without running Lean.
 
 CommonRootSimple.lean (audit-inbox 380052e): the common-mode polynomial X^(d+1) - (1-h) X^d - h has the simple
 root 1 (h > 0), and for 0 < h < 1 it is the only unit-circle root.
@@ -71,7 +71,7 @@ def test_statement_mutants_exact_shape():
 
 def test_def_mutants_and_controls():
     de = [m for m in mc.DEF_MUTANTS if m[1] in FILES]
-    assert [int(m[0].split("_")[0][1:]) for m in de] == list(range(119, 130))
+    assert [int(m[0].split("_")[0][1:]) for m in de] == list(range(119, 131))
     for name, f, edits, pins in de:
         assert mc.mutate_file(SRC[f], edits) != SRC[f], name
         assert pins and set(pins) <= set(mc.VALUE_PROBES[f]), name
@@ -106,6 +106,11 @@ def test_probe_and_witness_values_exact():
     # the mutants' values differ: self coupling 5/2, current slot 1/2, reversed sine -1/2... all != 3/2
     for v in (2 * (0.25 + 0.5 + 0.5), 2 * 0.25, 2 * (0.25 - 0.5), 2 * 0.25 + 0.5):
         assert not math.isclose(v, 1.5)
+    # #44 N1: at b = -1 the clip zeroes the coupling, head = dt * omega = 1/2; the raw-b mutant M130 gives -3/2
+    assert math.isclose(0 + 2 * (0.25 + max(0.0, -1.0) * math.sin(math.pi / 2)), 0.5)
+    assert math.isclose(0 + 2 * (0.25 + (-1.0) * math.sin(math.pi / 2)), -1.5)
+    m130 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M130")][0]
+    assert m130[3] == ["probe_phaseHead_negative_weight"] and "clippedWeight" not in m130[2][0][1]
 
 
 def test_engine_citations_match_engine_source():
