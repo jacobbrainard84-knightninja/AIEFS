@@ -44,7 +44,7 @@ On 2026-11-11 the owner approved deleting 20 remote branches that were fully mer
 | 011 | PhaseIncrement | P5 branch | ADOPT as a building block (does not alone close the C004 gap) |
 | 013 | PhaseCoherenceBridge | P5 branch | ADOPT WITH NOTES (two node-uniform probe survivors) |
 | 014 | TrajectoryInvariants | `research/lean-gate-c014` | ADOPT WITH NOTES (pWide witnesses use a full-reset step; not about engine params) |
-| 015 | ClosedLoopCore | audit-inbox `cycle_015/` (not ported) | ADOPT WITH NOTES: delayed read in the phase coupling and dt are unpinned by its probes (F1/F2); fix in the port. See `audit_inbox/2026-11-11_auditor-seat-002_lean-candidate-reviews/`. |
+| 015 | ClosedLoopCore | audit-inbox `cycle_015/` (not ported) | ADOPT WITH NOTES: delayed read in the phase coupling and dt are unpinned by its probes (F1/F2); fix in the port. See `audit_inbox/Researcher_040282_Inbox/Lead Direction/2026-11-11_REVIEW-2_lean-candidates-c010-c016/`. |
 | 012 | EMATracking | audit-inbox `cycle_012/` | ADOPT WITH NOTES (textbook tracking bound; low priority) |
 | 016 | CoherenceMotion | audit-inbox `cycle_016/` (imports P5 @ 54037ea) | ADOPT WITH NOTES: R moves at most 2(1−α) ≈ 0.00114 per step at engine α |
 
@@ -93,7 +93,7 @@ None of these proves closed-loop phase locking (O1), convergence of R or B, a sh
 
 ## Open / owner / docs (not PENDING science merges)
 
-- **Docs:** `CURRENT_STATUS.md` still stamped 2026-10-23; dead tangent/cocycle paths; freeze wording and "75 rows" stale. Chronicler patch under `audit_inbox/2026-11-08_arena-chronicler_project-chronicler/recommendations/current_status_edits.patch` (apply-checked clean against `ba171d0`; `CURRENT_STATUS.md` is unchanged through `1c30ca5`) (apply from a branch cut from `main`, dual-control). `registry/studies.csv`: **11** unresolved `canonical_entrypoints` tokens in 5 study rows (re-checked 2026-11-09). `lean/AIEFProofsKn/README.md` still says the project is not in CI (false: required row). Architecture doc still says 14 studies / 43 claims (actual 15 / 80).
+- **Docs:** `CURRENT_STATUS.md` still stamped 2026-10-23; dead tangent/cocycle paths; freeze wording and "75 rows" stale. Chronicler patch under `audit_inbox/Arena_Chronicler_Inbox/2026-11-08_arena-chronicler_project-chronicler/recommendations/current_status_edits.patch` (apply-checked clean against `ba171d0`; `CURRENT_STATUS.md` is unchanged through `1c30ca5`) (apply from a branch cut from `main`, dual-control). `registry/studies.csv`: **11** unresolved `canonical_entrypoints` tokens in 5 study rows (re-checked 2026-11-09). `lean/AIEFProofsKn/README.md` still says the project is not in CI (false: required row). Architecture doc still says 14 studies / 43 claims (actual 15 / 80).
 - **Science follow-ups:** v2 rate-law predeclared rerun; science fixes E–H; `research/freezing/REPORT.md:189` `≥ B_c` → `> B_c` (nit).
 - **Owner items:** G2c (manifest/verifier self-pin gap); ART-0043; claims.csv FreezeCore "branch-only" wording.
 - **v4.1:** trust-anchor E24/E25 landed; module remains an **unaudited candidate**. Full scientific audit of v4.1 and a real S01 *analysis* output are still open (distinct from the trust-guard positive control).
@@ -106,7 +106,7 @@ None of these proves closed-loop phase locking (O1), convergence of R or B, a sh
 ## Update 2026-11-15 (Auditor Seat 002)
 
 - main is at `871417d`, after PR #37 (C014) and PR #38 (C014 follow-up).
-- Arena_Researcher_06020041 cycles 6–10 have been reviewed. See TRIAGE (i) and `2026-11-15_auditor-seat-002_arena06020041-cycles6-10-review/REVIEW.md`. Researcher 001 independently agrees on C6.
+- Arena_Researcher_06020041 cycles 6–10 have been reviewed. See TRIAGE (i) and `Arena_Researcher_06020041/Lead Direction/2026-11-15_REVIEW-2_cycles6-10/REVIEW.md`. Researcher 001 independently agrees on C6.
   - All results hold only for homogeneous ω and do not support any production claim.
   - C6 is superseded by phaselock. Its JSON dumps contain email addresses and must never be copied to main.
 - Pending branches, in landing order:

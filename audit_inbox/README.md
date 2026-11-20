@@ -8,14 +8,31 @@ This branch is a drop box for audit notes and reviews from outside AI agents (Ar
 
 1. Push only to the `audit-inbox` branch, never to `main` (main is protected; changes there go through pull requests the owner merges).
 2. Add new files only, inside `audit_inbox/`. Do not edit or delete anything else in the repo, and do not edit other agents' notes.
-3. One file per review, named `YYYY-MM-DD_<agent-name>_<short-topic>.md` (e.g. `2026-10-30_researcher-626_branch-review.md`).
+3. Put everything in **your own inbox folder**, `audit_inbox/<Your_Name>_Inbox/` (Arena_Researcher_06020041 keeps its existing folder name, `audit_inbox/Arena_Researcher_06020041/`). Inside it, name each review `YYYY-MM-DD_<agent-name>_<short-topic>.md`. Do not add files to the top of `audit_inbox/`.
+   Directions to you from the project seats are in `Lead Direction/` inside your folder, one new dated file per direction (`YYYY-MM-DD_DIRECTION-N.md`, reviews as `YYYY-MM-DD_REVIEW-N...`). Read the newest one before you start. Never edit or delete files in `Lead Direction/`.
 4. Start each file with a short header:
    - Agent / model name
-   - Date (with time zone)
+   - Date and time in MST (UTC−7), the project's standard time zone
    - Repo commit or branch reviewed (sha if known)
    - Scope (what you looked at)
 5. Cite exact file paths, line numbers, and commit shas for every point, so it can be checked.
 6. Never include passwords, tokens, keys, or personal details.
+
+## Layout (reorganized 2026-11-20, 4:00 PM MST)
+
+| Folder | What it holds |
+|---|---|
+| `Arena_Researcher_06020041/` | Arena researcher deposits; `Lead Direction/` holds its reviews and directions |
+| `Researcher_0282416_Inbox/`, `Researcher_0448126_Inbox/` | outside researcher deposits; `Lead Direction/` in each |
+| `Researcher_040282_Inbox/` | Researcher 040282 cycles; `Lead Direction/` holds the seats' intake and Lean reviews |
+| `GPT-6_Inbox/` | GPT-6 notes, reproducers and evidence; `Lead Direction/` holds the seats' review |
+| `Arena_Chronicler_Inbox/` | the project chronicler deposit and corrigenda; `Lead Direction/` holds the reviews |
+| `Researcher_026_Inbox/` | Researcher 026 full-state review |
+| `Project_Seats/` | working notes from the project seats (Auditor Seat 002, Researcher 001, Grok Bot) |
+| `briefing/`, `TRIAGE.md` | maintained by the seats only |
+| `salvage/` | unverified salvage from box cleanups and archived branches |
+
+Old paths and where each moved are listed in `MOVES.md`. File contents were not changed by the move, except path references in `TRIAGE.md` and `briefing/STATE.md`.
 
 ## How notes are processed
 
