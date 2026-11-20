@@ -534,3 +534,91 @@ def test_weight_path_mutants(tmp_path, name, old, new, caught):
         except (AssertionError, RuntimeError):
             failing.append(pname)
     assert failing, f"{name}: NO test catches this weight-path mutant"
+
+
+# ---------------------------------------------------------------------------- projection-scale exact probes
+PROJ_TOL = 1e-12  # each expected value is one or two float ops on short binary fractions: error <= a few ulp ~ 1e-15.
+
+
+def _proj_cfg(m=eng):
+    # N = 3, a = 4, q = 1, delta = 0 => capacity 4; scale_epsilon = 1 gives slack below capacity (see case A).
+    # eta = mu = gamma = 0 => B_unprojected = max(0, B0 + dt*(0*R - 0 - 0*B0)) = B0 exactly, symmetric, zero diagonal.
+    # omega = 0, theta = history = 0 => coupling sin(0) = 0, phases stay 0: only the projection acts.
+    c = m.ModelConfig(N=3, dt=1.0, tau=1.0, omega=(0.0, 0.0, 0.0), a=4.0, q=1.0, delta=0.0, eta=0.0, mu=0.0,
+                      gamma=0.0, T_window=1.0, B_c=0.0, B_init_scale=0.0, scale_epsilon=1.0)
+    c.validate()
+    return c
+
+
+def _proj_step(B0, m=eng):
+    c = _proj_cfg(m)
+    z = np.zeros(3)
+    st = m.DynamicState(theta=z, B=np.array(B0, dtype=float), coherence_acc=np.zeros((3, 3), dtype=complex),
+                        history=[z, z])
+    _, _, info = m.advance_state(st, c, np.random.default_rng(0), shuffle_driver=False)
+    return st.B, info
+
+
+def _sym3(b01, b02, b12):
+    return np.array([[0.0, b01, b02], [b01, 0.0, b12], [b02, b12, 0.0]])
+
+
+def probe_projection_case_A(m=eng):
+    """All scales < 1 and DISTINCT (kills min -> max in np.minimum.outer).
+    B0: b01 = b02 = 3, b12 = 5/2. Row sums r = (6, 11/2, 11/2) > cap 4 -> pre_violation, g_min_pre = 4 - 6 = -2.
+    s_i = min(1, 4/(r_i + 1)): s0 = 4/7, s1 = s2 = 4/(13/2) = 8/13 (both < 1, s0 < s1).
+    Engine: B_ij *= min(s_i, s_j):
+      b01 = b02 = 3 * min(4/7, 8/13) = 12/7,  b12 = (5/2) * 8/13 = 20/13.
+      rows (24/7, 12/7 + 20/13 = 296/91, 296/91) -> g_min = 4 - 24/7 = 4/7 >= 0 (engine guard passes).
+    min->max mutant: b01 = b02 = 3 * 8/13 = 24/13 (row 0 = 48/13 < 4, so the engine guard does NOT fire and
+    only these asserts can catch it); differs from 12/7 by 12/91.
+    Dropping min(1, .) is equivalent here (all scales < 1); case B covers it."""
+    B, info = _proj_step(_sym3(3.0, 3.0, 2.5), m)
+    assert info["pre_violation"] is True and info["projection_active"] is True
+    assert abs(info["g_min_pre"] - (-2.0)) < PROJ_TOL
+    assert np.allclose(B, _sym3(12 / 7, 12 / 7, 20 / 13), rtol=0.0, atol=PROJ_TOL), B
+    assert abs(info["g_min"] - 4 / 7) < PROJ_TOL
+
+
+def probe_projection_case_B(m=eng):
+    """Heavy node 0, light pair (1, 2) whose raw scales are > 1 (kills dropping min(1, .)).
+    B0: b01 = b02 = 5/2, b12 = 1/4. r = (5, 11/4, 11/4); pre_violation (5 > 4), g_min_pre = -1.
+    Raw 4/(r_i + 1): node 0: 4/6 = 2/3 (< 1); nodes 1, 2: 4/(15/4) = 16/15 (> 1) -> clipped to s = 1.
+    Engine: b01 = b02 = (5/2) * min(2/3, 1) = 5/3, b12 = (1/4) * min(1, 1) = 1/4 (unchanged: scale >= 1 path).
+      rows (10/3, 5/3 + 1/4 = 23/12, 23/12) -> g_min = 4 - 10/3 = 2/3.
+    No-min(1, .) mutant: b12 = (1/4) * 16/15 = 4/15 (rows 29/15 < 4: engine guard silent, only these asserts
+    catch it). (min->max here gives b01 = 5/2, row 0 = 5 > 4 and the engine guard raises; case A catches it
+    by value instead.)"""
+    B, info = _proj_step(_sym3(2.5, 2.5, 0.25), m)
+    assert info["pre_violation"] is True and info["projection_active"] is True
+    assert abs(info["g_min_pre"] - (-1.0)) < PROJ_TOL
+    assert np.allclose(B, _sym3(5 / 3, 5 / 3, 0.25), rtol=0.0, atol=PROJ_TOL), B
+    assert abs(info["g_min"] - 2 / 3) < PROJ_TOL
+
+
+def test_projection_scale_exact_values():
+    probe_projection_case_A()
+    probe_projection_case_B()
+
+
+PROJ_MUTANTS = [
+    # (name, old, new, case whose OWN asserts must fail with AssertionError)
+    ("projection_min_to_max", "np.minimum.outer(scale, scale)", "np.maximum.outer(scale, scale)", "A"),
+    ("projection_no_clip_at_1", "scale = np.minimum(1.0, config.capacity / (row_sum_pre + config.scale_epsilon))",
+     "scale = config.capacity / (row_sum_pre + config.scale_epsilon)", "B"),
+]
+
+
+def test_projection_probes_pass_on_unmodified_copy(tmp_path):
+    m = _load_mutant(tmp_path, "proj_identity", "def advance_state(", "def advance_state(")
+    probe_projection_case_A(m)
+    probe_projection_case_B(m)
+
+
+@pytest.mark.parametrize("name,old,new,case", PROJ_MUTANTS, ids=[x[0] for x in PROJ_MUTANTS])
+def test_projection_scale_mutants_killed_by_own_asserts(tmp_path, name, old, new, case):
+    m = _load_mutant(tmp_path, name, old, new)
+    probe = probe_projection_case_A if case == "A" else probe_projection_case_B
+    # AssertionError, not RuntimeError: the value asserts catch it, not the engine's capacity self-check.
+    with pytest.raises(AssertionError):
+        probe(m)
