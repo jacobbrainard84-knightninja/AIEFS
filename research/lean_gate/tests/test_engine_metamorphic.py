@@ -24,6 +24,18 @@ Only 5 is bit-exact. 1-4 compare circularly (wrapped angle difference) with a wr
 Negative controls: each relation is also checked against (a) a deliberately wrong reference
 (wrong shift, wrong permutation, missing conj, changed seed) and (b) one-line mutants of a temporary
 copy of the engine; every control must be DETECTED (error above tolerance / outputs differ).
+
+Weight-path coverage (A002/R001 review of 34c44ec): every relation run also asserts that the Hebbian weight
+update and the gap projection are genuinely active (B nonzero at every step, B moves, >= MIN_PROJ projection
+steps), so a relation cannot pass vacuously on B = 0. States come from two sources: "random" (generic
+history, random B and C) and "native" (the engine's own initialize_state with B_init_scale = 0.05 and eta = 2).
+The frozen-eta native start is NOT used for relations: there B decays to 0 by step ~1190 with 0 projection
+steps (C starts at 0, so (eta + mu) R - mu < 0), which would make the weight path vacuous.
+
+Known blind spot (documented, asserted): weight-path bugs that keep the update symmetric and label-free
+(Hebbian sign, eta gain, projection bound, min->max in the projection) preserve all four symmetries, so no
+symmetry relation can catch them. test_weight_path_mutants asserts this honestly and asserts that the
+weight-decay closed form below and/or test_engine_step_order.py's value probes do catch each one.
 """
 import dataclasses
 import importlib.util
@@ -61,6 +73,15 @@ ZC_TOL = 1e-10
 # Minimum error a negative control must show to count as DETECTED: well above REL_TOL.
 DETECT = 1e3 * REL_TOL
 
+# Coverage floors for the weight path (measured counts are in the notes file).
+# MIN_PROJ: projection steps per 2000-step relation run; measured 526..1998 on the configs used, so 100 is
+#   a floor that only a vacuous (B ~ 0 or under-capacity) run would miss.
+# MIN_B: smallest per-step max_ij B allowed; measured >= 0.04 on the configs used (B never dies out).
+# MIN_B_MOVE: max_ij |B_final - B0| must exceed this; measured >= 0.11, so the weights really evolve.
+MIN_PROJ = 100
+MIN_B = 0.01
+MIN_B_MOVE = 0.05
+
 
 def circ(a, b):
     """Max wrapped angular distance |a - b| in (-pi, pi], elementwise over arrays."""
@@ -71,9 +92,9 @@ def maxabs(a, b):
     return float(np.max(np.abs(np.asarray(a) - np.asarray(b))))
 
 
-def config(m=eng, eta=None, omega=None):
+def config(m=eng, eta=None, omega=None, B_init_scale=None):
     c = m.DEFAULT_MODEL_CONFIG
-    kw = {}
+    kw = {} if B_init_scale is None else {"B_init_scale": B_init_scale}
     if eta is not None:
         kw["eta"] = eta
     if omega is not None:
@@ -81,6 +102,14 @@ def config(m=eng, eta=None, omega=None):
     c = dataclasses.replace(c, **kw)
     c.validate()
     return c
+
+
+def make_state(source, seed, c, m=eng):
+    if source == "random":
+        return random_state(seed, c, m)
+    if source == "native":
+        return m.initialize_state(seed, c)  # c must carry B_init_scale > 0 (see CONFIGS)
+    raise AssertionError(source)
 
 
 def random_state(seed, c, m=eng, B_scale=0.05, C_scale=0.9):
@@ -100,58 +129,69 @@ def run(st, c, n, m=eng, shuffle=False, rng_seed=0):
     """Advance n steps; return per-step (theta, B, C, R) and the number of projection steps."""
     rng = np.random.default_rng(rng_seed)
     out, proj = [], 0
+    B0 = st.B.copy()
     for _ in range(n):
         R, _, info = m.advance_state(st, c, rng, shuffle_driver=shuffle)
         proj += int(info["projection_active"])
         out.append((st.theta.copy(), st.B.copy(), st.coherence_acc.copy(), R.copy()))
-    return out, proj
+    cov = {"proj_steps": proj, "min_step_Bmax": float(min(float(np.max(o[1])) for o in out)),
+           "B_move": float(np.max(np.abs(out[-1][1] - B0))),
+           "zero_offdiag_final": int(np.count_nonzero(out[-1][1] == 0.0) - len(B0))}
+    return out, cov
+
+
+def assert_weight_path_active(cov):
+    assert cov["proj_steps"] >= MIN_PROJ, cov
+    assert cov["min_step_Bmax"] >= MIN_B, cov
+    assert cov["B_move"] >= MIN_B_MOVE, cov
 
 
 # ---------------------------------------------------------------------------- relation checkers
 # Each returns the max error of the relation; the real engine must give <= REL_TOL, and every
 # negative control must give >= DETECT.
 
-def shift_error(c, n, m=eng, shift=1.234, claimed_shift=None, seed=11):
+def shift_error(c, n, m=eng, shift=1.234, claimed_shift=None, seed=11, source="random", return_cov=False):
     claimed_shift = shift if claimed_shift is None else claimed_shift
-    s0 = random_state(seed, c, m)
+    s0 = make_state(source, seed, c, m)
     b = s0.clone()
     b.theta = np.mod(b.theta + shift, TWO_PI)
     b.history = [np.mod(h + shift, TWO_PI) for h in b.history]
-    ra, _ = run(s0.clone(), c, n, m)
+    ra, cov = run(s0.clone(), c, n, m)
     rb, _ = run(b, c, n, m)
     e = 0.0
     for (ta, Ba, Ca, Ra), (tb, Bb, Cb, Rb) in zip(ra, rb):
         e = max(e, circ(ta + claimed_shift, tb), maxabs(Ba, Bb), maxabs(np.abs(Ca), np.abs(Cb)), maxabs(Ra, Rb))
-    return e
+    return (e, cov) if return_cov else e
 
 
-def perm_error(c, n, m=eng, perm_seed=7, claimed_perm=None, seed=12):
+def perm_error(c, n, m=eng, perm_seed=7, claimed_perm=None, seed=12, source="random", return_cov=False):
     p = np.random.default_rng(perm_seed).permutation(N)
     q = p if claimed_perm is None else claimed_perm
-    s0 = random_state(seed, c, m)
+    s0 = make_state(source, seed, c, m)
     cp = dataclasses.replace(c, omega=tuple(np.asarray(c.omega)[p].tolist()))
     b = m.DynamicState(theta=s0.theta[p], B=s0.B[np.ix_(p, p)], coherence_acc=s0.coherence_acc[np.ix_(p, p)],
                        history=[h[p] for h in s0.history])
-    ra, _ = run(s0.clone(), c, n, m)
+    ra, cov = run(s0.clone(), c, n, m)
     rb, _ = run(b, cp, n, m)
     e = 0.0
     for (ta, Ba, Ca, Ra), (tb, Bb, Cb, Rb) in zip(ra, rb):
         e = max(e, circ(ta[q], tb), maxabs(Ba[np.ix_(q, q)], Bb), maxabs(Ca[np.ix_(q, q)], Cb), maxabs(Ra[np.ix_(q, q)], Rb))
-    return e
+    return (e, cov) if return_cov else e
 
 
-def flip_error(c, n, m=eng, conj_C=True, flip_omega=True, seed=13, shuffle=False):
-    s0 = random_state(seed, c, m)
+def flip_error(c, n, m=eng, conj_C=True, flip_omega=True, seed=13, shuffle=False, source="random",
+               return_cov=False):
+    s0 = make_state(source, seed, c, m)
     cf = dataclasses.replace(c, omega=tuple((-np.asarray(c.omega) if flip_omega else np.asarray(c.omega)).tolist()))
     b = m.DynamicState(theta=np.mod(-s0.theta, TWO_PI), B=s0.B,
                        coherence_acc=np.conj(s0.coherence_acc) if conj_C else s0.coherence_acc,
                        history=[np.mod(-h, TWO_PI) for h in s0.history])
-    ra, _ = run(s0.clone(), c, n, m, shuffle=shuffle)
+    ra, cov = run(s0.clone(), c, n, m, shuffle=shuffle)
     rb, _ = run(b, cf, n, m, shuffle=shuffle)
     e = 0.0
     for (ta, Ba, Ca, Ra), (tb, Bb, Cb, Rb) in zip(ra, rb):
         e = max(e, circ(-ta, tb), maxabs(Ba, Bb), maxabs(np.conj(Ca), Cb), maxabs(Ra, Rb))
-    return e
+    return (e, cov) if return_cov else e
 
 
 def zero_coupling_error(c, n, m=eng, seed=14, mu=None):
@@ -168,18 +208,50 @@ def zero_coupling_error(c, n, m=eng, seed=14, mu=None):
     return e
 
 
+def weight_decay_error(c, n, m=eng, seed=15):
+    """Zero-drive weight decay: eta = mu = 0 gives B' = max(0, B - dt gamma B) = (1 - dt gamma) B (no clip since
+    B >= 0 and dt gamma = 1.5e-4 < 1; row sums only shrink, so starting under capacity the projection never fires).
+    Hence B_n = (1 - dt gamma)^n B0 exactly in math, for ANY phase dynamics (B never reads theta here). This is the
+    one relation in the file that pins a weight-path VALUE rather than a symmetry."""
+    c = dataclasses.replace(c, eta=0.0, mu=0.0)
+    c.validate()
+    st = random_state(seed, c, m)
+    st.B = 0.5 * st.B  # max row sum ~0.3 < capacity 0.633: projection inactive by construction
+    B0 = st.B.copy()
+    assert float(np.max(np.sum(B0, axis=1))) < c.capacity
+    out, _ = run(st, c, n, m)
+    return max(maxabs(B, B0 * (1.0 - c.dt * c.gamma) ** k) for k, (_, B, _, _) in enumerate(out, start=1))
+
+
+# Relation-run configurations: (id, source, eta, B_init_scale). All have an active weight path (asserted).
+CONFIGS = [
+    ("random_frozen_eta", "random", eng.FROZEN_ETA, None),
+    ("random_eta2", "random", 2.0, None),
+    ("native_init_eta2_Binit0.05", "native", 2.0, 0.05),
+]
+CIDS = [x[0] for x in CONFIGS]
+
+
 # ---------------------------------------------------------------------------- relation tests
 
-@pytest.mark.parametrize("eta", [eng.FROZEN_ETA, 2.0], ids=["frozen_eta", "eta2_projection_every_step"])
-def test_global_phase_shift(eta):
-    c = config(eta=eta)
-    assert shift_error(c, N_STEPS) <= REL_TOL
+@pytest.mark.parametrize("cid,source,eta,binit", CONFIGS, ids=CIDS)
+def test_global_phase_shift(cid, source, eta, binit):
+    e, cov = shift_error(config(eta=eta, B_init_scale=binit), N_STEPS, source=source, return_cov=True)
+    assert_weight_path_active(cov)
+    assert e <= REL_TOL
 
 
-@pytest.mark.parametrize("eta", [eng.FROZEN_ETA, 2.0], ids=["frozen_eta", "eta2_projection_every_step"])
-def test_node_relabeling(eta):
-    c = config(eta=eta)
-    assert perm_error(c, N_STEPS) <= REL_TOL
+@pytest.mark.parametrize("cid,source,eta,binit", CONFIGS, ids=CIDS)
+def test_node_relabeling(cid, source, eta, binit):
+    e, cov = perm_error(config(eta=eta, B_init_scale=binit), N_STEPS, source=source, return_cov=True)
+    assert_weight_path_active(cov)
+    assert e <= REL_TOL
+
+
+def test_zero_drive_weight_decay():
+    # Tolerance REL_TOL: (1 - dt gamma)^k and the engine's repeated multiply-add each round at ~1 ulp of B
+    # (<= 0.03 * 2.2e-16) per step; measured 6.4e-16 over 2000 steps.
+    assert weight_decay_error(config(), N_STEPS) <= REL_TOL
 
 
 @pytest.mark.parametrize("mu", [None, 0.5], ids=["frozen_mu", "mu_half_clip_active"])
@@ -190,9 +262,10 @@ def test_zero_coupling_free_rotation(mu):
     assert zero_coupling_error(config(), N_STEPS, mu=mu) <= ZC_TOL
 
 
-@pytest.mark.parametrize("eta,shuffle", [(eng.FROZEN_ETA, False), (2.0, False), (2.0, True)],
-                         ids=["frozen_eta", "eta2_projection_every_step", "eta2_shuffle_driver_same_rng"])
-def test_omega_flip_mirrors_trajectory(eta, shuffle):
+@pytest.mark.parametrize("cid,source,eta,binit,shuffle", [x + (False,) for x in CONFIGS] +
+                         [("random_eta2_shuffle", "random", 2.0, None, True)],
+                         ids=CIDS + ["random_eta2_shuffle_driver_same_rng"])
+def test_omega_flip_mirrors_trajectory(cid, source, eta, binit, shuffle):
     """Derivation (from the engine's actual equations E1-E6 above), map S:
        theta -> -theta (mod 2pi), every history slot -> -slot (mod 2pi), omega -> -omega, C -> conj(C), B -> B.
     E1: dphi^S_ij = -theta_i + d_j + abar_ij tau = -dphi_ij (abar is linear in omega, so it flips too),
@@ -211,8 +284,10 @@ def test_omega_flip_mirrors_trajectory(eta, shuffle):
     (The relation needs omega -> -omega: the phase advance dt*omega is not odd in theta alone. The
     control flip_omega=False below confirms the check sees that.)
     """
-    c = config(eta=eta)
-    assert flip_error(c, N_STEPS, shuffle=shuffle) <= REL_TOL
+    c = config(eta=eta, B_init_scale=binit)
+    e, cov = flip_error(c, N_STEPS, shuffle=shuffle, source=source, return_cov=True)
+    assert_weight_path_active(cov)
+    assert e <= REL_TOL
 
 
 def _small_protocol():
@@ -243,20 +318,48 @@ def _bit_equal(a, b):
     return type(a) is type(b) and a == b
 
 
-def run_diff(seed_a, seed_b, m=eng):
-    """Number of differing leaves between two full run_seed calls (all 7 branches, incl. future_shuffle
-    and the theta-randomising resets, so every rng stream is consumed)."""
-    c = config(m=m)
-    p = _small_protocol()
-    fa = _flatten(m.run_seed(seed_a, c, p, eng.DEFAULT_PROTOCOL_CONFIG.branches))
-    fb = _flatten(m.run_seed(seed_b, c, p, eng.DEFAULT_PROTOCOL_CONFIG.branches))
+# Seed config for the determinism tests: eta = 2 and B_init_scale = 0.05 so B is nonzero and the projection
+# fires at T_sim = 4 (with the frozen eta and B_init_scale, B is exactly 0 at the split and at every branch end at
+# this horizon, which made 622/648 output leaves seed-independent in 34c44ec).
+SEED_CFG = {"eta": 2.0, "B_init_scale": 0.05}
+BRANCHES = eng.DEFAULT_PROTOCOL_CONFIG.branches
+
+
+def seed_run(seed, m=eng, cfg=None):
+    c = config(m=m, **(SEED_CFG if cfg is None else cfg))
+    return _flatten(m.run_seed(seed, c, _small_protocol(), BRANCHES))
+
+
+def run_diff(seed_a, seed_b, m=eng, cfg=None):
+    """(number of differing leaves, total leaves) between two full run_seed calls (all 7 branches, incl.
+    future_shuffle and the theta-randomising resets, so every rng stream is consumed)."""
+    fa, fb = seed_run(seed_a, m, cfg), seed_run(seed_b, m, cfg)
     assert fa.keys() == fb.keys()
     return sum(not _bit_equal(fa[k], fb[k]) for k in fa), len(fa)
 
 
-def test_seed_determinism_bit_exact():
-    diff, total = run_diff(20261120, 20261120)
+@pytest.mark.parametrize("cfg", [SEED_CFG, {}], ids=["eta2_Binit0.05", "frozen"])
+def test_seed_determinism_bit_exact(cfg):
+    diff, total = run_diff(20261120, 20261120, cfg=cfg)
     assert total > 100 and diff == 0
+
+
+def test_seed_config_weight_path_active():
+    # Coverage: the seeded run really carries weights, so the seed controls below see the B paths.
+    f = seed_run(20261120)
+    assert float(np.max(f["/prefix/B_at_split"])) >= MIN_B
+    for br in BRANCHES:
+        assert float(np.max(f[f"/branches/{br}/B_final"])) >= MIN_B, br
+
+
+# What the seed controls in this engine (read from initialize_state / make_prefix_rng / make_branch_rngs /
+# apply_intervention / advance_state): (i) the initial theta and (ii) the initial B (B_init_scale * U[0,1),
+# symmetrised) via the prefix stream; history starts as copies of theta and C starts at 0 (not seeded);
+# (iii) one branch stream per branch: future_shuffle uses it to shuffle R's edge values every step, and
+# B_carrier_only / full_reset use it to redraw theta and history at the split. continue, reset_ema, reset_B and
+# reset_B_ema draw nothing from their stream. The two controls below check (i)+(ii) and (iii) separately.
+SEED_SENSITIVE_PREFIX = ("/prefix/theta_at_split", "/prefix/B_at_split", "/prefix/history_at_split",
+                         "/prefix/coherence_acc_at_split")
 
 
 # ---------------------------------------------------------------------------- negative controls
@@ -280,9 +383,27 @@ def test_control_flip_without_omega_flip_detected():
     assert flip_error(config(), N_STEPS_MUT, flip_omega=False) >= DETECT
 
 
-def test_control_different_seed_detected():
-    diff, total = run_diff(20261120, 20261121)
-    assert diff > 0
+def test_control_different_seed_changes_prefix_and_every_branch_B():
+    fa, fb = seed_run(20261120), seed_run(20261121)
+    for k in SEED_SENSITIVE_PREFIX + tuple(f"/branches/{br}/B_final" for br in BRANCHES):
+        assert not _bit_equal(fa[k], fb[k]), k
+        # not just a last-bit difference: B and theta move by far more than rounding
+        assert maxabs(fa[k], fb[k]) >= DETECT, k
+
+
+def test_control_branch_stream_seed_used_exactly_where_documented():
+    # Same split state, branch rngs from two different seeds: only the rng-consuming branches may change.
+    c = config(**SEED_CFG)
+    p = _small_protocol()
+    split, prefix = eng.simulate_prefix(20261120, c, p)
+    ra, rb = eng.make_branch_rngs(20261120, BRANCHES), eng.make_branch_rngs(20261121, BRANCHES)
+    for br in BRANCHES:
+        Ba = eng.simulate_future(split.clone(), prefix, br, c, p, ra[br])["B_final"]
+        Bb = eng.simulate_future(split.clone(), prefix, br, c, p, rb[br])["B_final"]
+        if br in ("future_shuffle", "B_carrier_only", "full_reset"):
+            assert maxabs(Ba, Bb) >= DETECT, br
+        else:
+            assert _bit_equal(Ba, Bb), br
 
 
 # One-line mutants of a temporary copy of the engine. Each names the relation(s) it must break.
@@ -357,3 +478,59 @@ def test_negative_control_mutants(tmp_path, name, old, new, rels):
             assert run_diff(5, 5, m)[0] > 0, f"{name}: same seed still bit-identical"
         else:
             assert _relation_error(rel, m) >= DETECT, f"{name}: relation {rel} not broken"
+
+
+# ---------------------------------------------------------------------------- weight-path mutants
+# Bugs in the Hebbian update / projection that keep it symmetric, label-free and phase-free. Expectation
+# (derived, then confirmed by run): the shift, flip and zero-coupling relations CANNOT see them, because B'
+# depends on (B, R) only and R is invariant under those maps whatever the B rule is. They must instead be caught
+# by the weight-decay closed form (gamma path only) or by test_engine_step_order.py's exact-value probes.
+# "decay" marks the mutants the decay relation must catch; "guard" marks one only the engine's runtime gap guard
+# catches (during an eta = 2 relation run); every other mutant must fail >= 1 step-order probe.
+WEIGHT_MUTANTS = [
+    ("hebbian_sign", "(config.eta + config.mu) * R_driver", "-(config.eta + config.mu) * R_driver", ()),
+    ("eta_gain_doubled", "(config.eta + config.mu) * R_driver", "(2 * config.eta + config.mu) * R_driver", ()),
+    ("gamma_sign", "- config.gamma * state.B", "+ config.gamma * state.B", ("decay",)),
+    ("projection_bound_half", "config.capacity / (row_sum_pre + config.scale_epsilon)",
+     "0.5 * config.capacity / (row_sum_pre + config.scale_epsilon)", ()),
+    # min -> max pairs each B_ij with the LARGER row scale, so a heavy row keeps too much weight. At N = 2 (all
+    # step-order probes) both row sums are equal, s_0 = s_1, and min = max: the probes cannot see it (probe gap,
+    # reported in the H1 notes). It is caught only by the engine's own gap guard (RuntimeError "Gap projection
+    # failed") once row sums differ, which the eta = 2 relation runs reach: "guard".
+    ("projection_min_to_max", "np.minimum.outer(scale, scale)", "np.maximum.outer(scale, scale)", ("guard",)),
+]
+
+
+def _step_order_module():
+    f = Path(__file__).with_name("test_engine_step_order.py")
+    spec = importlib.util.spec_from_file_location("_h1_step_order_probes", f)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+@pytest.mark.parametrize("name,old,new,caught", WEIGHT_MUTANTS, ids=[x[0] for x in WEIGHT_MUTANTS])
+def test_weight_path_mutants(tmp_path, name, old, new, caught):
+    m = _load_mutant(tmp_path, name, old, new)
+    c = config(m=m)
+    # Documented blind spot: symmetry relations still hold on the mutant (frozen eta, B active, projection firing).
+    e, cov = shift_error(c, N_STEPS_MUT, m, return_cov=True)
+    assert e <= REL_TOL, f"{name}: shift now detects a weight-path bug; update the blind-spot note"
+    assert flip_error(c, N_STEPS_MUT, m) <= REL_TOL, f"{name}: flip now detects it; update the note"
+    d = weight_decay_error(c, N_STEPS_MUT, m)
+    if "decay" in caught:
+        assert d >= DETECT, f"{name}: weight-decay relation missed it"
+    else:
+        assert d <= REL_TOL, f"{name}: decay relation result changed; update the note"
+    if "guard" in caught:
+        with pytest.raises(RuntimeError, match="Gap projection failed"):
+            perm_error(config(m=m, eta=2.0), N_STEPS_MUT, m)
+        return
+    so = _step_order_module()
+    failing = []
+    for pname in sorted(n for n in dir(so) if n.startswith("test_probe_")):
+        try:
+            getattr(so, pname)(m=m)
+        except (AssertionError, RuntimeError):
+            failing.append(pname)
+    assert failing, f"{name}: NO test catches this weight-path mutant"
