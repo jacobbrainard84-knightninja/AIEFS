@@ -3,7 +3,12 @@
 The engine is SHA-256-locked (authority lock, legacy_sources.engine_v1), so its `DynamicState.validate` cannot be
 edited. Every engine path that writes a state keeps the newest history entry equal to theta (initialize_state,
 advance_state, apply_intervention); validate does not check it. Use `validate_with_theta_history` wherever a state is
-built or loaded outside those paths. Equality is exact (np.array_equal): the engine stores `theta.copy()`.
+built or loaded outside those paths.
+
+Equality is exact (np.array_equal), on purpose: the engine stores `theta.copy()`, so on every engine path the two are
+bit-identical and any difference at all means the state was built some other way. No tolerance and no angle wrapping
+is applied: a theta of 0.0 against a stored 2*pi (the same angle, rewrapped) is rejected, because the engine never
+produces that pair itself. A non-finite value in either is reported as such.
 """
 from __future__ import annotations
 
@@ -16,6 +21,10 @@ def check_theta_history(state) -> None:
         raise RuntimeError("history is empty, so theta == history[-1] cannot hold")
     head = np.asarray(state.history[-1])
     theta = np.asarray(state.theta)
+    if head.shape != theta.shape:
+        raise RuntimeError(f"theta != history[-1]: shape {theta.shape} vs history[-1] shape {head.shape}")
+    if not (np.all(np.isfinite(theta)) and np.all(np.isfinite(head))):
+        raise RuntimeError("theta != history[-1] cannot be checked: theta or history[-1] contains non-finite values")
     if head.shape != theta.shape or not np.array_equal(theta, head):
         diff = (
             float(np.max(np.abs(theta - head))) if head.shape == theta.shape else float("nan")
