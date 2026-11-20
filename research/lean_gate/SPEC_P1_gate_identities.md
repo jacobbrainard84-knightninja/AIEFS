@@ -1518,3 +1518,81 @@ After the #44 follow-up (M130, on `main` `63e06d7`): gate PASS, **948 declaratio
 mutation run **79/79 statement**, **51/51 definition** (M130 killed by `probe_phaseHead_negative_weight`), **130/130
 total**, 20/20 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS; pytest 373 passed;
 all repository checkers rc 0 after the inventory rebuild.
+
+## 17. Arena intake: EmaRadialRef (branch `research/lean-gate-ema-radial`, stacked on `research/lean-gate-arena-n1` `5ee0db3`, on `main` `63e06d7`; numbered after §16 and M130)
+
+### 17.1 What it is
+`AIEFGateCore/EmaRadialRef.lean` comes from Arena_Researcher_06020041's deposit `AIEFS_ema_radial/` on `audit-inbox` @
+`db0638f` (the deposited file's sha256 starts `8d8de510`). This is unverified inbox material, compiled offline under
+`unshare -rn`. It models one EMA update along a stipulated normalized path: the old entry is `1 + t(u + iv)` and the
+input phasor is `exp(i t δ)`. `reStep` and `imStep` are the real and imaginary parts of `α·old + (1−α)·input`,
+`magnitude` is their modulus, and `symMagnitude` is the off-diagonal average of two magnitudes. Proved: the base value
+`(1, 0)`; the derivatives at `t = 0` (real part αu, imaginary part αv + (1−α)δ, magnitude αu, average α(u₁+u₂)/2); and
+`complex_norm_eq`. In plain words, at unit coherence the first-order change in magnitude is radial only, because
+`|1 + tw|` has derivative `Re w` at `t = 0`. The engine citations, lines 735–745 (EMA update) and 747–750 (abs,
+symmetrize, `fill_diagonal`) of `aief_experiment_engine_v1.py` at `main` `63e06d7`, were checked and are re-checked
+by the test.
+
+**Changes at intake (Auditor Seat 002).**
+* The header was rewritten to the repository convention, and the file imports `AIEFGateCore.PhaseCoherence`.
+* **Bridge to `PhaseCoherence.coherenceStep`** (Researcher 001's request), added at intake: `path_eq` writes
+  `reStep + i·imStep` as `α·old + (1−α)·exp(i t δ)`. `coherenceStep_eq_path` proves that if the old entry `C i j` is
+  `p·old(t)` and `coherenceInput … i j` is `p·exp(i t δ)`, then `coherenceStep … i j` equals `p` times the path.
+  `coherenceStep_norm_eq_magnitude` adds `‖p‖ = 1` and concludes `‖coherenceStep … i j‖ = magnitude α u v δ t`.
+  **What the bridge does not give:** the two hypotheses are assumed. Nothing proves that any engine state has an old
+  entry of the form `p·(1 + t(u+iv))` (unit modulus) or an input phasor of the form `p·exp(i t δ)`. The engine's EMA starts
+  at `0` and approaches unit modulus only asymptotically, so unit coherence at the base point is a stipulation.
+* Direct value probes `probe_reStep_values`, `probe_imStep_value`, `probe_magnitude_value` (5/2) and
+  `probe_symMagnitude_value` (3/2). The deposited `*_probe` theorems only restate derivatives, so they cannot kill
+  definition mutants.
+* Proved refutations `false_real_no_alpha`, `false_imag_no_input`, `false_magnitude_no_alpha`,
+  `false_magnitude_angular` and `false_sym_first_only`, each by `HasDerivAt.unique` against the proved derivative.
+
+**Not covered:** the diagonal mask, the weight update, the gate, angle wrapping (mod 2π), stability, and any statement
+about a run of the engine. The derivative is taken in a hand-picked normalization frame (common phasor `p`).
+
+### 17.2 Statement mutants M131–M135 (rule as §5)
+| # | Statement | Change | Refuted by |
+|---|---|---|---|
+| M131 | `real_direction` | αu → u | `false_real_no_alpha` (α = 0, u = 1) |
+| M132 | `imag_direction` | the input term (1−α)δ dropped | `false_imag_no_input` (α = 0, δ = 1) |
+| M133 | `magnitude_direction` | αu → u | `false_magnitude_no_alpha` (α = 1/2, u = 1) |
+| M134 | `magnitude_direction` | the angular term (1−α)δ added | `false_magnitude_angular` (α = 1/2, u = 0, δ = 1) |
+| M135 | `sym_magnitude_direction` | α(u₁+u₂)/2 → αu₁ | `false_sym_first_only` (α = 1, u₁ = 0, u₂ = 2) |
+
+**Not mutated:** the hypotheses of `coherenceStep_norm_eq_magnitude` (`hp`, `hC`, `hin`). A refutation needs an
+explicit `coherenceInput` value, and `coherenceInput` is fixed by `Phase.inputPhasor`. This is a known gap. The bridge
+is pinned only by the test's shape check and a floating-point check of the modulus identity.
+
+### 17.3 Definition mutants M136–M142 (rule as §11.3)
+| # | Change | Killed by |
+|---|---|---|
+| M136 | `reStep`: input cos → sin | `probe_reStep_values` (1/2 instead of 1) |
+| M137 | `reStep`: input weight 1−α → α | `probe_reStep_values` (1 instead of 3/2) |
+| M138 | `imStep`: input sin → cos | `probe_imStep_value` (3/2 instead of 1) |
+| M139 | `magnitude`: square root dropped | `probe_magnitude_value` (25/4) |
+| M140 | `magnitude`: imaginary part dropped | `probe_magnitude_value` (3/2) |
+| M141 | `symMagnitude`: first entry twice | `probe_symMagnitude_value` (5/2) |
+| M142 | `symMagnitude`: /2 dropped | `probe_symMagnitude_value` (3) |
+
+Equivalence control E21: `reStep` with its two terms in the other order. It makes `real_direction` fail inside its
+proof, but no value probe fails, so it is not killed. This is the same proof brittleness disclosed for E17–E20.
+`OPENS` gains `open AIEFGate.EmaRadialRef (reStep imStep magnitude symMagnitude)`.
+
+### 17.4 Tests and pins
+`research/lean_gate/tests/test_lean_gate_ema_radial.py` checks the import and hash pin, no escape hatches, an axioms
+print for every theorem, the bridge's hypotheses, the exact shape of M131–M142 and E21, the probe and mutant values,
+the modulus identity numerically, and the engine citations. Pins move as follows:
+* P4b `len(MUTANTS)`: 79 → 84.
+* P5 `N_STATEMENT_MUTANTS`: 79 → 84.
+* P5 `N_DEF_MUTANTS`: 51 → 58.
+* Total mutants: 130 → 142.
+* Equivalence controls: 20 → 21.
+* c016 unique controls: 24 → 25.
+
+### 17.5 Results
+Local, 2026-11-20, on `main` `63e06d7` plus `5ee0db3`: `SKIP_CACHE=1 ./check_lean_gate.sh` PASS, 0 warnings,
+**978 declarations**, standard axioms only (propext, Classical.choice, Quot.sound). Full unfiltered mutation run:
+**84/84 statement** mutants rejected (the one name-reference note is M31's, pre-existing), **58/58 definition** mutants
+killed, **142/142 total**, 21/21 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
+pytest 381 passed; all repository checkers rc 0 after the inventory rebuild.

@@ -135,7 +135,7 @@ def test_p4b_mutants_shape():
     # + 6 (M87-M91, M94: FrequencyLock.lean statement mutants, see test_lean_gate_freqlock.py)
     # + 12 (M95-M106: DelayRoots.lean statement mutants, see test_lean_gate_delayroots.py)
     # + 9 (M110-M118: CommonRootSimple.lean / EngineStepRef.lean, see test_lean_gate_arena_intake.py)
-    assert len(names) == 79                                      # the single exact pin (P4a test: >= 23; 70 before §16)
+    assert len(names) == 84                                      # the single exact pin (P4a test: >= 23; 70 before §16, 79 before §17)
     assert names[23].startswith("M24") and names[35].startswith("M36")
     assert names[36].startswith("M57") and names[37].startswith("M58")
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
@@ -144,7 +144,8 @@ def test_p4b_mutants_shape():
     # the C014, P6, phase-lock and DelayRoots entries are selected by file, not by position
     assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean", "CoherenceMotion.lean",
                                               "FrequencyLock.lean", "DelayRoots.lean",
-                                              "CommonRootSimple.lean", "EngineStepRef.lean"}
+                                              "CommonRootSimple.lean", "EngineStepRef.lean",
+                                              "EmaRadialRef.lean"}
     assert len([m for m in mc.MUTANTS if m[1] == "DelayRoots.lean"]) == 12
     assert len([m for m in mc.MUTANTS if m[1] == "TrajectoryInvariants.lean"]) == 3
     assert len([m for m in mc.MUTANTS if m[1] == "CoherenceMotion.lean"]) == 11

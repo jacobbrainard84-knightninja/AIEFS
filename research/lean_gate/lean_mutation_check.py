@@ -115,6 +115,10 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   clippedWeight, phaseHead, phaseStep, orbitPath) killed by `probe_*` value probes; E18-E20 must not be killed
   (they break proofs but no probe, so they survive only through the probe rule: disclosed brittleness).
   M130 (#44 N1): phaseHead uses the raw b instead of clippedWeight b -> probe_phaseHead_negative_weight (b = -1).
+  EmaRadialRef.lean (Arena, audit-inbox db0638f; SPEC §17): M131-M135 statement mutants of the directional
+  derivatives (alpha dropped, the input term dropped or added, the average of the first entry only), each refuted
+  by a `false_*` theorem; definition mutants M136-M142 (reStep, imStep, magnitude, symMagnitude) killed by the
+  `probe_*` value probes added at intake; E21 (reStep terms commuted) must not be killed.
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
@@ -528,6 +532,17 @@ MUTANTS = [
      [("(v (k - 1) i) 0", "(v k i) 0", 1)], "", "EngineStepRef.false_history_no_shift H", None),
     ("M118_stepref_neighbor_reads_current_slot", "EngineStepRef.lean", "neighbor_derivative",
      [("(v d j - v 0 i)) 0", "(v 0 j - v 0 i)) 0", 1)], "", "EngineStepRef.false_neighbor_current_slot H", None),
+    # ---- EmaRadialRef.lean (Arena_Researcher_06020041, audit-inbox db0638f; SPEC §17), numbered after M130 ----
+    ("M131_ema_real_direction_alpha_dropped", "EmaRadialRef.lean", "real_direction",
+     [("(alpha * u) 0", "u 0", 1)], "", "EmaRadialRef.false_real_no_alpha H", None),
+    ("M132_ema_imag_direction_input_dropped", "EmaRadialRef.lean", "imag_direction",
+     [("(alpha * v + (1 - alpha) * delta) 0", "(alpha * v) 0", 1)], "", "EmaRadialRef.false_imag_no_input H", None),
+    ("M133_ema_magnitude_direction_alpha_dropped", "EmaRadialRef.lean", "magnitude_direction",
+     [("(alpha * u) 0", "u 0", 1)], "", "EmaRadialRef.false_magnitude_no_alpha H", None),
+    ("M134_ema_magnitude_direction_angular_added", "EmaRadialRef.lean", "magnitude_direction",
+     [("(alpha * u) 0", "(alpha * u + (1 - alpha) * delta) 0", 1)], "", "EmaRadialRef.false_magnitude_angular H", None),
+    ("M135_ema_sym_direction_first_only", "EmaRadialRef.lean", "sym_magnitude_direction",
+     [("(alpha * (u₁ + u₂) / 2) 0", "(alpha * u₁) 0", 1)], "", "EmaRadialRef.false_sym_first_only H", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -570,12 +585,19 @@ VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
 # proved by unfolding them in the probe itself
 VP_CR = ["probe_commonPoly_eval_d1", "probe_commonPoly_eval_d2"]
 VP_SR = ["probe_clippedWeight_values", "probe_phaseHead_value", "probe_phaseHead_negative_weight", "probe_phaseStep_values", "probe_orbitPath_value"]
+# EmaRadialRef.lean (Arena, SPEC §17): closed-number evaluations added at intake
+VP_EMA = ["probe_reStep_values", "probe_imStep_value", "probe_magnitude_value", "probe_symMagnitude_value"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
-                "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR}
+                "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR,
+                "EmaRadialRef.lean": VP_EMA}
 CP_OLD = "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n"
 CW_OLD = "def clippedWeight (b : ℝ) : ℝ := max 0 b\n"
+RE_OLD = "  alpha * (1 + t * u) + (1 - alpha) * Real.cos (t * delta)\n"
+IM_OLD = "  alpha * (t * v) + (1 - alpha) * Real.sin (t * delta)\n"
+MAG_OLD = "  Real.sqrt ((reStep alpha u delta t) ^ 2 + (imStep alpha v delta t) ^ 2)\n"
+SYM_OLD = "  (magnitude alpha u₁ v₁ delta₁ t + magnitude alpha u₂ v₂ delta₂ t) / 2\n"
 HEAD_OLD = ("  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
             "    clippedWeight b * Real.sin (x d j - x 0 i))\n")
 STEP_OLD = "  if k = 0 then phaseHead n d dt omega b x i else x (k - 1) i\n"
@@ -742,6 +764,23 @@ DEF_MUTANTS = [
     ("M130_stepref_head_raw_weight", "EngineStepRef.lean",
      [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
                  "    b * Real.sin (x d j - x 0 i))\n", 1)], ["probe_phaseHead_negative_weight"]),
+    # ---- EmaRadialRef.lean: the EMA path, the magnitude and the off-diagonal average (SPEC §17) ----
+    ("M136_ema_real_cos_to_sin", "EmaRadialRef.lean",
+     [(RE_OLD, "  alpha * (1 + t * u) + (1 - alpha) * Real.sin (t * delta)\n", 1)], ["probe_reStep_values"]),
+    ("M137_ema_real_input_weight_alpha", "EmaRadialRef.lean",
+     [(RE_OLD, "  alpha * (1 + t * u) + alpha * Real.cos (t * delta)\n", 1)], ["probe_reStep_values"]),
+    ("M138_ema_imag_sin_to_cos", "EmaRadialRef.lean",
+     [(IM_OLD, "  alpha * (t * v) + (1 - alpha) * Real.cos (t * delta)\n", 1)], ["probe_imStep_value"]),
+    ("M139_ema_magnitude_sqrt_dropped", "EmaRadialRef.lean",
+     [(MAG_OLD, "  (reStep alpha u delta t) ^ 2 + (imStep alpha v delta t) ^ 2\n", 1)], ["probe_magnitude_value"]),
+    ("M140_ema_magnitude_imag_dropped", "EmaRadialRef.lean",
+     [(MAG_OLD, "  Real.sqrt ((reStep alpha u delta t) ^ 2)\n", 1)], ["probe_magnitude_value"]),
+    ("M141_ema_sym_first_entry_twice", "EmaRadialRef.lean",
+     [(SYM_OLD, "  (magnitude alpha u₁ v₁ delta₁ t + magnitude alpha u₁ v₁ delta₁ t) / 2\n", 1)],
+     ["probe_symMagnitude_value"]),
+    ("M142_ema_sym_half_dropped", "EmaRadialRef.lean",
+     [(SYM_OLD, "  magnitude alpha u₁ v₁ delta₁ t + magnitude alpha u₂ v₂ delta₂ t\n", 1)],
+     ["probe_symMagnitude_value"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -786,6 +825,9 @@ EQUIV_CONTROLS = [
                  "    clippedWeight b * -Real.sin (x 0 i - x d j))\n", 1)]),
     ("E20_stepref_clip_max_commuted", "EngineStepRef.lean",
      [(CW_OLD, "def clippedWeight (b : ℝ) : ℝ := max b 0\n", 1)]),
+    # EmaRadialRef.lean: the same real part with the two terms in the other order
+    ("E21_ema_real_terms_commuted", "EmaRadialRef.lean",
+     [(RE_OLD, "  (1 - alpha) * Real.cos (t * delta) + alpha * (1 + t * u)\n", 1)]),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -831,7 +873,8 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n"
          "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n"
          "open Polynomial (derivative)\nopen AIEFGate.CommonRootSimple (commonPoly)\n"
-         "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n")
+         "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n"
+         "open AIEFGate.EmaRadialRef (reStep imStep magnitude symMagnitude)\n")
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 

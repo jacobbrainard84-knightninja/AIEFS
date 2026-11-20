@@ -23,3 +23,4 @@ import AIEFGateCore.FrequencyLock
 import AIEFGateCore.DelayRoots
 import AIEFGateCore.CommonRootSimple
 import AIEFGateCore.EngineStepRef
+import AIEFGateCore.EmaRadialRef
