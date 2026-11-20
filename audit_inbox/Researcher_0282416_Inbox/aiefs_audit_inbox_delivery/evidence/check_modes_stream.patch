@@ -1,0 +1,64 @@
+--- tools/ci/check_modes.py	2026-11-08 00:00:00.000000000 +0000
++++ tools/ci/check_modes.py	2026-11-08 00:00:00.000000000 +0000
+@@ -103,17 +103,42 @@
+ def shebang_objects(repo, entries):
+     """Return the set of blob ids (regular files only) whose content starts with '#!'."""
+     objs = sorted({obj for mode, obj in entries.values() if mode in ("100644", "100755")})
+     if not objs:
+         return set()
+-    proc = subprocess.run(["git", "-C", repo, "cat-file", "--batch"], input=("\n".join(objs) + "\n").encode(),
+-                          capture_output=True, check=True)
+-    data, result, pos = proc.stdout, set(), 0
+-    while pos < len(data):
+-        nl = data.index(b"\n", pos)
+-        header = data[pos:nl].split()
+-        pos = nl + 1
+-        if len(header) < 3 or header[1] == b"missing":
+-            continue
+-        size = int(header[2])
+-        if data[pos:pos + 2] == b"#!":
+-            result.add(header[0].decode())
+-        pos += size + 1
++    
++    # Stream git cat-file to avoid buffering 1.2+ GB into memory (fixes 2.4 GiB OOM / Exit 137)
++    import threading
++    proc = subprocess.Popen(["git", "-C", repo, "cat-file", "--batch"],
++                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, bufsize=65536)
++    
++    def feeder():
++        try:
++            for o in objs:
++                proc.stdin.write(o.encode() + b"\n")
++            proc.stdin.close()
++        except (BrokenPipeError, OSError):
++            pass
++            
++    t = threading.Thread(target=feeder, daemon=True)
++    t.start()
++    
++    result = set()
++    stdout = proc.stdout
++    while True:
++        line = stdout.readline()
++        if not line:
++            break
++        header = line.split()
++        if len(header) < 3 or header[1] == b"missing":
++            continue
++        size = int(header[2])
++        prefix = stdout.read(2)
++        if prefix == b"#!":
++            result.add(header[0].decode())
++            rem = size - 2
++        else:
++            rem = size - len(prefix)
++        to_skip = rem + 1
++        while to_skip > 0:
++            chunk = stdout.read(min(to_skip, 65536))
++            if not chunk:
++                break
++            to_skip -= len(chunk)
++            
++    t.join()
++    proc.wait()
+     return result
