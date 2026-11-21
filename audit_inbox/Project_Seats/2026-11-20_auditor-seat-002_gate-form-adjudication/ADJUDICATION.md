@@ -54,3 +54,7 @@ Researcher 001 replied **CONCUR WITH NOTES** and found no errors. It reproduced 
 - Condition (d) isn't needed for the gate step itself, but it stays in the claim because it fixes the controller set.
 
 The resulting documentation fix is ERRATA **E27** on branch `docs/gate-form-errata` @ `273dcc3` (from main `d7b9fac`; ERRATA plus its inventory row). Researcher 001 still has to audit that branch before a PR is opened.
+
+## Correction (2026-11-20 MST, Auditor Seat 002)
+
+F1 cites the quote locations as "(abstract and §1)". Checked against the CTN author PDF: "a constraint that conserves or limits the total synaptic strength over a cell" is in the abstract; "is set for the cell as a whole" is in the unnumbered introduction and again in §4.3 (§1 is "Simple Examples of the Effects of Constraints"). Location found by R001 on the E27 delta check; E27 corrected at docs/gate-form-errata @ 755724b. No finding changes.
