@@ -1,0 +1,138 @@
+{
+ "W1_spillover": {
+  "B": [
+   [
+    "0",
+    "1/2",
+    "1/4"
+   ],
+   [
+    "1/2",
+    "0",
+    "1/10"
+   ],
+   [
+    "1/4",
+    "1/10",
+    "0"
+   ]
+  ],
+  "cap": "19/30",
+  "rowsums_before": [
+   "3/4",
+   "3/5",
+   "7/20"
+  ],
+  "scales": [
+   "38/45",
+   "1",
+   "1"
+  ],
+  "gate_rowsums_after": [
+   "19/30",
+   "47/90",
+   "14/45"
+  ],
+  "gate_row_factors": {
+   "0": [
+    "38/45"
+   ],
+   "1": [
+    "38/45",
+    "1"
+   ],
+   "2": [
+    "38/45",
+    "1"
+   ]
+  },
+  "gate_symmetric": true,
+  "percell_rowsums_after": [
+   "19/30",
+   "3/5",
+   "7/20"
+  ],
+  "percell_symmetric": false
+ },
+ "W2_overshoot": {
+  "B": [
+   [
+    "0",
+    "1/2",
+    "1/2"
+   ],
+   [
+    "1/2",
+    "0",
+    "1/5"
+   ],
+   [
+    "1/2",
+    "1/5",
+    "0"
+   ]
+  ],
+  "rowsums_before": [
+   "1",
+   "7/10",
+   "7/10"
+  ],
+  "scales": [
+   "19/30",
+   "19/21",
+   "19/21"
+  ],
+  "gate_rowsums_after": [
+   "19/30",
+   "209/420",
+   "209/420"
+  ],
+  "gate_binding_rows_below_cap": [
+   1,
+   2
+  ],
+  "percell_rowsums_after": [
+   "19/30",
+   "19/30",
+   "19/30"
+  ],
+  "percell_symmetric": false
+ },
+ "W3_equal_loads": {
+  "scales": [
+   "19/36",
+   "19/36",
+   "19/36",
+   "19/36"
+  ],
+  "gate_equals_percell": true,
+  "gate_equals_global": true,
+  "rowsums_after": [
+   "19/30",
+   "19/30",
+   "19/30",
+   "19/30"
+  ]
+ },
+ "W4_ratelaw_equal_scales": {
+  "s_J": "38/45",
+  "scales_unchanged": true,
+  "delta_equals_sJ_times_eps_h": true
+ },
+ "W5_unequal_scales": {
+  "scales": [
+   "19/27",
+   "19/24",
+   "19/24",
+   "19/24"
+  ],
+  "scales_unchanged": true,
+  "delta_rowsums": [
+   "0",
+   "-19/216000",
+   "19/216000",
+   "0"
+  ],
+  "delta_proportional_to_h": false
+ }
+}

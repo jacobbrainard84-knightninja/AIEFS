@@ -1,0 +1,247 @@
+{
+  "metadata": {
+    "researcher": "0046882 (Arena.ai)",
+    "date_time_host_reported_MST": "2026-11-21T16:24:58.427532-07:00",
+    "clock_status": "UNVERIFIED: session authoritative date is 2026-09-20, host and relayed documents report November. No claim of externally registered chronology.",
+    "main_sha": "d1cbcf38937b75538100ccaf3115fcbe45a2714f",
+    "original_engine_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+    "instrumented_engine_sha256": "a69b7943d31542097d1a599accc1c8ba722b0bf6b74d31a20a6dd8538090c830",
+    "scope": "Gate spillover lane, DIRECTION-1",
+    "status": "UNVERIFIED by project seats",
+    "manifest_path": "runs/5a9f093a2fe0/manifest.json",
+    "manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+    "K": 4,
+    "seed_list": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270
+    ],
+    "branch": "continue",
+    "epsilon": 1e-12,
+    "event_threshold": 1e-09,
+    "windows": {
+      "all": [
+        0,
+        80000
+      ],
+      "burn": [
+        0,
+        16000
+      ],
+      "history": [
+        16000,
+        48000
+      ],
+      "future": [
+        48000,
+        80000
+      ],
+      "future_immediate": [
+        48000,
+        49750
+      ],
+      "future_recovery": [
+        49750,
+        56750
+      ],
+      "future_late": [
+        56750,
+        80000
+      ]
+    }
+  },
+  "cases": {
+    "W1": {
+      "on": true,
+      "rows": [
+        "3/4",
+        "3/5",
+        "7/20"
+      ],
+      "scales": [
+        "38/45",
+        "1",
+        "1"
+      ],
+      "post": [
+        "19/30",
+        "47/90",
+        "14/45"
+      ],
+      "d": [
+        "0",
+        null,
+        null
+      ],
+      "l": [
+        null,
+        "7/54",
+        "1/9"
+      ],
+      "extra": [
+        "0",
+        null,
+        null
+      ]
+    },
+    "W2": {
+      "on": true,
+      "rows": [
+        "1",
+        "7/10",
+        "7/10"
+      ],
+      "scales": [
+        "19/30",
+        "19/21",
+        "19/21"
+      ],
+      "post": [
+        "19/30",
+        "209/420",
+        "209/420"
+      ],
+      "d": [
+        "0",
+        "3/14",
+        "3/14"
+      ],
+      "l": [
+        null,
+        null,
+        null
+      ],
+      "extra": [
+        "0",
+        "3/14",
+        "3/14"
+      ]
+    },
+    "equal_load_epsilon_zero": {
+      "on": true,
+      "rows": [
+        "6/5",
+        "6/5",
+        "6/5",
+        "6/5"
+      ],
+      "scales": [
+        "19/36",
+        "19/36",
+        "19/36",
+        "19/36"
+      ],
+      "post": [
+        "19/30",
+        "19/30",
+        "19/30",
+        "19/30"
+      ],
+      "d": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "l": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extra": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "equal_load_production_epsilon": {
+      "on": true,
+      "rows": [
+        "6/5",
+        "6/5",
+        "6/5",
+        "6/5"
+      ],
+      "scales": [
+        "1900000000000/3600000000003",
+        "1900000000000/3600000000003",
+        "1900000000000/3600000000003",
+        "1900000000000/3600000000003"
+      ],
+      "post": [
+        "760000000000/1200000000001",
+        "760000000000/1200000000001",
+        "760000000000/1200000000001",
+        "760000000000/1200000000001"
+      ],
+      "d": [
+        "1/1200000000001",
+        "1/1200000000001",
+        "1/1200000000001",
+        "1/1200000000001"
+      ],
+      "l": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extra": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "feasible_no_gate": {
+      "on": false,
+      "rows": [
+        "3/10",
+        "3/10",
+        "3/10",
+        "3/10"
+      ],
+      "scales": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "post": [
+        "3/10",
+        "3/10",
+        "3/10",
+        "3/10"
+      ],
+      "d": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "l": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extra": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  "row_only_mutants_rejected": [
+    "W1",
+    "W2"
+  ],
+  "threshold_and_nonfinite_tests": "PASS",
+  "positive_controls": "PASS",
+  "negative_controls": "PASS",
+  "epsilon_correction": "equal binding loads have strictly positive d for eps>0; extra=0 exactly"
+}
