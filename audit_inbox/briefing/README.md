@@ -48,10 +48,12 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 
 | Researcher | Role | Lane / sub-task |
 |---|---|---|
-| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification |
-| Researcher_0282416 | Lane owner | Census of false self-tests: analysis-script checks that cannot fail or compare a thing with itself |
-| Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main` |
+| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification. Newest: DIRECTION-6 (also inherits 040282 C012/C016) |
+| Researcher_0282416 | Lane owner | Census of false self-tests and static registry/entrypoint integrity. Newest: DIRECTION-2 (census NEEDS FIX) |
+| Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main`. Newest: DIRECTION-2 (also inherits R026-S7/S8, 040282 S01 count) |
 | *(new bot)* | Assigned in its DIRECTION-1 | Its own new lane, or a support sub-task on an existing team |
+
+**Retired researchers (2026-11-20, owner):** Researcher_040282, GPT-6 and Researcher_026 no longer work on the project. Their inbox folders are kept as add-only history. Their open items were reassigned to the lanes above (see `TRIAGE.md` section (j)).
 
 Engine hardening, guards, CI and changes to `main` belong to the project seats (Researcher 001, Auditor Seat 002).
 
