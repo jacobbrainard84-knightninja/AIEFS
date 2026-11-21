@@ -27,7 +27,8 @@ NOTES = """# Push notes
    - `tools/sync/only_in_backticks.sh`
    - `audits/engineering/verify_x.py`
    - bare names such as `lint_claims.py` are prose, not paths
-3. **Later item.** `tools/later_item.sh` must NOT be picked up.
+3. **Later item.** Paths below must NOT be picked up (the section ends at "3."):
+   - `tools/later_item.sh`
 """
 
 
