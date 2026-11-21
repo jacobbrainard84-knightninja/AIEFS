@@ -5,7 +5,7 @@
 
 ## 0. Headline
 
-* **True and PROVEN (paper proof, real arithmetic; not in Lean except the per-edge core, §6):** a *conditional* finite-time freezing theorem. Suppose that from some step T on (with T ≥ 1, or row sums ≤ c at start, which the engine init satisfies), the coherence R_e(n) of each edge stays in a band that satisfies one of three strict, explicitly computable certificate inequalities (OFF, ON, gated-OFF; Thms 2–3). Then every edge's status `B_e > B_c` is constant for all n ≥ T + N. N is explicit (on paper and in code; paper-level only, the Lean statements are existential ∃N) and holds for the **real-arithmetic** map only (float64: see §3.6). It is explicit in the margin, h = γ·dt, the cap c = (a−δ)/q, the row-sum drive bound S_i and B(T). The proof handles the min-endpoint capacity gate *uniformly*. It never needs to know when the gate switches on or off, including late flips (Lemma 1).
+* **True and PROVEN (paper proof, real arithmetic; not in Lean except the per-edge core, §6):** a *conditional* finite-time freezing theorem. Suppose that from some step T on (with T ≥ 1, or row sums ≤ c at start, which the engine init satisfies at the production config but does not enforce in general; see (H0) in §3), the coherence R_e(n) of each edge stays in a band that satisfies one of three strict, explicitly computable certificate inequalities (OFF, ON, gated-OFF; Thms 2–3). Then every edge's status `B_e > B_c` is constant for all n ≥ T + N. N is explicit (on paper and in code; paper-level only, the Lean statements are existential ∃N) and holds for the **real-arithmetic** map only (float64: see §3.6). It is explicit in the margin, h = γ·dt, the cap c = (a−δ)/q, the row-sum drive bound S_i and B(T). The proof handles the min-endpoint capacity gate *uniformly*. It never needs to know when the gate switches on or off, including late flips (Lemma 1).
 * **False unconditionally** for the B-map viewed on its own. With R given externally (periodic), an edge flips forever (§3.4, numerical counterexample with 10 flips). So any freezing theorem must assume something about R. Equivalently, it must assume something about phase-locking or drift of the closed loop.
 * **Open:** whether the *closed-loop* dynamics (phases + delay + EMA + gated weights) always produce R satisfying the hypotheses, i.e. a locking/drift guarantee with margin. Also open: exact ties (gated equilibrium exactly at B_c) and multistability. We prove no closed-loop locking theorem. It remains a hypothesis.
 * **Numerics** (5 repo seeds plus no-delay, random-ω, near-identical-ω stress and B-reset variants):
@@ -135,7 +135,7 @@ Useful values:
 
 So the gate can switch *off* every edge of a fully locked large clique, a "too many friends" effect. Thm 3 addresses this case, but its certificate is only issued when the R band on the clique is very tight (k = 7: R spread ≲ 2e-4); see the remark after Thm 3. In the limit (c/(k−1) < B_c) all k ≥ 7 are OFF.
 
-* *General gated equilibria* (mixed cliques) give a proportional share x_e ≈ min(u_e, c·u_e/S_i) (a multiplicative-normalisation share; compare Miller–MacKay 1994, §5).
+* *General gated equilibria* (mixed cliques) give, heuristically, a proportional share x_e ≈ u_e·min(1, c/S_i, c/S_j) = u_e·min(1, c/max(S_i, S_j)) for e = {i, j}. The gate is per-edge min-endpoint (`aief_experiment_engine_v1.py` L812, `np.minimum.outer(scale, scale)`); the earlier form min(u_e, c·u_e/S_i) read only one endpoint (corrected 2026-11-21; see ERRATA E27, in audit on `docs/gate-form-errata`). It coincides with per-cell multiplicative normalisation (compare Miller–MacKay 1994, §5) only when the endpoint scales on the binding rows are equal, e.g. the equal-load cliques in the table above; with unequal scales the gate also takes weight from rows under the cap (E27). It is a rough guide only: on 3 synthetic constant-R mixes (6-, 4-, 2-clusters plus partial cross coherence; gate map iterated to equilibrium, 2026-11-21) both the one- and two-endpoint forms were off by up to 0.021 per edge, and the two-endpoint form misclassified 1 of 66 edges in one mix. No theorem, certificate or RES-FREEZE number uses this line: Lemma 1, Thms 2–3, Cor 4 and `freeze_check.py` (`:49`, `:91`) use the min-endpoint gate directly.
 
 **Finite time is not automatic.** All of these are only *asymptotic* limits. Freezing in finite time needs a strict margin between the limit and B_c. Exact ties (limit = B_c) can give infinitely many crossings in principle. They are non-generic and excluded below.
 
@@ -146,11 +146,11 @@ Notation:
 * Each edge e = {i,j} has the scalar sequence x_n = B_e(n).
 * For a window [T,∞) let U⁺_e = max(0, sup_{n≥T} u_e(n)), u^min_e = inf_{n≥T} u_e(n), and S_i⁺ = sup_{n≥T} Σ_j u_ij(n)⁺.
 * All statements are in real arithmetic; see §3.6 for floating point.
-* **Start hypothesis (H0): T ≥ 1, or row sums ≤ c at start** (Σ_j B_ij(0) ≤ c for every i). The engine init satisfies it (row sums ≤ 11·5e-4). Lemma 1, Thm 2 (ON) and Thm 3 use it; Thm 2 (OFF) needs only λ ≤ 1. See the remark after Lemma 1.
+* **Start hypothesis (H0): T ≥ 1, or row sums ≤ c at start** (Σ_j B_ij(0) ≤ c for every i). At the production config the engine init satisfies it (B_init_scale = 5e-4, N = 12: row sums ≤ 11·5e-4 < c). `initialize_state` does **not** enforce it: B(0) = B_init_scale·U[0,1) symmetrised, with no gap projection, so (H0) is guaranteed only for B_init_scale ≤ c/(N−1) ≈ 0.0576. At B_init_scale = 0.1, 141 of 200 seeds violate it at init, and at 0.2 all 200 do (check of 2026-11-21). The first engine step projects B under the cap, so T ≥ 1 always holds. Engine fact pinned in H2 `test_initial_gap_not_enforced` (branch `research/h2-engine-invariants` @ cf340b4, not yet on main). Lemma 1, Thm 2 (ON) and Thm 3 use it; Thm 2 (OFF) needs only λ ≤ 1. See the remark after Lemma 1.
 
 ### Lemma 1 (gate sandwich): PROVEN (paper proof; not in Lean), unconditional for n ≥ 1; at n = 0 it needs row sums ≤ c at start (H0)
 
-For every n ≥ 1 (and also for n = 0 if row sums ≤ c at start, as with the engine init) and every node i:
+For every n ≥ 1 (and also for n = 0 if row sums ≤ c at start, as with the engine init at the production config) and every node i:
 
 (a) Σ_j B⁺_ij ≤ c, hence B_e ≤ c.
 
@@ -162,7 +162,7 @@ Hence the edge factor satisfies 1/g_e ≤ λ_e ≤ min(1, c/s_i, c/s_j), where g
 
 *Proof.*
 
-(a) If the gate is active: Σ_j Ũ_ij min(λ_i,λ_j) ≤ λ_i s_i = min(1, c/(s_i+ε)) s_i ≤ c. If it is inactive: a − q s_i ≥ δ for all i, i.e. s_i ≤ c, and B⁺ = Ũ. At n = 0 this is the start hypothesis (H0); the engine init gives row sums ≤ 11·5e-4 < c.
+(a) If the gate is active: Σ_j Ũ_ij min(λ_i,λ_j) ≤ λ_i s_i = min(1, c/(s_i+ε)) s_i ≤ c. If it is inactive: a − q s_i ≥ δ for all i, i.e. s_i ≤ c, and B⁺ = Ũ. At n = 0 this is the start hypothesis (H0); the engine init at the production config gives row sums ≤ 11·5e-4 < c (not enforced for larger B_init_scale; see (H0)).
 
 (b) max(0, (1−h)B + hu) ≤ (1−h)B + h u⁺ because B ≥ 0. Sum over j and use (a) at the previous step.
 
@@ -186,9 +186,9 @@ If moreover u_e ≤ −m < 0 on [T,∞), then B_e reaches **exactly 0** by step 
 
 N_on = 0 if r := (x* − x_T)/(x* − B_c) < 1, else ⌊ln r / ln(1/ρ)⌋ + 1.
 
-*Proof.* By Lemma 1(c), x⁺ ≥ (1/g)((1−h)x + h u^min). The comparison sequence y_{k+1} = ρ y_k + h u^min/g has fixed point x*. Induction gives x_{T+k} ≥ x* − ρ^k (x* − x_T). If x_T ≤ x*, this lower bound is non-decreasing in k; solve it ≥ B_c for k. If x_T > x*, then r < 1 and N_on = 0, since x* − ρ^k(x* − x_T) ≥ x* > B_c for every k. ∎
+*Proof.* By Lemma 1(c), x⁺ ≥ (1/g)((1−h)x + h u^min). The comparison sequence y_{k+1} = ρ y_k + h u^min/g has fixed point x*. Induction gives x_{T+k} ≥ x* − ρ^k (x* − x_T). If x_T ≤ x*, this lower bound is non-decreasing in k; solve it > B_c for k. The inequality is strict because the status is B_e > B_c: x* − ρ^k(x* − x_T) > B_c ⇔ ρ^k r < 1 ⇔ k > ln r / ln(1/ρ), whose least integer solution is ⌊ln r / ln(1/ρ)⌋ + 1 = N_on (as in `freeze_check.py::certificate`). With ≥ the least k would be ⌈ln r / ln(1/ρ)⌉, which allows x = B_c (OFF) when the ratio is an integer. If x_T > x*, then r < 1 and N_on = 0, since x* − ρ^k(x* − x_T) ≥ x* > B_c for every k. ∎
 
-Interpretation: x* ≈ min(u, c·u/(S⁺ + ε/h)), the worst-case proportional share of the cap.
+Interpretation: x* ≈ min(u, c·u/(S⁺ + ε/h)) with S⁺ := max(S_i⁺, S_j⁺) (both endpoints, as in g_e), the worst-case proportional share of the cap.
 
 ### Theorem 3 (gated-OFF certificate for large locked cliques): PROVEN (paper proof; not in Lean), conditional on R on [T,∞); T ≥ 1, or row sums ≤ c at start (H0)
 
@@ -429,6 +429,7 @@ In every simulation we ran (1,412 certified checks over the simulated window), t
 * **R3 (counts/wording):** "~1,450" → **1,412** certified (run, T) pairs; "certified" is defined in §0 and §4 as checked over the finite window [T, 80000); reset row corrected to B := 0 (not B_init).
 * **Non-blocking:** re-implementation described as "exact on the default engine path" (variants are not engine modes; audit cross-check of 80k steps × 3 seeds cited); proof labels changed to "PROVEN (paper proof)" with the Lean coverage stated; explicit N marked as paper-level only (Lean has ∃N); gate-test caveat updated with the audit's tie scan.
 * Not changed: the theorems, proofs, Lean files, novelty assessment and other content.
+* **Doc fixes 2026-11-21 (Researcher 001, branch `docs/freezing-report-fixes`):** (H0) and Lemma 1 now say the engine init satisfies the start hypothesis only at the production config (`initialize_state` does not enforce the gap); Thm 2 (ON) proof says "> B_c" (strict, matching N_on and the code); the §2 gated-share heuristic uses both endpoints, u_e·min(1, c/max(S_i, S_j)) (ERRATA E27), with its approximation error stated, and the Thm 2 interpretation names S⁺ = max over both endpoints. No theorem, certificate, number or claim status changed.
 * **Novelty audit (2026-10-31, Auditor Seat 002; copy in `audit/AUDIT_R002_NOVELTY.md`; verdict: agree with changes):** novelty rescoped in §0, §5.1, README and `RES-FREEZE-NOVELTY`. Changes: Cho–Dong–Ha 2023 added as prior art; Ha–Noh–Park 2016 marked related only; the overlap counted as a consistency hit only; the residual restated as Lemma 1 + Thms 2–3 (not discrete time or explicit N), conditional on the R bands; the phase-offset-invariance mismatch noted. The theorems and proofs are unchanged.
 * **Ext-026 (2026-10-29, external review by Researcher 026, Arena AI; Corollary 4):** the old proof applied Thm 3 "by continuity in the limits", but Thm 3's ℓ_f depends on B_f(T), which need not converge. Fixed by using ℓ_f^0 = (1 − ρ_f^{N1})·x*_f (valid since B ≥ 0, independent of B(T)), checking monotonicity in (U⁺, u^min, S⁺) and choosing N1, then T (§3, Cor 4). Status now "revised after external review"; Auditor Seat 002 re-audited the revision on 2026-10-31 and found it CORRECT (`audit/AUDIT_R002_d9c03ef.md`). No code, number or Lean file changed. The ledger row RES-FREEZE-01 was split into LEAN-FREEZE-CORE, RES-FREEZE-GATED, RES-FREEZE-NUM and RES-FREEZE-NOVELTY in the same change.
 * **Audit of d9c03ef (2026-10-31, Auditor Seat 002; copy in `audit/AUDIT_R002_d9c03ef.md`; verdict CLEAN WITH NOTES, no blockers):** Cor 4 (revised) CORRECT; ledger rows, Lean build, pins and numerics PASS. Non-blocking notes addressed: (1) start hypothesis "T ≥ 1, or row sums ≤ c at start" (H0) added to Lemma 1, Thms 2–3, §0, README and the RES-FREEZE-GATED row; (2) the Thm 2 (ON) monotonicity wording now states x_T ≤ x* (and the x_T > x* case); (3) the stale stress-run comment at `freeze_check.py:151` fixed (comment only; the run is fully certified, §4); (4) line refs to `freeze_check.py` corrected (+3, after the MARGIN_GUARD block); (5) RES-FREEZE-NOVELTY note cites AUD-NOVELTY as the vocabulary precedent; (6) the "not yet re-audited" wording replaced by a citation to this audit. The b2a95dfbfbe3 SHA256SUMS failure it records is pre-existing on main and unrelated to this branch.
