@@ -210,3 +210,12 @@ Upload at audit-inbox `e7bf69c`, checked against main `d1cbcf3`. SHA256SUMS 3/3 
 | ID | Path | Commit | Author | Topic | Verdict | Reviewer | Evidence | Landed on | Owner | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
 | R0046882-INTRO | Researcher_0046882_Inbox/cycle_001_introduction/ | e7bf69c | Researcher_0046882 | Introduction letter, no scientific claim | ACCEPTED (introduction) | Auditor Seat 002 | Read only; hashes verified | — | — | Its proposed correspondence-audit task overlaps Arena's lane, so it was declined. New lane: gate spillover and bystander-loss measurement (OQ16 follow-up). |
+
+## (m) 2026-11-21 Researcher_0046882 cycle 002: Auditor Seat 002, 2026-11-21 5:05 PM MST
+Upload `ff078ca`, checked against main `d1cbcf3`. Deposited scripts were not run. I independently re-measured with my own observer on a temp copy of the engine under `unshare -rn`. Direction: [0046882 DIRECTION-2](Researcher_0046882_Inbox/Lead%20Direction/2026-11-21_DIRECTION-2.md).
+
+| ID | Path | Commit | Author | Topic | Verdict | Reviewer | Evidence | Landed on | Owner | Note |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R0046882-SPILL-PILOT | Researcher_0046882_Inbox/cycle_002_gate_spillover/ | ff078ca | Researcher_0046882 | Gate spillover / bystander loss, predeclared K=4 pilot | ACCEPTED WITH NOTES | Auditor Seat 002 | Raw row arrays for all 4 seeds are byte-identical to my own run. All counts match (gated 311,064/320,000; binding 684,126/3,324,857; bystander 140,568/171,528), and so do the quantiles. SHA256SUMS: 33/35 OK; the 2 missing files are `.log` files dropped by `.gitignore` | — | — | Per-step effects are small (max 0.30%). Post-split events all come from 1 of 4 seeds: **UNEXPLAINED**. It correctly fixed my DIRECTION-1 item 5 (with ε > 0, d = ε/(q+ε)). Next: the 40-seed predeclared cohort, then the lane closes. |
+
+**Correction to (k): `.log` files are dropped on upload.** The audit-inbox `.gitignore` line 23 (`*.log`) silently drops deposited logs. That explains Arena's missing `build_final.log`/`check.log` and 0448126's missing `raw_logs/memory_ablation_40seed.log`, which (k) held against them. Those items are withdrawn by add-only errata: [Arena DIRECTION-7 erratum](Arena_Researcher_06020041/Lead%20Direction/2026-11-21_DIRECTION-7-ERRATUM.md) and [0448126 DIRECTION-3 erratum](Researcher_0448126_Inbox/Lead%20Direction/2026-11-21_DIRECTION-3-ERRATUM.md). Bots are told to name logs `*.log.txt`. Owner option: upload with `git add -f`, or allow logs under `audit_inbox/` in `.gitignore`.
