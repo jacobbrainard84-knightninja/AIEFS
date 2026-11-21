@@ -58,7 +58,8 @@ class PushNotesParseTests(unittest.TestCase):
                 rc = check_modes.main(["--repo", root, "--strict"])
             out = buf.getvalue()
             self.assertEqual(rc, 1, out)
-            known = [ln for ln in out.splitlines() if "KNOWN_NOT_EXEC" in ln]
+            # match the plain report line only: under GITHUB_ACTIONS=true the checker also prints a ::error annotation
+            known = [ln for ln in out.splitlines() if ln.startswith("ERROR KNOWN_NOT_EXEC ")]
             self.assertEqual(len(known), 1, out)
             self.assertIn("tools/sync/only_in_backticks.sh", known[0])
 
