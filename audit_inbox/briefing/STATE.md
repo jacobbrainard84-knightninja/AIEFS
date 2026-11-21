@@ -1,23 +1,38 @@
-# Project state (current section refreshed 2026-11-20 4:10 PM MST by Auditor Seat 002)
+# Project state (current section refreshed 2026-11-20 5:50 PM MST by Researcher 001)
 
 AIEFS is a hobby math project: an adaptive Kuramoto model (N = 12 oscillators) with Hebbian-style adaptive couplings B, a delay τ = 0.5, an EMA of pairwise coherence R, and a min-endpoint multiplicative capacity gate, together with Lean 4 proofs of some supporting facts.
 
 Items marked **PENDING** have not landed on `main`. Do not cite them as results. Branch verdicts are agent ratings: input only (README rule 7).
 
-## Current state, 2026-11-20 (snapshot; re-run `git ls-remote origin` before citing)
+## Current state, 2026-11-20 5:50 PM MST (snapshot; PR states read from GitHub at 5:48 PM MST; re-run `git ls-remote origin` before citing)
 
-- **`main` = `0a6a2f6`** (`0a6a2f62ea9af147cac60a7be30d85d6b37fe52a`), after PR #46.
-- **Merged since the 2026-11-11 snapshot below:** #28–#30 (mutation-step guard, engine step-order pins, doc drift); #31 Lean P5 (delay buffer, phase increment, coherence EMA); #32, #36 (mutation-check guards); #33 engine step-order round 2; #34, #35 (E22 step-size sweep was run, label stays UNEXPLAINED); #37, #38 c014 TrajectoryInvariants; #39 c016 coherence speed limit; #40 `check_study_paths.py`; #41, #43 phase/frequency lock (SPEC §14); #42 DelayRoots (SPEC §15); #44, #45 Arena intake: CommonRootSimple + EngineStepRef (SPEC §16); #46 H1 metamorphic engine tests.
-- **Open PR:** #47 H3, a report-only Python mutation tester for the checker scripts (`research/h3-py-mutation` @ `e4341ca`; independent audit CLEAN). Waits on the owner's merge.
-- **PENDING branches (not on `main`):**
-  - `research/lean-gate-ema-radial` @ `0602c77`: EMA radial lemma from Arena (SPEC §17). Audited CLEAN WITH NOTES; PR waits on the owner.
-  - `fix/validate-theta-history` @ `2c71648`: engine-side guard that `theta == history[-1]`. Audited CLEAN WITH NOTES; PR waits on the owner.
-  - `research/h2-engine-invariants` @ `cf340b4`: seeded engine-invariant property tests. In delta review.
+- **`main` = `7ec6011`**, after PR #48. Earlier today: #46 (H1 metamorphic tests, merged 12:47 PM MST → `0a6a2f6`), #47 (H3 Python mutation tester, `research/h3-py-mutation` @ `e4341ca`, merged 3:57 PM MST → `d7b9fac`), #48 (H3 CI gap tests, `research/h3-gap-tests` @ `1ce14d2`, merged 5:38 PM MST → `7ec6011`; Auditor Seat 002 audit CLEAN WITH NOTES, 6 untargeted surviving mutants listed as follow-ups).
+- **Merged since the 2026-11-11 snapshot below:** #28–#30 (mutation-step guard, engine step-order pins, doc drift); #31 Lean P5 (delay buffer, phase increment, coherence EMA); #32, #36 (mutation-check guards); #33 engine step-order round 2; #34, #35 (E22 step-size sweep was run, label stays UNEXPLAINED); #37, #38 c014 TrajectoryInvariants; #39 c016 coherence speed limit; #40 `check_study_paths.py`; #41, #43 phase/frequency lock (SPEC §14); #42 DelayRoots (SPEC §15); #44, #45 Arena intake: CommonRootSimple + EngineStepRef (SPEC §16); #46 H1; #47, #48 H3.
+- **Open PR:** #49 `docs/freezing-report-fixes` @ `64b8f8e` (docs only, `research/freezing/REPORT.md`). Three fixes:
+  - It scopes the init-gap claim to the production config: 0/200 seeds fail up to B_init_scale 0.08, 141/200 at 0.1 and 200/200 at 0.2, and it is guaranteed for B_init_scale ≤ c/11.
+  - L189 `≥ B_c` → `> B_c` in the Thm 2 proof.
+  - L138 gated share in the two-endpoint form `u_e·min(1, c/max(S_i, S_j))`; no RES-FREEZE result depends on the one-endpoint form.
+  - The share approximation's error was 0.017–0.031 in seeded mixes, from the deposited script; this is an observation, not a bound.
+  - Waits on the owner's merge.
+- **Gate-form adjudication (open question 16 / TRIAGE R026-S9): done.**
+  - Verdict (i): a terminology and citation fix only, and AUD-RATELAW is unaffected.
+  - The engine gate is per-edge min-endpoint scaling, `B_unprojected * np.minimum.outer(scale, scale)` (engine L812).
+  - Auditor Seat 002 adjudicated (audit-inbox `7d6be91`, notes folded in `fa27403`/`95605fc`). Researcher 001 reviewed it independently: CONCUR WITH NOTES, with exact Fraction witnesses W1–W5 reproduced and run against the engine lines.
+- **ERRATA E27** (gate wording/citation, Miller–MacKay quotes with locations, W1/W2 witnesses): `docs/gate-form-errata` @ `755724b`. The PR form was shown to the owner; **no PR is open yet** (none found on GitHub). Researcher 001 audited `273dcc3` (CLEAN WITH NOTES) and `3b420ae` (FIXES: the "is set for the cell as a whole" quote is in the unnumbered introduction and §4.3, not §1). `755724b` (parent `3b420ae`) corrects that location to "introduction, unnumbered; also §4.3" (one line plus the inventory row). It has not yet been re-audited by Researcher 001.
+- **PENDING branches (not on `main`; no PR exists for any of these as of 5:48 PM MST):**
+  - `research/lean-gate-ema-radial` @ `0602c77`: EMA radial lemma from Arena (SPEC §17). Audited CLEAN WITH NOTES (Researcher 001: gate 979 decls, mutation 145/145, E 21/21, T 4/4, pytest 381). PR form pending.
+  - `fix/validate-theta-history` @ `2c71648`: engine-side guard that `theta == history[-1]`. Audited CLEAN WITH NOTES. PR form pending.
+  - `research/h2-engine-invariants` @ `cf340b4`: seeded engine-invariant property tests. PR form pending.
   - `research/h7-spec-pins` @ `e55b418`: held until ema-radial lands.
-  - `arena/d4a487cc-aiefs` @ `2af3859`: owner hold; never merge the tree. Its gate-form measurement is open question 16.
+  - `arena/d4a487cc-aiefs` @ `2af3859`: owner hold; never merge the tree.
+- **Owner items:**
+  - The AUD-GATE wording (`registry/claims.csv` L47) and the CF02 wording (L11); both now say "node-strength (multiplicative) normalisation". The proposed wording is "symmetric per-edge min-endpoint capacity scaling", via the reconciliation script.
+  - The RES-FREEZE-GATED "engine init satisfies" wording.
+  - Whether to run `tools/redteam` in CI.
+- **Still open:** the real-run impact of gate spillover/overshoot (non-binding rows lose weight; binding rows can end below the cap) is **UNEXPLAINED** and unmeasured.
 - On 2026-11-20 the owner approved deleting 21 remote branches that were fully merged or superseded; the north-star evaluation doc was archived under `audit_inbox/salvage/2026-11-20_branch-archive/`.
-- **Engine hardening plan (seats):** H1 merged (#46); H2 in review; H3 PR #47; H7 held; H5 later; H4 spike last; H6 doc-only.
-- **Outside researchers, lanes and teams:** see `README.md` → "Lanes and teams". Every bot has its own lane; extra help is assigned as a support bot on a team lead's lane. Current directions (2026-11-20 5:15 PM MST): Arena DIRECTION-6, Researcher_0282416 DIRECTION-2, Researcher_0448126 DIRECTION-2. Researcher_040282, GPT-6 and Researcher_026 are retired; their open items were reassigned (TRIAGE (j)). Main is now `d7b9fac` (PR #47 merged) (each in its own `Lead Direction/`).
+- **Engine hardening plan (seats):** H1 merged (#46); H2 `cf340b4` PR form pending; H3 merged (#47, #48); H7 held; H5 later; H4 spike last; H6 doc-only.
+- **Outside researchers, lanes and teams:** see `README.md` → "Lanes and teams". Every bot has its own lane; extra help is assigned as a support bot on a team lead's lane. Current directions (2026-11-20 5:15 PM MST): Arena DIRECTION-6, Researcher_0282416 DIRECTION-2, Researcher_0448126 DIRECTION-2. Researcher_040282, GPT-6 and Researcher_026 are retired; their open items were reassigned (TRIAGE (j)). (Each direction is in that bot's own `Lead Direction/`.)
 - **Inbox layout** changed on 2026-11-20 (audit-inbox `594c23d`): one folder per researcher; `audit_inbox/MOVES.md` maps old paths.
 
 ## Historical snapshots (kept for the record; superseded by the section above)
@@ -112,7 +127,7 @@ None of these proves closed-loop phase locking (O1), convergence of R or B, a sh
 ## Open / owner / docs (not PENDING science merges)
 
 - **Docs:** `CURRENT_STATUS.md` still stamped 2026-10-23; dead tangent/cocycle paths; freeze wording and "75 rows" stale. Chronicler patch under `audit_inbox/Arena_Chronicler_Inbox/2026-11-08_arena-chronicler_project-chronicler/recommendations/current_status_edits.patch` (apply-checked clean against `ba171d0`; `CURRENT_STATUS.md` is unchanged through `1c30ca5`) (apply from a branch cut from `main`, dual-control). `registry/studies.csv`: **11** unresolved `canonical_entrypoints` tokens in 5 study rows (re-checked 2026-11-09). `lean/AIEFProofsKn/README.md` still says the project is not in CI (false: required row). Architecture doc still says 14 studies / 43 claims (actual 15 / 80).
-- **Science follow-ups:** v2 rate-law predeclared rerun; science fixes E–H; `research/freezing/REPORT.md:189` `≥ B_c` → `> B_c` (nit).
+- **Science follow-ups:** v2 rate-law predeclared rerun; science fixes E–H; `research/freezing/REPORT.md:189` `≥ B_c` → `> B_c` (in open PR #49).
 - **Owner items:** G2c (manifest/verifier self-pin gap); ART-0043; claims.csv FreezeCore "branch-only" wording.
 - **v4.1:** trust-anchor E24/E25 landed; module remains an **unaudited candidate**. Full scientific audit of v4.1 and a real S01 *analysis* output are still open (distinct from the trust-guard positive control).
 

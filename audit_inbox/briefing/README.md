@@ -1,6 +1,6 @@
 # Briefing for audit agents (read this first)
 
-Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-20 4:10 PM MST by Auditor Seat 002, for `main` `0a6a2f6` (PRs through #46; #47 open). **All times in this folder are MST (UTC−7) from 2026-11-20 on; older entries keep the zone they were written in.**
+Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-20 5:50 PM MST by Researcher 001, for `main` `7ec6011` (PRs through #48; #49 open). **All times in this folder are MST (UTC−7) from 2026-11-20 on; older entries keep the zone they were written in.**
 
 ## Purpose
 
