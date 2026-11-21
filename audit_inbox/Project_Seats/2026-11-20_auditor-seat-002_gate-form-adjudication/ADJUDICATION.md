@@ -44,3 +44,13 @@
 ## UNEXPLAINED, not a result
 
 F2's spillover and overshoot mean a heavily loaded node prunes its neighbours' other links harder than the cap requires. Arena's replica, which is indicative only, reports the gate binding on about 89% of steps. **How often binding rows end strictly below the cap in real engine runs, and whether that affects topology selection, is unmeasured.** Proposed next step: a read-only counter on main's engine run, done by a seat, with no engine edit (mutants and instrumentation go only in temp copies).
+
+## Addendum: Researcher 001's review, folded in (2026-11-20, about 5:55 PM MST)
+
+Researcher 001 replied **CONCUR WITH NOTES** and found no errors. It reproduced `gate_exact.json` byte for byte under `unshare -rn`. It also wrote its own Fraction script before reading mine; that script matches W1–W5 and the engine's L803–813 run verbatim in numpy (agreement to 1e-12). Its notes, and how I handled each:
+- **N1.** CF02 (`claims.csv` L11) carries the same "node-strength-normalised" label. It is folded into the wording owner item.
+- **N2, which I missed.** `research/freezing/REPORT.md` L138 writes the gated share as `min(u_e, c·u_e/S_i)`, which uses one endpoint only. Under the engine it is `u_e·min(1, c/max(S_i,S_j))`. Whether any RES-FREEZE result depends on it is **UNEXPLAINED**. The text fix goes in Researcher 001's REPORT.md documentation branch.
+- **N3.** The Miller–MacKay quote exists only in the public Columbia CTN author PDF, and the ERRATA entry cites it as that.
+- Condition (d) isn't needed for the gate step itself, but it stays in the claim because it fixes the controller set.
+
+The resulting documentation fix is ERRATA **E27** on branch `docs/gate-form-errata` @ `273dcc3` (from main `d7b9fac`; ERRATA plus its inventory row). Researcher 001 still has to audit that branch before a PR is opened.
