@@ -1,0 +1,3619 @@
+{
+  "metadata": {
+    "researcher": "0046882 (Arena.ai)",
+    "date_time_host_reported_MST": "2026-11-22T03:01:39.733080-07:00",
+    "clock_status": "UNVERIFIED: session authoritative date is 2026-09-20, host and relayed documents report November. No claim of externally registered chronology.",
+    "main_sha": "d1cbcf38937b75538100ccaf3115fcbe45a2714f",
+    "original_engine_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+    "instrumented_engine_sha256": "a69b7943d31542097d1a599accc1c8ba722b0bf6b74d31a20a6dd8538090c830",
+    "scope": "Gate spillover lane, DIRECTION-2",
+    "status": "UNVERIFIED by project seats",
+    "manifest_path": "runs/5a9f093a2fe0/manifest.json",
+    "manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+    "K": 40,
+    "seed_list": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270,
+      18127452951968972828,
+      12851640484293199234,
+      4219039243791140697,
+      9082055256280075172,
+      1918007468868772336,
+      17883847597205629106,
+      16627818730624180313,
+      15403081841477312463,
+      4040285944958847150,
+      17521310920850592782,
+      2461295749352584108,
+      9036321132460399255,
+      14040336450255043598,
+      1888415619847841128,
+      172180395821707403,
+      17715532056777442089,
+      3704716633526084363,
+      6942591650975756121,
+      305986450614148690,
+      16952466944611321358,
+      12123519807951751650,
+      15853699719446171583,
+      9189988769602851417,
+      5213047409853278064,
+      4932511216876650745,
+      6108867655028980287,
+      6023008189364820510,
+      1230287949579537403,
+      283404770198602602,
+      3582616062465030267,
+      3258463328937640595,
+      3952397966055989215,
+      17279552413280415429,
+      5415544643585892346,
+      10856823803646276806,
+      14924267685654216746
+    ],
+    "branch": "continue",
+    "epsilon": 1e-12,
+    "event_threshold": 1e-09,
+    "windows": {
+      "all": [
+        0,
+        80000
+      ],
+      "burn": [
+        0,
+        16000
+      ],
+      "history": [
+        16000,
+        48000
+      ],
+      "future": [
+        48000,
+        80000
+      ],
+      "future_immediate": [
+        48000,
+        49750
+      ],
+      "future_recovery": [
+        49750,
+        56750
+      ],
+      "future_late": [
+        56750,
+        80000
+      ]
+    },
+    "cycle": "003",
+    "pilot_seeds": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270
+    ]
+  },
+  "seeds": {
+    "11242426753702356865": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618006,
+        "max": 0.997001125561813,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999991275,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000016518
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789459908,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894762924
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "6e009f7ffb059e439bb4a2b6bb77d520a3596fa462e23bc49c55217c205aabcf",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "efe97686f56f8b9e5ca1176f636313293392e389e87ef032389e0b96459a4296",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "4619122171158768524": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 11.64434375
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        11381,
+        20619
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9976293177003029,
+        "median": 0.9976293177003033,
+        "p95": 0.9976293177003075,
+        "max": 0.9976293177003143,
+        "mean": 0.9976293177003037
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0008000054264608591,
+        "median": 0.0008049491221385763,
+        "p95": 0.0010832392365899778,
+        "max": 0.0015049255499196557,
+        "mean": 0.0008520859603402281
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0012631664628329356,
+        "median": 0.0012709722981135417,
+        "p95": 0.0017103777419841756,
+        "max": 0.002376198236715246,
+        "mean": 0.0013453988847477285
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "3681fdabf3c26a10074e95df6733350a99862ed8df27a181c99fd0a73fa18940",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "6b040899ca474bb67c2be3389ffbb1dbb50305a661b0e51e48d311606c1749c8",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "52404669d11b4316401c839c63c271da7a59ad11471136fd8c17068c8ab51fcc",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "16329425431442249417": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617921,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618002,
+        "max": 0.9970011255618126,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999990831,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000025993,
+        "mean": 0.0016000000000017188
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789459207,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894777886,
+        "mean": 0.0025263157894763973
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "8f78ec3135d9458f2db9b42f0553b9c398d1948b1d62678ba60d883731a89b44",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "0bf63191e46468572fdccaa89a8e82d4db065b0ac8c1c81ecf84cb19d2d3afc4",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "10431384713483787270": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617921,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618004,
+        "max": 0.9970011255618132,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999932735,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000025993,
+        "mean": 0.001600000000001863
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894630634,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894777886,
+        "mean": 0.0025263157894766255
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "66d3f3e901161e48beef59c5a3cef56c72d44849d408b43cab30f49f110a6435",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "d55b7b7824e37b6c20ff2f42b6998125f173c2cde2adb2c7bdb75a8835290211",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "18127452951968972828": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.997001125561802,
+        "max": 0.9970011255618164,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999888326,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000015728
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894560516,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476167
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "776150f51f3f38f4bb836af37f4cc30ae54836edc341bcbde5c75ae98a0991e9",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "f8a53568de41ef6b7000c7e125d4bd756790b54d77657756296012bea826b658",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "12851640484293199234": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255617953,
+        "max": 0.9970011255618004,
+        "mean": 0.9970011255617933
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0016000000000021553,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000047088,
+        "max": 0.0016000000000081505,
+        "mean": 0.001600000000002565
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894770873,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894811193,
+        "max": 0.0025263157894865533,
+        "mean": 0.0025263157894777353
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "4049cb4c28d2640b03dfb47b54f7ad42c1dd190125d35b2eec597946fb2d3fcb",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "6aa71acb07353b639366a5c8fba76d157a69fc0caff8fbb3dc26a255fbb92149",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "4219039243791140697": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618034,
+        "max": 0.9970011255618203,
+        "mean": 0.9970011255617942
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999985502,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000013532
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894507924,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894758214
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "dde8071e481af52618bfaadda9d550674dc606ed8a3f02e643bdd799e97829ec",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "41bb9a4b635f4a30784f32b2bb4b28b3b3c2e17455676f2b4c62b1d7e3ac6f90",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "9082055256280075172": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618034,
+        "max": 0.9970011255618203,
+        "mean": 0.9970011255617942
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999881664,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000015772
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789455,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894761736
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "b9bc9bbab85dfdbfe475726e5c8d55ab2dfbc26b74bb39fbf6d895520cd3ecfa",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "df3db3f43145ff23bc44d952e92c4d250677b6c9539e4d974e2b217edc4ca063",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "1918007468868772336": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617919,
+        "median": 0.9970011255617921,
+        "p95": 0.9970011255618063,
+        "max": 0.9970011255618277,
+        "mean": 0.9970011255617939
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999846137,
+        "median": 0.0016000000000024883,
+        "p95": 0.0016000000000025993,
+        "max": 0.0016000000000027104,
+        "mean": 0.0016000000000015325
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894493903,
+        "median": 0.0025263157894776134,
+        "p95": 0.0025263157894777886,
+        "max": 0.002526315789477964,
+        "mean": 0.002526315789476104
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "8427eca03d1948fe833c5593bce77fefd255ba17a1c20d0a667362a51a1c937d",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "8ee859aef968cb1d93413a5ee366b2001b12313fe3f79f9e3dd504295a09065f",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "17883847597205629106": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9976293177003029,
+        "median": 0.997629317700303,
+        "p95": 0.9976293177003076,
+        "max": 0.9976293177003146,
+        "mean": 0.9976293177003036
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0008000000000769614,
+        "median": 0.0008000000000771834,
+        "p95": 0.000800000024105757,
+        "max": 0.0008000000601320334,
+        "mean": 0.0008000000033387972
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0012631578948583602,
+        "median": 0.0012631578948587108,
+        "p95": 0.0012631579327985639,
+        "max": 0.001263157989682158,
+        "mean": 0.0012631579000086273
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "d1462cb671bc836d89d9b70d23b5ffb352ef1c5b05fa908d16c23ad194c5e6c3",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e601e85be541707851f52bd3f09e77945419ac00c7ee6e37630d990f94c50b55",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "16627818730624180313": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255617973,
+        "max": 0.9970011255618053,
+        "mean": 0.9970011255617935
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999952719,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.001600000000001875
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789466219,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894766454
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "022f86f10f43b84c6dc64fed0180f8cea19f605681a2908424a5572b701e7744",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "c1c88fb7e32d9c96ff4d252db464f2d0852e1db93cb4c5d37c010efc695d2ee8",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "15403081841477312463": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617919,
+        "median": 0.9970011255617922,
+        "p95": 0.9970011255617989,
+        "max": 0.9970011255618093,
+        "mean": 0.9970011255617933
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999969372,
+        "median": 0.0016000000000023773,
+        "p95": 0.0016000000000024883,
+        "max": 0.0016000000000027104,
+        "mean": 0.001600000000002146
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894688483,
+        "median": 0.0025263157894774377,
+        "p95": 0.0025263157894776134,
+        "max": 0.002526315789477964,
+        "mean": 0.0025263157894770726
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "ee55fbb1329c0832326369a6d48676cc6f181e9adcf9dbe9e3c76df9b7b0c1fe",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "42935a1cf39dfc33acddfc836aa35dd67e9a7169f49f76326224c5b440a476a3",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "4040285944958847150": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617921,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618001,
+        "max": 0.9970011255618121,
+        "mean": 0.9970011255617937
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999991275,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000025993,
+        "mean": 0.001600000000001747
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789459908,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894777886,
+        "mean": 0.002526315789476442
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "93f3f4c5631cb164e6c41a063ed00ff758bd3375ea5f47fbf6f2d374fa87d2e3",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "ccca23001510761163cbfd52f39aa7aaa8cca174fae948a6e5d5467c7676c5be",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "17521310920850592782": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618013,
+        "max": 0.9970011255618149,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999916081,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000017727
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789460434,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894764828
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "1a8d84626413a752c00ad74a913af61315d0cff60f2e23dccff4c533ecdb3b8b",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "b3338f5ace6d93e718d9ce2bbab1720b1fbaa3fa55eb3b69a7934b035ffaacb5",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "2461295749352584108": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.997629317700303,
+        "median": 0.9976293177003035,
+        "p95": 0.997629317700306,
+        "max": 0.9976293177003108,
+        "mean": 0.9976293177003036
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0011999999999982025,
+        "median": 0.0012000000000016442,
+        "p95": 0.0012000000000018662,
+        "max": 0.0012000000000018662,
+        "mean": 0.0012000000000014954
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.001894736842102425,
+        "median": 0.0018947368421078593,
+        "p95": 0.00189473684210821,
+        "max": 0.00189473684210821,
+        "mean": 0.0018947368421076245
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "9f55d9a9699c8b5b499cfb1dc0d20375f8d00c2f948970b6230980012a47a07a",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "41117388a30ecc670f6a75a36c6fd228fe380a2507f8ea429b63289d517585cb",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "9036321132460399255": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618008,
+        "max": 0.997001125561814,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999921632,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000017203
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894613105,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476401
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "a39f946289a0f30ea5e06f236dbc27305a12026f4bec930e5159e41286782c58",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "c0e8a45a3add15b2432ab350072a6f3fc330febfe4b42a2d7e984e25ef962418",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "14040336450255043598": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618026,
+        "max": 0.9970011255618184,
+        "mean": 0.9970011255617942
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999990498,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.001600000000001625
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789458681,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894762503
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "6b0110dddb4eddde5cbca07e54a20a1bcb93a085a3e593033c415a072005dd93",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "d83c768972832f53ded3e29c1536518456e02617c92d2eff9af670dde9369465",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "1888415619847841128": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9976293177003027,
+        "median": 0.997629317700303,
+        "p95": 0.9976293177003066,
+        "max": 0.9976293177003118,
+        "mean": 0.9976293177003035
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0011999999999980915,
+        "median": 0.0012000000000017552,
+        "p95": 0.0012000000000018662,
+        "max": 0.0012000000000020883,
+        "mean": 0.001200000000001611
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0018947368421022499,
+        "median": 0.0018947368421080347,
+        "p95": 0.00189473684210821,
+        "max": 0.0018947368421085606,
+        "mean": 0.0018947368421078073
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "8d05bf3a83a7c9622d16d374ed7ca69bd404fc1a23c79578ba2730cb1877d9d3",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "005b8dcee603dad7edc64ead46f4f847c4ba8e26e03842ec500d8763bb03473c",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "172180395821707403": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255617983,
+        "max": 0.997001125561808,
+        "mean": 0.9970011255617934
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999940506,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000019068
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894642907,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894766944
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "0149efe22058d0890f8c22e774b2d46c9bf33c96be07d0cde219e4d30258d393",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "6411762807114c003c53c202fef3d4535aa0ac89a488a58c698585c2e957091b",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "17715532056777442089": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618019,
+        "max": 0.9970011255618164,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999990831,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000016598
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789459207,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476306
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "27761ffd540e27ce345ef4d613dc7a77ac3a0ac207af6525e7374e5f2ca705d3",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "92e87f3c7f32359aa57ebb2f86694f28cc725be1a3614a6dc1b84cd4ddf180ed",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "3704716633526084363": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.997001125561801,
+        "max": 0.9970011255618145,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999891656,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000015522
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894565773,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894761354
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "d43dafba8947e7344ae623a204d5c67f5078b1c7cdfe9aea067bf1bff4606486",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "330bdb49b8f46d11461c2a00ec90248b3d727f4192b41aba6dd29a1f30d240ee",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "6942591650975756121": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255617977,
+        "max": 0.997001125561806,
+        "mean": 0.9970011255617933
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999948278,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000019358
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894655176,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476741
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "020138b8dcc899a67d2e86f7c006aa96ac61f717ed0521129bc762d8fc096fd1",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "0405e2437fbcf29d3b60df429dd3abad1e7c537726d9b705af5d7f0e192f7542",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "305986450614148690": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618014,
+        "max": 0.9970011255618157,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999894987,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000015772
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894571033,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894761744
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "d0b3799fabbaaf8c6874672889bc4df2aa63ade70e35342b85bc2939e0da740e",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "8cf770234e8fccb275f2b30f2a341d89d41237cf68b04ae9bcbdadb08a46bb31",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "16952466944611321358": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618001,
+        "max": 0.9970011255618123,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999990609,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000017127
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894588563,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894763882
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "fe67c8528378ec2064ce20b5d220705fb1c2e74665e065f0765f0cbb62f05d7f",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "27b51744cc1c8dc9ae7168001b2174157c656b34cf7591c915aa6bcb6f64abce",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "12123519807951751650": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255617982,
+        "max": 0.9970011255618071,
+        "mean": 0.9970011255617935
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999940506,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000018079
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894642907,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476539
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "d98f4a07bb5b656b723f4b3aa2611e7795c71bbfe0d269f7ef21d29b6775cd30",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "62ba18bf2f08ebe08c0ace65fecc3ff66aca584cc1311659fc980eb47026568b",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "15853699719446171583": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255617994,
+        "max": 0.9970011255618105,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0016000000000021553,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000025993,
+        "max": 0.0016000000000028214,
+        "mean": 0.0016000000000022745
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894770873,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894777886,
+        "max": 0.002526315789478139,
+        "mean": 0.002526315789477276
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "64388feb36133ecd50bba3bc6990cbd54a9ab7582c1d705a2bef60d5b03ade9e",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "318d7e41e5bc8fcfb28682e4c799c2385f86fb158b5f1e2267800399a4474e99",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "9189988769602851417": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618022,
+        "max": 0.9970011255618173,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999877224,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000015553
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894542987,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894761397
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "78680238189566c80a98f4729e72c3146779aee6dacc192bb11b2eae3bb7f61f",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "1e8821f548af1034e18be4a55db908b1fe7301dc2022757e0796c83f43a31242",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "5213047409853278064": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618002,
+        "max": 0.9970011255618124,
+        "mean": 0.9970011255617939
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999990831,
+        "median": 0.0016000000000021553,
+        "p95": 0.0016000000000022663,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000016379
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789459207,
+        "median": 0.0025263157894770873,
+        "p95": 0.0025263157894772625,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476271
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "bb4ea6c82e1cc3746c2cb0fdb429c25dee0ec595e82de2cb4821610df92ad5c3",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "785d63165c3420d080b135d666821cd4eed401695757fe6ee24bfef19a71c295",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "4932511216876650745": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255617961,
+        "max": 0.9970011255618022,
+        "mean": 0.9970011255617931
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001600000000001267,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000027104,
+        "mean": 0.0016000000000022988
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789475685,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.002526315789477964,
+        "mean": 0.0025263157894773133
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "948c34588cd5bab01ec1380b420c57baadff0ac01ac2e3667696841168f1bf3b",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "0007cf7b8f10dca57b76767b6b50a728a0b74303e309d6668bbdfef93e5aae47",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "6108867655028980287": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618013,
+        "max": 0.9970011255618152,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001599999999990498,
+        "median": 0.0016000000000023773,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000017337
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789458681,
+        "median": 0.0025263157894774377,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894764216
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "72b391b2d90d7200ea719ef7dabc8464065e318451031c4bc909bc568a398e7b",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e5fc810ce5c00dc477d52a485c31ae66984970c8b89c099bf8d8884358243248",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "6023008189364820510": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617921,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255617985,
+        "max": 0.9970011255618083,
+        "mean": 0.9970011255617935
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999981585,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000024883,
+        "max": 0.0016000000000025993,
+        "mean": 0.001600000000002126
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894707764,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894776134,
+        "max": 0.0025263157894777886,
+        "mean": 0.0025263157894770405
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "3e167ce59b75f2a50248d1952957eb779c142ef687c24ac57b2e024ea734d8fa",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "6cca20cb4d5384218f0557e27a11a940e0014021aa223b06d5edfe32488ad434",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "1230287949579537403": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617912,
+        "median": 0.9970011255617918,
+        "p95": 0.9970011255618656,
+        "max": 0.9970011255619758,
+        "mean": 0.9970011255618016
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0003999999999000359,
+        "median": 0.0004000000000041748,
+        "p95": 0.0004000000000042858,
+        "max": 0.00040000000000450786,
+        "mean": 0.0003999999999995148
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.000631578947210583,
+        "median": 0.0006315789473750129,
+        "p95": 0.0006315789473751881,
+        "max": 0.0006315789473755387,
+        "mean": 0.000631578947367655
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "9b7cf6788b36653d5a2fb0db9454d7b7ac2bce3271cbb6da73d091f531a152b8",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "1fb5e677d51c77decb86043e05e64541a3fc3429e6fff0a60feff9a73ba22513",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "283404770198602602": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617919,
+        "median": 0.9970011255617922,
+        "p95": 0.9970011255618016,
+        "max": 0.9970011255618161,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999928294,
+        "median": 0.0016000000000023773,
+        "p95": 0.0016000000000024883,
+        "max": 0.0016000000000025993,
+        "mean": 0.001600000000001921
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789462362,
+        "median": 0.0025263157894774377,
+        "p95": 0.0025263157894776134,
+        "max": 0.0025263157894777886,
+        "mean": 0.002526315789476718
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "ca5352d742185f4824042fc3dad00a5d62f1bec19d8f9b0720816efce1c7c91d",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "b90d938e18d559a5fb52fa6c6388f856fa4135f47e2b04171e0ed77bcbacc96c",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "3582616062465030267": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617919,
+        "median": 0.9970011255617921,
+        "p95": 0.9970011255617974,
+        "max": 0.9970011255618053,
+        "mean": 0.9970011255617927
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999950498,
+        "median": 0.0016000000000024883,
+        "p95": 0.0016000000000025993,
+        "max": 0.0016000000000027104,
+        "mean": 0.0016000000000021145
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894658684,
+        "median": 0.0025263157894776134,
+        "p95": 0.0025263157894777886,
+        "max": 0.002526315789477964,
+        "mean": 0.002526315789477023
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "9984e4fb06754950e3bc1e456e0d7b69e9f82ac01fe7d572ea2dc247d5f2c8a2",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "f9c88ebd1945d3d8ec4653325965737429f2700dc9eb866146dcf82d9dd2f62d",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "3258463328937640595": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255617968,
+        "max": 0.9970011255618043,
+        "mean": 0.9970011255617933
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.001600000000000712,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000027104,
+        "mean": 0.0016000000000022693
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894748083,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.002526315789477964,
+        "mean": 0.002526315789477267
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "154ce138f45ddaf96a381dd21d5afba0665ff0370928369a04eb50c3c6e0753c",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "424ac0553e538f10416f5fad1ac033ae72303d76fa6f01596e89ee071a95499c",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "3952397966055989215": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255617989,
+        "max": 0.9970011255618088,
+        "mean": 0.9970011255617935
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999939396,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.001600000000001894
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.002526315789464115,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476674
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "2b99f44236af02aa57b4cb21740688930e604c4e72a8a51798a07f98160f198e",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "aee6cb3da8cff9c2bae9ea8a799b316b4520ce8d7d61e1ef7381a58d842829f0",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "17279552413280415429": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617925,
+        "p95": 0.9970011255618025,
+        "max": 0.9970011255618181,
+        "mean": 0.997001125561794
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999883885,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.00160000000000159
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894553504,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.002526315789476194
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "50b3bc71e91ec211094c311b4d006cf7487d29cf3d8bfd65a1d99ad597653b2f",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "a81d68d4d56696d29b45893426e6aaea42bffdab49ad1a829b98354125ff2818",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "5415544643585892346": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.997001125561801,
+        "max": 0.9970011255618142,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999902759,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000016875
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894583306,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894763488
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "49bc7eb4e1d68e7a39c13ba1ea1a909583d99cfa3aebae22fc811f3e51871b79",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "5b16046d81ffa70b00b7c5b2d9eae05dee202df8f4fa0fecbe7e01d3ef56d9af",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "10856823803646276806": {
+      "binding_count": {
+        "n": 32000,
+        "min": 12.0,
+        "median": 12.0,
+        "p95": 12.0,
+        "max": 12.0,
+        "mean": 12.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618011,
+        "max": 0.9970011255618145,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999936065,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.001600000000001876
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.0025263157894635895,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894766463
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "954e05e9af6c5814a6ae397a74fe9f0ad85e30daf328f16b612a2be59100e5b2",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "cd05d1c2ec1848ffbc56180700eda6d66c5fef24d5b32476526f76b10f1b9d70",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "8597444d8cd8d4c6760d2b10c830b3b594b89f46de81408d3f310cc9ce729923",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    },
+    "14924267685654216746": {
+      "binding_count": {
+        "n": 32000,
+        "min": 11.0,
+        "median": 11.0,
+        "p95": 11.0,
+        "max": 11.0,
+        "mean": 11.0
+      },
+      "binding_count_histogram_0_to_12": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32000,
+        0
+      ],
+      "min_scale": {
+        "n": 32000,
+        "min": 0.9970011255617922,
+        "median": 0.9970011255617924,
+        "p95": 0.9970011255618008,
+        "max": 0.997001125561814,
+        "mean": 0.9970011255617938
+      },
+      "binding_load_spread": {
+        "n": 32000,
+        "min": 0.0015999999999900538,
+        "median": 0.0016000000000022663,
+        "p95": 0.0016000000000023773,
+        "max": 0.0016000000000024883,
+        "mean": 0.0016000000000016995
+      },
+      "binding_load_spread_over_capacity": {
+        "n": 32000,
+        "min": 0.00252631578945798,
+        "median": 0.0025263157894772625,
+        "p95": 0.0025263157894774377,
+        "max": 0.0025263157894776134,
+        "mean": 0.0025263157894763674
+      },
+      "missing_spread_steps": 0,
+      "array_hashes": {
+        "binding_count": {
+          "dtype": "|u1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "e80fc4c9a28919de6cd352842af4a81b243d04056f20f6a169c4ec505ca08cae",
+          "nbytes": 32000
+        },
+        "min_scale": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "130b8cbf1e5eacbbed68132ff3b7a496c636be5ea48bdeac55fea5f4b25a6bca",
+          "nbytes": 256000
+        },
+        "binding_load_spread": {
+          "dtype": "<f8",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "10924e83c1d782bf482e5e3df217d6101d15cd9af963a18c17d399250bc05fca",
+          "nbytes": 256000
+        },
+        "pre_violation": {
+          "dtype": "|b1",
+          "shape": [
+            32000
+          ],
+          "order": "C",
+          "sha256": "493f5cb617d57ae998e9c1cb8f5a9f91f1f149074fd3f6a30e66973a03660940",
+          "nbytes": 32000
+        }
+      }
+    }
+  }
+}

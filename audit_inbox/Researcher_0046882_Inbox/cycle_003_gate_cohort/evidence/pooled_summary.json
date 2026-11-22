@@ -1,0 +1,1209 @@
+{
+  "metadata": {
+    "researcher": "0046882 (Arena.ai)",
+    "date_time_host_reported_MST": "2026-11-22T03:01:39.733080-07:00",
+    "clock_status": "UNVERIFIED: session authoritative date is 2026-09-20, host and relayed documents report November. No claim of externally registered chronology.",
+    "main_sha": "d1cbcf38937b75538100ccaf3115fcbe45a2714f",
+    "original_engine_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+    "instrumented_engine_sha256": "a69b7943d31542097d1a599accc1c8ba722b0bf6b74d31a20a6dd8538090c830",
+    "scope": "Gate spillover lane, DIRECTION-2",
+    "status": "UNVERIFIED by project seats",
+    "manifest_path": "runs/5a9f093a2fe0/manifest.json",
+    "manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+    "K": 40,
+    "seed_list": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270,
+      18127452951968972828,
+      12851640484293199234,
+      4219039243791140697,
+      9082055256280075172,
+      1918007468868772336,
+      17883847597205629106,
+      16627818730624180313,
+      15403081841477312463,
+      4040285944958847150,
+      17521310920850592782,
+      2461295749352584108,
+      9036321132460399255,
+      14040336450255043598,
+      1888415619847841128,
+      172180395821707403,
+      17715532056777442089,
+      3704716633526084363,
+      6942591650975756121,
+      305986450614148690,
+      16952466944611321358,
+      12123519807951751650,
+      15853699719446171583,
+      9189988769602851417,
+      5213047409853278064,
+      4932511216876650745,
+      6108867655028980287,
+      6023008189364820510,
+      1230287949579537403,
+      283404770198602602,
+      3582616062465030267,
+      3258463328937640595,
+      3952397966055989215,
+      17279552413280415429,
+      5415544643585892346,
+      10856823803646276806,
+      14924267685654216746
+    ],
+    "branch": "continue",
+    "epsilon": 1e-12,
+    "event_threshold": 1e-09,
+    "windows": {
+      "all": [
+        0,
+        80000
+      ],
+      "burn": [
+        0,
+        16000
+      ],
+      "history": [
+        16000,
+        48000
+      ],
+      "future": [
+        48000,
+        80000
+      ],
+      "future_immediate": [
+        48000,
+        49750
+      ],
+      "future_recovery": [
+        49750,
+        56750
+      ],
+      "future_late": [
+        56750,
+        80000
+      ]
+    },
+    "cycle": "003",
+    "pilot_seeds": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270
+    ]
+  },
+  "groups": {
+    "full40": {
+      "all": {
+        "steps": 3200000,
+        "gated_steps": 3111069,
+        "projection_active_steps": 3111069,
+        "zero_load_bystander_rowsteps_excluded": 2035492,
+        "gated_fraction": 0.9722090625,
+        "projection_active_fraction": 0.9722090625,
+        "binding_rows_per_gated_step": {
+          "n": 3111069,
+          "min": 1.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 3111069,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 3.0,
+          "max": 11.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 33943754,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 33943754,
+          "min": -5.258951169277058e-16,
+          "median": 1.7529837230923525e-16,
+          "p95": 1.238858701956513e-05,
+          "max": 0.0029939850568860837
+        },
+        "spillover": {
+          "eligible_rowsteps": 33943754,
+          "events": 6569600,
+          "gated_steps_with_event": 1498936,
+          "row_frequency": 0.19354370762880263,
+          "gated_step_frequency": 0.48180737874987667,
+          "all_eligible": {
+            "n": 33943754,
+            "min": 1.5736534882200048e-12,
+            "median": 1.5782112459000449e-12,
+            "p95": 1.2388588594664828e-05,
+            "max": 0.0029939850584649965
+          },
+          "event_only": {
+            "n": 6569600,
+            "min": 1.0000032381110727e-09,
+            "median": 5.608004459057906e-07,
+            "p95": 0.00032639003334712706,
+            "max": 0.0029939850584649965
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 1353582,
+          "events": 1018380,
+          "gated_steps_with_event": 487871,
+          "row_frequency": 0.7523592955580083,
+          "gated_step_frequency": 0.1568178012123807,
+          "all_eligible": {
+            "n": 1353582,
+            "min": 0.0,
+            "median": 0.0009520298746202075,
+            "p95": 0.00293006936996781,
+            "max": 0.002994002551555444
+          },
+          "event_only": {
+            "n": 1018380,
+            "min": 1.002394450682672e-09,
+            "median": 0.0011047154853695894,
+            "p95": 0.002950133793404807,
+            "max": 0.002994002551555444
+          }
+        },
+        "decomposition_abs_residual_max": 4.336808689942018e-19
+      },
+      "burn": {
+        "steps": 640000,
+        "gated_steps": 551069,
+        "projection_active_steps": 551069,
+        "zero_load_bystander_rowsteps_excluded": 299099,
+        "gated_fraction": 0.8610453125,
+        "projection_active_fraction": 0.8610453125,
+        "binding_rows_per_gated_step": {
+          "n": 551069,
+          "min": 1.0,
+          "median": 9.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 551069,
+          "min": 0.0,
+          "median": 3.0,
+          "p95": 7.0,
+          "max": 11.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 5003390,
+          "min": 1.5741793833369326e-12,
+          "median": 1.5761076654323342e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 5003390,
+          "min": -5.258951169277058e-16,
+          "median": 3.476449572951299e-07,
+          "p95": 0.0003818658080409019,
+          "max": 0.0029939850568860837
+        },
+        "spillover": {
+          "eligible_rowsteps": 5003390,
+          "events": 3110765,
+          "gated_steps_with_event": 550685,
+          "row_frequency": 0.6217314660660073,
+          "gated_step_frequency": 0.9993031725609679,
+          "all_eligible": {
+            "n": 5003390,
+            "min": 1.5736534882200048e-12,
+            "median": 3.4764653147451324e-07,
+            "p95": 0.0003818658096190167,
+            "max": 0.0029939850584649965
+          },
+          "event_only": {
+            "n": 3110765,
+            "min": 1.000160480751034e-09,
+            "median": 5.805860913260811e-06,
+            "p95": 0.0006338870304205778,
+            "max": 0.0029939850584649965
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 1310339,
+          "events": 975137,
+          "gated_steps_with_event": 445029,
+          "row_frequency": 0.7441868096729167,
+          "gated_step_frequency": 0.8075740061589384,
+          "all_eligible": {
+            "n": 1310339,
+            "min": 0.0,
+            "median": 0.0009591560719003956,
+            "p95": 0.00293004107220996,
+            "max": 0.002994002551555444
+          },
+          "event_only": {
+            "n": 975137,
+            "min": 1.002394450682672e-09,
+            "median": 0.0011065378835632498,
+            "p95": 0.0029501118124612537,
+            "max": 0.002994002551555444
+          }
+        },
+        "decomposition_abs_residual_max": 4.336808689942018e-19
+      },
+      "history": {
+        "steps": 1280000,
+        "gated_steps": 1280000,
+        "projection_active_steps": 1280000,
+        "zero_load_bystander_rowsteps_excluded": 872393,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 1280000,
+          "min": 10.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 1280000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 2.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 14455745,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 14455745,
+          "min": -5.258951169277058e-16,
+          "median": 3.5585569578774757e-13,
+          "p95": 1.530414753662287e-06,
+          "max": 0.00299178830850569
+        },
+        "spillover": {
+          "eligible_rowsteps": 14455745,
+          "events": 3424998,
+          "gated_steps_with_event": 916251,
+          "row_frequency": 0.23692988496960896,
+          "gated_step_frequency": 0.71582109375,
+          "all_eligible": {
+            "n": 14455745,
+            "min": 1.5736534882200048e-12,
+            "median": 1.930736272613917e-12,
+            "p95": 1.5304163302257283e-06,
+            "max": 0.0029917883100846025
+          },
+          "event_only": {
+            "n": 3424998,
+            "min": 1.0000032381110727e-09,
+            "median": 3.7710405149426444e-08,
+            "p95": 7.294635945072693e-05,
+            "max": 0.0029917883100846025
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 31862,
+          "events": 31862,
+          "gated_steps_with_event": 31461,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.02457890625,
+          "all_eligible": {
+            "n": 31862,
+            "min": 4.277324960086875e-05,
+            "median": 0.0006393037776718019,
+            "p95": 0.0029844654979108397,
+            "max": 0.0029929573092915625
+          },
+          "event_only": {
+            "n": 31862,
+            "min": 4.277324960086875e-05,
+            "median": 0.0006393037776718019,
+            "p95": 0.0029844654979108397,
+            "max": 0.0029929573092915625
+          }
+        },
+        "decomposition_abs_residual_max": 4.336808689942018e-19
+      },
+      "future": {
+        "steps": 1280000,
+        "gated_steps": 1280000,
+        "projection_active_steps": 1280000,
+        "zero_load_bystander_rowsteps_excluded": 864000,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 1280000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 1280000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 14484619,
+          "min": 1.5741793833369326e-12,
+          "median": 1.5750558751984787e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 14484619,
+          "min": -5.258951169277058e-16,
+          "median": 1.7529837230923525e-16,
+          "p95": 6.363330914825239e-14,
+          "max": 0.001111028200546123
+        },
+        "spillover": {
+          "eligible_rowsteps": 14484619,
+          "events": 33837,
+          "gated_steps_with_event": 32000,
+          "row_frequency": 0.002336064207142763,
+          "gated_step_frequency": 0.025,
+          "all_eligible": {
+            "n": 14484619,
+            "min": 1.5736534882200048e-12,
+            "median": 1.5762829638046435e-12,
+            "p95": 1.6397409745805865e-12,
+            "max": 0.0011110282021250353
+          },
+          "event_only": {
+            "n": 33837,
+            "min": 1.000077214024187e-09,
+            "median": 2.0980138082966966e-07,
+            "p95": 0.0004236309582470681,
+            "max": 0.0011110282021250353
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 11381,
+          "events": 11381,
+          "gated_steps_with_event": 11381,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.00889140625,
+          "all_eligible": {
+            "n": 11381,
+            "min": 0.000831741728493479,
+            "median": 0.0010927334315213076,
+            "p95": 0.0011108486987605837,
+            "max": 0.001111145181421048
+          },
+          "event_only": {
+            "n": 11381,
+            "min": 0.000831741728493479,
+            "median": 0.0010927334315213076,
+            "p95": 0.0011108486987605837,
+            "max": 0.001111145181421048
+          }
+        },
+        "decomposition_abs_residual_max": 2.168404344971009e-19
+      },
+      "future_immediate": {
+        "steps": 70000,
+        "gated_steps": 70000,
+        "projection_active_steps": 70000,
+        "zero_load_bystander_rowsteps_excluded": 47250,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 70000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 70000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 791000,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.5782112459000449e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 791000,
+          "min": -3.505967446184705e-16,
+          "median": 3.505967446184705e-16,
+          "p95": 3.4638958368304884e-12,
+          "max": 3.4808590343438084e-07
+        },
+        "spillover": {
+          "eligible_rowsteps": 791000,
+          "events": 1750,
+          "gated_steps_with_event": 1750,
+          "row_frequency": 0.0022123893805309734,
+          "gated_step_frequency": 0.025,
+          "all_eligible": {
+            "n": 791000,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5773347540384987e-12,
+            "p95": 5.0391270104012764e-12,
+            "max": 3.4808748094443327e-07
+          },
+          "event_only": {
+            "n": 1750,
+            "min": 2.200861773528716e-07,
+            "median": 2.9047446088798827e-07,
+            "p95": 3.467098868004115e-07,
+            "max": 3.4808748094443327e-07
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 1750,
+          "events": 1750,
+          "gated_steps_with_event": 1750,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.025,
+          "all_eligible": {
+            "n": 1750,
+            "min": 0.000831741728493479,
+            "median": 0.0008906271634335379,
+            "p95": 0.0009538829124177986,
+            "max": 0.0009601949774998404
+          },
+          "event_only": {
+            "n": 1750,
+            "min": 0.000831741728493479,
+            "median": 0.0008906271634335379,
+            "p95": 0.0009538829124177986,
+            "max": 0.0009601949774998404
+          }
+        },
+        "decomposition_abs_residual_max": 5.293955920339377e-23
+      },
+      "future_recovery": {
+        "steps": 280000,
+        "gated_steps": 280000,
+        "projection_active_steps": 280000,
+        "zero_load_bystander_rowsteps_excluded": 189000,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 280000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 280000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 3164000,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.5782112459000449e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 3164000,
+          "min": -5.258951169277058e-16,
+          "median": 1.7529837230923525e-16,
+          "p95": 3.9372014420654235e-13,
+          "max": 2.2001472135385907e-07
+        },
+        "spillover": {
+          "eligible_rowsteps": 3164000,
+          "events": 7000,
+          "gated_steps_with_event": 7000,
+          "row_frequency": 0.0022123893805309734,
+          "gated_step_frequency": 0.025,
+          "all_eligible": {
+            "n": 3164000,
+            "min": 1.5736534882200048e-12,
+            "median": 1.5762829638046435e-12,
+            "p95": 1.9691266161496394e-12,
+            "max": 2.2001629868861311e-07
+          },
+          "event_only": {
+            "n": 7000,
+            "min": 1.1614814022845179e-08,
+            "median": 6.307531558461708e-08,
+            "p95": 1.9695601496219185e-07,
+            "max": 2.2001629868861311e-07
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 7000,
+          "events": 7000,
+          "gated_steps_with_event": 7000,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.025,
+          "all_eligible": {
+            "n": 7000,
+            "min": 0.0009602660995543114,
+            "median": 0.0010874639720199891,
+            "p95": 0.0011077100355512807,
+            "max": 0.0011084659076988003
+          },
+          "event_only": {
+            "n": 7000,
+            "min": 0.0009602660995543114,
+            "median": 0.0010874639720199891,
+            "p95": 0.0011077100355512807,
+            "max": 0.0011084659076988003
+          }
+        },
+        "decomposition_abs_residual_max": 2.6469779601696886e-23
+      },
+      "future_late": {
+        "steps": 930000,
+        "gated_steps": 930000,
+        "projection_active_steps": 930000,
+        "zero_load_bystander_rowsteps_excluded": 627750,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 930000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 930000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 10529619,
+          "min": 1.5741793833369326e-12,
+          "median": 1.5750558751984787e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 10529619,
+          "min": -3.505967446184705e-16,
+          "median": 0.0,
+          "p95": 3.768915004648558e-14,
+          "max": 0.001111028200546123
+        },
+        "spillover": {
+          "eligible_rowsteps": 10529619,
+          "events": 25087,
+          "gated_steps_with_event": 23250,
+          "row_frequency": 0.0023825173541416837,
+          "gated_step_frequency": 0.025,
+          "all_eligible": {
+            "n": 10529619,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5762829638046435e-12,
+            "p95": 1.614848605712675e-12,
+            "max": 0.0011110282021250353
+          },
+          "event_only": {
+            "n": 25087,
+            "min": 1.000077214024187e-09,
+            "median": 8.624095106467498e-07,
+            "p95": 0.0005436580665581172,
+            "max": 0.0011110282021250353
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 2631,
+          "events": 2631,
+          "gated_steps_with_event": 2631,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.002829032258064516,
+          "all_eligible": {
+            "n": 2631,
+            "min": 0.0011084678618609259,
+            "median": 0.0011102825457440227,
+            "p95": 0.0011110849145959468,
+            "max": 0.001111145181421048
+          },
+          "event_only": {
+            "n": 2631,
+            "min": 0.0011084678618609259,
+            "median": 0.0011102825457440227,
+            "p95": 0.0011110849145959468,
+            "max": 0.001111145181421048
+          }
+        },
+        "decomposition_abs_residual_max": 2.168404344971009e-19
+      }
+    },
+    "pilot4": {
+      "all": {
+        "steps": 320000,
+        "gated_steps": 311064,
+        "projection_active_steps": 311064,
+        "zero_load_bystander_rowsteps_excluded": 236383,
+        "gated_fraction": 0.972075,
+        "projection_active_fraction": 0.972075,
+        "binding_rows_per_gated_step": {
+          "n": 311064,
+          "min": 1.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 311064,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 3.0,
+          "max": 11.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 3324857,
+          "min": 1.5741793833369326e-12,
+          "median": 1.5754064719430971e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 3324857,
+          "min": -5.258951169277058e-16,
+          "median": 3.505967446184705e-16,
+          "p95": 1.3797472408909837e-05,
+          "max": 0.0029898769694223695
+        },
+        "spillover": {
+          "eligible_rowsteps": 3324857,
+          "events": 684126,
+          "gated_steps_with_event": 185656,
+          "row_frequency": 0.2057610297224813,
+          "gated_step_frequency": 0.5968418074737032,
+          "all_eligible": {
+            "n": 3324857,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5782112459000449e-12,
+            "p95": 1.3797473983930652e-05,
+            "max": 0.002989876971001282
+          },
+          "event_only": {
+            "n": 684126,
+            "min": 1.0000127042231772e-09,
+            "median": 7.128268380825856e-07,
+            "p95": 0.00028723171428004336,
+            "max": 0.002989876971001282
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 171528,
+          "events": 140568,
+          "gated_steps_with_event": 79530,
+          "row_frequency": 0.8195046872813768,
+          "gated_step_frequency": 0.25567085873003625,
+          "all_eligible": {
+            "n": 171528,
+            "min": 0.0,
+            "median": 0.0008153728562564101,
+            "p95": 0.002903006523278443,
+            "max": 0.002990903890618527
+          },
+          "event_only": {
+            "n": 140568,
+            "min": 1.121755292817843e-09,
+            "median": 0.001036611520419653,
+            "p95": 0.002927232623299803,
+            "max": 0.002990903890618527
+          }
+        },
+        "decomposition_abs_residual_max": 4.336808689942018e-19
+      },
+      "burn": {
+        "steps": 64000,
+        "gated_steps": 55064,
+        "projection_active_steps": 55064,
+        "zero_load_bystander_rowsteps_excluded": 35990,
+        "gated_fraction": 0.860375,
+        "projection_active_fraction": 0.860375,
+        "binding_rows_per_gated_step": {
+          "n": 55064,
+          "min": 1.0,
+          "median": 9.0,
+          "p95": 11.0,
+          "max": 11.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 55064,
+          "min": 1.0,
+          "median": 3.0,
+          "p95": 7.0,
+          "max": 11.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 489438,
+          "min": 1.5741793833369326e-12,
+          "median": 1.5762829638046435e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 489438,
+          "min": -5.258951169277058e-16,
+          "median": 4.3063528260877643e-07,
+          "p95": 0.00030190285564401137,
+          "max": 0.0029898769694223695
+        },
+        "spillover": {
+          "eligible_rowsteps": 489438,
+          "events": 299929,
+          "gated_steps_with_event": 55020,
+          "row_frequency": 0.6128028473473658,
+          "gated_step_frequency": 0.9992009298271103,
+          "all_eligible": {
+            "n": 489438,
+            "min": 1.5738287865923142e-12,
+            "median": 4.3063685687580896e-07,
+            "p95": 0.00030190285722035573,
+            "max": 0.002989876971001282
+          },
+          "event_only": {
+            "n": 299929,
+            "min": 1.0108556097439928e-09,
+            "median": 6.479294835747215e-06,
+            "p95": 0.0005185537058366916,
+            "max": 0.002989876971001282
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 135340,
+          "events": 104380,
+          "gated_steps_with_event": 43743,
+          "row_frequency": 0.7712427959213832,
+          "gated_step_frequency": 0.7944028766526224,
+          "all_eligible": {
+            "n": 135340,
+            "min": 0.0,
+            "median": 0.000923501645361511,
+            "p95": 0.002930667237615028,
+            "max": 0.002990903890618527
+          },
+          "event_only": {
+            "n": 104380,
+            "min": 1.121755292817843e-09,
+            "median": 0.0010956541933461942,
+            "p95": 0.0029507725122061962,
+            "max": 0.002990903890618527
+          }
+        },
+        "decomposition_abs_residual_max": 4.336808689942018e-19
+      },
+      "history": {
+        "steps": 128000,
+        "gated_steps": 128000,
+        "projection_active_steps": 128000,
+        "zero_load_bystander_rowsteps_excluded": 104393,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 128000,
+          "min": 10.0,
+          "median": 11.0,
+          "p95": 11.0,
+          "max": 11.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 128000,
+          "min": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 2.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 1406800,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 1406800,
+          "min": -3.505967446184705e-16,
+          "median": 4.571781549824856e-13,
+          "p95": 3.154685789298985e-06,
+          "max": 0.0017379044784923546
+        },
+        "spillover": {
+          "eligible_rowsteps": 1406800,
+          "events": 350360,
+          "gated_steps_with_event": 98636,
+          "row_frequency": 0.24904748365083879,
+          "gated_step_frequency": 0.77059375,
+          "all_eligible": {
+            "n": 1406800,
+            "min": 1.5738287865923142e-12,
+            "median": 2.032234030180964e-12,
+            "p95": 3.1546873653628264e-06,
+            "max": 0.001737904480071267
+          },
+          "event_only": {
+            "n": 350360,
+            "min": 1.0000127042231772e-09,
+            "median": 5.3411941098050654e-08,
+            "p95": 6.139366648513626e-05,
+            "max": 0.001737904480071267
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 24807,
+          "events": 24807,
+          "gated_steps_with_event": 24406,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.190671875,
+          "all_eligible": {
+            "n": 24807,
+            "min": 4.277324960086875e-05,
+            "median": 0.00058976745825129,
+            "p95": 0.0008703593835413438,
+            "max": 0.001738686545965573
+          },
+          "event_only": {
+            "n": 24807,
+            "min": 4.277324960086875e-05,
+            "median": 0.00058976745825129,
+            "p95": 0.0008703593835413438,
+            "max": 0.001738686545965573
+          }
+        },
+        "decomposition_abs_residual_max": 2.168404344971009e-19
+      },
+      "future": {
+        "steps": 128000,
+        "gated_steps": 128000,
+        "projection_active_steps": 128000,
+        "zero_load_bystander_rowsteps_excluded": 96000,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 128000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 128000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 1428619,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 1428619,
+          "min": -3.505967446184705e-16,
+          "median": 1.7529837230923525e-16,
+          "p95": 4.2790332680684324e-13,
+          "max": 0.001111028200546123
+        },
+        "spillover": {
+          "eligible_rowsteps": 1428619,
+          "events": 33837,
+          "gated_steps_with_event": 32000,
+          "row_frequency": 0.02368511128579418,
+          "gated_step_frequency": 0.25,
+          "all_eligible": {
+            "n": 1428619,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5769841572938803e-12,
+            "p95": 2.0034850971222495e-12,
+            "max": 0.0011110282021250353
+          },
+          "event_only": {
+            "n": 33837,
+            "min": 1.000077214024187e-09,
+            "median": 2.0980138082966966e-07,
+            "p95": 0.0004236309582470681,
+            "max": 0.0011110282021250353
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 11381,
+          "events": 11381,
+          "gated_steps_with_event": 11381,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.0889140625,
+          "all_eligible": {
+            "n": 11381,
+            "min": 0.000831741728493479,
+            "median": 0.0010927334315213076,
+            "p95": 0.0011108486987605837,
+            "max": 0.001111145181421048
+          },
+          "event_only": {
+            "n": 11381,
+            "min": 0.000831741728493479,
+            "median": 0.0010927334315213076,
+            "p95": 0.0011108486987605837,
+            "max": 0.001111145181421048
+          }
+        },
+        "decomposition_abs_residual_max": 2.168404344971009e-19
+      },
+      "future_immediate": {
+        "steps": 7000,
+        "gated_steps": 7000,
+        "projection_active_steps": 7000,
+        "zero_load_bystander_rowsteps_excluded": 5250,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 7000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 11.0,
+          "max": 11.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 7000,
+          "min": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 77000,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.5782112459000449e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 77000,
+          "min": -3.505967446184705e-16,
+          "median": 3.505967446184705e-16,
+          "p95": 7.913888842493515e-12,
+          "max": 3.4808590343438084e-07
+        },
+        "spillover": {
+          "eligible_rowsteps": 77000,
+          "events": 1750,
+          "gated_steps_with_event": 1750,
+          "row_frequency": 0.022727272727272728,
+          "gated_step_frequency": 0.25,
+          "all_eligible": {
+            "n": 77000,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5778606491554265e-12,
+            "p95": 9.488068225830447e-12,
+            "max": 3.4808748094443327e-07
+          },
+          "event_only": {
+            "n": 1750,
+            "min": 2.200861773528716e-07,
+            "median": 2.9047446088798827e-07,
+            "p95": 3.467098868004115e-07,
+            "max": 3.4808748094443327e-07
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 1750,
+          "events": 1750,
+          "gated_steps_with_event": 1750,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.25,
+          "all_eligible": {
+            "n": 1750,
+            "min": 0.000831741728493479,
+            "median": 0.0008906271634335379,
+            "p95": 0.0009538829124177986,
+            "max": 0.0009601949774998404
+          },
+          "event_only": {
+            "n": 1750,
+            "min": 0.000831741728493479,
+            "median": 0.0008906271634335379,
+            "p95": 0.0009538829124177986,
+            "max": 0.0009601949774998404
+          }
+        },
+        "decomposition_abs_residual_max": 5.293955920339377e-23
+      },
+      "future_recovery": {
+        "steps": 28000,
+        "gated_steps": 28000,
+        "projection_active_steps": 28000,
+        "zero_load_bystander_rowsteps_excluded": 21000,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 28000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 11.0,
+          "max": 11.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 28000,
+          "min": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 308000,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.5782112459000449e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 308000,
+          "min": -3.505967446184705e-16,
+          "median": 1.7529837230923525e-16,
+          "p95": 9.178622774111557e-13,
+          "max": 2.2001472135385907e-07
+        },
+        "spillover": {
+          "eligible_rowsteps": 308000,
+          "events": 7000,
+          "gated_steps_with_event": 7000,
+          "row_frequency": 0.022727272727272728,
+          "gated_step_frequency": 0.25,
+          "all_eligible": {
+            "n": 308000,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5769841572938803e-12,
+            "p95": 2.492585085702243e-12,
+            "max": 2.2001629868861311e-07
+          },
+          "event_only": {
+            "n": 7000,
+            "min": 1.1614814022845179e-08,
+            "median": 6.307531558461708e-08,
+            "p95": 1.9695601496219185e-07,
+            "max": 2.2001629868861311e-07
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 7000,
+          "events": 7000,
+          "gated_steps_with_event": 7000,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.25,
+          "all_eligible": {
+            "n": 7000,
+            "min": 0.0009602660995543114,
+            "median": 0.0010874639720199891,
+            "p95": 0.0011077100355512807,
+            "max": 0.0011084659076988003
+          },
+          "event_only": {
+            "n": 7000,
+            "min": 0.0009602660995543114,
+            "median": 0.0010874639720199891,
+            "p95": 0.0011077100355512807,
+            "max": 0.0011084659076988003
+          }
+        },
+        "decomposition_abs_residual_max": 2.6469779601696886e-23
+      },
+      "future_late": {
+        "steps": 93000,
+        "gated_steps": 93000,
+        "projection_active_steps": 93000,
+        "zero_load_bystander_rowsteps_excluded": 69750,
+        "gated_fraction": 1.0,
+        "projection_active_fraction": 1.0,
+        "binding_rows_per_gated_step": {
+          "n": 93000,
+          "min": 11.0,
+          "median": 11.0,
+          "p95": 12.0,
+          "max": 12.0
+        },
+        "bystander_rows_per_gated_step": {
+          "n": 93000,
+          "min": 0.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        },
+        "own_scale_deficit_binding": {
+          "n": 1043619,
+          "min": 1.5741793833369326e-12,
+          "median": 1.575231173570788e-12,
+          "p95": 1.5782112459000449e-12,
+          "max": 1.578912439389282e-12
+        },
+        "extra_neighbor_loss_binding": {
+          "n": 1043619,
+          "min": -3.505967446184705e-16,
+          "median": 1.7529837230923525e-16,
+          "p95": 1.5075660018594233e-13,
+          "max": 0.001111028200546123
+        },
+        "spillover": {
+          "eligible_rowsteps": 1043619,
+          "events": 25087,
+          "gated_steps_with_event": 23250,
+          "row_frequency": 0.024038466145211997,
+          "gated_step_frequency": 0.25,
+          "all_eligible": {
+            "n": 1043619,
+            "min": 1.5738287865923142e-12,
+            "median": 1.5766335605492619e-12,
+            "p95": 1.7268642656182764e-12,
+            "max": 0.0011110282021250353
+          },
+          "event_only": {
+            "n": 25087,
+            "min": 1.000077214024187e-09,
+            "median": 8.624095106467498e-07,
+            "p95": 0.0005436580665581172,
+            "max": 0.0011110282021250353
+          }
+        },
+        "bystander_loss": {
+          "eligible_rowsteps": 2631,
+          "events": 2631,
+          "gated_steps_with_event": 2631,
+          "row_frequency": 1.0,
+          "gated_step_frequency": 0.02829032258064516,
+          "all_eligible": {
+            "n": 2631,
+            "min": 0.0011084678618609259,
+            "median": 0.0011102825457440227,
+            "p95": 0.0011110849145959468,
+            "max": 0.001111145181421048
+          },
+          "event_only": {
+            "n": 2631,
+            "min": 0.0011084678618609259,
+            "median": 0.0011102825457440227,
+            "p95": 0.0011110849145959468,
+            "max": 0.001111145181421048
+          }
+        },
+        "decomposition_abs_residual_max": 2.168404344971009e-19
+      }
+    }
+  }
+}

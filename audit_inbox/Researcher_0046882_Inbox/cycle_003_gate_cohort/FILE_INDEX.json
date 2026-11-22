@@ -1,0 +1,622 @@
+{
+  "shared_header": {
+    "researcher": "0046882 (Arena.ai)",
+    "date_time_host_reported_MST": "2026-11-22T03:01:39.733080-07:00",
+    "clock_status": "UNVERIFIED: session authoritative date is 2026-09-20, host and relayed documents report November. No claim of externally registered chronology.",
+    "main_sha": "d1cbcf38937b75538100ccaf3115fcbe45a2714f",
+    "original_engine_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+    "instrumented_engine_sha256": "a69b7943d31542097d1a599accc1c8ba722b0bf6b74d31a20a6dd8538090c830",
+    "scope": "Gate spillover lane, DIRECTION-2",
+    "status": "UNVERIFIED by project seats",
+    "manifest_path": "runs/5a9f093a2fe0/manifest.json",
+    "manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+    "K": 40,
+    "seed_list": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270,
+      18127452951968972828,
+      12851640484293199234,
+      4219039243791140697,
+      9082055256280075172,
+      1918007468868772336,
+      17883847597205629106,
+      16627818730624180313,
+      15403081841477312463,
+      4040285944958847150,
+      17521310920850592782,
+      2461295749352584108,
+      9036321132460399255,
+      14040336450255043598,
+      1888415619847841128,
+      172180395821707403,
+      17715532056777442089,
+      3704716633526084363,
+      6942591650975756121,
+      305986450614148690,
+      16952466944611321358,
+      12123519807951751650,
+      15853699719446171583,
+      9189988769602851417,
+      5213047409853278064,
+      4932511216876650745,
+      6108867655028980287,
+      6023008189364820510,
+      1230287949579537403,
+      283404770198602602,
+      3582616062465030267,
+      3258463328937640595,
+      3952397966055989215,
+      17279552413280415429,
+      5415544643585892346,
+      10856823803646276806,
+      14924267685654216746
+    ],
+    "branch": "continue",
+    "epsilon": 1e-12,
+    "event_threshold": 1e-09,
+    "windows": {
+      "all": [
+        0,
+        80000
+      ],
+      "burn": [
+        0,
+        16000
+      ],
+      "history": [
+        16000,
+        48000
+      ],
+      "future": [
+        48000,
+        80000
+      ],
+      "future_immediate": [
+        48000,
+        49750
+      ],
+      "future_recovery": [
+        49750,
+        56750
+      ],
+      "future_late": [
+        56750,
+        80000
+      ]
+    },
+    "cycle": "003",
+    "pilot_seeds": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270
+    ]
+  },
+  "format_note": "All formats inherit HEADER.txt/METADATA.json. Original sources and raw evidence are not modified to inject prose.",
+  "files": [
+    {
+      "path": "EXECUTION_INCIDENT.md",
+      "bytes": 2766,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "HEADER.txt",
+      "bytes": 447,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "METADATA.json",
+      "bytes": 2391,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "PACKAGE_VALIDATION.md",
+      "bytes": 1406,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "PROTOCOL.md",
+      "bytes": 7302,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "PROTOCOL.sha256",
+      "bytes": 78,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "RAN_READ.md",
+      "bytes": 6815,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "RAW_SCHEMA.md",
+      "bytes": 2871,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4417,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 14378,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "RESOURCE_LIMITS.md",
+      "bytes": 4476,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "TO_AUDITOR_002.md",
+      "bytes": 2649,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "code/common.py",
+      "bytes": 12959,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "code/engine_instrumented.py",
+      "bytes": 119832,
+      "provenance": "External observation-only instrumented engine, executed",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "code/engine_original.py",
+      "bytes": 119493,
+      "provenance": "Unchanged hash-pinned baseline engine, external copy, executed",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "code/resume_cohort.py",
+      "bytes": 14541,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "code/run_cohort.py",
+      "bytes": 12853,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "code/validate_saved.py",
+      "bytes": 5589,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_10431384713483787270.npz",
+      "bytes": 10616,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_10856823803646276806.npz",
+      "bytes": 10844,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_11242426753702356865.npz",
+      "bytes": 11096,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_12123519807951751650.npz",
+      "bytes": 10047,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_1230287949579537403.npz",
+      "bytes": 18902,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_12851640484293199234.npz",
+      "bytes": 7828,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_14040336450255043598.npz",
+      "bytes": 10973,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_14924267685654216746.npz",
+      "bytes": 9817,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_15403081841477312463.npz",
+      "bytes": 10972,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_15853699719446171583.npz",
+      "bytes": 10036,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_16329425431442249417.npz",
+      "bytes": 11213,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_16627818730624180313.npz",
+      "bytes": 9864,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_16952466944611321358.npz",
+      "bytes": 10317,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_172180395821707403.npz",
+      "bytes": 10176,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_17279552413280415429.npz",
+      "bytes": 11253,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_17521310920850592782.npz",
+      "bytes": 10414,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_17715532056777442089.npz",
+      "bytes": 11921,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_17883847597205629106.npz",
+      "bytes": 27020,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_18127452951968972828.npz",
+      "bytes": 11428,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_1888415619847841128.npz",
+      "bytes": 8028,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_1918007468868772336.npz",
+      "bytes": 13461,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_2461295749352584108.npz",
+      "bytes": 7519,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_283404770198602602.npz",
+      "bytes": 11434,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_305986450614148690.npz",
+      "bytes": 11489,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_3258463328937640595.npz",
+      "bytes": 8573,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_3582616062465030267.npz",
+      "bytes": 10256,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_3704716633526084363.npz",
+      "bytes": 10327,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_3952397966055989215.npz",
+      "bytes": 10432,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_4040285944958847150.npz",
+      "bytes": 10483,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_4219039243791140697.npz",
+      "bytes": 11761,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_4619122171158768524.npz",
+      "bytes": 156484,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_4932511216876650745.npz",
+      "bytes": 8837,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_5213047409853278064.npz",
+      "bytes": 10478,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_5415544643585892346.npz",
+      "bytes": 11672,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_6023008189364820510.npz",
+      "bytes": 10615,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_6108867655028980287.npz",
+      "bytes": 11341,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_6942591650975756121.npz",
+      "bytes": 10476,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_9036321132460399255.npz",
+      "bytes": 11166,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_9082055256280075172.npz",
+      "bytes": 11389,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "descriptors/future_9189988769602851417.npz",
+      "bytes": 11933,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/associations.json",
+      "bytes": 6863,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/attempt1.log.txt",
+      "bytes": 3060,
+      "provenance": "Preserved interrupted attempt evidence; not a full-cohort result",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/attempt1_environment.json",
+      "bytes": 3031,
+      "provenance": "Preserved interrupted attempt evidence; not a full-cohort result",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/attempt1_failure.json",
+      "bytes": 3270,
+      "provenance": "Preserved interrupted attempt evidence; not a full-cohort result",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/attempt1_future_descriptors.json",
+      "bytes": 60503,
+      "provenance": "Preserved interrupted attempt evidence; not a full-cohort result",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/attempt1_per_seed_summary.json",
+      "bytes": 433418,
+      "provenance": "Preserved interrupted attempt evidence; not a full-cohort result",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/attempt1_raw_array_hashes.json",
+      "bytes": 40470,
+      "provenance": "Preserved interrupted attempt evidence; not a full-cohort result",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/completion.json",
+      "bytes": 2874,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/configuration.json",
+      "bytes": 3347,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/controls.json",
+      "bytes": 5661,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/environment.json",
+      "bytes": 3133,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/future_descriptors.json",
+      "bytes": 91666,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/future_seed_table.csv",
+      "bytes": 17141,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/instrumentation.diff",
+      "bytes": 691,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/instrumented_outputs.npz",
+      "bytes": 47614,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/no_instrumentation.json",
+      "bytes": 2998,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/original_outputs.npz",
+      "bytes": 47614,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/per_seed_summary.json",
+      "bytes": 664899,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/per_seed_windows.csv",
+      "bytes": 61329,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/pilot_check.json",
+      "bytes": 3076,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/pooled_summary.json",
+      "bytes": 38241,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/raw_array_hashes.json",
+      "bytes": 60800,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/recovery.log.txt",
+      "bytes": 8729,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/state_trace_hashes.json",
+      "bytes": 9253,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/validation.json",
+      "bytes": 2970,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "evidence/validation.log.txt",
+      "bytes": 2977,
+      "provenance": "Cycle003 authored or generated work; UNVERIFIED by project seats",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "inputs/pilot_array_hashes.json",
+      "bytes": 4318,
+      "provenance": "Read-only production or accepted-pilot reference; original bytes preserved",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "inputs/pilot_summary.json",
+      "bytes": 85437,
+      "provenance": "Read-only production or accepted-pilot reference; original bytes preserved",
+      "header": "HEADER.txt"
+    },
+    {
+      "path": "inputs/production_manifest.json",
+      "bytes": 7087,
+      "provenance": "Read-only production or accepted-pilot reference; original bytes preserved",
+      "header": "HEADER.txt"
+    }
+  ]
+}

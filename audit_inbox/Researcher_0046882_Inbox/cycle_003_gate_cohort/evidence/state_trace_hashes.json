@@ -1,0 +1,234 @@
+{
+  "metadata": {
+    "researcher": "0046882 (Arena.ai)",
+    "date_time_host_reported_MST": "2026-11-22T03:01:39.733080-07:00",
+    "clock_status": "UNVERIFIED: session authoritative date is 2026-09-20, host and relayed documents report November. No claim of externally registered chronology.",
+    "main_sha": "d1cbcf38937b75538100ccaf3115fcbe45a2714f",
+    "original_engine_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+    "instrumented_engine_sha256": "a69b7943d31542097d1a599accc1c8ba722b0bf6b74d31a20a6dd8538090c830",
+    "scope": "Gate spillover lane, DIRECTION-2",
+    "status": "UNVERIFIED by project seats",
+    "manifest_path": "runs/5a9f093a2fe0/manifest.json",
+    "manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+    "K": 40,
+    "seed_list": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270,
+      18127452951968972828,
+      12851640484293199234,
+      4219039243791140697,
+      9082055256280075172,
+      1918007468868772336,
+      17883847597205629106,
+      16627818730624180313,
+      15403081841477312463,
+      4040285944958847150,
+      17521310920850592782,
+      2461295749352584108,
+      9036321132460399255,
+      14040336450255043598,
+      1888415619847841128,
+      172180395821707403,
+      17715532056777442089,
+      3704716633526084363,
+      6942591650975756121,
+      305986450614148690,
+      16952466944611321358,
+      12123519807951751650,
+      15853699719446171583,
+      9189988769602851417,
+      5213047409853278064,
+      4932511216876650745,
+      6108867655028980287,
+      6023008189364820510,
+      1230287949579537403,
+      283404770198602602,
+      3582616062465030267,
+      3258463328937640595,
+      3952397966055989215,
+      17279552413280415429,
+      5415544643585892346,
+      10856823803646276806,
+      14924267685654216746
+    ],
+    "branch": "continue",
+    "epsilon": 1e-12,
+    "event_threshold": 1e-09,
+    "windows": {
+      "all": [
+        0,
+        80000
+      ],
+      "burn": [
+        0,
+        16000
+      ],
+      "history": [
+        16000,
+        48000
+      ],
+      "future": [
+        48000,
+        80000
+      ],
+      "future_immediate": [
+        48000,
+        49750
+      ],
+      "future_recovery": [
+        49750,
+        56750
+      ],
+      "future_late": [
+        56750,
+        80000
+      ]
+    },
+    "cycle": "003",
+    "pilot_seeds": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270
+    ]
+  },
+  "seeds": {
+    "11242426753702356865": {
+      "post_step_state_and_return_stream_sha256": "c6ec8b7edd19415445e0fb49269140a90a690022312bb0b5a496573b0cf7e04f",
+      "steps": 80000
+    },
+    "4619122171158768524": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "16329425431442249417": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "10431384713483787270": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "18127452951968972828": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "12851640484293199234": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "4219039243791140697": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "9082055256280075172": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "1918007468868772336": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "17883847597205629106": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "16627818730624180313": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "15403081841477312463": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "4040285944958847150": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "17521310920850592782": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "2461295749352584108": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "9036321132460399255": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "14040336450255043598": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "1888415619847841128": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "172180395821707403": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "17715532056777442089": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "3704716633526084363": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "6942591650975756121": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "305986450614148690": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "16952466944611321358": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "12123519807951751650": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "15853699719446171583": {
+      "status": "reused hash-validated raw observations; state stream digest not durably saved before attempt1 log failure"
+    },
+    "9189988769602851417": {
+      "post_step_state_and_return_stream_sha256": "d561b61810537d71f6d626948f833c58298781470b380c50acbdfe98bc837e69",
+      "steps": 80000
+    },
+    "5213047409853278064": {
+      "post_step_state_and_return_stream_sha256": "b3a1d9985a175fb2abf8b8828d8a77571f540f0fdb95b77332cc82bf25f6443c",
+      "steps": 80000
+    },
+    "4932511216876650745": {
+      "post_step_state_and_return_stream_sha256": "b06e5caf84a85130cbd3d563e77eab83a6f107d236486464312fb2dc5fba663f",
+      "steps": 80000
+    },
+    "6108867655028980287": {
+      "post_step_state_and_return_stream_sha256": "338ccc6414fefde2fdd972e206e67ca0caa673ea3688ed681e016f08c947c20b",
+      "steps": 80000
+    },
+    "6023008189364820510": {
+      "post_step_state_and_return_stream_sha256": "04d5e6754bbfb63ec7d27013ad811088c745df5af01586739a4cc4d66eb9e657",
+      "steps": 80000
+    },
+    "1230287949579537403": {
+      "post_step_state_and_return_stream_sha256": "c8ff7ffc4e1edb66297f2d7ee574ffc5d4dc22f32eeca23186511d40d3b5e6ed",
+      "steps": 80000
+    },
+    "283404770198602602": {
+      "post_step_state_and_return_stream_sha256": "4e6bd2dd6cc018510dda34de44e4aabecd1945d2d1808dd4da9a2f310f06bd2e",
+      "steps": 80000
+    },
+    "3582616062465030267": {
+      "post_step_state_and_return_stream_sha256": "52657e60ed262aa8c662093ecf4323946a9a4d354c6f7f82e827a00f27670cb2",
+      "steps": 80000
+    },
+    "3258463328937640595": {
+      "post_step_state_and_return_stream_sha256": "ce291fd8dcdefffd02ecb5021638727ca3d0b8c00fc99ae6e2ff17ce4086f128",
+      "steps": 80000
+    },
+    "3952397966055989215": {
+      "post_step_state_and_return_stream_sha256": "4d1052b62cde8e7aa8f3201d4b471672d1ae16adc817bc632a5c70d8e0da8793",
+      "steps": 80000
+    },
+    "17279552413280415429": {
+      "post_step_state_and_return_stream_sha256": "813582140c2d0371ff4b6f5f30e0a4c4c974f31d633ee68e2663b57be0fba7ef",
+      "steps": 80000
+    },
+    "5415544643585892346": {
+      "post_step_state_and_return_stream_sha256": "6dc8bbefacd62d55345ad55621e7e9a61ae84d87ce1ecbeb6ea96d0d015b7660",
+      "steps": 80000
+    },
+    "10856823803646276806": {
+      "post_step_state_and_return_stream_sha256": "2a68345959c3f46fe7c1c05f0e323fce50c9c23c650a5cdcb80bfc61f07f2f72",
+      "steps": 80000
+    },
+    "14924267685654216746": {
+      "post_step_state_and_return_stream_sha256": "4dd555aedbb9d67913d472615410f5c57bd13c67698f3386d7f099b11fc8f847",
+      "steps": 80000
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "researcher": "0046882 (Arena.ai)",
+    "date_time_host_reported_MST": "2026-11-22T03:01:39.733080-07:00",
+    "clock_status": "UNVERIFIED: session authoritative date is 2026-09-20, host and relayed documents report November. No claim of externally registered chronology.",
+    "main_sha": "d1cbcf38937b75538100ccaf3115fcbe45a2714f",
+    "original_engine_sha256": "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede",
+    "instrumented_engine_sha256": "a69b7943d31542097d1a599accc1c8ba722b0bf6b74d31a20a6dd8538090c830",
+    "scope": "Gate spillover lane, DIRECTION-2",
+    "status": "UNVERIFIED by project seats",
+    "manifest_path": "runs/5a9f093a2fe0/manifest.json",
+    "manifest_sha256": "bf4d8c4152efafac352c8e1e56759ee7867fdd418cb04a8ee1f2fc87c2315a33",
+    "K": 40,
+    "seed_list": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270,
+      18127452951968972828,
+      12851640484293199234,
+      4219039243791140697,
+      9082055256280075172,
+      1918007468868772336,
+      17883847597205629106,
+      16627818730624180313,
+      15403081841477312463,
+      4040285944958847150,
+      17521310920850592782,
+      2461295749352584108,
+      9036321132460399255,
+      14040336450255043598,
+      1888415619847841128,
+      172180395821707403,
+      17715532056777442089,
+      3704716633526084363,
+      6942591650975756121,
+      305986450614148690,
+      16952466944611321358,
+      12123519807951751650,
+      15853699719446171583,
+      9189988769602851417,
+      5213047409853278064,
+      4932511216876650745,
+      6108867655028980287,
+      6023008189364820510,
+      1230287949579537403,
+      283404770198602602,
+      3582616062465030267,
+      3258463328937640595,
+      3952397966055989215,
+      17279552413280415429,
+      5415544643585892346,
+      10856823803646276806,
+      14924267685654216746
+    ],
+    "branch": "continue",
+    "epsilon": 1e-12,
+    "event_threshold": 1e-09,
+    "windows": {
+      "all": [
+        0,
+        80000
+      ],
+      "burn": [
+        0,
+        16000
+      ],
+      "history": [
+        16000,
+        48000
+      ],
+      "future": [
+        48000,
+        80000
+      ],
+      "future_immediate": [
+        48000,
+        49750
+      ],
+      "future_recovery": [
+        49750,
+        56750
+      ],
+      "future_late": [
+        56750,
+        80000
+      ]
+    },
+    "cycle": "003",
+    "pilot_seeds": [
+      11242426753702356865,
+      4619122171158768524,
+      16329425431442249417,
+      10431384713483787270
+    ]
+  },
+  "python": "3.13.18 (main, Nov  5 2026, 09:37:13) [GCC 14.2.0]",
+  "numpy": "2.3.5",
+  "platform": "Linux-6.1.189+-x86_64-with-glibc2.41",
+  "command": "python -u code/run_cohort.py",
+  "temporary_cache": "/home/user/.cache/r0046882/cycle003_9ln898h1",
+  "protocol_sha256": "8cb6faa6ecc9f980574226f0e35cef6cb0c85c045e6905fa419dc40f00948bdb",
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  }
+}

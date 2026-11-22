@@ -1,0 +1,182 @@
+{
+  "11242426753702356865": {
+    "row_sum_pre": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "7e5f4cf63a56c2deac2ba6152f757da463ef86ce5d4723b758c9af290a9285dc"
+    },
+    "r_post": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "b5798d27a04bd39bb1ee9be658c6c74ede3d346ba2c32c537b1827980fb0c532"
+    },
+    "scale": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "c3fcb29eafd98afc9305a0b245a47fccd41321f7f7abcaab00e84a1fddc94d51"
+    },
+    "pre_violation": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "b3208261f31377f0c029be7d2eec9269bb5cedd5715f60cdfe60f1f8d0574793"
+    },
+    "projection_active": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "b3208261f31377f0c029be7d2eec9269bb5cedd5715f60cdfe60f1f8d0574793"
+    },
+    "capacity": {
+      "dtype": "<f8",
+      "shape": [],
+      "sha256": "4b83aa8e837a091454c7aec17fac4b4535bfb64cb302e319a309674255dfdf37"
+    }
+  },
+  "4619122171158768524": {
+    "row_sum_pre": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "44b75f124a7ea4840fb3bcfdb2e97531a19c622ab5cc117633e91440c4b3706f"
+    },
+    "r_post": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "073977181ad83a30324069ff56892766fa76f38eb2839204bd5456de470b4ecb"
+    },
+    "scale": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "1cf55b785754764bf8e6f3d4e445f9a1513d1c3cba05894fde7a339da1abf947"
+    },
+    "pre_violation": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "b71c5aacb5ccf0cba8dbb285d2198309781d40bceee4e56365ff263f28b75606"
+    },
+    "projection_active": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "b71c5aacb5ccf0cba8dbb285d2198309781d40bceee4e56365ff263f28b75606"
+    },
+    "capacity": {
+      "dtype": "<f8",
+      "shape": [],
+      "sha256": "4b83aa8e837a091454c7aec17fac4b4535bfb64cb302e319a309674255dfdf37"
+    }
+  },
+  "16329425431442249417": {
+    "row_sum_pre": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "31ffedfa28093e0e5c72df16c890191dff86a3ac9f56442f1a03d8eba4e4ce50"
+    },
+    "r_post": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "7ae890751d12f1bf0ea8bd6e8d7fb1ae1e172265661122bc4d000008cc1a4312"
+    },
+    "scale": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "6f4ef2210518fefd96096658e9d7334bd14d28260313f1a936def493ab8f910e"
+    },
+    "pre_violation": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "9bd7265fa32475b173b922f0389823419e207a163a34c8e008a83d8ae223767c"
+    },
+    "projection_active": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "9bd7265fa32475b173b922f0389823419e207a163a34c8e008a83d8ae223767c"
+    },
+    "capacity": {
+      "dtype": "<f8",
+      "shape": [],
+      "sha256": "4b83aa8e837a091454c7aec17fac4b4535bfb64cb302e319a309674255dfdf37"
+    }
+  },
+  "10431384713483787270": {
+    "row_sum_pre": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "5fcf1b6b384d79743745b504c810ce966b0a633acbbe578ae30e09a7775d63bb"
+    },
+    "r_post": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "744f56eb8f835107ef898d8ccde6f8d74651e122e455b8b7629063e7e9fb108d"
+    },
+    "scale": {
+      "dtype": "<f8",
+      "shape": [
+        80000,
+        12
+      ],
+      "sha256": "ef5acc42fa2dddb7749dd8b8440805a2d8d732fd71f1721ef54ccef5365e5e20"
+    },
+    "pre_violation": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "08ff45d2214b3afb537988d8739afc0eb4f9b0511592e7f0e235fc1fa87c011e"
+    },
+    "projection_active": {
+      "dtype": "|b1",
+      "shape": [
+        80000
+      ],
+      "sha256": "08ff45d2214b3afb537988d8739afc0eb4f9b0511592e7f0e235fc1fa87c011e"
+    },
+    "capacity": {
+      "dtype": "<f8",
+      "shape": [],
+      "sha256": "4b83aa8e837a091454c7aec17fac4b4535bfb64cb302e319a309674255dfdf37"
+    }
+  }
+}

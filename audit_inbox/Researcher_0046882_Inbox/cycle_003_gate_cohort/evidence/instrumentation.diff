@@ -1,0 +1,15 @@
+--- engine_original.py
++++ engine_instrumented.py
+@@ -814,6 +814,12 @@
+         correction_norm = float(np.linalg.norm(B_projected - B_unprojected))
+     
+     projection_active = bool(correction_norm > FROZEN_PROJECTION_NORM_TOL)
++    # Researcher 0046882 observational hook; caller receives copies only.
++    _hook = globals().get("_GATE_OBSERVER")
++    if _hook is not None:
++        _hook(pre_violation, projection_active, row_sum_pre.copy(),
++              scale.copy() if pre_violation else np.ones_like(row_sum_pre),
++              B_projected.copy(), config.capacity)
+     relative_state = correction_norm / max(
+         float(np.linalg.norm(B_unprojected)), FROZEN_ZERO_TOL
+     )
