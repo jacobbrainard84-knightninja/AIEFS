@@ -1,0 +1,6 @@
+ℹ [2219/2219] Built AIEFGateCore.EmaNearUnit (136s)
+info: AIEFGateCore/EmaNearUnit.lean:67:0: 'AIEFGate.EmaNearUnit.near_unit_of_phase_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:68:0: 'AIEFGate.EmaNearUnit.trace_projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:69:0: 'AIEFGate.EmaNearUnit.trace_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:70:0: 'AIEFGate.EmaNearUnit.near_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2219 jobs).

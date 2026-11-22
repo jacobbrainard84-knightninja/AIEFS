@@ -1,0 +1,9 @@
+✖ [2138/2139] Running Mathlib.Tactic.Omega
+error: no such file or directory (error code: 4294967294)
+  file: /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/mathlib/Mathlib/Tactic/Omega.lean
+✖ [2139/2139] Running AIEFGateCore.EngineStepRef
+error: AIEFGateCore/EngineStepRef.lean: bad import 'Mathlib.Tactic.Omega'
+Some required targets logged failures:
+- Mathlib.Tactic.Omega
+- AIEFGateCore.EngineStepRef
+error: build failed

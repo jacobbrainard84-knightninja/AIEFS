@@ -1,0 +1,12 @@
+ℹ [2138/2138] Built AIEFGateCore.EngineStepRef (116s)
+info: AIEFGateCore/EngineStepRef.lean:194:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:195:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:196:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:197:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:198:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:199:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:200:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:201:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:202:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:203:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2138 jobs).

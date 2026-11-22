@@ -1,0 +1,40 @@
+✖ [2138/2138] Building AIEFGateCore.EngineStepRef (111s)
+trace: .> LEAN_PATH=/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/Cli/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/batteries/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/Qq/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/aesop/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/proofwidgets/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/importGraph/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/plausible/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/mathlib/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean /home/user/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean /var/tmp/aiefsref/repo/lean/AIEFGateCore/AIEFGateCore/EngineStepRef.lean -o /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EngineStepRef.olean -i /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EngineStepRef.ilean -c /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EngineStepRef.c --setup /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EngineStepRef.setup.json --json
+error: AIEFGateCore/EngineStepRef.lean:48:6: `simp` made no progress
+error: AIEFGateCore/EngineStepRef.lean:48:6: `simp` made no progress
+error: AIEFGateCore/EngineStepRef.lean:52:22: No goals to be solved
+error: AIEFGateCore/EngineStepRef.lean:73:6: `simp` made no progress
+error: AIEFGateCore/EngineStepRef.lean:73:6: `simp` made no progress
+error: AIEFGateCore/EngineStepRef.lean:75:2: Type mismatch: After simplification, term
+  hp
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedAddCommGroup.toAddCommGroup
+    NormedField.toNormedSpace.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    ((fun t ↦ orbitPath n dt Omega theta v t 0 i) + fun y ↦
+      dt *
+        (omega +
+          (∑ j, clippedWeight b * Real.sin (orbitPath n dt Omega theta v y d j - orbitPath n dt Omega theta v y 0 i) -
+            clippedWeight b * Real.sin (orbitPath n dt Omega theta v y d i - orbitPath n dt Omega theta v y 0 i))))
+    (v 0 i +
+      dt *
+        (∑ j, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i)) -
+          clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d i - v 0 i))))
+    0
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    (fun t ↦
+      orbitPath n dt Omega theta v t 0 i +
+        dt *
+          (omega +
+            (∑ j, clippedWeight b * Real.sin (orbitPath n dt Omega theta v t d j - orbitPath n dt Omega theta v t 0 i) -
+              clippedWeight b * Real.sin (orbitPath n dt Omega theta v t d i - orbitPath n dt Omega theta v t 0 i))))
+    (v 0 i +
+      dt *
+        (∑ j, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i)) -
+          clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d i - v 0 i))))
+    0
+error: Lean exited with code 1
+Some required targets logged failures:
+- AIEFGateCore.EngineStepRef
+error: build failed

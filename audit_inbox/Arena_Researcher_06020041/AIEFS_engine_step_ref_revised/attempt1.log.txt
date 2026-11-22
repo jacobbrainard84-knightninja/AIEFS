@@ -1,0 +1,47 @@
+✖ [2138/2138] Building AIEFGateCore.EngineStepRef (134s)
+trace: .> LEAN_PATH=/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/Cli/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/batteries/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/Qq/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/aesop/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/proofwidgets/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/importGraph/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/plausible/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/mathlib/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean /home/user/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean /var/tmp/aiefsref/repo/lean/AIEFGateCore/AIEFGateCore/EngineStepRef.lean -o /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EngineStepRef.olean -i /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EngineStepRef.ilean -c /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EngineStepRef.c --setup /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EngineStepRef.setup.json --json
+info: AIEFGateCore/EngineStepRef.lean:57:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+error: AIEFGateCore/EngineStepRef.lean:49:2: unsolved goals
+case pos
+n d : ℕ
+dt omega b Omega theta : ℝ
+hn : 1 ≤ n
+horbit : Omega = omega + (↑n - 1) * clippedWeight b * Real.sin (-(↑d * dt * Omega))
+v : ℕ → Fin n → ℝ
+i : Fin n
+_hk : 0 ≤ d
+hcard : ↑(Finset.univ.erase i).card = ↑n - 1
+hd : theta - ↑d * dt * Omega - theta = -(↑d * dt * Omega)
+⊢ theta + dt * omega +
+        dt * ↑n * clippedWeight b *
+          Real.sin
+            (-(dt * omega * ↑d) - dt * ↑n * clippedWeight b * ↑d * Real.sin (-(dt * ↑d * Omega)) +
+              dt * clippedWeight b * ↑d * Real.sin (-(dt * ↑d * Omega))) -
+      dt * clippedWeight b *
+        Real.sin
+          (-(dt * omega * ↑d) - dt * ↑n * clippedWeight b * ↑d * Real.sin (-(dt * ↑d * Omega)) +
+            dt * clippedWeight b * ↑d * Real.sin (-(dt * ↑d * Omega))) =
+    theta + dt * omega + dt * ↑n * clippedWeight b * Real.sin (-(dt * ↑d * Omega)) -
+      dt * clippedWeight b * Real.sin (-(dt * ↑d * Omega))
+warning: AIEFGateCore/EngineStepRef.lean:162:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+info: AIEFGateCore/EngineStepRef.lean:194:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:195:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:196:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:197:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:198:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:199:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:200:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:201:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:202:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:203:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+error: Lean exited with code 1
+Some required targets logged failures:
+- AIEFGateCore.EngineStepRef
+error: build failed

@@ -1,0 +1,9 @@
+ℹ [2139/2139] Built AIEFGateCore.EmaRadialRef (117s)
+info: AIEFGateCore/EmaRadialRef.lean:86:0: 'AIEFGate.EmaRadialRef.base_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:87:0: 'AIEFGate.EmaRadialRef.real_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:88:0: 'AIEFGate.EmaRadialRef.imag_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:89:0: 'AIEFGate.EmaRadialRef.magnitude_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:90:0: 'AIEFGate.EmaRadialRef.complex_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:91:0: 'AIEFGate.EmaRadialRef.radial_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:92:0: 'AIEFGate.EmaRadialRef.angular_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2139 jobs).

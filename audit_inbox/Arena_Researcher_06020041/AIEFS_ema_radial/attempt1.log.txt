@@ -1,0 +1,38 @@
+✖ [2139/2139] Building AIEFGateCore.EmaRadialRef (110s)
+trace: .> LEAN_PATH=/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/Cli/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/batteries/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/Qq/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/aesop/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/proofwidgets/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/importGraph/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/plausible/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/packages/mathlib/.lake/build/lib/lean:/var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/build/lib/lean /home/user/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean /var/tmp/aiefs_ema/repo/lean/AIEFGateCore/AIEFGateCore/EmaRadialRef.lean -o /var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EmaRadialRef.olean -i /var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EmaRadialRef.ilean -c /var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EmaRadialRef.c --setup /var/tmp/aiefs_ema/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EmaRadialRef.setup.json --json
+error: AIEFGateCore/EmaRadialRef.lean:32:2: No goals to be solved
+error: AIEFGateCore/EmaRadialRef.lean:65:2: Type mismatch: After simplification, term
+  ht
+ has type
+  HasDerivAt
+    (fun y ↦
+      √((alpha * (1 + y * u) + (1 - alpha) * Real.cos (y * delta)) ^ 2 +
+          (alpha * (y * v) + (1 - alpha) * Real.sin (y * delta)) ^ 2))
+    (2 * alpha * u / 2) 0
+but is expected to have type
+  HasDerivAt
+    (fun t ↦
+      √((alpha * (1 + t * u) + (1 - alpha) * Real.cos (t * delta)) ^ 2 +
+          (alpha * (t * v) + (1 - alpha) * Real.sin (t * delta)) ^ 2))
+    (alpha * u) 0
+error: AIEFGateCore/EmaRadialRef.lean:70:37: unsolved goals
+alpha u v delta t : ℝ
+⊢ √(reStep alpha u delta t * reStep alpha u delta t + imStep alpha v delta t * imStep alpha v delta t) =
+    √(reStep alpha u delta t ^ 2 + imStep alpha v delta t ^ 2)
+warning: AIEFGateCore/EmaRadialRef.lean:76:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: AIEFGateCore/EmaRadialRef.lean:80:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: AIEFGateCore/EmaRadialRef.lean:82:0: 'AIEFGate.EmaRadialRef.base_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:83:0: 'AIEFGate.EmaRadialRef.real_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:84:0: 'AIEFGate.EmaRadialRef.imag_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:85:0: 'AIEFGate.EmaRadialRef.magnitude_direction' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:86:0: 'AIEFGate.EmaRadialRef.complex_norm_eq' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:87:0: 'AIEFGate.EmaRadialRef.radial_probe' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaRadialRef.lean:88:0: 'AIEFGate.EmaRadialRef.angular_probe' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+error: Lean exited with code 1
+Some required targets logged failures:
+- AIEFGateCore.EmaRadialRef
+error: build failed

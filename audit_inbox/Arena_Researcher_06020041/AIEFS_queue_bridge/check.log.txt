@@ -1,0 +1,4 @@
+consistent: pre_violation=False, phase circle error=0, history error=0
+inconsistent-but-validated: old-current/shifted-history circular discrepancy=0.958851077; newest repaired=0
+phase lift representative discrepancy=1.73e-15
+PASS: 3 finite checks; not a general proof

@@ -1,0 +1,6 @@
+ℹ [2259/2260] Built AIEFGateCore.DelayRoots (139s)
+info: AIEFGateCore/DelayRoots.lean:232:0: 'AIEFGate.DelayRoots.symRoot_eq_one_or_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:233:0: 'AIEFGate.DelayRoots.symRoot_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:234:0: 'AIEFGate.DelayRoots.transRoot_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:235:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:236:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter_of_C' depends on axioms: [propext, Classical.choice, Quot.sound]

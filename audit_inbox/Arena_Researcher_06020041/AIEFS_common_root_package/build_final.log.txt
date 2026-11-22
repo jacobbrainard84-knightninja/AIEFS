@@ -1,0 +1,20 @@
+ℹ [2211/2260] Replayed AIEFGateCore.DelayRoots
+info: AIEFGateCore/DelayRoots.lean:232:0: 'AIEFGate.DelayRoots.symRoot_eq_one_or_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:233:0: 'AIEFGate.DelayRoots.symRoot_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:234:0: 'AIEFGate.DelayRoots.transRoot_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:235:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:236:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter_of_C' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2260/2260] Built AIEFGateCore.CommonRootSimple (132s)
+info: AIEFGateCore/CommonRootSimple.lean:87:0: 'AIEFGate.CommonRootSimple.common_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:88:0: 'AIEFGate.CommonRootSimple.derivative_at_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:89:0: 'AIEFGate.CommonRootSimple.root_multiplicity_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:90:0: 'AIEFGate.CommonRootSimple.unit_circle_root_unique_and_simple' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:91:0: 'AIEFGate.CommonRootSimple.negative_parameter_double_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:92:0: 'AIEFGate.CommonRootSimple.negative_parameter_double_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:93:0: 'AIEFGate.CommonRootSimple.upper_boundary_other_unit_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CommonRootSimple.lean:94:0: 'AIEFGate.CommonRootSimple.derivative_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2260 jobs).

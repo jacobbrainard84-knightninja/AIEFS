@@ -1,0 +1,45 @@
+ℹ [2148/2191] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+✖ [2191/2191] Building AIEFGateCore.MatrixPhaseBridge (119s)
+trace: .> LEAN_PATH=/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/Cli/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/batteries/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/Qq/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/aesop/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/proofwidgets/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/importGraph/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/plausible/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/packages/mathlib/.lake/build/lib/lean:/var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/build/lib/lean /home/user/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean /var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/AIEFGateCore/MatrixPhaseBridge.lean -o /var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/MatrixPhaseBridge.olean -i /var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/MatrixPhaseBridge.ilean -c /var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/MatrixPhaseBridge.c --setup /var/tmp/aiefs_matrix/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/MatrixPhaseBridge.setup.json --json
+error: AIEFGateCore/MatrixPhaseBridge.lean:126:72: unsolved goals
+⊢ ((1 + if 0 = 2 then 0 else 2) + (1 + if 1 = 2 then 0 else 3) + ((if 2 = 0 then 0 else 2) + if 2 = 1 then 0 else 3)) /
+      6 =
+    2
+error: AIEFGateCore/MatrixPhaseBridge.lean:131:87: unsolved goals
+⊢ ¬(1 + if 0 = 2 then 0 else 2 * Real.sin (if 2 = 1 then Real.pi / 2 else 0)) =
+      2 + 2 * Real.sin (if 2 = 1 then Real.pi / 2 else 0)
+error: AIEFGateCore/MatrixPhaseBridge.lean:149:52: unsolved goals
+⊢ ¬0 = 2 → Real.sin (if 2 = 1 then Real.pi / 2 else 0) = 0
+info: AIEFGateCore/MatrixPhaseBridge.lean:152:0: 'AIEFGate.MatrixPhaseBridge.matrix_to_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:153:0: 'AIEFGate.MatrixPhaseBridge.matrix_circle_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:154:0: 'AIEFGate.MatrixPhaseBridge.matrix_head_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:155:0: 'AIEFGate.MatrixPhaseBridge.probeW_mean' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:156:0: 'AIEFGate.MatrixPhaseBridge.nonuniform_counterexample' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:157:0: 'AIEFGate.MatrixPhaseBridge.inconsistent_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+error: Lean exited with code 1
+Some required targets logged failures:
+- AIEFGateCore.MatrixPhaseBridge
+error: build failed

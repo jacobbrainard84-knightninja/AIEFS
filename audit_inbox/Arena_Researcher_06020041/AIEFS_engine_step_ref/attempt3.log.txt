@@ -1,0 +1,88 @@
+✖ [2138/2138] Building AIEFGateCore.EngineStepRef (119s)
+trace: .> LEAN_PATH=/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/Cli/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/batteries/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/Qq/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/aesop/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/proofwidgets/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/importGraph/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/plausible/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/packages/mathlib/.lake/build/lib/lean:/var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean /home/user/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean /var/tmp/aiefsref/repo/lean/AIEFGateCore/AIEFGateCore/EngineStepRef.lean -o /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EngineStepRef.olean -i /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/lib/lean/AIEFGateCore/EngineStepRef.ilean -c /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EngineStepRef.c --setup /var/tmp/aiefsref/repo/lean/AIEFGateCore/.lake/build/ir/AIEFGateCore/EngineStepRef.setup.json --json
+error: AIEFGateCore/EngineStepRef.lean:43:63: unsolved goals
+case e'_4
+n d : ℕ
+dt Omega theta : ℝ
+v : ℕ → Fin n → ℝ
+i j : Fin n
+⊢ Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+
+case e'_5
+n d : ℕ
+dt Omega theta : ℝ
+v : ℕ → Fin n → ℝ
+i j : Fin n
+e_4✝ : Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+⊢ Semiring.toModule = NormedField.toNormedSpace.toModule
+
+case e'_8
+n d : ℕ
+dt Omega theta : ℝ
+v : ℕ → Fin n → ℝ
+i j : Fin n
+⊢ (fun t ↦ theta - ↑d * dt * Omega + t * v d j - (theta + t * v 0 i)) =
+    ((fun x ↦ theta - ↑d * dt * Omega) + fun y ↦ y * v d j) - ((fun x ↦ theta) + fun y ↦ y * v 0 i)
+error: AIEFGateCore/EngineStepRef.lean:70:86: unsolved goals
+case e'_4
+n d : ℕ
+dt omega b Omega theta : ℝ
+v : ℕ → Fin n → ℝ
+i : Fin n
+hs :
+  HasDerivAt
+    (fun t ↦
+      ∑ j ∈ Finset.univ.erase i,
+        clippedWeight b * Real.sin (orbitPath n dt Omega theta v t d j - orbitPath n dt Omega theta v t 0 i))
+    (∑ j ∈ Finset.univ.erase i, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i))) 0
+⊢ Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+
+case e'_5
+n d : ℕ
+dt omega b Omega theta : ℝ
+v : ℕ → Fin n → ℝ
+i : Fin n
+hs :
+  HasDerivAt
+    (fun t ↦
+      ∑ j ∈ Finset.univ.erase i,
+        clippedWeight b * Real.sin (orbitPath n dt Omega theta v t d j - orbitPath n dt Omega theta v t 0 i))
+    (∑ j ∈ Finset.univ.erase i, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i))) 0
+e_4✝ : Real.instAddCommGroup = Real.normedAddCommGroup.toAddCommGroup
+⊢ Semiring.toModule = NormedField.toNormedSpace.toModule
+
+case e'_8
+n d : ℕ
+dt omega b Omega theta : ℝ
+v : ℕ → Fin n → ℝ
+i : Fin n
+hs :
+  HasDerivAt
+    (fun t ↦
+      ∑ j ∈ Finset.univ.erase i,
+        clippedWeight b * Real.sin (orbitPath n dt Omega theta v t d j - orbitPath n dt Omega theta v t 0 i))
+    (∑ j ∈ Finset.univ.erase i, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i))) 0
+⊢ (fun t ↦ theta + t * v 0 i) = (fun x ↦ theta) + fun y ↦ y * v 0 i
+error: AIEFGateCore/EngineStepRef.lean:75:2: Type mismatch: After simplification, term
+  hp
+ has type
+  HasDerivAt
+    ((fun t ↦ orbitPath n dt Omega theta v t 0 i) + fun y ↦
+      dt *
+        (omega +
+          ∑ j ∈ Finset.univ.erase i,
+            clippedWeight b * Real.sin (orbitPath n dt Omega theta v y d j - orbitPath n dt Omega theta v y 0 i)))
+    (v 0 i + dt * (0 + ∑ j ∈ Finset.univ.erase i, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i)))) 0
+but is expected to have type
+  HasDerivAt
+    (fun t ↦
+      orbitPath n dt Omega theta v t 0 i +
+        dt *
+          (omega +
+            ∑ j ∈ Finset.univ.erase i,
+              clippedWeight b * Real.sin (orbitPath n dt Omega theta v t d j - orbitPath n dt Omega theta v t 0 i)))
+    (v 0 i + dt * ∑ j ∈ Finset.univ.erase i, clippedWeight b * (Real.cos (↑d * dt * Omega) * (v d j - v 0 i))) 0
+error: Lean exited with code 1
+Some required targets logged failures:
+- AIEFGateCore.EngineStepRef
+error: build failed

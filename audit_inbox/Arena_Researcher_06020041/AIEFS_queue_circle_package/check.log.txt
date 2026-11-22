@@ -1,0 +1,3 @@
+uniform: offdiag mean=0.1 actual-vs-weighted=0 actual-vs-uniform=0 radians
+nonuniform: offdiag mean=0.116666666667 actual-vs-weighted=0 actual-vs-uniform=0.00668114265541 radians
+PASS: N=3 uniform match; nonuniform matrix differs from same-mean scalar reference
