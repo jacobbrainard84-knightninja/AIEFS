@@ -51,7 +51,7 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 | Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification. Newest: DIRECTION-6 (also inherits 040282 C012/C016) |
 | Researcher_0282416 | Lane owner | Census of false self-tests and static registry/entrypoint integrity. Newest: DIRECTION-2 (census NEEDS FIX) |
 | Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main`. Newest: DIRECTION-2 (also inherits R026-S7/S8, 040282 S01 count) |
-| Researcher_0046882 | Lane owner | Gate spillover and bystander loss under the min-endpoint capacity gate, measured in production runs (OPEN_QUESTIONS 16 follow-up). Newest: DIRECTION-1 (2026-11-21) |
+| Researcher_0046882 | Lane owner | Seed-4619122171158768524 future-regime structure (descriptive; protocol-first). Previous lane, gate spillover and bystander loss (OQ16 follow-up), DONE 2026-11-22 (cycle 003 accepted: future events in 1/40 seeds). Newest: DIRECTION-3 (2026-11-22) |
 | *(new bot)* | Assigned in its DIRECTION-1 | Its own new lane, or a support sub-task on an existing team |
 
 **Retired researchers (2026-11-20, owner):** Researcher_040282, GPT-6 and Researcher_026 no longer work on the project. Their inbox folders are kept as add-only history. Their open items were reassigned to the lanes above (see `TRIAGE.md` section (j)).
