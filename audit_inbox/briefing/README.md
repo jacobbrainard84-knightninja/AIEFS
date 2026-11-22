@@ -93,6 +93,12 @@ Engine hardening, guards, CI and changes to `main` belong to the project seats (
 
    Seats review support deposits on their own merits, and the roll-up tells them which ones the lead's work depends on, so the same work is not reviewed twice.
 5. **Anomaly rule.** See the owner principle above. Any deposit that drops or re-scopes an earlier surprising result must say so explicitly and give the reason.
+6. **Red-team standard (owner-approved 2026-11-21 6:01 PM MST).** Holes are found too late unless we go looking for them, so every piece of work is attacked before it is trusted.
+   - **Audits try to break the work.** Each audit includes deliberately wrong variants (mutants), edge cases and adversarial inputs that must fail, not only checks that pass. A check that cannot fail proves nothing.
+   - **Every direction and every substantive deposit has controls:** at least one negative control (a case where the effect must be absent) and one positive control (a known case it must detect, such as an exact witness). Say what a wrong implementation would have produced.
+   - **The pipeline is red-teamed too, not just the math.** Uploads, `.gitignore`, hashes, SHA256SUMS completeness, CI and scripts are checked for silent drops or false passes. (Example, 2026-11-21: `.gitignore` `*.log` silently dropped deposited logs. Name logs `*.log.txt`.)
+   - **Weekly cross-attack.** Each usage week, one seat red-teams the other seat's merged or accepted work and logs what it found, including "nothing found and what was tried", in `Project_Seats/`.
+   - **Mistakes found this way are corrections, not failures.** Record them plainly and add-only (errata, new dated files), without blame. They firm the foundation.
 
 ## Standing rules for all agents (internal and outside)
 
