@@ -1,0 +1,199 @@
+file,line_range,claim_ids,what_it_claims_to_check,what_it_actually_compares,quote,class,tolerance,execution_mode,witness,notes
+aief_1_4_two_channel_alignment_v4.py,298-305,EMP-AIEF14-01,"Tuple-of-arrays edge index validation for K3 triangle edges (25, 29, 59)","Synthetic zero arrays edge_i, edge_j with entries set at indices 25, 29, 59 against static edge endpoint expectations (2,7), (2,11), (7,11)","edge_i = np.zeros(60, dtype=int)
+edge_j = np.zeros(60, dtype=int)
+edge_i[25], edge_j[25] = 2, 7
+edge_i[29], edge_j[29] = 2, 11
+edge_i[59], edge_j[59] = 7, 11
+validate_edge_indexing((edge_i, edge_j))",SELF_COPY,exact integer equality,Ran,"Constructs dummy zero arrays setting only entries 25, 29, 59; passes validate_edge_indexing without evaluating graph incidence matrix A or 57 remaining edges.",Verified running python3 aief_1_4_two_channel_alignment_v4.py --self-test. Prints: [PASS] Tuple-of-arrays edge index validation.
+aief_1_4_two_channel_alignment_v4.py,307-317,EMP-AIEF14-01,Exact algebraic identity e = T1 + T2 for channel alignment residual,"q[""alignment_residual""] against q[""T1""] + q[""T2""] computed from RNG synthetic inputs C_a, C_b, Z_a, Z_b","assert math.isclose(q[""alignment_residual""], T_sum, rel_tol=0.0, abs_tol=1e-14), ""Identity e = T1 + T2 failed""",PARTIAL_REDUNDANT,"abs_tol=1e-14, rel_tol=0.0",Ran,Exercises channel_quantities() on random numbers from rng.uniform; verifies internal algebraic formula on synthetic noise without running trajectory steps.,Verified running python3 aief_1_4_two_channel_alignment_v4.py --self-test. Prints: [PASS] Exact algebraic identity e = T1 + T2 (rel_tol=0.0).
+aief_1_4_two_channel_alignment_v4.py,319-328,EMP-AIEF14-01,Exact radial recurrence identity DeltaM_new = alpha * DeltaM_old + alpha * (1 - alpha) * e,DeltaM_new computed from forward single-step Euler formula against test_radial_identity prediction,"assert radial_check[""identity_passes""], ""Radial recurrence identity failed""",PARTIAL_REDUNDANT,DEFAULT_IDENTITY_TOL=1e-12,Ran,Calls test_radial_identity on single synthetic scalar; validates single-step recurrence on dummy variables without trajectory history.,Verified running python3 aief_1_4_two_channel_alignment_v4.py --self-test. Prints: [PASS] Exact radial recurrence identity.
+aief_1_4_two_channel_alignment_v4.py,330-338,EMP-AIEF14-01,Phase separation temporal increment identity,Modulo angle difference act_sep_inc vs pred_sep_inc = 0.05 for synthetic rotations exp(1j*0.1) and exp(1j*0.05),"assert phase_sep_check[""identity_passes""], ""Phase separation increment identity failed""",SELF_COPY,DEFAULT_IDENTITY_TOL=1e-12,Ran,Computes np.angle(np.exp(1j*(0.1 - 0.05))) and compares against hardcoded 0.05; pure arithmetic check on hardcoded angles decoupled from Kuramoto equations.,Verified running python3 aief_1_4_two_channel_alignment_v4.py --self-test. Prints: [PASS] Phase separation temporal increment identity.
+aief_1_4_two_channel_alignment_v4.py,340-343,EMP-AIEF14-01,Sign change logic across below-floor samples,"count_sign_changes([1.0, 0.5, 1e-18, -0.2, -1.0]) against expected sc == 1","assert sc == 1, f""Expected 1 sign change, got {sc}""",REAL_OPERATOR,exact integer equality,Ran,Passes arr with 1e-18 noise floor sample; verifies helper filters below-threshold values and counts real zero-crossings.,Verified running python3 aief_1_4_two_channel_alignment_v4.py --self-test. Prints: [PASS] Sign change logic across below-floor samples.
+aief_1_4_two_channel_alignment_v5.py,414-421,EMP-AIEF14-01,"Tuple-of-arrays edge index validation for K3 triangle edges (25, 29, 59)","Synthetic zero arrays edge_i, edge_j with entries set at indices 25, 29, 59 against static edge endpoint expectations","edge_i = np.zeros(60, dtype=int)
+edge_j = np.zeros(60, dtype=int)
+edge_i[25], edge_j[25] = 2, 7
+edge_i[29], edge_j[29] = 2, 11
+edge_i[59], edge_j[59] = 7, 11
+validate_edge_indexing((edge_i, edge_j))",SELF_COPY,exact integer equality,Ran,Synthetic zero arrays populated at 3 target indices; bypasses incidence matrix and full graph structure.,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Tuple-of-arrays edge index validation.
+aief_1_4_two_channel_alignment_v5.py,423-433,EMP-AIEF14-01,Exact algebraic identity e = T1 + T2 for channel alignment residual,"q[""alignment_residual""] against q[""T1""] + q[""T2""] computed from RNG synthetic inputs","assert math.isclose(q[""alignment_residual""], T_sum, rel_tol=0.0, abs_tol=1e-14)",PARTIAL_REDUNDANT,"abs_tol=1e-14, rel_tol=0.0",Ran,Asserts equality on random inputs from rng.uniform without simulation state.,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Exact algebraic identity e = T1 + T2 (rel_tol=0.0).
+aief_1_4_two_channel_alignment_v5.py,435-446,EMP-AIEF14-01,Exact radial recurrence identity DeltaM_new = alpha * DeltaM_old + alpha * (1 - alpha) * e,DeltaM_new computed from forward single-step Euler formula against test_radial_identity prediction,"assert radial_check[""identity_passes""]",PARTIAL_REDUNDANT,DEFAULT_IDENTITY_TOL=1e-12,Ran,Evaluates single step synthetic recurrence without multi-step trajectory check.,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Exact radial recurrence identity.
+aief_1_4_two_channel_alignment_v5.py,448-457,EMP-AIEF14-01,Phase separation temporal increment identity,Modulo angle difference act_sep_inc vs pred_sep_inc = 0.05 for synthetic rotations,"assert phase_sep_check[""identity_passes""]",SELF_COPY,DEFAULT_IDENTITY_TOL=1e-12,Ran,Checks 0.1 - 0.05 == 0.05 under exp(1j*theta); no Kuramoto dynamics evaluated.,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Phase separation temporal increment identity.
+aief_1_4_two_channel_alignment_v5.py,459-467,EMP-AIEF14-01;PROP-EQUALIZATION,Proposition 3.1: Exact proposal identity d_n = c0 * b_n + a_R * r_n,d_test (defined at L464 as c0_test*b_test + a_R_test*r_test) against prediction = c0*b + a_R*r in test_proposal_identity,"d_test = c0_test * b_test + a_R_test * r_test
+prop_check = test_proposal_identity(d_test, c0_test, b_test, a_R_test, r_test)
+assert prop_check[""identity_passes""]",SELF_COPY,DEFAULT_IDENTITY_TOL=1e-12,Ran,"d_test is synthesized using the exact tested formula on synthetic arrays, evaluating X - X = 0. Bypasses base_intermediates proposal operator.",Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Exact proposal identity d_n = c0 * b_n + a_R * r_n.
+aief_1_4_two_channel_alignment_v5.py,469-478,EMP-AIEF14-01;PROP-EQUALIZATION,Proposition 5.1: Exact proposal recurrence identity d_{n+1} = lambda_n * d_n + a_R * r_{n+1},d_next_test (defined at L472 as lambda_test * d_test + a_R_test * r_next_test) against prediction in test_proposal_recurrence,"d_next_test = lambda_test * d_test + a_R_test * r_next_test
+rec_check = test_proposal_recurrence(
+    d_next_test, lambda_test, d_test, a_R_test, r_next_test
+)
+assert rec_check[""identity_passes""]",SELF_COPY,DEFAULT_IDENTITY_TOL=1e-12,Ran,d_next_test is synthesized via tested formula; pure arithmetic evaluation of linear recurrence on synthetic arrays.,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Exact proposal recurrence identity.
+aief_1_4_two_channel_alignment_v5.py,480-485,EMP-AIEF14-01;PROP-EQUALIZATION,"Proposition 4.1: Exact projected weight identity (fixed-left) b_{n+1}^L = s_{7,n} * d_n^L",b_next_test (defined at L482 as s7_test * d_test) against prediction in test_projected_weight_identity_fixed_left,"b_next_test = s7_test * d_test
+pw_check = test_projected_weight_identity_fixed_left(b_next_test, s7_test, d_test)
+assert pw_check[""identity_passes""]",SELF_COPY,DEFAULT_IDENTITY_TOL=1e-12,Ran,b_next_test is constructed by multiplying input by s7_test; tests numpy scalar-array multiplication rather than engine projection.,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Exact projected weight identity (fixed-left).
+aief_1_4_two_channel_alignment_v5.py,487-490,EMP-AIEF14-01,Sign change logic across below-floor samples,"count_sign_changes([1.0, 0.5, 1e-18, -0.2, -1.0]) against expected sc == 1",assert sc == 1,REAL_OPERATOR,exact integer equality,Ran,Validates threshold filtering on sub-floor values (1e-18 with tol=1e-14).,Verified running python3 aief_1_4_two_channel_alignment_v5.py --self-test. Prints: [PASS] Sign change logic across below-floor samples.
+AIEF_1_4_proposal_equalization_bridge_analysis.py,225-227,THEO-EQ-01;E19,Left projection identity: abs((projected[EDGE_25] - projected[EDGE_59]) - s7 * d_left) < 1e-14,Synthetic left difference (s7*x25 - s7*x59) against s7*(x25 - x59),"assert abs(
+    (projected[EDGE_25] - projected[EDGE_59]) - s7 * d_left
+) < 1e-14",KNOWN_DEFECT,abs_tol < 1e-14,Ran,"Passes on known-false fixture (0.41, 0.31, 0.27) because line 216 hardcodes projected[EDGE_25] = s7 * x25. Under the true admissibility operator, node 2 wins at edge 25, so projected[EDGE_25] = s2 * x25 and true residual is -0.0212145969.",Verified running python3 AIEF_1_4_proposal_equalization_bridge_analysis.py --self-test. Passes and outputs: Synthetic proposal-equalization bridge checks: PASS.
+AIEF_1_4_proposal_equalization_bridge_analysis.py,228-230,THEO-EQ-01;E19,Right projection identity: abs((projected[EDGE_59] - projected[EDGE_29]) - sigma_right * d_right) < 1e-14,Synthetic right difference against sigma_right * d_right,"assert abs(
+    (projected[EDGE_59] - projected[EDGE_29]) - sigma_right * d_right
+) < 1e-14",KNOWN_DEFECT,abs_tol < 1e-14,Ran,Relies on hardcoded projected dictionary and synthetic right_projection_coefficient helper under assumed winner branch.,Verified running python3 AIEF_1_4_proposal_equalization_bridge_analysis.py --self-test.
+AIEF_1_4_proposal_equalization_bridge_analysis.py,231-232,THEO-EQ-01;E19,Contraction factor bounds: 0.0 < s7 < 1.0 and 0.0 < sigma_right < 1.0,"s7 and sigma_right against open unit interval (0.0, 1.0)","assert 0.0 < s7 < 1.0
+assert 0.0 < sigma_right < 1.0",REAL_OPERATOR,strict inequality bounds,Ran,Evaluates synthetic scale bounds.,Verified running python3 AIEF_1_4_proposal_equalization_bridge_analysis.py --self-test.
+AIEF_1_4_proposal_equalization_bridge_analysis.py,238-243,THEO-EQ-01,"Exact proposal difference identity across edge differences (0,2) and (2,1)",abs((x[ia] - x[ib]) - (c0 * (B[ia] - B[ib]) + a_R * (R[ia] - R[ib]))) < 1e-15,"for ia, ib in ((0, 2), (2, 1)):
+    assert abs(
+        (x[ia] - x[ib])
+        - (c0 * (B[ia] - B[ib]) + a_R * (R[ia] - R[ib]))
+    ) < 1e-15",PARTIAL_REDUNDANT,abs_tol < 1e-15,Ran,"Evaluates exact cancellation on random 3-vectors B, R with uniform noise; checks algebraic formula consistency.",Verified running python3 AIEF_1_4_proposal_equalization_bridge_analysis.py --self-test.
+AIEF_1_4_proposal_equalization_bridge_analysis_v1_1.py,247-257,THEO-EQ-01;E19-SUCCESSOR,"E19 negative control: reject known-false fixture (0.41, 0.31, 0.27)","Verifies bad[""winners""] picks NODE_2 for EDGE_25, left_residual == -0.0212145969, and check_synthetic_projection raises ValueError","try:
+    check_synthetic_projection((0.41, 0.31, 0.27))
+except ValueError:
+    pass
+else:
+    raise ValueError(""Known-false old fixture was accepted"")",REAL_OPERATOR,exception catch + exact float abs_tol < 1e-15,Ran,"Calls check_synthetic_projection((0.41, 0.31, 0.27)); confirms it raises ValueError(""Synthetic fixture is outside the expected winner branch..."") and asserts bad[""left_residual""] == -0.02121459694983044.",Verified running python3 AIEF_1_4_proposal_equalization_bridge_analysis_v1_1.py --self-test. PASS.
+AIEF_1_4_proposal_equalization_bridge_analysis_v1_1.py,258-260,THEO-EQ-01;E19-SUCCESSOR,"Positive control: accept verified fixture (0.41, 0.27, 0.31)","Executes check_synthetic_projection((0.41, 0.27, 0.31)) which verifies winners, residuals < 1e-14, and contraction bounds","check_synthetic_projection((0.41, 0.27, 0.31))",REAL_OPERATOR,abs_tol < 1e-14,Ran,Successfully verifies real admissibility operator on valid positive fixture where NODE_7 wins at EDGE_25.,Verified running python3 AIEF_1_4_proposal_equalization_bridge_analysis_v1_1.py --self-test. PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2327-2363,EMP-AIEF14-02,Test 1 (same seed -> same state): Same reset seed produces equal theta/history/EMA,"state1 vs state2 after prod.apply_intervention(state, ""full_reset"", rng)","test1 = (
+    np.array_equal(state1.theta, state2.theta) and
+    np.array_equal(state1.coherence_acc, state2.coherence_acc) and
+    len(state1.history) == len(state2.history) and
+    all(np.array_equal(h1, h2) for h1, h2 in zip(state1.history, state2.history))
+)",REAL_OPERATOR,exact array equality,Ran,"Applies production full_reset intervention on cloned states with identical seeds; checks array equality across theta, coherence_acc, and history.",Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 1 (same seed -> same state): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2365-2383,EMP-AIEF14-02,Test 2 (only B differs): Only B differs between B_carrier_only and full_reset interventions,state_p (B_carrier_only) vs state_z (full_reset),"test2 = (
+    np.array_equal(state_p.theta, state_z.theta) and
+    np.array_equal(state_p.coherence_acc, state_z.coherence_acc) and
+    np.array_equal(state_p.coherence_acc, np.zeros_like(state_p.coherence_acc)) and
+    np.array_equal(state_z.coherence_acc, np.zeros_like(state_z.coherence_acc)) and
+    not np.array_equal(state_p.B, state_z.B) and
+    np.array_equal(state_z.B, np.zeros((N, N)))
+)",REAL_OPERATOR,exact array equality,Ran,Verifies intervention contract: state_z.B is zeroed while state_p.B retains coupling matrix.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 2 (only B differs): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2385-2391,EMP-AIEF14-02,Test 3 (history equality): History equality between preserved and zero branches,len(state_p.history) == len(state_z.history) and history elements equality,"test3 = (
+    len(state_p.history) == len(state_z.history) and
+    all(np.array_equal(hp, hz) for hp, hz in zip(state_p.history, state_z.history))
+)",REAL_OPERATOR,exact array equality,Ran,Checks deque history preservation across interventions.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 3 (history equality): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2393-2404,EMP-AIEF14-02,Test 4 (RNG state equality): PRNG bit_generator state equality after intervention,rng_p2.bit_generator.state == rng_z2.bit_generator.state,rng_state_equal = (rng_p2.bit_generator.state == rng_z2.bit_generator.state),REAL_OPERATOR,exact bit_generator state match,Ran,Verifies both interventions consume identical PRNG streams to ensure paired-seed synchrony.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 4 (RNG state equality): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2406-2413,EMP-AIEF14-02,Test 5 (array hashing): SHA-256 array hashing determinism and collision resistance,array_sha256(arr) == array_sha256(arr) and != array_sha256(different_arr),test5 = (h1 == h2) and (h1 != h3),REAL_OPERATOR,exact hex digest match,Ran,Validates array_sha256 determinism and sensitivity on altered array elements.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 5 (array hashing): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2415-2422,EMP-AIEF14-02,Test 6 (dtype affects hash): Coherence hash changes with array dtype,array_sha256(arr_float) != array_sha256(arr_complex),test6 = (h_float != h_complex),REAL_OPERATOR,inequality check,Ran,Ensures array_sha256 includes dtype header to prevent float/complex collision.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 6 (dtype affects hash): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2424-2432,EMP-AIEF14-02,Test 7 (contrast construction): Paired contrast calculation for carrier reset,"compute_paired_contrasts(mock_outcomes).get(""carrier_reset"").get(""P_mean_late"") against expected 0.5","test7 = contrasts.get(""carrier_reset"", {}).get(""P_mean_late"", np.nan) == 0.5",REAL_OPERATOR,exact float equality,Ran,Exercises compute_paired_contrasts; verifies 1.0 - 0.5 = 0.5.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 7 (contrast construction): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2434-2445,EMP-AIEF14-02,Test 8 (seed-level averaging): Average and interaction contrast computation,avg_P_mean_late against 0.8 and interaction_P_mean_late against 0.4,"test8 = (
+    abs(seed_level.get(""avg_P_mean_late"", np.nan) - 0.8) < 1e-10 and
+    abs(seed_level.get(""interaction_P_mean_late"", np.nan) - 0.4) < 1e-10
+)",REAL_OPERATOR,abs_tol < 1e-10,Ran,Exercises compute_seed_level_contrasts; verifies mean and interaction contrast arithmetic.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 8 (seed-level averaging): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2447-2471,EMP-AIEF14-02,"Test 9 (atomic writes all formats): Atomic file writer for CSV, JSON, TXT, NPZ","File existence of test.csv, test.json, test.txt, test.npz after atomic write helpers",test9 = test9_csv and test9_json and test9_text and test9_npz,REAL_OPERATOR,filesystem file existence,Ran,"Tests atomic_write_csv, atomic_write_json, atomic_write_text, and atomic_write_npz into tmp_dir.",Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 9 (atomic writes all formats): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2475-2485,EMP-AIEF14-02,Test 10 (bootstrap CI): Bootstrap confidence interval bounds validity,ci_l <= mean_val <= ci_u and non-NaN checks,"test10 = (
+    not np.isnan(mean_val) and
+    not np.isnan(ci_l) and
+    not np.isnan(ci_u) and
+    ci_l <= mean_val <= ci_u
+)",REAL_OPERATOR,interval ordering ci_l <= mean <= ci_u,Ran,Executes bootstrap_ci on random sample.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 10 (bootstrap CI): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2487-2494,EMP-AIEF14-02,Test 11 (Wilson CI): Wilson score interval for binomial proportions,0.0 <= p <= 1.0 and 0.0 <= ci_l <= p <= ci_u <= 1.0,"test11 = (
+    0.0 <= p <= 1.0 and
+    0.0 <= ci_l <= p <= ci_u <= 1.0
+)",REAL_OPERATOR,"unit interval containment [0, 1]",Ran,"Executes wilson_ci(80, 100).",Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 11 (Wilson CI): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2496-2503,EMP-AIEF14-02,Test 12 (binary recovery indicator): Finite vs NaN recovery time classification,np.isfinite(5.0) is True and np.isfinite(np.nan) is False,"test12a = bool(np.isfinite(finite_time))
+test12b = not bool(np.isfinite(nan_time))
+test12 = test12a and test12b",PARTIAL_REDUNDANT,boolean logic,Ran,Sanity check on numpy isfinite behavior.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 12 (binary recovery indicator): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2505-2511,EMP-AIEF14-02,Test 13 (censored in denominator): Censored seed inclusion in recovery denominator,recovery_prob = 2/3 against float 2/3,test13 = abs(recovery_prob - 2/3) < 1e-10,PARTIAL_REDUNDANT,abs_tol < 1e-10,Ran,Arithmetic check verifying recovery fraction evaluation.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 13 (censored in denominator): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2513-2528,EMP-AIEF14-02,Test 14 (split state immutability): Mutation detection in check_split_state_immutability,Passes on untouched state and fails when B is mutated by 1e-6,test14 = unchanged_pass and mutation_detected,REAL_OPERATOR,exact immutability check,Ran,Verified negative control: mutates cloned state.B by 1e-6 and confirms mutation_detected evaluates True.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 14 (split state immutability): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2530-2536,EMP-AIEF14-02,Test 15 (NaN-aware equality): exact_array_equal_with_nan behavior,Equality with matching NaNs and inequality when finite entries differ,"test15 = exact_array_equal_with_nan(a, b) and not exact_array_equal_with_nan(a, c)",REAL_OPERATOR,exact array equality with NaN matching,Ran,Verifies NaN-aware comparator on matching vs differing float arrays.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 15 (NaN-aware equality): PASS.
+AIEF_1_4_matched_phase_memory_ablation.py,2538-2590,EMP-AIEF14-02,"Test 16 (NPZ serialization schema): NPZ flattening, writing, and round-trip reloading",Key existence in flattened dict and in re-read np.load NPZ files list,test16 = test16_keys and test16_read,REAL_OPERATOR,key membership,Ran,Saves synthetic results into temporary NPZ file and reads back to verify key persistence.,Verified running python3 AIEF_1_4_matched_phase_memory_ablation.py --self-test. Output: Test 16 (NPZ serialization schema): PASS.
+AIEF_1_4_Twindow_sensitivity.py,574-632,EMP-AIEF14-03;IMPL-MODULAR-01,Driver/engine model constant contract validation,Driver constants against aief_experiment_engine_v1.py constants,"for name, (driver_value, engine_value) in checks.items():
+    if driver_value != engine_value:
+        raise RuntimeError(
+            f""Driver/engine {name} mismatch: ""
+            f""driver={driver_value}, engine={engine_value}""
+        )",REAL_OPERATOR,"exact equality (rtol=0, atol=0)",Read,Compares driver and engine constants dictionary; raises RuntimeError on any constant drift.,Preflight inter-module contract validation ensuring identical physical parameters between driver and engine.
+aief_experiment_engine_v1.py,1755-1768,EMP-AIEF14-03;IMPL-MODULAR-01,exact_array_equal_with_nan comparator helper,"Array shapes, dtypes, NaN masks, and finite elements via np.array_equal","if not np.array_equal(a_nan, b_nan):
+    return False
+finite = ~a_nan
+return np.array_equal(a[finite], b[finite])",REAL_OPERATOR,bit-for-bit exact equality,Read,Core numerical comparator underlying all baseline equivalence assertions.,Ensures bit-for-bit equivalence and strict shape/dtype matching.
+aief_experiment_engine_v1.py,1835-1842,EMP-AIEF14-03;IMPL-MODULAR-01,Authority files preflight existence,"os.path.isfile for frozen_manifest_path, frozen_npz_path, frozen_csv_path","if not os.path.isfile(frozen_manifest_path):
+    return {
+        ""status"": ""failed"",
+        ""error"": f""Frozen manifest not found: {frozen_manifest_path}"",
+        ""frozen_manifest"": str(Path(frozen_manifest_path).resolve()) if frozen_manifest_path else None,
+        ""frozen_npz"": str(Path(frozen_npz_path).resolve()) if frozen_npz_path else None,
+        ""frozen_csv_path"": frozen_csv_path,
+    }",REAL_OPERATOR,filesystem existence,Read,Gatekeeper ensuring frozen historical assets exist before running simulations.,Preflight check preventing simulation on missing reference data.
+aief_experiment_engine_v1.py,1999-2011,EMP-AIEF14-03;IMPL-MODULAR-01,Frozen manifest schema prefix_keys validation,set(manifest_prefix) != set(REQUIRED_PREFIX_KEYS),"if set(manifest_prefix) != set(REQUIRED_PREFIX_KEYS):
+    missing_prefix = set(REQUIRED_PREFIX_KEYS) - set(manifest_prefix)
+    extra_prefix = set(manifest_prefix) - set(REQUIRED_PREFIX_KEYS)
+    return {
+        ""status"": ""failed"",
+        ""error"": (
+            f""Manifest prefix_keys mismatch: ""
+            f""missing={sorted(missing_prefix)}, extra={sorted(extra_prefix)}""
+        ),
+        ""frozen_manifest"": str(Path(frozen_manifest_path).resolve()),
+        ""frozen_npz"": str(Path(frozen_npz_path).resolve()),
+        ""frozen_csv_path"": frozen_csv_path,
+    }",REAL_OPERATOR,exact set equality,Read,Verifies manifest schema prefix keys match REQUIRED_PREFIX_KEYS.,Schema contract preflight check.
+aief_experiment_engine_v1.py,2054-2061,EMP-AIEF14-03;IMPL-MODULAR-01,Manifest seeds cohort exact alignment,list(seeds) != manifest_seeds,"if list(seeds) != manifest_seeds:
+    return {
+        ""status"": ""failed"",
+        ""error"": f""Seed authority mismatch: seeds={seeds}, manifest={manifest_seeds}"",
+        ""frozen_manifest"": str(Path(frozen_manifest_path).resolve()),
+        ""frozen_npz"": str(Path(frozen_npz_path).resolve()),
+        ""frozen_csv_path"": frozen_csv_path,
+    }",REAL_OPERATOR,exact sequence equality,Read,Verifies simulation seed cohort matches manifest paired_seeds.,Enforces cohort authority contract.
+aief_experiment_engine_v1.py,2096-2125,EMP-AIEF14-03;IMPL-MODULAR-01,Baseline horizon metadata validation at rho=1 (T_window = T_star),"actual_window_steps, actual_recovery_end_ema, actual_fixed_immediate_end, actual_fixed_recovery_end against expected BASELINE_HORIZON_METADATA","if actual_window_steps != expected_metadata[""window_steps""]:
+    return {
+        ""status"": ""failed"",
+        ""error"": f""window_steps mismatch: actual={actual_window_steps}, expected={expected_metadata['window_steps']}"",
+        ""frozen_manifest"": str(Path(frozen_manifest_path).resolve()),
+        ""frozen_npz"": str(Path(frozen_npz_path).resolve()),
+        ""frozen_csv_path"": frozen_csv_path,
+    }",REAL_OPERATOR,exact integer equality,Read,"At rho=1, checks actual horizon step indices match BASELINE_HORIZON_METADATA.",Guarantees evaluation step horizons align with baseline definitions.
+aief_experiment_engine_v1.py,2148-2156,EMP-AIEF14-03;IMPL-MODULAR-01,Frozen NPZ key coverage preflight,frozen_key not in frozen_files,"if frozen_key not in frozen_files:
+    return {
+        ""status"": ""failed"",
+        ""error"": f""Missing NPZ key: {frozen_key}"",
+        ""frozen_manifest"": str(Path(frozen_manifest_path).resolve()),
+        ""frozen_npz"": str(Path(frozen_npz_path).resolve()),
+        ""frozen_csv_path"": frozen_csv_path,
+    }",REAL_OPERATOR,key containment,Read,Verifies all required keys exist in frozen NPZ before execution.,Prevents incomplete NPZ files from passing.
+aief_experiment_engine_v1.py,2175-2182,EMP-AIEF14-03;IMPL-MODULAR-01,Frozen scalar CSV existence and readability,frozen_csv_path is None or not os.path.isfile(frozen_csv_path),"if frozen_csv_path is None or not os.path.isfile(frozen_csv_path):
+    return {
+        ""status"": ""failed"",
+        ""error"": f""Frozen scalar CSV not found: {frozen_csv_path}"",
+        ""frozen_manifest"": str(Path(frozen_manifest_path).resolve()),
+        ""frozen_npz"": str(Path(frozen_npz_path).resolve()),
+        ""frozen_csv_path"": frozen_csv_path,
+    }",REAL_OPERATOR,filesystem existence,Read,Preflight check requiring presence of frozen scalar summary CSV.,Ensures scalar benchmark file is present.
+aief_experiment_engine_v1.py,2328-2333,EMP-AIEF14-03;IMPL-MODULAR-01,Model configuration parameters exact match against frozen manifest,"Config parameters (dt, tau, a, q, delta, eta, mu, gamma, B_c, B_init_scale, T_window) against frozen manifest","for name, frozen_val, config_val in model_checks:
+    if not np.isclose(frozen_val, config_val, rtol=0.0, atol=0.0):
+        results[""status""] = ""failed""
+        results[""error""] = f""{name} mismatch: frozen={frozen_val}, config={config_val}""
+        return results",REAL_OPERATOR,"exact float equality (rtol=0.0, atol=0.0)",Read,Zero-tolerance parameter configuration verification.,Ensures no floating-point parameter drift between config and manifest.
+aief_experiment_engine_v1.py,2366-2374,EMP-AIEF14-03;IMPL-MODULAR-01,Protocol quantities and horizon steps exact match,observed != expected_frozen for protocol quantities,"for name, observed, expected_frozen, expected_manifest in protocol_checks:
+    if observed != expected_frozen:
+        results[""status""] = ""failed""
+        results[""error""] = (
+            f""{name} mismatch: observed={observed}, ""
+            f""expected (frozen)={expected_frozen}""
+        )
+        return results",REAL_OPERATOR,exact equality,Read,Verifies simulation protocol horizon parameters against frozen constants.,Enforces strict protocol step alignment.
+aief_experiment_engine_v1.py,2430-2435,EMP-AIEF14-03;IMPL-MODULAR-01,Prefix state exact numerical reproducibility,Live simulated prefix outputs against frozen historical NPZ prefix arrays for all seeds,"if exact_array_equal_with_nan(engine_val, frozen_val):
+    seed_results[""checks""][f""prefix_{key}_exact""] = True
+else:
+    seed_results[""checks""][f""prefix_{key}_exact""] = False
+    seed_results[""status""] = ""failed""
+    all_passed = False",REAL_OPERATOR,exact_array_equal_with_nan (bit-for-bit exact),Read,Full end-to-end numerical verification of prefix simulation against frozen reference.,Bit-for-bit prefix trajectory verification.
+aief_experiment_engine_v1.py,2492-2497,EMP-AIEF14-03;IMPL-MODULAR-01,Branch matrix outputs exact numerical reproducibility,Live simulated branch matrices against frozen historical NPZ branch arrays,"if exact_array_equal_with_nan(engine_val, frozen_val):
+    seed_results[""checks""][f""{branch}_{key}_exact""] = True
+else:
+    seed_results[""checks""][f""{branch}_{key}_exact""] = False
+    seed_results[""status""] = ""failed""
+    all_passed = False",REAL_OPERATOR,exact_array_equal_with_nan,Read,Trajectory regression verification across all seeds and branches.,Bit-for-bit branch matrix verification.
+aief_experiment_engine_v1.py,2601-2608,EMP-AIEF14-03;IMPL-MODULAR-01,Scalar summary metrics exact numerical reproducibility,Live computed scalar summary values against frozen CSV scalar values,"if engine_is_nan and frozen_is_nan:
+    seed_results[""checks""][f""{branch}_{key}_exact""] = True
+elif np.isclose(engine_scalar, frozen_scalar, rtol=0.0, atol=0.0):
+    seed_results[""checks""][f""{branch}_{key}_exact""] = True
+else:
+    seed_results[""checks""][f""{branch}_{key}_exact""] = False
+    seed_results[""status""] = ""failed""
+    all_passed = False",REAL_OPERATOR,"exact float equality (rtol=0.0, atol=0.0)",Read,Verifies live computed scalars match frozen CSV scalars with zero tolerance.,Zero-tolerance scalar regression verification.
+AIEF_1_4_Twindow_sensitivity_analysis_v3.py,1364-1370,EMP-AIEF14-03,Baseline certificate seed status verification,"seed_result.get(""status"") != ""passed""","for seed_id, seed_result in cert_seed_results.items():
+    if seed_result.get(""status"") != ""passed"":
+        results[""status""] = ""failed""
+        results[""errors""].append(
+            f""Baseline certificate seed {seed_id} status is '{seed_result.get('status')}', expected 'passed'""
+        )
+        return results",REAL_OPERATOR,exact string equality status == 'passed',Read,Inspects baseline certificate seed results before proceeding with analysis.,Gatekeeper ensuring all seeds passed baseline equivalence.
