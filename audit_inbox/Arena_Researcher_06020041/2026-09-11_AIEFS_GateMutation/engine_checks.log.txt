@@ -1,0 +1,12 @@
+active branch: True projection active: True
+actual edge01: np.float64(0.5714285714285714) expected: np.float64(0.5714285714285714)
+max absolute full-matrix error: 0.0
+active full-matrix oracle: PASS
+inactive branch control: PASS
+reference exit: 0
+active branch: True projection active: True
+actual edge01: np.float64(0.38095238095238093) expected: np.float64(0.5714285714285714)
+max absolute full-matrix error: 0.19047619047619047
+active full-matrix oracle: FAIL
+inactive branch control: PASS
+product mutant exit: 1

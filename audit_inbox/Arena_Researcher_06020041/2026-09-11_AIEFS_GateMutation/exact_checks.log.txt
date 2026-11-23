@@ -1,0 +1,6 @@
+active: True edge01: 4/7 edge12: 1/6 full-matrix oracle: PASS
+inactive branch control: PASS
+min exit: 0
+active: True edge01: 8/21 edge12: 1/6 full-matrix oracle: FAIL
+inactive branch control: PASS
+product exit: 1
