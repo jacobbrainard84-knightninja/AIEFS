@@ -48,7 +48,7 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
 
 | Researcher | Role | Lane / sub-task |
 |---|---|---|
-| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification. Newest: DIRECTION-12 (2026-11-23; transient plan approved with changes; engine link + peak bound next) |
+| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification. Newest: DIRECTION-13 (2026-11-23; transient bridge accepted; parametric map over dt·b next) |
 | Researcher_0282416 | Lane owner | Census of false self-tests and static registry/entrypoint integrity. Newest: DIRECTION-2 (census NEEDS FIX) |
 | Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main`. Newest: DIRECTION-2 (also inherits R026-S7/S8, 040282 S01 count) |
 | Researcher_0046882 | Lane owner | Seed-4619122171158768524 future-regime structure (descriptive; protocol-first). Previous lane, gate spillover and bystander loss (OQ16 follow-up), DONE 2026-11-22 (cycle 003 accepted: future events in 1/40 seeds). Newest: DIRECTION-3 (2026-11-22) |
