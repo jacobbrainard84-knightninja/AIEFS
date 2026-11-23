@@ -244,3 +244,4 @@ Checked against main `7865ab1`. Deposited scripts were not run. Lean was compile
 | ARENA-EMA-WRAP | wrap-invariant near-unit corollary + cross-wrap witness | ACCEPTED AS CANDIDATE | Builds; standard axioms only; my 3 mutants killed. Depends on the EmaNearUnit candidate (not on main). |
 | ARENA-C012 | causal EMA tracking (C012 re-derived) | ACCEPTED AS CANDIDATE | Builds; standard axioms only; my 3 mutants killed. C016 still open. |
 | ARENA-DATES | dated folders | NOT DONE (3rd) | Required fix in DIRECTION-9. |
+| ARENA-C016 | coherence speed limit, C016 re-derived (b10b485) | ACCEPTED AS CANDIDATE | Builds; standard axioms only; author's statement mutant is real; my 5 mutants killed. Same bound as main CoherenceMotion.lean, so it corroborates rather than adds. See DIRECTION-10. |
