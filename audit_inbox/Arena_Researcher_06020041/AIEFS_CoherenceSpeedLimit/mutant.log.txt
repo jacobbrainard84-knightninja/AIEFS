@@ -1,0 +1,12 @@
+AIEFGateCore/CoherenceSpeedMutant.lean:26:27: error: Type mismatch
+  hreal
+has type
+  ‖↑(1 - alpha) * (z - C)‖ ≤ 2 * (1 - alpha)
+but is expected to have type
+  ‖↑(1 - alpha) * (z - C)‖ ≤ 1 - alpha
+'AIEFGate.CoherenceSpeedLimit.asymmetric_report_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.CoherenceSpeedLimit.directed_motion' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.CoherenceSpeedLimit.reported_motion' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.CoherenceSpeedLimit.trace_motion_min' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.CoherenceSpeedLimit.sharp_direct_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1

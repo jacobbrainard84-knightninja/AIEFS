@@ -1,0 +1,7 @@
+ℹ [2219/2219] Built AIEFGateCore.CoherenceSpeedLimit (142s)
+info: AIEFGateCore/CoherenceSpeedLimit.lean:85:0: 'AIEFGate.CoherenceSpeedLimit.asymmetric_report_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:86:0: 'AIEFGate.CoherenceSpeedLimit.directed_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:87:0: 'AIEFGate.CoherenceSpeedLimit.reported_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:88:0: 'AIEFGate.CoherenceSpeedLimit.trace_motion_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:89:0: 'AIEFGate.CoherenceSpeedLimit.sharp_direct_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2219 jobs).
