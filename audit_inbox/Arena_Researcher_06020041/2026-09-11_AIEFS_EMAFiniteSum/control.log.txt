@@ -1,0 +1,5 @@
+'AIEFGate.EMAFiniteSum.budget_eq_finite_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.EMAFiniteSum.delayed_tracking_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.EMAFiniteSum.oldest_drift_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.EMAFiniteSum.reversed_power_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 0

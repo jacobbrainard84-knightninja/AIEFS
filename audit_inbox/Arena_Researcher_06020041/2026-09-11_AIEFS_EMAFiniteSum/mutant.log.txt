@@ -1,0 +1,30 @@
+AIEFGateCore/EMAFiniteMutant.lean:26:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ k ∈ Finset.range n, alpha ^ (n + 1 - 1 - k) * drift k
+in the target expression
+  alpha * (alpha ^ n * E + ∑ k ∈ Finset.range n, alpha ^ k * drift k) + drift n =
+    alpha ^ (n + 1) * E + (∑ x ∈ Finset.range n, alpha ^ x * drift x + alpha ^ n * drift n)
+
+case succ
+alpha E : ℝ
+drift : ℕ → ℝ
+n : ℕ
+ih : budget alpha E drift n = alpha ^ n * E + ∑ k ∈ Finset.range n, alpha ^ k * drift k
+hs :
+  ∑ k ∈ Finset.range n, alpha ^ (n + 1 - 1 - k) * drift k = alpha * ∑ k ∈ Finset.range n, alpha ^ (n - 1 - k) * drift k
+⊢ alpha * (alpha ^ n * E + ∑ k ∈ Finset.range n, alpha ^ k * drift k) + drift n =
+    alpha ^ (n + 1) * E + (∑ x ∈ Finset.range n, alpha ^ x * drift x + alpha ^ n * drift n)
+AIEFGateCore/EMAFiniteMutant.lean:38:2: error: Type mismatch: After simplification, term
+  delayed_tracking_bound alpha C0 d x0 u omega tau ha n i j
+ has type
+  ‖error alpha C0 d x0 u omega tau n i j‖ ≤
+    alpha ^ n * ‖error alpha C0 d x0 u omega tau 0 i j‖ +
+      ∑ k ∈ Finset.range n, alpha ^ k * |u k i - Phase.delayedIncrement d u k j|
+but is expected to have type
+  ‖error alpha C0 d x0 u omega tau n i j‖ ≤
+    alpha ^ n * ‖error alpha C0 d x0 u omega tau 0 i j‖ +
+      ∑ k ∈ Finset.range n, alpha ^ (n - 1 - k) * |u k i - Phase.delayedIncrement d u k j|
+'AIEFGate.EMAFiniteSum.budget_eq_finite_sum' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.EMAFiniteSum.delayed_tracking_sum' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.EMAFiniteSum.oldest_drift_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.EMAFiniteSum.reversed_power_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1

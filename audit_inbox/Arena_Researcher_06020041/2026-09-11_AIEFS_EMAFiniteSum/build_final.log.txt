@@ -1,0 +1,11 @@
+ℹ [2219/2220] Built AIEFGateCore.CausalEMATracking (135s)
+info: AIEFGateCore/CausalEMATracking.lean:69:0: 'AIEFGate.CausalEMATracking.tracking_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:70:0: 'AIEFGate.CausalEMATracking.tracking_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:71:0: 'AIEFGate.CausalEMATracking.delayed_tracking_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:72:0: 'AIEFGate.CausalEMATracking.drift_factor_one_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2220/2220] Built AIEFGateCore.EMAFiniteSum (136s)
+info: AIEFGateCore/EMAFiniteSum.lean:52:0: 'AIEFGate.EMAFiniteSum.budget_eq_finite_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:53:0: 'AIEFGate.EMAFiniteSum.delayed_tracking_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:54:0: 'AIEFGate.EMAFiniteSum.oldest_drift_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:55:0: 'AIEFGate.EMAFiniteSum.reversed_power_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2220 jobs).
