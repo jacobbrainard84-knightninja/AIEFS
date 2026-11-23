@@ -1,0 +1,52 @@
+AIEFGateCore/EmaWrapMutant.lean:14:73: error: unsolved goals
+phi beta : ℝ
+m : ℤ
+⊢ |phi + ↑m * (2 * Real.pi)| ≤ beta ↔ |phi| ≤ beta
+AIEFGateCore/EmaWrapMutant.lean:15:23: warning: This simp argument is unused:
+  Real.cos_add_int_mul_two_pi
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [arcBound]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+AIEFGateCore/EmaWrapMutant.lean:32:2: error: linarith failed to find a contradiction
+V : Type u_1
+alpha beta epsilon : ℝ
+d : ℕ
+x0 : V → ℝ
+u : ℕ → V → ℝ
+omega : V → ℝ
+tau : ℝ
+i j : V
+N : ℕ
+ha : 0 ≤ alpha
+ha1 : alpha ≤ 1
+hspread :
+  ∀ k < N, arcBound (Phase.phaseTrace x0 u k i - Phase.phaseTrace x0 u (k - d) j - (omega i + omega j) / 2 * tau) beta
+budget : alpha ^ N + (1 - Real.cos beta) ≤ epsilon
+k : ℕ
+hk : k < N
+hc : |Phase.phaseTrace x0 u k i - Phase.phaseTrace x0 u (k - d) j - (omega i + omega j) / 2 * tau| ≤ beta
+a✝ :
+  Real.cos (Phase.phaseTrace x0 u k i - Phase.phaseTrace x0 u (k - d) j - (omega i + omega j) / 2 * tau) <
+    1 - (1 - Real.cos beta)
+⊢ False
+failed
+AIEFGateCore/EmaWrapMutant.lean:41:82: error: unsolved goals
+⊢ |2 * Real.pi - Real.pi / 60| ≤ Real.pi / 60
+AIEFGateCore/EmaWrapMutant.lean:42:18: warning: This simp argument is unused:
+  Real.cos_two_pi_sub
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [arcBound]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'AIEFGate.EmaWrapInvariant.arcBound_periodic' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.EmaWrapInvariant.near_unit_circular_spread' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'AIEFGate.EmaWrapInvariant.cross_wrap_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.EmaWrapInvariant.cross_wrap_good' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.EmaWrapInvariant.cross_wrap_rejected' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1

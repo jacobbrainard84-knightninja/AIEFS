@@ -1,0 +1,35 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+AIEFGateCore/CausalEMAMutant.lean:27:52: error: unsolved goals
+V : Type u_1
+alpha : ℝ
+C0 : V → V → ℂ
+d : ℕ
+x0 : V → ℝ
+u : ℕ → V → ℝ
+omega : V → ℝ
+tau : ℝ
+n : ℕ
+i j : V
+⊢ ↑alpha * coherenceTrace alpha C0 d x0 u omega tau n i j - ↑alpha * coherenceInput d x0 u omega tau n i j +
+        coherenceInput d x0 u omega tau n i j -
+      coherenceInput d x0 u omega tau (1 + n) i j =
+    ↑alpha * coherenceTrace alpha C0 d x0 u omega tau n i j - ↑alpha * coherenceInput d x0 u omega tau n i j * 2 +
+          ↑alpha * coherenceInput d x0 u omega tau (1 + n) i j +
+        coherenceInput d x0 u omega tau n i j -
+      coherenceInput d x0 u omega tau (1 + n) i j
+AIEFGateCore/CausalEMAMutant.lean:41:4: error: invalid 'calc' step, left-hand side is
+  ‖↑alpha * error alpha C0 d x0 u omega tau n i j -
+      (coherenceInput d x0 u omega tau (n + 1) i j - coherenceInput d x0 u omega tau n i j)‖ : ℝ
+but is expected to be
+  ‖↑alpha * error alpha C0 d x0 u omega tau n i j -
+      ↑(1 - alpha) * (coherenceInput d x0 u omega tau (n + 1) i j - coherenceInput d x0 u omega tau n i j)‖ : ℝ
+'AIEFGate.CausalEMATracking.tracking_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.CausalEMATracking.tracking_step_bound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.CausalEMATracking.delayed_tracking_bound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.CausalEMATracking.drift_factor_one_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1

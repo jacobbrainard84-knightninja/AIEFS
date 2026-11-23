@@ -1,0 +1,6 @@
+ℹ [2219/2219] Built AIEFGateCore.CausalEMATracking (129s)
+info: AIEFGateCore/CausalEMATracking.lean:69:0: 'AIEFGate.CausalEMATracking.tracking_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:70:0: 'AIEFGate.CausalEMATracking.tracking_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:71:0: 'AIEFGate.CausalEMATracking.delayed_tracking_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:72:0: 'AIEFGate.CausalEMATracking.drift_factor_one_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2219 jobs).

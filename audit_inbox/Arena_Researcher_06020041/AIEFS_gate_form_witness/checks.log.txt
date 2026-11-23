@@ -1,0 +1,13 @@
+B valid symmetric/nonnegative/zero-diagonal; cap=1, epsilon=1/4
+row sums: (Fraction(3, 2), Fraction(5, 4), Fraction(3, 4)) ; scales: (Fraction(4, 7), Fraction(2, 3), Fraction(1, 1)) ; active: True
+edge (0,1): min= 4/7 , product= 8/21 , min squared= 16/49 , sqrt argument= 8/21
+projected row sums: (Fraction(6, 7), Fraction(31, 42), Fraction(19, 42))
+EXACT WITNESS: PASS
+MUTANT product : KILLED (fixed gate-value assertion failed)
+MUTANT geometric mean : KILLED (fixed gate-value assertion failed)
+config.validate: PASS; input and output state.validate: PASS
+R= [[0.0, 1.0, 0.5], [1.0, 0.0, 0.25], [0.5, 0.25, 0.0]]
+projection_active= True
+projected B= [[0.0, 0.5714285714285714, 0.2857142857142857], [0.5714285714285714, 0.0, 0.16666666666666666], [0.2857142857142857, 0.16666666666666666, 0.0]]
+max absolute difference vs exact-rational projection= 0.0
+FLOAT ENGINE PROBE: PASS (constructed state; no reachability claim)

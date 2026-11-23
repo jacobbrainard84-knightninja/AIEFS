@@ -1,0 +1,12 @@
+ℹ [2219/2220] Replayed AIEFGateCore.EmaNearUnit
+info: AIEFGateCore/EmaNearUnit.lean:67:0: 'AIEFGate.EmaNearUnit.near_unit_of_phase_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:68:0: 'AIEFGate.EmaNearUnit.trace_projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:69:0: 'AIEFGate.EmaNearUnit.trace_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:70:0: 'AIEFGate.EmaNearUnit.near_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2220/2220] Built AIEFGateCore.EmaWrapInvariant (133s)
+info: AIEFGateCore/EmaWrapInvariant.lean:50:0: 'AIEFGate.EmaWrapInvariant.arcBound_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:51:0: 'AIEFGate.EmaWrapInvariant.near_unit_circular_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:52:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:53:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:54:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_rejected' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2220 jobs).
