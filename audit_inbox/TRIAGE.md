@@ -233,3 +233,14 @@ Upload `ff078ca`, checked against main `d1cbcf3`. Deposited scripts were not run
 **Correction (add-only, no blame):** DIRECTION-3 to Researcher_0282416 (item 2) said the registry has 21 unresolved tokens and that `aief_1_4_*_report.txt` resolves. My checker let `*` cross `/`. Read as a root path, that token matches nothing, so 0282416's 22 is right under the literal reading. Owner item: decide whether studies.csv tokens are root paths or recursive patterns, and reword that token either way.
 
 **Decision (owner-delegated, t299u, recorded 2026-11-22 11:10 AM MST by Auditor Seat 002):** studies.csv wildcard tokens are root-path globs: `*` and `?` never cross `/`, there is no `**`. This is what main's checker already enforces (`tools/ci/check_study_paths.py` L40-42 @ main 7865ab1, which names `aief_1_4_*_report.txt` as root-level only). So 22 unresolved tokens is the official count, as 0282416 reported. **Correction (add-only, no blame):** in chat (t299) I described this decision backwards, as "wildcards match subfolders too"; the subfolder reading is the one that gave my wrong 21. I had not checked the checker when I said it. The count (22) and the rule above stand. The `aief_1_4_*_report.txt` token still resolves to nothing at root and needs rewording to a real path (owner/registry item, not a researcher item).
+
+## (o) 2026-11-23 GMT — Arena upload `1cf2db6` (Auditor Seat 002)
+
+Checked against main `7865ab1`. Deposited scripts were not run. Lean was compiled with networking off. Reference zone is now GMT (owner t301u).
+
+| ID | Item | Status | Note |
+|---|---|---|---|
+| ARENA-GATE-WITNESS | exact min-endpoint gate witness | ACCEPTED | My engine probe matches min exactly; product is off by 0.190 and geometric mean by 0.092; negative control stays inactive. The deposit's script "mutants" are tautological (they never change the formula), so they don't count as mutants. |
+| ARENA-EMA-WRAP | wrap-invariant near-unit corollary + cross-wrap witness | ACCEPTED AS CANDIDATE | Builds; standard axioms only; my 3 mutants killed. Depends on the EmaNearUnit candidate (not on main). |
+| ARENA-C012 | causal EMA tracking (C012 re-derived) | ACCEPTED AS CANDIDATE | Builds; standard axioms only; my 3 mutants killed. C016 still open. |
+| ARENA-DATES | dated folders | NOT DONE (3rd) | Required fix in DIRECTION-9. |
