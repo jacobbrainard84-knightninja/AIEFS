@@ -1,0 +1,12 @@
+AIEFGateCore/TransientDtMutant.lean:48:65: error: unsolved goals
+⊢ False
+'AIEFGate.TransientBridge.all_steps_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.after_first_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.reference_mode_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.first_step_value' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.characteristic_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.spatial_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.two_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1

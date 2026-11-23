@@ -1,0 +1,18 @@
+AIEFGateCore/TransientQueueMutant.lean:45:4: error: Type mismatch: After simplification, term
+  hq
+ has type
+  HasDerivAt (fun t => phaseStep 3 1 stepSize 0 1 (orbitPath 3 stepSize 0 1 (direction x y) t) 1 i) (x * mode i) 0
+but is expected to have type
+  HasDerivAt (fun t => phaseStep 3 1 stepSize 0 1 (orbitPath 3 stepSize 0 1 (direction x y) t) 1 i) 0 0
+AIEFGateCore/TransientQueueMutant.lean:48:65: error: unsolved goals
+⊢ False
+'AIEFGate.TransientBridge.all_steps_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.after_first_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.reference_mode_link' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.first_step_value' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.characteristic_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.spatial_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientBridge.two_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1
