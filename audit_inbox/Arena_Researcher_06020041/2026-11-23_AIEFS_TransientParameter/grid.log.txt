@@ -1,0 +1,5 @@
+c grid: 0.001 through 0.999, step 0.001; k=1 through 100
+largest observed norm: 1.6161400134670594 at c= 0.999 k= 1
+proposed all-step threshold sqrt(21/8): 1.620185174601965
+finite-grid threshold: PASS
+This grid does not prove the all-step or continuum claim.

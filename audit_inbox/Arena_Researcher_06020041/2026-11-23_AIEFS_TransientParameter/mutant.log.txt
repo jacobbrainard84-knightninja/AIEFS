@@ -1,0 +1,13 @@
+AIEFGateCore/TransientParameterMutant.lean:37:4: error: Type mismatch: After simplification, term
+  hq
+ has type
+  HasDerivAt (fun t => phaseStep 3 1 dt 0 b (orbitPath 3 dt 0 1 (direction x y) t) 1 i) (x * mode i) 0
+but is expected to have type
+  HasDerivAt (fun t => phaseStep 3 1 dt 0 b (orbitPath 3 dt 0 1 (direction x y) t) 1 i) (-(x * mode i)) 0
+'AIEFGate.TransientParameter.reference_mode_link' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.TransientParameter.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientParameter.stable_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientParameter.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientParameter.zero_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.TransientParameter.quarter_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+lean exit status: 1
