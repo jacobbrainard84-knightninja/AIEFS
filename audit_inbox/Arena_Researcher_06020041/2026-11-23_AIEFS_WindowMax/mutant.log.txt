@@ -1,0 +1,44 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+AIEFGateCore/WindowMaxMutant.lean:25:2: error: unsolved goals
+n d : ℕ
+dt b : ℝ
+hn : 1 ≤ n
+hb : 0 < b
+mode : Fin n → ℝ
+hm : ∑ j, mode j = 0
+v : ℕ → ℝ
+i : Fin n
+hs : ∑ j, v d * mode j = 0
+hh :
+  HasDerivAt (fun t => phaseStep n d dt 0 b (orbitPath n dt 0 1 (fun a j => v a * mode j) t) 0 i)
+    ((1 - (↑n - 1) * (dt * b * Real.cos (↑d * dt * 0))) * (v 0 * mode i) +
+      dt * b * Real.cos (↑d * dt * 0) * (∑ j, v d * mode j - v d * mode i))
+    0
+⊢ -(↑n * dt * b * v 0 * mode i) + dt * b * v 0 * mode i + dt * b * v d * mode i + v 0 * mode i =
+    -(↑n * dt * b * v 0 * mode i) + dt * b * v 0 * mode i - dt * b * v d * mode i + v 0 * mode i
+AIEFGateCore/WindowMaxMutant.lean:56:6: error: invalid 'calc' step, left-hand side is
+  |(1 - (↑n - 1) * c) * v 0 - c * v d| : ℝ
+but is expected to be
+  |(1 - (↑n - 1) * c) * v 0 + c * v d| : ℝ
+AIEFGateCore/WindowMaxMutant.lean:89:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (1 - (3 - 1) * c) * 1 - c * 1
+in the target expression
+  |(1 - (3 - 1) * c) * 1 + c * 1| = 3 * c - 1 ∧ |(1 - (3 - 1) * c) * 1 + c * 1| > 1 ∧ ∀ k ≤ 1, |1| ≤ 1
+
+c : ℝ
+hc : 2 / 3 < c
+hc1 : c < 1
+hneg : 1 - 3 * c < 0
+heq : (1 - (3 - 1) * c) * 1 - c * 1 = 1 - 3 * c
+⊢ |(1 - (3 - 1) * c) * 1 + c * 1| = 3 * c - 1 ∧ |(1 - (3 - 1) * c) * 1 + c * 1| > 1 ∧ ∀ k ≤ 1, |1| ≤ 1
+'AIEFGate.WindowMax.reference_link' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.WindowMax.coefficient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.WindowMax.window_step' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.WindowMax.window_all_steps' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.WindowMax.exact_growth_witness' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+lean exit status: 1
