@@ -1,0 +1,19 @@
+$ date -u +%F
+2026-11-24
+$ sha256sum current_main_enginestepref.tmp aief_experiment_engine_v1.py
+573adfd6d98181d5734c2293f8867236e78c55c3fe0a5bdaa8f120d4844c2666  current_main_enginestepref.tmp
+ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede  aief_experiment_engine_v1.py
+$ grep -nE "^noncomputable def (clippedWeight|phaseHead|phaseStep)|^theorem (neighbor_derivative|head_derivative_raw|head_derivative_block|phase_step_head|history_derivative)" current_main_enginestepref.tmp
+27:noncomputable def clippedWeight (b : ℝ) : ℝ := max 0 b
+33:noncomputable def phaseHead (n : ℕ) (d : ℕ) (dt omega b : ℝ)
+40:noncomputable def phaseStep (n d : ℕ) (dt omega b : ℝ)
+78:theorem neighbor_derivative (n d : ℕ) (dt Omega theta : ℝ)
+98:theorem head_derivative_raw (n d : ℕ) (dt omega b Omega theta : ℝ)
+120:theorem head_derivative_block (n d : ℕ) (dt omega b Omega theta : ℝ)
+137:theorem phase_step_head (n d : ℕ) (dt omega b Omega theta : ℝ)
+146:theorem history_derivative (n d k : ℕ) (dt omega b Omega theta : ℝ)
+$ grep -nE "B_projected = B_unprojected|state.B = B_projected|state.B \* np.sin|np.minimum.outer" aief_experiment_engine_v1.py
+808:    B_projected = B_unprojected
+812:        B_projected = B_unprojected * np.minimum.outer(scale, scale)
+823:    state.B = B_projected
+834:        state.B * np.sin(delayed[None, :] - state.theta[:, None]), axis=1
