@@ -1,0 +1,8 @@
+$ git rev-parse HEAD
+7865ab19282ceae49df9aa70b396d60ada38d3c2
+$ lean --version
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+$ sha256sum AIEFGateCore/EngineStepRef.lean
+573adfd6d98181d5734c2293f8867236e78c55c3fe0a5bdaa8f120d4844c2666  AIEFGateCore/EngineStepRef.lean
+$ date -u +%F
+2026-11-24

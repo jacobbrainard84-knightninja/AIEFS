@@ -1,0 +1,39 @@
+AIEFGateCore/HeteroMutantSign.lean:89:4: error: Type mismatch: After simplification, term
+  weighted_head_derivative n d dt omega 0 theta B hdiag v i
+ has type
+  HasDerivAt (fun t => phaseHeadW n d dt omega B (orbitPath n dt 0 theta v t) i)
+    ((1 - dt * row n B i) * v 0 i + dt * ∑ j, B i j * v d j) 0
+but is expected to have type
+  HasDerivAt (fun t => phaseHeadW n d dt omega B (orbitPath n dt 0 theta v t) i)
+    ((1 - dt * row n B i) * v 0 i - dt * ∑ j, B i j * v d j) 0
+AIEFGateCore/HeteroMutantSign.lean:114:6: error: invalid 'calc' step, left-hand side is
+  |(1 - dt * row n B i) * v 0 i + dt * ∑ j, B i j * v d j| : ℝ
+but is expected to be
+  |(1 - dt * row n B i) * v 0 i - dt * ∑ j, B i j * v d j| : ℝ
+AIEFGateCore/HeteroMutantSign.lean:154:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (1 - dt * row n B i) * 1 + dt * -row n B i
+in the target expression
+  (∀ k ≤ d, ∀ (j : Fin n), |if k = 0 then 1 else -1| ≤ 1) ∧
+    |(1 - dt * row n B i) * 1 - dt * -row n B i| = 2 * dt * row n B i - 1 ∧
+      1 < |(1 - dt * row n B i) * 1 - dt * -row n B i|
+
+n d : ℕ
+dt : ℝ
+B : Fin n → Fin n → ℝ
+i : Fin n
+hd : 0 < d
+hr : 1 < dt * row n B i
+hd' : d ≠ 0
+hs : ∑ j, B i j * -1 = -row n B i
+he : (1 - dt * row n B i) * 1 + dt * -row n B i = 1 - 2 * dt * row n B i
+⊢ (∀ k ≤ d, ∀ (j : Fin n), |if k = 0 then 1 else -1| ≤ 1) ∧
+    |(1 - dt * row n B i) * 1 - dt * -row n B i| = 2 * dt * row n B i - 1 ∧
+      1 < |(1 - dt * row n B i) * 1 - dt * -row n B i|
+'AIEFGate.HeteroStepRef.agrees_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.weighted_head_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.weighted_step_derivative' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.window_step' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.window_all_steps' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.guard_row_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.growth_witness' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+Lean exit status: 1

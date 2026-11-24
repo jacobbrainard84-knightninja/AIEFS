@@ -1,0 +1,24 @@
+AIEFGateCore/HeteroMutantNonnegative.lean:109:37: error: Application type mismatch: The argument
+  hB i j
+has type
+  0 ≤ B i j ∨ B i j < 0
+but is expected to have type
+  0 ≤ B i j
+in the application
+  abs_of_nonneg (hB i j)
+AIEFGateCore/HeteroMutantNonnegative.lean:132:73: error: Application type mismatch: The argument
+  hB
+has type
+  ∀ (i j : Fin n), 0 ≤ B i j
+but is expected to have type
+  ∀ (i j : Fin n), 0 ≤ B i j ∨ B i j < 0
+in the application
+  window_step n d dt M B (iterate n d dt B v t) hdt hB
+'AIEFGate.HeteroStepRef.agrees_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.weighted_head_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.weighted_step_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.window_step' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.window_all_steps' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.guard_row_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AIEFGate.HeteroStepRef.growth_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+Lean exit status: 1
