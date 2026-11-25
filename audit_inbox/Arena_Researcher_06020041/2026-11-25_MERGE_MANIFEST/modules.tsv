@@ -1,0 +1,13 @@
+ReachableQueue	AIEFS_reachable_queue/ReachableQueue.lean
+EmaNearUnit	AIEFS_ema_near_unit/EmaNearUnit.lean
+MatrixPhaseBridge	AIEFS_matrix_phase_bridge/MatrixPhaseBridge.lean
+QueueComposition	AIEFS_queue_composition/QueueComposition.lean
+EmaWrapInvariant	AIEFS_ema_wrap_invariant/EmaWrapInvariant.lean
+CausalEMATracking	AIEFS_CausalEMATracking/CausalEMATracking.lean
+EMAFiniteSum	2026-09-11_AIEFS_EMAFiniteSum/EMAFiniteSum.lean
+CoherenceSpeedLimit	AIEFS_CoherenceSpeedLimit/CoherenceSpeedLimit.lean
+TransientBridge	2026-11-23_AIEFS_TransientBridge/TransientBridge.lean
+TransientParameter	2026-11-23_AIEFS_TransientParameter/TransientParameter.lean
+WindowMax	2026-11-23_AIEFS_WindowMax/WindowMax.lean
+HeteroStepRef	2026-11-24_AIEFS_HeteroStepRef/HeteroStepRef.lean
+HeteroGuard	2026-11-24_AIEFS_HeteroStepRef/HeteroGuard.lean

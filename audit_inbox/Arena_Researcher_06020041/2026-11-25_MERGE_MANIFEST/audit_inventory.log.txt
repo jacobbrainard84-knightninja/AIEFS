@@ -1,0 +1,100 @@
+audit-inbox HEAD:
+62c85928f715644f4d078ff37acc07889721a476
+Candidate deposit checksum checks:
+=== AIEFS_reachable_queue ===
+ReachableQueue.lean: OK
+sha256sum: build_final.log: No such file or directory
+build_final.log: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+status=1
+=== AIEFS_ema_near_unit ===
+EmaNearUnit.lean: OK
+sha256sum: build_final.log: No such file or directory
+build_final.log: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+status=1
+=== AIEFS_queue_composition ===
+QueueComposition.lean: OK
+build_final.log.txt: OK
+status=0
+=== AIEFS_gate_form_witness ===
+exact_check.py: OK
+engine_probe.py: OK
+checks.log.txt: OK
+status=0
+=== AIEFS_ema_wrap_invariant ===
+EmaWrapInvariant.lean: OK
+build_final.log.txt: OK
+mutant.log.txt: OK
+status=0
+=== AIEFS_CausalEMATracking ===
+CausalEMATracking.lean: OK
+REVIEW_NOTE.md: OK
+build_final.log.txt: OK
+mutant.log.txt: OK
+status=0
+=== AIEFS_CoherenceSpeedLimit ===
+CoherenceSpeedLimit.lean: OK
+REVIEW_NOTE.md: OK
+build_final.log.txt: OK
+mutant.log.txt: OK
+status=0
+=== 2026-09-11_AIEFS_GateMutation ===
+REVIEW_NOTE.md: OK
+exact_gate_checks.py: OK
+engine_gate_checks.py: OK
+exact_checks.log.txt: OK
+engine_checks.log.txt: OK
+status=0
+=== 2026-09-11_AIEFS_EMAFiniteSum ===
+EMAFiniteSum.lean: OK
+CausalEMATracking.lean: OK
+REVIEW_NOTE.md: OK
+build_final.log.txt: OK
+control.log.txt: OK
+mutant.log.txt: OK
+status=0
+=== 2026-11-23_AIEFS_TransientBridge ===
+TransientBridge.lean: OK
+REVIEW_NOTE.md: OK
+build_final.log.txt: OK
+queue_mutant.log.txt: OK
+dt_mutant.log.txt: OK
+status=0
+=== 2026-11-23_AIEFS_TransientParameter ===
+TransientParameter.lean: OK
+REVIEW_NOTE.md: OK
+grid_probe.py: OK
+build_final.log.txt: OK
+mutant.log.txt: OK
+grid.log.txt: OK
+status=0
+=== 2026-11-23_AIEFS_WindowMax ===
+WindowMax.lean: OK
+REVIEW_NOTE.md: OK
+make_mutant.py: OK
+build_final.log.txt: OK
+mutant.log.txt: OK
+status=0
+=== 2026-11-24_AIEFS_HeteroStepRef ===
+HeteroStepRef.lean: OK
+HeteroGuard.lean: OK
+REVIEW_NOTE.md: OK
+make_mutants.py: OK
+build_final.log.txt: OK
+guard_build.log.txt: OK
+mutant_sign.log.txt: OK
+mutant_threshold.log.txt: OK
+mutant_nonnegative.log.txt: OK
+environment.log.txt: OK
+status=0
+Existing .log.txt replacements for missing .log entries:
+5ef2226df4e590a79014777c1af1264960d19b498b312639ec76d0201f78b87b  build_final.log.txt
+8e12fe63c4b1892712dad6f3a3ffca4ce3a1d2104af3ba352e16fabed675d1f1  build_final.log.txt
+CausalEMATracking duplicate:
+byte-identical
+=== D6 prerequisite MatrixPhaseBridge LOG_HASHES ===
+74d44d87e345712b9df9804811fa6586c759e2dcb215eb80a09659a0458fcb62  MatrixPhaseBridge.lean
+03e6b7a37706156a413b2f94f0d54548d3c05a4b132568e7d7a22613d3f9debb  build_final.log
+74d44d87e345712b9df9804811fa6586c759e2dcb215eb80a09659a0458fcb62  MatrixPhaseBridge.lean
+03e6b7a37706156a413b2f94f0d54548d3c05a4b132568e7d7a22613d3f9debb  build_final.log.txt

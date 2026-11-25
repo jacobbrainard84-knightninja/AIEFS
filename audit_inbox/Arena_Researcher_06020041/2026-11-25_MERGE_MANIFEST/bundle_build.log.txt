@@ -1,0 +1,440 @@
+copied ReachableQueue: 7ee2029583564959cf88b6acf3593aef442f991a1df7bc6667bb29e19ded9aa0  AIEFGateCore/ReachableQueue.lean
+copied EmaNearUnit: 292d1e7a98cf7ff963ac23873839686562a9cb453140d5f21b2d176589a895ec  AIEFGateCore/EmaNearUnit.lean
+copied MatrixPhaseBridge: 74d44d87e345712b9df9804811fa6586c759e2dcb215eb80a09659a0458fcb62  AIEFGateCore/MatrixPhaseBridge.lean
+copied QueueComposition: 7a1b1b006d8695f7bf1073e9034b95eac9093b7e9ea554316bba34438e5d87eb  AIEFGateCore/QueueComposition.lean
+copied EmaWrapInvariant: 5d05160b19e38f4b2ac07e08a0ca3e002dc4682aa629a84283a2523c83b763d4  AIEFGateCore/EmaWrapInvariant.lean
+copied CausalEMATracking: 21493f2821130734c1fe900454be57769ec38991506b755290f53f111f1ec958  AIEFGateCore/CausalEMATracking.lean
+copied EMAFiniteSum: 08a47a74f254509fa3e19afb9fd85f89727793622b9730619f9b62d75a560064  AIEFGateCore/EMAFiniteSum.lean
+copied CoherenceSpeedLimit: a62fb91aa040a4fb6e2060c68561df8fd908c25bc5531e435fdbc894b34699f0  AIEFGateCore/CoherenceSpeedLimit.lean
+copied TransientBridge: 5327041b90749144b3f21b09c2e594e6712a427432a5d374daeef8b6f69e1385  AIEFGateCore/TransientBridge.lean
+copied TransientParameter: 51fbb51d0e87c4f9f96c61e93685ccdcf41cd5ce46af699cbd423761ceed8b0c  AIEFGateCore/TransientParameter.lean
+copied WindowMax: 5d91183b3a47e41648d1fa63ccdaf3335627aea5d3580342542e8c31f1d2a9d2  AIEFGateCore/WindowMax.lean
+copied HeteroStepRef: 9d16831a773330b1258eba3d6a664451e2d6746b1f5f2ee18daaae473b00a46b  AIEFGateCore/HeteroStepRef.lean
+copied HeteroGuard: 9ebe000257ed7b7e1b64f3e956e0a8a56c3c78468ac1d076789c2dfddc564481  AIEFGateCore/HeteroGuard.lean
+Dependency duplicate CausalEMATracking: byte-identical
+=== Fresh target AIEFGateCore.ReachableQueue ===
+ℹ [2190/2191] Built AIEFGateCore.EngineStepRef (125s)
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2191/2191] Built AIEFGateCore.ReachableQueue (137s)
+info: AIEFGateCore/ReachableQueue.lean:85:0: 'AIEFGate.ReachableQueue.bad_breaks_reference' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:86:0: 'AIEFGate.ReachableQueue.shift_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:87:0: 'AIEFGate.ReachableQueue.reachable_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:88:0: 'AIEFGate.ReachableQueue.view_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:89:0: 'AIEFGate.ReachableQueue.step_reachable_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2191 jobs).
+=== Fresh target AIEFGateCore.EmaNearUnit ===
+✔ [2027/2043] Built AIEFGateCore.HistoryBuffer (720ms)
+✔ [2215/2219] Built AIEFGateCore.PhaseIncrement (192s)
+✔ [2216/2219] Built AIEFGateCore.GateMap (193s)
+✔ [2217/2219] Built AIEFGateCore.MatrixForm (113s)
+✔ [2218/2219] Built AIEFGateCore.PhaseCoherence (141s)
+ℹ [2219/2219] Built AIEFGateCore.EmaNearUnit (139s)
+info: AIEFGateCore/EmaNearUnit.lean:67:0: 'AIEFGate.EmaNearUnit.near_unit_of_phase_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:68:0: 'AIEFGate.EmaNearUnit.trace_projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:69:0: 'AIEFGate.EmaNearUnit.trace_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:70:0: 'AIEFGate.EmaNearUnit.near_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2219 jobs).
+=== Fresh target AIEFGateCore.MatrixPhaseBridge ===
+ℹ [2148/2191] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2191/2191] Built AIEFGateCore.MatrixPhaseBridge (129s)
+info: AIEFGateCore/MatrixPhaseBridge.lean:163:0: 'AIEFGate.MatrixPhaseBridge.matrix_to_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:164:0: 'AIEFGate.MatrixPhaseBridge.matrix_circle_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:165:0: 'AIEFGate.MatrixPhaseBridge.matrix_head_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:166:0: 'AIEFGate.MatrixPhaseBridge.probeW_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:167:0: 'AIEFGate.MatrixPhaseBridge.probeW_nonuniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:168:0: 'AIEFGate.MatrixPhaseBridge.nonuniform_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:169:0: 'AIEFGate.MatrixPhaseBridge.inconsistent_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2191 jobs).
+=== Fresh target AIEFGateCore.QueueComposition ===
+ℹ [2148/2193] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2191/2193] Replayed AIEFGateCore.MatrixPhaseBridge
+info: AIEFGateCore/MatrixPhaseBridge.lean:163:0: 'AIEFGate.MatrixPhaseBridge.matrix_to_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:164:0: 'AIEFGate.MatrixPhaseBridge.matrix_circle_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:165:0: 'AIEFGate.MatrixPhaseBridge.matrix_head_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:166:0: 'AIEFGate.MatrixPhaseBridge.probeW_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:167:0: 'AIEFGate.MatrixPhaseBridge.probeW_nonuniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:168:0: 'AIEFGate.MatrixPhaseBridge.nonuniform_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:169:0: 'AIEFGate.MatrixPhaseBridge.inconsistent_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2192/2193] Replayed AIEFGateCore.ReachableQueue
+info: AIEFGateCore/ReachableQueue.lean:85:0: 'AIEFGate.ReachableQueue.bad_breaks_reference' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:86:0: 'AIEFGate.ReachableQueue.shift_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:87:0: 'AIEFGate.ReachableQueue.reachable_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:88:0: 'AIEFGate.ReachableQueue.view_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:89:0: 'AIEFGate.ReachableQueue.step_reachable_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2193/2193] Built AIEFGateCore.QueueComposition (133s)
+info: AIEFGateCore/QueueComposition.lean:73:0: 'AIEFGate.QueueComposition.finite_abstract_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/QueueComposition.lean:74:0: 'AIEFGate.QueueComposition.initialized_trajectory_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2193 jobs).
+=== Fresh target AIEFGateCore.EmaWrapInvariant ===
+ℹ [2219/2220] Replayed AIEFGateCore.EmaNearUnit
+info: AIEFGateCore/EmaNearUnit.lean:67:0: 'AIEFGate.EmaNearUnit.near_unit_of_phase_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:68:0: 'AIEFGate.EmaNearUnit.trace_projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:69:0: 'AIEFGate.EmaNearUnit.trace_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:70:0: 'AIEFGate.EmaNearUnit.near_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2220/2220] Built AIEFGateCore.EmaWrapInvariant (134s)
+info: AIEFGateCore/EmaWrapInvariant.lean:50:0: 'AIEFGate.EmaWrapInvariant.arcBound_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:51:0: 'AIEFGate.EmaWrapInvariant.near_unit_circular_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:52:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:53:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:54:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_rejected' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2220 jobs).
+=== Fresh target AIEFGateCore.CausalEMATracking ===
+ℹ [2219/2219] Built AIEFGateCore.CausalEMATracking (133s)
+info: AIEFGateCore/CausalEMATracking.lean:69:0: 'AIEFGate.CausalEMATracking.tracking_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:70:0: 'AIEFGate.CausalEMATracking.tracking_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:71:0: 'AIEFGate.CausalEMATracking.delayed_tracking_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:72:0: 'AIEFGate.CausalEMATracking.drift_factor_one_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2219 jobs).
+=== Fresh target AIEFGateCore.EMAFiniteSum ===
+ℹ [2219/2220] Replayed AIEFGateCore.CausalEMATracking
+info: AIEFGateCore/CausalEMATracking.lean:69:0: 'AIEFGate.CausalEMATracking.tracking_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:70:0: 'AIEFGate.CausalEMATracking.tracking_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:71:0: 'AIEFGate.CausalEMATracking.delayed_tracking_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:72:0: 'AIEFGate.CausalEMATracking.drift_factor_one_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2220/2220] Built AIEFGateCore.EMAFiniteSum (133s)
+info: AIEFGateCore/EMAFiniteSum.lean:52:0: 'AIEFGate.EMAFiniteSum.budget_eq_finite_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:53:0: 'AIEFGate.EMAFiniteSum.delayed_tracking_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:54:0: 'AIEFGate.EMAFiniteSum.oldest_drift_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:55:0: 'AIEFGate.EMAFiniteSum.reversed_power_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2220 jobs).
+=== Fresh target AIEFGateCore.CoherenceSpeedLimit ===
+ℹ [2219/2219] Built AIEFGateCore.CoherenceSpeedLimit (131s)
+info: AIEFGateCore/CoherenceSpeedLimit.lean:85:0: 'AIEFGate.CoherenceSpeedLimit.asymmetric_report_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:86:0: 'AIEFGate.CoherenceSpeedLimit.directed_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:87:0: 'AIEFGate.CoherenceSpeedLimit.reported_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:88:0: 'AIEFGate.CoherenceSpeedLimit.trace_motion_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:89:0: 'AIEFGate.CoherenceSpeedLimit.sharp_direct_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2219 jobs).
+=== Fresh target AIEFGateCore.TransientBridge ===
+ℹ [2148/2149] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2149/2149] Built AIEFGateCore.TransientBridge (130s)
+info: AIEFGateCore/TransientBridge.lean:130:0: 'AIEFGate.TransientBridge.all_steps_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:131:0: 'AIEFGate.TransientBridge.after_first_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:132:0: 'AIEFGate.TransientBridge.reference_mode_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:133:0: 'AIEFGate.TransientBridge.first_step_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:134:0: 'AIEFGate.TransientBridge.characteristic_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:135:0: 'AIEFGate.TransientBridge.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:136:0: 'AIEFGate.TransientBridge.spatial_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:137:0: 'AIEFGate.TransientBridge.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:138:0: 'AIEFGate.TransientBridge.two_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2149 jobs).
+=== Fresh target AIEFGateCore.TransientParameter ===
+ℹ [2147/2183] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2212/2213] Built AIEFGateCore.DelayRoots (138s)
+info: AIEFGateCore/DelayRoots.lean:232:0: 'AIEFGate.DelayRoots.symRoot_eq_one_or_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:233:0: 'AIEFGate.DelayRoots.symRoot_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:234:0: 'AIEFGate.DelayRoots.transRoot_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:235:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:236:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter_of_C' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2213/2213] Built AIEFGateCore.TransientParameter (140s)
+info: AIEFGateCore/TransientParameter.lean:107:0: 'AIEFGate.TransientParameter.reference_mode_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:108:0: 'AIEFGate.TransientParameter.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:109:0: 'AIEFGate.TransientParameter.stable_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:110:0: 'AIEFGate.TransientParameter.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:111:0: 'AIEFGate.TransientParameter.zero_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:112:0: 'AIEFGate.TransientParameter.quarter_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2213 jobs).
+=== Fresh target AIEFGateCore.WindowMax ===
+ℹ [2148/2149] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2149/2149] Built AIEFGateCore.WindowMax (126s)
+info: AIEFGateCore/WindowMax.lean:97:0: 'AIEFGate.WindowMax.reference_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:98:0: 'AIEFGate.WindowMax.coefficient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:99:0: 'AIEFGate.WindowMax.window_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:100:0: 'AIEFGate.WindowMax.window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:101:0: 'AIEFGate.WindowMax.exact_growth_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2149 jobs).
+=== Fresh target AIEFGateCore.HeteroStepRef ===
+ℹ [2148/2149] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2149/2149] Built AIEFGateCore.HeteroStepRef (128s)
+info: AIEFGateCore/HeteroStepRef.lean:160:0: 'AIEFGate.HeteroStepRef.agrees_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:161:0: 'AIEFGate.HeteroStepRef.weighted_head_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:162:0: 'AIEFGate.HeteroStepRef.weighted_step_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:163:0: 'AIEFGate.HeteroStepRef.window_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:164:0: 'AIEFGate.HeteroStepRef.window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:165:0: 'AIEFGate.HeteroStepRef.guard_row_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:166:0: 'AIEFGate.HeteroStepRef.growth_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2149 jobs).
+=== Fresh target AIEFGateCore.HeteroGuard ===
+ℹ [2148/2150] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2149/2150] Replayed AIEFGateCore.HeteroStepRef
+info: AIEFGateCore/HeteroStepRef.lean:160:0: 'AIEFGate.HeteroStepRef.agrees_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:161:0: 'AIEFGate.HeteroStepRef.weighted_head_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:162:0: 'AIEFGate.HeteroStepRef.weighted_step_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:163:0: 'AIEFGate.HeteroStepRef.window_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:164:0: 'AIEFGate.HeteroStepRef.window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:165:0: 'AIEFGate.HeteroStepRef.guard_row_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:166:0: 'AIEFGate.HeteroStepRef.growth_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2150/2150] Built AIEFGateCore.HeteroGuard (128s)
+info: AIEFGateCore/HeteroGuard.lean:27:0: 'AIEFGate.HeteroStepRef.guarded_window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroGuard.lean:28:0: 'AIEFGate.HeteroStepRef.engine_constants_safe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2150 jobs).
+=== Combined target invocation ===
+ℹ [2147/2180] Replayed AIEFGateCore.EngineStepRef
+info: AIEFGateCore/EngineStepRef.lean:317:0: 'AIEFGate.EngineStepRef.orbit_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:318:0: 'AIEFGate.EngineStepRef.neighbor_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:319:0: 'AIEFGate.EngineStepRef.head_derivative_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:320:0: 'AIEFGate.EngineStepRef.head_derivative_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:321:0: 'AIEFGate.EngineStepRef.phase_step_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:322:0: 'AIEFGate.EngineStepRef.history_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:323:0: 'AIEFGate.EngineStepRef.two_node_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:324:0: 'AIEFGate.EngineStepRef.self_coupling_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:325:0: 'AIEFGate.EngineStepRef.adjacent_history_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:326:0: 'AIEFGate.EngineStepRef.clipping_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:327:0: 'AIEFGate.EngineStepRef.probe_clippedWeight_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:328:0: 'AIEFGate.EngineStepRef.probe_phaseHead_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:329:0: 'AIEFGate.EngineStepRef.probe_phaseHead_negative_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:330:0: 'AIEFGate.EngineStepRef.probe_phaseStep_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:331:0: 'AIEFGate.EngineStepRef.probe_orbitPath_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:332:0: 'AIEFGate.EngineStepRef.false_orbit_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:333:0: 'AIEFGate.EngineStepRef.false_orbit_no_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:334:0: 'AIEFGate.EngineStepRef.false_block_no_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:335:0: 'AIEFGate.EngineStepRef.false_history_no_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EngineStepRef.lean:336:0: 'AIEFGate.EngineStepRef.false_neighbor_current_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2191/2233] Replayed AIEFGateCore.ReachableQueue
+info: AIEFGateCore/ReachableQueue.lean:85:0: 'AIEFGate.ReachableQueue.bad_breaks_reference' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:86:0: 'AIEFGate.ReachableQueue.shift_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:87:0: 'AIEFGate.ReachableQueue.reachable_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:88:0: 'AIEFGate.ReachableQueue.view_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/ReachableQueue.lean:89:0: 'AIEFGate.ReachableQueue.step_reachable_consistent' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2221/2233] Replayed AIEFGateCore.EmaNearUnit
+info: AIEFGateCore/EmaNearUnit.lean:67:0: 'AIEFGate.EmaNearUnit.near_unit_of_phase_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:68:0: 'AIEFGate.EmaNearUnit.trace_projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:69:0: 'AIEFGate.EmaNearUnit.trace_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaNearUnit.lean:70:0: 'AIEFGate.EmaNearUnit.near_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2222/2233] Replayed AIEFGateCore.MatrixPhaseBridge
+info: AIEFGateCore/MatrixPhaseBridge.lean:163:0: 'AIEFGate.MatrixPhaseBridge.matrix_to_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:164:0: 'AIEFGate.MatrixPhaseBridge.matrix_circle_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:165:0: 'AIEFGate.MatrixPhaseBridge.matrix_head_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:166:0: 'AIEFGate.MatrixPhaseBridge.probeW_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:167:0: 'AIEFGate.MatrixPhaseBridge.probeW_nonuniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:168:0: 'AIEFGate.MatrixPhaseBridge.nonuniform_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/MatrixPhaseBridge.lean:169:0: 'AIEFGate.MatrixPhaseBridge.inconsistent_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2223/2233] Replayed AIEFGateCore.QueueComposition
+info: AIEFGateCore/QueueComposition.lean:73:0: 'AIEFGate.QueueComposition.finite_abstract_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/QueueComposition.lean:74:0: 'AIEFGate.QueueComposition.initialized_trajectory_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2224/2233] Replayed AIEFGateCore.EmaWrapInvariant
+info: AIEFGateCore/EmaWrapInvariant.lean:50:0: 'AIEFGate.EmaWrapInvariant.arcBound_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:51:0: 'AIEFGate.EmaWrapInvariant.near_unit_circular_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:52:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_angle' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:53:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EmaWrapInvariant.lean:54:0: 'AIEFGate.EmaWrapInvariant.cross_wrap_rejected' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2225/2233] Replayed AIEFGateCore.CausalEMATracking
+info: AIEFGateCore/CausalEMATracking.lean:69:0: 'AIEFGate.CausalEMATracking.tracking_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:70:0: 'AIEFGate.CausalEMATracking.tracking_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:71:0: 'AIEFGate.CausalEMATracking.delayed_tracking_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CausalEMATracking.lean:72:0: 'AIEFGate.CausalEMATracking.drift_factor_one_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2226/2233] Replayed AIEFGateCore.EMAFiniteSum
+info: AIEFGateCore/EMAFiniteSum.lean:52:0: 'AIEFGate.EMAFiniteSum.budget_eq_finite_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:53:0: 'AIEFGate.EMAFiniteSum.delayed_tracking_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:54:0: 'AIEFGate.EMAFiniteSum.oldest_drift_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/EMAFiniteSum.lean:55:0: 'AIEFGate.EMAFiniteSum.reversed_power_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2227/2233] Replayed AIEFGateCore.CoherenceSpeedLimit
+info: AIEFGateCore/CoherenceSpeedLimit.lean:85:0: 'AIEFGate.CoherenceSpeedLimit.asymmetric_report_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:86:0: 'AIEFGate.CoherenceSpeedLimit.directed_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:87:0: 'AIEFGate.CoherenceSpeedLimit.reported_motion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:88:0: 'AIEFGate.CoherenceSpeedLimit.trace_motion_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/CoherenceSpeedLimit.lean:89:0: 'AIEFGate.CoherenceSpeedLimit.sharp_direct_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2228/2233] Replayed AIEFGateCore.TransientBridge
+info: AIEFGateCore/TransientBridge.lean:130:0: 'AIEFGate.TransientBridge.all_steps_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:131:0: 'AIEFGate.TransientBridge.after_first_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:132:0: 'AIEFGate.TransientBridge.reference_mode_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:133:0: 'AIEFGate.TransientBridge.first_step_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:134:0: 'AIEFGate.TransientBridge.characteristic_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:135:0: 'AIEFGate.TransientBridge.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:136:0: 'AIEFGate.TransientBridge.spatial_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:137:0: 'AIEFGate.TransientBridge.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientBridge.lean:138:0: 'AIEFGate.TransientBridge.two_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2229/2233] Replayed AIEFGateCore.DelayRoots
+info: AIEFGateCore/DelayRoots.lean:232:0: 'AIEFGate.DelayRoots.symRoot_eq_one_or_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:233:0: 'AIEFGate.DelayRoots.symRoot_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:234:0: 'AIEFGate.DelayRoots.transRoot_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:235:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/DelayRoots.lean:236:0: 'AIEFGate.DelayRoots.projectedSlope_lt_quarter_of_C' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2230/2233] Replayed AIEFGateCore.TransientParameter
+info: AIEFGateCore/TransientParameter.lean:107:0: 'AIEFGate.TransientParameter.reference_mode_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:108:0: 'AIEFGate.TransientParameter.one_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:109:0: 'AIEFGate.TransientParameter.stable_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:110:0: 'AIEFGate.TransientParameter.eigenmode_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:111:0: 'AIEFGate.TransientParameter.zero_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/TransientParameter.lean:112:0: 'AIEFGate.TransientParameter.quarter_probe' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2231/2233] Replayed AIEFGateCore.WindowMax
+info: AIEFGateCore/WindowMax.lean:97:0: 'AIEFGate.WindowMax.reference_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:98:0: 'AIEFGate.WindowMax.coefficient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:99:0: 'AIEFGate.WindowMax.window_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:100:0: 'AIEFGate.WindowMax.window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/WindowMax.lean:101:0: 'AIEFGate.WindowMax.exact_growth_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2232/2233] Replayed AIEFGateCore.HeteroStepRef
+info: AIEFGateCore/HeteroStepRef.lean:160:0: 'AIEFGate.HeteroStepRef.agrees_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:161:0: 'AIEFGate.HeteroStepRef.weighted_head_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:162:0: 'AIEFGate.HeteroStepRef.weighted_step_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:163:0: 'AIEFGate.HeteroStepRef.window_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:164:0: 'AIEFGate.HeteroStepRef.window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:165:0: 'AIEFGate.HeteroStepRef.guard_row_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroStepRef.lean:166:0: 'AIEFGate.HeteroStepRef.growth_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [2233/2233] Replayed AIEFGateCore.HeteroGuard
+info: AIEFGateCore/HeteroGuard.lean:27:0: 'AIEFGate.HeteroStepRef.guarded_window_all_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: AIEFGateCore/HeteroGuard.lean:28:0: 'AIEFGate.HeteroStepRef.engine_constants_safe' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2233 jobs).
+=== Simultaneous import check ===
+=== Tracked main files unchanged ===
+BUNDLE BUILD AND IMPORT CHECK EXIT 0
+BUNDLE SCRIPT EXIT STATUS 0
