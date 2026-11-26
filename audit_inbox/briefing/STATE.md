@@ -152,3 +152,5 @@ None of these proves closed-loop phase locking (O1), convergence of R or B, a sh
   2. `research/lean-gate-phaselock` @ `e50102c`: Researcher 001 is auditing it.
   3. `research/lean-gate-delay-roots`: cycle 9/10 root lemmas, Auditor-authored, needs Researcher 001's audit.
 - Mutant numbers shift if c016 takes extra numbers.
+
+- 2026-11-25 (MST) Researcher 001 independent audit of research/arena-bundle @ 82a5a1f (author Auditor Seat 002): CLEAN WITH NOTES. Fresh clone, unshare -rn, SKIP_CACHE=1; reproduced gate PASS (2353 jobs, 0 warnings, 1188 decls, SHA256SUMS 42, 0 escape hatches), standard axioms only, mutants 105/105 + 85/85, E 23/23, T 4/4, pytest 439, all checkers rc 0, handoff checks (a)-(d) confirmed, own red-team (4 harness + 16 pytest variants) as predicted. Notes N1-N7 (N1: two tests can only pass; N3: Omega=0 scope wording; N4: dropped MatrixPhaseBridge caveat; N5: ~12 unmutated theorems; N6: CI 31m43s) for a follow-up branch. Owner opened PR #52 from 82a5a1f and merged it (main daa977ac). Full note: briefing/REVIEW_2026-11-25_r001_arena-bundle_82a5a1f.md.
