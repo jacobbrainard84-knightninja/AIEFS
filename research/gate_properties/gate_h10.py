@@ -181,6 +181,18 @@ PREDECLARED = {
     "E500_outer_transposed": "NOT KILLED",    # equivalence control: must not be killed
 }
 
+# Recorded AFTER the first run (commit 2). PREDECLARED above is left exactly as committed before the run; a deviation is
+# a finding about the prediction, listed here with its observed outcome and reason, never by editing PREDECLARED.
+OBSERVED_DEVIATIONS = {
+    "M504_scale_epsilon_dropped": ("KILLED",
+        "prediction wrong: with eps = 0 a binding row lands on the cap in float (often 1 ulp above), so the re-applied "
+        "gate re-triggers (P5 float idempotence) and values differ from the eps>0 oracle beyond rtol 1e-12 (P2)"),
+}
+
+
+def expected(name):
+    return OBSERVED_DEVIATIONS.get(name, (PREDECLARED[name], ""))[0]
+
 
 def mutate(block, edits):
     out = block
@@ -204,12 +216,13 @@ def run(verbose=True):
         else:
             results[name] = ("KILLED" if killed else "SURVIVES", sorted({p for p, _ in f})[:3])
     obs = spillover_observation(cases)
-    ok = results["UNMUTATED"] == "PASS" and all(results[k][0] == v for k, v in PREDECLARED.items())
+    ok = results["UNMUTATED"] == "PASS" and all(results[k][0] == expected(k) for k in PREDECLARED)
     if verbose:
         print("unmutated:", results["UNMUTATED"])
         for k, v in PREDECLARED.items():
+            dev = " [DEVIATION from predeclared, recorded in OBSERVED_DEVIATIONS]" if k in OBSERVED_DEVIATIONS else ""
             print(f"{k}: {results[k][0]} (predeclared {v}) failing={results[k][1]} ->"
-                  f" {'AS PREDECLARED' if results[k][0] == v else 'MISMATCH'}")
+                  f" {'AS EXPECTED' if results[k][0] == expected(k) else 'MISMATCH'}{dev}")
         print("spillover observation:", obs)
         print("RESULT:", "PASS" if ok else "FAIL")
     return ok, results, obs

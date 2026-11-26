@@ -23,6 +23,22 @@ def test_predeclared_table_complete():
 def test_run_matches_predeclared():
     ok, results, obs = g.run(verbose=False)
     assert results["UNMUTATED"] == "PASS"
-    for k, v in g.PREDECLARED.items():
-        assert results[k][0] == v, (k, results[k])
+    for k in g.PREDECLARED:
+        assert results[k][0] == g.expected(k), (k, results[k])
+    # the predeclared table itself is unchanged from commit 1; exactly one recorded deviation
+    assert g.PREDECLARED["M504_scale_epsilon_dropped"] == "SURVIVES" and set(g.OBSERVED_DEVIATIONS) == {"M504_scale_epsilon_dropped"}
     assert ok
+
+
+def test_witness_is_what_kills_always_project():
+    """Negative control for the witness: without it, M500 must SURVIVE the random cases (it differs only in the band)."""
+    block = g.engine_block()
+    m500 = g.make_gate(g.mutate(block, g.MUTANTS["M500_always_project"]))
+    cases = g.random_cases()
+    real_witness = g.eps_band_witness
+    try:
+        g.eps_band_witness = lambda: cases[1]          # replace the witness by an ordinary case
+        assert g.properties(m500, cases) == []
+    finally:
+        g.eps_band_witness = real_witness
+    assert g.properties(m500, cases) != []

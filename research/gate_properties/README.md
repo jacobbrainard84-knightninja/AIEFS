@@ -41,3 +41,16 @@ M500 H10, M600 H12, M700 H17).
 A mismatch with this table fails the run. Survivors are reported, never deleted.
 
 Run: `python research/gate_properties/gate_h10.py` (also run by `research/lean_gate/tests/test_gate_properties_h10.py`).
+
+## Results (commit 2, run 2026-11-26 MST on `main` `daa977a` + this branch)
+- Unmutated engine block: all properties PASS on 150 seeded cases + the ε-band witness.
+- M500–M503 KILLED, as predeclared. M505, M506 SURVIVE and E500 NOT KILLED, as predeclared.
+- **Deviation: M504 (ε dropped) was predeclared SURVIVES but is KILLED.** My prediction was wrong: with ε = 0 a
+  binding row lands on the cap in float, often 1 ulp above, so re-applying the gate re-triggers (P5) and the values
+  leave the ε > 0 oracle by more than rtol 1e-12 (P2). `PREDECLARED` is unchanged from commit 1; the deviation is
+  recorded in `OBSERVED_DEVIATIONS` with its reason.
+- The witness is what kills M500: with the witness swapped for an ordinary case, M500 survives (test
+  `test_witness_is_what_kills_always_project`).
+- **Spillover observation (synthetic matrices, not real runs):** projection fired in 89/150 cases; 457 of the 574
+  non-binding rows in those cases lost weight; a binding row ended up to 0.352 below the cap. How often this happens in
+  production runs is still **UNEXPLAINED** (unmeasured).
