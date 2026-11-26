@@ -70,7 +70,7 @@ class StubbedMainTests(unittest.TestCase):
                 return 1, ["Mutant.lean:1:1: error: unknown identifier 'h'"], ""
             return 1, ["Mutant.lean:1:1: error: type mismatch"], ""
 
-        def refute(msrc, src, thm, closure, term):
+        def refute(msrc, src, thm, closure, term, preamble=""):
             good = msrc not in ctrl
             return good, "stub", good, []
 

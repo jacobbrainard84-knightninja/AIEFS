@@ -18,7 +18,8 @@ Since the phase-lock rework (test_lean_gate_freqlock.py, numbered after P6): + M
 M92, M93 definition mutants and the equivalence control E16 on FrequencyLock.lean: 58 + 36 = 94, 16 equivalence.
 The #41 note-1 follow-up adds M107-M109 (FrequencyLock definition mutants) and E17: 70 + 39 = 109, 17 equivalence.
 The Arena cycle 13/21 intake (SPEC §16) adds M110-M118 statement, M119-M129 definition mutants and E18-E20:
-79 + 50 = 129, 20 equivalence; M130 (#44 N1) makes 79 + 51 = 130.
+79 + 50 = 129, 20 equivalence; M130 (#44 N1) makes 79 + 51 = 130. The Arena bundle intake (SPEC §17) adds M131-M156
+statement, M157-M190 definition mutants and E21-E23: 105 + 85 = 190, 23 equivalence.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q
 """
@@ -38,10 +39,10 @@ HB = (GATE / "HistoryBuffer.lean").read_text()
 PI = (GATE / "PhaseIncrement.lean").read_text()
 PC = (GATE / "PhaseCoherence.lean").read_text()
 
-N_STATEMENT_MUTANTS = 79          # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M59-M69 (P6) + M87-M91, M94 (lock) + M95-M106 (DelayRoots) + M110-M118 (§16)
-N_DEF_MUTANTS = 51                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93, M107-M109 (lock) + M119-M130 (§16, M130 #44 N1)
+N_STATEMENT_MUTANTS = 105         # M1-M36 (P1-P4b) + M57, M58 (#27) + M71-M73 (C014) + M59-M69 (P6) + M87-M91, M94 (lock) + M95-M106 (DelayRoots) + M110-M118 (§16) + M131-M156 (§17)
+N_DEF_MUTANTS = 85                # M37-M56 (P5) + M74-M78 (C014) + M70, M79-M86 (P6) + M92, M93, M107-M109 (lock) + M119-M130 (§16, M130 #44 N1) + M157-M190 (§17)
 N_P5_DEF_MUTANTS = 20             # M37-M56
-TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 130 (129 after #44; 109 after #43; 106 after DelayRoots; 94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
+TOTAL_MUTANTS = N_STATEMENT_MUTANTS + N_DEF_MUTANTS   # 190 (130 before §17; 129 after #44; 109 after #43; 106 after DelayRoots; 94 after phaselock; 86 after P6; 66 after C014; 58 before; 52 before N2 M53-M56 and #27 M57-M58)
 P5_FILES = ("PhaseIncrement.lean", "PhaseCoherence.lean")
 P5_DEF_MUTANTS = [m for m in mc.DEF_MUTANTS if m[1] in P5_FILES]
 
@@ -213,7 +214,7 @@ def test_p5_mutants_shape_and_exact_count():
     assert len(mc.MUTANTS) == N_STATEMENT_MUTANTS                       # M1-M36, M57, M58, M59-M69
     assert len(mc.DEF_MUTANTS) == N_DEF_MUTANTS
     assert len(P5_DEF_MUTANTS) == N_P5_DEF_MUTANTS
-    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (130)
+    assert len(mc.MUTANTS) + len(mc.DEF_MUTANTS) == TOTAL_MUTANTS       # the exact pin (190)
     names = [m[0] for m in P5_DEF_MUTANTS]                              # the P5 entries, selected by file
     assert names[0].startswith("M37") and names[-1].startswith("M56")
     assert [int(n.split("_")[0][1:]) for n in names] == list(range(37, 57))
@@ -248,7 +249,7 @@ def test_def_mutants_apply_exactly_once_and_pins_are_value_probes():
 
 
 def test_controls_exist_with_exact_counts():
-    assert len(mc.EQUIV_CONTROLS) == 20 and len(mc.TYPO_CONTROLS) == 4 and len(mc.STATEMENT_CONTROLS) == 2
+    assert len(mc.EQUIV_CONTROLS) == 23 and len(mc.TYPO_CONTROLS) == 4 and len(mc.STATEMENT_CONTROLS) == 2
     assert len([c for c in mc.EQUIV_CONTROLS if c[1] in P5_FILES]) == 10      # E1-E10 (P5); E11 is C014, E12-E15 P6, E16-E17 lock, E18-E20 §16
     assert len([c for c in mc.TYPO_CONTROLS if c[1] in P5_FILES]) == 3        # T1-T3 (P5); T4 is P6
     eq = {n.split("_")[0]: (n, e) for n, f, e in mc.EQUIV_CONTROLS}
@@ -269,7 +270,16 @@ def test_def_mutants_never_edit_unlisted_files_and_no_expected_survivor_since_n2
     assert {m[1] for m in P5_DEF_MUTANTS} == {"PhaseIncrement.lean", "PhaseCoherence.lean"}
     assert {m[1] for m in mc.DEF_MUTANTS} - set(P5_FILES) == {"TrajectoryInvariants.lean", "CoherenceMotion.lean",
                                                                       "FrequencyLock.lean", "CommonRootSimple.lean",
-                                                                      "EngineStepRef.lean"}
+                                                                      "EngineStepRef.lean",
+                                                                      "ReachableQueue.lean",
+                                                                      "QueueComposition.lean",
+                                                                      "MatrixPhaseBridge.lean",
+                                                                      "EmaWrapInvariant.lean",
+                                                                      "CausalEMATracking.lean",
+                                                                      "TransientBridge.lean",
+                                                                      "TransientParameter.lean",
+                                                                      "WindowMax.lean",
+                                                                      "HeteroStepRef.lean"}
     assert mc.KNOWN_SURVIVORS == []          # the former S1 (offset dropped in 011 only) is the counted M55 since N2
     # the offset is killed one level up by VALUE probes (audit fix): M43 pins probe_input_offset_value
     m43 = [m for m in mc.DEF_MUTANTS if m[0].startswith("M43")][0]

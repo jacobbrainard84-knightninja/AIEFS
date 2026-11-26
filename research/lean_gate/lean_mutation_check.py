@@ -116,6 +116,14 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   (they break proofs but no probe, so they survive only through the probe rule: disclosed brittleness).
   M130 (#44 N1): phaseHead uses the raw b instead of clippedWeight b -> probe_phaseHead_negative_weight (b = -1).
 
+  Arena bundle intake (MERGE_MANIFEST 2026-11-25, 12 modules, SPEC §17; numbered after M130): statement mutants
+  M131-M156 (a load-bearing hypothesis weakened to True, a budget term or delay power dropped, a bound factor
+  tightened), each refuted by a `false_*` theorem appended to its file; definition mutants M157-M190 (queue shift,
+  view reversal, oldest/newest slot, wrap-free heads, refInput, arcBound, budget, two-slot steps, stepSize, energy,
+  mode, WindowMax.next, HeteroStepRef.linearStep/row/phaseHeadW) killed by `probe_*` value probes; E21-E23 must not
+  be killed. The bundle reuses short names (State, Consistent, step, iterate, window_step, ...) in distinct
+  namespaces, so each refutation opens only the mutated file's own namespace (FILE_OPENS), never two at once.
+
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
@@ -528,6 +536,59 @@ MUTANTS = [
      [("(v (k - 1) i) 0", "(v k i) 0", 1)], "", "EngineStepRef.false_history_no_shift H", None),
     ("M118_stepref_neighbor_reads_current_slot", "EngineStepRef.lean", "neighbor_derivative",
      [("(v d j - v 0 i)) 0", "(v 0 j - v 0 i)) 0", 1)], "", "EngineStepRef.false_neighbor_current_slot H", None),
+    # ---- Arena bundle intake (MERGE_MANIFEST 2026-11-25, SPEC §17): statement mutants M131-M156 ----
+    ("M131_queue_reachable_consistency_dropped", "ReachableQueue.lean", "reachable_consistent",
+     [("(h : Consistent n d s)", "(h : True)", 1)], "", "ReachableQueue.false_reachable_no_consistent H", None),
+    ("M132_queue_view_shift_lag_positive_dropped", "ReachableQueue.lean", "view_shift",
+     [("(hk : k.val > 0)", "(hk : True)", 1)], "", "ReachableQueue.false_view_shift_no_pos H", None),
+    ("M133_queuecomp_transfer_consistency_dropped", "QueueComposition.lean", "consistent_transfer",
+     [("(h : ReachableQueue.Consistent n d s)", "(h : True)", 1)], "", "QueueComposition.false_transfer_no_consistent H", None),
+    ("M134_matrixbridge_circle_consistency_dropped", "MatrixPhaseBridge.lean", "matrix_circle_bridge",
+     [("(hc : Consistent n s)", "(hc : True)", 1)], "", "MatrixPhaseBridge.false_bridge_no_consistent H", None),
+    ("M135_matrixbridge_scalar_uniform_dropped", "MatrixPhaseBridge.lean", "matrix_to_scalar",
+     [("(hW : Uniform n W b)", "(hW : True)", 1)], "", "MatrixPhaseBridge.false_scalar_no_uniform H", None),
+    ("M136_emanear_budget_startup_dropped", "EmaNearUnit.lean", "near_unit",
+     [("(budget : alpha ^ N + delta ≤ epsilon)", "(budget : delta ≤ epsilon)", 1)], "", "EmaNearUnit.false_near_unit_no_startup H", None),
+    ("M137_emanear_delta_nonneg_dropped", "EmaNearUnit.lean", "near_unit",
+     [("(hd : 0 ≤ delta)", "(hd : True)", 1)], "", "EmaNearUnit.false_near_unit_no_delta_nonneg H", None),
+    ("M138_emawrap_budget_startup_dropped", "EmaWrapInvariant.lean", "near_unit_circular_spread",
+     [("(budget : alpha ^ N + (1 - Real.cos beta) ≤ epsilon)", "(budget : (1 - Real.cos beta) ≤ epsilon)", 1)], "", "EmaWrapInvariant.false_circular_no_startup H", None),
+    ("M139_causal_step_alpha_nonneg_dropped", "CausalEMATracking.lean", "tracking_step_bound",
+     [("(ha : 0 ≤ alpha)", "(ha : True)", 1)], "", "CausalEMATracking.false_step_bound_no_nonneg H", None),
+    ("M140_causal_delayed_alpha_nonneg_dropped", "CausalEMATracking.lean", "delayed_tracking_bound",
+     [("(ha : 0 ≤ alpha)", "(ha : True)", 1)], "", "CausalEMATracking.false_delayed_bound_no_nonneg H", None),
+    ("M141_emasum_powers_reversed", "EMAFiniteSum.lean", "budget_eq_finite_sum",
+     [("alpha ^ (n - 1 - k) * drift k", "alpha ^ k * drift k", 1)], "", "EMAFiniteSum.false_finite_sum_reversed H", None),
+    ("M142_emasum_start_decay_dropped", "EMAFiniteSum.lean", "budget_eq_finite_sum",
+     [("alpha ^ n * E +", "E +", 1)], "", "EMAFiniteSum.false_finite_sum_no_start_decay H", None),
+    ("M143_transbridge_one_step_factor_one", "TransientBridge.lean", "one_step_bound",
+     [("(81 / 64 : ℝ)", "(1 : ℝ)", 1)], "", "TransientBridge.false_one_step_factor_one H", None),
+    ("M144_transbridge_two_step_quarter", "TransientBridge.lean", "two_step_bound",
+     [("(1 / 2 : ℝ)", "(1 / 4 : ℝ)", 1)], "", "TransientBridge.false_two_step_quarter H", None),
+    ("M145_transbridge_all_steps_factor_one", "TransientBridge.lean", "all_steps_bound",
+     [("(81 / 64 : ℝ)", "(1 : ℝ)", 1)], "", "TransientBridge.false_all_steps_factor_one H", None),
+    ("M146_transparam_roots_upper_dropped", "TransientParameter.lean", "stable_roots",
+     [("(hc1 : c < 1)", "(hc1 : True)", 1)], "", "TransientParameter.false_stable_no_upper H", None),
+    ("M147_transparam_roots_pos_dropped", "TransientParameter.lean", "stable_roots",
+     [("(hc0 : 0 < c)", "(hc0 : True)", 1)], "", "TransientParameter.false_stable_no_pos H", None),
+    ("M148_transparam_one_step_upper_dropped", "TransientParameter.lean", "one_step_bound",
+     [("(hc1 : c ≤ 1)", "(hc1 : True)", 1)], "", "TransientParameter.false_one_step_no_upper H", None),
+    ("M149_windowmax_step_threshold_dropped", "WindowMax.lean", "window_step",
+     [("(ht : (n : ℝ) * c ≤ 2)", "(ht : True)", 1)], "", "WindowMax.false_window_step_no_threshold H", None),
+    ("M150_windowmax_all_threshold_dropped", "WindowMax.lean", "window_all_steps",
+     [("(ht : (n : ℝ) * c ≤ 2)", "(ht : True)", 1)], "", "WindowMax.false_window_all_no_threshold H", None),
+    ("M151_windowmax_coefficient_size_dropped", "WindowMax.lean", "coefficient_bound",
+     [("(hn : 2 ≤ n)", "(hn : True)", 1)], "", "WindowMax.false_coefficient_no_size H", None),
+    ("M152_hetero_step_row_dropped", "HeteroStepRef.lean", "window_step",
+     [("(hrow : ∀ i, dt * row n B i ≤ 1)", "(hrow : True)", 1)], "", "HeteroStepRef.false_window_step_no_row H", None),
+    ("M153_hetero_step_nonneg_dropped", "HeteroStepRef.lean", "window_step",
+     [("(hB : ∀ i j, 0 ≤ B i j)", "(hB : True)", 1)], "", "HeteroStepRef.false_window_step_no_nonneg H", None),
+    ("M154_hetero_step_dt_nonneg_dropped", "HeteroStepRef.lean", "window_step",
+     [("(hdt : 0 ≤ dt)", "(hdt : True)", 1)], "", "HeteroStepRef.false_window_step_no_dt H", None),
+    ("M155_heteroguard_cap_dropped", "HeteroGuard.lean", "guarded_window_all_steps",
+     [("(hcap : dt * ((a - delta + tol) / q) ≤ 1)", "(hcap : True)", 1)], "", "HeteroStepRef.false_guarded_no_cap H", None),
+    ("M156_heteroguard_q_pos_dropped", "HeteroGuard.lean", "guarded_window_all_steps",
+     [("(hq : 0 < q)", "(hq : True)", 1)], "", "HeteroStepRef.false_guarded_no_q H", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -570,10 +631,22 @@ VP_FL = ["probe_unitRate_nonzero", "probe_altU_not_constant",
 # proved by unfolding them in the probe itself
 VP_CR = ["probe_commonPoly_eval_d1", "probe_commonPoly_eval_d2"]
 VP_SR = ["probe_clippedWeight_values", "probe_phaseHead_value", "probe_phaseHead_negative_weight", "probe_phaseStep_values", "probe_orbitPath_value"]
+# Arena bundle intake (SPEC §17): closed-number evaluations appended to each file
+VP_ARENA = {"ReachableQueue.lean": ["probe_shift_values", "probe_view_values", "probe_head_value"],
+            "QueueComposition.lean": ["probe_abstractState_values", "probe_initState_values"],
+            "MatrixPhaseBridge.lean": ["probe_matrixHead_value", "probe_engineStep_shift", "probe_engineStep_head",
+                                       "probe_refInput_values"],
+            "EmaWrapInvariant.lean": ["probe_arcBound_values"],
+            "CausalEMATracking.lean": ["probe_budget_values"],
+            "TransientBridge.lean": ["probe_step_values", "probe_energy_value"],
+            "TransientParameter.lean": ["probe_step_values", "probe_energy_value", "probe_mode_values"],
+            "WindowMax.lean": ["probe_next_values"],
+            "HeteroStepRef.lean": ["probe_linearStep_values", "probe_phaseHeadW_value"]}
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
-                "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR}
+                "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR,
+                **VP_ARENA}
 CP_OLD = "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n"
 CW_OLD = "def clippedWeight (b : ℝ) : ℝ := max 0 b\n"
 HEAD_OLD = ("  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
@@ -742,6 +815,75 @@ DEF_MUTANTS = [
     ("M130_stepref_head_raw_weight", "EngineStepRef.lean",
      [(HEAD_OLD, "  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
                  "    b * Real.sin (x d j - x 0 i))\n", 1)], ["probe_phaseHead_negative_weight"]),
+    # ---- Arena bundle intake (SPEC §17): definition mutants M157-M190 ----
+    ("M157_queue_shift_not_shifted", "ReachableQueue.lean",
+     [("    s.history ⟨j.val + 1, by have := j.isLt; omega⟩ i⟩\n", "    s.history j i⟩\n", 1)], ["probe_shift_values"]),
+    ("M158_queue_shift_not_appended", "ReachableQueue.lean",
+     [("  ⟨out, fun j i => if h : j.val = d then out i else\n", "  ⟨out, fun j i => if h : j.val = d then s.history j i else\n", 1)], ["probe_shift_values"]),
+    ("M159_queue_view_not_reversed", "ReachableQueue.lean",
+     [("  ⟨d - k.val, by have := k.isLt; omega⟩\n", "  ⟨k.val, by have := k.isLt; omega⟩\n", 1)], ["probe_view_values"]),
+    ("M160_queue_head_reads_newest", "ReachableQueue.lean",
+     [("    W i j * Real.sin (s.history 0 j - s.theta i))\n", "    W i j * Real.sin (s.history (newestIndex d) j - s.theta i))\n", 1)], ["probe_head_value"]),
+    ("M161_queuecomp_view_not_reversed", "QueueComposition.lean",
+     [("then ReachableQueue.view n d s ⟨k, by omega⟩ i else 0⟩\n", "then s.history ⟨k, by omega⟩ i else 0⟩\n", 1)], ["probe_abstractState_values"]),
+    ("M162_queuecomp_init_zero", "QueueComposition.lean",
+     [("  ⟨theta, fun _ i => theta i⟩\n", "  ⟨theta, fun _ _ => 0⟩\n", 1)], ["probe_initState_values"]),
+    ("M163_matrixbridge_head_current_slot", "MatrixPhaseBridge.lean",
+     [("W i j * Real.sin (x d j - x 0 i))\n", "W i j * Real.sin (x 0 j - x 0 i))\n", 1)], ["probe_matrixHead_value"]),
+    ("M164_matrixbridge_head_sine_reversed", "MatrixPhaseBridge.lean",
+     [("W i j * Real.sin (x d j - x 0 i))\n", "W i j * Real.sin (x 0 i - x d j))\n", 1)], ["probe_matrixHead_value"]),
+    ("M165_matrixbridge_step_not_shifted", "MatrixPhaseBridge.lean",
+     [("if k = 0 then out i else s.history (k - 1) i⟩\n", "if k = 0 then out i else s.history k i⟩\n", 1)], ["probe_engineStep_shift"]),
+    ("M166_matrixbridge_step_reads_slot_zero", "MatrixPhaseBridge.lean",
+     [("    W i j * Real.sin (s.history d j - s.theta i))\n", "    W i j * Real.sin (s.history 0 j - s.theta i))\n", 1)], ["probe_engineStep_head"]),
+    ("M167_matrixbridge_refinput_history_at_zero", "MatrixPhaseBridge.lean",
+     [("  if k = 0 then s.theta i else s.history k i\n", "  if k = 0 then s.history 0 i else s.history k i\n", 1)], ["probe_refInput_values"]),
+    ("M168_emawrap_arcbound_reversed", "EmaWrapInvariant.lean",
+     [("Prop := Real.cos beta ≤ Real.cos phi\n", "Prop := Real.cos phi ≤ Real.cos beta\n", 1)], ["probe_arcBound_values"]),
+    ("M169_causal_budget_drift_scaled", "CausalEMATracking.lean",
+     [("  | n + 1 => alpha * budget alpha E drift n + drift n\n", "  | n + 1 => alpha * budget alpha E drift n + (1 - alpha) * drift n\n", 1)], ["probe_budget_values"]),
+    ("M170_causal_budget_no_decay", "CausalEMATracking.lean",
+     [("  | n + 1 => alpha * budget alpha E drift n + drift n\n", "  | n + 1 => budget alpha E drift n + drift n\n", 1)], ["probe_budget_values"]),
+    ("M171_causal_budget_zero_start", "CausalEMATracking.lean",
+     [("  | 0 => E\n", "  | 0 => 0\n", 1)], ["probe_budget_values"]),
+    ("M172_transbridge_stepsize_third", "TransientBridge.lean",
+     [("def stepSize : ℝ := 1 / 4\n", "def stepSize : ℝ := 1 / 3\n", 1)], ["probe_step_values"]),
+    ("M173_transbridge_step_coefficient_one_c", "TransientBridge.lean",
+     [("  ((1 - 2 * stepSize) * p.1 - stepSize * p.2, p.1)\n", "  ((1 - stepSize) * p.1 - stepSize * p.2, p.1)\n", 1)], ["probe_step_values"]),
+    ("M174_transbridge_step_delayed_sign", "TransientBridge.lean",
+     [("  ((1 - 2 * stepSize) * p.1 - stepSize * p.2, p.1)\n", "  ((1 - 2 * stepSize) * p.1 + stepSize * p.2, p.1)\n", 1)], ["probe_step_values"]),
+    ("M175_transbridge_step_not_shifted", "TransientBridge.lean",
+     [("  ((1 - 2 * stepSize) * p.1 - stepSize * p.2, p.1)\n", "  ((1 - 2 * stepSize) * p.1 - stepSize * p.2, p.2)\n", 1)], ["probe_step_values"]),
+    ("M176_transbridge_energy_one_slot", "TransientBridge.lean",
+     [("def energy (p : ℝ × ℝ) : ℝ := p.1 ^ 2 + p.2 ^ 2\n", "def energy (p : ℝ × ℝ) : ℝ := p.1 ^ 2\n", 1)], ["probe_energy_value"]),
+    ("M177_transparam_step_coefficient_one_c", "TransientParameter.lean",
+     [(":= ((1 - 2 * c) * p.1 - c * p.2, p.1)\n", ":= ((1 - c) * p.1 - c * p.2, p.1)\n", 1)], ["probe_step_values"]),
+    ("M178_transparam_step_delayed_sign", "TransientParameter.lean",
+     [(":= ((1 - 2 * c) * p.1 - c * p.2, p.1)\n", ":= ((1 - 2 * c) * p.1 + c * p.2, p.1)\n", 1)], ["probe_step_values"]),
+    ("M179_transparam_step_not_shifted", "TransientParameter.lean",
+     [(":= ((1 - 2 * c) * p.1 - c * p.2, p.1)\n", ":= ((1 - 2 * c) * p.1 - c * p.2, p.2)\n", 1)], ["probe_step_values"]),
+    ("M180_transparam_energy_one_slot", "TransientParameter.lean",
+     [("def energy (p : ℝ × ℝ) : ℝ := p.1 ^ 2 + p.2 ^ 2\n", "def energy (p : ℝ × ℝ) : ℝ := p.1 ^ 2\n", 1)], ["probe_energy_value"]),
+    ("M181_transparam_mode_not_mean_zero", "TransientParameter.lean",
+     [("if i = 1 then -1 else 0\n", "if i = 1 then 1 else 0\n", 1)], ["probe_mode_values"]),
+    ("M182_windowmax_head_coefficient_n", "WindowMax.lean",
+     [("  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v (k - 1)\n", "  if k = 0 then (1 - (n : ℝ) * c) * v 0 - c * v d else v (k - 1)\n", 1)], ["probe_next_values"]),
+    ("M183_windowmax_delayed_sign", "WindowMax.lean",
+     [("  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v (k - 1)\n", "  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 + c * v d else v (k - 1)\n", 1)], ["probe_next_values"]),
+    ("M184_windowmax_reads_slot_zero", "WindowMax.lean",
+     [("  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v (k - 1)\n", "  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v 0 else v (k - 1)\n", 1)], ["probe_next_values"]),
+    ("M185_windowmax_not_shifted", "WindowMax.lean",
+     [("  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v (k - 1)\n", "  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v k\n", 1)], ["probe_next_values"]),
+    ("M186_hetero_linear_coefficient_plus", "HeteroStepRef.lean",
+     [("  if k = 0 then (1 - dt * row n B i) * v 0 i + dt * ∑ j, B i j * v d j\n", "  if k = 0 then (1 + dt * row n B i) * v 0 i + dt * ∑ j, B i j * v d j\n", 1)], ["probe_linearStep_values"]),
+    ("M187_hetero_linear_reads_slot_zero", "HeteroStepRef.lean",
+     [("  if k = 0 then (1 - dt * row n B i) * v 0 i + dt * ∑ j, B i j * v d j\n", "  if k = 0 then (1 - dt * row n B i) * v 0 i + dt * ∑ j, B i j * v 0 j\n", 1)], ["probe_linearStep_values"]),
+    ("M188_hetero_linear_not_shifted", "HeteroStepRef.lean",
+     [("  else v (k - 1) i\n", "  else v k i\n", 1)], ["probe_linearStep_values"]),
+    ("M189_hetero_row_without_diagonal", "HeteroStepRef.lean",
+     [("  ∑ j : Fin n, B i j\n", "  ∑ j ∈ Finset.univ.erase i, B i j\n", 1)], ["probe_linearStep_values"]),
+    ("M190_hetero_head_current_slot", "HeteroStepRef.lean",
+     [("    B i j * Real.sin (x d j - x 0 i))\n", "    B i j * Real.sin (x 0 j - x 0 i))\n", 1)], ["probe_phaseHeadW_value"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -786,6 +928,15 @@ EQUIV_CONTROLS = [
                  "    clippedWeight b * -Real.sin (x 0 i - x d j))\n", 1)]),
     ("E20_stepref_clip_max_commuted", "EngineStepRef.lean",
      [(CW_OLD, "def clippedWeight (b : ℝ) : ℝ := max b 0\n", 1)]),
+    # Arena bundle intake (SPEC §17): equivalent rewrites that must not be killed
+    ("E21_windowmax_delayed_term_commuted", "WindowMax.lean",
+     [("  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v (k - 1)\n",
+       "  if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - v d * c else v (k - 1)\n", 1)]),
+    ("E22_transparam_coefficient_split", "TransientParameter.lean",
+     [(":= ((1 - 2 * c) * p.1 - c * p.2, p.1)\n", ":= ((1 - c - c) * p.1 - c * p.2, p.1)\n", 1)]),
+    ("E23_causal_budget_sum_commuted", "CausalEMATracking.lean",
+     [("  | n + 1 => alpha * budget alpha E drift n + drift n\n",
+       "  | n + 1 => drift n + alpha * budget alpha E drift n\n", 1)]),
 ]
 
 # Typo / invalid-mutant controls: must be classified INVALID (a name-reference or parse error line) and not killed.
@@ -832,6 +983,21 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n"
          "open Polynomial (derivative)\nopen AIEFGate.CommonRootSimple (commonPoly)\n"
          "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n")
+# Per-file opens for the refutation files of the Arena bundle (SPEC §17). The bundle reuses short names
+# (State, Consistent, step, iterate, mode, energy, window_step, window_all_steps, ...) in distinct namespaces,
+# so a refutation opens only the namespace(s) of the mutated file, never two bundle namespaces at once.
+FILE_OPENS = {"ReachableQueue.lean": "open AIEFGate.ReachableQueue\n",
+              "QueueComposition.lean": "open AIEFGate.QueueComposition\n",
+              "MatrixPhaseBridge.lean": "open AIEFGate.MatrixPhaseBridge\n",
+              "EmaNearUnit.lean": "open AIEFGate.EmaNearUnit\n",
+              "EmaWrapInvariant.lean": "open AIEFGate.EmaWrapInvariant\n",
+              "CausalEMATracking.lean": "open AIEFGate.CausalEMATracking\n",
+              "EMAFiniteSum.lean": "open AIEFGate.CausalEMATracking AIEFGate.EMAFiniteSum\n",
+              "TransientBridge.lean": "open AIEFGate.TransientBridge\n",
+              "TransientParameter.lean": "open AIEFGate.TransientParameter\n",
+              "WindowMax.lean": "open AIEFGate.WindowMax\n",
+              "HeteroStepRef.lean": "open AIEFGate.HeteroStepRef\n",
+              "HeteroGuard.lean": "open AIEFGate.HeteroStepRef\n"}
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
@@ -987,11 +1153,11 @@ def def_mutant_killed(rc, errs, failing, pins):
     return def_mutant_status(rc, errs, failing, pins) == "KILLED"
 
 
-def refute(msrc, src, thm, closure, term):
+def refute(msrc, src, thm, closure, term, preamble=""):
     """(refuted, why, control_ok): step (b) on the mutated statement and step (c) on the unmutated one."""
-    rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term))
+    rrc, rerrs, rout = lean(refutation_file(statement_prop(msrc, thm, closure), term, preamble))
     refuted, why = refutation_valid(rrc, rerrs, rout)
-    crc, cerrs, _ = lean(refutation_file(statement_prop(src, thm, closure), term))
+    crc, cerrs, _ = lean(refutation_file(statement_prop(src, thm, closure), term, preamble))
     return refuted, why, crc != 0 and bool(cerrs), (rerrs or rout.splitlines())
 
 
@@ -1051,14 +1217,14 @@ def main():
         rc, errs, out = lean(msrc)
         kind = classify(errs, out)
         build_rej = build_rejected(rc, errs, kind)
-        refuted, why, control_ok, rmsg = refute(msrc, src, thm, closure, term)
+        refuted, why, control_ok, rmsg = refute(msrc, src, thm, closure, term, FILE_OPENS.get(f, ""))
         rejected = build_rej and refuted and control_ok
         line = (f"{name}: build {'REJECTED' if build_rej else 'NOT REJECTED (BAD)'} [{kind}]; "
                 f"refuted by proof: {'YES' if refuted else 'NO (BAD)'} [{why}]; "
                 f"same term on unmutated statement fails (term-specificity only): {'YES' if control_ok else 'NO (BAD)'}")
         emsg = []
         if eterm is not None:
-            erefuted, ewhy, econtrol, emsg = refute(msrc, src, thm, closure, eterm)
+            erefuted, ewhy, econtrol, emsg = refute(msrc, src, thm, closure, eterm, FILE_OPENS.get(f, ""))
             rejected = rejected and erefuted and econtrol
             line += (f"; engine-shaped (pE, ε>0) refutation: {'YES' if erefuted else 'NO (BAD)'} [{ewhy}], "
                      f"term-specific: {'YES' if econtrol else 'NO (BAD)'}")
@@ -1084,7 +1250,7 @@ def main():
         msrc = mutate(src, thm, edits)
         rc, errs, out = lean(msrc)
         build_rej = build_rejected(rc, errs, classify(errs, out))
-        refuted, why, control_ok, _ = refute(msrc, src, thm, closure, term)
+        refuted, why, control_ok, _ = refute(msrc, src, thm, closure, term, FILE_OPENS.get(f, ""))
         rejected = build_rej and refuted and control_ok
         good = not rejected and not refuted
         print(f"STATEMENT CONTROL {name}: build rejected: {build_rej}; refuted by proof: {refuted} -> "

@@ -23,3 +23,15 @@ import AIEFGateCore.FrequencyLock
 import AIEFGateCore.DelayRoots
 import AIEFGateCore.CommonRootSimple
 import AIEFGateCore.EngineStepRef
+import AIEFGateCore.ReachableQueue
+import AIEFGateCore.EmaNearUnit
+import AIEFGateCore.MatrixPhaseBridge
+import AIEFGateCore.QueueComposition
+import AIEFGateCore.EmaWrapInvariant
+import AIEFGateCore.CausalEMATracking
+import AIEFGateCore.EMAFiniteSum
+import AIEFGateCore.TransientBridge
+import AIEFGateCore.TransientParameter
+import AIEFGateCore.WindowMax
+import AIEFGateCore.HeteroStepRef
+import AIEFGateCore.HeteroGuard
