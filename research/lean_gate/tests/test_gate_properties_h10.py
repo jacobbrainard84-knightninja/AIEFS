@@ -30,15 +30,19 @@ def test_run_matches_predeclared():
     assert ok
 
 
-def test_witness_is_what_kills_always_project():
-    """Negative control for the witness: without it, M500 must SURVIVE the random cases (it differs only in the band)."""
+def test_witness_is_what_kills_always_project_on_values():
+    """Negative control for the witness. Without it, M500 still fails P5 (an always-projected row ends inside the
+    eps band, so projecting again shrinks it), but it no longer fails P2: only the witness separates the two on a
+    single application. Found on the first run of this test; recorded, not tuned."""
     block = g.engine_block()
     m500 = g.make_gate(g.mutate(block, g.MUTANTS["M500_always_project"]))
     cases = g.random_cases()
     real_witness = g.eps_band_witness
     try:
-        g.eps_band_witness = lambda: cases[1]          # replace the witness by an ordinary case
-        assert g.properties(m500, cases) == []
+        g.eps_band_witness = lambda: cases[1]
+        without = {p for p, _ in g.properties(m500, cases)}
     finally:
         g.eps_band_witness = real_witness
-    assert g.properties(m500, cases) != []
+    with_w = {p for p, _ in g.properties(m500, cases)}
+    assert without == {"P5_idempotent_float"}
+    assert "P2_values_match_oracle" in with_w

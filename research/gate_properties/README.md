@@ -49,8 +49,10 @@ Run: `python research/gate_properties/gate_h10.py` (also run by `research/lean_g
   binding row lands on the cap in float, often 1 ulp above, so re-applying the gate re-triggers (P5) and the values
   leave the ε > 0 oracle by more than rtol 1e-12 (P2). `PREDECLARED` is unchanged from commit 1; the deviation is
   recorded in `OBSERVED_DEVIATIONS` with its reason.
-- The witness is what kills M500: with the witness swapped for an ordinary case, M500 survives (test
-  `test_witness_is_what_kills_always_project`).
+- The witness is the only thing that kills M500 **on a single application** (P2). Without it M500 still fails P5:
+  an always-projected binding row ends inside the ε band, so projecting again shrinks it. So the review's "only the
+  witness separates them" holds for P2 but not for P5. (Found when the witness negative control first ran; the test
+  `test_witness_is_what_kills_always_project_on_values` now asserts exactly this.)
 - **Spillover observation (synthetic matrices, not real runs):** projection fired in 89/150 cases; 457 of the 574
   non-binding rows in those cases lost weight; a binding row ended up to 0.352 below the cap. How often this happens in
   production runs is still **UNEXPLAINED** (unmeasured).
