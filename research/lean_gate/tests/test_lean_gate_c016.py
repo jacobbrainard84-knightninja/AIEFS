@@ -344,8 +344,11 @@ def test_p6_mutants_exact_counts_and_numbering():
     # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition
     bundle = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in mc.FILE_OPENS])
     assert sorted(bundle) == list(range(131, 191))
-    assert len(allnums) == len(set(allnums)) == 190 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (105, 85)
+    # H17 (WrapBridge.lean, SPEC §18): M700-M703 statement mutants (Researcher 001 block M700 ff.)
+    h17 = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] == "WrapBridge.lean"])
+    assert sorted(h17) == list(range(700, 704))
+    assert len(allnums) == len(set(allnums)) == 194 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (109, 85)
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 27                                          # unique across ports: E1-E23, T1-T4

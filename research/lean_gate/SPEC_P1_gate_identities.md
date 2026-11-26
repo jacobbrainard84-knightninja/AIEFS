@@ -1653,3 +1653,33 @@ unique controls 24 → 27 and M131–M190 numbered; the stubbed full-run test's 
   CoherenceSpeedLimit, widened a FILE_OPENS entry, dropped M190, wrong refuter name, moved engine
   citation, dropped E23), each applied to a copy outside the repo; all 11 caught.
 - No mutants dropped; no declarations renamed; deposited proofs and statements unchanged.
+
+## 18. H17: `wrapPhase` bridge to Mathlib `toIcoMod` (branch `research/h17-wrapphase-toicomod`, from `main` `daa977a`; Researcher 001 numbering block M700 ff.)
+
+Plan item H17 of audit-inbox `PLAN_2026-11-25_scan_leads.md`, as changed by Auditor Seat 002's review
+`REVIEW_2026-11-26_auditor_scan_leads.md` (audit-inbox `b15c5e5`; the review wins where they differ). New module
+`AIEFGateCore/WrapBridge.lean` (no edit to `PhaseIncrement.lean`, no new dependency, pinned Mathlib `0df444a`).
+
+- `wrapPhase_eq_toIcoMod`: `Phase.wrapPhase t = toIcoMod Real.two_pi_pos 0 t`, i.e. our floor-based wrap is the
+  **[0, 2π)** convention. `wrapPhase_mem_Ico`: `0 ≤ wrapPhase t < 2π`. `wrapPhase_coe_angle`: as a `Real.Angle`,
+  `wrapPhase t = t` (corollary only: the coercion forgets the representative, so it cannot discriminate conventions,
+  which is why the bridge targets `toIcoMod`, per the review).
+- Value probes `probe_wrap_neg_half_pi` (`−π/2 ↦ 3π/2`) and `probe_wrap_zero`.
+- Scope: exact reals. The engine wraps with float64 `np.mod(θ, 2π)` (engine L836), which can return exactly `2π`
+  (`np.mod(-1e-20, 2π) == 2π`, pinned in `tests/test_lean_gate_h17.py`). That is outside the real range proved here;
+  the phasor is unaffected. **Whether it occurs in production runs is UNEXPLAINED (unmeasured).**
+
+Mutant numbering (coordinated with Auditor Seat 002: its follow-up uses M191 ff., its H9(b)+H16 M300 ff.; Researcher
+001 uses M400 ff. for H8, M500 ff. for H10, M600 ff. for H12, M700 ff. for H17). H17 adds statement mutants only; no
+E or T controls (the existing harness controls apply unchanged). **Predeclared outcome, committed before the run:**
+
+| Mutant | Edit | Refuted by | Predeclared |
+|---|---|---|---|
+| M700 | `toIcoMod … 0 t` → `toIocMod … (−π) t` ((−π, π] convention) | `false_wrap_toIocMod_neg_pi` (t = −π/2) | KILLED |
+| M701 | range `< 2π` → `< π` | `false_wrap_lt_pi` (t = −π/2 ↦ 3π/2) | KILLED |
+| M702 | `0 ≤` → `0 <` | `false_wrap_pos` (t = 0) | KILLED |
+| M703 | `toIcoMod … 0 t` → `toIcoMod … (−π) t` ([−π, π) convention) | `false_wrap_toIcoMod_neg_pi` (t = −π/2) | KILLED |
+
+The control that shows these can fail: each refutation is a proved `¬` theorem (standard axioms), and the harness's
+step (c) re-runs the same term against the unmutated statement, which must fail. A survivor is reported, not deleted.
+Counts: statement mutants 105 → 109, total 190 → 194.
