@@ -1727,3 +1727,33 @@ follow-up. Its notes, and what this branch does about each:
   without a statement mutant are listed in §17.2.
 - **N6 (CI time).** See the results below.
 - **N7 (info).** Commit identity unchanged by convention; no action.
+
+**Results (2026-11-26 GMT, on commit `c666da6`, which first added M191–M201 with their predeclaration):**
+- `SKIP_CACHE=1 STRICT_ORPHANS=1 unshare -rn ./check_lean_gate.sh`: RESULT PASS. Build 2353 jobs, 0 warnings;
+  SHA256SUMS verified (42 files); escape-hatch scan 38 files, 0 hits; step 7 audited **1199 project declarations**
+  (1188 + the 11 new `false_*` witnesses), standard axioms only (propext, Classical.choice, Quot.sound).
+- Full unfiltered `unshare -rn python3 research/lean_gate/lean_mutation_check.py` (19 min 25 s locally): **116/116
+  statement** rejected, **85/85 definition** killed, **201/201 total**; 23/23 equivalence controls not killed; 4/4
+  typo controls flagged invalid; validator, classifier and statement controls as expected; RESULT PASS, rc 0. All 11
+  new mutants M191–M201 came out REJECTED, as predeclared. Three statement mutants carry the information-only note
+  "build output also has a name-reference/parse error line": M31 (pre-existing) and M199/M200. For M199/M200 this is
+  explained: the kept proof does `rcases hne with hv | hw`, which on `hne : True` binds no `hv`, so `Unknown
+  identifier hv` appears beside the real failures (`No goals to be solved`). Rejection does not rest on that line.
+- pytest: `research/lean_gate/tests` 193 passed; `tools/ci/tests` 246 passed (unittest OK); v4.1 held-event and
+  trust-anchor 45 passed; `tests_modular` 60 passed, 2 skipped, 2 xfailed. Every repository checker rc 0
+  (lint_claims, hygiene_scan with `--pii` against origin/main and without, check_manifest, check_sha256sums,
+  check_artifact_pins, check_modes --strict, check_current_inventory, check_study_paths, check_pinned_restatement,
+  verify_inventory_current).
+- N1 red-team: 12 wrong variants, each applied to a copy outside the repo with the gate sums regenerated after every
+  Lean edit, so the file-hash pin cannot be what catches them. Variants: four probe values changed (WindowMax,
+  HeteroStepRef, TransientBridge, CausalEMATracking), a witness instance that no longer violates, a witness factor,
+  a probe-docstring mutant value, three §17.4 SPEC edits (`1/(N−1)` → `1/N`, `2/N` → `3/N`, `c = 3/5` → `2/5`), and
+  a Lean row-bound change. **All 12 caught**, each by the intended test. Control: the pre-follow-up test file
+  (`daa977a`) passes the changed-probe, changed-factor and changed-SPEC variants, which confirms N1.
+- **N6 finding (record only; CI unchanged).** Per-step GitHub timings: the whole difference is in the "Lean-gate
+  mutation check" step. It took 25 min 20 s on the `82a5a1f` push run, against 17 min 30 s on the PR run for the
+  **same sha** about 2.5 hours later, 20 min 20 s on main `daa977a`, and 14 min 53 s on main `8b49f15` (Nov 20, 130
+  mutants). `lean-action` setup was 3 min 56 s against about 2.5 min. So 31 min 43 s is mutant growth (130 → 190,
+  +46%), plus about 8 minutes of runner variance on identical inputs. There is no sign of a cache miss beyond about
+  1.3 minutes of setup. This follow-up adds 11 statement mutants (201 total). The job timeout is 60 minutes, which
+  leaves headroom for now, but it should be watched before the next mutant batch.
