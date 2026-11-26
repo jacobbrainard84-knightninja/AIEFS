@@ -1518,3 +1518,138 @@ After the #44 follow-up (M130, on `main` `63e06d7`): gate PASS, **948 declaratio
 mutation run **79/79 statement**, **51/51 definition** (M130 killed by `probe_phaseHead_negative_weight`), **130/130
 total**, 20/20 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS; pytest 373 passed;
 all repository checkers rc 0 after the inventory rebuild.
+
+## 17. Arena bundle intake: 12 modules of the 2026-11-25 MERGE_MANIFEST (branch `research/arena-bundle`, from `main` `7865ab19`; numbered after §16 and M130)
+
+### 17.1 What it is
+The owner approved a bundle PR for the accepted Arena_Researcher_06020041 candidates listed in
+`audit_inbox/Arena_Researcher_06020041/2026-11-25_MERGE_MANIFEST/` on `audit-inbox` @ `41335f0` (unverified inbox
+material). Twelve Lean modules are taken in, by the owner's choice: ReachableQueue (D7), EmaNearUnit (D7),
+MatrixPhaseBridge (D6, prerequisite of QueueComposition), QueueComposition (D8), EmaWrapInvariant (D9),
+CausalEMATracking (D9), EMAFiniteSum (D11), TransientBridge (D13), TransientParameter (D14), WindowMax (D15),
+HeteroStepRef and HeteroGuard (D17). **CoherenceSpeedLimit (D10) is deliberately not taken in**: its
+`trace_motion_min` overlaps `CoherenceMotion.trace_step_abs_le_min` already on main. The manifest's `build_bundle.sh`
+and other deposited scripts were **not executed**; the Lean was compiled only with networking off
+(`unshare -rn lake build`).
+
+Each staged file was checked against the manifest's `source_inventory.tsv` sha256 (and the inbox copy) before
+editing. Edits, all additive: the repository copyright block, a module doc (with the verdict and the deposit sha256
+prefix), and an appended `/-! ### ...(SPEC §17)` section with value probes, `false_*` witnesses, the helper
+`CausalEMATracking.far_start`, and `#print axioms` lines for every new theorem and for five deposited theorems that
+had none (`QueueComposition.consistent_transfer`, `initialized_consistent`, `TransientBridge.mode_sum`,
+`energy_nonneg`, `TransientParameter.mode_sum`). MatrixPhaseBridge's SPDX comment was replaced by the block (its
+session-date note is kept in the doc). **Every deposited statement and proof is unchanged**:
+`test_lean_gate_arena_bundle.py` strips the added parts and pins the sha256 of the remaining non-blank lines, which
+equals that of the deposit.
+
+What the modules say (exact reals; fixed weights; none of it supports an AIEF-1.4 claim):
+- `ReachableQueue`: an engine-order finite queue (index 0 oldest) whose drop-oldest/append shift keeps "current phase
+  = newest slot on the circle" for every reachable state from a consistent start, for any next-phase rule.
+- `MatrixPhaseBridge`: a fixed supplied matrix `W` in the phase head; the engine-shaped step agrees with the matrix
+  reference on the circle under that consistency; a uniform zero-diagonal `W` reduces to `EngineStepRef.phaseHead`.
+- `QueueComposition`: the finite queue viewed as the newest-first bridge state; from a constant initial queue every
+  fixed-`W` iterate agrees with the matrix reference on every retained circle coordinate.
+- `EmaNearUnit` / `EmaWrapInvariant`: if every past input projects at least `1 − δ` (or a wrap-invariant cosine
+  condition holds), the zero-start coherence trace has norm `≥ 1 − ε` with budget `α^N + δ ≤ ε`. The phase spread is
+  a HYPOTHESIS; locking is not proved.
+- `CausalEMATracking` / `EMAFiniteSum`: the EMA error obeys `e(n+1) = α e(n) − Δinput`, so `‖e n‖ ≤ α^n ‖e 0‖ +
+  Σ α^(n−1−k) |drift k|` with the delayed-increment drift, for `0 ≤ α`.
+- `TransientBridge` / `TransientParameter`: two-slot energy of one mean-zero mode (`N = 3`, `d = 1`); derivative link to
+  `EngineStepRef.phaseStep`, root stability for `0 < c < 1`, one-step and (at `c = 1/4`) all-time energy bounds.
+- `WindowMax`: mean-zero window max-norm invariant for `N ≥ 2`, `0 ≤ c ≤ 2/N`; growth witness above the threshold.
+- `HeteroStepRef` / `HeteroGuard`: fixed `B`, all perturbations, window invariant under `dt ≥ 0`, `B ≥ 0`,
+  `dt·row_i(B) ≤ 1`; the exact-real gap guard implies the row condition; growth witness when a row fails.
+
+**Engine citations** (MatrixPhaseBridge lines 823, 830–839, 836–839, 841–844; HeteroStepRef lines 830–839) were
+checked against `aief_experiment_engine_v1.py` (sha `ca4593fd…`, unchanged) and are pinned in the test.
+
+**Not covered (disclosures):** no float64, no `mod 2π` in the reference heads (MatrixPhaseBridge's `wrap` only),
+no adaptive B, shuffle, projection or gate dynamics; the Transient Euclidean gains are largely queue-copy artifacts
+and must not be cited as engine amplification (MERGE_MANIFEST); TransientParameter's range necessity and an all-time
+general-`c` bound are not proved; `DelayRoots` is imported by TransientParameter but unused.
+
+### 17.2 Statement mutants M131–M156 (rule as §5)
+| Mutant | Change | Refuted by |
+|---|---|---|
+| M131 | `ReachableQueue.reachable_consistent`: consistency := True | `false_reachable_no_consistent` (`bad`, t = 0) |
+| M132 | `view_shift`: `k > 0` := True | `false_view_shift_no_pos` (k = 0 reads the appended value) |
+| M133 | `QueueComposition.consistent_transfer`: queue invariant := True | `false_transfer_no_consistent` |
+| M134 | `MatrixPhaseBridge.matrix_circle_bridge`: consistency := True | `false_bridge_no_consistent` |
+| M135 | `matrix_to_scalar`: `Uniform` := True | `false_scalar_no_uniform` (via `nonuniform_counterexample`) |
+| M136 | `EmaNearUnit.near_unit`: budget without `α^N` | `false_near_unit_no_startup` (N = 0) |
+| M137 | `near_unit`: `0 ≤ δ` := True | `false_near_unit_no_delta_nonneg` (δ = −1) |
+| M138 | `EmaWrapInvariant.near_unit_circular_spread`: budget without `α^N` | `false_circular_no_startup` |
+| M139 | `CausalEMATracking.tracking_step_bound`: `0 ≤ α` := True | `false_step_bound_no_nonneg` (α = −1, C0 = 10) |
+| M140 | `delayed_tracking_bound`: `0 ≤ α` := True | `false_delayed_bound_no_nonneg` |
+| M141 | `EMAFiniteSum.budget_eq_finite_sum`: reversed powers `α^k` | `false_finite_sum_reversed` (4 ≠ 1) |
+| M142 | `budget_eq_finite_sum`: start without `α^n` | `false_finite_sum_no_start_decay` |
+| M143 | `TransientBridge.one_step_bound`: factor 1 | `false_one_step_factor_one` (5/4) |
+| M144 | `two_step_bound`: factor 1/4 | `false_two_step_quarter` (37/64 > 1/2) |
+| M145 | `all_steps_bound`: factor 1 | `false_all_steps_factor_one` |
+| M146 | `TransientParameter.stable_roots`: `c < 1` := True | `false_stable_no_upper` (c = 2, root −1) |
+| M147 | `stable_roots`: `0 < c` := True | `false_stable_no_pos` (c = 0, root 1) |
+| M148 | `one_step_bound`: `c ≤ 1` := True | `false_one_step_no_upper` (energy 10) |
+| M149 | `WindowMax.window_step`: `n·c ≤ 2` := True | `false_window_step_no_threshold` (c = 4/5: 7/5) |
+| M150 | `window_all_steps`: `n·c ≤ 2` := True | `false_window_all_no_threshold` |
+| M151 | `coefficient_bound`: `2 ≤ n` := True | `false_coefficient_no_size` (n = 1, c = 1) |
+| M152 | `HeteroStepRef.window_step`: row condition := True | `false_window_step_no_row` (head −3) |
+| M153 | `window_step`: `0 ≤ B` := True | `false_window_step_no_nonneg` (row sums 0, head 3) |
+| M154 | `window_step`: `0 ≤ dt` := True | `false_window_step_no_dt` (dt = −1, head 3) |
+| M155 | `HeteroGuard.guarded_window_all_steps`: cap := True | `false_guarded_no_cap` |
+| M156 | `guarded_window_all_steps`: `0 < q` := True | `false_guarded_no_q` (q = 0) |
+
+**FILE_OPENS.** The bundle reuses short names (`State`, `Consistent`, `step`, `iterate`, `mode`, `energy`,
+`window_step`, `window_all_steps`, ...) in distinct namespaces. Rather than renaming anything, each refutation file
+opens only the mutated file's namespace (`FILE_OPENS` in `lean_mutation_check.py`; `refute` gained a `preamble`
+argument; EMAFiniteSum also opens CausalEMATracking for `budget`). No theorem was renamed; the full build imports all
+modules together with no clash.
+
+### 17.3 Definition mutants M157–M190 (rule as §11.3)
+| Mutants | Definition | Changes | Killed by |
+|---|---|---|---|
+| M157–M160 | `ReachableQueue.shift`, `reverseIndex`, `head` | no shift; no append; view not reversed; head reads newest | `probe_shift_values`, `probe_view_values`, `probe_head_value` |
+| M161–M162 | `QueueComposition.abstractState`, `initState` | view not reversed; zero initial queue | `probe_abstractState_values`, `probe_initState_values` |
+| M163–M167 | `MatrixPhaseBridge.matrixHead`, `engineStep`, `refInput` | current slot; sine reversed; no shift; slot 0 in the step head; history at slot 0 | `probe_matrixHead_value`, `probe_engineStep_shift`, `probe_engineStep_head`, `probe_refInput_values` |
+| M168 | `EmaWrapInvariant.arcBound` | inequality reversed | `probe_arcBound_values` |
+| M169–M171 | `CausalEMATracking.budget` | `(1−α)` on drift; no decay; zero start | `probe_budget_values` |
+| M172–M176 | `TransientBridge.stepSize`, `step`, `energy` | 1/3; `1 − c`; `+ c·p.2`; unshifted; one slot | `probe_step_values`, `probe_energy_value` |
+| M177–M181 | `TransientParameter.step`, `energy`, `mode` | `1 − c`; `+ c·p.2`; unshifted; one slot; mode not mean-zero | `probe_step_values`, `probe_energy_value`, `probe_mode_values` |
+| M182–M185 | `WindowMax.next` | `n` for `n − 1`; `+ c·v d`; slot 0 for `d`; unshifted | `probe_next_values` |
+| M186–M190 | `HeteroStepRef.linearStep`, `row`, `phaseHeadW` | `1 + dt·row`; slot 0 in the sum; unshifted; row without diagonal; head reads current slot | `probe_linearStep_values`, `probe_phaseHeadW_value` |
+
+Equivalence controls (must not be killed): E21 `v d * c` for `c * v d` in `WindowMax.next`; E22 `1 − c − c` for
+`1 − 2c` in `TransientParameter.step`; E23 the `budget` sum commuted. EmaNearUnit, EMAFiniteSum and HeteroGuard
+define nothing of their own, so they have statement mutants only.
+
+### 17.4 Merge note: WindowMax and HeteroStepRef are complementary, not contradictory
+Write `c = dt·b` for a uniform off-diagonal weight `b`. **HeteroStepRef** needs `dt·row_i(B) ≤ 1` for every row,
+which in the uniform case is `(N−1)·c ≤ 1`, i.e. `c ≤ 1/(N−1)`; it then bounds the window for **all** perturbations.
+**WindowMax** allows the larger range `c ≤ 2/N`, but only for **mean-zero** spatial modes. Since `1/(N−1) ≤ 2/N` for
+every `N ≥ 2` (equal at `N = 2`), the two never conflict: between the thresholds a mean-zero mode is still bounded
+while a non-mean-zero window can grow (HeteroStepRef's `growth_witness`; checked at `N = 3`, `c = 3/5` in the test).
+**TransientBridge and TransientParameter are included per the owner's choice of 12 files**, although the manifest
+recommended archiving them; their bounds are correct exact-real facts but say nothing about engine amplification.
+
+### 17.5 Tests and pins
+`research/lean_gate/tests/test_lean_gate_arena_bundle.py`: imports and hash pins, CoherenceSpeedLimit absent,
+deposit bodies unchanged (pinned digests), no escape hatches, an axioms print for every theorem, the exact shape of
+M131–M190 and E21–E23, `FILE_OPENS` (one bundle namespace each, none in the global `OPENS`), the probe and witness
+values in exact arithmetic, the §17.4 inequality, and the engine citations. Pins move: P4b `len(MUTANTS)` 79 → 105;
+P5 `N_STATEMENT_MUTANTS` 79 → 105, `N_DEF_MUTANTS` 51 → 85, total 130 → 190, equivalence controls 20 → 23; c016
+unique controls 24 → 27 and M131–M190 numbered; the stubbed full-run test's `refute` takes the new `preamble` argument.
+
+### 17.6 Results (2026-11-26 GMT)
+
+- `SKIP_CACHE=1 unshare -rn ./check_lean_gate.sh`: RESULT PASS. Build 2353 jobs, 0 warnings;
+  SHA256SUMS verified (42 files); escape-hatch scan 38 files, 0 hits; step 7 audited
+  **1188 project declarations**, standard axioms only (propext, Classical.choice, Quot.sound).
+- Full unfiltered `lean_mutation_check.py` (offline): **105/105 statement** rejected (the one
+  name-reference note is M31's, pre-existing), **85/85 definition** killed, **190/190 total**,
+  23/23 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
+- pytest: `research/lean_gate/tests` 193 passed, `tools/ci/tests` 246 passed (439 total);
+  all repository checkers rc 0 after the inventory rebuild.
+- Red-team of `test_lean_gate_arena_bundle.py`: 11 wrong variants (edited deposit proof, changed
+  probe value, dropped `#print axioms`, inserted `sorry`, dropped root import, added
+  CoherenceSpeedLimit, widened a FILE_OPENS entry, dropped M190, wrong refuter name, moved engine
+  citation, dropped E23), each applied to a copy outside the repo; all 11 caught.
+- No mutants dropped; no declarations renamed; deposited proofs and statements unchanged.
