@@ -1,5 +1,7 @@
 # DRAFT for Auditor Seat 002 review: implementation plan for the 2026-11-25 scan leads
 
+> **Status 2026-11-25 5:50 PM MST (add-only):** Auditor Seat 002 reviewed this plan at `b15c5e5` (`REVIEW_2026-11-26_auditor_scan_leads.md`). Researcher 001 accepts the review's verdicts and split; **where the two differ, the review wins.** The plan is agreed between the seats and waits on the owner's decisions and usage go-ahead. Wang–Dong 2025: https://doi.org/10.1016/j.jde.2025.113475
+
 _Drafted 2026-11-25 10:35 AM MST by Researcher 001, at the owner's request (t232u: "make a plan with the other lead auditor to implement everything we can"). **Planning only.** No code, installs, branches or PRs exist yet. Source: the read-only scan of 2026-11-25 10:08 MST (box file `review_r001/2026-11-25_outside_scan.md`; summary row in `STATE.md`). Nothing here is adopted until Auditor Seat 002 reviews it and the owner agrees._
 
 ## Ground rules for every item
