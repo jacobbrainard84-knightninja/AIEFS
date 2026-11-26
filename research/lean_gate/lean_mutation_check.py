@@ -124,6 +124,15 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   be killed. The bundle reuses short names (State, Consistent, step, iterate, window_step, ...) in distinct
   namespaces, so each refutation opens only the mutated file's own namespace (FILE_OPENS), never two at once.
 
+  H9(b) + H16 (GronwallEnvelope.lean, GateContraction.lean; SPEC §18; author Auditor Seat 002). Numbered in a
+  separate block from M300 on (another branch may add mutants right after M190); no rule change, no FILE_OPENS
+  entry (the statements name their own namespaces, e.g. `MatrixForm.GateOnM`, `GateContraction.scalarMap`):
+  statement mutants M300-M312 (a load-bearing hypothesis weakened to True: `0 ≤ ρ`, `0 ≤ B 0`, `lam ≤ 1`, `0 ≤ κ`,
+  `γ dt ≤ 1` (engine-legal `γ dt = 2` witness at `WeightUpdate.pH`), the gate-off hypotheses, symmetry, `ρ ≠ 1`;
+  and the wrong-variant control M306, gate applied before the drive), each refuted by a `false_*` theorem of its
+  file; definition mutants M313-M316 (`scalarMap` gate order / clamp, `l1` without `|.|`, the witness state
+  raised on one side only) killed by the `probe_*` value probes in `VP_H16`. All seventeen predeclared KILLED.
+
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
@@ -214,6 +223,8 @@ def via(inst, binders, pos):
 
 
 MAIN_BINDERS = "drive B h t ctrl hclip hon hker hc0 hc1"   # binder order of stepB_add_smul_of_branch
+ENV_UP = "B lam d ρ hρ0 hB0 hlam1 hrec n"          # binder order of GronwallEnvelope.scalar_envelope_upper
+ENV_LO = "B lam κ d ρ hρ0 hκ0 hκ hrec n"         # binder order of GronwallEnvelope.scalar_envelope_lower
 
 MUTANTS = [
     # name, file, theorem, [(old, new, count)], closure vars, refutation term, engine refutation term (or None)
@@ -589,6 +600,54 @@ MUTANTS = [
      [("(hcap : dt * ((a - delta + tol) / q) ≤ 1)", "(hcap : True)", 1)], "", "HeteroStepRef.false_guarded_no_cap H", None),
     ("M156_heteroguard_q_pos_dropped", "HeteroGuard.lean", "guarded_window_all_steps",
      [("(hq : 0 < q)", "(hq : True)", 1)], "", "HeteroStepRef.false_guarded_no_q H", None),
+    # ---- H9(b) + H16 (GronwallEnvelope.lean, GateContraction.lean; SPEC §18). Distinct block from M300 on, so it
+    # cannot collide with mutants added after M190 elsewhere. Every outcome predeclared KILLED in the first commit
+    # that adds it (build rejected for a real proof failure, refuted by the named false_* theorem, term-specific).
+    ("M300_envelope_upper_rho_nonneg_dropped", "GronwallEnvelope.lean", "scalar_envelope_upper",
+     [("(hρ0 : 0 ≤ ρ)", "(hρ0 : True)", 1)], "",
+     f"GronwallEnvelope.false_upper_no_rho_nonneg {via('H', ENV_UP, 4)}", None),
+    ("M301_envelope_upper_start_nonneg_dropped", "GronwallEnvelope.lean", "scalar_envelope_upper",
+     [("(hB0 : 0 ≤ B 0)", "(hB0 : True)", 1)], "",
+     f"GronwallEnvelope.false_upper_no_start_nonneg {via('H', ENV_UP, 5)}", None),
+    ("M302_envelope_upper_lam_le_one_dropped", "GronwallEnvelope.lean", "scalar_envelope_upper",
+     [("(hlam1 : ∀ n, lam n ≤ 1)", "(hlam1 : True)", 1)], "",
+     f"GronwallEnvelope.false_upper_no_lam_le_one {via('H', ENV_UP, 6)}", None),
+    ("M303_envelope_lower_kappa_nonneg_dropped", "GronwallEnvelope.lean", "scalar_envelope_lower",
+     [("(hκ0 : ∀ n, 0 ≤ κ n)", "(hκ0 : True)", 1)], "",
+     f"GronwallEnvelope.false_lower_no_kappa_nonneg {via('H', ENV_LO, 6)}", None),
+    ("M304_envelope_lower_rho_nonneg_dropped", "GronwallEnvelope.lean", "scalar_envelope_lower",
+     [("(hρ0 : 0 ≤ ρ)", "(hρ0 : True)", 1)], "",
+     f"GronwallEnvelope.false_lower_no_rho_nonneg {via('H', ENV_LO, 5)}", None),
+    ("M305_edge_envelope_gamma_dt_le_one_dropped", "GronwallEnvelope.lean", "stepM_edge_envelope_upper",
+     [("(hh1 : p.γ * p.dt ≤ 1)", "(hh1 : True)", 1)], WU_VARS,
+     "GronwallEnvelope.false_envelope_gamma_dt_gt_one (fun B D hrec hDs hB0s {i j} hij hB0 n => "
+     "@H (Fin 2) _ _ WeightUpdate.pH B D trivial hrec hDs hB0s i j hij hB0 n)", None),
+    ("M306_edge_recurrence_gate_before_drive", "GronwallEnvelope.lean", "edge_recurrence",
+     [("appliedFactor p (symM p D Bm) i j * max 0 ((1 - p.γ * p.dt) * Bm i j + p.dt * D i j)",
+       "max 0 (appliedFactor p (symM p D Bm) i j * ((1 - p.γ * p.dt) * Bm i j) + p.dt * D i j)", 1)], CAP_VARS,
+     "GronwallEnvelope.false_variant_gate_after_drive (fun D Bm hD hB {i j} hij => "
+     "@H (Fin 2) _ _ pE D Bm hD hB i j hij)", None),
+    ("M307_upper_geom_gronwall_rho_nonneg_dropped", "GronwallEnvelope.lean", "upper_geom_via_gronwall",
+     [("(hρ0 : 0 ≤ ρ)", "(hρ0 : True)", 1)], "",
+     f"GronwallEnvelope.false_upper_geom_rho_neg {via('H', 'x ρ β hρ0 hρ1 hstep', 3)}", None),
+    ("M308_upper_geom_ne_one_dropped", "GronwallEnvelope.lean", "upper_geom_of_ne_one",
+     [("(hρ1 : ρ ≠ 1)", "(hρ1 : True)", 1)], "",
+     f"GronwallEnvelope.false_upper_geom_rho_one {via('H', 'x ρ β hρ0 hρ1 hstep', 4)}", None),
+    ("M309_lipschitz_gate_off_hypotheses_dropped", "GateContraction.lean", "stepM_entry_lipschitz_gate_off",
+     [("(hoff : ¬ MatrixForm.GateOnM p D B) (hoff' : ¬ MatrixForm.GateOnM p D B')", "(hoff : True) (hoff' : True)", 1)],
+     CAP_VARS, "GateContraction.false_entry_lipschitz_no_gate_off (fun D B B' i j => "
+     "@H (Fin 3) _ _ pE (by norm_num [pE]) D B B' trivial trivial i j)", None),
+    ("M310_lipschitz_gamma_dt_le_one_dropped", "GateContraction.lean", "stepM_entry_lipschitz_gate_off",
+     [("(hh1 : p.γ * p.dt ≤ 1)", "(hh1 : True)", 1)], CAP_VARS,
+     "GateContraction.false_entry_lipschitz_gamma_dt_gt_one (fun D B B' hoff hoff' i j => "
+     "@H (Fin 2) _ _ WeightUpdate.pH trivial D B B' hoff hoff' i j)", None),
+    ("M311_lipschitz_symm_symmetry_dropped", "GateContraction.lean", "stepM_entry_lipschitz_gate_off_symm",
+     [("(hB : ∀ i j, B i j = B j i) (hB' : ∀ i j, B' i j = B' j i)", "(hB : True) (hB' : True)", 1)], CAP_VARS,
+     "GateContraction.false_lipschitz_symm_no_symm (fun D B B' hoff hoff' i j => "
+     "@H (Fin 2) _ _ pE (by norm_num [pE]) D B B' trivial trivial hoff hoff' i j)", None),
+    ("M312_contracting_lam_le_one_dropped", "GateContraction.lean", "scalar_map_contracting",
+     [("(hl1 : lam ≤ 1)", "(hl1 : True)", 1)], "",
+     f"GateContraction.false_contracting_lam_gt_one {via('H', 'lam ρ d hl0 hl1 hρ0 hρ1', 4)}", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -642,10 +701,13 @@ VP_ARENA = {"ReachableQueue.lean": ["probe_shift_values", "probe_view_values", "
             "TransientParameter.lean": ["probe_step_values", "probe_energy_value", "probe_mode_values"],
             "WindowMax.lean": ["probe_next_values"],
             "HeteroStepRef.lean": ["probe_linearStep_values", "probe_phaseHeadW_value"]}
+# H16 (GateContraction.lean, SPEC §18): closed-number probes, each proved from the definitions in the probe itself
+VP_H16 = ["probe_scalarMap_value", "probe_scalarMap_clamp", "probe_l1_B3"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
                 "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR,
+                "GateContraction.lean": VP_H16,
                 **VP_ARENA}
 CP_OLD = "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n"
 CW_OLD = "def clippedWeight (b : ℝ) : ℝ := max 0 b\n"
@@ -884,6 +946,17 @@ DEF_MUTANTS = [
      [("  ∑ j : Fin n, B i j\n", "  ∑ j ∈ Finset.univ.erase i, B i j\n", 1)], ["probe_linearStep_values"]),
     ("M190_hetero_head_current_slot", "HeteroStepRef.lean",
      [("    B i j * Real.sin (x d j - x 0 i))\n", "    B i j * Real.sin (x 0 j - x 0 i))\n", 1)], ["probe_phaseHeadW_value"]),
+    # ---- H16 (GateContraction.lean; SPEC §18): definition mutants, predeclared KILLED by the named value probes
+    ("M313_scalarMap_gate_before_drive", "GateContraction.lean",
+     [("def scalarMap (lam ρ d : ℝ) (x : ℝ) : ℝ := lam * max 0 (ρ * x + d)\n", "def scalarMap (lam ρ d : ℝ) (x : ℝ) : ℝ := max 0 (lam * (ρ * x) + d)\n", 1)],
+     ["probe_scalarMap_value"]),
+    ("M314_scalarMap_clamp_dropped", "GateContraction.lean",
+     [("def scalarMap (lam ρ d : ℝ) (x : ℝ) : ℝ := lam * max 0 (ρ * x + d)\n", "def scalarMap (lam ρ d : ℝ) (x : ℝ) : ℝ := lam * (ρ * x + d)\n", 1)], ["probe_scalarMap_clamp"]),
+    ("M315_l1_abs_dropped", "GateContraction.lean",
+     [("def l1 (X Y : Fin 3 → Fin 3 → ℝ) : ℝ := ∑ i, ∑ j, |X i j - Y i j|\n",
+       "def l1 (X Y : Fin 3 → Fin 3 → ℝ) : ℝ := ∑ i, ∑ j, (X i j - Y i j)\n", 1)], ["probe_l1_B3"]),
+    ("M316_B3prime_raised_one_side_only", "GateContraction.lean",
+     [("![13 / 30, 0, 1 / 3]", "![1 / 3, 0, 1 / 3]", 1)], ["probe_l1_B3"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of

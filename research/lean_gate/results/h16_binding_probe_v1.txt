@@ -1,0 +1,37 @@
+{
+ "n_binding_states": 200,
+ "l1_induced": [
+  1.2280492607498126,
+  2.2956632261296464
+ ],
+ "linf_induced": [
+  1.7051903872244978,
+  4.435955018866622
+ ],
+ "spectral": [
+  0.8922264207356313,
+  1.5173475495501794
+ ],
+ "rho_1_minus_gdt": 0.99985
+}
+{
+ "exact_pair_l1": {
+  "gate_on_both": true,
+  "min_rowsum_minus_cap_both": [
+   -0.21691864570100855,
+   -0.21691864570100855
+  ],
+  "max_rowsum_minus_cap": [
+   0.19452286282732506,
+   0.19452386267732508
+  ],
+  "l1_in": 2.0000000000002655e-06,
+  "l1_out": 4.5913214148983855e-06,
+  "ratio": 2.295660707448888,
+  "entrymax_in": 1.0000000000001327e-06,
+  "entrymax_out": 7.586173764156832e-07,
+  "entrymax_ratio": 0.7586173764155825
+ }
+}
+linf jacobian_norm 4.435955018866622 {"gate_on_both": true, "all_off_rows_nonneg": true, "entrymax_ratio": 4.4359616019557295, "fro_ratio": 1.5086404093761174}
+spectral jacobian_norm 1.5173475495501794 {"gate_on_both": true, "all_off_rows_nonneg": true, "entrymax_ratio": 3.8590781984396565, "fro_ratio": 1.5173482910827276}

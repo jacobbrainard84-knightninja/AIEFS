@@ -35,3 +35,5 @@ import AIEFGateCore.TransientParameter
 import AIEFGateCore.WindowMax
 import AIEFGateCore.HeteroStepRef
 import AIEFGateCore.HeteroGuard
+import AIEFGateCore.GronwallEnvelope
+import AIEFGateCore.GateContraction

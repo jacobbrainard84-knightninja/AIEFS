@@ -1653,3 +1653,88 @@ unique controls 24 → 27 and M131–M190 numbered; the stubbed full-run test's 
   CoherenceSpeedLimit, widened a FILE_OPENS entry, dropped M190, wrong refuter name, moved engine
   citation, dropped E23), each applied to a copy outside the repo; all 11 caught.
 - No mutants dropped; no declarations renamed; deposited proofs and statements unchanged.
+
+## 18. H9(b) + H16: n-step envelopes of the B recurrence, and the binding-gate contraction question (branch `research/h9b-h16-envelopes`, from `main` `daa977ac`; author Auditor Seat 002, auditor Researcher 001)
+
+### 18.1 What it is
+Plan items H9 and H16 of the 2026-11-25 scan-leads plan, as changed by the Auditor review of that plan: H9 targets `AIEFGate.Freeze.upper_geom` (AIEFGateCore may not
+import AIEFFreezeCore), keeps part (b), and uses only `discrete_gronwall_prod_general`; H16's binding-gate case was
+flagged "may be false (UNVERIFIED)" and had to be probed numerically before any Lean. Two new modules, nothing on
+`main` edited except the root imports, the gate SHA256SUMS and the test pins below. Owner go-ahead for usage: t333u.
+
+- `GronwallEnvelope.lean` (H9). (b) `scalar_envelope_upper`: `B (n+1) = λ n · max 0 (ρ B n + d n)`, `0 ≤ ρ`,
+  `0 ≤ B 0`, `λ n ≤ 1` give `B n ≤ ρⁿ B 0 + Σ_{k<n} ρ^(n−1−k) max 0 (d k)` for a **time-varying** drive; `0 ≤ λ n` is
+  not needed (proved through `max (B n) 0`). `scalar_envelope_lower`: with a time-varying floor `0 ≤ κ n ≤ λ n` and
+  `0 ≤ ρ`, `B 0 ∏ κρ + Σ κ_k d_k ∏ κρ ≤ B n`, no sign condition on `B` or `d`. Per edge on the engine step
+  (`edge_recurrence` = `WeightUpdate.stepM_scalar_recurrence`): `stepM_edge_envelope_upper/lower` (`γ dt ≤ 1`,
+  symmetric `D n`, symmetric `B 0`). Engine witness `stepM_edge_envelope_pE`: at `pE` (`ρ = 1 − γ dt = 19997/20000`,
+  `pE_rho`) with `D ≤ 1/25`, `B n ≤ ρⁿ B 0 + (1 − ρⁿ)·8/3`. (a), a short corollary only: `upper_geom_via_gronwall`
+  has `Freeze.upper_geom`'s statement (`upper_geom_statement_eq` by `rfl`, plus `example`s in both directions; the
+  link to AIEFFreezeCore stays the p4b text check), and `upper_geom_of_ne_one` records the review finding that
+  `upper_geom` needs only `0 ≤ ρ`, `ρ ≠ 1` (`ρ < 1` is used by the `∃ N` theorems only).
+- `GateContraction.lean` (H16). See 18.2 for the probe. True versions kept: `stepM_entry_lipschitz_gate_off(_symm)`
+  (gate off at both states ⇒ each entry moves by ≤ `(1 − γ dt)` × the symmetrised input change; per pair, not a
+  global contraction: the gate-off set is not shown invariant and the gate jumps by `~ε` at its trigger,
+  `Capacity.false_gate_nonexpansive`), and the frozen-gate scalar Banach corollary `scalar_map_contracting` /
+  `scalar_map_fixedPoint_tendsto` (Mathlib `ContractingWith`; restates what `upper_geom` already gives, so it is
+  not advertised as new and NORTH_STAR row 7 is **not** advanced). The refutation: `B3` (all edges `1/3`), `B3'`
+  (edge `{0,1}` = `13/30`), `pE`, `D = 0`: every row of both proposals is above `cap` (`binding_witness_rows`), the
+  ℓ1 distance grows by a factor `> 6/5` (`binding_witness_l1`, exact ratio ≈ 1.239), and the unchanged edge
+  `{0,2}` moves (`binding_witness_entry`); `false_stepM_l1_nonexpansive_binding`.
+- Scope, stated in both module headers: exact reals; frozen drive / frozen `R` (**conditional, not O1**: in the engine
+  `R` depends on the phases, which depend on `B`); `γ dt ≤ 1` assumed everywhere it is needed (`γ dt = 1` covered;
+  `γ dt > 1` is engine-legal, the engine validates only `γ ≥ 0`, and is refuted at `WeightUpdate.pH`); growth
+  envelopes only (no convergence of the engine `B`, no O1, no explanation of E22); nothing about float64.
+
+### 18.2 H16 probe (run before any H16 Lean was written)
+`research/lean_gate/h16_binding_probe.py` (stdlib + numpy, written fresh, mirrors engine L790–813, does not import or
+edit the engine), output `research/lean_gate/results/h16_binding_probe_v1.txt`. 200 seeded random `N = 12`
+gate-on states at the frozen parameters, frozen drive. Finite-difference Jacobian operator norms: ℓ1 (edge-sum)
+**1.228 … 2.296**, entry-max **1.705 … 4.436**, ℓ2 **0.892 … 1.517**, against `1 − γ dt = 0.99985`. Exact
+`Fraction` pairs (both states gate-on, one pair per metric): ℓ1 ratio **2.2957**, entry-max ratio **4.4360**,
+Frobenius ratio **1.5173**. **Verdict: the binding-gate contraction claim is FALSE** in all three metrics (not
+"not found": exact counterexamples). Mechanism, not new: `min(s_i, s_j)` with `s_i = cap/(row_i + ε)` depends on
+`B`, so raising one entry lowers every other entry of its two rows. In the random states some rows were below `cap`
+(the gate fires globally); the Lean witness has every row above `cap`. Not claimed: anything about convergence of
+the coupled engine (a non-contracting one-step map can still have convergent orbits); that stays open.
+
+### 18.3 Mutants M300–M316 (separate block; another branch may add mutants right after M190)
+Rules unchanged (statement mutants as §5, definition mutants as §11.3). **Predeclared outcome for every mutant:
+KILLED** (written into `lean_mutation_check.py` before the first run; a filtered debugging run of this block,
+`AIEF_MUT_ONLY`, preceded the first commit and agreed with every prediction; the full run is in 18.5). No equivalence or
+typo control and no `FILE_OPENS` entry is added (the mutated statements name their namespaces).
+
+| Mutant | Statement / definition | Edit | Refuted by / killed by |
+|---|---|---|---|
+| M300 | `scalar_envelope_upper` | `0 ≤ ρ` → `True` | `false_upper_no_rho_nonneg` |
+| M301 | `scalar_envelope_upper` | `0 ≤ B 0` → `True` | `false_upper_no_start_nonneg` |
+| M302 | `scalar_envelope_upper` | `λ n ≤ 1` → `True` | `false_upper_no_lam_le_one` |
+| M303 | `scalar_envelope_lower` | `0 ≤ κ n` → `True` | `false_lower_no_kappa_nonneg` |
+| M304 | `scalar_envelope_lower` | `0 ≤ ρ` → `True` | `false_lower_no_rho_nonneg` |
+| M305 | `stepM_edge_envelope_upper` | `γ dt ≤ 1` → `True` | `false_envelope_gamma_dt_gt_one` (engine-legal `γ dt = 2`, `pH`) |
+| M306 | `edge_recurrence` | wrong variant: gate applied before the drive, `max 0 (λ(1−γdt)B + dt D)` | `false_variant_gate_after_drive` (`pE`) |
+| M307 | `upper_geom_via_gronwall` | `0 ≤ ρ` → `True` | `false_upper_geom_rho_neg` (`ρ = −1`) |
+| M308 | `upper_geom_of_ne_one` | `ρ ≠ 1` → `True` | `false_upper_geom_rho_one` (`ρ = 1`, where `β/(1−ρ) = 0` in Lean) |
+| M309 | `stepM_entry_lipschitz_gate_off` | gate-off hypotheses → `True` | `false_entry_lipschitz_no_gate_off` (the `Fin 3` witness) |
+| M310 | `stepM_entry_lipschitz_gate_off` | `γ dt ≤ 1` → `True` | `false_entry_lipschitz_gamma_dt_gt_one` (`pH`) |
+| M311 | `stepM_entry_lipschitz_gate_off_symm` | symmetry → `True` | `false_lipschitz_symm_no_symm` |
+| M312 | `scalar_map_contracting` | `λ ≤ 1` → `True` | `false_contracting_lam_gt_one` (`λ = 2`) |
+| M313 | def `scalarMap` | gate before drive | `probe_scalarMap_value` |
+| M314 | def `scalarMap` | clamp dropped | `probe_scalarMap_clamp` |
+| M315 | def `l1` | `|·|` dropped | `probe_l1_B3` |
+| M316 | def `B3'` | edge raised on one side only | `probe_l1_B3` |
+
+Controls from the review, how they are met: the λ(1−h) = 1 mutant (it tests Mathlib's `K < 1`, not us) is not used;
+the wrong-variant control is M306; the `pE` witness is `stepM_edge_envelope_pE`; the `γ dt ≥ 1` adversarial witness is
+M305/M310. The review's "ρ > 1 mutant of `upper_geom` survives" finding is recorded as the proved theorem
+`upper_geom_of_ne_one` instead of a surviving mutant (`KNOWN_SURVIVORS` stays empty).
+
+### 18.4 Tests and pins
+`research/lean_gate/tests/test_lean_gate_h9h16.py`: imports and hash pins, no escape hatches, scope sentence, axioms
+prints, product-form Grönwall only (code, not prose), H9(a) target and `rfl` statement equality, the exact shape of
+M300–M316 (13 statement + 4 definition mutants, numbering, predeclared outcomes), value probes,
+the `Fin 3` witness and the other witnesses recomputed in exact arithmetic,
+the stored probe output, and the mirrored engine lines (engine sha256 checked, engine not edited). Pins move: P4b
+`len(MUTANTS)` 105 → 118; P5 `N_STATEMENT_MUTANTS` 105 → 118, `N_DEF_MUTANTS` 85 → 89, total 190 → 207; c016 total
+190 → 207 and M300–M316 numbered. **Merge note:** a concurrent branch may add mutants after
+M190 and move the same pins; whichever lands second must re-add the other's counts (the block numbers do not collide).
