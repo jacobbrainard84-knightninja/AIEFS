@@ -25,6 +25,17 @@ operator norm was `1.23 … 2.30` in ℓ1, `1.71 … 4.44` in the entry-max norm
 and `j`. So the statement "the binding-gate B map is a contraction" is **false**, it is not proved
 here, and NORTH_STAR row 7 is not advanced by this file.
 
+**Scope of the witness and the probe (F2, Researcher 001 audit of `952f87d`):** the Lean witness
+below and the `N = 12` probe use input states whose rows are above `cap` (`B3`, `B3'` have rows
+`2/3` and `23/30` against `cap = 19/30`; the probe draws row sums at `1 … 1.5 ×` cap). The engine
+never feeds such a state into the step: after every step the rows are `≤ cap`. So the Lean
+refutation is valid as stated (all gate-on states), but its witness is not engine-reachable, and the
+probe's ℓ2 low end `0.892 < ρ` comes from those unreachable rows. On reachable states the claim
+fails too, by a wider margin: Researcher 001's probe of the real engine `advance_state` (sha-checked
+temp copy; 604 gate-on states from seeds 7001–7006, production defaults) found Jacobian norms ℓ1
+`1.97 … 2.58` and ℓ2 `1.11 … 1.44`, every one above `ρ`, and a gate-off negative control of exactly
+`0.99985`. Those are numerical audit results, not Lean results, and not part of this branch's probe.
+
 Content:
 
 * `stepM_entry_lipschitz_gate_off`, `stepM_entry_lipschitz_gate_off_symm` (the true version where it
@@ -43,14 +54,20 @@ Content:
   ratio `≈ 1.239`), and edge `{0,2}`, which did not change, moves (`binding_witness_entry`).
   Negations: `false_stepM_l1_nonexpansive_binding`, `false_entry_lipschitz_no_gate_off`,
   `false_entry_lipschitz_gamma_dt_gt_one`, `false_lipschitz_symm_no_symm`,
-  `false_contracting_lam_gt_one`. Value probes (definition mutants): `probe_scalarMap_value`,
-  `probe_scalarMap_clamp`, `probe_l1_B3`.
+  `false_contracting_lam_gt_one`, `false_binding_l1_five_fourths` (the constant `6/5` is sharp to
+  within `(1.2391, 5/4)`). Value probes (definition mutants): `probe_scalarMap_value`,
+  `probe_scalarMap_clamp`, `probe_l1_B3`; pin probe of the headline constant:
+  `probe_binding_ratio_six_fifths`.
 
 Scope: exact reals; frozen `D` (frozen `R`): **conditional, not O1** (in the engine `R` depends on
 the phases, which depend on `B`). Not proved and not claimed: convergence of the engine `B`
-trajectory; contraction in any norm when the gate fires (refuted in ℓ1 here, and numerically in
-entry-max and ℓ2 at `N = 12`; the numerical numbers are not Lean results). Nothing about float64. `γ
-dt ≤ 1` is a hypothesis of the gate-off theorem (`γ dt > 1` is engine-legal and excluded).
+trajectory; contraction in any norm when the gate fires (refuted in ℓ1 here, on a witness with rows
+above `cap`, and numerically in entry-max and ℓ2; the numerical numbers are not Lean results).
+Nothing about float64. `γ dt ≤ 1` is a hypothesis of the signed form
+`stepM_entry_lipschitz_gate_off`; `γ dt > 1` is engine-legal and is **EXCLUDED** there, **not
+refuted**: `false_entry_lipschitz_gamma_dt_gt_one` fails only because `1 - γ dt < 0` makes the
+right-hand side negative. `stepM_entry_lipschitz_gate_off_abs` (with `|1 - γ dt|`) holds for every
+`γ dt`. Correction (F1): `952f87d` called the case refuted in SPEC §18.1; that was wrong.
 -/
 
 set_option autoImplicit false
@@ -83,6 +100,35 @@ theorem stepM_entry_lipschitz_gate_off (hh1 : p.γ * p.dt ≤ 1) (D B B' : V →
     refine (abs_max_sub_max_le_abs _ _ 0).trans (le_of_eq ?_)
     rw [show preM p D B a b - preM p D B' a b = (1 - p.γ * p.dt) * (B a b - B' a b) by
       unfold preM; ring, abs_mul, abs_of_nonneg hρ]
+  unfold stepM
+  rw [if_neg hoff, if_neg hoff']
+  unfold symM
+  by_cases hij : i = j
+  · simp only [if_pos hij, sub_self, abs_zero]
+    positivity
+  · simp only [if_neg hij]
+    have e : (clipM p D B i j + clipM p D B j i) / 2 - (clipM p D B' i j + clipM p D B' j i) / 2 =
+        ((clipM p D B i j - clipM p D B' i j) + (clipM p D B j i - clipM p D B' j i)) / 2 := by ring
+    rw [e, abs_div, abs_two]
+    have := abs_add_le (clipM p D B i j - clipM p D B' i j) (clipM p D B j i - clipM p D B' j i)
+    have h1 := hc i j
+    have h2 := hc j i
+    rw [div_le_iff₀ (by norm_num : (0 : ℝ) < 2)]
+    nlinarith
+
+/-- **Gate off at both states, every `γ dt`** (F1 correction): the same bound with `|1 - γ dt|`, no
+`γ dt ≤ 1`. Proof adopted, with credit, from Researcher 001's audit scratch (`G1`). -/
+theorem stepM_entry_lipschitz_gate_off_abs (D B B' : V → V → ℝ)
+    (hoff : ¬ MatrixForm.GateOnM p D B) (hoff' : ¬ MatrixForm.GateOnM p D B') (i j : V) :
+    |stepM p D B i j - stepM p D B' i j| ≤
+      |1 - p.γ * p.dt| * ((|B i j - B' i j| + |B j i - B' j i|) / 2) := by
+  have hc : ∀ a b : V,
+      |clipM p D B a b - clipM p D B' a b| ≤ |1 - p.γ * p.dt| * |B a b - B' a b| := by
+    intro a b
+    unfold clipM
+    refine (abs_max_sub_max_le_abs _ _ 0).trans (le_of_eq ?_)
+    rw [show preM p D B a b - preM p D B' a b = (1 - p.γ * p.dt) * (B a b - B' a b) by
+      unfold preM; ring, abs_mul]
   unfold stepM
   rw [if_neg hoff, if_neg hoff']
   unfold symM
@@ -211,7 +257,8 @@ theorem rowM_B3' (i : Fin 3) : rowM pE (fun _ _ => 0) B3' i = rowB3' i := by
   fin_cases i <;> simp [B3', rowB3'] <;> norm_num
 
 /-- **Both states are deep in the binding region:** every row of both proposals is strictly above
-`cap`. -/
+`cap`. Scope (F2): such states are not engine-reachable inputs (after every engine step each row is
+`≤ cap`); see the module header for the reachable-state confirmation. -/
 theorem binding_witness_rows (i : Fin 3) :
     pE.cap < rowM pE (fun _ _ => 0) B3 i ∧ pE.cap < rowM pE (fun _ _ => 0) B3' i := by
   rw [rowM_B3, rowM_B3']
@@ -318,8 +365,42 @@ theorem binding_witness_l1 :
   rw [abs_of_neg h1, abs_of_pos h2]
   norm_num [sA, sB]
 
+/-- **Pin of the headline constant `6/5`** (F3): the growth ratio of the witness is above `6/5`,
+derived from `binding_witness_l1` and `probe_l1_B3` only. If the constant of `binding_witness_l1` is
+weakened (e.g. to `1`), this fails (mutant M319). A true strengthening of that constant (e.g.
+`123/100 < 1.2391`) still proves it; that survivor is predeclared (M321). -/
+theorem probe_binding_ratio_six_fifths :
+    6 / 5 < l1 (stepM pE (fun _ _ => 0) B3) (stepM pE (fun _ _ => 0) B3') / l1 B3 B3' := by
+  have h := binding_witness_l1
+  rw [probe_l1_B3] at h ⊢
+  rw [lt_div_iff₀ (by norm_num)]
+  linarith
+
+/-- `binding_witness_l1` is false with `5/4` in place of `6/5`: the exact ratio is `≈ 1.2391 < 5/4`
+(negation adopted, with credit, from Researcher 001's audit scratch `K4_neg`). Mutant M318. -/
+theorem false_binding_l1_five_fourths :
+    ¬ (5 / 4 * l1 B3 B3' < l1 (stepM pE (fun _ _ => 0) B3) (stepM pE (fun _ _ => 0) B3')) := by
+  rw [probe_l1_B3]
+  simp only [l1, Fin.sum_univ_three]
+  have d : ∀ i, stepM pE (fun _ _ => 0) B3 i i = 0 ∧ stepM pE (fun _ _ => 0) B3' i i = 0 :=
+    fun i => ⟨stepM_diag pE _ _ i, stepM_diag pE _ _ i⟩
+  rw [(d 0).1, (d 0).2, (d 1).1, (d 1).2, (d 2).1, (d 2).2,
+    step_symm B3 1 0, step_symm B3' 1 0, step_symm B3 2 0, step_symm B3' 2 0,
+    step_symm B3 2 1, step_symm B3' 2 1,
+    step_B3 (by decide : (0 : Fin 3) ≠ 1), step_B3 (by decide : (0 : Fin 3) ≠ 2),
+    step_B3 (by decide : (1 : Fin 3) ≠ 2), step_B3'_01, step_B3'_x2 (by decide : (0 : Fin 3) ≠ 2),
+    step_B3'_x2 (by decide : (1 : Fin 3) ≠ 2)]
+  have h1 : 19997 / 20000 * (1 / 3) * sA - 19997 / 20000 * (13 / 30) * sB < 0 := by
+    norm_num [sA, sB]
+  have h2 : 0 < 19997 / 20000 * (1 / 3) * sA - 19997 / 20000 * (1 / 3) * sB := by
+    have := sB_lt_sA; nlinarith
+  rw [abs_of_neg h1, abs_of_pos h2]
+  norm_num [sA, sB]
+
 /-- **H16, binding gate: refuted.** "The frozen-drive B map is ℓ1-nonexpansive on gate-on states" is
-false (so no ℓ1 contraction constant `K < 1`, nor `K = 1`, exists there). -/
+false (so no ℓ1 contraction constant `K < 1`, nor `K = 1`, exists there). Scope (F2): the witness
+has rows above `cap`, so it is not engine-reachable; Researcher 001 confirmed the failure
+numerically on reachable states. -/
 theorem false_stepM_l1_nonexpansive_binding :
     ¬ ∀ (B B' : Fin 3 → Fin 3 → ℝ), GateOnM pE (fun _ _ => 0) B → GateOnM pE (fun _ _ => 0) B' →
       l1 (stepM pE (fun _ _ => 0) B) (stepM pE (fun _ _ => 0) B') ≤ l1 B B' := by
@@ -341,9 +422,12 @@ theorem false_entry_lipschitz_no_gate_off :
   rw [he.1, e1, sub_self, sub_self, abs_zero, add_zero, zero_div, mul_zero, abs_nonpos_iff] at h
   linarith [he.2]
 
-/-- `stepM_entry_lipschitz_gate_off` needs `γ dt ≤ 1`: at `WeightUpdate.pH` (`γ dt = 2`, `ρ = -1`),
-`D = Xo (1/4)`, `B = Xo 0`, `B' = Xo (1/4)` the gate is off at both and the entry moves by `1/4 > 0
-≥ ρ · 1/4`. -/
+/-- The **signed** form `stepM_entry_lipschitz_gate_off` needs `γ dt ≤ 1`: at `WeightUpdate.pH` (`γ
+dt = 2`, `ρ = -1`), `D = Xo (1/4)`, `B = Xo 0`, `B' = Xo (1/4)` the gate is off at both and the
+entry moves by `1/4 > 0 ≥ ρ · 1/4`. This is a sign artifact (the right-hand side is negative), not a
+refutation of a gate-off bound at `γ dt > 1`: `stepM_entry_lipschitz_gate_off_abs` gives `|ρ| · 1/4
+= 1/4`, which holds with equality here. Correction (F1): `952f87d` described the case as refuted.
+Mutant M310. -/
 theorem false_entry_lipschitz_gamma_dt_gt_one :
     ¬ ∀ (D B B' : Fin 2 → Fin 2 → ℝ), ¬ MatrixForm.GateOnM pH D B → ¬ MatrixForm.GateOnM pH D B' →
       ∀ i j, |stepM pH D B i j - stepM pH D B' i j| ≤
@@ -386,6 +470,9 @@ theorem false_lipschitz_symm_no_symm :
 
 #print axioms stepM_entry_lipschitz_gate_off
 #print axioms stepM_entry_lipschitz_gate_off_symm
+#print axioms stepM_entry_lipschitz_gate_off_abs
+#print axioms probe_binding_ratio_six_fifths
+#print axioms false_binding_l1_five_fourths
 #print axioms scalar_map_contracting
 #print axioms scalar_map_fixedPoint_tendsto
 #print axioms binding_witness_rows

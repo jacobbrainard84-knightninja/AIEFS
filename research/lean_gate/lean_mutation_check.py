@@ -132,6 +132,19 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   and the wrong-variant control M306, gate applied before the drive), each refuted by a `false_*` theorem of its
   file; definition mutants M313-M316 (`scalarMap` gate order / clamp, `l1` without `|.|`, the witness state
   raised on one side only) killed by the `probe_*` value probes in `VP_H16`. All seventeen predeclared KILLED.
+  Follow-up to the Researcher 001 audit of 952f87d (F3 and the coverage note), predeclared in the commit that adds
+  them, before any run of them: statement mutants M317 (`stepM_edge_envelope_lower`, `γ dt ≤ 1` -> True; refuted by
+  `false_lower_envelope_gamma_dt_gt_one` at `WeightUpdate.pH`) and M318 (`binding_witness_l1`, `6/5` -> `5/4`;
+  refuted by `false_binding_l1_five_fourths`), predeclared KILLED; definition-style pins M319 (`6/5` -> `1` in
+  `binding_witness_l1`; pin probe `probe_binding_ratio_six_fifths`) and M320 (`8/3` -> `3` in
+  `stepM_edge_envelope_pE`; pin probe `probe_envelope_pE_orbit`), predeclared KILLED. These two "probes" are
+  statement pins (they consume the theorem with its headline constant written out), not closed-number value
+  equalities; KILLED there means "the pinned constant changed". M321 (`6/5` -> `123/100`, a TRUE strengthening,
+  since the exact ratio is about 1.2391) is predeclared SURVIVE and listed in `KNOWN_SURVIVORS`: no Lean check can
+  reject a statement that is still true and still proved; only the text pin in test_lean_gate_h9h16.py catches it.
+  Disclosure: Researcher 001's audit scratch already ran the analogues of M317 (K5), M318 (K4), M319 (K1) and
+  M321 (K2), so these predictions are informed by those results, not independent of them. `GateContraction.lean`
+  gets a `FILE_OPENS` entry because M318's statement uses the file's short names (`l1`, `B3`, `B3'`).
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
@@ -648,6 +661,14 @@ MUTANTS = [
     ("M312_contracting_lam_le_one_dropped", "GateContraction.lean", "scalar_map_contracting",
      [("(hl1 : lam ≤ 1)", "(hl1 : True)", 1)], "",
      f"GateContraction.false_contracting_lam_gt_one {via('H', 'lam ρ d hl0 hl1 hρ0 hρ1', 4)}", None),
+    # Audit follow-up (Researcher 001 on 952f87d: coverage note and F3). Predeclared KILLED before any run of them.
+    ("M317_edge_envelope_lower_gamma_dt_le_one_dropped", "GronwallEnvelope.lean", "stepM_edge_envelope_lower",
+     [("(hh1 : p.γ * p.dt ≤ 1)", "(hh1 : True)", 1)], WU_VARS,
+     "GronwallEnvelope.false_lower_envelope_gamma_dt_gt_one (fun B D κ hrec hDs hB0s {i j} hij hκ0 hκ n => "
+     "@H (Fin 2) _ _ WeightUpdate.pH B D trivial κ hrec hDs hB0s i j hij hκ0 hκ n)", None),
+    ("M318_binding_witness_l1_six_fifths_to_five_fourths", "GateContraction.lean", "binding_witness_l1",
+     [("6 / 5 * l1 B3 B3'", "5 / 4 * l1 B3 B3'", 1)], "",
+     "GateContraction.false_binding_l1_five_fourths H", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -702,12 +723,14 @@ VP_ARENA = {"ReachableQueue.lean": ["probe_shift_values", "probe_view_values", "
             "WindowMax.lean": ["probe_next_values"],
             "HeteroStepRef.lean": ["probe_linearStep_values", "probe_phaseHeadW_value"]}
 # H16 (GateContraction.lean, SPEC §18): closed-number probes, each proved from the definitions in the probe itself
-VP_H16 = ["probe_scalarMap_value", "probe_scalarMap_clamp", "probe_l1_B3"]
+VP_H16 = ["probe_scalarMap_value", "probe_scalarMap_clamp", "probe_l1_B3", "probe_binding_ratio_six_fifths"]
+# H9 (GronwallEnvelope.lean, audit follow-up F3): statement-pin probe of the `pE` envelope constants
+VP_H9 = ["probe_envelope_pE_orbit"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
                 "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR,
-                "GateContraction.lean": VP_H16,
+                "GateContraction.lean": VP_H16, "GronwallEnvelope.lean": VP_H9,
                 **VP_ARENA}
 CP_OLD = "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n"
 CW_OLD = "def clippedWeight (b : ℝ) : ℝ := max 0 b\n"
@@ -957,6 +980,13 @@ DEF_MUTANTS = [
        "def l1 (X Y : Fin 3 → Fin 3 → ℝ) : ℝ := ∑ i, ∑ j, (X i j - Y i j)\n", 1)], ["probe_l1_B3"]),
     ("M316_B3prime_raised_one_side_only", "GateContraction.lean",
      [("![13 / 30, 0, 1 / 3]", "![1 / 3, 0, 1 / 3]", 1)], ["probe_l1_B3"]),
+    # Audit follow-up (F3): the headline constants, pinned by statement-pin probes. Predeclared KILLED.
+    ("M319_binding_witness_l1_six_fifths_to_one", "GateContraction.lean",
+     [("    6 / 5 * l1 B3 B3' < l1 (stepM", "    1 * l1 B3 B3' < l1 (stepM", 1)], ["probe_binding_ratio_six_fifths"]),
+    ("M320_envelope_pE_eight_thirds_to_three", "GronwallEnvelope.lean",
+     [("    B n i j ≤ (19997 / 20000 : ℝ) ^ n * B 0 i j + (1 - (19997 / 20000 : ℝ) ^ n) * (8 / 3) := by\n",
+       "    B n i j ≤ (19997 / 20000 : ℝ) ^ n * B 0 i j + (1 - (19997 / 20000 : ℝ) ^ n) * 3 := by\n", 1)],
+     ["probe_envelope_pE_orbit"]),
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -1039,7 +1069,14 @@ STATEMENT_CONTROLS = [
 # PhaseIncrement.lean alone survived (that file had no value probe involving ω or τ; S1, killed only one level up by
 # M43). `probe_input_asym_omega_value` (PhaseIncrement.lean) now kills it (M55, a counted definition mutant). The
 # mechanism is kept: a mutant listed here is run, reported, and fails the run if it is detected (stale entry).
-KNOWN_SURVIVORS = []
+# H16 audit follow-up (predeclared SURVIVE in the commit that adds it): M321 strengthens the constant of
+# `binding_witness_l1` from 6/5 to 123/100. The statement is still TRUE (exact ratio about 1.2391) and the kept proof
+# closes it, and `probe_binding_ratio_six_fifths` still follows from it, so the Lean build passes: no Lean check can
+# kill a true strengthening. Only the text pin in test_lean_gate_h9h16.py catches it.
+KNOWN_SURVIVORS = [
+    ("M321_binding_witness_l1_six_fifths_to_123_100", "GateContraction.lean",
+     [("    6 / 5 * l1 B3 B3' < l1 (stepM", "    123 / 100 * l1 B3 B3' < l1 (stepM", 1)]),
+]
 
 # Classifier negative control (P3 rule change, see (a) above): the P2 deletion form of M1 fails to build with
 # name-reference errors only; it must be classified as such and must NOT count as a build rejection.
@@ -1070,7 +1107,9 @@ FILE_OPENS = {"ReachableQueue.lean": "open AIEFGate.ReachableQueue\n",
               "TransientParameter.lean": "open AIEFGate.TransientParameter\n",
               "WindowMax.lean": "open AIEFGate.WindowMax\n",
               "HeteroStepRef.lean": "open AIEFGate.HeteroStepRef\n",
-              "HeteroGuard.lean": "open AIEFGate.HeteroStepRef\n"}
+              "HeteroGuard.lean": "open AIEFGate.HeteroStepRef\n",
+              # H16 audit follow-up: M318's statement uses this file's short names (`l1`, `B3`, `B3'`)
+              "GateContraction.lean": "open AIEFGate.GateContraction\n"}
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 

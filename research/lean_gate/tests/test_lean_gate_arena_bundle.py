@@ -115,8 +115,12 @@ def test_def_mutants_probes_and_controls():
 
 
 def test_file_opens_one_bundle_namespace_each():
-    assert set(mc.FILE_OPENS) == set(FILES)
+    # GateContraction.lean (H16, SPEC §18.6, not a bundle file) has its own entry for M318's short names
+    assert set(mc.FILE_OPENS) - {"GateContraction.lean"} == set(FILES)
+    assert mc.FILE_OPENS["GateContraction.lean"] == "open AIEFGate.GateContraction\n"
     for f, pre in mc.FILE_OPENS.items():
+        if f == "GateContraction.lean":
+            continue
         opened = re.findall(r"AIEFGate\.(\w+)", pre)
         expect = ["CausalEMATracking", "EMAFiniteSum"] if f == "EMAFiniteSum.lean" else [NS[f]]
         assert opened == expect, f

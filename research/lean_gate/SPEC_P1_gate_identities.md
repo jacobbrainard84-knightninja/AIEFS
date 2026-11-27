@@ -1682,9 +1682,12 @@ flagged "may be false (UNVERIFIED)" and had to be probed numerically before any 
   ℓ1 distance grows by a factor `> 6/5` (`binding_witness_l1`, exact ratio ≈ 1.239), and the unchanged edge
   `{0,2}` moves (`binding_witness_entry`); `false_stepM_l1_nonexpansive_binding`.
 - Scope, stated in both module headers: exact reals; frozen drive / frozen `R` (**conditional, not O1**: in the engine
-  `R` depends on the phases, which depend on `B`); `γ dt ≤ 1` assumed everywhere it is needed (`γ dt = 1` covered;
-  `γ dt > 1` is engine-legal, the engine validates only `γ ≥ 0`, and is refuted at `WeightUpdate.pH`); growth
-  envelopes only (no convergence of the engine `B`, no O1, no explanation of E22); nothing about float64.
+  `R` depends on the phases, which depend on `B`); `γ dt ≤ 1` is a hypothesis of the signed-`ρ` theorems
+  (`γ dt = 1` covered). `γ dt > 1` is engine-legal (the engine validates only `γ ≥ 0`) and is **EXCLUDED** from
+  those theorems, **not refuted**: the `false_*` witnesses at `WeightUpdate.pH` (`ρ = −1`) are a sign artifact of the
+  signed `ρ`, and the `|1 − γ dt|` / `max(ρ, 0)` forms hold for every `γ dt` (§18.6, F1; corrected wording, the
+  version at `952f87d` was wrong); growth envelopes only (no convergence of the engine `B`, no O1, no explanation of
+  E22); nothing about float64.
 
 ### 18.2 H16 probe (run before any H16 Lean was written)
 `research/lean_gate/h16_binding_probe.py` (stdlib + numpy, written fresh, mirrors engine L790–813, does not import or
@@ -1697,6 +1700,10 @@ Frobenius ratio **1.5173**. **Verdict: the binding-gate contraction claim is FAL
 `B`, so raising one entry lowers every other entry of its two rows. In the random states some rows were below `cap`
 (the gate fires globally); the Lean witness has every row above `cap`. Not claimed: anything about convergence of
 the coupled engine (a non-contracting one-step map can still have convergent orbits); that stays open.
+**Scope (added after the audit, F2):** the probe draws row sums at `1 … 1.5 ×` cap and the Lean witness has rows
+`2/3`, `23/30` against `cap = 19/30`; the engine never feeds such states into the step (after every step each row is
+`≤ cap`), so neither input set is engine-reachable, and the ℓ2 low end `0.892 < ρ` comes from those unreachable rows.
+See §18.6 for Researcher 001's reachable-state confirmation (the claim fails there too, by a wider margin).
 
 ### 18.3 Mutants M300–M316 (separate block; another branch may add mutants right after M190)
 Rules unchanged (statement mutants as §5, definition mutants as §11.3). **Predeclared outcome for every mutant:
@@ -1753,3 +1760,63 @@ M190 and move the same pins; whichever lands second must re-add the other's coun
   Checkers `check_manifest`, `check_sha256sums`, `check_current_inventory`, `hygiene_scan`, `lint_claims`,
   `check_modes`, `check_pinned_restatement`, `check_artifact_pins`, `check_study_paths`: rc 0.
 - UNEXPLAINED: none found. Open (not claimed): convergence of the coupled engine `B` with `R` not frozen.
+
+### 18.6 Audit follow-up (Researcher 001 on `952f87d`: CLEAN WITH NOTES, F1–F5 and a coverage note)
+Corrections, recorded plainly:
+- **F1 (wrong claim):** `952f87d` said the engine-legal case `γ dt > 1` "is refuted" (§18.1, the GronwallEnvelope
+  header). That was wrong. At `WeightUpdate.pH` `ρ = 1 − γ dt = −1`, so the signed-`ρ` right-hand sides are
+  negative and any nonzero change "refutes" them: a sign artifact. The case is **EXCLUDED** from the signed-`ρ`
+  theorems, **not refuted**. Added, proofs adopted with credit from Researcher 001's audit scratch (`G1`,
+  `G2_scalar`, `G2_pH_edge`): `GateContraction.stepM_entry_lipschitz_gate_off_abs` (gate off at both states, bound
+  `|1 − γ dt| · (|ΔB_ij| + |ΔB_ji|)/2`, every `γ dt`), `GronwallEnvelope.scalar_envelope_upper_pos` (any sign of
+  `ρ`, with `max ρ 0`; needs `0 ≤ λ n ≤ 1`, `0 ≤ B 0`) and `stepM_edge_envelope_upper_pos` (per edge, every `γ dt`,
+  given `EngineGate p`; generalised from Researcher 001's `pH` instance). `false_envelope_gamma_dt_gt_one` and
+  `false_entry_lipschitz_gamma_dt_gt_one` are kept and relabelled: they show only that the **signed** formulas need
+  `γ dt ≤ 1` (M305, M310).
+- **F2 (missing scope):** the Lean witness (`B3`, `B3'`) and the `N = 12` probe use rows above `cap`, which the
+  engine never feeds into the step; the refutation is valid as stated but its witness is not engine-reachable, and
+  the probe's ℓ2 low end `0.892` comes from those unreachable rows. Researcher 001 re-derived the result on
+  reachable states with the real engine `advance_state` (sha-checked temp copy, production defaults, seeds
+  7001–7006, 604 gate-on states, largest row minus cap `−1.0e−12`): ℓ1 `1.97 … 2.58`, entry-max `1.50 … 2.54`, ℓ2
+  `1.11 … 1.44`, every one above `ρ = 0.99985`; gate-off negative control (44 states) exactly `0.99985`. Those are
+  Researcher 001's numerical audit results (its audit note), not Lean results and not this branch's probe. A
+  reachable Lean witness was not added (Researcher 001's best exact `Fin 3` reachable pair, ratio `1.9654`, needs a
+  nonzero drive and a new chain of row lemmas; optional, left open).
+- **F3 (unpinned constants):** at `952f87d`, `binding_witness_l1` with `6/5 → 1`, `stepM_edge_envelope_pE` with
+  `8/3 → 3`, and the GateContraction header with "not" deleted from its NORTH_STAR row 7 sentence passed every
+  check (`lint_claims` included). Now: text pins in
+  `test_lean_gate_h9h16.py` (exact statement lines with `6 / 5`, `19997 / 20000`, `8 / 3`, `1 / 25`; every
+  "NORTH_STAR (row) 7 … advanced" phrase in both modules and this section must say "not"), and Lean pin probes
+  `probe_binding_ratio_six_fifths` (`6/5 <` the witness ratio, from `binding_witness_l1`) and
+  `probe_envelope_pE_orbit` (the `pE` envelope on a concrete orbit, closed by `exact`), counted by the harness as
+  M319 and M320.
+- **F4:** the `pE` envelope constant `8/3` is about `4.2×` (`80/19`) looser than the trivial bound `cap = 19/30`
+  that every edge obeys after one step (the gate keeps each row `≤ cap`). The instance only checks that the formula
+  fits the engine form; it is not a useful bound.
+- **F5:** `upper_geom_statement_eq` was the same written type on both sides (`A = A`) and linked nothing; the real
+  link was the two `example`s. It now states `type_of% @AIEFGate.Freeze.upper_geom = type_of%
+  @upper_geom_via_gronwall := rfl`, which does name both declarations.
+- **Coverage note:** dropping `γ dt ≤ 1` from `stepM_edge_envelope_lower` gives a false statement, and the branch had
+  no mutant for it. Added `false_lower_envelope_gamma_dt_gt_one` (negation adopted with credit from Researcher
+  001's `K5_neg`) and mutant M317. `false_binding_l1_five_fourths` (from Researcher 001's `K4_neg`) shows `6/5` is
+  sharp to within `(1.2391, 5/4)` (M318).
+
+Mutants added (predeclared in the commit that adds them, before any run of them; rules unchanged):
+
+| Mutant | Statement / definition | Edit | Predeclared | Refuted by / killed by |
+|---|---|---|---|---|
+| M317 | `stepM_edge_envelope_lower` | `γ dt ≤ 1` → `True` | KILLED | `false_lower_envelope_gamma_dt_gt_one` (`pH`) |
+| M318 | `binding_witness_l1` | `6/5` → `5/4` | KILLED | `false_binding_l1_five_fourths` |
+| M319 | `binding_witness_l1` (definition-style pin) | `6/5` → `1` | KILLED | `probe_binding_ratio_six_fifths` |
+| M320 | `stepM_edge_envelope_pE` (definition-style pin) | `8/3` → `3` | KILLED | `probe_envelope_pE_orbit` |
+| M321 | `binding_witness_l1` (`KNOWN_SURVIVORS`, not counted) | `6/5` → `123/100` | **SURVIVE** | none: a true strengthening (ratio ≈ 1.2391) that the kept proof closes; only the text pin catches it |
+
+M319/M320 use the definition-mutant rule with statement-pin probes (the probe consumes the theorem with the constant
+written out); they are not closed-number value equalities. Disclosure: Researcher 001's audit scratch already ran
+the analogues of M317 (K5), M318 (K4), M319 (K1) and M321 (K2), so these predictions are informed by those results.
+`GateContraction.lean` gets a `FILE_OPENS` entry (M318's statement uses the short names `l1`, `B3`, `B3'`). Pins move:
+statement mutants 118 → 120, definition mutants 89 → 91, total 207 → 211; `KNOWN_SURVIVORS` holds one entry (M321),
+the first since N2.
+
+Results: recorded in the next commit, after the runs.
+
