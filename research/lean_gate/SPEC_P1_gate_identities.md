@@ -1538,7 +1538,8 @@ prefix), and an appended `/-! ### ...(SPEC §17)` section with value probes, `fa
 `CausalEMATracking.far_start`, and `#print axioms` lines for every new theorem and for five deposited theorems that
 had none (`QueueComposition.consistent_transfer`, `initialized_consistent`, `TransientBridge.mode_sum`,
 `energy_nonneg`, `TransientParameter.mode_sum`). MatrixPhaseBridge's SPDX comment was replaced by the block (its
-session-date note is kept in the doc). **Every deposited statement and proof is unchanged**:
+session date is kept in the doc; its caveat "lead-note date conflicts, see note" was at first dropped and is restored
+by the audit follow-up, §17.7 N4; the deposit file itself contains no such note, so the date is unverified). **Every deposited statement and proof is unchanged**:
 `test_lean_gate_arena_bundle.py` strips the added parts and pins the sha256 of the remaining non-blank lines, which
 equals that of the deposit.
 
@@ -1556,9 +1557,15 @@ What the modules say (exact reals; fixed weights; none of it supports an AIEF-1.
   Σ α^(n−1−k) |drift k|` with the delayed-increment drift, for `0 ≤ α`.
 - `TransientBridge` / `TransientParameter`: two-slot energy of one mean-zero mode (`N = 3`, `d = 1`); derivative link to
   `EngineStepRef.phaseStep`, root stability for `0 < c < 1`, one-step and (at `c = 1/4`) all-time energy bounds.
-- `WindowMax`: mean-zero window max-norm invariant for `N ≥ 2`, `0 ≤ c ≤ 2/N`; growth witness above the threshold.
+- `WindowMax`: mean-zero window max-norm invariant for `N ≥ 2`, `0 ≤ c ≤ 2/N`; growth witness above the threshold
+  (linearised at the in-phase frozen state, Ω = 0: `reference_link` is the derivative along `orbitPath … 0 1`).
 - `HeteroStepRef` / `HeteroGuard`: fixed `B`, all perturbations, window invariant under `dt ≥ 0`, `B ≥ 0`,
-  `dt·row_i(B) ≤ 1`; the exact-real gap guard implies the row condition; growth witness when a row fails.
+  `dt·row_i(B) ≤ 1`; the exact-real gap guard implies the row condition; growth witness when a row fails
+  (linearised at the in-phase frozen state, Ω = 0: `weighted_step_derivative` is taken along `orbitPath … 0 θ`).
+- Scope of both (audit note N3): "all perturbations" means all perturbations of that one linearised map, iterated. It
+  matches an engine linearisation along an orbit only when `cos(d·dt·Ω) = 1`; the engine's heterogeneous ω has no such
+  in-phase orbit. `HeteroGuard.engine_constants_safe` is exact-rational algebra on the default constants
+  (`dt·cap ≈ 0.0063 ≪ 1`), not a statement about runs.
 
 **Engine citations** (MatrixPhaseBridge lines 823, 830–839, 836–839, 841–844; HeteroStepRef lines 830–839) were
 checked against `aief_experiment_engine_v1.py` (sha `ca4593fd…`, unchanged) and are pinned in the test.
@@ -1598,6 +1605,42 @@ general-`c` bound are not proved; `DelayRoots` is imported by TransientParameter
 | M155 | `HeteroGuard.guarded_window_all_steps`: cap := True | `false_guarded_no_cap` |
 | M156 | `guarded_window_all_steps`: `0 < q` := True | `false_guarded_no_q` (q = 0) |
 
+**Audit follow-up M191–M201 (Researcher 001 note N5, §17.7).** Statement mutants for deposited theorems that had
+none. Rule as §5. **Predeclared in the commit that adds them, before any run: every one is expected REJECTED** (none
+is expected to survive; a survivor would be reported UNEXPLAINED, not moved to `KNOWN_SURVIVORS`).
+
+| Mutant | Change | Refuted by | Predeclared |
+|---|---|---|---|
+| M191 | `EmaNearUnit.trace_projection_bound`: startup factor `(1 − α^N)` dropped | `false_projection_no_startup` (N = 0, L = 1) | REJECTED |
+| M192 | `trace_norm_bound`: startup factor `(1 − α^N)` dropped | `false_norm_no_startup` (N = 0, L = 1) | REJECTED |
+| M193 | `near_unit_of_phase_spread`: budget without `α^N` | `false_spread_no_startup` (N = 0, β = 0, ε = 0) | REJECTED |
+| M194 | `EMAFiniteSum.delayed_tracking_sum`: `0 ≤ α` := True | `false_delayed_sum_no_nonneg` (α = −1, C0 = 10, n = 1) | REJECTED |
+| M195 | `ReachableQueue.step_reachable_consistent`: consistency := True | `false_step_reachable_no_consistent` (`bad`, t = 0) | REJECTED |
+| M196 | `QueueComposition.finite_abstract_step`: reads slot 0 for `history k` | `false_finite_step_head_slot` (`probeState`, dt = 0, k = 1: 1 ≠ 0) | REJECTED |
+| M197 | `MatrixPhaseBridge.matrix_head_direction`: factor `cos(d·dt·Ω)` dropped | `false_head_direction_no_cos` (Ω = π: derivative −1, not 1) | REJECTED |
+| M198 | `TransientBridge.after_first_bound`: factor 1/4 | `false_after_first_quarter` (p = (1, −1): 37/64 > 1/2) | REJECTED |
+| M199 | `TransientBridge.eigenmode_stable`: `v ≠ 0 ∨ w ≠ 0` := True | `false_eigenmode_no_nonzero` (v = w = z = 0) | REJECTED |
+| M200 | `TransientParameter.eigenmode_stable`: `v ≠ 0 ∨ w ≠ 0` := True | `false_param_eigenmode_no_nonzero` (c = 1/2, z = 1) | REJECTED |
+| M201 | `HeteroStepRef.window_all_steps`: row condition := True | `false_window_all_no_row` (t = 1, head −3) | REJECTED |
+
+**Still without a statement mutant** (plain list):
+- `QueueComposition.initialized_trajectory_bridge`: not mutable by the current harness. Its statement contains
+  `let s := …`, and `theorem_span` / `statement_prop` stop at the first top-level `:=`. A harness change is out of
+  scope here. Its two ingredients are mutated: `consistent_transfer` (M133) and `finite_abstract_step` (M196).
+- Unconditional identities and value facts, with no hypothesis to drop: `ReachableQueue.shift_consistent`,
+  `QueueComposition.initialized_consistent`, `CausalEMATracking.tracking_identity`,
+  `TransientBridge.mode_sum` / `TransientParameter.mode_sum`, `spatial_energy`, `energy_nonneg`, `first_step_value`,
+  `characteristic_roots`, `reference_mode_link` (both Transient files), `WindowMax.reference_link`,
+  `EmaWrapInvariant.arcBound_periodic`, `HeteroStepRef.agrees_main`, `weighted_head_derivative`,
+  `weighted_step_derivative`, `guard_row_bound`.
+- Counterexamples and closed probes that are themselves the negative facts: `ReachableQueue.bad_breaks_reference`,
+  `MatrixPhaseBridge.probeW_mean`, `probeW_nonuniform`, `nonuniform_counterexample`, `inconsistent_counterexample`,
+  `EmaWrapInvariant.cross_wrap_angle`, `cross_wrap_good`, `cross_wrap_rejected`,
+  `CausalEMATracking.drift_factor_one_probe`, `EMAFiniteSum.oldest_drift_probe`, `reversed_power_counterexample`,
+  `TransientParameter.quarter_probe`, `zero_boundary`, `WindowMax.exact_growth_witness`,
+  `HeteroStepRef.growth_witness`, `HeteroGuard.engine_constants_safe` (exact-rational algebra on the defaults).
+  These are not mutated.
+
 **FILE_OPENS.** The bundle reuses short names (`State`, `Consistent`, `step`, `iterate`, `mode`, `energy`,
 `window_step`, `window_all_steps`, ...) in distinct namespaces. Rather than renaming anything, each refutation file
 opens only the mutated file's namespace (`FILE_OPENS` in `lean_mutation_check.py`; `refute` gained a `preamble`
@@ -1633,8 +1676,16 @@ recommended archiving them; their bounds are correct exact-real facts but say no
 ### 17.5 Tests and pins
 `research/lean_gate/tests/test_lean_gate_arena_bundle.py`: imports and hash pins, CoherenceSpeedLimit absent,
 deposit bodies unchanged (pinned digests), no escape hatches, an axioms print for every theorem, the exact shape of
-M131–M190 and E21–E23, `FILE_OPENS` (one bundle namespace each, none in the global `OPENS`), the probe and witness
-values in exact arithmetic, the §17.4 inequality, and the engine citations. Pins move: P4b `len(MUTANTS)` 79 → 105;
+M131–M190 (and M191–M201, §17.7) and E21–E23, `FILE_OPENS` (one bundle namespace each except EMAFiniteSum, which
+opens CausalEMATracking and EMAFiniteSum; none in the global `OPENS`), and the engine citations.
+`test_probe_and_witness_values_exact` reads the Lean sources: it pins the Python models to the text of `next`,
+`linearStep`, `row`, `step`, `stepSize`, `energy` and `budget`, checks that each probe statement's right-hand side
+equals the model value, checks the mutant values named in the `probe_next_values` docstring, and checks each
+witness instance (`have h := H …`) and the violation it gives. `test_window_max_and_hetero_are_complementary` parses
+the §17.4 thresholds, the `N ≥ 2` range and the `N = 3`, `c = 3/5` example from this SPEC text and checks them
+against the hypotheses of `HeteroStepRef.window_step`, `WindowMax.coefficient_bound` / `window_step` and
+`growth_witness` as written in Lean. (Before the §17.7 follow-up these two tests recomputed constants in Python only
+and could not fail when the Lean or the SPEC changed; audit note N1.) Pins move: P4b `len(MUTANTS)` 79 → 105;
 P5 `N_STATEMENT_MUTANTS` 79 → 105, `N_DEF_MUTANTS` 51 → 85, total 130 → 190, equivalence controls 20 → 23; c016
 unique controls 24 → 27 and M131–M190 numbered; the stubbed full-run test's `refute` takes the new `preamble` argument.
 
@@ -1653,3 +1704,56 @@ unique controls 24 → 27 and M131–M190 numbered; the stubbed full-run test's 
   CoherenceSpeedLimit, widened a FILE_OPENS entry, dropped M190, wrong refuter name, moved engine
   citation, dropped E23), each applied to a copy outside the repo; all 11 caught.
 - No mutants dropped; no declarations renamed; deposited proofs and statements unchanged.
+
+### 17.7 Audit follow-up (branch `fix/arena-bundle-audit-notes`, from `main` `daa977ac`)
+Researcher 001's independent audit of `research/arena-bundle` @ `82a5a1f` (non-author) returned **CLEAN WITH NOTES**
+(`audit_inbox/briefing/REVIEW_2026-11-25_r001_arena-bundle_82a5a1f.md` on `audit-inbox`). PR #52 merged before this
+follow-up. Its notes, and what this branch does about each:
+- **N1 (test honesty).** `test_probe_and_witness_values_exact` and `test_window_max_and_hetero_are_complementary`
+  read no Lean file and no SPEC text, so they could not fail when a probe value or the §17.4 thresholds changed.
+  Both now parse what they are named after (§17.5). **Correction to §17.6 (add-only):** the "all 11 caught" red-team
+  there partly relied on a stale `AIEF_LEAN_GATE_SOURCE_SHA256SUMS.txt` pin. The red-team script did not regenerate
+  the sums after each Lean edit, so at least the changed-probe-value, inserted-`sorry` and edited-deposit-proof
+  variants were also, or only, caught by the file-hash pin. The new red-team regenerates the sums after every edit.
+  Its baseline label, which printed `SURVIVED (BAD)` for a passing baseline, is corrected.
+- **N2 (wording).** The `lean_mutation_check.py` comments said a refutation never opens two bundle namespaces.
+  EMAFiniteSum opens two, CausalEMATracking and EMAFiniteSum, which share no names. The comments now say so.
+- **N3 (scope).** README row and §17.1 now say that WindowMax and HeteroStepRef are linearised at the in-phase frozen
+  state (Ω = 0), with what "all perturbations" does and does not cover.
+- **N4 (provenance).** The MatrixPhaseBridge module doc again carries the deposit's "lead-note date conflicts, see
+  note" caveat, and says that the deposit file contains no such note. This changes the repository header doc only; no
+  deposited statement or proof changes (the deposit digest test still passes).
+- **N5 (coverage).** Statement mutants M191–M201 are added, each predeclared REJECTED (§17.2). The theorems still
+  without a statement mutant are listed in §17.2.
+- **N6 (CI time).** See the results below.
+- **N7 (info).** Commit identity unchanged by convention; no action.
+
+**Results (2026-11-26 GMT, on commit `c666da6`, which first added M191–M201 with their predeclaration):**
+- `SKIP_CACHE=1 STRICT_ORPHANS=1 unshare -rn ./check_lean_gate.sh`: RESULT PASS. Build 2353 jobs, 0 warnings;
+  SHA256SUMS verified (42 files); escape-hatch scan 38 files, 0 hits; step 7 audited **1199 project declarations**
+  (1188 + the 11 new `false_*` witnesses), standard axioms only (propext, Classical.choice, Quot.sound).
+- Full unfiltered `unshare -rn python3 research/lean_gate/lean_mutation_check.py` (19 min 25 s locally): **116/116
+  statement** rejected, **85/85 definition** killed, **201/201 total**; 23/23 equivalence controls not killed; 4/4
+  typo controls flagged invalid; validator, classifier and statement controls as expected; RESULT PASS, rc 0. All 11
+  new mutants M191–M201 came out REJECTED, as predeclared. Three statement mutants carry the information-only note
+  "build output also has a name-reference/parse error line": M31 (pre-existing) and M199/M200. For M199/M200 this is
+  explained: the kept proof does `rcases hne with hv | hw`, which on `hne : True` binds no `hv`, so `Unknown
+  identifier hv` appears beside the real failures (`No goals to be solved`). Rejection does not rest on that line.
+- pytest: `research/lean_gate/tests` 193 passed; `tools/ci/tests` 246 passed (unittest OK); v4.1 held-event and
+  trust-anchor 45 passed; `tests_modular` 60 passed, 2 skipped, 2 xfailed. Every repository checker rc 0
+  (lint_claims, hygiene_scan with `--pii` against origin/main and without, check_manifest, check_sha256sums,
+  check_artifact_pins, check_modes --strict, check_current_inventory, check_study_paths, check_pinned_restatement,
+  verify_inventory_current).
+- N1 red-team: 12 wrong variants, each applied to a copy outside the repo with the gate sums regenerated after every
+  Lean edit, so the file-hash pin cannot be what catches them. Variants: four probe values changed (WindowMax,
+  HeteroStepRef, TransientBridge, CausalEMATracking), a witness instance that no longer violates, a witness factor,
+  a probe-docstring mutant value, three §17.4 SPEC edits (`1/(N−1)` → `1/N`, `2/N` → `3/N`, `c = 3/5` → `2/5`), and
+  a Lean row-bound change. **All 12 caught**, each by the intended test. Control: the pre-follow-up test file
+  (`daa977a`) passes the changed-probe, changed-factor and changed-SPEC variants, which confirms N1.
+- **N6 finding (record only; CI unchanged).** Per-step GitHub timings: the whole difference is in the "Lean-gate
+  mutation check" step. It took 25 min 20 s on the `82a5a1f` push run, against 17 min 30 s on the PR run for the
+  **same sha** about 2.5 hours later, 20 min 20 s on main `daa977a`, and 14 min 53 s on main `8b49f15` (Nov 20, 130
+  mutants). `lean-action` setup was 3 min 56 s against about 2.5 min. So 31 min 43 s is mutant growth (130 → 190,
+  +46%), plus about 8 minutes of runner variance on identical inputs. There is no sign of a cache miss beyond about
+  1.3 minutes of setup. This follow-up adds 11 statement mutants (201 total). The job timeout is 60 minutes, which
+  leaves headroom for now, but it should be watched before the next mutant batch.

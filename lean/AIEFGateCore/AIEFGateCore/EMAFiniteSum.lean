@@ -91,6 +91,26 @@ theorem false_finite_sum_no_start_decay :
   have h := H 2 1 (fun _ => 0) 1
   norm_num [budget] at h
 
+/-- Dropping `0 ≤ α` from `delayed_tracking_sum` is false (`α = -1`, `C0 = 10`, `u = 0`, `n = 1`:
+the right side is `-‖e 0‖ ≤ -9`). Audit note N5. -/
+theorem false_delayed_sum_no_nonneg :
+    ¬ (∀ {V : Type*} (alpha : ℝ) (C0 : V → V → ℂ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ)
+      (omega : V → ℝ) (tau : ℝ) (_ha : True) (n : ℕ) (i j : V),
+      ‖error alpha C0 d x0 u omega tau n i j‖ ≤
+        alpha ^ n * ‖error alpha C0 d x0 u omega tau 0 i j‖ +
+          ∑ k ∈ Finset.range n, alpha ^ (n - 1 - k) *
+            |u k i - Phase.delayedIncrement d u k j|) := by
+  intro H
+  have h := @H PUnit (-1) (fun _ _ => 10) 0 (fun _ => 0) (fun _ _ => 0) (fun _ => 0) 0 trivial 1
+    PUnit.unit PUnit.unit
+  have h9 := far_start (-1) 0 (fun _ => 0) (fun _ _ => 0) (fun _ => 0) 0 PUnit.unit PUnit.unit
+  have h0 := norm_nonneg (error (-1) (fun (_ _ : PUnit) => (10 : ℂ)) 0 (fun _ => 0) (fun _ _ => 0)
+    (fun _ => 0) 0 1 PUnit.unit PUnit.unit)
+  simp only [Phase.delayedIncrement, Finset.sum_range_one] at h
+  norm_num at h
+  linarith
+
+#print axioms false_delayed_sum_no_nonneg
 #print axioms false_finite_sum_reversed
 #print axioms false_finite_sum_no_start_decay
 
