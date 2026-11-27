@@ -20,7 +20,7 @@ ENGINE = (REPO / "aief_experiment_engine_v1.py")
 STATEMENTS = [
     "theorem wrapPhase_eq_toIcoMod (t : ℝ) : Phase.wrapPhase t = toIcoMod Real.two_pi_pos 0 t := by",
     "theorem wrapPhase_mem_Ico (t : ℝ) : 0 ≤ Phase.wrapPhase t ∧ Phase.wrapPhase t < 2 * Real.pi := by",
-    "theorem wrapPhase_coe_angle (t : ℝ) : ((Phase.wrapPhase t : ℝ) : Real.Angle) = (t : Real.Angle) := by",
+    "theorem wrapPhase_coe_angle (t : ℝ) :\n    ((Phase.wrapPhase t : ℝ) : Real.Angle) = (t : Real.Angle) := by",
 ]
 # predeclared (first commit): every H17 mutant must be KILLED; none is a known survivor
 PREDECLARED = {"M700_wrap_is_ioc_neg_pi": "KILLED", "M701_wrap_range_lt_pi": "KILLED",

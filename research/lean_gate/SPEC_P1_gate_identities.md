@@ -1683,3 +1683,13 @@ E or T controls (the existing harness controls apply unchanged). **Predeclared o
 The control that shows these can fail: each refutation is a proved `¬` theorem (standard axioms), and the harness's
 step (c) re-runs the same term against the unmutated statement, which must fail. A survivor is reported, not deleted.
 Counts: statement mutants 105 → 109, total 190 → 194.
+
+### 18.1 Results (local, 2026-11-26 MST, on `main` `daa977a` + this branch)
+- Gate (`SKIP_CACHE=1 STRICT_ORPHANS=1`, run under `unshare -rn`): **PASS**. 1197 project declarations audited,
+  standard axioms only. The first run failed step 5 on one >100-char line in `WrapBridge.lean`; the line was split and
+  SHA256SUMS regenerated before the passing run.
+- Mutation harness: **194/194 rejected**. M700–M703 all KILLED as predeclared (refuted by proof, and each term fails on
+  the unmutated statement). Typo controls 4/4 flagged invalid; SE1 and ST1 not rejected (good).
+- Float witness `np.mod(-1e-20, 2*pi) == 2*pi` holds (the engine can produce 2π, outside [0, 2π)), with the +1e-20
+  negative control. How often this happens in real runs is **UNEXPLAINED** (unmeasured).
+- pytest `research/lean_gate/tests`: 197 passed. The 12 CI checkers: all rc = 0.

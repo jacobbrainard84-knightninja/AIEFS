@@ -41,7 +41,8 @@ theorem wrapPhase_mem_Ico (t : ℝ) : 0 ≤ Phase.wrapPhase t ∧ Phase.wrapPhas
   rw [← wrapPhase_eq_toIcoMod, zero_add] at h
   exact ⟨h.1, h.2⟩
 
-theorem wrapPhase_coe_angle (t : ℝ) : ((Phase.wrapPhase t : ℝ) : Real.Angle) = (t : Real.Angle) := by
+theorem wrapPhase_coe_angle (t : ℝ) :
+    ((Phase.wrapPhase t : ℝ) : Real.Angle) = (t : Real.Angle) := by
   rw [wrapPhase_eq_toIcoMod]
   exact Real.Angle.coe_toIcoMod t 0
 
