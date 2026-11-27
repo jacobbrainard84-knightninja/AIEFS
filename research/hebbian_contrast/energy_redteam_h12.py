@@ -161,3 +161,33 @@ if __name__ == "__main__":
     res = run()
     ok = all(res[k][0] == v for k, v in PREDECLARED.items())
     print("RESULT:", "AS PREDECLARED" if ok else "DEVIATION(S) - see above")
+
+
+def discrete_energy_observation():
+    """Observation (not predeclared; added with the results commit): the candidate E itself, evaluated on the engine
+    copy's actual steps in regime M600, before the first gate trigger. Returns per-seed (trigger_step, increasing
+    steps, steps, E_start, E_end, max step increase)."""
+    mod, _ = load_engine_copy()
+    base = dataclasses.replace(mod.DEFAULT_MODEL_CONFIG, tau=0.0)
+    cfg = dataclasses.replace(base, omega=tuple([float(np.mean(base.omega))] * base.N))
+    c = cfg.eta + cfg.mu
+    iu = np.triu_indices(cfg.N, 1)
+
+    def energy(th, B):
+        d = th[None, :] - th[:, None]
+        return float(np.sum(-B[iu] * np.cos(d[iu]) + (cfg.mu * B[iu] + cfg.gamma * B[iu] ** 2 / 2) / c))
+
+    out = {}
+    for seed in SEEDS:
+        st = mod.initialize_state(seed, cfg)
+        rng = np.random.default_rng(seed)
+        Es, trig = [], None
+        for n in range(STEPS):
+            Es.append(energy(st.theta, st.B))
+            _, _, info = mod.advance_state(st, cfg, rng)
+            if info["pre_violation"]:
+                trig = n
+                break
+        dE = np.diff(Es)
+        out[seed] = (trig, int((dE > 1e-15).sum()), len(dE), Es[0], Es[-1], float(dE.max()))
+    return out
