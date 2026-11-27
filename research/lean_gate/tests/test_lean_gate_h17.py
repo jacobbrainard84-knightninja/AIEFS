@@ -1,7 +1,9 @@
 """H17 (SPEC §18): `wrapPhase` = Mathlib `toIcoMod two_pi_pos 0` on [0, 2π). Pins the Lean statements, the
-mutants M700-M703 and their predeclared outcome (all KILLED), and a float64 witness that the engine's `np.mod`
-can return exactly 2π (outside the real-number range Lean proves). Runs no Lean."""
+mutants M700-M703 and their predeclared outcome (all KILLED), and float64 witnesses that the engine's `np.mod`
+reduces modulo fl(2π) (not 2π) and can return its own modulus fl(2π), so float θ is in [0, fl(2π)] (audit N1; fl(2π)
+itself is inside the real [0, 2π)). Runs no Lean."""
 import math
+import re
 import sys
 from fractions import Fraction
 from pathlib import Path
@@ -43,7 +45,8 @@ def test_mutants_pinned_and_predeclared():
     assert all(PREDECLARED[m[0]] == "KILLED" for m in h17)
     assert not [m for m in mc.KNOWN_SURVIVORS if m[1] == "WrapBridge.lean"]
     for name, f, thm, edits, closure, term, eterm in h17:
-        assert f"theorem {term.split()[0].split('.')[-1]}" in WB      # the refuting false_* theorem exists
+        ref = term.split()[0].split('.')[-1]
+        assert re.search(rf"theorem {re.escape(ref)}\b", WB), ref      # the refuting false_* theorem exists
         msrc = mc.mutate(WB, thm, edits)
         assert msrc != WB
 
@@ -65,12 +68,22 @@ def test_witnesses_match_lean_probes_and_numpy():
 
 
 def test_float_two_pi_witness_unexplained():
-    """Float vs real gap (Auditor Seat 002 review, H17): float64 np.mod can return exactly 2π. The real-number
-    theorem says wrapPhase t < 2π. Whether this value occurs in production runs is UNEXPLAINED (unmeasured)."""
-    v = float(np.mod(-1e-20, 2 * np.pi))
-    assert v == 2 * np.pi
+    """Float vs real gap (audit N1/N2). (a) The engine's modulus is fl(2π) = 2π − 2.449e−16, not 2π. (b) float64
+    np.mod returns its own modulus fl(2π) for x in [−4.440892098500626e−16, 0), so float θ ∈ [0, fl(2π)]. fl(2π) is
+    inside the real [0, 2π); the gap is the period and the closed top end. The phasor differs from θ = 0 by
+    rounding only. Whether (b) occurs in production runs is UNEXPLAINED (unmeasured)."""
+    m = 2 * np.pi
+    two_pi = Fraction("6.28318530717958647692528676655900576839433879875021164194988918461563281257241799725606965")
+    assert -2.46e-16 < float(Fraction(m) - two_pi) < -2.44e-16                    # (a) fl(2π) < 2π by 2.449e-16
+    v = float(np.mod(-1e-20, m))
+    assert v == m                                                                  # (b) modulus returned
+    x_star = -4.440892098500626e-16
+    assert np.mod(x_star, m) == m and np.mod(-5e-324, m) == m                      # boundary of (b), both ends
+    assert np.mod(np.nextafter(x_star, -1.0), m) < m                               # just beyond: back inside
+    z = np.exp(1j * m)
+    assert z != 1 and abs(z - 1) < 3e-16                                           # phasor: rounding-level only
     # negative control: the same call on +1e-20 stays inside [0, 2π)
     w = float(np.mod(1e-20, 2 * np.pi))
     assert 0 <= w < 2 * np.pi
     # the engine wraps with np.mod(..., 2*pi) (read only; the engine is SHA-locked and not imported here)
-    assert "np.mod(" in ENGINE.read_text()
+    assert ENGINE.read_text().count("state.theta = np.mod(") == 1

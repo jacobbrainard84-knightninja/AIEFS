@@ -1665,9 +1665,15 @@ Plan item H17 of audit-inbox `PLAN_2026-11-25_scan_leads.md`, as changed by Audi
   `wrapPhase t = t` (corollary only: the coercion forgets the representative, so it cannot discriminate conventions,
   which is why the bridge targets `toIcoMod`, per the review).
 - Value probes `probe_wrap_neg_half_pi` (`−π/2 ↦ 3π/2`) and `probe_wrap_zero`.
-- Scope: exact reals. The engine wraps with float64 `np.mod(θ, 2π)` (engine L836), which can return exactly `2π`
-  (`np.mod(-1e-20, 2π) == 2π`, pinned in `tests/test_lean_gate_h17.py`). That is outside the real range proved here;
-  the phasor is unaffected. **Whether it occurs in production runs is UNEXPLAINED (unmeasured).**
+- Scope: exact reals. The engine wraps with float64 `np.mod(θ, 2*np.pi)` (engine L836). It differs from the Lean
+  wrap in two ways (corrected after audit, see §18.2):
+  - (a) It reduces modulo fl(2π) = 2π − 2.449e−16, not 2π.
+  - (b) It can return its own modulus fl(2π) for x ∈ [−4.440892098500626e−16, 0) (e.g. `np.mod(-1e-20, 2*np.pi)`),
+    so float θ ∈ [0, fl(2π)], closed at the top. fl(2π) is inside the real [0, 2π).
+  - The phasor is unaffected only up to rounding: exp(i·fl(2π)) = 1 − 2.449e−16·i, and each wrap shifts the real
+    phase by about 2.45e−16.
+  - **How often production runs hit (b) is UNEXPLAINED (unmeasured).** The witnesses are pinned in
+    `tests/test_lean_gate_h17.py`.
 
 Mutant numbering (coordinated with Auditor Seat 002: its follow-up uses M191 ff., its H9(b)+H16 M300 ff.; Researcher
 001 uses M400 ff. for H8, M500 ff. for H10, M600 ff. for H12, M700 ff. for H17). H17 adds statement mutants only; no
@@ -1690,6 +1696,23 @@ Counts: statement mutants 105 → 109, total 190 → 194.
   SHA256SUMS regenerated before the passing run.
 - Mutation harness: **194/194 rejected**. M700–M703 all KILLED as predeclared (refuted by proof, and each term fails on
   the unmutated statement). Typo controls 4/4 flagged invalid; SE1 and ST1 not rejected (good).
-- Float witness `np.mod(-1e-20, 2*pi) == 2*pi` holds (the engine can produce 2π, outside [0, 2π)), with the +1e-20
-  negative control. How often this happens in real runs is **UNEXPLAINED** (unmeasured).
+- Float witness `np.mod(-1e-20, 2*pi) == 2*pi` holds, i.e. the engine can return its own modulus fl(2π), with the
+  +1e-20 negative control. *(The original wording "the engine can produce 2π, outside [0, 2π)" was wrong; see §18.2.)*
+  How often this happens in real runs is **UNEXPLAINED** (unmeasured).
 - pytest `research/lean_gate/tests`: 197 passed. The 12 CI checkers: all rc = 0.
+
+### 18.2 Audit follow-up (Auditor Seat 002 CLEAN WITH NOTES on `d9a5cad`; Researcher 001, 2026-11-27 MST)
+- **N1.** The float result is fl(2π) = 2π − 2.4492935982947064e−16, which is inside the real [0, 2π), not 2π.
+  Researcher 001 checked this numerically with a 90-digit rational 2π. The real gaps are (a) the period fl(2π) ≠ 2π
+  and (b) `np.mod` returning its own modulus.
+  - (b) happens exactly for x ∈ [−4.440892098500626e−16, 0) = [−ulp(fl(2π))/2, 0). This was found by bisection over
+    float bit patterns. All 400,001 sampled floats in that range return the modulus. The next float below the range,
+    −4.440892098500627e−16, gives 6.283185307179585 < fl(2π).
+  - The WrapBridge docstring, the scope bullet above and the §18.1 bullet are reworded. The test pins (a), both ends
+    of (b) and the first float outside it.
+- **N2.** The phasor claim is now "up to rounding": exp(i·fl(2π)) = 1 − 2.449e−16·i (pinned). How often real runs hit
+  (b) stays UNEXPLAINED (unmeasured).
+- **N3.** The refuter-exists check is now a word-boundary regex. A copy with `false_wrap_pos` renamed to
+  `false_wrap_pos_renamed` fails it (checked, then reverted).
+- **N4.** The engine link pins `state.theta = np.mod(`, which occurs exactly once, instead of any `np.mod(`.
+- No Lean statement, proof or mutant changed; only the WrapBridge module docstring. SHA256SUMS regenerated.

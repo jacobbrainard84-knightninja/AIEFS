@@ -21,10 +21,13 @@ coercion to `Real.Angle` forgets the representative, so an `Angle` equality alon
 * `wrapPhase_coe_angle`: as an `Angle`, `wrapPhase t` is `t` (corollary; it does not discriminate).
 * `false_*`: refutations of the conventions `wrapPhase` is *not* (used by mutants M700–M703).
 
-Scope: exact reals. The engine wraps with float64 `np.mod(θ, 2π)`, which can return exactly
-`2π` (e.g. `np.mod(-1e-20, 2π)`), outside the real range proved here; the phasor is unaffected.
-Whether that value occurs in production runs is UNEXPLAINED/unmeasured (see the Python test
-`test_lean_gate_h17.py`, which pins the witness).
+Scope: exact reals. The engine's float64 `np.mod(θ, 2*np.pi)` differs in two ways (audit N1):
+(a) it reduces modulo fl(2π) = 2π − 2.449e−16, not 2π, so its period is not the Lean one;
+(b) it can return its own modulus fl(2π) for x ∈ [−4.440892098500626e−16, 0) (e.g. x = −1e−20),
+so float θ ∈ [0, fl(2π)], closed at the top. fl(2π) itself lies inside the real [0, 2π).
+The phasor is unaffected only up to rounding: exp(i·fl(2π)) = 1 − 2.449e−16·i, and each wrap
+shifts the real phase by about 2.45e−16. How often real runs hit (b) is UNEXPLAINED (unmeasured);
+the Python test `test_lean_gate_h17.py` pins these witnesses.
 -/
 
 set_option autoImplicit false
