@@ -1832,3 +1832,25 @@ Python model of the definitions in exact rationals. It adds the sampled-bound ch
 400 random `(a, b, d, window)` with `a, b ≥ 0`, `a + b < 1`, `d ≤ 5`, `M ≥ 0`, including the adversarial
 constant-window equality tail (tight on `0..d+1`), with wrong-variant controls (`n / d`, base `a`, short
 window, `M < 0`) that must each fail on some samples, plus a sampled `ρ < 1` check at `a + b = 1`.
+
+### 18.11 Results after the audit fixes (2026-11-27 GMT; run at `92e4fe7`, recorded in the next commit)
+- `SKIP_CACHE=1 STRICT_ORPHANS=1 unshare -rn ./check_lean_gate.sh` at `92e4fe7` (dirty 0): RESULT PASS.
+  Build 2354 jobs, 0 warnings; SHA256SUMS verified (43 files); escape-hatch scan 39 files, 0 hits;
+  step 7 audited **1274 project declarations** (1271 + the three new refuters), standard axioms only.
+- Full unfiltered `unshare -rn python3 research/lean_gate/lean_mutation_check.py`: **113/113 statement**
+  rejected (the one name-reference note is M31's, pre-existing), **89/89 definition** killed, **202/202
+  total**, 23/23 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
+- **M809, M810, M811: KILLED, as predeclared in §18.6** (`908d7e0`, pushed before the wiring commit
+  `92e4fe7`): each build REJECTED with a real proof failure, refuted by its `false_*` with standard axioms,
+  and the refuter term fails on the unmutated statement. (As §18.6 says, the refuters were already known to
+  compile, so this confirms the registered three-sense outcome, not a blind guess.) M800–M808 unchanged.
+- pytest: `research/lean_gate/tests` 210 passed (8 subtests); `tools/ci/tests` 246 passed. Every
+  `tools/ci` checker and `audits/engineering/verify_inventory_current.py` rc 0, also on a fresh checkout
+  of the pushed tip.
+- pytest red team of `test_lean_gate_h13.py` (temp copies outside the repo, SHA256SUMS regenerated after
+  each Lean edit): 24 hostile edits plus a baseline, all as expected. Now caught (they passed at `badac0c`):
+  a changed Lean witness value (`uNeg 3`, `aE`, `uNeg 1`), changed probe values (`blockPow`, `initMax`
+  spike index, `windowMax`), and changed docstring numbers (Lean, SPEC, harness, README, the new refuter
+  docstrings, the §18.9 rate numbers). Also caught: the `_geom` correction reverted, `a + b < 1` put back on
+  `_d0`, the §18.7 correction removed, a swapped M809 refuter, and a no-op M811 edit.
+- No engine claim; H13 is not progress on O1.
