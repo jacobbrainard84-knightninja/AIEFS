@@ -1,10 +1,33 @@
-# Project state (current section refreshed 2026-11-20 5:50 PM MST by Researcher 001)
+# Project state (current section refreshed 2026-11-27 20:05 GMT by Auditor Seat 002)
 
 AIEFS is a hobby math project: an adaptive Kuramoto model (N = 12 oscillators) with Hebbian-style adaptive couplings B, a delay τ = 0.5, an EMA of pairwise coherence R, and a min-endpoint multiplicative capacity gate, together with Lean 4 proofs of some supporting facts.
 
 Items marked **PENDING** have not landed on `main`. Do not cite them as results. Branch verdicts are agent ratings: input only (README rule 7).
 
-## Current state, 2026-11-20 5:50 PM MST (snapshot; PR states read from GitHub at 5:48 PM MST; re-run `git ls-remote origin` before citing)
+## Current state, 2026-11-27 20:05 GMT (13:05 MST) — start-of-week refresh by Auditor Seat 002 (snapshot; read with `git ls-remote origin` and `gh pr list` at 20:05 GMT; re-run before citing)
+
+Times are GMT from here on (owner standard since 2026-11-23); older entries keep their zone. The usage week began Friday 2026-11-27 19:02 GMT.
+
+- **`main` = `daa977a`.** Last merge: PR #52 (Arena `research/arena-bundle` @ `82a5a1f`), merged 2026-11-26 05:03 GMT. Before it: #50 E27 gate-form errata (2026-11-22 14:39 GMT, `7865ab1`) and #49 freezing REPORT fixes (2026-11-21 18:54 GMT, `d1cbcf3`). **Open PRs: none** (`gh pr list --state open` empty). PR #51 stays closed unmerged; audit-inbox stays out of main.
+- **Branches awaiting seat audit (none is a PR; branch verdicts are agent ratings, input only):**
+  - `fix/arena-bundle-audit-notes` @ `2ca6635` (Auditor, 2026-11-26 21:12 GMT; 2 ahead / 0 behind main): follow-up to R001's CLEAN WITH NOTES on arena-bundle; add-only; ready for Researcher 001 audit.
+  - `research/h9b-h16-envelopes` @ `16e450f` (Auditor, 2026-11-26 21:06 GMT; 1 commit ahead of main): awaiting Researcher 001 audit. Content not re-read in this refresh.
+  - `research/h10-gate-properties` @ `f31da4c` (R001, 2026-11-26 20:52 GMT; 3 ahead): awaiting Auditor audit.
+  - `research/h17-wrapphase-toicomod` @ `d9a5cad` (R001, 2026-11-27 19:47 GMT; 2 ahead): awaiting Auditor audit.
+  - `research/h12-hebbian-contrast` @ `4debc9f` (R001, 2026-11-27 19:52 GMT; 2 ahead): awaiting Auditor audit.
+  - H8 (RESEARCH_LEADS verification levels, audit-inbox only): awaiting Auditor audit; blind planted-misstatement control is on R001's box (see the H8 line in the superseded section below).
+  - Older branches, no change this week: `fix/validate-theta-history` @ `2c71648`, `research/h2-engine-invariants` @ `cf340b4`, `research/h7-spec-pins` @ `e55b418`, `research/lean-gate-ema-radial` @ `0602c77` (all 2026-11-20; each is behind main by 3–4 commits and ahead by 26–31); `arena/d4a487cc-aiefs` @ `2af3859` (2026-10-31, 12 ahead / 407 behind main; purpose not re-verified here).
+- **Seat plan:** the scan-leads plan (`PLAN_2026-11-25_scan_leads.md`, Auditor review `REVIEW_2026-11-26_auditor_scan_leads.md`) is the agreed plan; I did not find a recorded owner go-ahead in the files I read, but R001 has pushed H8, H10, H12 and H17 and the Auditor pushed H9(b)+H16 on `16e450f`. H13 (Auditor) not seen as pushed.
+- **Outside researchers (newest Lead Direction in each folder):** Arena_Researcher_06020041 DIRECTION-18 (2026-11-25; merge manifest accepted, PR #52 merged, lane paused pending owner decision); Researcher_0282416 DIRECTION-4 (2026-11-22; census ACCEPTED WITH NOTES); Researcher_0448126 DIRECTION-4 (2026-11-22; v3 NEEDS FIX, the engine-import claim); Researcher_0046882 DIRECTION-3 (2026-11-22; cycle 003 ACCEPTED, gate-spillover lane DONE). Retired: Researcher_040282, GPT-6, Researcher_026.
+- **Overdue outside deposits (no TRIAGE answer for 7+ days, i.e. arrived before 2026-11-20 20:05 GMT): none found.** Latest outside-folder commits: Arena 2026-11-25 03:13 GMT (answered by DIRECTION-18 / TRIAGE same push); 0282416, 0448126 and 0046882 2026-11-22 15:15 GMT (answered by TRIAGE (n) and DIRECTION-3/4 the same morning). Method: `git log` per outside folder against TRIAGE sections (k)–(o). Not verified: items inside TRIAGE rows were not re-audited line by line, and no outside deposit has arrived since 2026-11-25.
+- **Missing weekly TEAM-ROLLUP:** none required. No Lead Direction file or README row assigns a support bot to any team lead (`find -iname '*ROLLUP*'` is empty; the `Team:` mention in Arena DIRECTION-6 is the rule text, not an assignment, as far as grep shows). All four active lanes are lane-owner lanes.
+- **Weekly cross-attack (README standard 6):** not verified for this week; no new file in `Project_Seats/` since 2026-11-21 00:33 GMT.
+- **Owner decisions still open:** merge or park any further Arena bundle work; the INTAKE_GUARD_PROPOSAL choice (A/B/neither); formal-statement object choice (a) vs (b) in NORTH_STAR.
+- **This refresh edited only:** STATE.md, README.md (header, lane table). OPEN_QUESTIONS, NORTH_STAR, RESEARCH_LEADS and INTAKE_GUARD_PROPOSAL: nothing changed that I could verify, so no edits.
+
+## Historical snapshots (kept for the record; superseded by the section above)
+
+## Superseded: current state as of 2026-11-20 5:50 PM MST (was 'Current state'; snapshot; PR states read from GitHub at 5:48 PM MST; re-run `git ls-remote origin` before citing)
 
 - **`main` = `7ec6011`**, after PR #48. Earlier today: #46 (H1 metamorphic tests, merged 12:47 PM MST → `0a6a2f6`), #47 (H3 Python mutation tester, `research/h3-py-mutation` @ `e4341ca`, merged 3:57 PM MST → `d7b9fac`), #48 (H3 CI gap tests, `research/h3-gap-tests` @ `1ce14d2`, merged 5:38 PM MST → `7ec6011`; Auditor Seat 002 audit CLEAN WITH NOTES, 6 untargeted surviving mutants listed as follow-ups).
 - **Merged since the 2026-11-11 snapshot below:** #28–#30 (mutation-step guard, engine step-order pins, doc drift); #31 Lean P5 (delay buffer, phase increment, coherence EMA); #32, #36 (mutation-check guards); #33 engine step-order round 2; #34, #35 (E22 step-size sweep was run, label stays UNEXPLAINED); #37, #38 c014 TrajectoryInvariants; #39 c016 coherence speed limit; #40 `check_study_paths.py`; #41, #43 phase/frequency lock (SPEC §14); #42 DelayRoots (SPEC §15); #44, #45 Arena intake: CommonRootSimple + EngineStepRef (SPEC §16); #46 H1; #47, #48 H3.
@@ -44,7 +67,6 @@ Items marked **PENDING** have not landed on `main`. Do not cite them as results.
 - **Outside researchers, lanes and teams:** see `README.md` → "Lanes and teams". Every bot has its own lane; extra help is assigned as a support bot on a team lead's lane. Current directions (2026-11-20 5:15 PM MST): Arena DIRECTION-6, Researcher_0282416 DIRECTION-2, Researcher_0448126 DIRECTION-2. Researcher_040282, GPT-6 and Researcher_026 are retired; their open items were reassigned (TRIAGE (j)). (Each direction is in that bot's own `Lead Direction/`.)
 - **Inbox layout** changed on 2026-11-20 (audit-inbox `594c23d`): one folder per researcher; `audit_inbox/MOVES.md` maps old paths.
 
-## Historical snapshots (kept for the record; superseded by the section above)
 
 ## Update 2026-11-14 (Auditor Seat 002; snapshot, re-run `git ls-remote origin` before citing)
 - `main` = `a559e0d` (PR #30 merged; PRs #28, #29, #30 landed since the table below). 0 open PRs at that time.

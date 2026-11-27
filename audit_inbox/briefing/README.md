@@ -1,6 +1,6 @@
 # Briefing for audit agents (read this first)
 
-Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-20 5:50 PM MST by Researcher 001, for `main` `7ec6011` (PRs through #48; #49 open). **All times in this folder are MST (UTC−7) from 2026-11-20 on; older entries keep the zone they were written in.**
+Maintained by Researcher 001 (Head Researcher) and Auditor Seat 002 (independent auditor). Last updated 2026-11-27 20:05 GMT (13:05 MST) by Auditor Seat 002, for `main` `daa977a` (PRs through #52; none open). **Times are GMT from 2026-11-23 (owner standard); entries from 2026-11-20 to 2026-11-23 are MST (UTC−7); older entries keep the zone they were written in.**
 
 ## Purpose
 
@@ -44,14 +44,16 @@ This folder is a **maintainer-curated navigation snapshot** of where AIEFS stand
   - does not edit the team lead's folder. The team lead cites the support bot's deposit by path when it builds on it;
   - is credited for its own sub-task. Seats triage each deposit on its own merits.
 - **Who assigns.** Only the project seats (Researcher 001, Auditor Seat 002) assign lanes, teams and sub-tasks, through Lead Direction files, with the owner's oversight. Bots do not recruit each other or take over another lane on their own.
-- **Changes.** A lane can be closed, split or handed off only by a new dated Lead Direction file. The table below is refreshed each Friday (end and start of the usage week).
+- **Changes.** A lane can be closed, split or handed off only by a new dated Lead Direction file. The table below is refreshed each Friday (end and start of the usage week). Last refresh: 2026-11-27 20:05 GMT (start of week). **Lanes DONE as of this refresh:** Researcher_0046882 gate spillover (2026-11-22); Arena transient-amplification sub-question (2026-11-24). No team lead currently has support bots, so no TEAM-ROLLUP is due.
 
 | Researcher | Role | Lane / sub-task |
 |---|---|---|
-| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification. Newest: DIRECTION-18 (2026-11-25; merge manifest accepted, 13-module joint build reproduced by seat; lane paused pending owner decision on the bundle PR) |
-| Researcher_0282416 | Lane owner | Census of false self-tests and static registry/entrypoint integrity. Newest: DIRECTION-2 (census NEEDS FIX) |
-| Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main`. Newest: DIRECTION-2 (also inherits R026-S7/S8, 040282 S01 count) |
+| Arena_Researcher_06020041 | Lane owner (team lead) | Lean bridge between the Python engine and the formal models (AIEFGateCore), and transient amplification. Newest: DIRECTION-18 (2026-11-25; merge manifest accepted, 13-module joint build reproduced by seat; lane paused pending owner decision on the bundle PR; PR #52 has since merged, 2026-11-26 05:03 GMT). **DONE:** transient-amplification sub-question (DIRECTION-17, 2026-11-24). No deposit since 2026-11-24 19:46 MST |
+| Researcher_0282416 | Lane owner | Census of false self-tests and static registry/entrypoint integrity. Previous census revisions NEEDS FIX; revision 3 ACCEPTED WITH NOTES (2026-11-22; fix 5 half done). Newest: DIRECTION-4 (2026-11-22). Lane not marked DONE by any Lead Direction file |
+| Researcher_0448126 | Lane owner | Independent replication of the Supported claims with the repo's own scripts, unchanged, from a clean `main`. Newest: DIRECTION-4 (2026-11-22; v3 NEEDS FIX: the engine-import claim in the header was not true; also inherits R026-S7/S8, 040282 S01 count). No deposit since 2026-11-22 |
 | Researcher_0046882 | Lane owner | Seed-4619122171158768524 future-regime structure (descriptive; protocol-first). Previous lane, gate spillover and bystander loss (OQ16 follow-up), DONE 2026-11-22 (cycle 003 accepted: future events in 1/40 seeds). Newest: DIRECTION-3 (2026-11-22) |
+| Researcher 001 (Head Researcher, seat) | Project seat: audits, engine hardening, scan-leads plan author | Builds H8, H10, H12, H17 (all pushed, awaiting Auditor audit: H8 audit-inbox only; H10 `f31da4c`, H17 `d9a5cad`, H12 `4debc9f`); audits Arena bundle (done, PR #52 merged) and Auditor's H9(b)+H16 (`16e450f`) and arena-bundle follow-up (`2ca6635`). No Lead Direction files (seats do not direct themselves) |
+| Auditor Seat 002 (seat) | Project seat: independent auditor, triage, Lead Direction author | Authors H9(b)+H16 (`16e450f`) and H13 (not seen pushed); owes audits of H8, H10, H12, H17. Newest Lead Direction written: Arena DIRECTION-18 (2026-11-25); 0282416 and 0448126 DIRECTION-4, 0046882 DIRECTION-3 (all 2026-11-22) |
 | *(new bot)* | Assigned in its DIRECTION-1 | Its own new lane, or a support sub-task on an existing team |
 
 **Retired researchers (2026-11-20, owner):** Researcher_040282, GPT-6 and Researcher_026 no longer work on the project. Their inbox folders are kept as add-only history. Their open items were reassigned to the lanes above (see `TRIAGE.md` section (j)).
