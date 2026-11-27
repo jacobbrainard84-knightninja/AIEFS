@@ -189,6 +189,23 @@ OBSERVED_DEVIATIONS = {
         "gate re-triggers (P5 float idempotence) and values differ from the eps>0 oracle beyond rtol 1e-12 (P2)"),
 }
 
+# FOLLOW-UP PREDECLARATION (audit follow-up, commit 4 of this branch; committed BEFORE the witness/tie tests exist or
+# have run). Informed by Auditor Seat 002's red team on f31da4c (its X7 and R14), so these are not blind predictions.
+MUTANTS_FOLLOWUP = {
+    # trigger loosened by the engine's own gap tolerance: projection only once g_min_pre < delta - 1e-9
+    "M507_trigger_loosened_delta_minus_1e-9": [("g_min_pre < config.delta", "g_min_pre < config.delta - 1e-9")],
+}
+CASESET_MUTANTS_FOLLOWUP = {
+    # test-set mutation, not a gate edit: the k % 10 == 0 exact-tie construction is removed from random_cases()
+    "M508_tie_cases_removed": "random_cases(ties=False)",
+}
+PREDECLARED_FOLLOWUP = {
+    "M507_trigger_loosened_delta_minus_1e-9": "KILLED",   # by a fixed above-cap witness: one edge at
+                                                           # nextafter(fl(cap), 1); engine and oracle project, M507 not (P1)
+    "M508_tie_cases_removed": "NOT DETECTED",              # predicted: the tie cases add no detection power; every
+                                                           # predeclared outcome (incl. M507) stays the same without them
+}
+
 
 def expected(name):
     return OBSERVED_DEVIATIONS.get(name, (PREDECLARED[name], ""))[0]
