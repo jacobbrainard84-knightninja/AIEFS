@@ -27,7 +27,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 ENGINE = ROOT / "aief_experiment_engine_v1.py"
-ENGINE_SHA256 = "ca4593fda86a1b0a"  # prefix; full value checked against the registry pin below
+ENGINE_SHA256 = "ca4593fda86a1b0a3d450d68b5ce4bddd08583fdb93deaf17db20dd6b1acdede"  # full sha256, asserted below
 SEEDS = range(5)
 STEPS = 9000          # > 5 * T_window / dt = 8751 (EMA warm-up)
 WARMUP = 8751
@@ -46,7 +46,7 @@ PREDECLARED = {
 def load_engine_copy():
     data = ENGINE.read_bytes()
     full = hashlib.sha256(data).hexdigest()
-    assert full.startswith(ENGINE_SHA256), full
+    assert full == ENGINE_SHA256, full
     tmp = Path(tempfile.mkdtemp(prefix="h12_engine_copy_"))
     copy = tmp / "aief_engine_copy_h12.py"
     shutil.copyfile(ENGINE, copy)
@@ -157,12 +157,6 @@ def run(verbose=True):
     return results
 
 
-if __name__ == "__main__":
-    res = run()
-    ok = all(res[k][0] == v for k, v in PREDECLARED.items())
-    print("RESULT:", "AS PREDECLARED" if ok else "DEVIATION(S) - see above")
-
-
 def discrete_energy_observation():
     """Observation (not predeclared; added with the results commit): the candidate E itself, evaluated on the engine
     copy's actual steps in regime M600, before the first gate trigger. Returns per-seed (trigger_step, increasing
@@ -191,3 +185,21 @@ def discrete_energy_observation():
         dE = np.diff(Es)
         out[seed] = (trig, int((dE > 1e-15).sum()), len(dE), Es[0], Es[-1], float(dE.max()))
     return out
+
+
+def tau_dt_observation():
+    """Observation (not predeclared; added in the audit follow-up, note T1): the engine-legal sibling regime
+    tau = dt (delay_steps = 1), which passes ModelConfig.validate(). Same identical-omega rotating frame and the
+    same undelayed-rate candidate, so it is an approximation (the phase law then reads a one-step-delayed state)."""
+    mod, _ = load_engine_copy()
+    base = mod.DEFAULT_MODEL_CONFIG
+    cfg = dataclasses.replace(base, tau=base.dt, omega=tuple([float(np.mean(base.omega))] * base.N))
+    cfg.validate()
+    assert cfg.delay_steps == 1
+    return evaluate(mod, cfg, "rotating", "engine")
+
+
+if __name__ == "__main__":
+    res = run()
+    ok = all(res[k][0] == v for k, v in PREDECLARED.items())
+    print("RESULT:", "AS PREDECLARED" if ok else "DEVIATION(S) - see above")
