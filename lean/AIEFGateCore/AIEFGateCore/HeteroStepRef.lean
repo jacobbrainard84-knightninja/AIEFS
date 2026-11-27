@@ -244,6 +244,20 @@ theorem false_window_step_no_dt :
     (fun k _ _ => by by_cases hk : k = 0 <;> simp [hk]) 0 (by norm_num) 0
   norm_num [linearStep, row, abs_le] at h
 
+/-- Dropping the row condition from `window_all_steps` is false (`n = 1`, `B = 2`, `dt = 1`,
+`t = 1`: head `-3`). Audit note N5. -/
+theorem false_window_all_no_row :
+    ¬ (∀ (n d : ℕ) (dt M : ℝ) (B : Fin n → Fin n → ℝ) (v : ℕ → Fin n → ℝ) (_hdt : 0 ≤ dt)
+      (_hB : ∀ i j, 0 ≤ B i j) (_hrow : True) (_hM : 0 ≤ M)
+      (_hv : ∀ k, k ≤ d → ∀ i, |v k i| ≤ M),
+      ∀ t k, k ≤ d → ∀ i, |iterate n d dt B v t k i| ≤ M) := by
+  intro H
+  have h := H 1 1 1 1 (fun _ _ => 2) (fun k _ => if k = 0 then 1 else -1) (by norm_num)
+    (fun _ _ => by norm_num) trivial (by norm_num)
+    (fun k _ _ => by by_cases hk : k = 0 <;> simp [hk]) 1 0 (by norm_num) 0
+  norm_num [iterate, linearStep, row, abs_le] at h
+
+#print axioms false_window_all_no_row
 #print axioms probe_linearStep_values
 #print axioms probe_phaseHeadW_value
 #print axioms false_window_step_no_row

@@ -341,15 +341,16 @@ def test_p6_mutants_exact_counts_and_numbering():
     # the Arena cycle 13/21 intake (CommonRootSimple.lean, EngineStepRef.lean, SPEC §16): M110-M129
     arena = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in ("CommonRootSimple.lean", "EngineStepRef.lean")])
     assert sorted(arena) == list(range(110, 131))
-    # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition
+    # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition; the audit
+    # follow-up (Researcher 001 note N5, SPEC §17.7) adds statement mutants M191-M201
     bundle = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in mc.FILE_OPENS and m[1] != "GateContraction.lean"])
-    assert sorted(bundle) == list(range(131, 191))
+    assert sorted(bundle) == list(range(131, 202))
     # H9(b)/H16 (SPEC §18): a separate block M300-M320 (GronwallEnvelope.lean, GateContraction.lean); M321 is the
     # documented survivor (KNOWN_SURVIVORS, not counted). GateContraction.lean has a FILE_OPENS entry since M318.
     h9h16 = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in ("GronwallEnvelope.lean", "GateContraction.lean")])
     assert sorted(h9h16) == list(range(300, 321))
-    assert len(allnums) == len(set(allnums)) == 211 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (120, 91)
+    assert len(allnums) == len(set(allnums)) == 222 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (131, 91)                    # main 116 + 85, plus §18 15 + 6
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 27                                          # unique across ports: E1-E23, T1-T4

@@ -84,7 +84,7 @@ def test_block_mutants_exact_shape():
     assert len(BLOCK) == N_BLOCK_STATEMENT and len(BLOCK_DEF) == N_BLOCK_DEF
     assert [num(m[0]) for m in BLOCK] == list(range(300, 313)) + [317, 318]
     assert [num(m[0]) for m in BLOCK_DEF] == list(range(313, 317)) + [319, 320]
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (120, 91)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (131, 91)          # after merging main §17.7 (116 + 85)
     assert all(num(m[0]) < 300 for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] not in FILES)   # separate block
     for name, f, thm, edits, closure, term, eterm in BLOCK:
         assert eterm is None and len(edits) == 1 and edits[0][2] == 1, name

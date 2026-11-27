@@ -115,6 +115,21 @@ theorem false_transfer_no_consistent :
     ReachableQueue.bad] at h
   exact Real.Angle.pi_ne_zero (by simpa using h.symm)
 
+/-- `finite_abstract_step` reading slot `0` of the unbounded step instead of slot `k` is false
+(`probeState`, `dt = 0`, `k = 1`: the retained lag-1 value `1` against the new head `0`). Audit
+note N5. -/
+theorem false_finite_step_head_slot :
+    ¬ (∀ (n d k : ℕ) (dt omega : ℝ) (W : Fin n → Fin n → ℝ) (s : ReachableQueue.State n d)
+      (hk : k ≤ d) (i : Fin n),
+      ReachableQueue.view n d (ReachableQueue.step n d dt omega W s) ⟨k, by omega⟩ i =
+        (MatrixPhaseBridge.engineStep n d dt omega W (abstractState n d s)).history 0 i) := by
+  intro H
+  have h := H 1 1 1 0 0 (fun _ _ => 0) ReachableQueue.probeState le_rfl 0
+  simp [ReachableQueue.view, ReachableQueue.step, ReachableQueue.shift, ReachableQueue.reverseIndex,
+    ReachableQueue.head, ReachableQueue.probeState, MatrixPhaseBridge.engineStep,
+    MatrixPhaseBridge.wrap, abstractState, toIcoMod_apply_left] at h
+
+#print axioms false_finite_step_head_slot
 #print axioms probe_abstractState_values
 #print axioms probe_initState_values
 #print axioms false_transfer_no_consistent
