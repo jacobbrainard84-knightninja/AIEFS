@@ -124,6 +124,20 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   be killed. The bundle reuses short names (State, Consistent, step, iterate, window_step, ...) in distinct
   namespaces, so each refutation opens only the mutated file's own namespace (FILE_OPENS), never two at once.
 
+  H13 DiscreteHalanay.lean (SPEC §18; numbered M800 ff. so it does not collide with concurrent H9/H16 work):
+  M800 discrete_halanay, hM (0 ≤ initMax u d) := True          -> DiscreteHalanay.false_bound_neg_initMax
+       (M < 0 counterexample: d=1, u0=u1=-1, u3=-25/36 > -5/6)
+  M801 discrete_halanay, exponent n/(d+1) -> n/d               -> DiscreteHalanay.false_bound_wrong_exponent
+  M802 discrete_halanay, initMax u d -> initMax u (d-1)        -> DiscreteHalanay.false_bound_short_window
+  M803 discrete_halanay_decay, hq_decay (a+b < 1) -> a+b ≤ 1   -> DiscreteHalanay.false_decay_at_q_one
+  M804 discrete_halanay, hstep starts at d+1 ≤ n               -> DiscreteHalanay.false_step_starts_late
+  Definition mutants M805-M808 (initMax short / only u 0; windowMax current-only; blockPow n/d) killed by
+  probe_initMax_spike, probe_windowMax_values, probe_blockPow_values. A weakening of a+b < 1 to a+b ≤ 1 on
+  the *written* bound of discrete_halanay is predicted to SURVIVE (at a+b=1 the bound is M, and u n ≤ M still
+  holds); it is not registered as a mutant and is not in KNOWN_SURVIVORS. Refutations use the qualified name
+  DiscreteHalanay.false_* H; DiscreteHalanay.lean is not in FILE_OPENS (the arena-bundle pin range(131, 191)
+  must stay unchanged).
+
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
   M71 TrajectorySafety.post_capacity, `(p n).cap` -> `(p (n + 1)).cap`   -> TrajectorySafety.capacity_clock_refuted
@@ -589,6 +603,28 @@ MUTANTS = [
      [("(hcap : dt * ((a - delta + tol) / q) ≤ 1)", "(hcap : True)", 1)], "", "HeteroStepRef.false_guarded_no_cap H", None),
     ("M156_heteroguard_q_pos_dropped", "HeteroGuard.lean", "guarded_window_all_steps",
      [("(hq : 0 < q)", "(hq : True)", 1)], "", "HeteroStepRef.false_guarded_no_q H", None),
+    # ---- DiscreteHalanay.lean (H13, SPEC §18): statement mutants M800-M804.
+    # Predeclaration in this first commit that adds them: M800-M804 are predicted KILL
+    # (each has a proved false_*). Weakening a+b < 1 to a+b ≤ 1 on the written bound of
+    # discrete_halanay is predicted SURVIVE and is deliberately not registered.
+    ("M800_halanay_initMax_nonneg_dropped", "DiscreteHalanay.lean", "discrete_halanay",
+     [("(hM : 0 ≤ initMax u d)", "(hM : True)", 1)], "",
+     "DiscreteHalanay.false_bound_neg_initMax H", None),
+    ("M801_halanay_wrong_exponent_n_div_d", "DiscreteHalanay.lean", "discrete_halanay",
+     [("∀ n, u n ≤ initMax u d * blockPow (a + b) n d",
+       "∀ n, u n ≤ initMax u d * (a + b) ^ (n / d)", 1)], "",
+     "DiscreteHalanay.false_bound_wrong_exponent H", None),
+    ("M802_halanay_short_initial_window", "DiscreteHalanay.lean", "discrete_halanay",
+     [("∀ n, u n ≤ initMax u d * blockPow (a + b) n d",
+       "∀ n, u n ≤ initMax u (d - 1) * blockPow (a + b) n d", 1)], "",
+     "DiscreteHalanay.false_bound_short_window H", None),
+    ("M803_halanay_decay_lt_to_le", "DiscreteHalanay.lean", "discrete_halanay_decay",
+     [("(hq_decay : a + b < 1)", "(hq_decay : a + b ≤ 1)", 1)], "",
+     "DiscreteHalanay.false_decay_at_q_one H", None),
+    ("M804_halanay_step_starts_late", "DiscreteHalanay.lean", "discrete_halanay",
+     [("(hstep : ∀ n, d ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d)",
+       "(hstep : ∀ n, d + 1 ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d)", 1)], "",
+     "DiscreteHalanay.false_step_starts_late H", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"
@@ -642,11 +678,13 @@ VP_ARENA = {"ReachableQueue.lean": ["probe_shift_values", "probe_view_values", "
             "TransientParameter.lean": ["probe_step_values", "probe_energy_value", "probe_mode_values"],
             "WindowMax.lean": ["probe_next_values"],
             "HeteroStepRef.lean": ["probe_linearStep_values", "probe_phaseHeadW_value"]}
+VP_H13 = ["probe_initMax_spike", "probe_windowMax_values", "probe_blockPow_values"]
 VALUE_PROBES = {"PhaseIncrement.lean": VP_INC, "PhaseCoherence.lean": VP_COH, "TrajectoryInvariants.lean": VP_TS,
                 "CoherenceMotion.lean": VP_MOT,
                 "FrequencyLock.lean": VP_FL,
                 "CommonRootSimple.lean": VP_CR, "EngineStepRef.lean": VP_SR,
-                **VP_ARENA}
+                **VP_ARENA,
+                "DiscreteHalanay.lean": VP_H13}
 CP_OLD = "  X ^ (d + 1) - C (((1 - h : ℝ) : ℂ)) * X ^ d - C (h : ℂ)\n"
 CW_OLD = "def clippedWeight (b : ℝ) : ℝ := max 0 b\n"
 HEAD_OLD = ("  x 0 i + dt * (omega + ∑ j ∈ Finset.univ.erase i,\n"
@@ -884,6 +922,24 @@ DEF_MUTANTS = [
      [("  ∑ j : Fin n, B i j\n", "  ∑ j ∈ Finset.univ.erase i, B i j\n", 1)], ["probe_linearStep_values"]),
     ("M190_hetero_head_current_slot", "HeteroStepRef.lean",
      [("    B i j * Real.sin (x d j - x 0 i))\n", "    B i j * Real.sin (x 0 j - x 0 i))\n", 1)], ["probe_phaseHeadW_value"]),
+    # ---- DiscreteHalanay.lean (H13, SPEC §18): definition mutants M805-M808, predicted KILL ----
+    ("M805_halanay_initMax_short_window", "DiscreteHalanay.lean",
+     [("def initMax (u : ℕ → ℝ) (d : ℕ) : ℝ :=\n  intervalMax u 0 d (Nat.zero_le d)\n",
+       "def initMax (u : ℕ → ℝ) (d : ℕ) : ℝ :=\n  intervalMax u 0 (d - 1) (Nat.zero_le (d - 1))\n", 1)],
+     ["probe_initMax_spike"]),
+    ("M806_halanay_windowMax_current_only", "DiscreteHalanay.lean",
+     [("def windowMax (u : ℕ → ℝ) (n d : ℕ) : ℝ :=\n  intervalMax u (n - d) n (Nat.sub_le n d)\n",
+       "def windowMax (u : ℕ → ℝ) (n d : ℕ) : ℝ :=\n  intervalMax u n n (le_rfl)\n", 1)],
+     ["probe_windowMax_values"]),
+    ("M807_halanay_blockPow_n_div_d", "DiscreteHalanay.lean",
+     [("def blockPow (q : ℝ) (n d : ℕ) : ℝ :=\n  q ^ (n / (d + 1))\n",
+       "def blockPow (q : ℝ) (n d : ℕ) : ℝ :=\n  q ^ (n / d)\n", 1)],
+     ["probe_blockPow_values"]),
+    ("M808_halanay_initMax_only_origin", "DiscreteHalanay.lean",
+     [("def initMax (u : ℕ → ℝ) (d : ℕ) : ℝ :=\n  intervalMax u 0 d (Nat.zero_le d)\n",
+       "def initMax (u : ℕ → ℝ) (d : ℕ) : ℝ :=\n  intervalMax u 0 0 (Nat.zero_le 0)\n", 1)],
+     ["probe_initMax_spike"]),
+
 ]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
@@ -982,7 +1038,8 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.TrajectorySafety (Weights weightsTrace Structural)\n"
          "open AIEFGate.PhaseCoherence (coherenceInput coherenceTrace reported)\n"
          "open Polynomial (derivative)\nopen AIEFGate.CommonRootSimple (commonPoly)\n"
-         "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n")
+         "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n"
+         "open AIEFGate.DiscreteHalanay (intervalMax windowMax initMax blockPow)\n")
 # Per-file opens for the refutation files of the Arena bundle (SPEC §17). The bundle reuses short names
 # (State, Consistent, step, iterate, mode, energy, window_step, window_all_steps, ...) in distinct namespaces,
 # so a refutation opens only the namespace(s) of the mutated file, never two bundle namespaces at once.

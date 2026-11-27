@@ -344,8 +344,11 @@ def test_p6_mutants_exact_counts_and_numbering():
     # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition
     bundle = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in mc.FILE_OPENS])
     assert sorted(bundle) == list(range(131, 191))
-    assert len(allnums) == len(set(allnums)) == 190 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (105, 85)
+    # H13 DiscreteHalanay (SPEC §18): M800-M808, not in FILE_OPENS (bundle range unchanged)
+    h13 = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] == "DiscreteHalanay.lean"])
+    assert sorted(h13) == list(range(800, 809))
+    assert len(allnums) == len(set(allnums)) == 199 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (110, 89)
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 27                                          # unique across ports: E1-E23, T1-T4

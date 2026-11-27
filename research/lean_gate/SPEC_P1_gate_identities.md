@@ -1653,3 +1653,92 @@ unique controls 24 → 27 and M131–M190 numbered; the stubbed full-run test's 
   CoherenceSpeedLimit, widened a FILE_OPENS entry, dropped M190, wrong refuter name, moved engine
   citation, dropped E23), each applied to a copy outside the repo; all 11 caught.
 - No mutants dropped; no declarations renamed; deposited proofs and statements unchanged.
+
+## 18. Discrete Halanay (branch `research/h13-discrete-halanay`, from `main` `daa977ac`; numbered after §17, mutants M800–M808)
+
+### 18.1 What it is
+An abstract discrete Halanay inequality for a real sequence `u : ℕ → ℝ` and a fixed delay `d`.
+If `0 ≤ a`, `0 ≤ b`, `a + b < 1`, the delayed inequality
+
+  `u (n + 1) ≤ a * u n + b * windowMax u n d`
+
+holds for every `n ≥ d`, and the initial-window maximum `M := initMax u d` (the max of `u` on the inclusive
+window `0..d`) satisfies `0 ≤ M`, then
+
+  `u n ≤ M * (a + b) ^ (n / (d + 1))`
+
+with natural-number (floor) division (`blockPow`). Production `d = 50` (`FROZEN_DELAY_STEPS`) is the
+intended parameter; the lemma is for general `d`.
+
+**Hypothesis `0 ≤ M`, not `u ≥ 0` everywhere.** Researcher 001 suggested dropping `u ≥ 0` as unused.
+That change is wrong for the written bound when `M < 0`. The counterexample `d = 1`, `u 0 = u 1 = -1`
+(so `M = -1`), `u 2 = -q`, `u 3 = -q^2` with `q = a + b ∈ (0, 1)` obeys the delayed inequality, but
+`u 3 = -q^2 > -q = M * q ^ (3 / 2)` (exact rationals `a = 1/2`, `b = 1/3`, `q = 5/6`,
+`-25/36 > -5/6`, difference `5/36`; Lean witness `false_bound_neg_initMax`). The earlier signed-sample
+probe (16 random mixed-sign initial windows, 16/16 held) was too weak to find this: it never sat `M`
+strictly below 0 with the equality tail. Researcher 001 later formally withdrew change (1) and accepts `0 ≤ M`. Correction, not blame. The weakest correct hypothesis used
+here is `0 ≤ initMax u d`. Pointwise nonnegativity of `u` is a corollary (`discrete_halanay_of_nonneg`).
+For `M ≥ 0` the block bounds `M * q ^ k` are nonincreasing, which is what the block induction uses
+(windows of length `d + 1`).
+
+**Not progress on O1; no engine claim.** This is an abstract lemma about a real sequence. It does not
+assert that any engine phase, frequency, `R`, or `B` quantity satisfies the delayed inequality, and it
+is not a synchronization or basin result. The engine `B` law is delay-free
+(`WeightUpdate.stepM_scalar_recurrence`). A Halanay hypothesis on a fully nonlinear phase diameter is
+essentially O1 and is unproven. Application to AIEFS dynamics is a later, separately audited item
+(NORTH_STAR step 8).
+
+The `d = 0` corollary `discrete_halanay_d0` is `AIEFGate.Freeze.upper_geom` with `β = 0` (and
+`ρ = a + b`). GateCore already imports `Freeze`, so the corollary is proved by applying
+`Freeze.upper_geom`. That form does *not* need `0 ≤ u 0`. When `0 ≤ u 0`, the `d = 0` case of the
+main theorem agrees with this corollary (`discrete_halanay_d0_of_initMax`).
+
+Killable decay: `discrete_halanay_decay` gives `∃ ρ, 0 ≤ ρ ∧ ρ < 1 ∧ ∀ n, u n ≤ M * ρ ^ (n / (d + 1))`
+(witness `ρ = a + b`). The geometric form `discrete_halanay_geom` uses `ρ = Real.rpow q (1 / (d + 1))`
+and `0 < q < 1` to write `u n ≤ M * (ρ ^ n / ρ ^ d)`. The constant sequence at `a + b = 1` kills the
+decay claim (`false_decay_at_q_one`). A weakening of `a + b < 1` to `a + b ≤ 1` on the *written*
+bound of `discrete_halanay` is predicted to **SURVIVE** (at `a + b = 1` the bound is `M`, and
+`u n ≤ M` still holds). It is not registered as a mutant and is not placed in `KNOWN_SURVIVORS`.
+
+### 18.2 Statement mutants M800–M804 (rule as §5)
+| Mutant | Change | Refuted by |
+|---|---|---|
+| M800 | `discrete_halanay`: `0 ≤ initMax u d` := True | `false_bound_neg_initMax` (`M = -1`, `u 3 = -25/36 > -5/6`) |
+| M801 | exponent `n / (d + 1)` → `n / d` | `false_bound_wrong_exponent` (constant window, fails at `n = d`) |
+| M802 | bound uses `initMax u (d - 1)` | `false_bound_short_window` (unique max at index `d`) |
+| M803 | `discrete_halanay_decay`: `a + b < 1` → `a + b ≤ 1` | `false_decay_at_q_one` (constant `u ≡ 1`) |
+| M804 | delayed inequality starts at `d + 1 ≤ n` | `false_step_starts_late` (unconstrained jump at `n = d + 1`) |
+
+Refutations use the qualified name `DiscreteHalanay.false_* H`. `DiscreteHalanay.lean` is **not** added
+to `FILE_OPENS`, so the arena-bundle pin `range(131, 191)` is unchanged.
+
+### 18.3 Definition mutants M805–M808 (rule as §11.3)
+| Mutant | Definition | Change | Killed by |
+|---|---|---|---|
+| M805 | `initMax` | window `0..(d - 1)` | `probe_initMax_spike` (spike at 50, `d = 50`) |
+| M806 | `windowMax` | current point only | `probe_windowMax_values` (spike at 0 on `[0, 1]`) |
+| M807 | `blockPow` | exponent `n / d` | `probe_blockPow_values` (`50 / 50 = 1`, not `50 / 51 = 0`) |
+| M808 | `initMax` | only `u 0` | `probe_initMax_spike` |
+
+### 18.4 Tests and pins
+`research/lean_gate/tests/test_lean_gate_h13.py`: import and hash pin, no escape hatches, an axioms
+print for every theorem, the exact shape of M800–M808, the consumer caveat and the `0 ≤ M`
+correction, and the counterexample / exponent / decay controls in exact rationals. Pins move:
+P4b `len(MUTANTS)` 105 → 110 and `MUTANTS[38:]` gains `DiscreteHalanay.lean`; P5
+`N_STATEMENT_MUTANTS` 105 → 110, `N_DEF_MUTANTS` 85 → 89, total 190 → 199; c016 unique numbers
+190 → 199, `(105, 85) → (110, 89)`, plus `M800–M808`, with `KNOWN_SURVIVORS` still empty and the
+bundle range unchanged.
+
+### 18.5 Results (2026-11-27 GMT)
+
+- `SKIP_CACHE=1 unshare -rn ./check_lean_gate.sh`: RESULT PASS. Build 2354 jobs, 0 warnings;
+  SHA256SUMS verified (43 files); escape-hatch scan 39 files, 0 hits; step 7 audited
+  **1271 project declarations**, standard axioms only (propext, Classical.choice, Quot.sound).
+- Full unfiltered `lean_mutation_check.py` (offline): **110/110 statement** rejected (the one
+  name-reference note is M31's, pre-existing), **89/89 definition** killed, **199/199 total**,
+  23/23 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
+  M800–M808 all rejected/killed as predeclared; `a+b≤1` on the written bound was not registered.
+- pytest: `research/lean_gate/tests` 202 passed (8 subtests), `tools/ci/tests` 246 passed;
+  v4.1 analysis tests 45 passed; modular platform 60 passed, 2 skipped, 2 xfailed.
+  All repository checkers rc 0 after the inventory rebuild.
+- No engine claim; H13 is not progress on O1.
