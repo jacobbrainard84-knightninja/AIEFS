@@ -1738,3 +1738,18 @@ the stored probe output, and the mirrored engine lines (engine sha256 checked, e
 `len(MUTANTS)` 105 → 118; P5 `N_STATEMENT_MUTANTS` 105 → 118, `N_DEF_MUTANTS` 85 → 89, total 190 → 207; c016 total
 190 → 207 and M300–M316 numbered. **Merge note:** a concurrent branch may add mutants after
 M190 and move the same pins; whichever lands second must re-add the other's counts (the block numbers do not collide).
+
+### 18.5 Results (at `16e450f`, the commit that added and predeclared M300–M316)
+- Gate: `SKIP_CACHE=1 unshare -rn ./check_lean_gate.sh` **PASS** (2026-11-26 21:06–21:07 GMT): build 2358 jobs,
+  warnings 0; escape-hatch scan 40 files, 0 hits; 1260 project declarations audited, axioms only `propext`,
+  `Classical.choice`, `Quot.sound`.
+- Full unfiltered mutation run under `unshare -rn` (2026-11-27 19:46–20:13 GMT): **RESULT: PASS**; statement mutants
+  rejected 118/118, definition mutants killed 89/89 (207 total), equivalence controls not killed 23/23, typo controls
+  flagged invalid 4/4, statement controls SE1/ST1 not rejected, classifier negative control PASS. M300–M316: all 17
+  REJECTED/KILLED as predeclared; no survivor. The one name-reference info line is M31 (already on `main`, info only).
+  A first full run started 2026-11-26 21:07 GMT was interrupted around M151 when the session stopped (no failure in
+  its 102 completed entries) and was discarded, not merged into these counts.
+- pytest `tools/ci/tests research`: 481 passed; `tools/redteam`: 181 passed, 9 xfailed (the existing xfail markers).
+  Checkers `check_manifest`, `check_sha256sums`, `check_current_inventory`, `hygiene_scan`, `lint_claims`,
+  `check_modes`, `check_pinned_restatement`, `check_artifact_pins`, `check_study_paths`: rc 0.
+- UNEXPLAINED: none found. Open (not claimed): convergence of the coupled engine `B` with `R` not frozen.
