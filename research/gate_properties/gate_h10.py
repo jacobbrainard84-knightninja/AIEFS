@@ -74,7 +74,7 @@ def to_frac(Bf):
     return [[F(float(v)) for v in row] for row in Bf]     # exact value of each float64 input
 
 
-def random_cases(seed=20261126, count=150):
+def random_cases(seed=20261126, count=150, ties=True):
     """Seeded symmetric nonnegative zero-diagonal matrices: sparse/dense, row sums spread around the cap, ties."""
     rng = random.Random(seed)
     cases = []
@@ -89,7 +89,7 @@ def random_cases(seed=20261126, count=150):
         target = rng.choice([0.3, 0.6, 0.633, 0.64, 0.8, 1.5]) * float(CAP) / 0.6333
         if rs.max() > 0:
             M *= target / rs.max()
-        if k % 10 == 0:                                   # exact ties between endpoint scales
+        if ties and k % 10 == 0:                          # exact ties between endpoint scales
             M[0, :] = M[:, 0] = M[1, :] = M[:, 1] = 0
             M[0, 2] = M[2, 0] = M[1, 3] = M[3, 1] = 0.5
             M[0, 4] = M[4, 0] = M[1, 4] = M[4, 1] = 0.4
@@ -105,11 +105,23 @@ def eps_band_witness():
     return M
 
 
+def above_cap_witness():
+    """Follow-up witness (M507): one edge at nextafter(fl(cap), 1), the smallest float above fl(cap). Engine and oracle
+    both project; a trigger loosened to delta - 1e-9 does not."""
+    M = np.zeros((N, N))
+    M[0, 1] = M[1, 0] = np.nextafter((1.0 - 0.05) / 1.5, 1.0)
+    return M
+
+
+def witnesses():
+    return [eps_band_witness(), above_cap_witness()]
+
+
 def properties(gate, cases):
     """List of (property, case index) failures for a gate implementation."""
     fails = []
     capf = float(CAP)
-    for idx, M in enumerate(cases + [eps_band_witness()]):
+    for idx, M in enumerate(cases + witnesses()):
         Bp, pv, err = gate(M)
         if err is not None:
             fails.append(("P0_no_post_check_error", idx)); continue
@@ -136,7 +148,9 @@ def properties(gate, cases):
 
 def spillover_observation(cases):
     """OBSERVATION (not a pass/fail rule): on projected cases, how often a non-binding row (rowsum <= cap) loses
-    weight, and how far binding rows end below the cap. Impact on real runs stays UNEXPLAINED."""
+    weight, and how far binding rows end below the cap. Mechanism EXPLAINED (audit follow-up): a below-cap row loses
+    weight iff it has an edge to an over-cap row (per-edge min-endpoint gate, E27), with no exceptions either way on
+    this case set (h10_followup_checks.spillover_rule). How often it happens in real runs is UNMEASURED."""
     n_proj = n_rows_nb = n_nb_lose = 0
     worst_gap = F(0)
     for M in cases:
@@ -206,6 +220,15 @@ PREDECLARED_FOLLOWUP = {
                                                            # predeclared outcome (incl. M507) stays the same without them
 }
 
+# Audit follow-up (Auditor Seat 002 note N1; numbers reproduced in h10_followup_checks.m504_breakdown). The reason
+# recorded in OBSERVED_DEVIATIONS above led with the secondary cause and is superseded by this one:
+M504_REASON_CORRECTED = (
+    "main cause: dropping eps shifts each scaled entry by about eps/rowsum = 1.58e-12 relative (max 1.576e-12), which "
+    "is ABOVE rtol 1e-12, so P2 kills M504 on a single application (84 of 150 cases); the predeclared arithmetic "
+    "('about 1e-12, below the tolerance') was itself wrong. Secondary: of the over-cap rows, 62 land exactly on fl(cap), "
+    "19 at +1 ulp and 4 at +2 ulp, so re-applying the gate re-triggers (P5 fails in 23 cases)."
+)
+
 
 def expected(name):
     return OBSERVED_DEVIATIONS.get(name, (PREDECLARED[name], ""))[0]
@@ -232,14 +255,28 @@ def run(verbose=True):
             results[name] = ("KILLED" if killed else "NOT KILLED", sorted({p for p, _ in f})[:3])
         else:
             results[name] = ("KILLED" if killed else "SURVIVES", sorted({p for p, _ in f})[:3])
+    # follow-up (audit): M507 on the same cases + witnesses; M508 = the whole table re-run without the tie cases
+    for name, edits in MUTANTS_FOLLOWUP.items():
+        f = properties(make_gate(mutate(block, edits)), cases)
+        results[name] = ("KILLED" if f else "SURVIVES", sorted({p for p, _ in f})[:3])
+    nt = random_cases(ties=False)
+    same = not properties(make_gate(block), nt)
+    for name, edits in {**MUTANTS, **EQUIV, **MUTANTS_FOLLOWUP}.items():
+        killed = bool(properties(make_gate(mutate(block, edits)), nt))
+        same = same and (killed == (results[name][0] == "KILLED"))
+    results["M508_tie_cases_removed"] = ("NOT DETECTED" if same else "DETECTED", [])
     obs = spillover_observation(cases)
     ok = results["UNMUTATED"] == "PASS" and all(results[k][0] == expected(k) for k in PREDECLARED)
+    ok = ok and all(results[k][0] == v for k, v in PREDECLARED_FOLLOWUP.items())
     if verbose:
         print("unmutated:", results["UNMUTATED"])
         for k, v in PREDECLARED.items():
             dev = " [DEVIATION from predeclared, recorded in OBSERVED_DEVIATIONS]" if k in OBSERVED_DEVIATIONS else ""
             print(f"{k}: {results[k][0]} (predeclared {v}) failing={results[k][1]} ->"
                   f" {'AS EXPECTED' if results[k][0] == expected(k) else 'MISMATCH'}{dev}")
+        for k, v in PREDECLARED_FOLLOWUP.items():
+            print(f"{k}: {results[k][0]} (predeclared {v}) failing={results[k][1]} ->"
+                  f" {'AS PREDECLARED' if results[k][0] == v else 'MISMATCH'}")
         print("spillover observation:", obs)
         print("RESULT:", "PASS" if ok else "FAIL")
     return ok, results, obs
