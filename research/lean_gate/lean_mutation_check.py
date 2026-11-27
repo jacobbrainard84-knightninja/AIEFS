@@ -143,6 +143,9 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   M811 discrete_halanay, conclusion base a + b -> a            predicted KILLED -> DiscreteHalanay.false_bound_base_a
   These are Researcher 001's X3/X4/X5; R001 had already compiled the refuters in scratch, so step (b) is not a
   blind prediction. The registered three-sense harness outcome is the prediction.
+  CORRECTION (2026-11-27, audit B2, SPEC §18.7): M800-M808 were declared in the same commit as their results
+  (badac0c). Prior written predictions exist only for M801-M803 and the a+b ≤ 1 survivor (target note,
+  2026-11-26, outside git). M800 was declared after its counterexample was found; M804-M808 had none.
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
@@ -613,6 +616,11 @@ MUTANTS = [
     # Predeclaration in this first commit that adds them: M800-M804 are predicted KILL
     # (each has a proved false_*). Weakening a+b < 1 to a+b ≤ 1 on the written bound of
     # discrete_halanay is predicted SURVIVE and is deliberately not registered.
+    # CORRECTION (2026-11-27, SPEC §18.7; audit B2): the line above is not accurate. M800-M808
+    # were declared in the same commit (badac0c) as their results, so git cannot show that the
+    # prediction came first. Prior written predictions (outside git, 2026-11-26 20:48 GMT target
+    # note) exist only for M801, M802, M803 and the a+b ≤ 1 survivor. M800 was declared after its
+    # counterexample was found; M804 and M805-M808 had no earlier written prediction.
     ("M800_halanay_initMax_nonneg_dropped", "DiscreteHalanay.lean", "discrete_halanay",
      [("(hM : 0 ≤ initMax u d)", "(hM : True)", 1)], "",
      "DiscreteHalanay.false_bound_neg_initMax H", None),
@@ -631,6 +639,18 @@ MUTANTS = [
      [("(hstep : ∀ n, d ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d)",
        "(hstep : ∀ n, d + 1 ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d)", 1)], "",
      "DiscreteHalanay.false_step_starts_late H", None),
+    # M809-M811: predeclared KILLED in a separate earlier text-only commit (SPEC §18.6), then wired here.
+    # Researcher 001's X3/X4/X5 (refuters reused with credit).
+    ("M809_halanay_a_nonneg_dropped", "DiscreteHalanay.lean", "discrete_halanay",
+     [("(ha : 0 ≤ a)", "(ha : True)", 1)], "",
+     "DiscreteHalanay.false_bound_no_a_nonneg H", None),
+    ("M810_halanay_b_nonneg_dropped", "DiscreteHalanay.lean", "discrete_halanay",
+     [("(hb : 0 ≤ b)", "(hb : True)", 1)], "",
+     "DiscreteHalanay.false_bound_no_b_nonneg H", None),
+    ("M811_halanay_base_a_not_a_plus_b", "DiscreteHalanay.lean", "discrete_halanay",
+     [("∀ n, u n ≤ initMax u d * blockPow (a + b) n d",
+       "∀ n, u n ≤ initMax u d * blockPow a n d", 1)], "",
+     "DiscreteHalanay.false_bound_base_a H", None),
 ]
 
 UR_OLD = "def unitRate (_ : ℕ) (_ : Fin 2) : ℝ := 1\n"

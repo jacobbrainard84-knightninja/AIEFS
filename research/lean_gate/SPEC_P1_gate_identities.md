@@ -1691,7 +1691,8 @@ essentially O1 and is unproven. Application to AIEFS dynamics is a later, separa
 The `d = 0` corollary `discrete_halanay_d0` is `AIEFGate.Freeze.upper_geom` with `β = 0` (and
 `ρ = a + b`). GateCore already imports `Freeze`, so the corollary is proved by applying
 `Freeze.upper_geom`. That form does *not* need `0 ≤ u 0`. When `0 ≤ u 0`, the `d = 0` case of the
-main theorem agrees with this corollary (`discrete_halanay_d0_of_initMax`).
+main theorem agrees with this corollary (`discrete_halanay_d0_of_initMax`). *(Corrected in §18.8: the
+corollary no longer takes `a + b < 1` and no longer applies `upper_geom`.)*
 
 Killable decay: `discrete_halanay_decay` gives `∃ ρ, 0 ≤ ρ ∧ ρ < 1 ∧ ∀ n, u n ≤ M * ρ ^ (n / (d + 1))`
 (witness `ρ = a + b`). The geometric form `discrete_halanay_geom` uses `ρ = Real.rpow q (1 / (d + 1))`
@@ -1699,6 +1700,7 @@ and `0 < q < 1` to write `u n ≤ M * (ρ ^ n / ρ ^ d)`. The constant sequence 
 decay claim (`false_decay_at_q_one`). A weakening of `a + b < 1` to `a + b ≤ 1` on the *written*
 bound of `discrete_halanay` is predicted to **SURVIVE** (at `a + b = 1` the bound is `M`, and
 `u n ≤ M` still holds). It is not registered as a mutant and is not placed in `KNOWN_SURVIVORS`.
+*(See §18.8 for `discrete_halanay_geom`, which is not a decay control.)*
 
 ### 18.2 Statement mutants M800–M804 (rule as §5)
 | Mutant | Change | Refuted by |
@@ -1727,7 +1729,7 @@ correction, and the counterexample / exponent / decay controls in exact rational
 P4b `len(MUTANTS)` 105 → 110 and `MUTANTS[38:]` gains `DiscreteHalanay.lean`; P5
 `N_STATEMENT_MUTANTS` 105 → 110, `N_DEF_MUTANTS` 85 → 89, total 190 → 199; c016 unique numbers
 190 → 199, `(105, 85) → (110, 89)`, plus `M800–M808`, with `KNOWN_SURVIVORS` still empty and the
-bundle range unchanged.
+bundle range unchanged. *(Superseded by §18.10: 113 + 89 = 202 after M809–M811.)*
 
 ### 18.5 Results (2026-11-27 GMT)
 
@@ -1738,9 +1740,11 @@ bundle range unchanged.
   name-reference note is M31's, pre-existing), **89/89 definition** killed, **199/199 total**,
   23/23 equivalence controls not killed, 4/4 typo controls flagged invalid, RESULT PASS.
   M800–M808 all rejected/killed as predeclared; `a+b≤1` on the written bound was not registered.
+  *(Corrected in §18.7: "as predeclared" holds only for M801–M803; see there.)*
 - pytest: `research/lean_gate/tests` 202 passed (8 subtests), `tools/ci/tests` 246 passed;
   v4.1 analysis tests 45 passed; modular platform 60 passed, 2 skipped, 2 xfailed.
-  All repository checkers rc 0 after the inventory rebuild.
+  All repository checkers rc 0 after the inventory rebuild. *(Corrected in §18.7: this did not reproduce on a
+  clean checkout of `badac0c`.)*
 - No engine claim; H13 is not progress on O1.
 
 ### 18.6 Predeclaration of M809–M811 (2026-11-27 21:05 GMT; this commit, before any wiring or run)
@@ -1765,3 +1769,66 @@ the registered edits) rejects all three. Credit: Researcher 001 (refuters and wi
 Survivors kept as documented, unregistered survivors (both proved true in Lean by Researcher 001, X1 and
 X6): `a + b < 1` → `a + b ≤ 1` on the written bound of `discrete_halanay`, and `a + b < 1` dropped from
 `discrete_halanay_d0`.
+
+### 18.7 Correction: predeclaration timing (audit B2) and the inventory (audit B1), 2026-11-27 GMT
+Recorded plainly as corrections, found by Researcher 001's audit of `badac0c`.
+
+- **B2.** `badac0c` is a single commit that holds the mutant predeclaration ("Predeclaration in this first
+  commit…"), the mutants, the refuters and the results ("M800–M808 all rejected/killed as predeclared").
+  Git cannot show that any prediction came before its result. The agreed target required "predeclare
+  kill/survive in the first commit"; that was not done. Prior written predictions exist (target note,
+  2026-11-26 20:48 GMT, outside git) only for M801, M802, M803 and the `a + b ≤ 1` survivor. M800 was declared after its counterexample was found, so its
+  "prediction" holds by construction. M804 and the definition mutants M805–M808 had no earlier written
+  prediction. Their outcomes stand as results, not as confirmed predictions. No history was rewritten.
+  M809–M811 were predeclared in a separate, earlier, text-only commit (§18.6) and wired afterwards.
+- **B1.** The inventory in `badac0c` was built before `git add`, so `DiscreteHalanay.lean` and
+  `test_lean_gate_h13.py` were `NOT_INVENTORIED`, and `check_current_inventory.py` /
+  `verify_inventory_current.py` failed (rc 1) on a clean checkout. The §18.5 claim "checkers rc 0" did not
+  reproduce. Fixed by rebuilding after `git add`; checked on a fresh clone of the pushed tip (§18.11).
+
+### 18.8 Corrections to `_geom` and `_d0` wording and hypotheses (audit F2, F3)
+- **F2.** The `discrete_halanay_geom` docstring called it "the `Real.rpow` spelling of the decay control".
+  That is wrong. With `a + b < 1` weakened to `a + b ≤ 1` it stays true: at `a + b = 1`, `u ≡ M`, `ρ = 1`,
+  and the bound `M · 1^n / 1^d = M` holds with equality for every `n`. `discrete_halanay_geom` is not mutated:
+  its statement contains `let`, which the harness's `theorem_span` does not mutate, and a `≤ 1` mutant would
+  survive anyway. M803 on `discrete_halanay_decay` is kept as the only control that tells `a + b < 1` apart from `a + b ≤ 1`.
+  (As mathematics `_decay` is a two-line corollary of `discrete_halanay` with `ρ = a + b`.)
+- **F3.** `discrete_halanay_d0` carried `a + b < 1`, which its conclusion never used (Researcher 001 proved
+  the statement without it, X6). The hypothesis is dropped and the proof is a direct induction (as in X6);
+  `Freeze.upper_geom` needs `ρ < 1`, so it is no longer applied, and the corollary only has its conclusion
+  at `β = 0`. The corollary still asks `0 ≤ a` and `0 ≤ b` separately, which is more than `upper_geom`'s
+  `0 ≤ ρ`; only `0 ≤ a + b` is used. This is not a strengthening of any claim about the main theorem.
+- Documented survivors (not registered, both proved true in Lean by Researcher 001): X1 (`a + b ≤ 1` on
+  the written bound of `discrete_halanay`) and X6 (`a + b < 1` dropped from `_d0`, now the stated form).
+
+### 18.9 How loose the rate is (audit F4)
+The floor-exponent rate `(a + b)^(1/(d+1))` per step is genuine exponential decay but can be far slower
+than the sharp Halanay rate, the root `λ ∈ (0, 1)` of `λ^(d+1) = a·λ^d + b`. At the target note's gated
+typical consumer values `a = 2981/3000`, `b = 19/33000` (`a + b = 3281/3300`), `d = 50`: the easy rate
+`≈ 0.9998868` gives a half-life of 6122 steps, against 124 for the sharp root `λ ≈ 0.9944280`
+(about 49× slower). On the adversarial sequence (constant window `u = 1` on `0..50`, then equality in
+the recurrence) the true value is `u 3000 ≈ 6.9e-8`, and it tracks `λ^(n−d)` (max ratio 1, up to float
+rounding), while the floor bound allows `0.715` (`(3281/3300)^58`). Other rows (same check): `a = 1/2`,
+`b = 1/3`, `d = 1`: half-lives 7.6 / 5.4; `d = 50`: 194 / 89. Numbers from Researcher 001's audit,
+re-verified independently (60-digit decimal recurrence and bisection; pinned in
+`test_f4_rate_looseness_numbers_match_spec`). **The target note's comparison of `0.9998868` with
+`1 − γ dt = 0.99985` (half-life about 4621 steps) uses this loose rate, not the true one**; on the sharp
+rate the comparison is different (124 steps). This changes no Lean statement. A sharp-rate theorem is a
+possible later item. No engine claim.
+
+### 18.10 Statement mutants M809–M811, tests and pins
+| Mutant | Change | Refuted by |
+|---|---|---|
+| M809 | `discrete_halanay`: `0 ≤ a` := True | `false_bound_no_a_nonneg` (`a = -1`, `b = 0`, `d = 0`) |
+| M810 | `discrete_halanay`: `0 ≤ b` := True | `false_bound_no_b_nonneg` (`a = 0`, `b = -1/2`, `d = 0`) |
+| M811 | `discrete_halanay`: base `a + b` → `a` | `false_bound_base_a` (`a = 0`, `b = 1/2`, `d = 0`) |
+
+Refuters are Researcher 001's X3–X5 (credit), predeclared KILLED in §18.6. Pins: P4b `len(MUTANTS)`
+110 → 113; P5 `N_STATEMENT_MUTANTS` 110 → 113, total 199 → 202; c016 unique numbers 199 → 202,
+`(110, 89) → (113, 89)`, H13 numbers `800..811`. `test_lean_gate_h13.py` now parses `aE`, `bE`, the
+witness sequences `uNeg`, `uHold1`, `uSpike1`, the `*_initMax` / `uNeg_two` / `uNeg_three` values, the three
+`probe_*` statements and the docstring numbers (Lean, this SPEC, harness, README), and recomputes them from a
+Python model of the definitions in exact rationals. It adds the sampled-bound check the target asked for:
+400 random `(a, b, d, window)` with `a, b ≥ 0`, `a + b < 1`, `d ≤ 5`, `M ≥ 0`, including the adversarial
+constant-window equality tail (tight on `0..d+1`), with wrong-variant controls (`n / d`, base `a`, short
+window, `M < 0`) that must each fail on some samples, plus a sampled `ρ < 1` check at `a + b = 1`.

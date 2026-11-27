@@ -46,9 +46,15 @@ nonlinear phase diameter is essentially O1 and is unproven. Application to AIEFS
 dynamics is a later, separately audited item (NORTH_STAR step 8). Production
 `d = 50` is the intended parameter (`FROZEN_DELAY_STEPS`); the lemma is for general `d`.
 
-The `d = 0` corollary `discrete_halanay_d0` is `AIEFGate.Freeze.upper_geom` with `β = 0`
-(and `ρ = a + b`). That form does *not* need `0 ≤ u 0`. The general floor-exponent
+The `d = 0` corollary `discrete_halanay_d0` has the conclusion of `AIEFGate.Freeze.upper_geom`
+with `β = 0` (and `ρ = a + b`). That form does *not* need `0 ≤ u 0`. The general floor-exponent
 result still requires `0 ≤ M` when the window can be longer than one point.
+
+Correction (2026-11-27, Researcher 001 audit F3): `discrete_halanay_d0` first carried
+`a + b < 1`, which its conclusion never used (Researcher 001 proved it without, X6). The
+hypothesis is dropped and the proof is now a direct induction; `upper_geom` itself needs
+`ρ < 1`, so the corollary no longer applies it. The corollary still asks `0 ≤ a` and `0 ≤ b`
+separately, which is more than the `0 ≤ ρ` of `upper_geom`: only `0 ≤ a + b` is used.
 
 A weakening of `a + b < 1` to `a + b ≤ 1` on the *written* bound of `discrete_halanay`
 is predicted to **SURVIVE** (at `a + b = 1` the bound is `M`, and `u n ≤ M` still holds).
@@ -337,18 +343,23 @@ theorem discrete_halanay_of_nonneg (u : ℕ → ℝ) (a b : ℝ) (d : ℕ)
 
 #print axioms discrete_halanay_of_nonneg
 
-/-- The delay-free special case `d = 0`. This is `AIEFGate.Freeze.upper_geom` with `β = 0`
-and `ρ = a + b`. Unlike `discrete_halanay`, it does not require `0 ≤ u 0`. When `d = 0`
-the delayed inequality is `u (n + 1) ≤ (a + b) * u n` for every `n`, and the floor
-exponent is `n / 1 = n`. -/
+/-- The delay-free special case `d = 0`: the conclusion of `AIEFGate.Freeze.upper_geom` with
+`β = 0` and `ρ = a + b`. Unlike `discrete_halanay`, it does not require `0 ≤ u 0`. When
+`d = 0` the delayed inequality is `u (n + 1) ≤ (a + b) * u n` for every `n`, and the floor
+exponent is `n / 1 = n`. No `a + b < 1` is needed (correction, audit F3; proof by induction
+as in Researcher 001's X6). Only `0 ≤ a + b` is used; `0 ≤ a` and `0 ≤ b` are kept separately
+to match the main theorem, which is more than `upper_geom`'s `0 ≤ ρ`. -/
 theorem discrete_halanay_d0 (u : ℕ → ℝ) (a b : ℝ)
-    (ha : 0 ≤ a) (hb : 0 ≤ b) (hq : a + b < 1)
+    (ha : 0 ≤ a) (hb : 0 ≤ b)
     (hstep : ∀ n, u (n + 1) ≤ (a + b) * u n) :
     ∀ n, u n ≤ (a + b) ^ n * u 0 := by
   intro n
-  have h := AIEFGate.Freeze.upper_geom u (a + b) 0 (add_nonneg ha hb) hq
-    (fun k => by simpa using hstep k) n
-  simpa using h
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    calc u (k + 1) ≤ (a + b) * u k := hstep k
+      _ ≤ (a + b) * ((a + b) ^ k * u 0) := mul_le_mul_of_nonneg_left ih (add_nonneg ha hb)
+      _ = (a + b) ^ (k + 1) * u 0 := by ring
 
 #print axioms discrete_halanay_d0
 
@@ -394,7 +405,12 @@ theorem discrete_halanay_decay (u : ℕ → ℝ) (a b : ℝ) (d : ℕ)
 
 /-- Geometric (single-ratio) form: with `ρ = q ^ (1 / (d + 1))` in the reals (`Real.rpow`)
 and `0 < q < 1`, one has `u n ≤ M * (ρ ^ n / ρ ^ d)`. This is looser than the floor
-bound, and is the `Real.rpow` spelling of the decay control. -/
+bound. It is *not* a decay control. Correction (2026-11-27, Researcher 001 audit F2): an
+earlier docstring called it "the `Real.rpow` spelling of the decay control", which is wrong.
+With `a + b < 1` weakened to `a + b ≤ 1` the statement stays true (at `a + b = 1`, `u ≡ M`,
+`ρ = 1` and it holds with equality for every `n`), so it cannot tell `a + b < 1` from
+`a + b ≤ 1`. It is not mutated (its statement has `let`, and such a mutant would survive).
+The killable decay control is `discrete_halanay_decay` (M803). -/
 theorem discrete_halanay_geom (u : ℕ → ℝ) (a b : ℝ) (d : ℕ)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hq0 : 0 < a + b) (hq : a + b < 1)
     (hM : 0 ≤ initMax u d)
@@ -746,6 +762,77 @@ theorem false_decay_at_q_one :
     simpa [u, hMval, this] using h2
   exact (not_le_of_gt hρ1) this
 
+/-! ### M809–M811 refuters (Researcher 001's X3, X4, X5 from its audit of `badac0c`; reused with
+credit; predeclared KILLED in SPEC §18.6 before wiring) -/
+
+/-- Dropping `0 ≤ a` is false: `a = -1`, `b = 0`, `d = 0`, `u = 1, -5, 5, -5, …`.
+At `n = 2`: `u 2 = 5 > 1 = M * (-1) ^ 2`. -/
+theorem false_bound_no_a_nonneg :
+    ¬ (∀ (u : ℕ → ℝ) (a b : ℝ) (d : ℕ) (_ha : True) (_hb : 0 ≤ b) (_hq : a + b < 1)
+      (_hM : 0 ≤ initMax u d)
+      (_hstep : ∀ n, d ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d),
+      ∀ n, u n ≤ initMax u d * blockPow (a + b) n d) := by
+  intro H
+  let u : ℕ → ℝ := fun n => if n = 0 then 1 else if n % 2 = 1 then -5 else 5
+  have hs : ∀ n, 0 ≤ n → u (n + 1) ≤ (-1) * u n + 0 * windowMax u n 0 := by
+    intro n _
+    rcases Nat.even_or_odd n with ⟨k, hk⟩ | ⟨k, hk⟩
+    · subst hk
+      by_cases h0 : k = 0
+      · subst h0; simp [u]
+      · have h1 : (k + k + 1) % 2 = 1 := by omega
+        have h2 : (k + k) % 2 = 0 := by omega
+        simp [u, h0, h1, h2]
+    · subst hk
+      have h1 : (2 * k + 1 + 1) % 2 = 0 := by omega
+      have h2 : (2 * k + 1) % 2 = 1 := by omega
+      simp [u, h1, h2]
+  have h := H u (-1) 0 0 trivial le_rfl (by norm_num)
+    (by rw [initMax_delay_zero]; simp [u]) hs 2
+  rw [initMax_delay_zero] at h
+  norm_num [u, blockPow] at h
+
+/-- Dropping `0 ≤ b` is false: `a = 0`, `b = -1/2`, `d = 0`, `u 0 = 1`,
+`u n = -10 * (-1/2) ^ (n - 1)` for `n ≥ 1`. At `n = 2`: `u 2 = 5 > 1/4 = M * (-1/2) ^ 2`. -/
+theorem false_bound_no_b_nonneg :
+    ¬ (∀ (u : ℕ → ℝ) (a b : ℝ) (d : ℕ) (_ha : 0 ≤ a) (_hb : True) (_hq : a + b < 1)
+      (_hM : 0 ≤ initMax u d)
+      (_hstep : ∀ n, d ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d),
+      ∀ n, u n ≤ initMax u d * blockPow (a + b) n d) := by
+  intro H
+  let u : ℕ → ℝ := fun n => if n = 0 then 1 else -10 * (-1 / 2 : ℝ) ^ (n - 1)
+  have hs : ∀ n, 0 ≤ n → u (n + 1) ≤ 0 * u n + (-1 / 2) * windowMax u n 0 := by
+    intro n _
+    rw [windowMax_delay_zero]
+    by_cases h0 : n = 0
+    · subst h0; simp [u]; norm_num
+    · have : n + 1 - 1 = (n - 1) + 1 := by omega
+      simp only [u, h0, if_false, Nat.add_one_ne_zero, this, pow_succ]
+      ring_nf; exact le_rfl
+  have h := H u 0 (-1 / 2) 0 le_rfl trivial (by norm_num)
+    (by rw [initMax_delay_zero]; simp [u]) hs 2
+  rw [initMax_delay_zero] at h
+  norm_num [u, blockPow] at h
+
+/-- Base `a` instead of `a + b` is false: `a = 0`, `b = 1/2`, `d = 0`, `u n = (1/2) ^ n`.
+At `n = 1`: `u 1 = 1/2 > 0 = M * 0 ^ 1`. -/
+theorem false_bound_base_a :
+    ¬ (∀ (u : ℕ → ℝ) (a b : ℝ) (d : ℕ) (_ha : 0 ≤ a) (_hb : 0 ≤ b) (_hq : a + b < 1)
+      (_hM : 0 ≤ initMax u d)
+      (_hstep : ∀ n, d ≤ n → u (n + 1) ≤ a * u n + b * windowMax u n d),
+      ∀ n, u n ≤ initMax u d * blockPow a n d) := by
+  intro H
+  let u : ℕ → ℝ := fun n => (1 / 2 : ℝ) ^ n
+  have hs : ∀ n, 0 ≤ n → u (n + 1) ≤ 0 * u n + (1 / 2) * windowMax u n 0 := by
+    intro n _; rw [windowMax_delay_zero]; simp [u, pow_succ]
+  have h := H u 0 (1 / 2) 0 le_rfl (by norm_num) (by norm_num)
+    (by rw [initMax_delay_zero]; simp [u]) hs 1
+  rw [initMax_delay_zero] at h
+  norm_num [u, blockPow] at h
+
+#print axioms false_bound_no_a_nonneg
+#print axioms false_bound_no_b_nonneg
+#print axioms false_bound_base_a
 #print axioms false_bound_neg_initMax
 #print axioms false_bound_wrong_exponent
 #print axioms false_bound_short_window
