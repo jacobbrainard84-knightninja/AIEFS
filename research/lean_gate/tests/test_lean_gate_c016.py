@@ -341,11 +341,12 @@ def test_p6_mutants_exact_counts_and_numbering():
     # the Arena cycle 13/21 intake (CommonRootSimple.lean, EngineStepRef.lean, SPEC §16): M110-M129
     arena = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in ("CommonRootSimple.lean", "EngineStepRef.lean")])
     assert sorted(arena) == list(range(110, 131))
-    # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition
+    # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition; the audit
+    # follow-up (Researcher 001 note N5, SPEC §17.7) adds statement mutants M191-M201
     bundle = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in mc.FILE_OPENS])
-    assert sorted(bundle) == list(range(131, 191))
-    assert len(allnums) == len(set(allnums)) == 190 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (105, 85)
+    assert sorted(bundle) == list(range(131, 202))
+    assert len(allnums) == len(set(allnums)) == 201 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (116, 85)
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 27                                          # unique across ports: E1-E23, T1-T4

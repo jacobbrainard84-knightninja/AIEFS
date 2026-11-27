@@ -149,6 +149,17 @@ theorem false_view_shift_no_pos :
   have h := H 1 1 probeState (fun _ => 5) 0 trivial 0
   norm_num [view, shift, reverseIndex, probeState] at h
 
+/-- Dropping consistency from `step_reachable_consistent` is false (`bad`, `t = 0`). Audit note
+N5. -/
+theorem false_step_reachable_no_consistent :
+    ¬ (∀ (n d : ℕ) (dt omega : ℝ) (W : Fin n → Fin n → ℝ) (s : State n d) (_h : True) (t : ℕ),
+      Consistent n d (iterate n d (fun x => (step n d dt omega W x).theta) t s)) := by
+  intro H
+  have h := H 1 1 0 0 (fun _ _ => 0) bad trivial 0 0
+  simp only [iterate, view, reverseIndex, bad] at h
+  exact Real.Angle.pi_ne_zero (by simpa using h.symm)
+
+#print axioms false_step_reachable_no_consistent
 #print axioms probe_shift_values
 #print axioms probe_view_values
 #print axioms probe_head_value

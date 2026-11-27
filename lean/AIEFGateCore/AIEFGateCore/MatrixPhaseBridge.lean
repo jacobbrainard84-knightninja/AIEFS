@@ -9,12 +9,13 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Angle
 /-!
 # Fixed-matrix phase/queue reference and directional derivative (Arena D6)
 
-Research candidate (deposit note: session date 2026-09-11, Atlantic/Reykjavik). A fixed supplied
-matrix `W` (not clipped or projected here) in the phase head, an engine-shaped step with queue
-shift, and the circle bridge under the consistency hypothesis; the matrix head reduces to the
-scalar `EngineStepRef.phaseHead` for a uniform zero-diagonal `W`. Not a formalization of Python,
-adaptive weights, or a stability theorem. Value probes and `false_*` witnesses are appended (SPEC
-§17).
+Research candidate (deposit note: session date 2026-09-11, Atlantic/Reykjavik; the deposit adds
+"lead-note date conflicts, see note", but no such note is in the deposited file, so the date is
+unverified). A fixed supplied matrix `W` (not clipped or projected here) in the phase head, an
+engine-shaped step with queue shift, and the circle bridge under the consistency hypothesis; the
+matrix head reduces to the scalar `EngineStepRef.phaseHead` for a uniform zero-diagonal `W`. Not a
+formalization of Python, adaptive weights, or a stability theorem. Value probes and `false_*`
+witnesses are appended (SPEC §17).
 
 Source: audit-inbox `41335f0` MERGE_MANIFEST, verdict D6 prerequisite, deposit sha256 `74d44d87…`;
 proofs and statements unchanged from the deposit.
@@ -237,6 +238,22 @@ theorem false_scalar_no_uniform :
   intro H
   exact nonuniform_counterexample (H 3 1 1 0 2 probeW probeX (by norm_num) trivial 0)
 
+/-- Dropping the factor `cos (d·dt·Ω)` from `matrix_head_direction` is false (`n = d = dt = 1`,
+`Ω = π`, `W = 1`, `v = (0, 1)`: derivative `-1`, not `1`; derivatives are unique). Audit note N5. -/
+theorem false_head_direction_no_cos :
+    ¬ (∀ (n d : ℕ) (dt omega Omega theta : ℝ) (W : Fin n → Fin n → ℝ) (v : ℕ → Fin n → ℝ)
+      (i : Fin n),
+      HasDerivAt (fun t => matrixHead n d dt omega W
+        (EngineStepRef.orbitPath n dt Omega theta v t) i)
+        (v 0 i + dt * ∑ j : Fin n, W i j * (v d j - v 0 i)) 0) := by
+  intro H
+  have h1 := H 1 1 1 0 Real.pi 0 (fun _ _ => 1) (fun k _ => if k = 0 then 0 else 1) 0
+  have h2 := matrix_head_direction 1 1 1 0 Real.pi 0 (fun _ _ => 1)
+    (fun k _ => if k = 0 then 0 else 1) 0
+  have h := h1.unique h2
+  norm_num [Real.cos_pi] at h
+
+#print axioms false_head_direction_no_cos
 #print axioms probe_matrixHead_value
 #print axioms probe_engineStep_shift
 #print axioms probe_engineStep_head

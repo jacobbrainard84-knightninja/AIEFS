@@ -1,5 +1,6 @@
 """Lean intake of the Arena bundle (MERGE_MANIFEST 2026-11-25 of Arena_Researcher_06020041, audit-inbox 41335f0;
-SPEC §17): pin the 12 modules, their mutants M131-M190 / controls E21-E23 and FILE_OPENS without running Lean.
+SPEC §17): pin the 12 modules, their mutants M131-M190 (+ M191-M201, audit follow-up §17.7) / controls E21-E23 and
+FILE_OPENS without running Lean.
 
 Modules (deposit sha256 in DEPOSIT below): ReachableQueue, EmaNearUnit, MatrixPhaseBridge (D6 prerequisite),
 QueueComposition, EmaWrapInvariant, CausalEMATracking, EMAFiniteSum, TransientBridge, TransientParameter, WindowMax,
@@ -86,7 +87,7 @@ def test_no_escape_hatches_and_axioms_printed():
 
 def test_statement_mutants_exact_shape():
     ms = [m for m in mc.MUTANTS if m[1] in FILES]
-    assert [int(m[0].split("_")[0][1:]) for m in ms] == list(range(131, 157))
+    assert [int(m[0].split("_")[0][1:]) for m in ms] == list(range(131, 157)) + list(range(191, 202))
     for name, f, thm, edits, closure, term, engine in ms:
         assert closure == "" and engine is None, name
         assert len(edits) == 1 and edits[0][2] == 1, name
@@ -127,7 +128,39 @@ def test_file_opens_one_bundle_namespace_each():
     assert "FILE_OPENS.get(f, \"\")" in (HERE.parent / "lean_mutation_check.py").read_text()
 
 
-def _next(n, d, c, v, k):           # WindowMax.next
+def _flat(text):
+    return " ".join(text.split())
+
+
+def _stmt(f, thm):
+    """The statement of `theorem thm` in file f, read from the Lean source (up to `:= by`), whitespace-flattened."""
+    m = re.search(rf"^theorem {thm}\b(.*?):= by", SRC[f], re.M | re.S)
+    assert m, (f, thm)
+    return _flat(m.group(1))
+
+
+def _def(f, name):
+    """The text of `def name` in file f up to the next blank line, whitespace-flattened."""
+    m = re.search(rf"^def {name}\b(.*?)\n\n", SRC[f], re.M | re.S)
+    assert m, (f, name)
+    return _flat(m.group(1))
+
+
+def _proof_line(f, thm, prefix="have h := H "):
+    """The first `have h := H ...` line of the proof of `theorem thm` (the witness instantiation), flattened."""
+    s = SRC[f][SRC[f].index(f"theorem {thm}"):]
+    s = s[:s.index("\n\n")]
+    i = s.index(prefix)
+    return _flat(s[i:s.index("\n", i)])
+
+
+def lean(x):
+    """An exact rational in the form the probes write it: `2`, `-1/2`, `3/2`."""
+    x = Q(x)
+    return str(x.numerator) if x.denominator == 1 else f"{x.numerator}/{x.denominator}"
+
+
+def _next(n, d, c, v, k):           # WindowMax.next (pinned to the Lean def in the test below)
     return (1 - (n - 1) * c) * v[0] - c * v[d] if k == 0 else v[k - 1]
 
 
@@ -135,7 +168,7 @@ def _lin(dt, row, vd_sum, v0, k, vprev):   # HeteroStepRef.linearStep, one node
     return (1 - dt * row) * v0 + dt * vd_sum if k == 0 else vprev
 
 
-def _step(c, p):                     # TransientParameter.step (TransientBridge at c = 1/4)
+def _step(c, p):                     # TransientParameter.step (TransientBridge at c = stepSize = 1/4)
     return ((1 - 2 * c) * p[0] - c * p[1], p[0])
 
 
@@ -143,50 +176,145 @@ def _energy(p):
     return p[0] ** 2 + p[1] ** 2
 
 
+def _budget(a, E, drift, n):         # CausalEMATracking.budget
+    return E if n == 0 else a * _budget(a, E, drift, n - 1) + drift(n - 1)
+
+
 def test_probe_and_witness_values_exact():
+    """Read the probe and witness statements from the Lean sources and recompute their numbers in exact arithmetic.
+
+    The Python models are first pinned to the Lean definitions (text), so a changed definition, a changed probe value or
+    a changed witness instance in the .lean file fails here (not only in the Lean build). SPEC §17.5, audit note N1."""
+    wm, he = "WindowMax.lean", "HeteroStepRef.lean"
+    tb, tp = "TransientBridge.lean", "TransientParameter.lean"
+    ce, ef = "CausalEMATracking.lean", "EMAFiniteSum.lean"
+    # 1. the models are the Lean definitions
+    assert _def(wm, "next") == ("(n d : ℕ) (c : ℝ) (v : ℕ → ℝ) (k : ℕ) : ℝ := "
+                                "if k = 0 then (1 - ((n : ℝ) - 1) * c) * v 0 - c * v d else v (k - 1)")
+    assert _def(he, "linearStep") == ("(n d : ℕ) (dt : ℝ) (B : Fin n → Fin n → ℝ) (v : ℕ → Fin n → ℝ) (k : ℕ) "
+                                      "(i : Fin n) : ℝ := if k = 0 then (1 - dt * row n B i) * v 0 i + "
+                                      "dt * ∑ j, B i j * v d j else v (k - 1) i")
+    assert _def(he, "row") == "(n : ℕ) (B : Fin n → Fin n → ℝ) (i : Fin n) : ℝ := ∑ j : Fin n, B i j"
+    assert _def(tb, "stepSize") == ": ℝ := 1 / 4"
+    assert _def(tb, "step") == "(p : ℝ × ℝ) : ℝ × ℝ := ((1 - 2 * stepSize) * p.1 - stepSize * p.2, p.1)"
+    assert _def(tp, "step").startswith("(c : ℝ) (p : ℝ × ℝ) : ℝ × ℝ := ((1 - 2 * c) * p.1 - c * p.2, p.1)")
+    for f in (tb, tp):
+        assert re.search(r"^def energy \(p : ℝ × ℝ\) : ℝ := p\.1 \^ 2 \+ p\.2 \^ 2$", SRC[f], re.M), f
+    assert _def(ce, "budget") == ("(alpha E : ℝ) (drift : ℕ → ℝ) : ℕ → ℝ | 0 => E | n + 1 => "
+                                  "alpha * budget alpha E drift n + drift n")
+
+    # 2. probes: the right-hand sides in the .lean file equal the model values
     v = {0: Q(1), 1: Q(4)}
-    assert (_next(3, 1, Q(1, 4), v, 0), _next(3, 1, Q(1, 4), v, 1)) == (Q(-1, 2), 1)     # probe_next_values
-    # the four next-mutants give different values (M182-M185)
-    assert (1 - 3 * Q(1, 4)) * 1 - Q(1, 4) * 4 != Q(-1, 2) and (1 - 2 * Q(1, 4)) + Q(1, 4) * 4 != Q(-1, 2)
-    assert (1 - 2 * Q(1, 4)) - Q(1, 4) * 1 != Q(-1, 2) and v[1] != 1
-    # M149/M150: c = 4/5, v = 1 grows to 7/5 > 1; M151: n = 1, c = 1 gives |1| + 1 = 2 > 1
-    assert abs(_next(3, 1, Q(4, 5), {0: 1, 1: 1}, 0)) == Q(7, 5) and abs(1 - 0 * 1) + 1 == 2
-    # probe_linearStep_values: n = 1, dt = 1/2, B = 1, window (1, 3) -> head 2; mutants 3, 1, 5/2
-    assert _lin(Q(1, 2), 1, 3, 1, 0, None) == 2 and _lin(Q(1, 2), 1, 3, 1, 1, 1) == 1
-    assert (1 + Q(1, 2)) * 1 + Q(1, 2) * 3 == 3 and _lin(Q(1, 2), 1, 1, 1, 0, None) == 1
-    assert _lin(Q(1, 2), 0, 3, 1, 0, None) == Q(5, 2)
-    # M152-M154 witnesses: heads -3, 3, 3 with |window| <= 1
-    assert _lin(1, 2, -2, 1, 0, None) == -3                       # row condition dropped (B = 2, dt = 1)
-    assert (1 - 1 * 0) * 1 + 1 * (1 * 1 + (-1) * (-1)) == 3       # B = [[1,-1],[-1,1]], row 0
-    assert _lin(-1, 1, -1, 1, 0, None) == 3                       # dt = -1, B = 1
-    # TransientBridge / TransientParameter probes and witnesses
-    assert _step(Q(1, 4), (1, 2)) == (0, 1) and _energy((1, 2)) == 5
-    assert _step(Q(1, 3), (1, 2)) != (0, 1) and _energy(_step(Q(1, 4), (1, 0))) == Q(5, 4) > 1      # M172, M143
-    assert _energy(_step(Q(1, 4), _step(Q(1, 4), (1, -1)))) == Q(37, 64) > Q(1, 4) * 2                # M144
-    assert _energy(_step(2, (1, 0))) == 10 > Q(21, 8)                                                # M148
-    assert (-1) ** 2 - (1 - 2 * 2) * (-1) + 2 == 0 and 1 - (1 - 0) * 1 + 0 == 0                      # M146, M147
-    # CausalEMATracking probe_budget_values and EMAFiniteSum witnesses
-    budget = lambda a, E, drift, n: E if n == 0 else a * budget(a, E, drift, n - 1) + drift(n - 1)
-    assert budget(2, 0, lambda k: 1, 1) == 1 and budget(2, 1, lambda k: 0, 2) == 4
+    w = "(fun k => if k = 0 then 1 else 4)"
+    assert _stmt(wm, "probe_next_values") == (
+        f": next 3 1 (1/4) {w} 0 = {lean(_next(3, 1, Q(1, 4), v, 0))} ∧ "
+        f"next 3 1 (1/4) {w} 1 = {lean(_next(3, 1, Q(1, 4), v, 1))}")
+    b, w = "(fun _ _ => 1)", "(fun k _ => if k = 0 then 1 else 3)"
+    assert _stmt(he, "probe_linearStep_values") == (
+        f": linearStep 1 1 (1/2) {b} {w} 0 0 = {lean(_lin(Q(1, 2), 1, 1 * 3, 1, 0, None))} ∧ "
+        f"linearStep 1 1 (1/2) {b} {w} 1 0 = {lean(_lin(Q(1, 2), 1, 3, 1, 1, 1))}")
+    s = _step(Q(1, 4), (1, 2))
+    assert _stmt(tb, "probe_step_values") == f": step (1, 2) = ({lean(s[0])}, {lean(s[1])})"
+    assert _stmt(tp, "probe_step_values") == f": step (1/4) (1, 2) = ({lean(s[0])}, {lean(s[1])})"
+    for f in (tb, tp):
+        assert _stmt(f, "probe_energy_value") == f": energy (1, 2) = {lean(_energy((1, 2)))}", f
+    assert _stmt(ce, "probe_budget_values") == (
+        f": budget 2 0 (fun _ => 1) 1 = {lean(_budget(2, 0, lambda k: 1, 1))} ∧ "
+        f"budget 2 1 (fun _ => 0) 2 = {lean(_budget(2, 1, lambda k: 0, 2))}")
+
+    # 3. the mutant values the probe docstrings promise differ from the probe value (M182-M185, M186-M188)
+    doc = _flat(SRC[wm][SRC[wm].index("/-- `next 3 1 (1/4)"):SRC[wm].index("theorem probe_next_values")])
+    c = Q(1, 4)
+    claimed = {"`n - 1` gives": (1 - 3 * c) * 1 - c * 4, "`+ c·v d` gives": (1 - 2 * c) * 1 + c * 4,
+               "slot 0 instead of `d` gives": (1 - 2 * c) * 1 - c * 1, "unshifted slot 1 gives": v[1]}
+    for phrase, val in claimed.items():
+        m = re.search(re.escape(phrase.split(" gives")[0]) + r"[^`]*?gives `(-?\d+(?:/\d+)?)`", doc)
+        assert m and Q(m.group(1)) == val != _next(3, 1, c, v, 0 if "slot 1" not in phrase else 1), phrase
+
+    # 4. witnesses: the instance in each `false_*` proof, and the violation it gives
+    assert _proof_line(wm, "false_window_step_no_threshold").startswith("have h := H 3 1 (4/5) 1 (fun _ => 1)")
+    assert abs(_next(3, 1, Q(4, 5), {0: 1, 1: 1}, 0)) == Q(7, 5) > 1                         # M149 / M150
+    assert _proof_line(wm, "false_window_all_no_threshold").startswith("have h := H 3 1 (4/5) 1 (fun _ => 1)")
+    assert _proof_line(wm, "false_coefficient_no_size").startswith("have h := H 1 1 trivial")
+    assert abs(1 - (1 - 1) * 1) + 1 == 2 > 1                                                  # M151 at n = 1, c = 1
+    assert _proof_line(he, "false_window_step_no_row").startswith(
+        "have h := H 1 1 1 1 (fun _ _ => 2) (fun k _ => if k = 0 then 1 else -1)")
+    assert _lin(1, 2, 2 * -1, 1, 0, None) == -3                                               # M152
+    assert _proof_line(he, "false_window_step_no_dt").startswith(
+        "have h := H 1 1 (-1) 1 (fun _ _ => 1) (fun k _ => if k = 0 then 1 else -1)")
+    assert _lin(-1, 1, -1, 1, 0, None) == 3                                                   # M154
+    assert "fun i j => if i = j then 1 else -1" in _flat(SRC[he][SRC[he].index("theorem false_window_step_no_nonneg"):])
+    assert (1 - 1 * (1 - 1)) * 1 + 1 * (1 * 1 + (-1) * (-1)) == 3                              # M153, row 0
+    assert _proof_line(tb, "false_one_step_factor_one") == "have h := H (1, 0)"
+    assert _energy(_step(Q(1, 4), (1, 0))) == Q(5, 4) > 1 * _energy((1, 0))                   # M143
+    assert _proof_line(tb, "false_two_step_quarter") == "have h := H (1, -1)"
+    assert _energy(_step(Q(1, 4), _step(Q(1, 4), (1, -1)))) == Q(37, 64) > Q(1, 4) * _energy((1, -1))   # M144
+    assert _proof_line(tp, "false_one_step_no_upper").startswith("have h := H 2 (1, 0)")
+    assert re.search(r"energy \(step c p\) ≤ \(21 / 8 : ℝ\) \* energy p", _stmt(tp, "false_one_step_no_upper"))
+    assert _energy(_step(2, (1, 0))) == 10 > Q(21, 8)                                          # M148
+    # M146 / M147: the characteristic polynomial z^2 - (1 - 2c) z + c in the statement, at the witnessed root
+    poly = "(_hz : z ^ 2 - ((1 - 2 * c : ℝ) : ℂ) * z + (c : ℂ) = 0)"
+    for thm, (cc, z) in {"false_stable_no_upper": (2, -1), "false_stable_no_pos": (0, 1)}.items():
+        assert poly in _stmt(tp, thm), thm
+        assert _proof_line(tp, thm).startswith(f"have h := H {cc} ") and \
+            f" {z if z >= 0 else f'({z})'} (by push_cast" in _proof_line(tp, thm)
+        assert z ** 2 - (1 - 2 * cc) * z + cc == 0 and abs(z) >= 1, thm
     ind = lambda k: 1 if k == 0 else 0
-    assert budget(2, 0, ind, 3) == 4 != sum(2 ** k * ind(k) for k in range(3))                        # M141
-    assert budget(2, 1, lambda k: 0, 1) == 2 != 1                                                    # M142
+    assert _proof_line(ef, "false_finite_sum_reversed") == "have h := H 2 0 (fun k => if k = 0 then 1 else 0) 3"
+    assert _budget(2, 0, ind, 3) == 4 != sum(2 ** k * ind(k) for k in range(3))                # M141
+    assert _proof_line(ef, "false_finite_sum_no_start_decay") == "have h := H 2 1 (fun _ => 0) 1"
+    assert _budget(2, 1, lambda k: 0, 1) == 2 != 1                                             # M142
+
+
+def _spec_section(num):
+    spec = (REPO / "research" / "lean_gate" / "SPEC_P1_gate_identities.md").read_text()
+    i = spec.index(f"### {num} ")
+    return _flat(spec[i:spec.index("\n### ", i + 1)])
+
+
+def _threshold(expr, n):
+    """Evaluate a SPEC threshold such as `1/(N−1)` or `2/N` at N = n, exactly (digits, N, /, −, parentheses only)."""
+    e = expr.replace("−", "-").replace(" ", "")
+    assert re.fullmatch(r"[0-9N/()+-]+", e), expr
+    e = re.sub(r"(\d+)", r"Q(\1)", e).replace("N", f"Q({n})")
+    return eval(e, {"Q": Q, "__builtins__": {}})        # noqa: S307 -- restricted to the characters above
 
 
 def test_window_max_and_hetero_are_complementary():
-    """SPEC §17.4: uniform b, c = dt*b. HeteroStepRef needs dt*row_i = (N-1)c <= 1 for all perturbations;
-    WindowMax allows c <= 2/N for mean-zero modes only. 1/(N-1) <= 2/N for every N >= 2 (equality at N = 2),
-    so the all-perturbation threshold is never larger, and the two results never conflict."""
-    for n in range(2, 200):
-        assert Q(1, n - 1) <= Q(2, n)
-        assert (Q(1, n - 1) == Q(2, n)) == (n == 2)
-    # inside (1/(N-1), 2/N] a mean-zero mode is still bounded by WindowMax while HeteroStepRef's growth witness
-    # (a non-mean-zero window, row condition failing) grows: N = 3, c = 3/5
-    c = Q(3, 5)
-    assert Q(1, 2) < c <= Q(2, 3) and (3 - 1) * c > 1
-    assert abs(1 - (3 - 1) * c) + c <= 1                                                    # coefficient_bound
-    r = (3 - 1) * c                                   # dt * row_i at dt = 1, zero diagonal, b = c
-    assert abs(_lin(1, r, -r, 1, 0, None)) == 2 * r - 1 == Q(7, 5) > 1    # growth_witness (window 1, -1)
+    """SPEC §17.4, read from the SPEC text and checked against the Lean hypotheses (audit note N1).
+
+    The thresholds in §17.4 are parsed and must equal those implied by the Lean statements: HeteroStepRef.window_step's
+    row condition `dt * row n B i ≤ 1` (uniform off-diagonal b, c = dt*b: (N-1)c ≤ 1) and WindowMax's
+    `2 ≤ n`, `(n : ℝ) * c ≤ 2` (c ≤ 2/N). Then 1/(N-1) ≤ 2/N for every N ≥ 2, and the §17.4 example (N, c) is checked
+    against coefficient_bound and growth_witness as stated in Lean."""
+    sec = _spec_section("17.4")
+    hrow = re.search(r"\(hrow : ∀ i, dt \* row n B i ≤ (\d+)\)", _stmt("HeteroStepRef.lean", "window_step"))
+    cb = _stmt("WindowMax.lean", "coefficient_bound")
+    wsize = re.search(r"\(hn : (\d+) ≤ n\)", cb)
+    wthr = re.search(r"\(ht : \(n : ℝ\) \* c ≤ (\d+)\)", cb)
+    assert hrow and wsize and wthr
+    assert cb.endswith("|1 - ((n : ℝ) - 1) * c| + c ≤ 1")
+    assert "(hn : 2 ≤ n) (hc : 0 ≤ c) (ht : (n : ℝ) * c ≤ 2)" in _stmt("WindowMax.lean", "window_step")
+    h_spec = re.search(r"`\(N−1\)·c ≤ (\d+)`, i\.e\. `c ≤ ([^`]+)`", sec)
+    w_spec = re.search(r"allows the larger range `c ≤ ([^`]+)`", sec)
+    n_spec = re.search(r"for every `N ≥ (\d+)` \(equal at `N = (\d+)`\)", sec)
+    ex = re.search(r"checked at `N = (\d+)`, `c = (\d+)/(\d+)`", sec)
+    assert h_spec and w_spec and n_spec and ex, "SPEC §17.4 wording changed; update this test with it"
+    assert int(h_spec.group(1)) == int(hrow.group(1)) and int(n_spec.group(1)) == int(wsize.group(1))
+    for n in range(int(n_spec.group(1)), 200):
+        h_thr, w_thr = _threshold(h_spec.group(2), n), _threshold(w_spec.group(1), n)
+        assert h_thr == Q(int(hrow.group(1)), n - 1)          # uniform row: (N-1)·c ≤ bound
+        assert w_thr == Q(int(wthr.group(1)), n)              # n·c ≤ bound
+        assert h_thr <= w_thr and ((h_thr == w_thr) == (n == int(n_spec.group(2))))
+    # the example inside (1/(N-1), 2/N]: a mean-zero mode stays bounded, HeteroStepRef's witness grows
+    n, c = int(ex.group(1)), Q(int(ex.group(2)), int(ex.group(3)))
+    assert _threshold(h_spec.group(2), n) < c <= _threshold(w_spec.group(1), n)
+    assert abs(1 - (n - 1) * c) + c <= 1                                         # coefficient_bound's conclusion
+    gw = _stmt("HeteroStepRef.lean", "growth_witness")
+    assert "let v : ℕ → Fin n → ℝ := fun k _ => if k = 0 then 1 else -1" in gw
+    assert "|linearStep n d dt B v 0 i| = 2 * dt * row n B i - 1" in gw and "(hr : 1 < dt * row n B i)" in gw
+    r = (n - 1) * c                                   # dt * row_i at dt = 1, zero diagonal, b = c
+    assert r > 1 and abs(_lin(1, r, -r, 1, 0, None)) == 2 * r - 1 > 1
 
 
 def test_engine_citations_match_engine_source():
