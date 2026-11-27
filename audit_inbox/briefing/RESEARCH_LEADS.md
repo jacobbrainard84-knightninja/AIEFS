@@ -93,3 +93,43 @@ Verification levels: **full text read** / **abstract** / **third-party review (z
 
 ### Rejected (do not re-check)
 polyrith (Sage server shut down, per Mathlib source); LeanDojo/LeanCopilot (AI proof search, no added trust); Duper (poor fit for real inequalities); lasalle-lean / lyapunov-odes-lean (v4.28, superseded by Mathlib `Dynamics/Flow`, `OmegaLimit` and LeanForControl); Gkogkas–Kuehn continuum limits, CMS 21 (2023) (N → ∞ only); mutmut/cosmic-ray on the engine (SHA-locked; the bespoke H3 mutation tester exists); rate-model synaptic-scaling papers (AMS Notices 2024, bioRxiv 2025.04.10.648137: seen in search snippets only, UNVERIFIED, not phase oscillators).
+
+### H8 corrections after audit (Researcher 001, 2026-11-27 MST; add-only; Auditor Seat 002 CLEAN WITH NOTES on `0d40452`)
+_Each line below corrects or supersedes text above, which is left in place. Where they disagree, this subsection wins._
+
+1. **Time (supersedes "~2:10 PM MST" in the H8 header above, and "~2:15 PM MST" in the H8 line in STATE.md):** H8 was
+   committed at 2026-11-26 1:48 PM MST (20:48 UTC), commit `0d40452`.
+2. **Path (corrects the tooling row "`Order/ToIntervalMod.lean`"):** the file is `Mathlib/Algebra/Order/ToIntervalMod.lean`.
+   Checked with `git ls-files` in the pinned Mathlib checkout at `0df444a360eaa60ab8c11dca51a86af692955474`. That is
+   the only ToIntervalMod file there, and `Mathlib/Order/ToIntervalMod.lean` does not exist. The other rows check out at
+   the same pin:
+   - `Mathlib/Analysis/ODE/DiscreteGronwall.lean` and `Mathlib/Topology/MetricSpace/Contracting.lean` exist.
+   - `coe_toIcoMod` is at `Mathlib/Analysis/SpecialFunctions/Trigonometric/Angle.lean` L417.
+3. **Tooling header (corrects "### Tooling leads (code; source read, not built)"):** that is true only of the Mathlib,
+   LeanPool and LeanForControl rows. **LeanCert** is **README/docs read** and **LeanBlueprint** is **README read**,
+   with no source read, as their per-row tags say. The per-row Level column is authoritative.
+4. **Superseded, old Cho–Ha–Kang row** ("Possibly analogous to the EMA (fading memory). This is inferred from the title
+   only…"): **SUPERSEDED.** No EMA analogy is claimed; see item 6.
+5. **Superseded, old combined row** "Cho, Dong & Ha, CMS 22 (2024); Wang & Dong, JDE 441 (2025) … | Unread":
+   **SUPERSEDED.** The levels are now Cho–Dong–Ha CMS 22 = **metadata only** and Wang–Dong = **third-party review
+   (zbMATH/MaRDI); full text not read** (the H8 tables above).
+6. **Cho, Ha & Kang, JNS 35 (2025), "Emergent Behaviors of a Kuramoto Ensemble Under Fading Memory"**
+   (https://doi.org/10.1007/s00332-024-10099-3):
+   - The earlier tag reason "publisher elides the abstract" **is wrong as of 2026-11-27**. The Springer page now serves
+     the abstract.
+   - **New level: abstract** (read 2026-11-27).
+   - What the abstract says: the Kuramoto model with a memory effect, posed as Volterra-type integro-differential
+     equations on the circle. The memory enters through nonlocal temporal interactions in the **phase** dynamics. The
+     paper gives well-posedness, a framework for a bounded phase diameter, and complete frequency sync (by bootstrap and
+     by an energy functional). For identical frequencies it gives complete phase sync.
+   - **The no-EMA-analogy conclusion still holds.** In this paper the memory weights past interactions in the phase law,
+     with fixed coupling. The AIEFS EMA is a complex average of the delayed phase difference. Its modulus R drives the
+     **weight** law. The abstract gives no adaptive coupling and no kernel form, so no EMA analogy is claimed.
+7. **Ha, Lee, Li & Park, SIADS 17 (2018)** (corrects "The conservation law preserves the sum of incoming couplings"
+   in its row):
+   - **The 2018 abstract** (Crossref, re-read 2026-11-27) **does not say what is conserved.** It mentions a
+     conservation law only in the title.
+   - The "preserves the sum of all incoming pairwise coupling strengths" property is in the **Ha–Noh–Park 2016
+     abstract** (SIADS 15, https://doi.org/10.1137/15M101484X, re-read 2026-11-27), which introduced Model A.
+   - Whether the 2018 conservation law is that same property is **UNVERIFIED** (full text not read). The row's level
+     stays **abstract**; that sentence is now attributed to the 2016 abstract, not to the 2018 one.
