@@ -172,6 +172,16 @@ theorem false_one_step_no_upper :
   have h := H 2 (1, 0) (by norm_num) trivial
   norm_num [energy, step] at h
 
+/-- Dropping `v ≠ 0 ∨ w ≠ 0` from `eigenmode_stable` is false (`c = 1/2`, `v = w = 0`, `z = 1`).
+Audit note N5. -/
+theorem false_param_eigenmode_no_nonzero :
+    ¬ (∀ (c : ℝ) (_hc0 : 0 < c) (_hc1 : c < 1) (z v w : ℂ) (_hne : True)
+      (_h1 : ((1 - 2 * c : ℝ) : ℂ) * v - (c : ℂ) * w = z * v) (_h2 : v = z * w), ‖z‖ < 1) := by
+  intro H
+  have h := H (1 / 2) (by norm_num) (by norm_num) 1 0 0 trivial (by simp) (by simp)
+  norm_num at h
+
+#print axioms false_param_eigenmode_no_nonzero
 #print axioms probe_step_values
 #print axioms probe_energy_value
 #print axioms probe_mode_values
