@@ -1820,3 +1820,28 @@ the first since N2.
 
 Results: recorded in the next commit, after the runs.
 
+Results (at `3716697`, the commit that added and predeclared M317–M321; times GMT):
+- Gate: `SKIP_CACHE=1 unshare -rn ./check_lean_gate.sh` **PASS** (2026-11-27 21:03–21:04): build 2358 jobs, warnings
+  0; SHA256SUMS 44 files verified; escape-hatch scan 40 files, 0 hits; 1275 project declarations audited (1260
+  before), axioms only `propext`, `Classical.choice`, `Quot.sound`.
+- Full unfiltered mutation run under `unshare -rn` (2026-11-27 21:04–21:28): **RESULT: PASS**; statement mutants
+  rejected 120/120, definition mutants killed 91/91 (211 total), equivalence controls not killed 23/23, typo controls
+  flagged invalid 4/4, SE1/ST1 not rejected, classifier and validator negative controls PASS; the one name-reference
+  info line is M31 (on `main`). As predeclared: M317, M318 REJECTED; M319 KILLED (only
+  `probe_binding_ratio_six_fifths` fails); M320 KILLED (`stepM_edge_envelope_pE` and `probe_envelope_pE_orbit`
+  fail); M321 build PASSES, SURVIVES as documented (not counted). M300–M316 unchanged (all REJECTED/KILLED).
+- F3 red-team (each variant in a temp copy outside the repo, gate SHA256SUMS re-hashed in the copy so the hash pin is
+  not what catches it; unmodified control 208/208 pass): `6/5 → 1` caught by `test_f3_headline_constants_pinned`
+  (and by the harness edit checks), and the Lean build of the mutated file fails in
+  `probe_binding_ratio_six_fifths`; `8/3 → 3` caught by `test_f3_headline_constants_pinned`, and the Lean build fails
+  in `stepM_edge_envelope_pE` itself and in `probe_envelope_pE_orbit`; the GateContraction header with "not" removed from its NORTH_STAR sentence caught by
+  `test_f3_north_star_not_advanced_wording` (`lint_claims` still rc 0: it does not check this phrase); `6/5 →
+  123/100` (M321) caught by the text pin only, Lean build passes, as predeclared. Note: the `8/3 → 3` edit already
+  broke the kept proof of `stepM_edge_envelope_pE` at `952f87d` (`linarith`), so the gate build would have rejected
+  it there; only the pytest suite missed it.
+- pytest `tools/ci/tests research`: 486 passed; `tools/redteam`: 181 passed, 9 xfailed. Checkers `check_manifest`,
+  `check_sha256sums`, `check_current_inventory`, `hygiene_scan` (also `--base origin/main --pii`), `lint_claims`,
+  `check_modes`, `check_pinned_restatement`, `check_artifact_pins`, `check_study_paths`: rc 0.
+- UNEXPLAINED: none new. Open (not claimed): a reachable-state Lean witness for H16; convergence of the coupled
+  engine `B` with `R` not frozen.
+
