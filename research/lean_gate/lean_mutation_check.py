@@ -137,6 +137,12 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   holds); it is not registered as a mutant and is not in KNOWN_SURVIVORS. Refutations use the qualified name
   DiscreteHalanay.false_* H; DiscreteHalanay.lean is not in FILE_OPENS (the arena-bundle pin range(131, 191)
   must stay unchanged).
+  PREDECLARATION (2026-11-27 21:05 GMT, a text-only commit before these are wired or run; SPEC §18.6):
+  M809 discrete_halanay, ha (0 ≤ a) := True                    predicted KILLED -> DiscreteHalanay.false_bound_no_a_nonneg
+  M810 discrete_halanay, hb (0 ≤ b) := True                    predicted KILLED -> DiscreteHalanay.false_bound_no_b_nonneg
+  M811 discrete_halanay, conclusion base a + b -> a            predicted KILLED -> DiscreteHalanay.false_bound_base_a
+  These are Researcher 001's X3/X4/X5; R001 had already compiled the refuters in scratch, so step (b) is not a
+  blind prediction. The registered three-sense harness outcome is the prediction.
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):

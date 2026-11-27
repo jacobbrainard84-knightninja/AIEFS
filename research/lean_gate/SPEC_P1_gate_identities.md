@@ -1742,3 +1742,26 @@ bundle range unchanged.
   v4.1 analysis tests 45 passed; modular platform 60 passed, 2 skipped, 2 xfailed.
   All repository checkers rc 0 after the inventory rebuild.
 - No engine claim; H13 is not progress on O1.
+
+### 18.6 Predeclaration of M809–M811 (2026-11-27 21:05 GMT; this commit, before any wiring or run)
+This commit adds text only. It registers no mutant, adds no Lean, and records no outcome. The mutants
+are wired and run in a later commit; their outcomes go in a later subsection.
+
+| Mutant | Theorem | Change | Predicted | Planned refuter |
+|---|---|---|---|---|
+| M809 | `discrete_halanay` | `(ha : 0 ≤ a)` := `True` | **KILLED** | `false_bound_no_a_nonneg` (`a = -1`, `b = 0`, `d = 0`, `u = 1, -5, 5, -5, …`; fails at `n = 2`) |
+| M810 | `discrete_halanay` | `(hb : 0 ≤ b)` := `True` | **KILLED** | `false_bound_no_b_nonneg` (`a = 0`, `b = -1/2`, `d = 0`, `u 0 = 1`, `u n = -10·(-1/2)^(n-1)`; fails at `n = 2`) |
+| M811 | `discrete_halanay` | conclusion base `a + b` → `a` | **KILLED** | `false_bound_base_a` (`a = 0`, `b = 1/2`, `d = 0`, `u n = (1/2)^n`; fails at `n = 1`) |
+
+"KILLED" means rejected in all three senses of §5: the kept proof fails with a real proof error, the
+refuter elaborates with standard axioms only, and the refuter term fails on the unmutated statement.
+
+Provenance, stated plainly: these three are Researcher 001's X3, X4 and X5 from its audit of `badac0c`.
+Researcher 001 had already compiled the three refuters in its own scratch files (standard axioms) before
+this predeclaration. So the prediction about step (b) is informed by a known result, not blind. What is
+not yet known, and is predicted here, is that the full harness run (steps (a), (b) and (c) together, at
+the registered edits) rejects all three. Credit: Researcher 001 (refuters and witnesses reused).
+
+Survivors kept as documented, unregistered survivors (both proved true in Lean by Researcher 001, X1 and
+X6): `a + b < 1` → `a + b ≤ 1` on the written bound of `discrete_halanay`, and `a + b < 1` dropped from
+`discrete_halanay_d0`.
