@@ -1959,3 +1959,16 @@ M320) = **91**, total **222**; `KNOWN_SURVIVORS` holds M321 only; equivalence/ty
 SHA256SUMS regenerated. The §18.4–§18.6 counts (118/89/207, 120/91/211) are this branch's counts before the merge and
 are kept as written.
 
+### 18.8 Classification of M319 and M320 (Researcher 001 delta note 2 on `98dda3a`)
+M319 (`6/5 → 1` in `binding_witness_l1`) and M320 (`8/3 → 3` in `stepM_edge_envelope_pE`) edit a **theorem
+statement**, not a definition, so they are **statement pins**, not definition mutants; the "definition-style pin"
+label in the §18.6 table (kept as written) was imprecise. They stay counted in `DEF_MUTANTS` on purpose: each edit
+is a **true weakening**, so no proved negation exists and the statement-mutant rule (build rejected **and** refuted
+by a `false_*` theorem, §5) can never kill them. What catches them is a downstream declaration that needs the
+original constant (`probe_binding_ratio_six_fifths`, `probe_envelope_pE_orbit`), which is exactly the
+definition-mutant rule (build fails, no invalid line, a declared probe fails, §11.3). The harness now lists them in
+`STATEMENT_PIN_MUTANTS` and prints them separately ("of which statement pins … 2/2; definition mutants proper …
+89/89"). Pins: `DEF_MUTANTS` stays 91 (89 definition mutants proper + 2 statement pins); statement mutants 131;
+total 222; `test_lean_gate_h9h16.py` pins the list, that both edits lie inside the theorem statement, and the 89.
+(M320's kill is also redundant with the kept proof of `stepM_edge_envelope_pE` failing, as Researcher 001 noted.)
+

@@ -22,7 +22,8 @@ The Arena cycle 13/21 intake (SPEC §16) adds M110-M118 statement, M119-M129 def
 statement, M157-M190 definition mutants and E21-E23: 105 + 85 = 190, 23 equivalence. Its audit follow-up (SPEC §17.7,
 Researcher 001 note N5) adds statement mutants M191-M201: 116 + 85 = 201. H9(b)/H16 (SPEC §18, separate block from
 M300) adds M300-M312 statement and M313-M316 definition mutants, no control (118 + 89 = 207 on its own branch). Its
-audit follow-up (SPEC §18.6) adds M317, M318 statement and M319, M320 definition-style pins, and the first documented
+audit follow-up (SPEC §18.6) adds M317, M318 statement and M319, M320 statement pins (counted
+under the definition-mutant rule, STATEMENT_PIN_MUTANTS, SPEC §18.8), and the first documented
 survivor since N2, M321 (KNOWN_SURVIVORS, predeclared SURVIVE, not counted). Merged: 131 + 91 = 222.
 
 Run: /workspace/venv_req_cmp/bin/python -m pytest research/lean_gate/tests -q

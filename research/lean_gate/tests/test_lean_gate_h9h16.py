@@ -117,6 +117,18 @@ def test_block_def_mutants_and_probes():
         assert mc.mutate_file(SRC[f], edits) != SRC[f], name
     assert [m[1] for m in BLOCK_DEF] == ["GateContraction.lean"] * 5 + ["GronwallEnvelope.lean"]
     assert BLOCK_DEF[4][3] == ["probe_binding_ratio_six_fifths"] and BLOCK_DEF[5][3] == ["probe_envelope_pE_orbit"]
+    # SPEC §18.8: M319, M320 are statement pins (they edit a theorem statement), counted under the definition rule
+    assert mc.STATEMENT_PIN_MUTANTS == [BLOCK_DEF[4][0], BLOCK_DEF[5][0]]
+    assert [num(n) for n in mc.STATEMENT_PIN_MUTANTS] == [319, 320]
+    assert set(mc.STATEMENT_PIN_MUTANTS) <= {m[0] for m in mc.DEF_MUTANTS}
+    assert not set(mc.STATEMENT_PIN_MUTANTS) & {m[0] for m in mc.MUTANTS}
+    for name, f, edits, pins in BLOCK_DEF[4:]:
+        thm = {"M319": "binding_witness_l1", "M320": "stepM_edge_envelope_pE"}[name[:4]]
+        s, e = mc.theorem_span(SRC[f], thm)
+        assert edits[0][0].split(" := by")[0] in SRC[f][s:e], name   # the edit lies inside the theorem STATEMENT
+    assert len(mc.DEF_MUTANTS) - len(mc.STATEMENT_PIN_MUTANTS) == 89     # definition mutants proper (85 main + 4 §18)
+    hm = (HERE.parent / "lean_mutation_check.py").read_text()
+    assert "of which statement pins" in hm and "n_pin += killed and name in STATEMENT_PIN_MUTANTS" in hm
     # the one documented survivor (predeclared SURVIVE): a TRUE strengthening of the 6/5 constant
     assert len(mc.KNOWN_SURVIVORS) == 1
     name, f, edits = mc.KNOWN_SURVIVORS[0]

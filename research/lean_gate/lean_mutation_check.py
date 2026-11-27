@@ -136,7 +136,7 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   Follow-up to the Researcher 001 audit of 952f87d (F3 and the coverage note), predeclared in the commit that adds
   them, before any run of them: statement mutants M317 (`stepM_edge_envelope_lower`, `γ dt ≤ 1` -> True; refuted by
   `false_lower_envelope_gamma_dt_gt_one` at `WeightUpdate.pH`) and M318 (`binding_witness_l1`, `6/5` -> `5/4`;
-  refuted by `false_binding_l1_five_fourths`), predeclared KILLED; definition-style pins M319 (`6/5` -> `1` in
+  refuted by `false_binding_l1_five_fourths`), predeclared KILLED; statement pins M319 (`6/5` -> `1` in
   `binding_witness_l1`; pin probe `probe_binding_ratio_six_fifths`) and M320 (`8/3` -> `3` in
   `stepM_edge_envelope_pE`; pin probe `probe_envelope_pE_orbit`), predeclared KILLED. These two "probes" are
   statement pins (they consume the theorem with its headline constant written out), not closed-number value
@@ -1012,7 +1012,8 @@ DEF_MUTANTS = [
        "def l1 (X Y : Fin 3 → Fin 3 → ℝ) : ℝ := ∑ i, ∑ j, (X i j - Y i j)\n", 1)], ["probe_l1_B3"]),
     ("M316_B3prime_raised_one_side_only", "GateContraction.lean",
      [("![13 / 30, 0, 1 / 3]", "![1 / 3, 0, 1 / 3]", 1)], ["probe_l1_B3"]),
-    # Audit follow-up (F3): the headline constants, pinned by statement-pin probes. Predeclared KILLED.
+    # Audit follow-up (F3): the headline constants, pinned by statement-pin probes. Predeclared KILLED. These two are
+    # STATEMENT PINS, not definition mutants: they edit a theorem statement (listed in STATEMENT_PIN_MUTANTS below).
     ("M319_binding_witness_l1_six_fifths_to_one", "GateContraction.lean",
      [("    6 / 5 * l1 B3 B3' < l1 (stepM", "    1 * l1 B3 B3' < l1 (stepM", 1)], ["probe_binding_ratio_six_fifths"]),
     ("M320_envelope_pE_eight_thirds_to_three", "GronwallEnvelope.lean",
@@ -1020,6 +1021,13 @@ DEF_MUTANTS = [
        "    B n i j ≤ (19997 / 20000 : ℝ) ^ n * B 0 i j + (1 - (19997 / 20000 : ℝ) ^ n) * 3 := by\n", 1)],
      ["probe_envelope_pE_orbit"]),
 ]
+
+# Statement pins (SPEC §18.8): entries of DEF_MUTANTS that edit a THEOREM STATEMENT, not a definition. They sit in
+# DEF_MUTANTS on purpose: each edit is a TRUE weakening (6/5 -> 1, 8/3 -> 3), so no proved negation exists and the
+# statement-mutant rule (build rejected AND refuted by a `false_*` theorem) can never kill them; what catches them is
+# a downstream declaration that needs the original constant, which is exactly the definition-mutant rule (build fails,
+# no invalid line, a declared probe fails). They are counted in DEF_MUTANTS and reported separately in the run output.
+STATEMENT_PIN_MUTANTS = ["M319_binding_witness_l1_six_fifths_to_one", "M320_envelope_pE_eight_thirds_to_three"]
 
 # Equivalence negative controls: semantically EQUAL definitions. Each must NOT be killed (no declared value probe of
 # the file fails); a control scored killed FAILS the run (the rule would then measure proof brittleness).
@@ -1403,6 +1411,7 @@ def main():
         ok &= good
     # P5: definition mutants (rule: build fails, no name-reference/parse error line, a declared value probe fails)
     n_def = 0
+    n_pin = 0
     for name, f, edits, pins in DEF_MUTANTS:
         if only and not re.search(only, name):
             continue
@@ -1415,6 +1424,7 @@ def main():
         status = def_mutant_status(rc, errs, failing, pins)
         killed = status == "KILLED"
         n_def += killed
+        n_pin += killed and name in STATEMENT_PIN_MUTANTS
         hit = [p for p in pins if p in failing]
         print(f"{name}: {status}; failing declarations: {', '.join(failing) or '-'}; "
               f"value probes failing: {', '.join(hit) or 'NONE'} -> "
@@ -1423,6 +1433,9 @@ def main():
             print("    invalid-mutant line: " + l.split("Mutant.lean:")[-1][:150])
         ok &= killed
     print(f"definition mutants killed: {n_def}/{len(DEF_MUTANTS)}")
+    print(f"  of which statement pins (theorem-statement edits under the definition rule, STATEMENT_PIN_MUTANTS): "
+          f"{n_pin}/{len(STATEMENT_PIN_MUTANTS)}; definition mutants proper: {n_def - n_pin}/"
+          f"{len(DEF_MUTANTS) - len(STATEMENT_PIN_MUTANTS)}")
     print(f"mutants rejected in total: {n_rej + n_def}/{len(MUTANTS) + len(DEF_MUTANTS)}")
     # equivalence controls: must NOT be killed
     n_eq = 0
