@@ -122,7 +122,8 @@ Mutants (statement -> negation theorem used in step (b); "+ engine" = second ref
   view reversal, oldest/newest slot, wrap-free heads, refInput, arcBound, budget, two-slot steps, stepSize, energy,
   mode, WindowMax.next, HeteroStepRef.linearStep/row/phaseHeadW) killed by `probe_*` value probes; E21-E23 must not
   be killed. The bundle reuses short names (State, Consistent, step, iterate, window_step, ...) in distinct
-  namespaces, so each refutation opens only the mutated file's own namespace (FILE_OPENS), never two at once.
+  namespaces, so each refutation opens only the mutated file's own namespace (FILE_OPENS). One exception:
+  EMAFiniteSum opens two, CausalEMATracking (for `budget`) and EMAFiniteSum, which share no names (audit note N2).
 
   C014 (TrajectoryInvariants.lean, port of cycle 014 of Researcher 040282; numbered M71 ff.; the c016 port was
   renumbered after these, its definition mutants M71-M76 becoming M79-M84, plus M85-M86 added for audit N3 (the phase-lock port then takes M87-M94) and its controls E11-E14 becoming E12-E15):
@@ -589,6 +590,37 @@ MUTANTS = [
      [("(hcap : dt * ((a - delta + tol) / q) ≤ 1)", "(hcap : True)", 1)], "", "HeteroStepRef.false_guarded_no_cap H", None),
     ("M156_heteroguard_q_pos_dropped", "HeteroGuard.lean", "guarded_window_all_steps",
      [("(hq : 0 < q)", "(hq : True)", 1)], "", "HeteroStepRef.false_guarded_no_q H", None),
+    # ---- Arena bundle audit follow-up (Researcher 001 note N5, SPEC §17.7): statement mutants M191-M201 for the
+    # deposited theorems that had none (QueueComposition.initialized_trajectory_bridge cannot be mutated: its
+    # statement has a `let`, and theorem_span/statement_prop stop at the first top-level `:=`). PREDECLARED in the commit that adds them, before any run: every one of
+    # M191-M201 is expected REJECTED (kept proof fails for a real reason, refuted by its `false_*` with standard
+    # axioms, control on the unmutated statement fails). None is expected to survive; a survivor would be reported
+    # as UNEXPLAINED, not moved to KNOWN_SURVIVORS.
+    ("M191_emanear_projection_startup_dropped", "EmaNearUnit.lean", "trace_projection_bound",
+     [("(1 - alpha ^ N) * L ≤", "L ≤", 1)], "", "EmaNearUnit.false_projection_no_startup H", None),
+    ("M192_emanear_norm_startup_dropped", "EmaNearUnit.lean", "trace_norm_bound",
+     [("(1 - alpha ^ N) * L ≤", "L ≤", 1)], "", "EmaNearUnit.false_norm_no_startup H", None),
+    ("M193_emanear_spread_budget_startup_dropped", "EmaNearUnit.lean", "near_unit_of_phase_spread",
+     [("(budget : alpha ^ N + (1 - Real.cos beta) ≤ epsilon)", "(budget : (1 - Real.cos beta) ≤ epsilon)", 1)], "",
+     "EmaNearUnit.false_spread_no_startup H", None),
+    ("M194_emasum_delayed_alpha_nonneg_dropped", "EMAFiniteSum.lean", "delayed_tracking_sum",
+     [("(ha : 0 ≤ alpha)", "(ha : True)", 1)], "", "EMAFiniteSum.false_delayed_sum_no_nonneg H", None),
+    ("M195_queue_step_reachable_consistency_dropped", "ReachableQueue.lean", "step_reachable_consistent",
+     [("(h : Consistent n d s)", "(h : True)", 1)], "", "ReachableQueue.false_step_reachable_no_consistent H", None),
+    ("M196_queuecomp_finite_step_reads_head_slot", "QueueComposition.lean", "finite_abstract_step",
+     [("history k i", "history 0 i", 1)], "", "QueueComposition.false_finite_step_head_slot H", None),
+    ("M197_matrixbridge_direction_cos_dropped", "MatrixPhaseBridge.lean", "matrix_head_direction",
+     [("W i j * (Real.cos ((d : ℝ) * dt * Omega) * (v d j - v 0 i))", "W i j * (v d j - v 0 i)", 1)], "",
+     "MatrixPhaseBridge.false_head_direction_no_cos H", None),
+    ("M198_transbridge_after_first_quarter", "TransientBridge.lean", "after_first_bound",
+     [("(81 / 128 : ℝ)", "(1 / 4 : ℝ)", 1)], "", "TransientBridge.false_after_first_quarter H", None),
+    ("M199_transbridge_eigenmode_nonzero_dropped", "TransientBridge.lean", "eigenmode_stable",
+     [("(hne : v ≠ 0 ∨ w ≠ 0)", "(hne : True)", 1)], "", "TransientBridge.false_eigenmode_no_nonzero H", None),
+    ("M200_transparam_eigenmode_nonzero_dropped", "TransientParameter.lean", "eigenmode_stable",
+     [("(hne : v ≠ 0 ∨ w ≠ 0)", "(hne : True)", 1)], "", "TransientParameter.false_param_eigenmode_no_nonzero H",
+     None),
+    ("M201_hetero_all_steps_row_dropped", "HeteroStepRef.lean", "window_all_steps",
+     [("(hrow : ∀ i, dt * row n B i ≤ 1)", "(hrow : True)", 1)], "", "HeteroStepRef.false_window_all_no_row H", None),
     # ---- H17 (WrapBridge.lean; numbering block M700 ff. reserved for Researcher 001's H17, see SPEC §18).
     # Predeclared outcome for every entry below: KILLED (build rejected for a real reason AND refuted by the proved
     # `false_*` theorem AND the same term fails on the unmutated statement). A survivor is a finding, never deleted.
@@ -998,7 +1030,8 @@ OPENS = ("open Finset\nopen AIEFGate.MatrixForm (CE KG toEdge stepM symM rowM)\n
          "open AIEFGate.EngineStepRef (clippedWeight phaseHead phaseStep orbitPath)\n")
 # Per-file opens for the refutation files of the Arena bundle (SPEC §17). The bundle reuses short names
 # (State, Consistent, step, iterate, mode, energy, window_step, window_all_steps, ...) in distinct namespaces,
-# so a refutation opens only the namespace(s) of the mutated file, never two bundle namespaces at once.
+# so a refutation opens only the namespace of the mutated file. The one exception is EMAFiniteSum, which opens two
+# (CausalEMATracking for `budget`, and EMAFiniteSum); those two share no names, and the arena test pins this.
 FILE_OPENS = {"ReachableQueue.lean": "open AIEFGate.ReachableQueue\n",
               "QueueComposition.lean": "open AIEFGate.QueueComposition\n",
               "MatrixPhaseBridge.lean": "open AIEFGate.MatrixPhaseBridge\n",

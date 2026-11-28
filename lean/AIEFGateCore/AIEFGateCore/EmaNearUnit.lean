@@ -114,6 +114,48 @@ theorem false_near_unit_no_delta_nonneg :
     le_rfl zero_le_one trivial (fun k hk => absurd hk (Nat.not_lt_zero k)) (by norm_num)
   norm_num [coherenceTrace] at h
 
+/-- Dropping the startup factor `1 - α^N` from `trace_projection_bound` is false (`N = 0`, `L = 1`:
+the zero-start trace is `0`). Audit note N5. -/
+theorem false_projection_no_startup :
+    ¬ (∀ {V : Type*} (alpha L : ℝ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ)
+      (tau : ℝ) (i j : V) (N : ℕ) (_ha : 0 ≤ alpha) (_ha1 : alpha ≤ 1)
+      (_hin : ∀ k < N, L ≤ (coherenceInput d x0 u omega tau k i j).re),
+      L ≤ (coherenceTrace alpha (fun _ _ => 0) d x0 u omega tau N i j).re) := by
+  intro H
+  have h := @H PUnit 0 1 0 (fun _ => 0) (fun _ _ => 0) (fun _ => 0) 0 PUnit.unit PUnit.unit 0
+    le_rfl zero_le_one (fun k hk => absurd hk (Nat.not_lt_zero k))
+  norm_num [coherenceTrace] at h
+
+/-- Dropping the startup factor `1 - α^N` from `trace_norm_bound` is false (`N = 0`, `L = 1`).
+Audit note N5. -/
+theorem false_norm_no_startup :
+    ¬ (∀ {V : Type*} (alpha L : ℝ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ) (omega : V → ℝ)
+      (tau : ℝ) (i j : V) (N : ℕ) (_ha : 0 ≤ alpha) (_ha1 : alpha ≤ 1)
+      (_hin : ∀ k < N, L ≤ (coherenceInput d x0 u omega tau k i j).re),
+      L ≤ ‖coherenceTrace alpha (fun _ _ => 0) d x0 u omega tau N i j‖) := by
+  intro H
+  have h := @H PUnit 0 1 0 (fun _ => 0) (fun _ _ => 0) (fun _ => 0) 0 PUnit.unit PUnit.unit 0
+    le_rfl zero_le_one (fun k hk => absurd hk (Nat.not_lt_zero k))
+  norm_num [coherenceTrace] at h
+
+/-- Dropping the startup loss `α^N` from the budget of `near_unit_of_phase_spread` is false
+(`N = 0`, `β = 0`, `ε = 0`). Audit note N5. -/
+theorem false_spread_no_startup :
+    ¬ (∀ {V : Type*} (alpha beta epsilon : ℝ) (d : ℕ) (x0 : V → ℝ) (u : ℕ → V → ℝ)
+      (omega : V → ℝ) (tau : ℝ) (i j : V) (N : ℕ) (_ha : 0 ≤ alpha) (_ha1 : alpha ≤ 1)
+      (_hb : beta ≤ Real.pi)
+      (_hspread : ∀ k < N, |Phase.phaseTrace x0 u k i - Phase.phaseTrace x0 u (k - d) j -
+        ((omega i + omega j) / 2) * tau| ≤ beta)
+      (_budget : (1 - Real.cos beta) ≤ epsilon),
+      1 - epsilon ≤ ‖coherenceTrace alpha (fun _ _ => 0) d x0 u omega tau N i j‖) := by
+  intro H
+  have h := @H PUnit 0 0 0 0 (fun _ => 0) (fun _ _ => 0) (fun _ => 0) 0 PUnit.unit PUnit.unit 0
+    le_rfl zero_le_one Real.pi_pos.le (fun k hk => absurd hk (Nat.not_lt_zero k)) (by norm_num)
+  norm_num [coherenceTrace] at h
+
+#print axioms false_projection_no_startup
+#print axioms false_norm_no_startup
+#print axioms false_spread_no_startup
 #print axioms false_near_unit_no_startup
 #print axioms false_near_unit_no_delta_nonneg
 

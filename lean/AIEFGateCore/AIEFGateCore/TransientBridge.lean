@@ -189,6 +189,25 @@ theorem false_all_steps_factor_one :
   have h := H 1 (1, 0)
   norm_num [evolve, energy, step, stepSize] at h
 
+/-- `after_first_bound` with factor `1/4` is false (`n = 0`, `p = (1, -1)`: `37/64 > 1/2`). Audit
+note N5. -/
+theorem false_after_first_quarter :
+    ¬ (∀ (n : ℕ) (p : ℝ × ℝ), energy (evolve (n + 2) p) ≤ (1 / 4 : ℝ) * energy p) := by
+  intro H
+  have h := H 0 (1, -1)
+  norm_num [evolve, energy, step, stepSize] at h
+
+/-- Dropping `v ≠ 0 ∨ w ≠ 0` from `eigenmode_stable` is false (`v = w = 0`, `z = 0`). Audit note
+N5. -/
+theorem false_eigenmode_no_nonzero :
+    ¬ (∀ (z v w : ℂ) (_hne : True) (_h1 : (1 / 2 : ℂ) * v - (1 / 4 : ℂ) * w = z * v)
+      (_h2 : v = z * w), ‖z‖ = 1 / 2) := by
+  intro H
+  have h := H 0 0 0 trivial (by simp) (by simp)
+  norm_num at h
+
+#print axioms false_after_first_quarter
+#print axioms false_eigenmode_no_nonzero
 #print axioms probe_step_values
 #print axioms probe_energy_value
 #print axioms false_one_step_factor_one
