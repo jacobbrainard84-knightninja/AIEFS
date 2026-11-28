@@ -137,7 +137,8 @@ def test_p4b_mutants_shape():
     # + 9 (M110-M118: CommonRootSimple.lean / EngineStepRef.lean, see test_lean_gate_arena_intake.py)
     # + 26 (M131-M156: Arena bundle, SPEC §17) + 11 (M191-M201: bundle audit follow-up N5, SPEC §17.7)
     # + 13 (M300-M312: H9(b)/H16, SPEC §18, see test_lean_gate_h9h16.py) + 2 (M317, M318: its audit follow-up, §18.6)
-    assert len(names) == 131                                     # the single exact pin (P4a test: >= 23; 116 + 15 after merging §17.7 and §18/§18.6; 105 before both, 79 before §17, 70 before §16)
+    # + 4 (M700-M703: H17 WrapBridge.lean statement mutants, see test_lean_gate_h17.py)
+    assert len(names) == 135                                     # the single exact pin (P4a test: >= 23; 120 + 15 after merging H17 and §18/§18.6; 116 before H17, 105 before §17.7, 79 before §17, 70 before §16)
     assert names[23].startswith("M24") and names[35].startswith("M36")
     assert names[36].startswith("M57") and names[37].startswith("M58")
     assert {m[1] for m in mc.MUTANTS[23:36]} == {"WeightUpdate.lean"}
@@ -146,7 +147,7 @@ def test_p4b_mutants_shape():
     # the C014, P6, phase-lock and DelayRoots entries are selected by file, not by position
     assert {m[1] for m in mc.MUTANTS[38:]} == {"TrajectoryInvariants.lean", "CoherenceMotion.lean",
                                               "FrequencyLock.lean", "DelayRoots.lean",
-                                              "CommonRootSimple.lean", "EngineStepRef.lean",
+                                              "CommonRootSimple.lean", "EngineStepRef.lean", "WrapBridge.lean",
                                               "ReachableQueue.lean", "QueueComposition.lean", "MatrixPhaseBridge.lean", "EmaNearUnit.lean", "EmaWrapInvariant.lean", "CausalEMATracking.lean", "EMAFiniteSum.lean", "TransientBridge.lean", "TransientParameter.lean", "WindowMax.lean", "HeteroStepRef.lean", "HeteroGuard.lean",
                                               "GronwallEnvelope.lean", "GateContraction.lean"}
     assert len([m for m in mc.MUTANTS if m[1] == "DelayRoots.lean"]) == 12

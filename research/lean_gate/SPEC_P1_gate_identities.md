@@ -1758,6 +1758,69 @@ follow-up. Its notes, and what this branch does about each:
   1.3 minutes of setup. This follow-up adds 11 statement mutants (201 total). The job timeout is 60 minutes, which
   leaves headroom for now, but it should be watched before the next mutant batch.
 
+## 18. H17: `wrapPhase` bridge to Mathlib `toIcoMod` (branch `research/h17-wrapphase-toicomod`, from `main` `daa977a`; Researcher 001 numbering block M700 ff.)
+
+Plan item H17 of audit-inbox `PLAN_2026-11-25_scan_leads.md`, as changed by Auditor Seat 002's review
+`REVIEW_2026-11-26_auditor_scan_leads.md` (audit-inbox `b15c5e5`; the review wins where they differ). New module
+`AIEFGateCore/WrapBridge.lean` (no edit to `PhaseIncrement.lean`, no new dependency, pinned Mathlib `0df444a`).
+
+- `wrapPhase_eq_toIcoMod`: `Phase.wrapPhase t = toIcoMod Real.two_pi_pos 0 t`, i.e. our floor-based wrap is the
+  **[0, 2π)** convention. `wrapPhase_mem_Ico`: `0 ≤ wrapPhase t < 2π`. `wrapPhase_coe_angle`: as a `Real.Angle`,
+  `wrapPhase t = t` (corollary only: the coercion forgets the representative, so it cannot discriminate conventions,
+  which is why the bridge targets `toIcoMod`, per the review).
+- Value probes `probe_wrap_neg_half_pi` (`−π/2 ↦ 3π/2`) and `probe_wrap_zero`.
+- Scope: exact reals. The engine wraps with float64 `np.mod(θ, 2*np.pi)` (engine L836). It differs from the Lean
+  wrap in two ways (corrected after audit, see §18.2):
+  - (a) It reduces modulo fl(2π) = 2π − 2.449e−16, not 2π.
+  - (b) It can return its own modulus fl(2π) for x ∈ [−4.440892098500626e−16, 0) (e.g. `np.mod(-1e-20, 2*np.pi)`),
+    so float θ ∈ [0, fl(2π)], closed at the top. fl(2π) is inside the real [0, 2π).
+  - The phasor is unaffected only up to rounding: exp(i·fl(2π)) = 1 − 2.449e−16·i, and each wrap shifts the real
+    phase by about 2.45e−16.
+  - **How often production runs hit (b) is UNEXPLAINED (unmeasured).** The witnesses are pinned in
+    `tests/test_lean_gate_h17.py`.
+
+Mutant numbering (coordinated with Auditor Seat 002: its follow-up uses M191 ff., its H9(b)+H16 M300 ff.; Researcher
+001 uses M400 ff. for H8, M500 ff. for H10, M600 ff. for H12, M700 ff. for H17). H17 adds statement mutants only; no
+E or T controls (the existing harness controls apply unchanged). **Predeclared outcome, committed before the run:**
+
+| Mutant | Edit | Refuted by | Predeclared |
+|---|---|---|---|
+| M700 | `toIcoMod … 0 t` → `toIocMod … (−π) t` ((−π, π] convention) | `false_wrap_toIocMod_neg_pi` (t = −π/2) | KILLED |
+| M701 | range `< 2π` → `< π` | `false_wrap_lt_pi` (t = −π/2 ↦ 3π/2) | KILLED |
+| M702 | `0 ≤` → `0 <` | `false_wrap_pos` (t = 0) | KILLED |
+| M703 | `toIcoMod … 0 t` → `toIcoMod … (−π) t` ([−π, π) convention) | `false_wrap_toIcoMod_neg_pi` (t = −π/2) | KILLED |
+
+The control that shows these can fail: each refutation is a proved `¬` theorem (standard axioms), and the harness's
+step (c) re-runs the same term against the unmutated statement, which must fail. A survivor is reported, not deleted.
+Counts: statement mutants 105 → 109, total 190 → 194.
+
+### 18.1 Results (local, 2026-11-26 MST, on `main` `daa977a` + this branch)
+- Gate (`SKIP_CACHE=1 STRICT_ORPHANS=1`, run under `unshare -rn`): **PASS**. 1197 project declarations audited,
+  standard axioms only. The first run failed step 5 on one >100-char line in `WrapBridge.lean`; the line was split and
+  SHA256SUMS regenerated before the passing run.
+- Mutation harness: **194/194 rejected**. M700–M703 all KILLED as predeclared (refuted by proof, and each term fails on
+  the unmutated statement). Typo controls 4/4 flagged invalid; SE1 and ST1 not rejected (good).
+- Float witness `np.mod(-1e-20, 2*pi) == 2*pi` holds, i.e. the engine can return its own modulus fl(2π), with the
+  +1e-20 negative control. *(The original wording "the engine can produce 2π, outside [0, 2π)" was wrong; see §18.2.)*
+  How often this happens in real runs is **UNEXPLAINED** (unmeasured).
+- pytest `research/lean_gate/tests`: 197 passed. The 12 CI checkers: all rc = 0.
+
+### 18.2 Audit follow-up (Auditor Seat 002 CLEAN WITH NOTES on `d9a5cad`; Researcher 001, 2026-11-27 MST)
+- **N1.** The float result is fl(2π) = 2π − 2.4492935982947064e−16, which is inside the real [0, 2π), not 2π.
+  Researcher 001 checked this numerically with a 90-digit rational 2π. The real gaps are (a) the period fl(2π) ≠ 2π
+  and (b) `np.mod` returning its own modulus.
+  - (b) happens exactly for x ∈ [−4.440892098500626e−16, 0) = [−ulp(fl(2π))/2, 0). This was found by bisection over
+    float bit patterns. All 400,001 sampled floats in that range return the modulus. The next float below the range,
+    −4.440892098500627e−16, gives 6.283185307179585 < fl(2π).
+  - The WrapBridge docstring, the scope bullet above and the §18.1 bullet are reworded. The test pins (a), both ends
+    of (b) and the first float outside it.
+- **N2.** The phasor claim is now "up to rounding": exp(i·fl(2π)) = 1 − 2.449e−16·i (pinned). How often real runs hit
+  (b) stays UNEXPLAINED (unmeasured).
+- **N3.** The refuter-exists check is now a word-boundary regex. A copy with `false_wrap_pos` renamed to
+  `false_wrap_pos_renamed` fails it (checked, then reverted).
+- **N4.** The engine link pins `state.theta = np.mod(`, which occurs exactly once, instead of any `np.mod(`.
+- No Lean statement, proof or mutant changed; only the WrapBridge module docstring. SHA256SUMS regenerated.
+
 ## 18. H9(b) + H16: n-step envelopes of the B recurrence, and the binding-gate contraction question (branch `research/h9b-h16-envelopes`, from `main` `daa977ac`; author Auditor Seat 002, auditor Researcher 001)
 
 ### 18.1 What it is
@@ -1972,3 +2035,26 @@ definition-mutant rule (build fails, no invalid line, a declared probe fails, §
 total 222; `test_lean_gate_h9h16.py` pins the list, that both edits lie inside the theorem statement, and the 89.
 (M320's kill is also redundant with the kept proof of `stepM_edge_envelope_pE` failing, as Researcher 001 noted.)
 
+### 18.9 Refresh merge with `main` `4325e45` (PR #54 H10, PR #56 H17), and the earlier csv-only merge `cfe3677`
+Two normal merge commits, no rebase.
+
+`cfe3677` merged `origin/main` `6eb2fb9` (PR #55, H12 Hebbian contrast) into this branch after `eef7748`. The only
+conflict was `registry/artifacts_current.csv`, which was regenerated after `git add`. H12 adds no Lean or mutation
+pins; SPEC was not conflicted, so that merge was not given its own subsection at the time.
+
+This commit merges `origin/main` `4325e45` (PR #54 H10 gate properties, PR #56 H17 WrapBridge). Conflicts in nine
+files, both sides kept: `AIEFGateCore.lean` (main's `WrapBridge` import plus `GronwallEnvelope` and
+`GateContraction`), the GateCore README (main's H17 row plus the H9/H16 row), `registry/artifacts_current.csv`
+(regenerated), this SPEC (H17's §18, already on main, then this branch's §18, then this note),
+`lean_mutation_check.py` (main's M700–M703 then M300–M318; `FILE_OPENS` keeps the `GateContraction.lean` entry),
+the c016, p4b, p5 and h9h16 count pins (h9h16's 'separate block' check now allows M700–M703), and the gate SHA256SUMS (regenerated). H10 adds `research/gate_properties/` and
+no Lean mutants.
+
+H17 on main and H9(b)/H16 on this branch each used §18 independently. Both texts are kept with their original
+subsection numbers; H17's §18 appears first (it is on main), then this branch's §18. References to "SPEC §18" in
+H17 files mean H17's section; references in H9/H16 files mean this one.
+
+Pins recomputed from the merged harness: statement mutants 120 (main, including M700–M703) + 15 (M300–M312, M317,
+M318) = **135**, definition mutants 85 + 6 (M313–M316, M319, M320) = **91** (89 definition mutants proper + 2
+statement pins), total **226**; `KNOWN_SURVIVORS` holds M321 only; equivalence/typo controls unchanged (23, 4).
+The earlier counts in §18.4–§18.8 (including 222 after the `10b8065` merge in §18.7) are kept as written.

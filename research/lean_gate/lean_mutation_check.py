@@ -645,6 +645,19 @@ MUTANTS = [
      None),
     ("M201_hetero_all_steps_row_dropped", "HeteroStepRef.lean", "window_all_steps",
      [("(hrow : ∀ i, dt * row n B i ≤ 1)", "(hrow : True)", 1)], "", "HeteroStepRef.false_window_all_no_row H", None),
+    # ---- H17 (WrapBridge.lean; numbering block M700 ff. reserved for Researcher 001's H17, see SPEC §18).
+    # Predeclared outcome for every entry below: KILLED (build rejected for a real reason AND refuted by the proved
+    # `false_*` theorem AND the same term fails on the unmutated statement). A survivor is a finding, never deleted.
+    ("M700_wrap_is_ioc_neg_pi", "WrapBridge.lean", "wrapPhase_eq_toIcoMod",
+     [("toIcoMod Real.two_pi_pos 0 t", "toIocMod Real.two_pi_pos (-Real.pi) t", 1)], "",
+     "WrapBridge.false_wrap_toIocMod_neg_pi H", None),
+    ("M701_wrap_range_lt_pi", "WrapBridge.lean", "wrapPhase_mem_Ico",
+     [("Phase.wrapPhase t < 2 * Real.pi", "Phase.wrapPhase t < Real.pi", 1)], "", "WrapBridge.false_wrap_lt_pi H", None),
+    ("M702_wrap_range_strict_lower", "WrapBridge.lean", "wrapPhase_mem_Ico",
+     [("0 ≤ Phase.wrapPhase t", "0 < Phase.wrapPhase t", 1)], "", "WrapBridge.false_wrap_pos H", None),
+    ("M703_wrap_is_ico_neg_pi", "WrapBridge.lean", "wrapPhase_eq_toIcoMod",
+     [("toIcoMod Real.two_pi_pos 0 t", "toIcoMod Real.two_pi_pos (-Real.pi) t", 1)], "",
+     "WrapBridge.false_wrap_toIcoMod_neg_pi H", None),
     # ---- H9(b) + H16 (GronwallEnvelope.lean, GateContraction.lean; SPEC §18). Distinct block from M300 on, so it
     # cannot collide with mutants added after M190 elsewhere. Every outcome predeclared KILLED in the first commit
     # that adds it (build rejected for a real proof failure, refuted by the named false_* theorem, term-specific).
