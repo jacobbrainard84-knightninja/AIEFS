@@ -343,18 +343,22 @@ def test_p6_mutants_exact_counts_and_numbering():
     assert sorted(arena) == list(range(110, 131))
     # the Arena bundle intake (12 modules, SPEC §17): M131-M156 statement, M157-M190 definition; the audit
     # follow-up (Researcher 001 note N5, SPEC §17.7) adds statement mutants M191-M201
-    bundle = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in mc.FILE_OPENS])
+    bundle = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in mc.FILE_OPENS and m[1] != "GateContraction.lean"])
     assert sorted(bundle) == list(range(131, 202))
+    # H9(b)/H16 (SPEC §18): a separate block M300-M320 (GronwallEnvelope.lean, GateContraction.lean); M321 is the
+    # documented survivor (KNOWN_SURVIVORS, not counted). GateContraction.lean has a FILE_OPENS entry since M318.
+    h9h16 = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] in ("GronwallEnvelope.lean", "GateContraction.lean")])
+    assert sorted(h9h16) == list(range(300, 321))
     # H17 (WrapBridge.lean, SPEC §18): M700-M703 statement mutants (Researcher 001 block M700 ff.)
     h17 = nums([m for m in mc.MUTANTS + mc.DEF_MUTANTS if m[1] == "WrapBridge.lean"])
     assert sorted(h17) == list(range(700, 704))
-    assert len(allnums) == len(set(allnums)) == 205 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
-    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (120, 85)
+    assert len(allnums) == len(set(allnums)) == 226 == len(mc.MUTANTS) + len(mc.DEF_MUTANTS)
+    assert (len(mc.MUTANTS), len(mc.DEF_MUTANTS)) == (135, 91)                    # main 120 + 85, plus §18 15 + 6
     assert [c[0].split("_")[0] for c in P6_EQUIV] == ["E12", "E13", "E14", "E15"]   # E11 is C014's
     eqn = [c[0].split("_")[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(eqn) == len(set(eqn)) == 27                                          # unique across ports: E1-E23, T1-T4
     assert [c[0].split("_")[0] for c in P6_TYPO] == ["T4"]
-    assert mc.KNOWN_SURVIVORS == []
+    assert [s[0].split("_")[0] for s in mc.KNOWN_SURVIVORS] == ["M321"]                # SPEC §18.6, predeclared SURVIVE
     allnames = [m[0] for m in mc.MUTANTS] + [m[0] for m in mc.DEF_MUTANTS] + [c[0] for c in mc.EQUIV_CONTROLS + mc.TYPO_CONTROLS]
     assert len(allnames) == len(set(allnames))
 

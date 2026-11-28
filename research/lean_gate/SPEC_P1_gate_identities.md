@@ -1820,3 +1820,241 @@ Counts: statement mutants 105 → 109, total 190 → 194.
   `false_wrap_pos_renamed` fails it (checked, then reverted).
 - **N4.** The engine link pins `state.theta = np.mod(`, which occurs exactly once, instead of any `np.mod(`.
 - No Lean statement, proof or mutant changed; only the WrapBridge module docstring. SHA256SUMS regenerated.
+
+## 18. H9(b) + H16: n-step envelopes of the B recurrence, and the binding-gate contraction question (branch `research/h9b-h16-envelopes`, from `main` `daa977ac`; author Auditor Seat 002, auditor Researcher 001)
+
+### 18.1 What it is
+Plan items H9 and H16 of the 2026-11-25 scan-leads plan, as changed by the Auditor review of that plan: H9 targets `AIEFGate.Freeze.upper_geom` (AIEFGateCore may not
+import AIEFFreezeCore), keeps part (b), and uses only `discrete_gronwall_prod_general`; H16's binding-gate case was
+flagged "may be false (UNVERIFIED)" and had to be probed numerically before any Lean. Two new modules, nothing on
+`main` edited except the root imports, the gate SHA256SUMS and the test pins below. Owner go-ahead for usage: t333u.
+
+- `GronwallEnvelope.lean` (H9). (b) `scalar_envelope_upper`: `B (n+1) = λ n · max 0 (ρ B n + d n)`, `0 ≤ ρ`,
+  `0 ≤ B 0`, `λ n ≤ 1` give `B n ≤ ρⁿ B 0 + Σ_{k<n} ρ^(n−1−k) max 0 (d k)` for a **time-varying** drive; `0 ≤ λ n` is
+  not needed (proved through `max (B n) 0`). `scalar_envelope_lower`: with a time-varying floor `0 ≤ κ n ≤ λ n` and
+  `0 ≤ ρ`, `B 0 ∏ κρ + Σ κ_k d_k ∏ κρ ≤ B n`, no sign condition on `B` or `d`. Per edge on the engine step
+  (`edge_recurrence` = `WeightUpdate.stepM_scalar_recurrence`): `stepM_edge_envelope_upper/lower` (`γ dt ≤ 1`,
+  symmetric `D n`, symmetric `B 0`). Engine witness `stepM_edge_envelope_pE`: at `pE` (`ρ = 1 − γ dt = 19997/20000`,
+  `pE_rho`) with `D ≤ 1/25`, `B n ≤ ρⁿ B 0 + (1 − ρⁿ)·8/3`. (a), a short corollary only: `upper_geom_via_gronwall`
+  has `Freeze.upper_geom`'s statement (`upper_geom_statement_eq` by `rfl`, plus `example`s in both directions; the
+  link to AIEFFreezeCore stays the p4b text check), and `upper_geom_of_ne_one` records the review finding that
+  `upper_geom` needs only `0 ≤ ρ`, `ρ ≠ 1` (`ρ < 1` is used by the `∃ N` theorems only).
+- `GateContraction.lean` (H16). See 18.2 for the probe. True versions kept: `stepM_entry_lipschitz_gate_off(_symm)`
+  (gate off at both states ⇒ each entry moves by ≤ `(1 − γ dt)` × the symmetrised input change; per pair, not a
+  global contraction: the gate-off set is not shown invariant and the gate jumps by `~ε` at its trigger,
+  `Capacity.false_gate_nonexpansive`), and the frozen-gate scalar Banach corollary `scalar_map_contracting` /
+  `scalar_map_fixedPoint_tendsto` (Mathlib `ContractingWith`; restates what `upper_geom` already gives, so it is
+  not advertised as new and NORTH_STAR row 7 is **not** advanced). The refutation: `B3` (all edges `1/3`), `B3'`
+  (edge `{0,1}` = `13/30`), `pE`, `D = 0`: every row of both proposals is above `cap` (`binding_witness_rows`), the
+  ℓ1 distance grows by a factor `> 6/5` (`binding_witness_l1`, exact ratio ≈ 1.239), and the unchanged edge
+  `{0,2}` moves (`binding_witness_entry`); `false_stepM_l1_nonexpansive_binding`.
+- Scope, stated in both module headers: exact reals; frozen drive / frozen `R` (**conditional, not O1**: in the engine
+  `R` depends on the phases, which depend on `B`); `γ dt ≤ 1` is a hypothesis of the signed-`ρ` theorems
+  (`γ dt = 1` covered). `γ dt > 1` is engine-legal (the engine validates only `γ ≥ 0`) and is **EXCLUDED** from
+  those theorems, **not refuted**: the `false_*` witnesses at `WeightUpdate.pH` (`ρ = −1`) are a sign artifact of the
+  signed `ρ`, and the `|1 − γ dt|` / `max(ρ, 0)` forms hold for every `γ dt` (§18.6, F1; corrected wording, the
+  version at `952f87d` was wrong); growth envelopes only (no convergence of the engine `B`, no O1, no explanation of
+  E22); nothing about float64.
+
+### 18.2 H16 probe (run before any H16 Lean was written)
+`research/lean_gate/h16_binding_probe.py` (stdlib + numpy, written fresh, mirrors engine L790–813, does not import or
+edit the engine), output `research/lean_gate/results/h16_binding_probe_v1.txt`. 200 seeded random `N = 12`
+gate-on states at the frozen parameters, frozen drive. Finite-difference Jacobian operator norms: ℓ1 (edge-sum)
+**1.228 … 2.296**, entry-max **1.705 … 4.436**, ℓ2 **0.892 … 1.517**, against `1 − γ dt = 0.99985`. Exact
+`Fraction` pairs (both states gate-on, one pair per metric): ℓ1 ratio **2.2957**, entry-max ratio **4.4360**,
+Frobenius ratio **1.5173**. **Verdict: the binding-gate contraction claim is FALSE** in all three metrics (not
+"not found": exact counterexamples). Mechanism, not new: `min(s_i, s_j)` with `s_i = cap/(row_i + ε)` depends on
+`B`, so raising one entry lowers every other entry of its two rows. In the random states some rows were below `cap`
+(the gate fires globally); the Lean witness has every row above `cap`. Not claimed: anything about convergence of
+the coupled engine (a non-contracting one-step map can still have convergent orbits); that stays open.
+**Scope (added after the audit, F2):** the probe draws row sums at `1 … 1.5 ×` cap and the Lean witness has rows
+`2/3`, `23/30` against `cap = 19/30`; the engine never feeds such states into the step (after every step each row is
+`≤ cap`), so neither input set is engine-reachable, and the ℓ2 low end `0.892 < ρ` comes from those unreachable rows.
+See §18.6 for Researcher 001's reachable-state confirmation (the claim fails there too, by a wider margin).
+
+### 18.3 Mutants M300–M316 (separate block; another branch may add mutants right after M190)
+Rules unchanged (statement mutants as §5, definition mutants as §11.3). **Predeclared outcome for every mutant:
+KILLED** (written into `lean_mutation_check.py` before the first run; a filtered debugging run of this block,
+`AIEF_MUT_ONLY`, preceded the first commit and agreed with every prediction; the full run is in 18.5). No equivalence or
+typo control and no `FILE_OPENS` entry is added (the mutated statements name their namespaces).
+
+| Mutant | Statement / definition | Edit | Refuted by / killed by |
+|---|---|---|---|
+| M300 | `scalar_envelope_upper` | `0 ≤ ρ` → `True` | `false_upper_no_rho_nonneg` |
+| M301 | `scalar_envelope_upper` | `0 ≤ B 0` → `True` | `false_upper_no_start_nonneg` |
+| M302 | `scalar_envelope_upper` | `λ n ≤ 1` → `True` | `false_upper_no_lam_le_one` |
+| M303 | `scalar_envelope_lower` | `0 ≤ κ n` → `True` | `false_lower_no_kappa_nonneg` |
+| M304 | `scalar_envelope_lower` | `0 ≤ ρ` → `True` | `false_lower_no_rho_nonneg` |
+| M305 | `stepM_edge_envelope_upper` | `γ dt ≤ 1` → `True` | `false_envelope_gamma_dt_gt_one` (engine-legal `γ dt = 2`, `pH`) |
+| M306 | `edge_recurrence` | wrong variant: gate applied before the drive, `max 0 (λ(1−γdt)B + dt D)` | `false_variant_gate_after_drive` (`pE`) |
+| M307 | `upper_geom_via_gronwall` | `0 ≤ ρ` → `True` | `false_upper_geom_rho_neg` (`ρ = −1`) |
+| M308 | `upper_geom_of_ne_one` | `ρ ≠ 1` → `True` | `false_upper_geom_rho_one` (`ρ = 1`, where `β/(1−ρ) = 0` in Lean) |
+| M309 | `stepM_entry_lipschitz_gate_off` | gate-off hypotheses → `True` | `false_entry_lipschitz_no_gate_off` (the `Fin 3` witness) |
+| M310 | `stepM_entry_lipschitz_gate_off` | `γ dt ≤ 1` → `True` | `false_entry_lipschitz_gamma_dt_gt_one` (`pH`) |
+| M311 | `stepM_entry_lipschitz_gate_off_symm` | symmetry → `True` | `false_lipschitz_symm_no_symm` |
+| M312 | `scalar_map_contracting` | `λ ≤ 1` → `True` | `false_contracting_lam_gt_one` (`λ = 2`) |
+| M313 | def `scalarMap` | gate before drive | `probe_scalarMap_value` |
+| M314 | def `scalarMap` | clamp dropped | `probe_scalarMap_clamp` |
+| M315 | def `l1` | `|·|` dropped | `probe_l1_B3` |
+| M316 | def `B3'` | edge raised on one side only | `probe_l1_B3` |
+
+Controls from the review, how they are met: the λ(1−h) = 1 mutant (it tests Mathlib's `K < 1`, not us) is not used;
+the wrong-variant control is M306; the `pE` witness is `stepM_edge_envelope_pE`; the `γ dt ≥ 1` adversarial witness is
+M305/M310. The review's "ρ > 1 mutant of `upper_geom` survives" finding is recorded as the proved theorem
+`upper_geom_of_ne_one` instead of a surviving mutant (`KNOWN_SURVIVORS` stays empty).
+
+### 18.4 Tests and pins
+`research/lean_gate/tests/test_lean_gate_h9h16.py`: imports and hash pins, no escape hatches, scope sentence, axioms
+prints, product-form Grönwall only (code, not prose), H9(a) target and `rfl` statement equality, the exact shape of
+M300–M316 (13 statement + 4 definition mutants, numbering, predeclared outcomes), value probes,
+the `Fin 3` witness and the other witnesses recomputed in exact arithmetic,
+the stored probe output, and the mirrored engine lines (engine sha256 checked, engine not edited). Pins move: P4b
+`len(MUTANTS)` 105 → 118; P5 `N_STATEMENT_MUTANTS` 105 → 118, `N_DEF_MUTANTS` 85 → 89, total 190 → 207; c016 total
+190 → 207 and M300–M316 numbered. **Merge note:** a concurrent branch may add mutants after
+M190 and move the same pins; whichever lands second must re-add the other's counts (the block numbers do not collide).
+
+### 18.5 Results (at `16e450f`, the commit that added and predeclared M300–M316)
+- Gate: `SKIP_CACHE=1 unshare -rn ./check_lean_gate.sh` **PASS** (2026-11-26 21:06–21:07 GMT): build 2358 jobs,
+  warnings 0; escape-hatch scan 40 files, 0 hits; 1260 project declarations audited, axioms only `propext`,
+  `Classical.choice`, `Quot.sound`.
+- Full unfiltered mutation run under `unshare -rn` (2026-11-27 19:46–20:13 GMT): **RESULT: PASS**; statement mutants
+  rejected 118/118, definition mutants killed 89/89 (207 total), equivalence controls not killed 23/23, typo controls
+  flagged invalid 4/4, statement controls SE1/ST1 not rejected, classifier negative control PASS. M300–M316: all 17
+  REJECTED/KILLED as predeclared; no survivor. The one name-reference info line is M31 (already on `main`, info only).
+  A first full run started 2026-11-26 21:07 GMT was interrupted around M151 when the session stopped (no failure in
+  its 102 completed entries) and was discarded, not merged into these counts.
+- pytest `tools/ci/tests research`: 481 passed; `tools/redteam`: 181 passed, 9 xfailed (the existing xfail markers).
+  Checkers `check_manifest`, `check_sha256sums`, `check_current_inventory`, `hygiene_scan`, `lint_claims`,
+  `check_modes`, `check_pinned_restatement`, `check_artifact_pins`, `check_study_paths`: rc 0.
+- UNEXPLAINED: none found. Open (not claimed): convergence of the coupled engine `B` with `R` not frozen.
+
+### 18.6 Audit follow-up (Researcher 001 on `952f87d`: CLEAN WITH NOTES, F1–F5 and a coverage note)
+Corrections, recorded plainly:
+- **F1 (wrong claim):** `952f87d` said the engine-legal case `γ dt > 1` "is refuted" (§18.1, the GronwallEnvelope
+  header). That was wrong. At `WeightUpdate.pH` `ρ = 1 − γ dt = −1`, so the signed-`ρ` right-hand sides are
+  negative and any nonzero change "refutes" them: a sign artifact. The case is **EXCLUDED** from the signed-`ρ`
+  theorems, **not refuted**. Added, proofs adopted with credit from Researcher 001's audit scratch (`G1`,
+  `G2_scalar`, `G2_pH_edge`): `GateContraction.stepM_entry_lipschitz_gate_off_abs` (gate off at both states, bound
+  `|1 − γ dt| · (|ΔB_ij| + |ΔB_ji|)/2`, every `γ dt`), `GronwallEnvelope.scalar_envelope_upper_pos` (any sign of
+  `ρ`, with `max ρ 0`; needs `0 ≤ λ n ≤ 1`, `0 ≤ B 0`) and `stepM_edge_envelope_upper_pos` (per edge, every `γ dt`,
+  given `EngineGate p`; generalised from Researcher 001's `pH` instance). `false_envelope_gamma_dt_gt_one` and
+  `false_entry_lipschitz_gamma_dt_gt_one` are kept and relabelled: they show only that the **signed** formulas need
+  `γ dt ≤ 1` (M305, M310).
+- **F2 (missing scope):** the Lean witness (`B3`, `B3'`) and the `N = 12` probe use rows above `cap`, which the
+  engine never feeds into the step; the refutation is valid as stated but its witness is not engine-reachable, and
+  the probe's ℓ2 low end `0.892` comes from those unreachable rows. Researcher 001 re-derived the result on
+  reachable states with the real engine `advance_state` (sha-checked temp copy, production defaults, seeds
+  7001–7006, 604 gate-on states, largest row minus cap `−1.0e−12`): ℓ1 `1.97 … 2.58`, entry-max `1.50 … 2.54`, ℓ2
+  `1.11 … 1.44`, every one above `ρ = 0.99985`; gate-off negative control (44 states) exactly `0.99985`. Those are
+  Researcher 001's numerical audit results (its audit note), not Lean results and not this branch's probe. A
+  reachable Lean witness was not added (Researcher 001's best exact `Fin 3` reachable pair, ratio `1.9654`, needs a
+  nonzero drive and a new chain of row lemmas; optional, left open).
+- **F3 (unpinned constants):** at `952f87d`, `binding_witness_l1` with `6/5 → 1`, `stepM_edge_envelope_pE` with
+  `8/3 → 3`, and the GateContraction header with "not" deleted from its NORTH_STAR row 7 sentence passed every
+  check (`lint_claims` included). Now: text pins in
+  `test_lean_gate_h9h16.py` (exact statement lines with `6 / 5`, `19997 / 20000`, `8 / 3`, `1 / 25`; every
+  "NORTH_STAR (row) 7 … advanced" phrase in both modules and this section must say "not"), and Lean pin probes
+  `probe_binding_ratio_six_fifths` (`6/5 <` the witness ratio, from `binding_witness_l1`) and
+  `probe_envelope_pE_orbit` (the `pE` envelope on a concrete orbit, closed by `exact`), counted by the harness as
+  M319 and M320.
+- **F4:** the `pE` envelope constant `8/3` is about `4.2×` (`80/19`) looser than the trivial bound `cap = 19/30`
+  that every edge obeys after one step (the gate keeps each row `≤ cap`). The instance only checks that the formula
+  fits the engine form; it is not a useful bound.
+- **F5:** `upper_geom_statement_eq` was the same written type on both sides (`A = A`) and linked nothing; the real
+  link was the two `example`s. It now states `type_of% @AIEFGate.Freeze.upper_geom = type_of%
+  @upper_geom_via_gronwall := rfl`, which does name both declarations.
+- **Coverage note:** dropping `γ dt ≤ 1` from `stepM_edge_envelope_lower` gives a false statement, and the branch had
+  no mutant for it. Added `false_lower_envelope_gamma_dt_gt_one` (negation adopted with credit from Researcher
+  001's `K5_neg`) and mutant M317. `false_binding_l1_five_fourths` (from Researcher 001's `K4_neg`) shows `6/5` is
+  sharp to within `(1.2391, 5/4)` (M318).
+
+Mutants added (predeclared in the commit that adds them, before any run of them; rules unchanged):
+
+| Mutant | Statement / definition | Edit | Predeclared | Refuted by / killed by |
+|---|---|---|---|---|
+| M317 | `stepM_edge_envelope_lower` | `γ dt ≤ 1` → `True` | KILLED | `false_lower_envelope_gamma_dt_gt_one` (`pH`) |
+| M318 | `binding_witness_l1` | `6/5` → `5/4` | KILLED | `false_binding_l1_five_fourths` |
+| M319 | `binding_witness_l1` (definition-style pin) | `6/5` → `1` | KILLED | `probe_binding_ratio_six_fifths` |
+| M320 | `stepM_edge_envelope_pE` (definition-style pin) | `8/3` → `3` | KILLED | `probe_envelope_pE_orbit` |
+| M321 | `binding_witness_l1` (`KNOWN_SURVIVORS`, not counted) | `6/5` → `123/100` | **SURVIVE** | none: a true strengthening (ratio ≈ 1.2391) that the kept proof closes; only the text pin catches it |
+
+M319/M320 use the definition-mutant rule with statement-pin probes (the probe consumes the theorem with the constant
+written out); they are not closed-number value equalities. Disclosure: Researcher 001's audit scratch already ran
+the analogues of M317 (K5), M318 (K4), M319 (K1) and M321 (K2), so these predictions are informed by those results.
+`GateContraction.lean` gets a `FILE_OPENS` entry (M318's statement uses the short names `l1`, `B3`, `B3'`). Pins move:
+statement mutants 118 → 120, definition mutants 89 → 91, total 207 → 211; `KNOWN_SURVIVORS` holds one entry (M321),
+the first since N2.
+
+Results: recorded in the next commit, after the runs.
+
+Results (at `3716697`, the commit that added and predeclared M317–M321; times GMT):
+- Gate: `SKIP_CACHE=1 unshare -rn ./check_lean_gate.sh` **PASS** (2026-11-27 21:03–21:04): build 2358 jobs, warnings
+  0; SHA256SUMS 44 files verified; escape-hatch scan 40 files, 0 hits; 1275 project declarations audited (1260
+  before), axioms only `propext`, `Classical.choice`, `Quot.sound`.
+- Full unfiltered mutation run under `unshare -rn` (2026-11-27 21:04–21:28): **RESULT: PASS**; statement mutants
+  rejected 120/120, definition mutants killed 91/91 (211 total), equivalence controls not killed 23/23, typo controls
+  flagged invalid 4/4, SE1/ST1 not rejected, classifier and validator negative controls PASS; the one name-reference
+  info line is M31 (on `main`). As predeclared: M317, M318 REJECTED; M319 KILLED (only
+  `probe_binding_ratio_six_fifths` fails); M320 KILLED (`stepM_edge_envelope_pE` and `probe_envelope_pE_orbit`
+  fail); M321 build PASSES, SURVIVES as documented (not counted). M300–M316 unchanged (all REJECTED/KILLED).
+- F3 red-team (each variant in a temp copy outside the repo, gate SHA256SUMS re-hashed in the copy so the hash pin is
+  not what catches it; unmodified control 208/208 pass): `6/5 → 1` caught by `test_f3_headline_constants_pinned`
+  (and by the harness edit checks), and the Lean build of the mutated file fails in
+  `probe_binding_ratio_six_fifths`; `8/3 → 3` caught by `test_f3_headline_constants_pinned`, and the Lean build fails
+  in `stepM_edge_envelope_pE` itself and in `probe_envelope_pE_orbit`; the GateContraction header with "not" removed from its NORTH_STAR sentence caught by
+  `test_f3_north_star_not_advanced_wording` (`lint_claims` still rc 0: it does not check this phrase); `6/5 →
+  123/100` (M321) caught by the text pin only, Lean build passes, as predeclared. Note: the `8/3 → 3` edit already
+  broke the kept proof of `stepM_edge_envelope_pE` at `952f87d` (`linarith`), so the gate build would have rejected
+  it there; only the pytest suite missed it.
+- pytest `tools/ci/tests research`: 486 passed; `tools/redteam`: 181 passed, 9 xfailed. Checkers `check_manifest`,
+  `check_sha256sums`, `check_current_inventory`, `hygiene_scan` (also `--base origin/main --pii`), `lint_claims`,
+  `check_modes`, `check_pinned_restatement`, `check_artifact_pins`, `check_study_paths`: rc 0.
+- UNEXPLAINED: none new. Open (not claimed): a reachable-state Lean witness for H16; convergence of the coupled
+  engine `B` with `R` not frozen.
+
+### 18.7 Refresh merge with `main` `10b8065` (PR #53, Arena bundle audit follow-up §17.7)
+Normal merge commit, no rebase. Conflicts in seven files, both sides kept: the GateCore README (main's §17.7 bundle
+row plus the H9/H16 row), `registry/artifacts_current.csv` (regenerated), this SPEC (§17.7 then §18),
+`lean_mutation_check.py` (main's M191–M201 then M300–M318; `FILE_OPENS` keeps main's bundle entries and the
+`GateContraction.lean` entry), and the c016, p4b and p5 count pins. Pins recomputed from the merged harness:
+statement mutants 116 (main) + 15 (M300–M312, M317, M318) = **131**, definition mutants 85 + 6 (M313–M316, M319,
+M320) = **91**, total **222**; `KNOWN_SURVIVORS` holds M321 only; equivalence/typo controls unchanged (23, 4). Gate
+SHA256SUMS regenerated. The §18.4–§18.6 counts (118/89/207, 120/91/211) are this branch's counts before the merge and
+are kept as written.
+
+### 18.8 Classification of M319 and M320 (Researcher 001 delta note 2 on `98dda3a`)
+M319 (`6/5 → 1` in `binding_witness_l1`) and M320 (`8/3 → 3` in `stepM_edge_envelope_pE`) edit a **theorem
+statement**, not a definition, so they are **statement pins**, not definition mutants; the "definition-style pin"
+label in the §18.6 table (kept as written) was imprecise. They stay counted in `DEF_MUTANTS` on purpose: each edit
+is a **true weakening**, so no proved negation exists and the statement-mutant rule (build rejected **and** refuted
+by a `false_*` theorem, §5) can never kill them. What catches them is a downstream declaration that needs the
+original constant (`probe_binding_ratio_six_fifths`, `probe_envelope_pE_orbit`), which is exactly the
+definition-mutant rule (build fails, no invalid line, a declared probe fails, §11.3). The harness now lists them in
+`STATEMENT_PIN_MUTANTS` and prints them separately ("of which statement pins … 2/2; definition mutants proper …
+89/89"). Pins: `DEF_MUTANTS` stays 91 (89 definition mutants proper + 2 statement pins); statement mutants 131;
+total 222; `test_lean_gate_h9h16.py` pins the list, that both edits lie inside the theorem statement, and the 89.
+(M320's kill is also redundant with the kept proof of `stepM_edge_envelope_pE` failing, as Researcher 001 noted.)
+
+### 18.9 Refresh merge with `main` `4325e45` (PR #54 H10, PR #56 H17), and the earlier csv-only merge `cfe3677`
+Two normal merge commits, no rebase.
+
+`cfe3677` merged `origin/main` `6eb2fb9` (PR #55, H12 Hebbian contrast) into this branch after `eef7748`. The only
+conflict was `registry/artifacts_current.csv`, which was regenerated after `git add`. H12 adds no Lean or mutation
+pins; SPEC was not conflicted, so that merge was not given its own subsection at the time.
+
+This commit merges `origin/main` `4325e45` (PR #54 H10 gate properties, PR #56 H17 WrapBridge). Conflicts in nine
+files, both sides kept: `AIEFGateCore.lean` (main's `WrapBridge` import plus `GronwallEnvelope` and
+`GateContraction`), the GateCore README (main's H17 row plus the H9/H16 row), `registry/artifacts_current.csv`
+(regenerated), this SPEC (H17's §18, already on main, then this branch's §18, then this note),
+`lean_mutation_check.py` (main's M700–M703 then M300–M318; `FILE_OPENS` keeps the `GateContraction.lean` entry),
+the c016, p4b, p5 and h9h16 count pins (h9h16's 'separate block' check now allows M700–M703), and the gate SHA256SUMS (regenerated). H10 adds `research/gate_properties/` and
+no Lean mutants.
+
+H17 on main and H9(b)/H16 on this branch each used §18 independently. Both texts are kept with their original
+subsection numbers; H17's §18 appears first (it is on main), then this branch's §18. References to "SPEC §18" in
+H17 files mean H17's section; references in H9/H16 files mean this one.
+
+Pins recomputed from the merged harness: statement mutants 120 (main, including M700–M703) + 15 (M300–M312, M317,
+M318) = **135**, definition mutants 85 + 6 (M313–M316, M319, M320) = **91** (89 definition mutants proper + 2
+statement pins), total **226**; `KNOWN_SURVIVORS` holds M321 only; equivalence/typo controls unchanged (23, 4).
+The earlier counts in §18.4–§18.8 (including 222 after the `10b8065` merge in §18.7) are kept as written.
